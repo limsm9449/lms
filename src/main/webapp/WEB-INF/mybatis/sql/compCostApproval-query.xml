@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="compCostApproval">
+		
+	<select id="compCostApprovalList" parameterType="CompCostApproval" resultType="CompCostApproval">
+	SELECT DATA.* FROM (
+		SELECT AP.APPROVAL_ID,
+		       AP.TOTAL_COST,
+		       AP.PAYMENT_POINT,
+		       AP.PAYMENT_COST,
+		       AP.PAYMENT_KIND,
+		       (SELECT BANK_NAME FROM BANK WHERE SEQ = AP.PAYMENT_BANK) PAYMENT_BANK,
+		       DATE_FORMAT(AP.PAYMENT_DATE, '%y.%m.%d %T') PAYMENT_DATE,
+		       (SELECT DISTINCT C.COURSE_NAME
+		          FROM COURSE_REGISTER A JOIN COURSE B ON A.COURSE_ID = B.COURSE_ID
+		                                 JOIN COURSE_CODE C ON B.COURSE_CODE = C.COURSE_CODE
+		         WHERE APPROVAL_ID = AP.APPROVAL_ID) COURSE_NAME,
+		       (SELECT COUNT(*) FROM COURSE_REGISTER WHERE APPROVAL_ID = AP.APPROVAL_ID) CNT
+		  FROM APPROVAL AP
+		 WHERE AP.STATUS IN ('A','B')
+		   AND AP.USER_ID = #{userId}
+		   AND AP.KIND = 'C'
+		   <if test="courseName != null and courseName != ''">
+		   	   AND AP.APPROVAL_ID IN (SELECT A.APPROVAL_ID
+		                                FROM COURSE_REGISTER A JOIN COURSE B ON A.COURSE_ID = B.COURSE_ID
+		                                                       JOIN COURSE_CODE C ON B.COURSE_CODE = C.COURSE_CODE
+		                               WHERE C.COURSE_NAME LIKE CONCAT('%',#{courseName},'%'))
+		   </if>
+		 ORDER BY AP.CREATE_DATE DESC
+	 ) DATA LIMIT #{limitStart},#{limitUnit}
+	</select>
+	
+	<select id="compCostApprovalTotal" parameterType="CompCostApproval" resultType="CompCostApproval">
+	SELECT SUM(DATA.CNT) CNT FROM (
+		SELECT COUNT(*) CNT
+		  FROM APPROVAL AP
+		 WHERE AP.STATUS IN ('A','B')
+		   AND AP.USER_ID = #{userId}
+		   AND AP.KIND = 'C'
+		   <if test="courseName != null and courseName != ''">
+		   	   AND AP.APPROVAL_ID IN (SELECT A.APPROVAL_ID
+		                                FROM COURSE_REGISTER A JOIN COURSE B ON A.COURSE_ID = B.COURSE_ID
+		                                                       JOIN COURSE_CODE C ON B.COURSE_CODE = C.COURSE_CODE
+		                               WHERE C.COURSE_NAME LIKE CONCAT('%',#{courseName},'%'))
+		   </if>
+	 ) DATA
+	</select>
+
+
+
+</mapper>

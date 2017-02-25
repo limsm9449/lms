@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="compUser">
+	
+<select id="compUserList" parameterType="compUser" resultType="compUser">
+SELECT DATA.* FROM (
+	SELECT USER_ID,
+	       USER_NAME,
+	       HOME_TEL,
+	       MOBILE,
+	       EMAIL,
+	       (SELECT COUNT(*) FROM COURSE_REGISTER WHERE USER_ID = A.USER_ID AND STATUS = 'A') COURSE_CNT
+	  FROM USER A
+	 WHERE COMP_CD IN (SELECT COMP_CD FROM COMPANY WHERE TUTOR_ID = #{userId})
+       <if test="searchStr != null and searchStr != ''">
+	     <if test="searchKind == 'USER_ID'">
+	       AND UPPER(USER_ID) LIKE CONCAT('%',UPPER(#{searchStr}),'%') 
+	     </if>
+	     <if test="searchKind == 'USER_NAME'">
+	       AND UPPER(USER_NAME) LIKE CONCAT('%',UPPER(#{searchStr}),'%') 
+	     </if>
+       </if>	
+ ORDER BY USER_NAME
+) DATA LIMIT #{limitStart},#{limitUnit}
+</select>
+
+<select id="compUserTotal" parameterType="compUser" resultType="compUser">
+	SELECT COUNT(*) CNT
+	  FROM USER
+	 WHERE COMP_CD IN (SELECT COMP_CD FROM COMPANY WHERE TUTOR_ID = #{userId})
+       <if test="searchStr != null and searchStr != ''">
+	     <if test="searchKind == 'USER_ID'">
+	       AND UPPER(USER_ID) LIKE CONCAT('%',UPPER(#{searchStr}),'%') 
+	     </if>
+	     <if test="searchKind == 'USER_NAME'">
+	       AND UPPER(USER_NAME) LIKE CONCAT('%',UPPER(#{searchStr}),'%') 
+	     </if>
+       </if>	
+</select>
+
+<select id="userCompCd" parameterType="compUser" resultType="compUser">
+	SELECT COMP_CD
+	  FROM COMPANY
+	 WHERE TUTOR_ID = #{workerId} 
+</select>
+
+<select id="compUserDel" parameterType="compUser">
+	DELETE FROM UPLOAD_USER
+	WHERE WORKER_ID = #{workerId} 
+</select>
+
+<select id="compUserIns" parameterType="compUser">
+	INSERT INTO UPLOAD_USER(WORKER_ID,USER_ID,USER_NAME,EMAIL,USER_PASSWORD,
+ 							HOME_TEL,HOME_TEL1,HOME_TEL2,HOME_TEL3,MOBILE,MOBILE1,MOBILE2,MOBILE3,
+ 							COMP_CD,CREATE_DATE,
+ 							SEX,BIRTH_DAY)
+	VALUES(#{workerId},#{userId},#{userName},#{email},#{userPassword},
+			#{homeTel},#{homeTel1},#{homeTel2},#{homeTel3},#{mobile},#{mobile1},#{mobile2},#{mobile3},
+			(SELECT COMP_CD FROM COMPANY WHERE TUTOR_ID = #{workerId}),CURRENT_TIMESTAMP,
+			#{sex},#{birthDay})
+</select>
+
+<select id="compUserErrorChk" parameterType="compUser">
+	UPDATE UPLOAD_USER A
+	   SET ERROR = CONCAT(IF((SELECT COUNT(*) FROM USER WHERE USER_ID = A.USER_ID) > 0,'중복 사용자',''),
+	                      IF(SEX != 'M' AND SEX != 'F','성별 코드 오류',''))
+	WHERE WORKER_ID = #{workerId} 
+</select>
+
+<select id="uploadInvalidCnt" parameterType="compUser" resultType="compUser">
+	SELECT COUNT(*) CNT
+	  FROM UPLOAD_USER
+	 WHERE WORKER_ID = #{workerId}
+	   AND IFNULL(ERROR,'') != ''  
+</select>
+
+<select id="uploadExcelList" parameterType="compUser" resultType="compUser">
+	SELECT *
+	  FROM UPLOAD_USER
+	 WHERE WORKER_ID = #{workerId} 
+	 ORDER BY USER_ID
+</select>
+
+<select id="userIns" parameterType="compUser">
+	INSERT INTO USER(USER_ID,USER_NAME,EMAIL,USER_PASSWORD,
+ 							HOME_TEL,HOME_TEL1,HOME_TEL2,HOME_TEL3,MOBILE,MOBILE1,MOBILE2,MOBILE3,
+ 							COMP_CD,CREATE_DATE,
+ 							SEX,BIRTH_DAY)    
+	SELECT USER_ID,USER_NAME,EMAIL,PASSWORD(USER_PASSWORD),
+ 							HOME_TEL,HOME_TEL1,HOME_TEL2,HOME_TEL3,MOBILE,MOBILE1,MOBILE2,MOBILE3,
+ 							COMP_CD,CREATE_DATE,
+ 							SEX,BIRTH_DAY
+	  FROM UPLOAD_USER 							
+	 WHERE WORKER_ID = #{workerId}
+</select>
+
+        
+</mapper>

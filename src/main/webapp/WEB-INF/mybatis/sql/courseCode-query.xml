@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="courseCode">
+	
+<select id="courseCodeList" parameterType="CourseCode" resultType="CourseCode">
+SELECT DATA.* FROM (
+	SELECT B.CATEGORY_NAME,
+	       A.COURSE_NAME,
+	       A.COURSE_CODE,
+	       A.TEACHER_ID,
+	       C.USER_NAME TEACHER_NAME,
+	       A.H_PX,
+	       A.V_PX,
+	       A.DIRECTORY,
+	       A.POINT,
+	       A.USE_YN,
+	       IF(IFNULL(QG_ID,0) > 0,'Y','N') QUEST_GROUP_YN
+	  FROM COURSE_CODE A LEFT OUTER JOIN (
+	           SELECT C3.CODE C3_CODE,
+	                  C2.CODE C2_CODE,
+	                  C1.CODE C1_CODE,
+	                  CONCAT(C1.CODE_NAME,' > ',C2.CODE_NAME,' > ',C3.CODE_NAME) CATEGORY_NAME
+		     	 FROM CATEGORY C3 LEFT OUTER JOIN CATEGORY C2 ON C3.PARENT_CODE = C2.CODE
+		                      LEFT OUTER JOIN CATEGORY C1 ON C2.PARENT_CODE = C1.CODE
+	            WHERE C3.DEPTH = 3) B ON A.CODE = B.C3_CODE
+	                     LEFT OUTER JOIN USER C ON A.TEACHER_ID = C.USER_ID
+	 WHERE 1 = 1                    
+	  <if test="c1Code != null and c1Code != ''"> AND B.C1_CODE = #{c1Code}</if>
+	  <if test="c2Code != null and c2Code != ''"> AND B.C2_CODE = #{c2Code}</if>
+	  <if test="c3Code != null and c3Code != ''"> AND B.C3_CODE = #{c3Code}</if>
+	  <if test="courseName != null and courseName != ''"> AND A.COURSE_NAME LIKE CONCAT('%',#{courseName},'%')</if>
+	 ORDER BY B.CATEGORY_NAME,A.COURSE_NAME
+ ) DATA LIMIT #{limitStart},#{limitUnit}
+</select>
+
+<select id="courseCodeListTotal" parameterType="CourseCode" resultType="CourseCode">
+	SELECT COUNT(*) CNT
+	  FROM COURSE_CODE A LEFT OUTER JOIN (
+	           SELECT C3.CODE C3_CODE,
+	                  C2.CODE C2_CODE,
+	                  C1.CODE C1_CODE,
+	                  CONCAT(C1.CODE_NAME,' > ',C2.CODE_NAME,' > ',C3.CODE_NAME) CATEGORY_NAME
+		     	 FROM CATEGORY C3 LEFT OUTER JOIN CATEGORY C2 ON C3.PARENT_CODE = C2.CODE
+		                      LEFT OUTER JOIN CATEGORY C1 ON C2.PARENT_CODE = C1.CODE
+	            WHERE C3.DEPTH = 3) B ON A.CODE = B.C3_CODE
+	                     LEFT OUTER JOIN USER C ON A.TEACHER_ID = C.USER_ID
+	 WHERE 1 = 1                    
+	  <if test="c1Code != null and c1Code != ''"> AND B.C1_CODE = #{c1Code}</if>
+	  <if test="c2Code != null and c2Code != ''"> AND B.C2_CODE = #{c2Code}</if>
+	  <if test="c3Code != null and c3Code != ''"> AND B.C3_CODE = #{c3Code}</if>
+	  <if test="courseName != null and courseName != ''"> AND A.COURSE_NAME LIKE CONCAT('%',#{courseName},'%')</if>
+</select>
+
+<select id="isExistCourseCode" parameterType="CourseCode" resultType="CourseCode">
+SELECT COUNT(*) CNT
+  FROM COURSE_CODE
+ WHERE COURSE_CODE = #{courseCode} 
+</select>
+	
+<select id="courseCodeInsert" parameterType="CourseCode">
+INSERT INTO COURSE_CODE(COURSE_CODE,COURSE_NAME,TEACHER_ID,H_PX,V_PX,CODE,DIRECTORY,USE_YN,POINT,CREATE_DATE,CREATE_USER,COMPANY_RATE,QG_ID)
+VALUES (#{courseCode},#{courseName},#{teacherId},#{hPx},#{vPx},#{c3Code},#{directory},#{useYn},#{point},CURRENT_TIMESTAMP,#{createUser},100,#{qgId})
+</select>
+	
+<select id="courseCodeData" parameterType="CourseCode" resultType="CourseCode">
+SELECT B.CATEGORY_NAME,
+	       A.COURSE_NAME,
+	       A.COURSE_CODE,
+	       A.TEACHER_ID,
+	       C.USER_NAME TEACHER_NAME,
+	       A.H_PX,
+	       A.V_PX,
+	       A.DIRECTORY,
+	       A.USE_YN,
+	       A.POINT,
+	       (SELECT COUNT(*) CNT FROM COURSE WHERE COURSE_CODE = A.COURSE_CODE) SUB_CNT,
+	       IF(IFNULL(A.QG_ID,0) > 0,'Y','N') QUEST_GROUP_YN,
+	       A.QG_ID,
+	       (SELECT GROUP_NAME FROM QUEST_GROUP WHERE QG_ID = A.QG_ID) QUEST_GROUP_NAME
+	  FROM COURSE_CODE A LEFT OUTER JOIN (
+	           SELECT C3.CODE C3_CODE,
+	                  C2.CODE C2_CODE,
+	                  C1.CODE C1_CODE,
+	                  CONCAT(C1.CODE_NAME,' > ',C2.CODE_NAME,' > ',C3.CODE_NAME) CATEGORY_NAME
+		     	 FROM CATEGORY C3 LEFT OUTER JOIN CATEGORY C2 ON C3.PARENT_CODE = C2.CODE
+		                      LEFT OUTER JOIN CATEGORY C1 ON C2.PARENT_CODE = C1.CODE
+	            WHERE C3.DEPTH = 3) B ON A.CODE = B.C3_CODE
+	                     LEFT OUTER JOIN USER C ON A.TEACHER_ID = C.USER_ID
+ WHERE A.COURSE_CODE = #{courseCode} 
+</select>	
+
+<select id="courseCodeUpdate" parameterType="CourseCode">
+UPDATE COURSE_CODE
+   SET COURSE_NAME = #{courseName}
+       ,TEACHER_ID = #{teacherId}
+       ,H_PX = #{hPx}
+       ,V_PX = #{vPx}
+       ,DIRECTORY = #{directory}
+       ,USE_YN = #{useYn}
+       ,POINT = #{point}
+       ,UPDATE_DATE = CURRENT_TIMESTAMP
+       ,UPDATE_USER = #{updateUser}
+       ,QG_ID = #{qgId}
+ WHERE COURSE_CODE = #{courseCode}   
+</select>
+
+<select id="courseCnt" parameterType="CourseCode" resultType="CourseCode">
+SELECT COUNT(*) CNT
+  FROM COURSE
+ WHERE COURSE_CODE = #{courseCode} 
+</select>
+	
+<select id="courseCodeDelete" parameterType="CourseCode">
+	DELETE FROM COURSE_CODE
+	 WHERE COURSE_CODE = #{courseCode}   
+</select>
+	
+<select id="courseResourceDelete" parameterType="CourseCode">
+	DELETE FROM COURSE_RESOURCE
+	 WHERE COURSE_CODE = #{courseCode}   
+</select>
+
+<select id="courseMasterDelete" parameterType="CourseCode">
+	DELETE FROM COURSE_MASTER
+	 WHERE COURSE_CODE = #{courseCode}   
+</select>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+
+
+
+
+   
+        
+</mapper>

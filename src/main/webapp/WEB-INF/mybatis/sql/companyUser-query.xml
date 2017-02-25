@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="companyUser">
+	
+<select id="companyUserList" parameterType="CompanyUser" resultType="CompanyUser">
+SELECT DATA.* FROM (
+	SELECT *
+	  FROM USER
+	 WHERE COMP_CD = #{compCd}
+	   <if test="fUserName != null and fUserName != ''"> AND USER_NAME LIKE CONCAT('%',#{fUserName},'%')</if>
+ ORDER BY USER_NAME
+) DATA LIMIT #{limitStart},#{limitUnit}
+</select>
+
+<select id="companyUserTotal" parameterType="CompanyUser" resultType="CompanyUser">
+	SELECT COUNT(*) CNT
+	  FROM USER
+	 WHERE COMP_CD = #{compCd}
+	   <if test="fUserName != null and fUserName != ''"> AND USER_NAME LIKE CONCAT('%',#{fUserName},'%')</if>
+</select>
+
+<select id="userPwdReset" parameterType="CompanyUser">
+UPDATE USER
+   SET USER_PASSWORD = PASSWORD('init1234'),
+       UPDATE_DATE = CURRENT_TIMESTAMP,
+       UPDATE_USER = #{updateUser}
+ WHERE USER_ID = #{userId}
+</select>
+
+
+
+
+
+
+        
+</mapper>

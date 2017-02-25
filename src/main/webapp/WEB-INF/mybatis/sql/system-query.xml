@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="system">
+
+	<select id="logList" parameterType="System" resultType="System">
+	SELECT DATA.* FROM (
+		SELECT A.SEQ,
+		       A.USER_ID,
+		       A.IP,
+		       A.URL,
+		       A.PARAMETER,
+		       DATE_FORMAT(A.CREATE_DATE, '%y.%m.%d %H:%i') CREATE_DATE,
+		       IFNULL(B.USER_NAME,'GUEST') USER_NAME
+		  FROM REQUEST_LOG A LEFT OUTER JOIN USER B ON A.USER_ID = B.USER_ID
+		 WHERE 1 = 1
+	       <if test="searchStr != null and searchStr != ''">
+		     <if test="searchKind == 'USER_ID'">
+		       AND UPPER(A.USER_ID) LIKE CONCAT('%',UPPER(#{searchStr}),'%') 
+		     </if>
+		     <if test="searchKind == 'USER_NAME'">
+		       AND UPPER(IFNULL(B.USER_NAME,'GUEST')) LIKE CONCAT('%',UPPER(#{searchStr}),'%') 
+		     </if>
+	       </if>			  
+	       <if test="searchStr2 != null and searchStr2 != ''">
+		       AND (UPPER(A.URL) LIKE CONCAT('%',UPPER(#{searchStr2}),'%') 
+		         OR UPPER(A.PARAMETER) LIKE CONCAT('%',UPPER(#{searchStr2}),'%')) 
+	       </if>			  
+		 ORDER BY CREATE_DATE DESC
+	 ) DATA LIMIT #{limitStart},#{limitUnit}
+	</select> 
+	        
+	<select id="logTotal" parameterType="System" resultType="System">
+	SELECT COUNT(*) CNT
+	  FROM REQUEST_LOG A LEFT OUTER JOIN USER B ON A.USER_ID = B.USER_ID
+	 WHERE 1 = 1
+       <if test="searchStr != null and searchStr != ''">
+	     <if test="searchKind == 'USER_ID'">
+	       AND UPPER(A.USER_ID) LIKE CONCAT('%',UPPER(#{searchStr}),'%') 
+	     </if>
+	     <if test="searchKind == 'USER_NAME'">
+	       AND UPPER(IFNULL(B.USER_NAME,'GUEST')) LIKE CONCAT('%',UPPER(#{searchStr}),'%') 
+	     </if>
+       </if>			  
+       <if test="searchStr2 != null and searchStr2 != ''">
+	       AND (UPPER(A.URL) LIKE CONCAT('%',UPPER(#{searchStr2}),'%') 
+	       	 OR UPPER(A.PARAMETER) LIKE CONCAT('%',UPPER(#{searchStr2}),'%')) 
+       </if>			  
+	</select>	      
+</mapper>

@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="company">
+	
+<select id="companyList" parameterType="Company" resultType="Company">
+SELECT DATA.* FROM (
+	SELECT COMP_CD,
+	       COMP_NAME,
+	       COMP_TEL,
+	       TUTOR_ID,
+	       (SELECT USER_NAME FROM USER WHERE USER_ID = A.TUTOR_ID) TUTOR_NAME,
+	       OWNER_NAME,
+	       (SELECT COUNT(*) FROM USER WHERE COMP_CD = A.COMP_CD) EMP_CNT
+	  FROM COMPANY A
+	 WHERE 1 = 1
+	   <if test="fCompName != null and fCompName != ''"> AND COMP_NAME LIKE CONCAT('%',#{fCompName},'%')</if>
+ ORDER BY COMP_NAME
+) DATA LIMIT #{limitStart},#{limitUnit}
+</select>
+
+<select id="companyTotal" parameterType="Company" resultType="Company">
+	SELECT COUNT(*) CNT
+	  FROM COMPANY A
+	 WHERE 1 = 1
+	   <if test="fCompName != null and fCompName != ''"> AND COMP_NAME LIKE CONCAT('%',#{fCompName},'%')</if>
+</select>
+
+<select id="companyData" parameterType="Company" resultType="Company">
+SELECT A.COMP_CD,
+       A.COMP_NAME,
+       A.ADDR,
+       A.ZIPCODE_SEQ,
+       A.COMP_TEL,
+       A.FAX,
+       A.BUSINESS_NO,
+       A.OWNER_NAME,
+       A.TUTOR_ID,
+       B.USER_NAME TUTOR_NAME,
+       B.EMAIL TUTOR_EMAIL,
+       B.HOME_TEL TUTOR_TEL,
+       B.MOBILE TUTOR_MOBILE,
+       (SELECT COUNT(*) FROM USER WHERE COMP_CD = A.COMP_CD) CNT
+  FROM COMPANY A LEFT OUTER JOIN USER B ON A.TUTOR_ID = B.USER_ID
+ WHERE A.COMP_CD = #{compCd}
+</select>
+
+<select id="isExistCompany" parameterType="Company" resultType="Company">
+SELECT COUNT(*) CNT
+  FROM COMPANY
+ WHERE COMP_CD = #{compCd}
+</select>
+
+<select id="companyIns" parameterType="Company">
+INSERT INTO COMPANY(COMP_CD,COMP_NAME,ADDR,ZIPCODE_SEQ,COMP_TEL,FAX,TUTOR_ID,BUSINESS_NO,OWNER_NAME,CREATE_USER,CREATE_DATE)
+VALUES(#{compCd},#{compName},#{addr},#{zipcodeSeq},#{compTel},#{fax},#{tutorId},#{businessNo},#{ownerName},#{createUser},CURRENT_TIMESTAMP)
+</select>
+
+<select id="isExistCompanyTutor" parameterType="Company" resultType="Company">
+SELECT COUNT(*) CNT
+  FROM COMPANY
+ WHERE TUTOR_ID = #{tutorId}
+   AND COMP_CD != #{compCd}
+</select>
+
+<select id="companyUpd" parameterType="Company">
+UPDATE COMPANY
+   SET COMP_NAME = #{compName},
+       ADDR = #{addr},
+       ZIPCODE_SEQ = #{zipcodeSeq},
+       COMP_TEL = #{compTel},
+       FAX = #{fax},
+       TUTOR_ID = #{tutorId},
+       BUSINESS_NO = #{businessNo},
+       OWNER_NAME = #{ownerName},
+       UPDATE_DATE = CURRENT_TIMESTAMP,
+       UPDATE_USER = #{updateUser}
+ WHERE COMP_CD = #{compCd}
+</select>
+
+<select id="companyDel" parameterType="Company">
+DELETE FROM COMPANY
+ WHERE COMP_CD = #{compCd}
+</select>
+
+<select id="companyUserDel" parameterType="Company">
+UPDATE USER
+   SET COMP_CD = ''
+ WHERE COMP_CD = #{compCd}
+</select>
+
+<select id="companyUserList" parameterType="CompanyUser" resultType="CompanyUser">
+SELECT DATA.* FROM (
+	SELECT A.*
+	  FROM USER A
+	 WHERE COMP_CD = #{compCd}
+ ORDER BY USER_NAME
+) DATA LIMIT #{limitStart},#{limitUnit}
+</select>
+
+<select id="companyUserTotal" parameterType="CompanyUser" resultType="CompanyUser">
+	SELECT COUNT(*) CNT
+	  FROM USER A
+	 WHERE COMP_CD = #{compCd}
+</select>
+
+
+
+
+        
+</mapper>

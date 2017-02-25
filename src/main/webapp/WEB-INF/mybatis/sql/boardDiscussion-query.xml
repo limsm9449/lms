@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="boardDiscussion">
+
+    <!-- 토론 조회 -->
+    <select id="boardDiscussionList" parameterType="BoardDiscussion" resultType="BoardDiscussion">
+		SELECT PAGE.* FROM ( SELECT DATA.* FROM ( 
+			SELECT A.SEQ,
+			       A.COURSE_ID,
+			       A.REF,
+			       A.ORD,
+			       A.STEP,
+			       A.TITLE,
+			       A.USER_ID,
+			       A.USER_IP,
+			       B.USER_NAME,
+			       A.VIEW_CNT,
+			       DATE_FORMAT(IFNULL(A.UPDATE_DATE,A.CREATE_DATE), '%y.%m.%d %H:%i') CREATE_DATE,
+			       @ROWNUM := @ROWNUM + 1 ROWNUM
+			  FROM BOARD_DISCUSSION A LEFT OUTER JOIN USER B ON A.USER_ID = B.USER_ID,
+			       (SELECT @ROWNUM := 0) NUM
+			 WHERE A.COURSE_ID = #{courseId}
+			   <if test="findString != null and findString != ''"> AND A.TITLE LIKE CONCAT('%',#{findString},'%')</if> 
+			 ORDER BY REF,ORD DESC
+		) DATA ORDER BY REF DESC,ORD ) PAGE LIMIT #{limitStart},#{limitUnit}  
+    </select>	
+
+    <!-- 토론 전체 갯수 -->
+    <select id="boardDiscussionTotal" parameterType="BoardDiscussion" resultType="BoardDiscussion">
+		SELECT COUNT(*) CNT
+		  FROM BOARD_DISCUSSION A LEFT OUTER JOIN USER B ON A.USER_ID = B.USER_ID
+		 WHERE A.COURSE_ID = #{courseId}
+		   <if test="findString != null and findString != ''"> AND A.TITLE LIKE CONCAT('%',#{findString},'%')</if> 
+    </select>
+
+    <!-- 토론 데이타 -->
+	<select id="boardDiscussionData" parameterType="BoardDiscussion" resultType="BoardDiscussion">
+		SELECT A.SEQ,
+		       A.COURSE_ID,
+		       A.REF,
+		       A.ORD,
+		       A.STEP,
+		       A.TITLE,
+		       A.CONTENTS,
+		       A.USER_ID,
+		       A.USER_IP,
+		       B.USER_NAME,
+		       A.VIEW_CNT,
+		       DATE_FORMAT(IFNULL(A.UPDATE_DATE,A.CREATE_DATE), '%y.%m.%d %H:%i') CREATE_DATE
+		  FROM BOARD_DISCUSSION A LEFT OUTER JOIN USER B ON A.USER_ID = B.USER_ID
+		 WHERE A.SEQ = #{seq}
+    </select>
+    
+    <!-- 토론 추가 -->
+    <select id="boardDiscussionIns" parameterType="BoardDiscussion">
+		INSERT INTO BOARD_DISCUSSION (COURSE_ID,REF,ORD,STEP,TITLE,CONTENTS,USER_ID,USER_IP,VIEW_CNT,CREATE_DATE)
+		VALUES (#{courseId},#{ref},#{ord},#{step},#{title},#{contents},#{userId},#{userIp},0,CURRENT_TIMESTAMP)
+    </select>	
+
+    <!-- 토론 답변 추가 -->
+    <select id="boardDiscussionReplyIns" parameterType="BoardDiscussion">
+		INSERT INTO BOARD_DISCUSSION (COURSE_ID,REF,ORD,STEP,TITLE,CONTENTS,USER_ID,USER_IP,VIEW_CNT,CREATE_DATE)
+		VALUES (#{courseId},#{ref},#{ord} + 1,#{step} + 1,#{title},#{contents},#{userId},#{userIp},0,CURRENT_TIMESTAMP)
+    </select>	
+
+    <!-- 토론 추가후 ref 수정 -->
+    <select id="boardDiscussionRefUpd" parameterType="BoardDiscussion">
+		UPDATE BOARD_DISCUSSION
+		   SET REF = #{ref}
+		 WHERE SEQ = #{seq}
+    </select>	
+    
+    <!-- 토론 수정 -->
+    <select id="boardDiscussionUpd" parameterType="BoardDiscussion">
+		UPDATE BOARD_DISCUSSION
+		   SET TITLE = #{title},
+		       CONTENTS = #{contents},
+		       UPDATE_DATE = CURRENT_TIMESTAMP
+		 WHERE SEQ = #{seq}
+    </select>	
+
+    <!-- 토론 정렬 수정 -->
+    <select id="boardDiscussionOrdUpd" parameterType="BoardDiscussion">
+		UPDATE BOARD_DISCUSSION
+		   SET ORD = ORD + 1
+		 WHERE COURSE_ID = #{courseId}
+		   AND REF = #{ref}
+		   AND ORD > #{ord}
+    </select>	
+
+	<!-- 토론 삭제 -->
+    <select id="boardDiscussionDel" parameterType="BoardDiscussion">
+		DELETE FROM BOARD_DISCUSSION
+		 WHERE SEQ = #{seq}
+    </select>	
+
+	<!-- 토론 조회수 증가 -->
+    <select id="boardDiscussionViewCntUpd" parameterType="BoardDiscussion">
+		UPDATE BOARD_DISCUSSION
+		   SET VIEW_CNT = VIEW_CNT + 1
+		 WHERE SEQ = #{seq}
+    </select>	
+
+        
+</mapper>

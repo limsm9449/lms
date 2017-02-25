@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="compCourseReg">
+	
+		
+	<select id="compCourseRegList" parameterType="CompCourseReg" resultType="CompCourseReg">
+	<![CDATA[
+		SELECT DATA.* FROM (
+		    SELECT D.CATEGORY_NAME
+		           ,A.COURSE_ID
+			       ,A.COURSE_CODE
+			       ,B.COURSE_NAME
+			       ,A.COMP_CD
+			       ,(SELECT COMP_NAME FROM COMPANY WHERE COMP_CD = A.COMP_CD) COMP_NAME
+			       ,E.TUTOR_ID
+			       ,(SELECT USER_NAME FROM USER WHERE USER_ID = E.TUTOR_ID) TUTOR_NAME
+			       ,A.CHASU
+			       ,A.C_PERIOD
+			       ,A.OPEN_YN
+			       ,(SELECT COUNT(*) FROM COURSE_REGISTER WHERE COURSE_ID = A.COURSE_ID AND STATUS = 'Y') Y_CNT
+			       ,(SELECT COUNT(*) FROM COURSE_REGISTER WHERE COURSE_ID = A.COURSE_ID AND STATUS = 'A') A_CNT
+			       ,IFNULL((SELECT SUM(COURSE_COST) FROM COURSE_REGISTER WHERE COURSE_ID = A.COURSE_ID AND STATUS = 'Y'),0) Y_COURSE_COST
+			       ,IFNULL((SELECT SUM(COURSE_COST) FROM COURSE_REGISTER WHERE COURSE_ID = A.COURSE_ID AND STATUS = 'A'),0) A_COURSE_COST
+			  FROM COURSE  A 
+			                LEFT OUTER JOIN COURSE_CODE B ON A.COURSE_CODE = B.COURSE_CODE
+			                LEFT OUTER JOIN CATEGORY C ON B.CODE = C.CODE 
+			                LEFT OUTER JOIN (
+								   SELECT C3.CODE C3_CODE,
+									  C2.CODE C2_CODE,
+									  C1.CODE C1_CODE,
+									  CONCAT(C1.CODE_NAME,' > ',C2.CODE_NAME,' > ',C3.CODE_NAME) CATEGORY_NAME
+									 FROM CATEGORY C3 LEFT OUTER JOIN CATEGORY C2 ON C3.PARENT_CODE = C2.CODE
+										      LEFT OUTER JOIN CATEGORY C1 ON C2.PARENT_CODE = C1.CODE
+								    WHERE C3.DEPTH = 3) D ON B.CODE = D.C3_CODE
+					        LEFT OUTER JOIN COMPANY E ON A.COMP_CD = E.COMP_CD
+			 WHERE A.COURSE_KIND = 'COMPANY'
+			   AND A.COMP_CD IN (SELECT COMP_CD FROM COMPANY WHERE TUTOR_ID = #{userId}) 
+	]]>
+	           <if test="courseName != null and courseName != ''"> AND B.COURSE_NAME LIKE CONCAT('%',#{courseName},'%')</if>
+	 	ORDER BY D.CATEGORY_NAME,B.COURSE_NAME,A.CHASU DESC  
+		) DATA LIMIT #{limitStart},#{limitUnit}
+	</select>
+	
+	<select id="compCourseRegTotal" parameterType="CompCourseReg" resultType="CompCourseReg">
+	<![CDATA[
+		SELECT COUNT(*) CNT
+		  FROM COURSE A 
+		                LEFT OUTER JOIN COURSE_CODE B ON A.COURSE_CODE = B.COURSE_CODE
+		                LEFT OUTER JOIN CATEGORY C ON B.CODE = C.CODE 
+		                LEFT OUTER JOIN (
+							   SELECT C3.CODE C3_CODE,
+								  C2.CODE C2_CODE,
+								  C1.CODE C1_CODE,
+								  CONCAT(C1.CODE_NAME,' > ',C2.CODE_NAME,' > ',C3.CODE_NAME) CATEGORY_NAME
+								 FROM CATEGORY C3 LEFT OUTER JOIN CATEGORY C2 ON C3.PARENT_CODE = C2.CODE
+									      LEFT OUTER JOIN CATEGORY C1 ON C2.PARENT_CODE = C1.CODE
+							    WHERE C3.DEPTH = 3) D ON B.CODE = D.C3_CODE
+		 WHERE A.COURSE_KIND = 'COMPANY'
+		   AND A.COMP_CD IN (SELECT COMP_CD FROM COMPANY WHERE TUTOR_ID = #{userId}) 
+	]]>
+	           <if test="courseName != null and courseName != ''"> AND B.COURSE_NAME LIKE CONCAT('%',#{courseName},'%')</if>
+	</select>
+
+	<select id="compCourseRegData" parameterType="CompCourseReg" resultType="CompCourseReg">
+		SELECT A.COURSE_ID
+		       ,A.COURSE_CODE
+		       ,B.COURSE_NAME
+		       ,A.CHASU
+	      	   ,A.COURSE_COST
+		       ,A.REPORT_RATE
+		       ,A.EXAM_RATE
+		       ,A.DISCUSSION_RATE
+		       ,A.PROGRESS_RATE
+		       ,A.OPEN_YN
+	    	   ,A.C_PERIOD
+		  FROM COURSE A 
+			          LEFT OUTER JOIN COURSE_CODE B ON A.COURSE_CODE = B.COURSE_CODE
+		              LEFT OUTER JOIN COURSE_MASTER C ON A.COURSE_CODE = C.COURSE_CODE
+		 WHERE A.COURSE_ID = #{courseId}
+	</select>
+	
+	<select id="noRegisterUserList" parameterType="CompCourseReg" resultType="CompCourseReg">
+		SELECT USER_ID,
+	           USER_NAME
+		  FROM USER
+		 WHERE COMP_CD IN (SELECT COMP_CD FROM COMPANY WHERE TUTOR_ID = #{userId})
+		   AND USER_ID NOT IN (SELECT USER_ID FROM COURSE_REGISTER WHERE COURSE_ID = #{courseId}) 
+ 	</select>
+	        
+	<select id="registerUserList" parameterType="CompCourseReg" resultType="CompCourseReg">
+		SELECT A.USER_ID,
+		       B.USER_NAME,
+		       A.STATUS,
+		       (SELECT DD_VALUE FROM CODE WHERE DD_MAIN = 'REG_STATUS' AND DD_KEY = A.STATUS) STATUS_NAME
+		  FROM COURSE_REGISTER A LEFT OUTER JOIN USER B ON A.USER_ID = B.USER_ID
+		 WHERE COURSE_ID = #{courseId}
+		 ORDER BY A.STATUS,B.USER_NAME 
+ 	</select>	
+ 	        
+	<select id="userIns" parameterType="CompCourseReg">
+		INSERT INTO COURSE_REGISTER(COURSE_ID,USER_ID,STATUS,COURSE_COST,COMPANY_COST,TEACHER_COST,TUTOR_COST,CREATE_DATE,CREATE_USER)
+		SELECT A.COURSE_ID, 
+		       #{userId},
+		       'Y',
+		       A.COURSE_COST,
+		       A.COURSE_COST * ( B.COMPANY_RATE / 100),
+		       A.COURSE_COST * ( B.TEACHER_RATE / 100),
+		       A.COURSE_COST * ( B.TUTOR_RATE / 100),
+		       CURRENT_TIMESTAMP,
+		       #{createUser}
+		  FROM COURSE A LEFT OUTER JOIN COURSE_CODE B ON A.COURSE_CODE = B.COURSE_CODE
+		 WHERE COURSE_ID = #{courseId}	
+	</select>
+
+	<select id="userDel" parameterType="CompCourseReg">
+		DELETE FROM COURSE_REGISTER
+		 WHERE COURSE_ID = #{courseId}
+		   AND USER_ID = #{userId}
+		   AND STATUS = 'Y'
+	</select>
+
+	<select id="applicationUserList" parameterType="CompCourseReg" resultType="CompCourseReg">
+		SELECT A.USER_ID,
+		       B.USER_NAME,
+		       A.COURSE_COST
+		  FROM COURSE_REGISTER A LEFT OUTER JOIN USER B ON A.USER_ID = B.USER_ID
+		 WHERE COURSE_ID = #{courseId}
+		   AND STATUS = 'Y' 
+ 	</select>
+	        
+	<select id="approvalIns" parameterType="CompCourseReg">
+		INSERT INTO APPROVAL(APPROVAL_ID,USER_ID,STATUS,KIND,TOTAL_COST,PAYMENT_POINT,PAYMENT_COST,PAYMENT_KIND,PAYMENT_BANK,PAYMENT_DATE,CREATE_DATE,CREATE_USER)
+		VALUES(#{approvalId},#{userId},if(#{paymentKind} = 'CARD','A','B'),'C',#{totalCost},#{paymentPoint},#{paymentCost},#{paymentKind},#{paymentBank},CURRENT_TIMESTAMP,CURRENT_TIMESTAMP,#{createUser})   
+	</select>	
+
+	<select id="courseRegisterUpd" parameterType="CompCourseReg">
+		UPDATE COURSE_REGISTER
+		   SET STATUS = if(#{paymentKind} = 'CARD','A','B'),
+		       APPROVAL_ID = #{approvalId},
+		       CONFIRM_DATE = if(#{paymentKind} = 'CARD',CURRENT_TIMESTAMP,NULL)
+		 WHERE COURSE_ID = #{courseId}
+		   AND USER_ID = #{userId}
+	</select>	
+
+	<select id="courseEvalIns" parameterType="CompCourseReg">
+		INSERT INTO COURSE_EVAL(COURSE_ID,USER_ID,REPORT,EXAM,DISCUSSION,PROGRESS,TOTAL,LAST_WEEK,LAST_PAGE,CREATE_DATE,CREATE_USER)
+		VALUES (#{courseId},#{userId},0,0,0,0,0,1,1,CURRENT_TIMESTAMP,#{createUser})
+	</select>
+	
+	<select id="courseWeekIns" parameterType="CompCourseReg">
+		INSERT INTO COURSE_WEEK(COURSE_ID,USER_ID,WEEK,PROGRESS_RATE,STUDY_START,STUDY_END)
+		SELECT #{courseId},#{userId},WEEK,0,NULL,NULL
+		  FROM COURSE_RESOURCE
+		 WHERE COURSE_CODE = ( SELECT COURSE_CODE FROM COURSE WHERE COURSE_ID = #{courseId} ) 
+	</select>    
+	        
+ 	        
+</mapper>

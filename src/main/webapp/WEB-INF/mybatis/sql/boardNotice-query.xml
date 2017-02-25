@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="boardNotice">
+
+	<select id="boardNoticeList" parameterType="Board" resultType="Board">
+	SELECT PAGE.* FROM ( SELECT DATA.* FROM ( 
+		SELECT SEQ,
+		       COURSE_ID,
+		       TITLE,
+		       VIEW_CNT,
+		       DATE_FORMAT(IFNULL(UPDATE_DATE,CREATE_DATE), '%y.%m.%d %H:%i') CREATE_DATE,
+		       IF(DATE_FORMAT(CREATE_DATE, '%y.%m.%d') = DATE_FORMAT(SYSDATE(), '%y.%m.%d'),'Y','N') IS_NEW,
+		       @ROWNUM := @ROWNUM + 1 ROWNUM
+		  FROM BOARD_NOTICE,
+		       (SELECT @ROWNUM := 0) NUM
+		 WHERE COURSE_ID = #{courseId}
+		   <if test="findString != null and findString != ''"> AND TITLE LIKE CONCAT('%',#{findString},'%')</if> 
+		 ORDER BY SEQ
+	) DATA ORDER BY SEQ DESC ) PAGE LIMIT #{limitStart},#{limitUnit}    
+	</select>	
+	
+	<select id="boardNoticeTotal" parameterType="Board" resultType="Board">
+	SELECT COUNT(*) CNT
+	  FROM BOARD_NOTICE
+	 WHERE COURSE_ID = #{courseId}
+	   <if test="findString != null and findString != ''"> AND TITLE LIKE CONCAT('%',#{findString},'%')</if> 
+	</select>
+
+    <select id="boardNoticeData" parameterType="Board" resultType="Board">
+		SELECT SEQ,
+		       COURSE_ID,
+		       TITLE,
+		       CONTENTS,
+		       VIEW_CNT,
+		       DATE_FORMAT(IFNULL(UPDATE_DATE,CREATE_DATE), '%y.%m.%d %H:%i') CREATE_DATE
+		  FROM BOARD_NOTICE
+		 WHERE SEQ = #{seq}
+    </select>	
+
+	<!-- 공지사항 게시판 추가 -->
+    <select id="boardNoticeIns" parameterType="Board">
+		INSERT INTO BOARD_NOTICE (COURSE_ID,TITLE,CONTENTS,VIEW_CNT,CREATE_DATE)
+		VALUES (#{courseId},#{title},#{contents},0,CURRENT_TIMESTAMP)
+    </select>	
+    
+    <!-- 공지사항 게시판 수정 -->
+    <select id="boardNoticeUpd" parameterType="Board">
+		UPDATE BOARD_NOTICE
+		   SET TITLE = #{title},
+		       CONTENTS = #{contents},
+		       UPDATE_DATE = CURRENT_TIMESTAMP
+		 WHERE SEQ = #{seq}
+    </select>	
+
+	<!-- 조회수 증가 -->
+    <select id="boardNoticeViewCntUpd" parameterType="Board">
+		UPDATE BOARD_NOTICE
+		   SET VIEW_CNT = VIEW_CNT + 1
+		 WHERE SEQ = #{seq}
+    </select>	
+
+	<!-- 공지사항 게시판 삭제 -->
+    <select id="boardNoticeDel" parameterType="Board">
+		DELETE FROM BOARD_NOTICE
+		 WHERE SEQ = #{seq}
+    </select>	
+
+    <select id="nextNoticeSeq" parameterType="Board" resultType="Board">
+	<![CDATA[
+		SELECT MIN(SEQ) SEQ
+		  FROM BOARD_NOTICE
+		 WHERE COURSE_ID = #{courseId}
+		   AND SEQ > #{seq}
+	]]>		 
+    </select>
+
+    <select id="prevNoticeSeq" parameterType="Board" resultType="Board">
+	<![CDATA[
+		SELECT MAX(SEQ) SEQ
+		  FROM BOARD_NOTICE
+		 WHERE COURSE_ID = #{courseId}
+		   AND SEQ < #{seq}
+	]]>		 
+    </select>
+        
+</mapper>

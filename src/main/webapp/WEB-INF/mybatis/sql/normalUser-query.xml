@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="normalUser">
+
+	<!-- 수강현황 -->
+    <select id="attendCourseList" parameterType="User" resultType="Course">
+    <![CDATA[ 
+	SELECT CD.COURSE_NAME,
+	       C.COURSE_ID,
+           CD.TEACHER_ID,
+           (SELECT USER_NAME FROM USER WHERE USER_ID = CD.TEACHER_ID) TEACHER_NAME,
+	       C.REPORT_RATE,
+	       C.EXAM_RATE,
+	       C.DISCUSSION_RATE,
+	       C.PROGRESS_RATE,
+	       DATE_FORMAT(CR.CONFIRM_DATE,'%y.%m.%d') C_FROM_DATE,
+	       DATE_FORMAT(DATE_ADD(CR.CONFIRM_DATE,INTERVAL C.C_PERIOD DAY),'%y.%m.%d') C_TO_DATE,
+	       CD.H_PX,
+	       CD.V_PX,
+	       IF(CD.QG_ID = 0,'-',CR.QUEST_YN) QUEST_YN,
+	       CD.QG_ID,
+	       IFNULL((SELECT EVAL FROM POSTSCRIPT WHERE COURSE_ID = CR.COURSE_ID AND USER_ID = CR.USER_ID),0) COURSE_EVAL,
+	       E.PROGRESS,
+	       IF(C.EXAM_RATE = 0,'-',E.EXAM_YN) EXAM_YN,
+	       E.TOTAL,
+	       IF(DATEDIFF(DATE_ADD(CR.CONFIRM_DATE,INTERVAL C.C_PERIOD DAY),CURDATE()) < 0,0,DATEDIFF(DATE_ADD(CR.CONFIRM_DATE,INTERVAL C.C_PERIOD DAY),CURDATE())) REMAIN_DAY
+	  FROM COURSE_REGISTER CR
+	           JOIN COURSE C ON C.COURSE_ID = CR.COURSE_ID		 
+	           JOIN COURSE_CODE CD ON CD.COURSE_CODE = C.COURSE_CODE
+	           JOIN COURSE_EVAL E ON CR.COURSE_ID = E.COURSE_ID AND CR.USER_ID = E.USER_ID
+	 WHERE CR.USER_ID = #{userId}
+	   AND CR.STATUS = 'A'
+	   AND CURDATE() BETWEEN DATE_FORMAT(DATE_FORMAT(CR.CONFIRM_DATE,'%Y%m%d'),'%Y%m%d')  AND DATE_FORMAT(DATE_FORMAT(DATE_ADD(CR.CONFIRM_DATE,INTERVAL C.C_PERIOD DAY),'%Y%m%d'),'%Y%m%d')
+	 ORDER BY CD.COURSE_NAME  
+	 ]]> 
+    </select>
+
+	<!-- 승인대기과목 -->
+    <select id="waitingCourseList" parameterType="User" resultType="Course">
+	SELECT CD.COURSE_NAME,
+	       C.COURSE_ID,
+           CD.TEACHER_ID,
+           (SELECT USER_NAME FROM USER WHERE USER_ID = CD.TEACHER_ID) TEACHER_NAME,
+	       C.REPORT_RATE,
+	       C.EXAM_RATE,
+	       C.DISCUSSION_RATE,
+	       C.PROGRESS_RATE,
+	       C.C_PERIOD,
+	       DATE_FORMAT(CR.CREATE_DATE,'%Y/%m/%d') CREATE_DATE,
+	       C.COURSE_COST,
+	       CR.APPROVAL_ID
+	  FROM COURSE_REGISTER CR
+	           JOIN COURSE C ON C.COURSE_ID = CR.COURSE_ID		 
+	           JOIN COURSE_CODE CD ON CD.COURSE_CODE = C.COURSE_CODE
+	 WHERE CR.USER_ID = #{userId}
+	   AND CR.STATUS = 'B'
+	 ORDER BY CD.COURSE_NAME
+    </select>
+
+	<!-- 수강내역 -->
+    <select id="myCourseList" parameterType="User" resultType="Course">
+	<![CDATA[ 
+	SELECT CD.COURSE_NAME,
+	       C.COURSE_ID,
+           CD.TEACHER_ID,
+           (SELECT USER_NAME FROM USER WHERE USER_ID = CD.TEACHER_ID) TEACHER_NAME,
+	       C.REPORT_RATE,
+	       C.EXAM_RATE,
+	       C.DISCUSSION_RATE,
+	       E.REPORT,
+	       E.EXAM,
+	       E.DISCUSSION,
+	       E.PROGRESS,
+	       DATE_FORMAT(CR.CONFIRM_DATE,'%y.%m.%d') C_FROM_DATE,
+	       DATE_FORMAT(DATE_ADD(CR.CONFIRM_DATE,INTERVAL C.C_PERIOD DAY),'%y.%m.%d') C_TO_DATE,
+	       (SELECT DD_VALUE FROM CODE WHERE DD_MAIN = 'REG_STATUS' AND DD_KEY = CR.STATUS) STATUS_NAME,
+           IF(CURDATE() >= DATE_FORMAT(CR.CONFIRM_DATE,'%Y-%m-%d') AND CURDATE() <= DATE_ADD(DATE_FORMAT(CR.CONFIRM_DATE,'%Y-%m-%d'),INTERVAL C.C_PERIOD DAY),'C_ING',
+             IF(CURDATE() >= DATE_ADD(DATE_FORMAT(CR.CONFIRM_DATE,'%Y-%m-%d'),INTERVAL C.C_PERIOD DAY) AND CURDATE() <= DATE_ADD(DATE_FORMAT(CR.CONFIRM_DATE,'%Y-%m-%d'),INTERVAL C.C_PERIOD + 30 DAY),'V_ING','')) MODE,
+	       CD.H_PX,
+	       CD.V_PX,
+	       IF(CD.QG_ID = 0,'-',CR.QUEST_YN) QUEST_YN,
+	       CD.QG_ID,
+	       IFNULL((SELECT EVAL FROM POSTSCRIPT WHERE COURSE_ID = CR.COURSE_ID AND USER_ID = CR.USER_ID),0) COURSE_EVAL,
+	       IF(C.EXAM_RATE = 0,'-',E.EXAM_YN) EXAM_YN,
+	       E.TOTAL,
+	       CR.STATUS
+	  FROM COURSE_REGISTER CR
+	           JOIN COURSE C ON C.COURSE_ID = CR.COURSE_ID		 
+	           JOIN COURSE_CODE CD ON CD.COURSE_CODE = C.COURSE_CODE
+	           JOIN COURSE_EVAL E ON CR.COURSE_ID = E.COURSE_ID AND CR.USER_ID = E.USER_ID
+	 WHERE CR.USER_ID = #{userId}
+	   AND ( CURDATE() >= DATE_ADD(DATE_FORMAT(CR.CONFIRM_DATE,'%Y-%m-%d'),INTERVAL C.C_PERIOD DAY) OR CR.STATUS = 'C' )
+	 ORDER BY C_FROM_DATE DESC
+	]]> 
+    </select>
+
+
+
+
+
+	<select id="courseData" parameterType="User" resultType="Course">
+	<![CDATA[ 
+		SELECT A.COURSE_ID
+		       ,A.COURSE_CODE
+		       ,B.COURSE_NAME
+		       ,A.TUTOR_ID
+		       ,C.USER_NAME TUTOR_NAME
+		       ,A.CHASU
+		       ,A.C_STATUS STATUS
+		       ,(SELECT DD_VALUE FROM CODE WHERE DD_MAIN = 'COURSE_STATUS' AND DD_KEY = A.C_STATUS) STATUS_NAME
+		       ,E.LEARING_GOAL
+		       ,E.LEARING_CONTENT
+		       ,E.EVAL_METHOD
+		       ,E.LEARING_TARGET
+		       ,E.LEARING_COST
+		       ,E.COURSE_COST
+		       ,A.REPORT_RATE
+		       ,(SELECT DD_VALUE FROM CODE WHERE DD_MAIN = 'EVAL_RATE' AND DD_KEY = A.REPORT_RATE) REPORT_RATE_NAME
+		       ,A.EXAM_RATE
+		       ,(SELECT DD_VALUE FROM CODE WHERE DD_MAIN = 'EVAL_RATE' AND DD_KEY = A.EXAM_RATE) EXAM_RATE_NAME
+		       ,A.DISCUSSION_RATE
+		       ,(SELECT DD_VALUE FROM CODE WHERE DD_MAIN = 'EVAL_RATE' AND DD_KEY = A.DISCUSSION_RATE) DISCUSSION_RATE_NAME
+		       ,A.PROGRESS_RATE
+		       ,(SELECT DD_VALUE FROM CODE WHERE DD_MAIN = 'EVAL_RATE' AND DD_KEY = A.PROGRESS_RATE) PROGRESS_RATE_NAME
+		       ,A.C_FROM_DATE
+		       ,A.C_TO_DATE
+		       ,D.STATUS REGISTER_STATUS
+		       ,(SELECT DD_VALUE FROM CODE WHERE DD_MAIN = 'REG_STATUS' AND DD_KEY = D.STATUS) REGISTER_STATUS_NAME
+		       ,IF(D.COURSE_ID IS NULL,'N','Y') IS_REGISTER
+		       ,IF(NOW() > C_FROM_DATE AND NOW() < C_TO_DATE,'Y','N') IS_EDUCATION_DATE
+		  FROM COURSE A LEFT JOIN (SELECT * FROM COURSE_REGISTER WHERE USER_ID = #{userId}) AS D ON (A.COURSE_ID = D.COURSE_ID)
+		                               LEFT JOIN COURSE_CODE AS B ON (A.COURSE_CODE = B.COURSE_CODE )
+		                               LEFT JOIN USER AS C ON (A.TUTOR_ID = C.USER_ID)
+		                               JOIN COURSE_MASTER E ON A.COURSE_CODE = E.COURSE_CODE
+		 WHERE A.COURSE_ID = #{courseId}
+	]]> 
+    </select>
+    
+    
+    <!--수강과정 사용자 정보  -->
+    <select id="userInfo" parameterType="User" resultType="User">
+		SELECT USER_NAME
+		       ,MOBILE
+		       ,EMAIL
+		       ,(SELECT COUNT(*) FROM COUNSEL WHERE USER_ID = A.USER_ID) COUNSEL_CNT
+		  FROM USER A
+		 WHERE USER_ID = #{userId}
+    </select>
+
+    <select id="courseRegCancel" parameterType="User">
+		UPDATE COURSE_REGISTER
+		   SET STATUS = 'C',  
+		       CONFIRM_DATE = CURRENT_TIMESTAMP,
+		       UPDATE_DATE = CURRENT_TIMESTAMP,
+	           UPDATE_USER = #{updateUser}
+		 WHERE USER_ID = #{userId}
+		   AND APPROVAL_ID = #{approvalId}
+    </select>
+
+    <select id="courseApprovalRegCancel" parameterType="User">
+		UPDATE APPROVAL
+		   SET STATUS = 'C',  
+		       UPDATE_DATE = CURRENT_TIMESTAMP,
+	           UPDATE_USER = #{updateUser}
+		 WHERE APPROVAL_ID = #{approvalId}
+    </select>
+
+
+</mapper>

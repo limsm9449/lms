@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="costNotPay">
+		
+	<select id="costNotPayList" parameterType="CostNotPay" resultType="CostNotPay">
+	<![CDATA[
+	SELECT DATA.* FROM (
+		SELECT CT.CATEGORY_NAME,
+		       A.COURSE_ID,
+		       (SELECT DD_VALUE FROM CODE WHERE DD_MAIN = 'COURSE_KIND' AND DD_KEY = A.COURSE_KIND) COURSE_KIND_NAME,
+		       CC.COURSE_NAME,
+		       A.CHASU,
+	           CR.PAYMENT_COST,
+	           CR.NOT_PAYMENT_COST,
+	           CR.REGISTER_CNT,
+		       CR.COST_NOT_PAY_CNT
+		  FROM COURSE A 
+		           LEFT OUTER JOIN COURSE_CODE CC ON CC.COURSE_CODE = A.COURSE_CODE
+		           LEFT OUTER JOIN (
+                       SELECT C3.CODE C3_CODE,
+				              C2.CODE C2_CODE,
+				              C1.CODE C1_CODE,
+	 	 	 	              CONCAT(C1.CODE_NAME,' > ',C2.CODE_NAME,' > ',C3.CODE_NAME) CATEGORY_NAME
+				         FROM CATEGORY C3 
+				                  LEFT OUTER JOIN CATEGORY C2 ON C3.PARENT_CODE = C2.CODE
+					              LEFT OUTER JOIN CATEGORY C1 ON C2.PARENT_CODE = C1.CODE
+			            WHERE C3.DEPTH = 3) CT ON CT.C3_CODE = CC.CODE
+				   JOIN (
+				       SELECT COURSE_ID, 
+	 				          SUM(COURSE_COST) PAYMENT_COST, 
+					          SUM(IF(COST_ID = 0,COURSE_COST,0)) NOT_PAYMENT_COST,
+					          COUNT(*) REGISTER_CNT,
+					          SUM(IF(COST_ID = 0,1,0)) COST_NOT_PAY_CNT
+				         FROM COURSE_REGISTER
+				        WHERE STATUS = 'A' 
+				        GROUP BY COURSE_ID) CR ON CR.COURSE_ID = A.COURSE_ID
+		 WHERE CR.COST_NOT_PAY_CNT != 0
+	]]>
+		  <if test="c1Code != null and c1Code != ''"> AND CT.C1_CODE = #{c1Code}</if>
+		  <if test="c2Code != null and c2Code != ''"> AND CT.C2_CODE = #{c2Code}</if>
+		  <if test="c3Code != null and c3Code != ''"> AND CT.C3_CODE = #{c3Code}</if>
+	      <if test="courseName != null and courseName != ''"> AND CC.COURSE_NAME LIKE CONCAT('%',#{courseName},'%')</if>
+		 ORDER BY 1,4
+	 ) DATA LIMIT #{limitStart},#{limitUnit}
+	</select>
+	
+	<select id="costNotPayListTotal" parameterType="CostNotPay" resultType="CostNotPay">
+ 	<![CDATA[
+	SELECT SUM(DATA.CNT) CNT FROM (
+		SELECT COUNT(*) CNT
+		  FROM COURSE A 
+		           LEFT OUTER JOIN COURSE_CODE CC ON CC.COURSE_CODE = A.COURSE_CODE
+		           LEFT OUTER JOIN (
+                       SELECT C3.CODE C3_CODE,
+				              C2.CODE C2_CODE,
+				              C1.CODE C1_CODE,
+	 	 	 	              CONCAT(C1.CODE_NAME,' > ',C2.CODE_NAME,' > ',C3.CODE_NAME) CATEGORY_NAME
+				         FROM CATEGORY C3 
+				                  LEFT OUTER JOIN CATEGORY C2 ON C3.PARENT_CODE = C2.CODE
+					              LEFT OUTER JOIN CATEGORY C1 ON C2.PARENT_CODE = C1.CODE
+			            WHERE C3.DEPTH = 3) CT ON CT.C3_CODE = CC.CODE
+				   JOIN (
+				       SELECT COURSE_ID, 
+	 				          SUM(COURSE_COST) PAYMENT_COST, 
+					          SUM(IF(COST_ID = 0,COURSE_COST,0)) NOT_PAYMENT_COST,
+					          COUNT(*) REGISTER_CNT,
+					          SUM(IF(COST_ID = 0,1,0)) COST_NOT_PAY_CNT
+				         FROM COURSE_REGISTER
+				        WHERE STATUS = 'A'  
+				        GROUP BY COURSE_ID) CR ON CR.COURSE_ID = A.COURSE_ID
+		 WHERE CR.COST_NOT_PAY_CNT != 0
+	]]>
+		  <if test="c1Code != null and c1Code != ''"> AND CT.C1_CODE = #{c1Code}</if>
+		  <if test="c2Code != null and c2Code != ''"> AND CT.C2_CODE = #{c2Code}</if>
+		  <if test="c3Code != null and c3Code != ''"> AND CT.C3_CODE = #{c3Code}</if>
+	      <if test="courseName != null and courseName != ''"> AND CC.COURSE_NAME LIKE CONCAT('%',#{courseName},'%')</if>
+	 ) DATA
+	</select>
+	
+	<select id="costNotPayData" parameterType="CostNotPay" resultType="CostNotPay">
+	SELECT D.CATEGORY_NAME,
+	       A.COURSE_ID,
+	       B.COURSE_NAME,
+	       C.PAYMENT_COST,
+	       C.NOT_PAYMENT_COST,
+	       C.REGISTER_CNT,
+	       C.COST_NOT_PAY_CNT
+	  FROM COURSE A 
+	           JOIN COURSE_CODE B ON B.COURSE_CODE = A.COURSE_CODE
+		       JOIN (
+					SELECT COURSE_ID, 
+						   SUM(COURSE_COST) PAYMENT_COST, 
+					       SUM(IF(COST_ID = 0,COURSE_COST,0)) NOT_PAYMENT_COST,
+					       COUNT(*) REGISTER_CNT,
+					       SUM(IF(COST_ID = 0,1,0)) COST_NOT_PAY_CNT
+				   	  FROM COURSE_REGISTER
+				     WHERE STATUS = 'A' 
+				  	 GROUP BY COURSE_ID) C ON C.COURSE_ID = A.COURSE_ID
+		       JOIN (
+				   SELECT C3.CODE C3_CODE,
+					      C2.CODE C2_CODE,
+					      C1.CODE C1_CODE,
+					      CONCAT(C1.CODE_NAME,' > ',C2.CODE_NAME,' > ',C3.CODE_NAME) CATEGORY_NAME
+					 FROM CATEGORY C3 LEFT OUTER JOIN CATEGORY C2 ON C3.PARENT_CODE = C2.CODE
+						              LEFT OUTER JOIN CATEGORY C1 ON C2.PARENT_CODE = C1.CODE
+				    WHERE C3.DEPTH = 3) D ON D.C3_CODE = B.CODE
+	 WHERE A.COURSE_ID = #{courseId}
+	</select>	
+	
+	<select id="costNotPayRegisterList" parameterType="CostNotPay" resultType="CostNotPay">
+	SELECT A.USER_ID,
+	        B.USER_NAME,
+	        B.EMAIL,
+	        B.MOBILE,
+	        A.COURSE_COST 
+	   FROM COURSE_REGISTER A JOIN USER B ON B.USER_ID = A.USER_ID
+	  WHERE A.COURSE_ID = #{courseId}
+        AND A.STATUS = 'A' 
+	    AND A.COST_ID = 0
+	</select>
+
+	<select id="costPayUserData" parameterType="CostNotPay" resultType="CostNotPay">
+	SELECT A.COURSE_ID,
+	       B.TEACHER_ID, 
+	       C.USER_NAME TEACHER_NAME,
+	       C.BANK TEACHER_BANK,
+	       C.ACC_NUM TEACHER_ACC_NUM,
+	       A.TUTOR_ID,
+	       D.USER_NAME TUTOR_NAME,
+	       D.BANK TUTOR_BANK,
+	       D.ACC_NUM TUTOR_ACC_NUM
+	  FROM COURSE A LEFT OUTER JOIN COURSE_CODE B ON B.COURSE_CODE = A.COURSE_CODE
+	                LEFT OUTER JOIN USER C ON C.USER_ID = B.TEACHER_ID
+	                LEFT OUTER JOIN USER D ON D.USER_ID = A.TUTOR_ID
+	 WHERE COURSE_ID = #{courseId}  
+	</select>
+	
+	<select id="costPayData" parameterType="CostNotPay" resultType="CostNotPay">
+	SELECT A.PAYMENT_COST,
+	       COMPANY_COST,
+	       TEACHER_COST,
+	       TUTOR_COST
+	  FROM (SELECT COURSE_ID,
+	               COST_ID,
+	               COURSE_COST PAYMENT_COST,
+	               COMPANY_COST,
+	               TEACHER_COST,
+	               TUTOR_COST
+	          FROM COURSE_REGISTER
+	         WHERE COURSE_ID = #{courseId}
+	           AND USER_ID = #{userId}) A 
+	           JOIN COURSE B ON B.COURSE_ID = A.COURSE_ID
+	           JOIN COURSE_CODE C ON C.COURSE_CODE = B.COURSE_CODE
+	</select>
+
+	<select id="costCheckCourseRegister" parameterType="CostNotPay" resultType="CostNotPay">
+	SELECT COST_ID
+	  FROM COURSE_REGISTER
+	 WHERE COURSE_ID = #{courseId}
+	   AND USER_ID = #{userId}
+	</select>
+	
+	<insert id="costIns" parameterType="CostNotPay">
+	INSERT INTO COST(COURSE_ID,TEACHER_BANK,TEACHER_ACC_NUM,TUTOR_BANK,TUTOR_ACC_NUM,PAYMENT_DATE,CREATE_DATE,CREATE_USER)
+	VALUES (#{courseId},#{teacherBank},#{teacherAccNum},#{tutorBank},#{tutorAccNum},CURRENT_TIMESTAMP,CURRENT_TIMESTAMP,#{createUser})
+	</insert>
+
+	<select id="costPayCalcData" parameterType="CostNotPay" resultType="CostNotPay">
+	SELECT A.PAYMENT_COST,
+	       COMPANY_COST,
+	       TEACHER_COST,
+	       TUTOR_COST
+	   FROM (SELECT COURSE_ID,
+	                COST_ID,
+	                SUM(COURSE_COST) PAYMENT_COST,
+	                SUM(COMPANY_COST) COMPANY_COST,
+	                SUM(TEACHER_COST) TEACHER_COST,
+	                SUM(TUTOR_COST) TUTOR_COST
+	           FROM COURSE_REGISTER 
+	          WHERE COURSE_ID = #{courseId}
+	            AND COST_ID = #{costId}
+	          GROUP BY COURSE_ID,COST_ID) A LEFT OUTER JOIN COURSE B ON B.COURSE_ID = A.COURSE_ID
+	                                        LEFT OUTER JOIN COURSE_CODE C ON C.COURSE_CODE = B.COURSE_CODE
+	</select>
+
+	<select id="costUpd" parameterType="CostNotPay">
+	UPDATE COST A
+	   SET TOTAL_COST = #{paymentCost},  
+	       COMPANY_COST = #{companyCost},
+	       TEACHER_COST = #{teacherCost},
+	       TUTOR_COST = #{tutorCost}
+	 WHERE COST_ID = #{costId}
+	</select>
+
+	<select id="costNotPayUpdate" parameterType="CostNotPay">
+	UPDATE COURSE_REGISTER
+	   SET COST_ID = #{costId},
+	       UPDATE_DATE = CURRENT_TIMESTAMP,
+	       UPDATE_USER = #{updateUser}
+	 WHERE COURSE_ID = #{courseId}
+	   AND USER_ID = #{userId}
+	</select>
+        
+</mapper>

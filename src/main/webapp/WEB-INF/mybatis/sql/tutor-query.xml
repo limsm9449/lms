@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="tutor">
+
+	<select id="myCourse" parameterType="Condi" resultType="Course">
+	SELECT DATA.* FROM (
+		SELECT A.COURSE_ID
+		       ,A.COURSE_CODE
+		       ,B.COURSE_NAME
+		       ,A.CHASU
+		       ,(SELECT DD_VALUE FROM CODE WHERE DD_KEY = A.COURSE_KIND AND DD_MAIN = 'COURSE_KIND') COURSE_KIND_NAME
+		       ,(SELECT COUNT(*) FROM COURSE_REGISTER WHERE COURSE_ID = A.COURSE_ID AND STATUS = 'A') ALL_CNT
+		       ,(SELECT SUM(IF(REPORT > 0,1,0)) FROM COURSE_EVAL WHERE COURSE_ID = A.COURSE_ID) REPORT_CNT
+		       ,(SELECT SUM(IF(EXAM > 0,1,0)) FROM COURSE_EVAL WHERE COURSE_ID = A.COURSE_ID) EXAM_CNT
+		       ,(SELECT SUM(IF(DISCUSSION > 0,1,0)) FROM COURSE_EVAL WHERE COURSE_ID = A.COURSE_ID) DISCUSSION_CNT
+		       ,(SELECT SUM(IF(PROGRESS > 0,1,0)) FROM COURSE_EVAL WHERE COURSE_ID = A.COURSE_ID) PROGRESS_CNT
+		       ,(SELECT COUNT(*) FROM COURSE_EVAL WHERE COURSE_ID = A.COURSE_ID AND COMPLETE_YN = 'Y') COMPLETE_CNT
+		       ,(SELECT COUNT(*) FROM COURSE_EVAL WHERE COURSE_ID = A.COURSE_ID AND COMPLETE_YN = 'N') NOT_COMPLETE_CNT
+		       ,IF(A.REPORT_RATE > 0,'Y','N') IS_REPORT
+		       ,IF(A.EXAM_RATE > 0,'Y','N') IS_EXAM
+		       ,IF(A.DISCUSSION_RATE > 0,'Y','N') IS_DISCUSSION
+		       ,IF(A.PROGRESS_RATE > 0,'Y','N') IS_PROGRESS
+		  FROM COURSE A JOIN COURSE_CODE B ON A.COURSE_CODE = B.COURSE_CODE
+		 WHERE A.TUTOR_ID = #{userId}
+		   <if test="courseName != null and courseName != ''"> AND B.COURSE_NAME LIKE CONCAT('%',#{courseName},'%')</if>
+		 ORDER BY B.COURSE_NAME,A.CHASU DESC  
+	 ) DATA LIMIT #{limitStart},#{limitUnit}
+    </select>
+
+	<select id="myCourseTotal" parameterType="Condi" resultType="Course">
+		SELECT COUNT(*) CNT 
+		  FROM COURSE A JOIN COURSE_CODE B ON A.COURSE_CODE = B.COURSE_CODE
+		 WHERE A.TUTOR_ID = #{userId}
+		   <if test="courseName != null and courseName != ''"> AND B.COURSE_NAME LIKE CONCAT('%',#{courseName},'%')</if>
+    </select>
+    
+    <select id="courseEval" parameterType="Condi" resultType="Evaluation">
+	SELECT A.COURSE_ID,
+	       CR.USER_ID,
+	       U.USER_NAME,
+	       ROUND(A.REPORT_RATE * CE.REPORT / 100) REPORT,
+	       ROUND(A.EXAM_RATE * CE.EXAM / 100) EXAM,
+	       ROUND(A.DISCUSSION_RATE * CE.DISCUSSION / 100) DISCUSSION,
+	       ROUND(A.PROGRESS_RATE * CE.PROGRESS / 100) PROGRESS,
+	       CE.TOTAL,
+	       CE.COMPLETE_YN
+	  FROM COURSE A JOIN COURSE_REGISTER CR ON CR.COURSE_ID = A.COURSE_ID AND CR.STATUS = 'A'
+	                JOIN COURSE_EVAL CE ON CE.COURSE_ID = CR.COURSE_ID AND CR.USER_ID = CE.USER_ID
+	                JOIN USER U ON U.USER_ID = CR.USER_ID
+	 WHERE A.COURSE_ID = #{courseId}
+	 ORDER BY U.USER_NAME
+    </select>
+
+	<select id="updCourseEvalForEval" parameterType="Evaluation">
+		UPDATE COURSE_EVAL
+		   SET REPORT = #{report}, 
+		       DISCUSSION = #{discussion}
+		 WHERE COURSE_ID = #{courseId}
+		   AND USER_ID = #{userId}
+    </select>
+
+	<select id="evalCompleteUpd" parameterType="Evaluation">
+		UPDATE COURSE_EVAL
+		   SET COMPLETE_YN = 'Y'
+		 WHERE COURSE_ID = #{courseId}
+		   AND USER_ID = #{userId}
+    </select>
+            
+</mapper>

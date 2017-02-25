@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="boardReport">
+
+    <select id="boardReportList" parameterType="Board" resultType="Board">
+		SELECT PAGE.* FROM ( SELECT DATA.* FROM (     
+			SELECT A.SEQ,
+			       A.COURSE_ID,
+			       TITLE,
+			       A.USER_ID,
+			       B.USER_NAME,
+			       USER_IP,
+			       VIEW_CNT,
+			       DATE_FORMAT(IFNULL(A.UPDATE_DATE,A.CREATE_DATE), '%y.%m.%d %H:%i') CREATE_DATE,
+			       @ROWNUM := @ROWNUM + 1 ROWNUM
+			  FROM BOARD_REPORT A LEFT OUTER JOIN USER B ON A.USER_ID = B.USER_ID,
+			       (SELECT @ROWNUM := 0) NUM
+			 WHERE A.COURSE_ID = #{courseId}
+			   <if test="findString != null and findString != ''"> AND A.TITLE LIKE CONCAT('%',#{findString},'%')</if> 
+			 ORDER BY SEQ
+		) DATA ORDER BY SEQ DESC ) PAGE LIMIT #{limitStart},#{limitUnit}  
+    </select>	
+
+    <select id="boardReportTotal" parameterType="Board" resultType="Board">
+		SELECT COUNT(*) CNT
+		  FROM BOARD_REPORT A LEFT OUTER JOIN USER B ON A.USER_ID = B.USER_ID
+		 WHERE A.COURSE_ID = #{courseId}
+		   <if test="findString != null and findString != ''"> AND A.TITLE LIKE CONCAT('%',#{findString},'%')</if> 
+    </select>
+
+    <select id="boardReportData" parameterType="Board" resultType="Board">
+		SELECT A.SEQ,
+		       A.COURSE_ID,
+		       TITLE,
+		       CONTENTS,
+		       A.USER_ID,
+		       B.USER_NAME,
+		       USER_IP,
+		       VIEW_CNT,
+		       DATE_FORMAT(IFNULL(A.UPDATE_DATE,A.CREATE_DATE), '%y.%m.%d %H:%i') CREATE_DATE
+		  FROM BOARD_REPORT A LEFT OUTER JOIN USER B ON A.USER_ID = B.USER_ID
+		 WHERE A.SEQ = #{seq}
+    </select>	
+
+	<!-- 자료실 게시판 추가 -->
+    <insert id="boardBataIns" parameterType="Board">
+		INSERT INTO BOARD_REPORT (COURSE_ID,TITLE,CONTENTS,USER_ID,USER_IP,VIEW_CNT,CREATE_DATE)
+		VALUES (#{courseId},#{title},#{contents},#{userId},#{userIp},0,CURRENT_TIMESTAMP)
+    </insert>	
+    
+    <update id="boardReportUpd" parameterType="Board">
+		UPDATE BOARD_REPORT
+		   SET TITLE = #{title},
+		       CONTENTS = #{contents},
+		       UPDATE_DATE = CURRENT_TIMESTAMP
+		 WHERE SEQ = #{seq}
+    </update>	
+
+	<!-- 조회수 증가 -->
+    <update id="boardReportViewCntUpd" parameterType="Board">
+		UPDATE BOARD_REPORT
+		   SET VIEW_CNT = VIEW_CNT + 1
+		 WHERE SEQ = #{seq}
+    </update>	
+
+	<!-- 자료실 게시판 삭제 -->
+    <delete id="boardReportDel" parameterType="Board">
+		DELETE FROM BOARD_REPORT
+		 WHERE SEQ = #{seq}
+    </delete>	
+
+
+</mapper>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+여기서 세이한 값이 적용 안됨.
+
+서버 tomcat/conf/server.xml에 적용
+        <Context path="/cImage" docBase="cImage" debug="0" />
+		<Context path="/cContents" docBase="cContents" debug="0" />
+		<Context path="/cu" docBase="cu" debug="0" />
+
+-->
+
+
+<Context path="/cContents" docBase="/home/hosting_users/qlearning/lms_contents" debug="0"
+         privileged="true" reloadable="false">
+	<Logger className="org.apache.catalina.logger.FileLogger" directory="logs" prefix="lms_contents_log." suffix=".txt" timestamp="true"/>
+</Context>

@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="attach">
+
+    <!-- 첨부화일 리스트 -->
+    <select id="attachList" parameterType="Attach" resultType="Attach">
+		SELECT SEQ,
+		       KIND,
+		       P_SEQ,
+		       FILE_NAME,
+		       FILE_SIZE,
+		       FILE_PATH,
+		       ORG_FILE_NAME,
+		       CREATE_DATE
+		  FROM ATTACH A
+		 WHERE KIND = #{kind}
+		   AND P_SEQ = #{pSeq}
+    </select>	
+
+	<!-- 첨부화일 Data -->
+    <select id="attachData" parameterType="Attach" resultType="Attach">
+		SELECT SEQ,
+		       KIND,
+		       P_SEQ,
+		       FILE_NAME,
+		       FILE_SIZE,
+		       FILE_PATH,
+		       ORG_FILE_NAME,
+		       CREATE_DATE
+		  FROM ATTACH
+		 WHERE SEQ = #{seq}
+    </select>	
+
+	<!-- 첨부화일 추가 -->
+    <insert id="attachIns" parameterType="Attach">
+		INSERT INTO ATTACH (KIND,P_SEQ,FILE_NAME,FILE_SIZE,FILE_PATH,ORG_FILE_NAME,CREATE_DATE)
+		VALUES (#{kind},#{pSeq},#{fileName},#{fileSize},#{filePath},#{orgFileName},CURRENT_TIMESTAMP)
+    </insert>	
+
+	<!-- 첨부화일(임시) 리스트 -->
+    <select id="attachTempList" parameterType="Attach" resultType="Attach">
+		SELECT SEQ,
+		       FILE_NAME,
+		       FILE_SIZE,
+		       FILE_PATH,
+		       ORG_FILE_NAME,
+		       CREATE_DATE
+		  FROM ATTACH_TEMP
+		 WHERE USER_ID = #{userId}
+    </select>	
+
+	<!-- 첨부화일첨부화일 Data -->
+    <select id="attachDataTemp" parameterType="Attach" resultType="Attach">
+		SELECT SEQ,
+		       FILE_NAME,
+		       FILE_SIZE,
+		       FILE_PATH,
+		       ORG_FILE_NAME,
+		       CREATE_DATE
+		  FROM ATTACH_TEMP
+		 WHERE SEQ = #{seq}
+    </select>	
+    
+	<!-- 첨부화일(임시) 추가 -->
+    <insert id="attachTempIns" parameterType="Attach">
+		INSERT INTO ATTACH_TEMP (KIND,USER_ID,FILE_NAME,FILE_SIZE,FILE_PATH,ORG_FILE_NAME,CREATE_DATE)
+		VALUES (#{kind},#{userId},#{fileName},#{fileSize},#{filePath},#{orgFileName},CURRENT_TIMESTAMP)
+    </insert>	
+
+	<!-- 첨부화일(임시)에서 실 첨부화일로 저장 -->
+    <insert id="attachFromAttachTempIns" parameterType="Attach">
+		INSERT INTO ATTACH (KIND,P_SEQ,FILE_NAME,FILE_SIZE,FILE_PATH,ORG_FILE_NAME,CREATE_DATE)
+		SELECT KIND,#{pSeq},FILE_NAME,FILE_SIZE,FILE_PATH,ORG_FILE_NAME,CREATE_DATE
+		  FROM ATTACH_TEMP
+		 WHERE USER_ID = #{userId}
+    </insert>	
+
+	<!-- 첨부화일(임시) 리스트에서 하루가 지나서 삭제해야 할 첨부 리스트 -->
+    <select id="attachTempForDeleteList" resultType="Attach">
+    	<![CDATA[
+			SELECT SEQ,
+			       KIND,
+			       FILE_NAME,
+			       FILE_SIZE,
+			       FILE_PATH,
+			       ORG_FILE_NAME,
+			       CREATE_DATE
+			  FROM ATTACH_TEMP
+			 WHERE CREATE_DATE < CURDATE() - 1
+		]]>
+    </select>	
+
+	<!-- 첨부화일 삭제 -->
+    <delete id="attachDel" parameterType="Attach">
+		DELETE FROM ATTACH
+		 WHERE SEQ = #{seq}
+    </delete>	
+
+	<!-- 첨부화일(임시) 삭제 -->
+    <delete id="attachTempDel" parameterType="Attach">
+		DELETE FROM ATTACH_TEMP
+		 WHERE SEQ = #{seq}
+    </delete>	
+
+	<!-- 첨부화일(임시) 삭제 -->
+    <delete id="attachTempForUserDel" parameterType="Attach">
+		DELETE FROM ATTACH_TEMP
+		 WHERE USER_ID = #{userId}
+    </delete>	
+
+	<!-- 첨부화일(임시) 리스트에서 하루가 지나서 삭제해야 할 첨부 리스트 -->
+    <select id="attachTempForUser" resultType="Attach">
+    	<![CDATA[
+			SELECT SEQ,
+			       KIND,
+			       FILE_NAME,
+			       FILE_SIZE,
+			       FILE_PATH,
+			       ORG_FILE_NAME,
+			       CREATE_DATE
+			  FROM ATTACH_TEMP
+			 WHERE USER_ID = #{userId}
+		]]>
+    </select>	
+
+
+        
+</mapper>

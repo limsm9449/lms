@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="normalCourse">
+	
+<select id="normalCourseList" parameterType="NormalCourse" resultType="NormalCourse">
+<![CDATA[
+SELECT DATA.* FROM (
+    SELECT D.CATEGORY_NAME
+           ,A.COURSE_ID
+	       ,A.COURSE_CODE
+	       ,B.COURSE_NAME
+	       ,A.TUTOR_ID
+	       ,(SELECT USER_NAME FROM USER WHERE USER_ID = A.TUTOR_ID) TUTOR_NAME
+	       ,A.C_PERIOD
+	       ,A.OPEN_YN
+	       ,(SELECT COUNT(*) FROM COURSE_REGISTER WHERE COURSE_ID = A.COURSE_ID AND STATUS = 'Y') Y_CNT
+	       ,(SELECT COUNT(*) FROM COURSE_REGISTER WHERE COURSE_ID = A.COURSE_ID AND STATUS = 'A') A_CNT
+	       ,A.CHASU
+	  FROM COURSE A LEFT OUTER JOIN COURSE_CODE B ON A.COURSE_CODE = B.COURSE_CODE
+	                LEFT OUTER JOIN CATEGORY C ON B.CODE = C.CODE 
+	                LEFT OUTER JOIN (
+						   SELECT C3.CODE C3_CODE,
+							  C2.CODE C2_CODE,
+							  C1.CODE C1_CODE,
+							  CONCAT(C1.CODE_NAME,' > ',C2.CODE_NAME,' > ',C3.CODE_NAME) CATEGORY_NAME
+							 FROM CATEGORY C3 LEFT OUTER JOIN CATEGORY C2 ON C3.PARENT_CODE = C2.CODE
+								      LEFT OUTER JOIN CATEGORY C1 ON C2.PARENT_CODE = C1.CODE
+						    WHERE C3.DEPTH = 3) D ON B.CODE = D.C3_CODE
+	 WHERE A.COURSE_KIND = 'NORMAL'
+]]>
+	   <if test="c1Code != null and c1Code != ''"> AND D.C1_CODE = #{c1Code}</if>
+	   <if test="c2Code != null and c2Code != ''"> AND D.C2_CODE = #{c2Code}</if>
+	   <if test="c3Code != null and c3Code != ''"> AND D.C3_CODE = #{c3Code}</if>
+	   <if test="courseName != null and courseName != ''"> AND B.COURSE_NAME LIKE CONCAT('%',#{courseName},'%')</if>
+ ORDER BY D.CATEGORY_NAME,B.COURSE_NAME,A.CHASU DESC  
+) DATA LIMIT #{limitStart},#{limitUnit}
+</select>
+
+<select id="normalCourseTotal" parameterType="NormalCourse" resultType="NormalCourse">
+<![CDATA[
+	SELECT COUNT(*) CNT
+	  FROM COURSE A LEFT OUTER JOIN COURSE_CODE B ON A.COURSE_CODE = B.COURSE_CODE
+	                LEFT OUTER JOIN CATEGORY C ON B.CODE = C.CODE 
+	                LEFT OUTER JOIN (
+						   SELECT C3.CODE C3_CODE,
+							  C2.CODE C2_CODE,
+							  C1.CODE C1_CODE,
+							  CONCAT(C1.CODE_NAME,' > ',C2.CODE_NAME,' > ',C3.CODE_NAME) CATEGORY_NAME
+							 FROM CATEGORY C3 LEFT OUTER JOIN CATEGORY C2 ON C3.PARENT_CODE = C2.CODE
+								      LEFT OUTER JOIN CATEGORY C1 ON C2.PARENT_CODE = C1.CODE
+						    WHERE C3.DEPTH = 3) D ON B.CODE = D.C3_CODE
+	 WHERE A.COURSE_KIND = 'NORMAL'
+]]>
+	   <if test="c1Code != null and c1Code != ''"> AND D.C1_CODE = #{c1Code}</if>
+	   <if test="c2Code != null and c2Code != ''"> AND D.C2_CODE = #{c2Code}</if>
+	   <if test="c3Code != null and c3Code != ''"> AND D.C3_CODE = #{c3Code}</if>
+	   <if test="courseName != null and courseName != ''"> AND B.COURSE_NAME LIKE CONCAT('%',#{courseName},'%')</if>
+</select>
+
+<select id="courseData" parameterType="NormalCourse" resultType="NormalCourse">
+<![CDATA[
+SELECT D.CATEGORY_NAME
+       ,A.COURSE_ID
+       ,A.COURSE_CODE
+       ,B.COURSE_NAME
+       ,A.TUTOR_ID
+       ,(SELECT USER_NAME FROM USER WHERE USER_ID = A.TUTOR_ID) TUTOR_NAME
+       ,A.CHASU
+       ,C.LEARING_GOAL
+       ,C.LEARING_CONTENT
+       ,C.EVAL_METHOD
+       ,C.LEARING_TARGET
+       ,C.LEARING_COST
+       ,A.COURSE_COST
+       ,A.REPORT_RATE
+       ,A.EXAM_RATE
+       ,A.DISCUSSION_RATE
+       ,A.PROGRESS_RATE
+       ,A.OPEN_YN
+       ,A.C_PERIOD
+       ,(SELECT COUNT(*) FROM COURSE_REGISTER WHERE COURSE_ID = A.COURSE_ID AND STATUS = 'A') A_CNT
+       ,B.H_PX
+       ,B.V_PX
+       ,C.WEEK_COST_YN
+       ,(SELECT DD_VALUE FROM CODE WHERE DD_MAIN = 'WEEK_COST_YN' AND DD_KEY = C.WEEK_COST_YN) WEEK_COST_YN_NAME
+  FROM COURSE A LEFT OUTER JOIN COURSE_CODE B ON A.COURSE_CODE = B.COURSE_CODE
+                LEFT OUTER JOIN COURSE_MASTER C ON A.COURSE_CODE = C.COURSE_CODE
+                LEFT OUTER JOIN (
+						   SELECT C3.CODE C3_CODE,
+							  C2.CODE C2_CODE,
+							  C1.CODE C1_CODE,
+							  CONCAT(C1.CODE_NAME,' > ',C2.CODE_NAME,' > ',C3.CODE_NAME) CATEGORY_NAME
+							 FROM CATEGORY C3 LEFT OUTER JOIN CATEGORY C2 ON C3.PARENT_CODE = C2.CODE
+								      LEFT OUTER JOIN CATEGORY C1 ON C2.PARENT_CODE = C1.CODE
+						    WHERE C3.DEPTH = 3) D ON B.CODE = D.C3_CODE
+ WHERE A.COURSE_ID = #{courseId}
+]]> 
+</select>
+
+<select id="normalCourseIns" parameterType="NormalCourse">
+INSERT INTO COURSE(COURSE_CODE,TUTOR_ID,CHASU,COURSE_KIND,COURSE_COST,C_PERIOD,OPEN_YN,
+                   REPORT_RATE,EXAM_RATE,DISCUSSION_RATE,PROGRESS_RATE,
+                   CREATE_DATE,CREATE_USER)
+SELECT A.COURSE_CODE
+       ,#{tutorId}
+       ,(SELECT IFNULL(MAX(CHASU) + 1,1) FROM COURSE WHERE COURSE_CODE = A.COURSE_CODE)
+       ,'NORMAL'
+       ,#{courseCost}
+       ,#{cPeriod}
+       ,#{openYn}
+       ,A.REPORT_RATE
+       ,A.EXAM_RATE
+       ,A.DISCUSSION_RATE
+       ,A.PROGRESS_RATE
+       ,CURRENT_TIMESTAMP
+       ,#{createUser}
+  FROM COURSE_MASTER A
+ WHERE A.COURSE_CODE = #{courseCode}   
+</select>
+
+<select id="normalCourseUpd" parameterType="NormalCourse">
+UPDATE COURSE
+   SET TUTOR_ID = #{tutorId},
+       COURSE_COST =  #{courseCost},
+       C_PERIOD = #{cPeriod},
+       OPEN_YN = #{openYn},
+       REPORT_RATE = #{reportRate},
+       EXAM_RATE = #{examRate},
+       DISCUSSION_RATE = #{discussionRate},
+       PROGRESS_RATE = #{progressRate},
+       UPDATE_DATE = CURRENT_TIMESTAMP,
+       UPDATE_USER = #{updateUser}
+ WHERE COURSE_ID = #{courseId}   
+</select>
+
+<select id="normalCourseDel" parameterType="NormalCourse">
+DELETE FROM COURSE
+ WHERE COURSE_ID = #{courseId}   
+</select>
+
+<select id="titleList" parameterType="NormalCourse" resultType="NormalCourse">
+SELECT B.WEEK,
+       B.TITLE, 
+       C.WEEK_COST
+  FROM COURSE A LEFT OUTER JOIN COURSE_RESOURCE B ON A.COURSE_CODE = B.COURSE_CODE
+                LEFT OUTER JOIN COURSE_WEEK_COST C ON C.COURSE_ID = A.COURSE_ID AND C.WEEK = B.WEEK
+ WHERE A.COURSE_ID = #{courseId}
+ ORDER BY B.WEEK  
+</select>
+
+<select id="weekCostList" parameterType="NormalCourse" resultType="NormalCourse">
+SELECT WEEK, TITLE, WEEK_COST
+  FROM COURSE_RESOURCE
+ WHERE COURSE_CODE = #{courseCode}
+</select>
+
+<select id="courseWeekCostIns" parameterType="NormalCourse">
+INSERT INTO COURSE_WEEK_COST(COURSE_ID, WEEK, WEEK_COST)
+VALUES (#{courseId}, #{week}, #{weekCost})
+</select>
+
+<select id="courseWeekCostUpd" parameterType="NormalCourse">
+UPDATE COURSE_WEEK_COST
+   SET WEEK_COST = #{weekCost}
+ WHERE COURSE_Id = #{courseId} 
+   AND WEEK = #{week}
+</select>
+
+<select id="courseWeekCostDel" parameterType="NormalCourse">
+DELETE FROM COURSE_WEEK_COST
+ WHERE COURSE_ID = #{courseId}   
+</select>
+
+<select id="popularCourseList" parameterType="NormalCourse" resultType="NormalCourse">
+<![CDATA[
+SELECT DATA.* FROM (
+    SELECT D.CATEGORY_NAME
+           ,A.COURSE_ID
+	       ,A.COURSE_CODE
+	       ,B.COURSE_NAME
+	       ,A.C_PERIOD
+	       ,A.POPULAR_YN
+	  FROM COURSE A LEFT OUTER JOIN COURSE_CODE B ON A.COURSE_CODE = B.COURSE_CODE
+	                LEFT OUTER JOIN CATEGORY C ON B.CODE = C.CODE 
+	                LEFT OUTER JOIN (
+						   SELECT C3.CODE C3_CODE,
+							  C2.CODE C2_CODE,
+							  C1.CODE C1_CODE,
+							  CONCAT(C1.CODE_NAME,' > ',C2.CODE_NAME,' > ',C3.CODE_NAME) CATEGORY_NAME
+							 FROM CATEGORY C3 LEFT OUTER JOIN CATEGORY C2 ON C3.PARENT_CODE = C2.CODE
+								      LEFT OUTER JOIN CATEGORY C1 ON C2.PARENT_CODE = C1.CODE
+						    WHERE C3.DEPTH = 3) D ON B.CODE = D.C3_CODE
+	 WHERE A.COURSE_KIND = 'NORMAL'
+	   AND A.OPEN_YN = 'Y'
+]]>
+	   <if test="c1Code != null and c1Code != ''"> AND D.C1_CODE = #{c1Code}</if>
+	   <if test="c2Code != null and c2Code != ''"> AND D.C2_CODE = #{c2Code}</if>
+	   <if test="c3Code != null and c3Code != ''"> AND D.C3_CODE = #{c3Code}</if>
+	   <if test="courseName != null and courseName != ''"> AND B.COURSE_NAME LIKE CONCAT('%',#{courseName},'%')</if>
+ ORDER BY A.POPULAR_YN DESC,D.CATEGORY_NAME,B.COURSE_NAME,A.CHASU DESC  
+) DATA LIMIT #{limitStart},#{limitUnit}
+</select>
+
+<select id="popularCourseTotal" parameterType="NormalCourse" resultType="NormalCourse">
+<![CDATA[
+	SELECT COUNT(*) CNT
+	  FROM COURSE A LEFT OUTER JOIN COURSE_CODE B ON A.COURSE_CODE = B.COURSE_CODE
+	                LEFT OUTER JOIN CATEGORY C ON B.CODE = C.CODE 
+	                LEFT OUTER JOIN (
+						   SELECT C3.CODE C3_CODE,
+							  C2.CODE C2_CODE,
+							  C1.CODE C1_CODE,
+							  CONCAT(C1.CODE_NAME,' > ',C2.CODE_NAME,' > ',C3.CODE_NAME) CATEGORY_NAME
+							 FROM CATEGORY C3 LEFT OUTER JOIN CATEGORY C2 ON C3.PARENT_CODE = C2.CODE
+								      LEFT OUTER JOIN CATEGORY C1 ON C2.PARENT_CODE = C1.CODE
+						    WHERE C3.DEPTH = 3) D ON B.CODE = D.C3_CODE
+	 WHERE A.COURSE_KIND = 'NORMAL'
+	   AND A.OPEN_YN = 'Y'
+]]>
+	   <if test="c1Code != null and c1Code != ''"> AND D.C1_CODE = #{c1Code}</if>
+	   <if test="c2Code != null and c2Code != ''"> AND D.C2_CODE = #{c2Code}</if>
+	   <if test="c3Code != null and c3Code != ''"> AND D.C3_CODE = #{c3Code}</if>
+	   <if test="courseName != null and courseName != ''"> AND B.COURSE_NAME LIKE CONCAT('%',#{courseName},'%')</if>
+</select>
+        
+<select id="popularCourseAdd" parameterType="NormalCourse">
+UPDATE COURSE
+   SET POPULAR_YN = 'Y'
+ WHERE COURSE_ID = #{courseId}   
+</select>
+
+<select id="popularCourseRemove" parameterType="NormalCourse">
+UPDATE COURSE
+   SET POPULAR_YN = 'N'
+ WHERE COURSE_ID = #{courseId}   
+</select>
+
+        
+</mapper>

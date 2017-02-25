@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="point">
+
+	<select id="pointUserList" parameterType="Point" resultType="Point">
+	SELECT DATA.* FROM (
+		SELECT A.*,
+		       IF(IFNULL(COMP_CD,'-') = '-','일반회원','기업회원') USER_KIND,
+		       IFNULL(B.IN_POINT,0) IN_POINT,
+		       IFNULL(B.OUT_POINT,0) OUT_POINT,
+		       (IFNULL(B.IN_POINT,0) - IFNULL(B.OUT_POINT,0)) REMAIN_POINT
+		  FROM USER A LEFT OUTER JOIN 
+			         (SELECT USER_ID,
+			                 SUM(IN_POINT) IN_POINT,
+			                 SUM(OUT_POINT) OUT_POINT
+			            FROM POINT
+			           GROUP BY USER_ID) B ON A.USER_ID = B.USER_ID
+		 WHERE 1 = 1
+	       <if test="searchStr != null and searchStr != ''">
+		     <if test="searchKind == 'USER_ID'">
+		       AND UPPER(A.USER_ID) LIKE CONCAT('%',UPPER(#{searchStr}),'%') 
+		     </if>
+		     <if test="searchKind == 'USER_NAME'">
+		       AND UPPER(A.USER_NAME) LIKE CONCAT('%',UPPER(#{searchStr}),'%') 
+		     </if>
+	       </if>			 
+	 	ORDER BY A.USER_NAME 
+	) DATA LIMIT #{limitStart},#{limitUnit}
+	</select>
+	
+	<select id="pointUserTotal" parameterType="Point" resultType="Point">
+		SELECT COUNT(*) CNT
+		  FROM USER A LEFT OUTER JOIN 
+			         (SELECT USER_ID,
+			                 SUM(IN_POINT) IN_POINT,
+			                 SUM(OUT_POINT) OUT_POINT
+			            FROM POINT
+			           GROUP BY USER_ID) B ON A.USER_ID = B.USER_ID
+		 WHERE 1 = 1
+	       <if test="searchStr != null and searchStr != ''">
+		     <if test="searchKind == 'USER_ID'">
+		       AND UPPER(A.USER_ID) LIKE CONCAT('%',UPPER(#{searchStr}),'%') 
+		     </if>
+		     <if test="searchKind == 'USER_NAME'">
+		       AND UPPER(A.USER_NAME) LIKE CONCAT('%',UPPER(#{searchStr}),'%') 
+		     </if>
+	       </if>			 
+	</select>
+	
+	<select id="pointUserData" parameterType="Point" resultType="Point">
+	<![CDATA[
+		SELECT KIND,
+		       (SELECT DD_VALUE FROM CODE WHERE DD_MAIN = 'POINT_KIND' AND DD_KEY = A.KIND) KIND_NAME,
+		       IN_POINT,
+		       OUT_POINT,
+		       DATE_FORMAT(CREATE_DATE,'%y.%m.%d %H:%i:%S') CREATE_DATE
+		  FROM POINT A
+		 WHERE USER_ID = #{userId}
+		 ORDER BY CREATE_DATE DESC
+	]]> 
+	</select>
+
+	<select id="pointUserSum" parameterType="Point" resultType="Point">
+	<![CDATA[
+		SELECT SUM(IN_POINT - OUT_POINT) REMAIN_POINT
+		  FROM POINT A
+		 WHERE USER_ID = #{userId}
+	]]> 
+	</select>        
+</mapper>

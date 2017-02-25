@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="login">
+	
+    <select id="getLoginUser" resultType="com.qp.lms.login.model.LoginVO">
+    	SELECT USER_ID,USER_NAME,RETIRED_YN,ADMIN_YN,TEACHER_YN,TUTOR_YN,
+               IF((SELECT COUNT(*) FROM COMPANY WHERE TUTOR_ID = A.USER_ID) > 0,'Y','N') COMP_MANAGER_YN,
+               COMP_CD,
+               CERTIFICATION_YN	 	 
+    	  FROM USER A
+    	 WHERE USER_ID = #{userId}
+    	   AND USER_PASSWORD = PASSWORD(#{password}) 
+    </select>
+
+    <select id="isExistUser" resultType="com.qp.lms.login.model.LoginVO">
+    	SELECT COUNT(*) CNT
+    	  FROM USER
+    	 WHERE USER_ID = #{userId}
+    </select>
+
+    <select id="getUserInfo" resultType="com.qp.lms.login.model.LoginVO">
+    	SELECT USER_ID,USER_NAME,RETIRED_YN,ADMIN_YN,TEACHER_YN,TUTOR_YN,
+               IF((SELECT COUNT(*) FROM COMPANY WHERE TUTOR_ID = A.USER_ID) > 0,'Y','N') COMP_MANAGER_YN,
+               COMP_CD	 
+    	  FROM USER A
+    	 WHERE USER_ID = #{userId}
+    </select>
+</mapper>

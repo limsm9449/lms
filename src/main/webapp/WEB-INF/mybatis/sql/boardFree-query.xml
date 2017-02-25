@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="boardFree">
+
+<select id="boardFreeList" parameterType="Board" resultType="Board">
+SELECT PAGE.* FROM ( SELECT DATA.* FROM ( 
+	SELECT A.SEQ,
+	       A.TITLE,
+	       A.USER_ID,
+	       A.USER_IP,
+	       B.USER_NAME,
+	       A.VIEW_CNT,
+	       DATE_FORMAT(IFNULL(A.UPDATE_DATE,A.CREATE_DATE), '%y.%m.%d %H:%i') CREATE_DATE,
+	       @ROWNUM := @ROWNUM + 1 ROWNUM
+	  FROM BOARD_FREE A LEFT OUTER JOIN USER B ON A.USER_ID = B.USER_ID,
+	       (SELECT @ROWNUM := 0) NUM
+	 WHERE A.COURSE_ID = #{courseId}
+	   <if test="findString != null and findString != ''"> AND A.TITLE LIKE CONCAT('%',#{findString},'%')</if> 
+	 ORDER BY A.SEQ
+) DATA ORDER BY SEQ DESC ) PAGE LIMIT #{limitStart},#{limitUnit}  
+</select>	
+
+<select id="boardFreeTotal" parameterType="Board" resultType="Board">
+	SELECT COUNT(*) CNT
+	  FROM BOARD_FREE A LEFT OUTER JOIN USER B ON A.USER_ID = B.USER_ID,
+	       (SELECT @ROWNUM := 0) NUM
+	 WHERE A.COURSE_ID = #{courseId}
+	   <if test="findString != null and findString != ''"> AND A.TITLE LIKE CONCAT('%',#{findString},'%')</if> 
+</select>
+
+<select id="boardFreeData" parameterType="Board" resultType="Board">
+SELECT A.SEQ,
+       A.TITLE,
+       A.CONTENTS,
+       A.USER_ID,
+       A.USER_IP,
+       B.USER_NAME,
+       A.VIEW_CNT,	
+       DATE_FORMAT(IFNULL(A.UPDATE_DATE,A.CREATE_DATE), '%y.%m.%d %H:%i') CREATE_DATE
+  FROM BOARD_FREE A LEFT OUTER JOIN USER B ON A.USER_ID = B.USER_ID
+ WHERE A.SEQ = #{seq}
+</select>
+    
+<select id="boardFreeIns" parameterType="Board">
+INSERT INTO BOARD_FREE (COURSE_ID,TITLE,CONTENTS,USER_ID,USER_IP,VIEW_CNT,CREATE_DATE)
+VALUES (#{courseId},#{title},#{contents},#{userId},#{userIp},0,CURRENT_TIMESTAMP)
+</select>	
+  
+<select id="boardFreeUpd" parameterType="Board">
+UPDATE BOARD_FREE
+   SET TITLE = #{title},
+       CONTENTS = #{contents},
+       UPDATE_DATE = CURRENT_TIMESTAMP
+ WHERE SEQ = #{seq}
+</select>	
+
+<select id="boardFreeDel" parameterType="Board">
+DELETE FROM BOARD_FREE
+ WHERE SEQ = #{seq}
+</select>	
+
+<select id="boardFreeViewCntUpd" parameterType="Board">
+UPDATE BOARD_FREE
+   SET VIEW_CNT = VIEW_CNT + 1
+ WHERE SEQ = #{seq}
+</select>	
+
+        
+</mapper>

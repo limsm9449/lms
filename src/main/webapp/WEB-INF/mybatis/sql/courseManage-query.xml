@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="courseManage">
+	
+<select id="courseManageList" parameterType="CourseManage" resultType="CourseManage">
+<![CDATA[
+SELECT DATA.* FROM (
+    SELECT D.CATEGORY_NAME
+           ,A.COURSE_ID
+	       ,A.COURSE_CODE
+	       ,B.COURSE_NAME
+	       ,A.TUTOR_ID
+	       ,(SELECT USER_NAME FROM USER WHERE USER_ID = A.TUTOR_ID) TUTOR_NAME
+	       ,A.CHASU
+	       ,A.C_STATUS STATUS
+	       ,(SELECT DD_VALUE FROM CODE WHERE DD_MAIN = 'COURSE_STATUS' AND DD_KEY = A.C_STATUS) STATUS_NAME
+	       ,(SELECT COUNT(*) FROM COURSE_REGISTER WHERE COURSE_ID = A.COURSE_ID AND STATUS = 'Y') Y_CNT
+	       ,(SELECT COUNT(*) FROM COURSE_REGISTER WHERE COURSE_ID = A.COURSE_ID AND STATUS = 'A') A_CNT
+	  FROM COURSE A 
+	                LEFT OUTER JOIN COURSE_CODE B ON A.COURSE_CODE = B.COURSE_CODE
+	                LEFT OUTER JOIN CATEGORY C ON B.CODE = C.CODE 
+	                LEFT OUTER JOIN (
+						   SELECT C3.CODE C3_CODE,
+							  C2.CODE C2_CODE,
+							  C1.CODE C1_CODE,
+							  CONCAT(C1.CODE_NAME,' > ',C2.CODE_NAME,' > ',C3.CODE_NAME) CATEGORY_NAME
+							 FROM CATEGORY C3 LEFT OUTER JOIN CATEGORY C2 ON C3.PARENT_CODE = C2.CODE
+								      LEFT OUTER JOIN CATEGORY C1 ON C2.PARENT_CODE = C1.CODE
+						    WHERE C3.DEPTH = 3) D ON B.CODE = D.C3_CODE
+	 WHERE A.COURSE_KIND = 'COLLEGE'
+]]>
+	   <if test="c1Code != null and c1Code != ''"> AND D.C1_CODE = #{c1Code}</if>
+	   <if test="c2Code != null and c2Code != ''"> AND D.C2_CODE = #{c2Code}</if>
+	   <if test="c3Code != null and c3Code != ''"> AND D.C3_CODE = #{c3Code}</if>
+	   <if test="courseCode != null and courseCode != ''"> AND A.COURSE_CODE = #{courseCode}</if>
+	   <if test="status != null and status != ''"> AND A.C_STATUS = #{status}</if>
+ ORDER BY D.CATEGORY_NAME,B.COURSE_NAME,A.CHASU DESC  
+) DATA LIMIT #{limitStart},#{limitUnit}
+</select>
+
+<select id="courseManageTotal" parameterType="CourseManage" resultType="CourseManage">
+<![CDATA[
+	SELECT COUNT(*) CNT
+	  FROM COURSE A 
+	                LEFT OUTER JOIN COURSE_CODE B ON A.COURSE_CODE = B.COURSE_CODE
+	                LEFT OUTER JOIN CATEGORY C ON B.CODE = C.CODE 
+	                LEFT OUTER JOIN (
+						   SELECT C3.CODE C3_CODE,
+							  C2.CODE C2_CODE,
+							  C1.CODE C1_CODE,
+							  CONCAT(C1.CODE_NAME,' > ',C2.CODE_NAME,' > ',C3.CODE_NAME) CATEGORY_NAME
+							 FROM CATEGORY C3 LEFT OUTER JOIN CATEGORY C2 ON C3.PARENT_CODE = C2.CODE
+								      LEFT OUTER JOIN CATEGORY C1 ON C2.PARENT_CODE = C1.CODE
+						    WHERE C3.DEPTH = 3) D ON B.CODE = D.C3_CODE
+	 WHERE A.COURSE_KIND = 'COLLEGE'
+]]>
+	   <if test="c1Code != null and c1Code != ''"> AND D.C1_CODE = #{c1Code}</if>
+	   <if test="c2Code != null and c2Code != ''"> AND D.C2_CODE = #{c2Code}</if>
+	   <if test="c3Code != null and c3Code != ''"> AND D.C3_CODE = #{c3Code}</if>
+	   <if test="courseCode != null and courseCode != ''"> AND A.COURSE_CODE = #{courseCode}</if>
+	   <if test="status != null and status != ''"> AND A.C_STATUS = #{status}</if>
+</select>
+
+<select id="courseData" parameterType="CourseManage" resultType="CourseManage">
+<![CDATA[
+SELECT D.CATEGORY_NAME
+       ,A.COURSE_ID
+       ,A.COURSE_CODE
+       ,B.COURSE_NAME
+       ,A.TUTOR_ID
+       ,(SELECT USER_NAME FROM USER WHERE USER_ID = A.TUTOR_ID) TUTOR_NAME
+       ,A.CHASU
+       ,C.LEARING_GOAL
+       ,C.LEARING_CONTENT
+       ,C.EVAL_METHOD
+       ,C.LEARING_TARGET
+       ,C.LEARING_COST
+       ,A.COURSE_COST
+       ,A.REPORT_RATE
+       ,A.EXAM_RATE
+       ,A.DISCUSSION_RATE
+       ,A.PROGRESS_RATE
+       ,(SELECT COUNT(*) FROM COURSE_REGISTER WHERE COURSE_ID = A.COURSE_ID AND STATUS = 'A') A_CNT
+       ,A.OPEN_YN
+       ,A.C_PERIOD
+  FROM COURSE A 
+	          LEFT OUTER JOIN COURSE_CODE B ON A.COURSE_CODE = B.COURSE_CODE
+              LEFT OUTER JOIN COURSE_MASTER C ON A.COURSE_CODE = C.COURSE_CODE
+              LEFT OUTER JOIN (
+						   SELECT C3.CODE C3_CODE,
+							  C2.CODE C2_CODE,
+							  C1.CODE C1_CODE,
+							  CONCAT(C1.CODE_NAME,' > ',C2.CODE_NAME,' > ',C3.CODE_NAME) CATEGORY_NAME
+							 FROM CATEGORY C3 LEFT OUTER JOIN CATEGORY C2 ON C3.PARENT_CODE = C2.CODE
+								      LEFT OUTER JOIN CATEGORY C1 ON C2.PARENT_CODE = C1.CODE
+						    WHERE C3.DEPTH = 3) D ON B.CODE = D.C3_CODE
+ WHERE A.COURSE_ID = #{courseId}
+]]> 
+</select>
+
+<select id="courseManageIns" parameterType="CourseManage">
+INSERT INTO COURSE(COURSE_CODE,TUTOR_ID,CHASU,COURSE_KIND,COURSE_COST,
+                   REPORT_RATE,EXAM_RATE,DISCUSSION_RATE,PROGRESS_RATE,
+                   CREATE_DATE,CREATE_USER)
+SELECT A.COURSE_CODE
+       ,#{tutorId}
+       ,(SELECT IFNULL(MAX(CHASU) + 1,1) FROM COURSE WHERE COURSE_CODE = A.COURSE_CODE)
+       ,'COLLEGE'
+       ,#{courseCost}
+       ,A.REPORT_RATE
+       ,A.EXAM_RATE
+       ,A.DISCUSSION_RATE
+       ,A.PROGRESS_RATE
+       ,CURRENT_TIMESTAMP
+       ,#{createUser}
+  FROM COURSE_MASTER A
+ WHERE A.COURSE_CODE = #{courseCode}   
+</select>
+
+<select id="courseManageUpd" parameterType="CourseManage">
+UPDATE COURSE
+   SET TUTOR_ID = #{tutorId},
+       COURSE_COST =  #{courseCost},
+       REPORT_RATE = #{reportRate},
+       EXAM_RATE = #{examRate},
+       DISCUSSION_RATE = #{discussionRate},
+       PROGRESS_RATE = #{progressRate},
+       UPDATE_DATE = CURRENT_TIMESTAMP,
+       UPDATE_USER = #{updateUser}
+ WHERE COURSE_ID = #{courseId}   
+</select>
+
+<select id="courseManageDel" parameterType="CourseManage">
+DELETE FROM COURSE
+ WHERE COURSE_ID = #{courseId}   
+</select>
+
+
+
+        
+</mapper>

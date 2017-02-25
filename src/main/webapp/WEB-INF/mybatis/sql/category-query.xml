@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="category">
+
+<select id="ddCategory1Depth" resultType="Code">
+SELECT CODE DD_KEY,
+       CODE_NAME DD_VALUE
+  FROM CATEGORY
+ WHERE USE_YN = 'Y'
+   AND DEPTH = 1
+ ORDER BY 2  
+</select>
+
+<select id="ddCategory2Depth" parameterType="String" resultType="Code">
+SELECT CODE DD_KEY,
+       CODE_NAME DD_VALUE
+  FROM CATEGORY
+ WHERE USE_YN = 'Y'
+   AND DEPTH = 2
+   AND PARENT_CODE = #{id} 
+ ORDER BY 2  
+</select>
+
+<select id="ddCategory3Depth" parameterType="String" resultType="Code">
+SELECT CODE DD_KEY,
+       CODE_NAME DD_VALUE
+  FROM CATEGORY
+ WHERE USE_YN = 'Y'
+   AND DEPTH = 3
+   AND PARENT_CODE = #{id} 
+ ORDER BY 2  
+</select>
+
+<select id="categoryList" parameterType="Category" resultType="Category">
+SELECT DATA.* FROM (
+	SELECT A.CODE C1_CODE,
+	       A.CODE_NAME C1_CODE_NAME,
+	       B.CODE C2_CODE,
+	       B.CODE_NAME C2_CODE_NAME,
+	       C.CODE C3_CODE,
+	       C.CODE_NAME C3_CODE_NAME,
+	       C.USE_YN
+	  FROM CATEGORY A LEFT OUTER JOIN CATEGORY B ON A.CODE = B.PARENT_CODE AND B.DEPTH = 2
+	                  LEFT OUTER JOIN CATEGORY C ON B.CODE = C.PARENT_CODE AND C.DEPTH = 3
+	WHERE A.DEPTH = 1
+	  <if test="c1Code != null and c1Code != ''"> AND A.CODE = #{c1Code}</if>
+	  <if test="c2Code != null and c2Code != ''"> AND B.CODE = #{c2Code}</if>
+	  <if test="c3Code != null and c3Code != ''"> AND C.CODE = #{c3Code}</if>
+	ORDER BY C1_CODE_NAME,C2_CODE_NAME,C3_CODE_NAME   
+) DATA LIMIT #{limitStart},#{limitUnit}
+</select>
+    
+<select id="categoryListTotal" parameterType="Category" resultType="Category">
+	SELECT COUNT(*) CNT
+	  FROM CATEGORY A LEFT OUTER JOIN CATEGORY B ON A.CODE = B.PARENT_CODE AND B.DEPTH = 2
+	                  LEFT OUTER JOIN CATEGORY C ON B.CODE = C.PARENT_CODE AND C.DEPTH = 3
+	WHERE A.DEPTH = 1
+	  <if test="c1Code != null and c1Code != ''"> AND A.CODE = #{c1Code}</if>
+	  <if test="c2Code != null and c2Code != ''"> AND B.CODE = #{c2Code}</if>
+	  <if test="c3Code != null and c3Code != ''"> AND C.CODE = #{c3Code}</if>
+</select>    
+    
+<select id="codeCnt" parameterType="Category" resultType="Category">
+SELECT COUNT(*) CNT
+  FROM CATEGORY
+ WHERE CODE = #{code} 
+</select>
+    
+<select id="categoryIns" parameterType="Category">
+INSERT INTO CATEGORY(CODE, CODE_NAME, USE_YN, PARENT_CODE, DEPTH, CREATE_DATE, CREATE_USER)
+VALUES (#{code},#{codeName},'Y',#{parentCode},#{depth},CURRENT_TIMESTAMP,#{createUser})
+</select>    
+
+<select id="categoryInfo" parameterType="String" resultType="Category">
+SELECT CODE
+	   ,CODE_NAME
+	   ,USE_YN
+	   ,PARENT_CODE
+  FROM CATEGORY
+ WHERE CODE = #{id} 
+</select>
+
+<select id="categoryUpd" parameterType="Category">
+UPDATE CATEGORY
+   SET CODE_NAME = #{codeName}
+       ,USE_YN = #{useYn}
+       ,UPDATE_DATE = CURRENT_TIMESTAMP
+       ,UPDATE_USER = #{updateUser}
+ WHERE CODE = #{code}   
+</select>    
+
+<select id="subCategoryCount" parameterType="String" resultType="Category">
+SELECT COUNT(*) SUB_CNT
+  FROM CATEGORY 
+ WHERE PARENT_CODE = #{id} 
+</select>
+
+<select id="subCourseCount" parameterType="String" resultType="Category">
+SELECT COUNT(*) SUB_CNT
+  FROM COURSE_CODE
+ WHERE CODE = #{id} 
+</select>
+
+<select id="categoryDel" parameterType="Category">
+DELETE FROM CATEGORY
+ WHERE CODE = #{code}   
+</select>  
+
+
+        
+</mapper>

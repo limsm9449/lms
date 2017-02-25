@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="courseExam">
+	
+	
+<select id="courseExamList" parameterType="CourseExam" resultType="CourseExam">
+SELECT DATA.* FROM (
+	SELECT B.CATEGORY_NAME,
+	       A.COURSE_NAME,
+	       A.COURSE_CODE,
+	       (SELECT COUNT(*) FROM COURSE_EXAM WHERE COURSE_CODE = A.COURSE_CODE) QUESTION_CNT,
+	       C.EXAM_RATE
+	  FROM COURSE_CODE A LEFT OUTER JOIN (
+				           SELECT C3.CODE C3_CODE,
+				                  C2.CODE C2_CODE,
+				                  C1.CODE C1_CODE,
+				                  CONCAT(C1.CODE_NAME,' > ',C2.CODE_NAME,' > ',C3.CODE_NAME) CATEGORY_NAME
+					     	 FROM CATEGORY C3 LEFT OUTER JOIN CATEGORY C2 ON C3.PARENT_CODE = C2.CODE
+					                          LEFT OUTER JOIN CATEGORY C1 ON C2.PARENT_CODE = C1.CODE
+				            WHERE C3.DEPTH = 3) B ON A.CODE = B.C3_CODE
+	                     JOIN COURSE_MASTER C ON C.COURSE_CODE = A.COURSE_CODE   
+	 WHERE C.EXAM_RATE > 0
+	   AND A.COURSE_CODE IN (SELECT DISTINCT COURSE_CODE FROM COURSE_EXAM)
+	  <if test="c1Code != null and c1Code != ''"> AND B.C1_CODE = #{c1Code}</if>
+	  <if test="c2Code != null and c2Code != ''"> AND B.C2_CODE = #{c2Code}</if>
+	  <if test="c3Code != null and c3Code != ''"> AND B.C3_CODE = #{c3Code}</if>
+	  <if test="courseName != null and courseName != ''"> AND A.COURSE_NAME LIKE CONCAT('%',#{courseName},'%')</if>
+	 ORDER BY B.CATEGORY_NAME,A.COURSE_NAME
+ ) DATA LIMIT #{limitStart},#{limitUnit}
+</select>
+
+<select id="courseExamTotal" parameterType="CourseExam" resultType="CourseExam">
+	SELECT COUNT(*) CNT
+	  FROM COURSE_CODE A LEFT OUTER JOIN (
+				           SELECT C3.CODE C3_CODE,
+				                  C2.CODE C2_CODE,
+				                  C1.CODE C1_CODE,
+				                  CONCAT(C1.CODE_NAME,' > ',C2.CODE_NAME,' > ',C3.CODE_NAME) CATEGORY_NAME
+					     	 FROM CATEGORY C3 LEFT OUTER JOIN CATEGORY C2 ON C3.PARENT_CODE = C2.CODE
+   					                          LEFT OUTER JOIN CATEGORY C1 ON C2.PARENT_CODE = C1.CODE
+				            WHERE C3.DEPTH = 3) B ON A.CODE = B.C3_CODE
+	                     JOIN COURSE_MASTER C ON C.COURSE_CODE = A.COURSE_CODE   
+	 WHERE C.EXAM_RATE > 0       
+	   AND A.COURSE_CODE IN (SELECT DISTINCT COURSE_CODE FROM COURSE_EXAM)       
+	  <if test="c1Code != null and c1Code != ''"> AND B.C1_CODE = #{c1Code}</if>
+	  <if test="c2Code != null and c2Code != ''"> AND B.C2_CODE = #{c2Code}</if>
+	  <if test="c3Code != null and c3Code != ''"> AND B.C3_CODE = #{c3Code}</if>
+	  <if test="courseName != null and courseName != ''"> AND A.COURSE_NAME LIKE CONCAT('%',#{courseName},'%')</if>
+</select>	
+	
+<select id="ddCourseCodeNotInput" resultType="Code">
+SELECT A.COURSE_CODE DD_KEY
+       ,CONCAT(B.CODE_NAME,' - ',A.COURSE_NAME) DD_VALUE
+  FROM COURSE_CODE A LEFT OUTER JOIN CATEGORY B ON A.CODE = B.CODE
+ WHERE A.COURSE_CODE NOT IN (SELECT COURSE_CODE FROM COURSE_EXAM)
+   AND A.COURSE_CODE IN (SELECT COURSE_CODE FROM COURSE_MASTER WHERE EXAM_RATE > 0)
+ ORDER BY 2 	
+</select>
+	
+<select id="isExistCourseExam" parameterType="CourseExam" resultType="CourseExam">
+SELECT COUNT(*) CNT
+  FROM COURSE_EXAM
+ WHERE COURSE_CODE = #{courseCode} 
+</select>
+	
+<select id="courseExamInsert" parameterType="CourseExam">
+	INSERT INTO COURSE_EXAM(COURSE_CODE,SEQ,TYPE,QUESTION,QA1,QA2,QA3,QA4,ANSWER,GRADE,CREATE_DATE,CREATE_USER)
+	VALUES (#{courseCode},#{seq},#{type},#{question},#{qa1},#{qa2},#{qa3},#{qa4},#{answer},#{grade},CURRENT_TIMESTAMP,#{createUser})
+</select>
+
+<select id="courseExamDataList" parameterType="CourseExam" resultType="CourseExam">
+SELECT C.CODE_NAME
+       ,B.COURSE_NAME
+       ,B.COURSE_CODE
+       ,A.SEQ
+       ,A.TYPE
+       ,A.QUESTION 
+       ,A.QA1
+       ,A.QA2
+       ,A.QA3
+       ,A.QA4
+       ,A.ANSWER
+       ,A.GRADE
+  FROM COURSE_EXAM A
+       ,COURSE_CODE B
+       ,CATEGORY C
+ WHERE A.COURSE_CODE = B.COURSE_CODE
+   AND B.CODE = C.CODE 
+   AND A.COURSE_CODE = #{courseCode} 
+</select>
+	
+<select id="courseCodeInfo" parameterType="String" resultType="CourseExam">
+SELECT B.CATEGORY_NAME,
+       A.COURSE_NAME,
+       A.COURSE_CODE,
+       (SELECT COUNT(*) FROM COURSE WHERE COURSE_CODE = A.COURSE_CODE) SUB_CNT
+  FROM COURSE_CODE A LEFT OUTER JOIN (
+           SELECT C3.CODE C3_CODE,
+                  C2.CODE C2_CODE,
+                  C1.CODE C1_CODE,
+                  CONCAT(C1.CODE_NAME,' > ',C2.CODE_NAME,' > ',C3.CODE_NAME) CATEGORY_NAME
+	     	 FROM CATEGORY C3 LEFT OUTER JOIN CATEGORY C2 ON C3.PARENT_CODE = C2.CODE
+	                      LEFT OUTER JOIN CATEGORY C1 ON C2.PARENT_CODE = C1.CODE
+            WHERE C3.DEPTH = 3) B ON A.CODE = B.C3_CODE
+ WHERE A.COURSE_CODE = #{id}
+</select>
+    
+<select id="courseExamDelete" parameterType="CourseExam">
+DELETE FROM COURSE_EXAM
+ WHERE COURSE_CODE = #{courseCode}   
+</select>
+
+
+
+
+        
+</mapper>

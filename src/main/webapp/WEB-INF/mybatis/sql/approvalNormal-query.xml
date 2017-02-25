@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="approvalNormal">
+	
+<select id="approvalNormalList" parameterType="ApprovalNormal" resultType="ApprovalNormal">
+<![CDATA[
+SELECT DATA.* FROM (
+	SELECT A.COURSE_ID,
+	       CT.CATEGORY_NAME,
+	       A.COURSE_CODE,	
+	       CC.COURSE_NAME,	
+	       A.CHASU,
+	       CA.USER_ID,
+	       U.USER_NAME,
+	       A.COURSE_COST PAYMENT_COST,
+	       DATE_FORMAT(AP.PAYMENT_DATE, '%y.%m.%d %T') PAYMENT_DATE
+	  FROM COURSE A 
+				JOIN COURSE_CODE CC ON CC.COURSE_CODE = A.COURSE_CODE
+				JOIN COURSE_APPROVAL CA ON CA.COURSE_ID = A.COURSE_ID
+				JOIN APPROVAL AP ON AP.APPROVAL_ID = CA.APPROVAL_ID AND AP.STATUS = 'A'
+				LEFT OUTER JOIN USER U ON U.USER_ID = CA.USER_ID
+				LEFT OUTER JOIN (
+						   SELECT C3.CODE C3_CODE,C2.CODE C2_CODE,C1.CODE C1_CODE,
+							  CONCAT(C1.CODE_NAME,' > ',C2.CODE_NAME,' > ',C3.CODE_NAME) CATEGORY_NAME
+						     FROM CATEGORY C3 LEFT OUTER JOIN CATEGORY C2 ON C3.PARENT_CODE = C2.CODE
+								      LEFT OUTER JOIN CATEGORY C1 ON C2.PARENT_CODE = C1.CODE
+						    WHERE C3.DEPTH = 3) CT ON CT.C3_CODE = CC.CODE
+	 WHERE A.COURSE_KIND IN ('NORMAL')
+]]>
+	   <if test="c1Code != null and c1Code != ''"> AND CT.C1_CODE = #{c1Code}</if>
+	   <if test="c2Code != null and c2Code != ''"> AND CT.C2_CODE = #{c2Code}</if>
+	   <if test="c3Code != null and c3Code != ''"> AND CT.C3_CODE = #{c3Code}</if>
+	   <if test="courseCode != null and courseCode != ''"> AND A.COURSE_CODE = #{courseCode}</if>
+	 ORDER BY CT.CATEGORY_NAME,CC.COURSE_NAME,A.CHASU DESC,U.USER_NAME
+ ) DATA LIMIT #{limitStart},#{limitUnit}
+</select>
+
+<select id="approvalNormalTotal" parameterType="ApprovalNormal" resultType="ApprovalNormal">
+<![CDATA[
+	SELECT COUNT(*) CNT
+	  FROM COURSE A 
+				JOIN COURSE_CODE CC ON CC.COURSE_CODE = A.COURSE_CODE
+				JOIN COURSE_APPROVAL CA ON CA.COURSE_ID = A.COURSE_ID
+				JOIN APPROVAL AP ON AP.APPROVAL_ID = CA.APPROVAL_ID AND AP.STATUS = 'A'
+				LEFT OUTER JOIN USER U ON U.USER_ID = CA.USER_ID
+				LEFT OUTER JOIN (
+						   SELECT C3.CODE C3_CODE,C2.CODE C2_CODE,C1.CODE C1_CODE,
+							  CONCAT(C1.CODE_NAME,' > ',C2.CODE_NAME,' > ',C3.CODE_NAME) CATEGORY_NAME
+						     FROM CATEGORY C3 LEFT OUTER JOIN CATEGORY C2 ON C3.PARENT_CODE = C2.CODE
+								      LEFT OUTER JOIN CATEGORY C1 ON C2.PARENT_CODE = C1.CODE
+						    WHERE C3.DEPTH = 3) CT ON CT.C3_CODE = CC.CODE
+	 WHERE A.COURSE_KIND IN ('NORMAL')
+]]>
+	   <if test="c1Code != null and c1Code != ''"> AND CT.C1_CODE = #{c1Code}</if>
+	   <if test="c2Code != null and c2Code != ''"> AND CT.C2_CODE = #{c2Code}</if>
+	   <if test="c3Code != null and c3Code != ''"> AND CT.C3_CODE = #{c3Code}</if>
+	   <if test="courseCode != null and courseCode != ''"> AND A.COURSE_CODE = #{courseCode}</if>
+</select>
+
+<select id="approvalNormalData" parameterType="ApprovalNormal" resultType="ApprovalNormal">
+SELECT *
+  FROM COURSE_REGISTER
+ WHERE COURSE_ID = #{courseId}
+   AND USER_ID = #{userId}
+</select>
+
+<select id="waitingApprovalNormalList" parameterType="ApprovalNormal" resultType="ApprovalNormal">
+<![CDATA[
+SELECT DATA.* FROM (
+	SELECT A.COURSE_ID,
+	       CT.CATEGORY_NAME,
+	       A.COURSE_CODE,	
+	       CC.COURSE_NAME,	
+	       A.CHASU,
+	       CA.USER_ID,
+	       U.USER_NAME,
+	       A.COURSE_COST PAYMENT_COST,
+	       (SELECT DD_VALUE FROM CODE WHERE DD_MAIN = 'BANK' AND DD_KEY = AP.PAYMENT_BANK) PAYMENT_BANK
+	  FROM COURSE A 
+				JOIN COURSE_CODE CC ON CC.COURSE_CODE = A.COURSE_CODE
+				JOIN COURSE_APPROVAL CA ON CA.COURSE_ID = A.COURSE_ID
+				JOIN APPROVAL AP ON AP.APPROVAL_ID = CA.APPROVAL_ID AND AP.STATUS = 'Y'
+				LEFT OUTER JOIN USER U ON U.USER_ID = CA.USER_ID
+				LEFT OUTER JOIN (
+						   SELECT C3.CODE C3_CODE,C2.CODE C2_CODE,C1.CODE C1_CODE,
+							  CONCAT(C1.CODE_NAME,' > ',C2.CODE_NAME,' > ',C3.CODE_NAME) CATEGORY_NAME
+						     FROM CATEGORY C3 LEFT OUTER JOIN CATEGORY C2 ON C3.PARENT_CODE = C2.CODE
+								      LEFT OUTER JOIN CATEGORY C1 ON C2.PARENT_CODE = C1.CODE
+						    WHERE C3.DEPTH = 3) CT ON CT.C3_CODE = CC.CODE
+	 WHERE A.COURSE_KIND IN ('NORMAL')
+]]>
+	   <if test="c1Code != null and c1Code != ''"> AND CT.C1_CODE = #{c1Code}</if>
+	   <if test="c2Code != null and c2Code != ''"> AND CT.C2_CODE = #{c2Code}</if>
+	   <if test="c3Code != null and c3Code != ''"> AND CT.C3_CODE = #{c3Code}</if>
+	   <if test="courseCode != null and courseCode != ''"> AND A.COURSE_CODE = #{courseCode}</if>
+	 ORDER BY CT.CATEGORY_NAME,CC.COURSE_NAME,A.CHASU DESC,U.USER_NAME
+ ) DATA LIMIT #{limitStart},#{limitUnit}
+</select>
+
+<select id="waitingApprovalNormalTotal" parameterType="ApprovalNormal" resultType="ApprovalNormal">
+<![CDATA[
+	SELECT COUNT(*) CNT
+	  FROM COURSE A 
+				JOIN COURSE_CODE CC ON CC.COURSE_CODE = A.COURSE_CODE
+				JOIN COURSE_APPROVAL CA ON CA.COURSE_ID = A.COURSE_ID
+				JOIN APPROVAL AP ON AP.APPROVAL_ID = CA.APPROVAL_ID AND AP.STATUS = 'Y'
+				LEFT OUTER JOIN USER U ON U.USER_ID = CA.USER_ID
+				LEFT OUTER JOIN (
+						   SELECT C3.CODE C3_CODE,C2.CODE C2_CODE,C1.CODE C1_CODE,
+							  CONCAT(C1.CODE_NAME,' > ',C2.CODE_NAME,' > ',C3.CODE_NAME) CATEGORY_NAME
+						     FROM CATEGORY C3 LEFT OUTER JOIN CATEGORY C2 ON C3.PARENT_CODE = C2.CODE
+								      LEFT OUTER JOIN CATEGORY C1 ON C2.PARENT_CODE = C1.CODE
+						    WHERE C3.DEPTH = 3) CT ON CT.C3_CODE = CC.CODE
+	 WHERE A.COURSE_KIND IN ('NORMAL')
+]]>
+	   <if test="c1Code != null and c1Code != ''"> AND CT.C1_CODE = #{c1Code}</if>
+	   <if test="c2Code != null and c2Code != ''"> AND CT.C2_CODE = #{c2Code}</if>
+	   <if test="c3Code != null and c3Code != ''"> AND CT.C3_CODE = #{c3Code}</if>
+	   <if test="courseCode != null and courseCode != ''"> AND A.COURSE_CODE = #{courseCode}</if>
+</select>
+
+<select id="refundNormalList" parameterType="ApprovalNormal" resultType="ApprovalNormal">
+<![CDATA[
+SELECT DATA.* FROM (
+	SELECT A.COURSE_ID,
+	       CT.CATEGORY_NAME,
+	       A.COURSE_CODE,	
+	       CC.COURSE_NAME,	
+	       A.CHASU,
+	       CA.USER_ID,
+	       U.USER_NAME,
+	       A.COURSE_COST PAYMENT_COST,
+	       DATE_FORMAT(AP.PAYMENT_DATE, '%y.%m.%d %T') PAYMENT_DATE
+	  FROM COURSE A 
+				JOIN COURSE_CODE CC ON CC.COURSE_CODE = A.COURSE_CODE
+				JOIN COURSE_APPROVAL CA ON CA.COURSE_ID = A.COURSE_ID
+				JOIN APPROVAL AP ON AP.APPROVAL_ID = CA.APPROVAL_ID AND AP.STATUS = 'R'
+				LEFT OUTER JOIN USER U ON U.USER_ID = CA.USER_ID
+				LEFT OUTER JOIN (
+						   SELECT C3.CODE C3_CODE,C2.CODE C2_CODE,C1.CODE C1_CODE,
+							  CONCAT(C1.CODE_NAME,' > ',C2.CODE_NAME,' > ',C3.CODE_NAME) CATEGORY_NAME
+						     FROM CATEGORY C3 LEFT OUTER JOIN CATEGORY C2 ON C3.PARENT_CODE = C2.CODE
+								      LEFT OUTER JOIN CATEGORY C1 ON C2.PARENT_CODE = C1.CODE
+						    WHERE C3.DEPTH = 3) CT ON CT.C3_CODE = CC.CODE
+	 WHERE A.COURSE_KIND IN ('NORMAL')
+]]>
+	   <if test="c1Code != null and c1Code != ''"> AND CT.C1_CODE = #{c1Code}</if>
+	   <if test="c2Code != null and c2Code != ''"> AND CT.C2_CODE = #{c2Code}</if>
+	   <if test="c3Code != null and c3Code != ''"> AND CT.C3_CODE = #{c3Code}</if>
+	   <if test="courseCode != null and courseCode != ''"> AND A.COURSE_CODE = #{courseCode}</if>
+	 ORDER BY CT.CATEGORY_NAME,CC.COURSE_NAME,A.CHASU DESC,U.USER_NAME
+ ) DATA LIMIT #{limitStart},#{limitUnit}
+</select>
+
+<select id="refundNormalTotal" parameterType="ApprovalNormal" resultType="ApprovalNormal">
+<![CDATA[
+	SELECT COUNT(*) CNT
+	  FROM COURSE A 
+				JOIN COURSE_CODE CC ON CC.COURSE_CODE = A.COURSE_CODE
+				JOIN COURSE_APPROVAL CA ON CA.COURSE_ID = A.COURSE_ID
+				JOIN APPROVAL AP ON AP.APPROVAL_ID = CA.APPROVAL_ID AND AP.STATUS = 'R'
+				LEFT OUTER JOIN USER U ON U.USER_ID = CA.USER_ID
+				LEFT OUTER JOIN (
+						   SELECT C3.CODE C3_CODE,C2.CODE C2_CODE,C1.CODE C1_CODE,
+							  CONCAT(C1.CODE_NAME,' > ',C2.CODE_NAME,' > ',C3.CODE_NAME) CATEGORY_NAME
+						     FROM CATEGORY C3 LEFT OUTER JOIN CATEGORY C2 ON C3.PARENT_CODE = C2.CODE
+								      LEFT OUTER JOIN CATEGORY C1 ON C2.PARENT_CODE = C1.CODE
+						    WHERE C3.DEPTH = 3) CT ON CT.C3_CODE = CC.CODE
+	 WHERE A.COURSE_KIND IN ('NORMAL')
+]]>
+	   <if test="c1Code != null and c1Code != ''"> AND CT.C1_CODE = #{c1Code}</if>
+	   <if test="c2Code != null and c2Code != ''"> AND CT.C2_CODE = #{c2Code}</if>
+	   <if test="c3Code != null and c3Code != ''"> AND CT.C3_CODE = #{c3Code}</if>
+	   <if test="courseCode != null and courseCode != ''"> AND A.COURSE_CODE = #{courseCode}</if>
+</select>
+
+<select id="paymentConfirm" parameterType="ApprovalNormal">
+UPDATE COURSE_REGISTER
+   SET STATUS = 'A',
+       UPDATE_DATE = CURRENT_TIMESTAMP,
+       UPDATE_USER = #{updateUser}
+ WHERE COURSE_ID = #{courseId}   
+   AND USER_ID = #{userId}
+</select>
+
+<select id="registerConfirm" parameterType="ApprovalNormal">
+UPDATE APPROVAL
+   SET STATUS = 'A',
+       PAYMENT_DATE = CURRENT_TIMESTAMP,
+       UPDATE_DATE = CURRENT_TIMESTAMP,
+       UPDATE_USER = #{updateUser}
+ WHERE APPROVAL_ID = (SELECT APPROVAL_ID FROM COURSE_APPROVAL WHERE COURSE_ID = #{courseId} AND USER_ID = #{userId})
+</select>
+
+<select id="courseEvalIns" parameterType="ApprovalNormal">
+INSERT INTO COURSE_EVAL(COURSE_ID,USER_ID,REPORT,EXAM,DISCUSSION,PROGRESS,TOTAL,LAST_WEEK,LAST_PAGE,CREATE_DATE,CREATE_USER)
+VALUES(#{courseId},#{userId},0,0,0,0,0,1,1,CURRENT_TIMESTAMP,#{createUser})
+</select>
+
+<select id="courseWeekIns" parameterType="ApprovalNormal">
+INSERT INTO COURSE_WEEK(COURSE_ID,USER_ID,WEEK,PROGRESS_RATE,STUDY_START,STUDY_END)
+SELECT #{courseId},#{userId},WEEK,0,NULL,NULL
+  FROM COURSE_RESOURCE
+ WHERE COURSE_CODE = ( SELECT COURSE_CODE FROM COURSE WHERE COURSE_ID = #{courseId} ) 
+</select>    
+
+<select id="approvalNormalRefundUpd" parameterType="ApprovalNormal">
+UPDATE COURSE_REGISTER
+   SET STATUS = 'R',
+       REFUND_COST = #{refundCost},
+       REFUND_BANK = #{refundBank},
+       REFUND_ACC_NUM = #{refundAccNum},
+       REFUND_DATE = CURRENT_TIMESTAMP,
+       UPDATE_DATE = CURRENT_TIMESTAMP,
+       UPDATE_USER = #{updateUser}
+ WHERE COURSE_ID = #{courseId}   
+   AND USER_ID = #{userId}
+</select>
+
+<select id="pointCourseInIns" parameterType="ApprovalNormal">
+INSERT POINT(USER_ID, KIND, IN_POINT, OUT_POINT, REF_ID, CREATE_DATE)
+SELECT #{userId},'COURSE',B.POINT,0,A.COURSE_ID,CURRENT_TIMESTAMP
+  FROM COURSE A LEFT OUTER JOIN COURSE_CODE B ON A.COURSE_CODE = B.COURSE_CODE
+ WHERE COURSE_ID = #{courseId}
+   AND B.POINT != 0 
+</select> 
+
+<select id="pointCourseRefundOutIns" parameterType="ApprovalNormal">
+INSERT POINT(USER_ID, KIND, IN_POINT, OUT_POINT, REF_ID, CREATE_DATE)
+VALUES (#{userId},'COURSE_REFUND',0,(SELECT POINT FROM COURSE_CODE WHERE COURSE_CODE = (SELECT COURSE_CODE FROM COURSE WHERE COURSE_ID = #{courseId})),#{courseId},CURRENT_TIMESTAMP)
+SELECT #{userId},'COURSE_REFUND',0,B.POINT,A.COURSE_ID,CURRENT_TIMESTAMP
+  FROM COURSE A LEFT OUTER JOIN COURSE_CODE B ON A.COURSE_CODE = B.COURSE_CODE
+ WHERE COURSE_ID = #{courseId}
+   AND B.POINT != 0 
+</select> 
+
+
+        
+</mapper>

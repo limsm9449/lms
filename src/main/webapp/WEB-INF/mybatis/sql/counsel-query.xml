@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="counsel">
+
+	<select id="userCounselList" parameterType="Counsel" resultType="Counsel">
+	SELECT PAGE.* FROM ( SELECT DATA.* FROM ( 
+		SELECT SEQ,
+		       B.DD_VALUE CATEGORY_NAME,
+		       TITLE,
+		       CONTENTS,
+		       ANSWER,
+		       IF(ANSWER IS NULL,'X','O') ANSWER_YN,
+		       DATE_FORMAT(IFNULL(UPDATE_DATE,CREATE_DATE), '%y.%m.%d %H:%i') CREATE_DATE,
+		       @ROWNUM := @ROWNUM + 1 ROWNUM
+		  FROM COUNSEL A LEFT OUTER JOIN CODE B ON A.CATEGORY = B.DD_KEY AND B.DD_MAIN = 'FAQ',
+		       (SELECT @ROWNUM := 0) NUM
+		 WHERE USER_ID = #{userId}
+		   <if test="findString != null and findString != ''"> AND TITLE LIKE CONCAT('%',#{findString},'%')</if> 
+		 ORDER BY SEQ
+	) DATA ORDER BY SEQ DESC ) PAGE LIMIT #{limitStart},#{limitUnit}    
+	</select>	
+	
+	<select id="userCounselTotal" parameterType="Counsel" resultType="Counsel">
+	SELECT COUNT(*) CNT
+	  FROM COUNSEL
+	 WHERE USER_ID = #{userId}
+		   <if test="findString != null and findString != ''"> AND TITLE LIKE CONCAT('%',#{findString},'%')</if> 
+	</select>
+
+	<select id="counselList" parameterType="Counsel" resultType="Counsel">
+	SELECT PAGE.* FROM ( SELECT DATA.* FROM ( 
+		SELECT SEQ,
+		       B.DD_VALUE CATEGORY_NAME,
+		       TITLE,
+		       CONTENTS,
+		       ANSWER,
+		       IF(LENGTH(IFNULL(ANSWER,''))=0,'N','Y') ANSWER_YN,
+		       DATE_FORMAT(IFNULL(UPDATE_DATE,CREATE_DATE), '%y.%m.%d %H:%i') CREATE_DATE,
+		       (SELECT USER_NAME FROM USER WHERE USER_ID = A.USER_ID) USER_NAME,
+		       @ROWNUM := @ROWNUM + 1 ROWNUM
+		  FROM COUNSEL A LEFT OUTER JOIN CODE B ON A.CATEGORY = B.DD_KEY AND B.DD_MAIN = 'FAQ',
+		       (SELECT @ROWNUM := 0) NUM
+		   <if test="findString != null and findString != ''"> WHERE TITLE LIKE CONCAT('%',#{findString},'%')</if> 
+		 ORDER BY SEQ
+	) DATA ORDER BY SEQ DESC ) PAGE LIMIT #{limitStart},#{limitUnit}    
+	</select>	
+	
+	<select id="counselTotal" parameterType="Counsel" resultType="Counsel">
+	SELECT COUNT(*) CNT
+	  FROM COUNSEL
+       <if test="findString != null and findString != ''"> WHERE TITLE LIKE CONCAT('%',#{findString},'%')</if> 
+	</select>
+
+    <select id="userCounselData" parameterType="Counsel" resultType="Counsel">
+		SELECT SEQ,
+		       A.CATEGORY,
+		       B.DD_VALUE CATEGORY_NAME,
+		       TITLE,
+		       CONTENTS,
+		       ANSWER,
+		       DATE_FORMAT(IFNULL(UPDATE_DATE,CREATE_DATE), '%y.%m.%d %H:%i') CREATE_DATE
+		  FROM COUNSEL A LEFT OUTER JOIN CODE B ON A.CATEGORY = B.DD_KEY AND B.DD_MAIN = 'FAQ'
+		 WHERE SEQ = #{seq}
+    </select>	
+
+    <select id="counselAnswerData" parameterType="Counsel" resultType="Counsel">
+		SELECT SEQ,
+		       B.DD_VALUE CATEGORY_NAME, 
+		       TITLE,
+		       CONTENTS,
+		       ANSWER,
+		       DATE_FORMAT(IFNULL(UPDATE_DATE,CREATE_DATE), '%y.%m.%d %H:%i') CREATE_DATE
+		  FROM COUNSEL A LEFT OUTER JOIN CODE B ON A.CATEGORY = B.DD_KEY AND B.DD_MAIN = 'FAQ'
+		 WHERE SEQ = #{seq}
+    </select>	
+
+    <select id="userCounselIns" parameterType="Counsel">
+		INSERT INTO COUNSEL (CATEGORY,TITLE,CONTENTS,USER_ID,CREATE_DATE)
+		VALUES (#{category},#{title},#{contents},#{userId},CURRENT_TIMESTAMP)
+    </select>	
+    
+    <select id="userCounselUpd" parameterType="Counsel">
+		UPDATE COUNSEL
+		   SET CATEGORY = #{category},
+		       TITLE = #{title},
+		       CONTENTS = #{contents},
+		       UPDATE_DATE = CURRENT_TIMESTAMP
+		 WHERE SEQ = #{seq}
+    </select>	
+
+    <select id="userCounselDel" parameterType="Counsel">
+		DELETE FROM COUNSEL
+		 WHERE SEQ = #{seq}
+    </select>	
+
+    <select id="counselAnswerUpd" parameterType="Counsel">
+		UPDATE COUNSEL
+		   SET ANSWER = #{answer},
+		       UPDATE_DATE = CURRENT_TIMESTAMP
+		 WHERE SEQ = #{seq}
+    </select>	
+
+
+        
+</mapper>

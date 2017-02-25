@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ns">
+
+    <!-- UserId를 검색한다. -->
+   	<select id="findUseridType1" parameterType="Ns" resultType="Ns">
+		SELECT USER_ID,RETIRED_YN
+		  FROM USER 
+		 WHERE USER_NAME = #{userName1}
+		   AND EMAIL = #{email} 
+    </select>
+    	
+    <!-- UserId를 검색한다. -->
+   	<select id="findUseridType2" parameterType="Ns" resultType="Ns">
+		SELECT USER_ID,RETIRED_YN
+		  FROM USER 
+		 WHERE USER_NAME = #{userName2}
+		   AND REPLACE(MOBILE,'-','') = CONCAT(#{mobile1},#{mobile2},#{mobile3}) 
+    </select>
+    	
+   	<!-- EMail를 검색한다. -->
+   	<select id="findEmailType1" parameterType="Ns" resultType="Ns">
+		SELECT EMAIL,USER_NAME,RETIRED_YN
+		  FROM USER 
+		 WHERE USER_ID = #{userId1}
+		   AND USER_NAME = #{userName1}
+		   AND EMAIL = #{email} 
+    </select>
+  
+    <!-- EMail를 검색한다. -->
+   	<select id="findEmailType2" parameterType="Ns" resultType="Ns">
+		SELECT EMAIL,USER_NAME,RETIRED_YN
+		  FROM USER 
+		 WHERE USER_ID = #{userId2}
+		   AND USER_NAME = #{userName2}
+		   AND REPLACE(MOBILE,'-','') = CONCAT(#{mobile1},#{mobile2},#{mobile3}) 
+    </select>
+      
+    <!-- Password를 변경한다. -->
+   	<select id="updNewPassword" parameterType="Ns">
+		UPDATE USER
+		   SET USER_PASSWORD = PASSWORD(#{newPassword}) 
+		 WHERE USER_ID = #{userId}
+    </select>
+    
+    
+</mapper>

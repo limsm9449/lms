@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="courseImage">
+	
+<select id="courseImageList" parameterType="CourseImage" resultType="CourseImage">
+SELECT DATA.* FROM (
+    SELECT C.CATEGORY_NAME
+           ,A.COURSE_CODE
+	       ,B.COURSE_NAME
+	       ,A.SWF
+	       ,A.B_IMG
+	       ,A.C_IMG
+	       ,A.M_IMG1
+	       ,A.M_IMG2
+	       ,A.M_IMG3
+	       ,A.S_IMG1
+	       ,A.S_IMG2
+	       ,A.S_IMG3
+	  FROM COURSE_MASTER A LEFT OUTER JOIN COURSE_CODE B ON A.COURSE_CODE = B.COURSE_CODE
+	                       LEFT OUTER JOIN (
+				   SELECT C3.CODE C3_CODE,
+					  C2.CODE C2_CODE,
+					  C1.CODE C1_CODE,
+					  CONCAT(C1.CODE_NAME,' > ',C2.CODE_NAME,' > ',C3.CODE_NAME) CATEGORY_NAME
+					 FROM CATEGORY C3 LEFT OUTER JOIN CATEGORY C2 ON C3.PARENT_CODE = C2.CODE
+						      LEFT OUTER JOIN CATEGORY C1 ON C2.PARENT_CODE = C1.CODE
+				    WHERE C3.DEPTH = 3) C ON B.CODE = C.C3_CODE
+	 WHERE 1 = 1
+	   <if test="c1Code != null and c1Code != ''"> AND C.C1_CODE = #{c1Code}</if>
+	   <if test="c2Code != null and c2Code != ''"> AND C.C2_CODE = #{c2Code}</if>
+	   <if test="c3Code != null and c3Code != ''"> AND C.C3_CODE = #{c3Code}</if>
+	   <if test="courseName != null and courseName != ''"> AND B.COURSE_NAME LIKE CONCAT('%',#{courseName},'%')</if>
+	 ORDER BY B.COURSE_NAME  
+ ) DATA LIMIT #{limitStart},#{limitUnit}
+</select>
+<select id="courseImageTotal" parameterType="CourseImage" resultType="CourseImage">
+    SELECT COUNT(*) CNT			       
+	  FROM COURSE_MASTER A LEFT OUTER JOIN COURSE_CODE B ON A.COURSE_CODE = B.COURSE_CODE
+	                       LEFT OUTER JOIN (
+				   SELECT C3.CODE C3_CODE,
+					  C2.CODE C2_CODE,
+					  C1.CODE C1_CODE,
+					  CONCAT(C1.CODE_NAME,' > ',C2.CODE_NAME,' > ',C3.CODE_NAME) CATEGORY_NAME
+					 FROM CATEGORY C3 LEFT OUTER JOIN CATEGORY C2 ON C3.PARENT_CODE = C2.CODE
+						      LEFT OUTER JOIN CATEGORY C1 ON C2.PARENT_CODE = C1.CODE
+				    WHERE C3.DEPTH = 3) C ON B.CODE = C.C3_CODE
+	 WHERE 1 = 1
+	   <if test="c1Code != null and c1Code != ''"> AND C.C1_CODE = #{c1Code}</if>
+	   <if test="c2Code != null and c2Code != ''"> AND C.C2_CODE = #{c2Code}</if>
+	   <if test="c3Code != null and c3Code != ''"> AND C.C3_CODE = #{c3Code}</if>
+	   <if test="courseName != null and courseName != ''"> AND B.COURSE_NAME LIKE CONCAT('%',#{courseName},'%')</if>
+</select>
+
+<select id="courseImageData" parameterType="CourseImage" resultType="CourseImage">
+SELECT A.COURSE_CODE
+       ,B.COURSE_NAME
+       ,A.SWF
+       ,A.B_IMG
+       ,A.C_IMG
+       ,A.M_IMG1
+       ,A.M_IMG2
+       ,A.M_IMG3
+       ,A.S_IMG1
+       ,A.S_IMG2
+       ,A.S_IMG3
+  FROM COURSE_MASTER A, COURSE_CODE B
+ WHERE A.COURSE_CODE = B.COURSE_CODE 
+   AND A.COURSE_CODE = #{courseCode}
+</select>
+
+<select id="courseImageUpd" parameterType="CourseImage">
+UPDATE COURSE_MASTER
+   SET UPDATE_DATE = CURRENT_TIMESTAMP
+   <if test="kind != null and kind == 'SWF'"> ,SWF = 'Y'</if>
+   <if test="kind != null and kind == 'B_IMG'"> ,B_IMG = 'Y'</if>
+   <if test="kind != null and kind == 'C_IMG'"> ,C_IMG = 'Y'</if>
+   <if test="kind != null and kind == 'M_IMG1'"> ,M_IMG1 = 'Y'</if>
+   <if test="kind != null and kind == 'M_IMG2'"> ,M_IMG2 = 'Y'</if>
+   <if test="kind != null and kind == 'M_IMG3'"> ,M_IMG3 = 'Y'</if>
+   <if test="kind != null and kind == 'S_IMG1'"> ,S_IMG1 = 'Y'</if>
+   <if test="kind != null and kind == 'S_IMG2'"> ,S_IMG2 = 'Y'</if>
+   <if test="kind != null and kind == 'S_IMG3'"> ,S_IMG3 = 'Y'</if>
+ WHERE COURSE_CODE = #{courseCode} 
+</select>
+
+
+    
+        
+</mapper>

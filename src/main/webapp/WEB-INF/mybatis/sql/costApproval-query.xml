@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="costApproval">
+		
+	<select id="costApprovalList" parameterType="CostApproval" resultType="CostApproval">
+	SELECT DATA.* FROM (
+		SELECT AP.APPROVAL_ID,
+		       AP.USER_ID,
+		       U.USER_NAME,
+		       AP.TOTAL_COST,
+		       AP.PAYMENT_POINT,
+		       AP.PAYMENT_COST,
+		       AP.PAYMENT_KIND,
+		       (SELECT DD_VALUE FROM CODE WHERE DD_MAIN = 'PAYMENT_KIND2' AND DD_KEY = AP.PAYMENT_KIND) PAYMENT_KIND_NAME,
+		       (SELECT DD_VALUE FROM CODE WHERE DD_MAIN = 'BANK' AND DD_KEY = AP.PAYMENT_BANK) PAYMENT_BANK,
+		       (SELECT DD_VALUE FROM CODE WHERE DD_MAIN = 'UC_KIND' AND DD_KEY = AP.KIND) KIND_NAME,
+		       DATE_FORMAT(AP.PAYMENT_DATE, '%y.%m.%d %T') PAYMENT_DATE,
+		       (SELECT COUNT(*) FROM COURSE_REGISTER WHERE APPROVAL_ID = AP.APPROVAL_ID AND COST_ID != 0) COST_ID_CNT
+		  FROM APPROVAL AP LEFT OUTER JOIN USER U ON U.USER_ID = AP.USER_ID
+		 WHERE AP.STATUS = 'A' 
+		   <if test="fDate != null and fDate != ''"> AND DATE_FORMAT(AP.PAYMENT_DATE,'%Y%m%d') BETWEEN DATE_FORMAT(#{fDate},'%Y%m%d') AND DATE_FORMAT(#{tDate},'%Y%m%d')</if>
+		   <if test="userName != null and userName != ''"> AND U.USER_NAME LIKE CONCAT('%',#{userName},'%')</if>		 
+		 ORDER BY AP.CREATE_DATE DESC
+	 ) DATA LIMIT #{limitStart},#{limitUnit}
+	</select>
+	
+	<select id="costApprovalTotal" parameterType="CostApproval" resultType="CostApproval">
+	SELECT SUM(DATA.CNT) CNT FROM (
+		SELECT COUNT(*) CNT
+		  FROM APPROVAL AP LEFT OUTER JOIN USER U ON U.USER_ID = AP.USER_ID
+		 WHERE AP.STATUS = 'A' 
+		   <if test="fDate != null and fDate != ''"> AND DATE_FORMAT(AP.PAYMENT_DATE,'%Y%m%d') BETWEEN DATE_FORMAT(#{fDate},'%Y%m%d') AND DATE_FORMAT(#{tDate},'%Y%m%d')</if>
+		   <if test="userName != null and userName != ''"> AND U.USER_NAME LIKE CONCAT('%',#{userName},'%')</if>		 
+	 ) DATA
+	</select>
+
+	<select id="costBankList" parameterType="CostApproval" resultType="CostApproval">
+	SELECT DATA.* FROM (
+		SELECT AP.APPROVAL_ID,
+		       AP.USER_ID,
+		       U.USER_NAME,
+		       AP.TOTAL_COST,
+		       AP.PAYMENT_POINT,
+		       AP.PAYMENT_COST,
+		       AP.PAYMENT_KIND,
+		       (SELECT DD_VALUE FROM CODE WHERE DD_MAIN = 'PAYMENT_KIND2' AND DD_KEY = AP.PAYMENT_KIND) PAYMENT_KIND_NAME,
+		       (SELECT CONCAT(BANK_NAME,' ',ACC_NO) FROM BANK WHERE SEQ = AP.PAYMENT_BANK) PAYMENT_BANK,
+		       (SELECT DD_VALUE FROM CODE WHERE DD_MAIN = 'UC_KIND' AND DD_KEY = AP.KIND) KIND_NAME,
+		       AP.STATUS
+		  FROM APPROVAL AP LEFT OUTER JOIN USER U ON U.USER_ID = AP.USER_ID
+		 WHERE AP.STATUS IN ('B','C') 
+		   <if test="userName != null and userName != ''"> AND U.USER_NAME LIKE CONCAT('%',#{userName},'%')</if>		 
+		 ORDER BY AP.STATUS, AP.CREATE_DATE DESC
+	 ) DATA LIMIT #{limitStart},#{limitUnit}
+	</select>
+	
+	<select id="costBankTotal" parameterType="CostApproval" resultType="CostApproval">
+	SELECT SUM(DATA.CNT) CNT FROM (
+		SELECT COUNT(*) CNT
+		  FROM APPROVAL AP LEFT OUTER JOIN USER U ON U.USER_ID = AP.USER_ID
+		 WHERE AP.STATUS = 'B' 
+		   <if test="userName != null and userName != ''"> AND U.USER_NAME LIKE CONCAT('%',#{userName},'%')</if>		 
+	 ) DATA
+	</select>
+	
+	<select id="costRefundList" parameterType="CostApproval" resultType="CostApproval">
+	SELECT DATA.* FROM (
+		SELECT AP.APPROVAL_ID,
+		       AP.USER_ID,
+		       U.USER_NAME,
+		       (SELECT DD_VALUE FROM CODE WHERE DD_MAIN = 'UC_KIND' AND DD_KEY = AP.KIND) KIND_NAME,
+		       AP.TOTAL_COST,
+		       AP.PAYMENT_POINT,
+		       AP.PAYMENT_COST,
+		       AP.REFUND_COST,
+		       DATE_FORMAT(AP.REFUND_DATE, '%y.%m.%d %T') REFUND_DATE
+		  FROM APPROVAL AP LEFT OUTER JOIN USER U ON U.USER_ID = AP.USER_ID
+		 WHERE AP.STATUS = 'R' 
+		   <if test="fDate != null and fDate != ''"> AND DATE_FORMAT(AP.REFUND_DATE,'%Y%m%d') BETWEEN DATE_FORMAT(#{fDate},'%Y%m%d') AND DATE_FORMAT(#{tDate},'%Y%m%d')</if>
+		   <if test="userName != null and userName != ''"> AND U.USER_NAME LIKE CONCAT('%',#{userName},'%')</if>		 
+		 ORDER BY AP.CREATE_DATE DESC
+	 ) DATA LIMIT #{limitStart},#{limitUnit}
+	</select>
+	
+	<select id="costRefundTotal" parameterType="CostApproval" resultType="CostApproval">
+	SELECT SUM(DATA.CNT) CNT FROM (
+		SELECT COUNT(*) CNT
+		  FROM APPROVAL AP LEFT OUTER JOIN USER U ON U.USER_ID = AP.USER_ID
+		 WHERE AP.STATUS = 'R' 
+		   <if test="fDate != null and fDate != ''"> AND DATE_FORMAT(AP.REFUND_DATE,'%Y%m%d') BETWEEN DATE_FORMAT(#{fDate},'%Y%m%d') AND DATE_FORMAT(#{tDate},'%Y%m%d')</if>
+		   <if test="userName != null and userName != ''"> AND U.USER_NAME LIKE CONCAT('%',#{userName},'%')</if>		 
+	 ) DATA
+	</select>
+	
+	<select id="costApprovalData" parameterType="CostApproval" resultType="CostApproval">
+	SELECT AP.APPROVAL_ID,
+	       AP.USER_ID,
+	       U.USER_NAME,
+	       AP.TOTAL_COST,
+	       AP.PAYMENT_POINT,
+	       AP.PAYMENT_COST,
+	       AP.PAYMENT_KIND,
+	       (SELECT DD_VALUE FROM CODE WHERE DD_MAIN = 'BANK' AND DD_KEY = AP.PAYMENT_BANK) PAYMENT_BANK,
+	       (SELECT DD_VALUE FROM CODE WHERE DD_MAIN = 'UC_KIND' AND DD_KEY = AP.KIND) KIND_NAME,
+	       DATE_FORMAT(AP.PAYMENT_DATE, '%y.%m.%d %T') PAYMENT_DATE,
+	       AP.REFUND_COST,
+	       AP.REFUND_BANK,
+	       AP.REFUND_ACC_NUM,
+	       DATE_FORMAT(AP.REFUND_DATE, '%y.%m.%d %T') REFUND_DATE
+	  FROM APPROVAL AP LEFT OUTER JOIN USER U ON U.USER_ID = AP.USER_ID
+	 WHERE AP.APPROVAL_ID = #{approvalId}
+	</select>
+	
+	<select id="approvalCoursList" parameterType="CostApproval" resultType="CostApproval">
+	<![CDATA[
+	SELECT CC.COURSE_NAME,
+	       (SELECT KIND FROM APPROVAL WHERE APPROVAL_ID = A.APPROVAL_ID) KIND,
+	       SUM(C.COURSE_COST) COURSE_COST,
+	       COUNT(*) COMP_USER_CNT
+	  FROM COURSE_REGISTER A 
+	         JOIN COURSE C ON C.COURSE_ID = A.COURSE_ID
+	         JOIN COURSE_CODE CC ON CC.COURSE_CODE = C.COURSE_CODE  
+	 WHERE A.APPROVAL_ID = #{approvalId}
+	 GROUP BY CC.COURSE_NAME
+	]]>
+	</select>
+	
+    <select id="registerList" parameterType="CostApproval" resultType="CostApproval">
+	SELECT COURSE_ID,USER_ID
+	  FROM COURSE_REGISTER
+	 WHERE APPROVAL_ID = #{approvalId}
+	</select>
+	
+	<select id="costRefundUpd" parameterType="CostApproval">
+	UPDATE APPROVAL
+	   SET STATUS = 'R',
+	       REFUND_KIND = 'BANK',
+	       REFUND_COST = #{refundCost},
+	       REFUND_BANK = #{refundBank},
+	       REFUND_ACC_NUM = #{refundAccNum},
+	       REFUND_DATE = CURRENT_TIMESTAMP,
+	       UPDATE_DATE = CURRENT_TIMESTAMP,
+	       UPDATE_USER = #{updateUser}
+	 WHERE APPROVAL_ID = #{approvalId}
+	</select>
+
+	<select id="registerRefundUpd" parameterType="CostApproval">
+	UPDATE COURSE_REGISTER CR
+       SET STATUS = 'R',
+  	       UPDATE_DATE = CURRENT_TIMESTAMP,
+	       UPDATE_USER = #{updateUser}
+     WHERE APPROVAL_ID = #{approvalId}
+	</select>
+
+	<select id="costBankUpd" parameterType="CostApproval">
+	UPDATE APPROVAL
+	   SET STATUS = 'A',
+	       PAYMENT_DATE = CURRENT_TIMESTAMP,
+	       UPDATE_DATE = CURRENT_TIMESTAMP,
+	       UPDATE_USER = #{updateUser}
+	 WHERE APPROVAL_ID = #{approvalId}
+	</select>
+
+	<select id="registerConfirmUpd" parameterType="CostApproval">
+	UPDATE COURSE_REGISTER CR
+       SET STATUS = 'A',
+  	       CONFIRM_DATE = CURRENT_TIMESTAMP,
+  	       UPDATE_DATE = CURRENT_TIMESTAMP,
+	       UPDATE_USER = #{updateUser}
+     WHERE COURSE_ID = #{courseId} 
+       AND USER_ID = #{userId}
+	</select>
+
+
+</mapper>

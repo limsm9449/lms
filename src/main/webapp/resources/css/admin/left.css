@@ -1,0 +1,131 @@
+/* left */
+#wrap {
+  left: 208px;
+	height: 100%;
+	margin: 0;
+	padding: 0;
+}
+/* ----------------------    container     -------------------------- */
+#container {
+  width: 208px;
+  height: 100%;
+  background: url('/resources/images/admin/common/menu_right_line.png') right top repeat-y #fff;
+}
+
+/* ----------------------    side     -------------------------- */
+#side {
+  float:left;
+  width:208px;
+}
+ /* side header */
+#side #side_header {
+  width: 200px;
+  height: 140px;
+  text-align: center;
+  padding-top: 18px;
+}
+
+#side #side_header h1.logo {
+  margin: 0 auto 25px;
+}
+#side #side_header p.logmsg {
+  text-align: right;
+  padding-right: 14px;
+}
+
+#side #side_header .log_btn {
+  margin-top: 12px;
+  text-align: right;
+  padding-right: 14px;
+}
+
+#side hr {
+  display: block;
+  border-top: 1px solid #f0f0ef;
+	border-bottom: 0px;
+	border-left: 0px;
+	border-right: 0px;
+}
+
+/* left menu */
+#side #menu {
+  width: 200px;
+}
+#side #menu .snb li {
+  text-align: right;
+}
+#side #menu .snb li a {
+  display:block;
+  height: 34px;
+  cursor: pointer;
+}
+#side #menu .snb {
+  background-color: #fff;
+}
+#side #menu .snb li ul {
+  background-color: #f0f0f0;
+}
+#side #menu .snb li a {
+  border-bottom: 1px solid #f0f0ef;
+}
+#side #menu .snb li a span{
+  font: 14px 'Nanum Gothic';
+  color: #4b4b4b;
+  font-weight: bold;
+  height: 100%;
+  display: block;
+  padding-right: 22px;
+  line-height: 34px;
+}
+
+#side #menu .snb li a.linker:hover,
+#side #menu .snb li a.linker:active,
+#side #menu .snb li a.linker:focus,
+#side #menu .snb li a.here {
+  background-color: #0096dd;
+  border-bottom: 1px solid #fff;
+  border-left: 1px solid #fff;
+}
+#side #menu .snb li a.linker:hover span,
+#side #menu .snb li a.linker:active span,
+#side #menu .snb li a.linker:focus span, 
+#side #menu .snb li a.here span {
+  color:white;
+}
+#side #menu .snb li a.linker:hover span:before,
+#side #menu .snb li a.linker:active span:before,
+#side #menu .snb li a.linker:focus span:before, 
+#side #menu .snb li a.here span:before {
+  content: url('/resources/images/admin/common/bl_menu_chk.png');
+  padding-right: 10px;
+}
+#side #menu .snb li ul li a {
+  border-bottom: 1px solid #fff;
+  border-left: 1px solid #fff;
+}
+#side #menu .snb li ul li a span {
+  font: 12px 'Nanum Gothic';
+  color: #666;
+  font-weight: bold;
+  height: 100%;
+  line-height: 34px;
+}
+#side #menu .snb li ul li a.linker:hover,
+#side #menu .snb li ul li a.linker:active,
+#side #menu .snb li ul li a.linker:focus,
+#side #menu .snb li ul li a.here {
+  background-color: #a6e2fe;
+}
+
+#side #menu .snb li ul li a.linker:hover span,
+#side #menu .snb li ul li a.linker:active span,
+#side #menu .snb li ul li a.linker:focus span ,
+#side #menu .snb li ul li a.here span {
+  color: #666;
+}
+#side #menu .snb li ul li a.linker:hover span:before,
+#side #menu .snb li ul li a.linker:active span:before,
+#side #menu .snb li ul li a.linker:focus span:before, 
+#side #menu .snb li ul li a.here span:before {
+  content: none;
+}

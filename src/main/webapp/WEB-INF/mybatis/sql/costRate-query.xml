@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="costRate">
+		
+	<select id="costRateList" parameterType="CostRate" resultType="CostRate">
+	SELECT DATA.* FROM (
+		SELECT B.CATEGORY_NAME,
+		       A.COURSE_NAME,
+		       A.COURSE_CODE,
+		       IFNULL(A.COMPANY_RATE,0) COMPANY_RATE,
+		       IFNULL(A.TEACHER_RATE,0) TEACHER_RATE,
+		       IFNULL(A.TUTOR_RATE,0) TUTOR_RATE
+		  FROM COURSE_CODE A LEFT OUTER JOIN (
+		           SELECT C3.CODE C3_CODE,
+		                  C2.CODE C2_CODE,
+		                  C1.CODE C1_CODE,
+		                  CONCAT(C1.CODE_NAME,' > ',C2.CODE_NAME,' > ',C3.CODE_NAME) CATEGORY_NAME
+			     	 FROM CATEGORY C3 LEFT OUTER JOIN CATEGORY C2 ON C3.PARENT_CODE = C2.CODE
+			                      LEFT OUTER JOIN CATEGORY C1 ON C2.PARENT_CODE = C1.CODE
+		            WHERE C3.DEPTH = 3) B ON A.CODE = B.C3_CODE
+		 WHERE 1 = 1                    
+		  <if test="c1Code != null and c1Code != ''"> AND B.C1_CODE = #{c1Code}</if>
+		  <if test="c2Code != null and c2Code != ''"> AND B.C2_CODE = #{c2Code}</if>
+		  <if test="c3Code != null and c3Code != ''"> AND B.C3_CODE = #{c3Code}</if>
+	      <if test="courseName != null and courseName != ''"> AND A.COURSE_NAME LIKE CONCAT('%',#{courseName},'%')</if>
+		 ORDER BY B.CATEGORY_NAME,A.COURSE_NAME
+	 ) DATA LIMIT #{limitStart},#{limitUnit}
+	</select>
+	
+	<select id="costRateListTotal" parameterType="CostRate" resultType="CostRate">
+		SELECT COUNT(*) CNT
+		  FROM COURSE_CODE A LEFT OUTER JOIN (
+		           SELECT C3.CODE C3_CODE,
+		                  C2.CODE C2_CODE,
+		                  C1.CODE C1_CODE,
+		                  CONCAT(C1.CODE_NAME,' > ',C2.CODE_NAME,' > ',C3.CODE_NAME) CATEGORY_NAME
+			     	 FROM CATEGORY C3 LEFT OUTER JOIN CATEGORY C2 ON C3.PARENT_CODE = C2.CODE
+			                      LEFT OUTER JOIN CATEGORY C1 ON C2.PARENT_CODE = C1.CODE
+		            WHERE C3.DEPTH = 3) B ON A.CODE = B.C3_CODE
+		 WHERE 1 = 1                    
+		  <if test="c1Code != null and c1Code != ''"> AND B.C1_CODE = #{c1Code}</if>
+		  <if test="c2Code != null and c2Code != ''"> AND B.C2_CODE = #{c2Code}</if>
+		  <if test="c3Code != null and c3Code != ''"> AND B.C3_CODE = #{c3Code}</if>
+	      <if test="courseName != null and courseName != ''"> AND A.COURSE_NAME LIKE CONCAT('%',#{courseName},'%')</if>
+	</select>
+	
+	<select id="costRateData" parameterType="CostRate" resultType="CostRate">
+	SELECT B.CATEGORY_NAME,
+	       A.COURSE_NAME,
+	       A.COURSE_CODE,
+		   IFNULL(A.COMPANY_RATE,0) COMPANY_RATE,
+		   IFNULL(A.TEACHER_RATE,0) TEACHER_RATE,
+		   IFNULL(A.TUTOR_RATE,0) TUTOR_RATE
+	  FROM COURSE_CODE A LEFT OUTER JOIN (
+	           SELECT C3.CODE C3_CODE,
+	                  C2.CODE C2_CODE,
+	                  C1.CODE C1_CODE,
+	                  CONCAT(C1.CODE_NAME,' > ',C2.CODE_NAME,' > ',C3.CODE_NAME) CATEGORY_NAME
+		     	 FROM CATEGORY C3 LEFT OUTER JOIN CATEGORY C2 ON C3.PARENT_CODE = C2.CODE
+		                      LEFT OUTER JOIN CATEGORY C1 ON C2.PARENT_CODE = C1.CODE
+	            WHERE C3.DEPTH = 3) B ON A.CODE = B.C3_CODE
+ 	WHERE A.COURSE_CODE = #{courseCode} 
+	</select>	
+	
+	<select id="costRateUpdate" parameterType="CostRate">
+	UPDATE COURSE_CODE
+	   SET COMPANY_RATE = #{companyRate},
+	       TEACHER_RATE = #{teacherRate},
+	       TUTOR_RATE = #{tutorRate},
+	       UPDATE_DATE = CURRENT_TIMESTAMP,
+	       UPDATE_USER = #{updateUser}
+	 WHERE COURSE_CODE = #{courseCode}   
+	</select>
+        
+</mapper>

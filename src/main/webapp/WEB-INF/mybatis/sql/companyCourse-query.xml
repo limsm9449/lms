@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="companyCourse">
+		
+	<select id="companyCourseList" parameterType="CompanyCourse" resultType="CompanyCourse">
+	<![CDATA[
+	SELECT DATA.* FROM (
+	    SELECT D.CATEGORY_NAME
+	           ,A.COURSE_ID
+		       ,A.COURSE_CODE
+		       ,B.COURSE_NAME
+		       ,A.COMP_CD
+		       ,(SELECT COMP_NAME FROM COMPANY WHERE COMP_CD = A.COMP_CD) COMP_NAME
+		       ,E.TUTOR_ID
+		       ,(SELECT USER_NAME FROM USER WHERE USER_ID = E.TUTOR_ID) TUTOR_NAME
+		       ,A.CHASU
+		       ,A.C_PERIOD
+		       ,A.OPEN_YN
+		       ,(SELECT COUNT(*) FROM COURSE_REGISTER WHERE COURSE_ID = A.COURSE_ID AND STATUS = 'Y') Y_CNT
+		       ,(SELECT COUNT(*) FROM COURSE_REGISTER WHERE COURSE_ID = A.COURSE_ID AND STATUS = 'A') A_CNT
+		  FROM COURSE  A 
+		                LEFT OUTER JOIN COURSE_CODE B ON A.COURSE_CODE = B.COURSE_CODE
+		                LEFT OUTER JOIN CATEGORY C ON B.CODE = C.CODE 
+		                LEFT OUTER JOIN (
+							   SELECT C3.CODE C3_CODE,
+								  C2.CODE C2_CODE,
+								  C1.CODE C1_CODE,
+								  CONCAT(C1.CODE_NAME,' > ',C2.CODE_NAME,' > ',C3.CODE_NAME) CATEGORY_NAME
+								 FROM CATEGORY C3 LEFT OUTER JOIN CATEGORY C2 ON C3.PARENT_CODE = C2.CODE
+									      LEFT OUTER JOIN CATEGORY C1 ON C2.PARENT_CODE = C1.CODE
+							    WHERE C3.DEPTH = 3) D ON B.CODE = D.C3_CODE
+				        LEFT OUTER JOIN COMPANY E ON A.COMP_CD = E.COMP_CD
+		 WHERE A.COURSE_KIND = 'COMPANY'
+	]]>
+		   <if test="c1Code != null and c1Code != ''"> AND D.C1_CODE = #{c1Code}</if>
+		   <if test="c2Code != null and c2Code != ''"> AND D.C2_CODE = #{c2Code}</if>
+		   <if test="c3Code != null and c3Code != ''"> AND D.C3_CODE = #{c3Code}</if>
+		   <if test="courseName != null and courseName != ''"> AND B.COURSE_NAME LIKE CONCAT('%',#{courseName},'%')</if>
+		   <if test="status != null and status != ''"> AND A.C_STATUS = #{status}</if>
+	 ORDER BY D.CATEGORY_NAME,B.COURSE_NAME,A.CHASU DESC  
+	) DATA LIMIT #{limitStart},#{limitUnit}
+	</select>
+	
+	<select id="companyCourseTotal" parameterType="CompanyCourse" resultType="CompanyCourse">
+	<![CDATA[
+		SELECT COUNT(*) CNT
+		  FROM COURSE A 
+		                LEFT OUTER JOIN COURSE_CODE B ON A.COURSE_CODE = B.COURSE_CODE
+		                LEFT OUTER JOIN CATEGORY C ON B.CODE = C.CODE 
+		                LEFT OUTER JOIN (
+							   SELECT C3.CODE C3_CODE,
+								  C2.CODE C2_CODE,
+								  C1.CODE C1_CODE,
+								  CONCAT(C1.CODE_NAME,' > ',C2.CODE_NAME,' > ',C3.CODE_NAME) CATEGORY_NAME
+								 FROM CATEGORY C3 LEFT OUTER JOIN CATEGORY C2 ON C3.PARENT_CODE = C2.CODE
+									      LEFT OUTER JOIN CATEGORY C1 ON C2.PARENT_CODE = C1.CODE
+							    WHERE C3.DEPTH = 3) D ON B.CODE = D.C3_CODE
+		 WHERE A.COURSE_KIND = 'COMPANY'
+	]]>
+		   <if test="c1Code != null and c1Code != ''"> AND D.C1_CODE = #{c1Code}</if>
+		   <if test="c2Code != null and c2Code != ''"> AND D.C2_CODE = #{c2Code}</if>
+		   <if test="c3Code != null and c3Code != ''"> AND D.C3_CODE = #{c3Code}</if>
+		   <if test="courseName != null and courseName != ''"> AND B.COURSE_NAME LIKE CONCAT('%',#{courseName},'%')</if>
+		   <if test="status != null and status != ''"> AND A.C_STATUS = #{status}</if>
+	</select>
+	
+	<select id="companyCourseData" parameterType="CompanyCourse" resultType="CompanyCourse">
+	<![CDATA[
+	SELECT D.CATEGORY_NAME
+	       ,A.COURSE_ID
+	       ,A.COURSE_CODE
+	       ,B.COURSE_NAME
+	       ,A.COMP_CD
+		       ,(SELECT COMP_NAME FROM COMPANY WHERE COMP_CD = A.COMP_CD) COMP_NAME
+	       ,A.CHASU
+	       ,E.TUTOR_ID
+	       ,(SELECT COMP_NAME FROM USER WHERE USER_ID = E.TUTOR_ID) TUTOR_NAME
+	       ,C.LEARING_GOAL
+	       ,C.LEARING_CONTENT
+	       ,C.EVAL_METHOD
+	       ,C.LEARING_TARGET
+	       ,C.LEARING_COST
+      	   ,A.COURSE_COST
+	       ,A.REPORT_RATE
+	       ,A.EXAM_RATE
+	       ,A.DISCUSSION_RATE
+	       ,A.PROGRESS_RATE
+	       ,A.OPEN_YN
+    	   ,A.C_PERIOD
+	       ,(SELECT COUNT(*) FROM COURSE_REGISTER WHERE COURSE_ID = A.COURSE_ID AND STATUS = 'A') A_CNT
+       	   ,B.H_PX
+           ,B.V_PX
+	       ,C.WEEK_COST_YN
+    	   ,(SELECT DD_VALUE FROM CODE WHERE DD_MAIN = 'WEEK_COST_YN' AND DD_KEY = C.WEEK_COST_YN) WEEK_COST_YN_NAME
+	  FROM COURSE A 
+		          LEFT OUTER JOIN COURSE_CODE B ON A.COURSE_CODE = B.COURSE_CODE
+	              LEFT OUTER JOIN COURSE_MASTER C ON A.COURSE_CODE = C.COURSE_CODE
+	              LEFT OUTER JOIN (
+							   SELECT C3.CODE C3_CODE,
+								  C2.CODE C2_CODE,
+								  C1.CODE C1_CODE,
+								  CONCAT(C1.CODE_NAME,' > ',C2.CODE_NAME,' > ',C3.CODE_NAME) CATEGORY_NAME
+								 FROM CATEGORY C3 LEFT OUTER JOIN CATEGORY C2 ON C3.PARENT_CODE = C2.CODE
+									      LEFT OUTER JOIN CATEGORY C1 ON C2.PARENT_CODE = C1.CODE
+							    WHERE C3.DEPTH = 3) D ON B.CODE = D.C3_CODE
+		          LEFT OUTER JOIN COMPANY E ON A.COMP_CD = E.COMP_CD
+	 WHERE A.COURSE_ID = #{courseId}
+	]]> 
+	</select>
+	
+	<select id="companyCourseIns" parameterType="CompanyCourse">
+	INSERT INTO COURSE(COURSE_CODE,COMP_CD,CHASU,COURSE_KIND,COURSE_COST,C_PERIOD,OPEN_YN,
+	                   REPORT_RATE,EXAM_RATE,DISCUSSION_RATE,PROGRESS_RATE,
+	                   CREATE_DATE,CREATE_USER)
+	SELECT A.COURSE_CODE
+	       ,#{compCd}
+	       ,(SELECT IFNULL(MAX(CHASU) + 1,1) FROM COURSE WHERE COURSE_CODE = A.COURSE_CODE)
+	       ,'COMPANY'
+	       ,#{courseCost}
+       ,#{cPeriod}
+       ,#{openYn}
+	       ,A.REPORT_RATE
+	       ,A.EXAM_RATE
+	       ,A.DISCUSSION_RATE
+	       ,A.PROGRESS_RATE
+	       ,CURRENT_TIMESTAMP
+	       ,#{createUser}
+	  FROM COURSE_MASTER A
+	 WHERE A.COURSE_CODE = #{courseCode}   
+	</select>
+	
+	<select id="companyCourseUpd" parameterType="CompanyCourse">
+	UPDATE COURSE
+	   SET COURSE_COST =  #{courseCost},
+           C_PERIOD = #{cPeriod},
+           OPEN_YN = #{openYn},
+	       REPORT_RATE = #{reportRate},
+	       EXAM_RATE = #{examRate},
+	       DISCUSSION_RATE = #{discussionRate},
+	       PROGRESS_RATE = #{progressRate},
+	       UPDATE_DATE = CURRENT_TIMESTAMP,
+	       UPDATE_USER = #{updateUser}
+	 WHERE COURSE_ID = #{courseId}   
+	</select>
+	
+	<select id="comPanyCourseDel" parameterType="CompanyCourse">
+	DELETE FROM COURSE
+	 WHERE COURSE_ID = #{courseId}   
+	</select>
+	
+	<select id="registerList" parameterType="CompanyCourse" resultType="Register">
+	SELECT B.USER_NAME,
+	       A.USER_ID, 
+	       A.CREATE_DATE,
+	       B.EMAIL,
+	       B.HOME_TEL,
+	       B.MOBILE,
+	       B.SEX,
+	       (SELECT DD_VALUE FROM CODE WHERE DD_MAIN = 'SEX' AND DD_KEY = B.SEX) SEX_NAME,
+	       B.BIRTH_DAY
+	  FROM COURSE_REGISTER A, USER B
+	 WHERE A.USER_ID = B.USER_ID
+	   AND A.COURSE_ID = #{courseId}
+	   AND A.STATUS = 'A'
+	 ORDER BY B.USER_NAME
+	</select>
+
+	<select id="titleList" parameterType="CompanyCourse" resultType="CompanyCourse">
+	SELECT B.WEEK,
+	       B.TITLE
+	  FROM COURSE A LEFT OUTER JOIN COURSE_RESOURCE B ON A.COURSE_CODE = B.COURSE_CODE
+	 WHERE A.COURSE_ID = #{courseId}
+	 ORDER BY B.WEEK  
+	</select>
+
+	<select id="weekCostList" parameterType="CompanyCourse" resultType="CompanyCourse">
+	SELECT WEEK, TITLE, WEEK_COST
+	  FROM COURSE_RESOURCE
+	 WHERE COURSE_CODE = #{courseCode}
+	</select>
+
+	<select id="courseWeekCostIns" parameterType="CompanyCourse">
+	INSERT INTO COURSE_WEEK_COST(COURSE_ID, WEEK, WEEK_COST)
+	VALUES (#{courseId}, #{week}, #{weekCost})
+	</select>
+	
+	<select id="courseWeekCostUpd" parameterType="CompanyCourse">
+	UPDATE COURSE_WEEK_COST
+	   SET WEEK_COST = #{weekCost}
+	 WHERE COURSE_Id = #{courseId} 
+	   AND WEEK = #{week}
+	</select>
+	
+	<select id="courseWeekCostDel" parameterType="CompanyCourse">
+	DELETE FROM COURSE_WEEK_COST
+	 WHERE COURSE_ID = #{courseId}   
+	</select>
+
+
+
+
+
+        
+</mapper>

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="setting">
+
+	<select id="mailList" resultType="Setting">
+	<![CDATA[
+		SELECT *
+		  FROM MAIL 
+	]]> 
+	</select>
+
+	<select id="mailAllDelete" parameterType="Setting">
+	DELETE FROM MAIL
+	</select>
+
+	<select id="mailIns" parameterType="Setting">
+	INSERT INTO MAIL(SEQ, KIND, EMAIL)
+	VALUES ((SELECT IFNULL(MAX(SEQ) + 1,1) FROM MAIL AS T_MAIL), #{kind}, #{email})
+	</select>
+	 
+	<select id="bankList" resultType="Setting">
+	<![CDATA[
+		SELECT *
+		  FROM BANK 
+		 ORDER BY SEQ
+	]]> 
+	</select>
+
+	<select id="bankIns" parameterType="Setting">
+	INSERT INTO BANK(SEQ, BANK_NAME, ACC_NO, USER, USE_YN)
+	VALUES ((SELECT IFNULL(MAX(SEQ) + 1,1) FROM BANK AS T_MAIL), #{bankName}, #{accNo}, #{user}, #{useYn})
+	</select>	 
+	        
+	<select id="bankUpd" parameterType="Setting">
+	UPDATE BANK
+	   SET BANK_NAME = #{bankName}, 
+	       ACC_NO = #{accNo}, 
+	       USER = #{user},
+	       USE_YN = #{useYn}
+	 WHERE SEQ = #{seq}
+	</select>	 
+	        
+
+	<select id="settingList" resultType="Setting">
+	<![CDATA[
+		SELECT *
+		  FROM SETTING
+		 ORDER BY OPTION_KEY
+	]]> 
+	</select>
+
+	<select id="settingUpd" parameterType="Setting">
+	UPDATE SETTING
+	   SET OPTION_VALUE = #{optionValue} 
+	 WHERE OPTION_KEY = #{optionKey}
+	</select>	 
+	        
+	        
+</mapper>

@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="courseMaster">
+	
+<select id="courseMasterList" parameterType="CourseMaster" resultType="CourseMaster">
+SELECT DATA.* FROM (
+    SELECT C.CATEGORY_NAME
+           ,A.COURSE_CODE
+	       ,B.COURSE_NAME
+	       ,A.TUTOR_ID
+	       ,(SELECT USER_NAME FROM USER WHERE USER_ID = A.TUTOR_ID) TUTOR_NAME
+	       ,(SELECT COUNT(*) FROM COURSE WHERE COURSE_CODE = A.COURSE_CODE) SUB_CNT
+	       ,REPORT_RATE
+	       ,EXAM_RATE
+	       ,DISCUSSION_RATE
+	       ,PROGRESS_RATE			       
+	       ,A.WEEK_COST_YN
+    	   ,(SELECT DD_VALUE FROM CODE WHERE DD_MAIN = 'WEEK_COST_YN' AND DD_KEY = A.WEEK_COST_YN) WEEK_COST_YN_NAME
+	  FROM COURSE_MASTER A LEFT OUTER JOIN COURSE_CODE B ON A.COURSE_CODE = B.COURSE_CODE
+	                       LEFT OUTER JOIN (
+				   SELECT C3.CODE C3_CODE,
+					  C2.CODE C2_CODE,
+					  C1.CODE C1_CODE,
+					  CONCAT(C1.CODE_NAME,' > ',C2.CODE_NAME,' > ',C3.CODE_NAME) CATEGORY_NAME
+					 FROM CATEGORY C3 LEFT OUTER JOIN CATEGORY C2 ON C3.PARENT_CODE = C2.CODE
+						      LEFT OUTER JOIN CATEGORY C1 ON C2.PARENT_CODE = C1.CODE
+				    WHERE C3.DEPTH = 3) C ON B.CODE = C.C3_CODE
+	 WHERE 1 = 1
+	   <if test="c1Code != null and c1Code != ''"> AND C.C1_CODE = #{c1Code}</if>
+	   <if test="c2Code != null and c2Code != ''"> AND C.C2_CODE = #{c2Code}</if>
+	   <if test="c3Code != null and c3Code != ''"> AND C.C3_CODE = #{c3Code}</if>
+	   <if test="courseName != null and courseName != ''"> AND B.COURSE_NAME LIKE CONCAT('%',#{courseName},'%')</if>
+	 ORDER BY B.COURSE_NAME  
+ ) DATA LIMIT #{limitStart},#{limitUnit}
+</select>
+<select id="courseMasterTotal" parameterType="CourseMaster" resultType="CourseMaster">
+    SELECT COUNT(*) CNT			       
+	  FROM COURSE_MASTER A LEFT OUTER JOIN COURSE_CODE B ON A.COURSE_CODE = B.COURSE_CODE
+	                       LEFT OUTER JOIN (
+				   SELECT C3.CODE C3_CODE,
+					  C2.CODE C2_CODE,
+					  C1.CODE C1_CODE,
+					  CONCAT(C1.CODE_NAME,' > ',C2.CODE_NAME,' > ',C3.CODE_NAME) CATEGORY_NAME
+					 FROM CATEGORY C3 LEFT OUTER JOIN CATEGORY C2 ON C3.PARENT_CODE = C2.CODE
+						      LEFT OUTER JOIN CATEGORY C1 ON C2.PARENT_CODE = C1.CODE
+				    WHERE C3.DEPTH = 3) C ON B.CODE = C.C3_CODE
+	 WHERE 1 = 1
+	   <if test="c1Code != null and c1Code != ''"> AND C.C1_CODE = #{c1Code}</if>
+	   <if test="c2Code != null and c2Code != ''"> AND C.C2_CODE = #{c2Code}</if>
+	   <if test="c3Code != null and c3Code != ''"> AND C.C3_CODE = #{c3Code}</if>
+	   <if test="courseName != null and courseName != ''"> AND B.COURSE_NAME LIKE CONCAT('%',#{courseName},'%')</if>
+</select>
+
+<select id="ddCourseCodeNotInput" resultType="Code">
+SELECT A.COURSE_CODE DD_KEY
+       ,CONCAT(B.CODE_NAME,' - ',A.COURSE_NAME) DD_VALUE
+  FROM COURSE_CODE A, CATEGORY B
+ WHERE A.CODE = B.CODE
+   AND A.COURSE_CODE IN ( SELECT COURSE_CODE FROM COURSE_RESOURCE )
+   AND A.COURSE_CODE NOT IN ( SELECT COURSE_CODE FROM COURSE_MASTER)
+   AND A.USE_YN = 'Y'
+ ORDER BY 2 	
+</select>
+
+<select id="courseMasterData" parameterType="CourseMaster" resultType="CourseMaster">
+SELECT A.COURSE_CODE
+       ,B.COURSE_NAME
+       ,A.TUTOR_ID
+       ,(SELECT USER_NAME FROM USER WHERE USER_ID = A.TUTOR_ID) TUTOR_NAME
+       ,A.LEARING_GOAL
+       ,A.LEARING_CONTENT
+       ,A.EVAL_METHOD
+       ,A.LEARING_TARGET
+       ,A.LEARING_COST
+       ,A.COURSE_COST
+       ,A.REPORT_RATE
+       ,A.EXAM_RATE
+       ,A.DISCUSSION_RATE
+       ,A.PROGRESS_RATE
+       ,A.WEEK_COST_YN
+       ,(SELECT DD_VALUE FROM CODE WHERE DD_MAIN = 'WEEK_COST_YN' AND DD_KEY = A.WEEK_COST_YN) WEEK_COST_YN_NAME
+       ,A.PROMOTION_VIDEO_YN
+  FROM COURSE_MASTER A, COURSE_CODE B
+ WHERE A.COURSE_CODE = B.COURSE_CODE 
+   AND A.COURSE_CODE = #{courseCode}
+</select>
+
+<select id="courseMasterIns" parameterType="CourseMaster">
+INSERT INTO COURSE_MASTER(COURSE_CODE,TUTOR_ID
+	   ,LEARING_GOAL,LEARING_CONTENT,EVAL_METHOD,LEARING_TARGET,LEARING_COST,COURSE_COST
+                   ,REPORT_RATE,EXAM_RATE,DISCUSSION_RATE,PROGRESS_RATE
+                   ,CREATE_DATE,CREATE_USER,WEEK_COST_YN,PROMOTION_VIDEO_YN)
+VALUES (#{courseCode},#{tutorId}
+        ,#{learingGoal},#{learingContent},#{evalMethod},#{learingTarget},#{learingCost},#{courseCost}
+        ,#{reportRate},#{examRate},#{discussionRate},#{progressRate}
+        ,CURRENT_TIMESTAMP,#{createUser},#{weekCostYn},#{promotionVideoYn})
+</select>
+
+<select id="courseMasterUpd" parameterType="CourseMaster">
+UPDATE COURSE_MASTER
+   SET TUTOR_ID = #{tutorId}
+	   ,LEARING_GOAL = #{learingGoal}
+	   ,LEARING_CONTENT = #{learingContent}
+	   ,EVAL_METHOD = #{evalMethod}
+	   ,LEARING_TARGET = #{learingTarget}
+	   ,LEARING_COST = #{learingCost}
+	   ,COURSE_COST = #{courseCost}
+	   ,REPORT_RATE = #{reportRate}
+	   ,EXAM_RATE = #{examRate}
+	   ,DISCUSSION_RATE = #{discussionRate}
+	   ,PROGRESS_RATE = #{progressRate}
+       ,UPDATE_DATE = CURRENT_TIMESTAMP
+       ,UPDATE_USER = #{updateUser}
+       ,PROMOTION_VIDEO_YN = #{promotionVideoYn}
+ WHERE COURSE_CODE = #{courseCode} 
+</select>
+
+<select id="courseMasterDel" parameterType="CourseMaster">
+DELETE FROM COURSE_MASTER
+ WHERE COURSE_CODE = #{courseCode}   
+</select>
+
+<select id="weekCostList" parameterType="CourseMaster" resultType="CourseMaster">
+SELECT WEEK, TITLE, WEEK_COST
+  FROM COURSE_RESOURCE
+ WHERE COURSE_CODE = #{courseCode}
+</select>
+
+<select id="weekCostUpd" parameterType="CourseMaster">
+UPDATE COURSE_RESOURCE
+   SET WEEK_COST = #{weekCost}
+ WHERE COURSE_CODE = #{courseCode} 
+   AND WEEK = #{week}
+</select>
+
+<select id="weekCostAllUpd" parameterType="CourseMaster">
+UPDATE COURSE_RESOURCE
+   SET WEEK_COST = #{weekCost}
+ WHERE COURSE_CODE = #{courseCode} 
+</select>
+
+
+    
+        
+</mapper>

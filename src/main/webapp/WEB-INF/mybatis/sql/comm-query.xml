@@ -1,0 +1,356 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="comm">
+
+
+<select id="ddTeacher" resultType="Code">
+SELECT USER_ID DD_KEY,
+       USER_NAME DD_VALUE
+  FROM USER
+ WHERE TEACHER_YN = 'Y'
+ ORDER BY 2
+</select>
+
+<select id="categoryPathForCourseCode" parameterType="String" resultType="Comm">
+SELECT CONCAT(C1.CODE_NAME,' > ',C2.CODE_NAME,' > ',C3.CODE_NAME) CATEGORY_NAME
+  FROM CATEGORY C3 LEFT OUTER JOIN CATEGORY C2 ON C3.PARENT_CODE = C2.CODE
+                  LEFT OUTER JOIN CATEGORY C1 ON C2.PARENT_CODE = C1.CODE
+ WHERE C3.DEPTH = 3	
+   AND C3.CODE = (SELECT CODE FROM COURSE_CODE WHERE COURSE_CODE = #{id}) 
+</select>
+
+<select id="ddTutor" resultType="Code">
+SELECT USER_ID DD_KEY
+       ,USER_NAME DD_VALUE
+  FROM USER
+ WHERE TUTOR_YN = 'Y'
+ ORDER BY 2 	
+</select>
+
+<select id="getDdCourseCode" parameterType="String" resultType="Code">
+SELECT COURSE_CODE DD_KEY
+       ,COURSE_NAME DD_VALUE
+  FROM COURSE_CODE
+ WHERE CODE = #{id}
+ ORDER BY 2 	
+</select>
+
+<select id="getDdCourseCodeForUse" parameterType="String" resultType="Code">
+SELECT COURSE_CODE DD_KEY
+       ,COURSE_NAME DD_VALUE
+  FROM COURSE_CODE
+ WHERE CODE = #{id}
+   AND USE_YN = 'Y'
+ ORDER BY 2 	
+</select>
+
+<select id="getDdCode" parameterType="String" resultType="Code">
+SELECT DD_KEY
+	   ,DD_VALUE
+  FROM CODE
+ WHERE DD_MAIN = #{id} 
+ ORDER BY ORD 	
+</select>
+
+
+<select id="ddCompany" resultType="Code">
+SELECT COMP_CD DD_KEY
+       ,COMP_NAME DD_VALUE
+  FROM COMPANY
+ ORDER BY 2 	
+</select>
+
+<select id="userAdminCnt" parameterType="String" resultType="Comm">
+SELECT COUNT(*) CNT
+  FROM USER
+ WHERE USER_ID = #{id}
+   AND ADMIN_YN = 'Y'
+</select>
+
+<select id="courseStatus" parameterType="String" resultType="Comm">
+<![CDATA[
+SELECT IF(CURDATE() < G_FROM_DATE,'G_BEFORE',
+         IF(CURDATE() BETWEEN G_FROM_DATE AND G_TO_DATE,'G_ING',
+           IF(CURDATE() < C_FROM_DATE,'P_BEFORE',
+             IF(CURDATE() BETWEEN C_FROM_DATE AND C_TO_DATE,'P_ING',
+               IF(CURDATE() > C_TO_DATE,IF(STATUS IS NULL,'COMPLETE',STATUS),''))))) STATUS
+  FROM COURSE
+ WHERE COURSE_ID = #{id}  
+]]> 
+</select>
+
+<select id="courseEditInfo" parameterType="Comm" resultType="Comm">
+<![CDATA[
+SELECT CE.COMPLETE_YN,
+       C.COURSE_KIND,
+       IF(CR.STATUS='A' AND CURDATE() >= DATE_FORMAT(CR.CONFIRM_DATE,'%Y-%m-%d') AND CURDATE() <= DATE_ADD(DATE_FORMAT(CR.CONFIRM_DATE,'%Y-%m-%d'),INTERVAL C.C_PERIOD DAY),'Y','N') IS_PERIOD,
+       DATE_FORMAT(CR.CONFIRM_DATE,'%Y-%m-%d') CONFIRM_DATE,
+       C.C_PERIOD
+  FROM COURSE_EVAL CE JOIN COURSE C ON C.COURSE_ID = CE.COURSE_ID
+                      JOIN COURSE_REGISTER CR ON CR.COURSE_ID = CE.COURSE_ID AND CR.USER_ID = CE.USER_ID
+]]> 
+ WHERE CE.COURSE_ID = #{courseId} 
+   AND CE.USER_ID = #{userId} 
+</select>
+
+<!-- 임시 SEQ : 시분초로 구성 -->
+<select id="tempSeq" resultType="String">
+SELECT DATE_FORMAT(NOW(), '%H%i%s') SEQ
+</select>
+
+<!-- 마지막에 추가된 ID를 가져온다. -->
+<select id="lastInsertId" resultType="String">
+SELECT LAST_INSERT_ID() LAST_ID
+</select>
+
+<!-- 사용자 검색. -->
+<select id="userSearchList" parameterType="Comm" resultType="Member">
+	SELECT DATA.* FROM (
+		SELECT *
+		  FROM USER
+		 WHERE 1 = 1
+		   <if test="searchStr != null and searchStr != ''">
+			   <if test="kind == 'USER_ID'">
+			     AND UPPER(USER_ID) LIKE CONCAT('%',UPPER(#{searchStr}),'%') 
+			   </if>
+			   <if test="kind == 'USER_NAME'">
+			     AND UPPER(USER_NAME) LIKE CONCAT('%',UPPER(#{searchStr}),'%') 
+			   </if>
+		   </if>
+		   <if test="screen != null and screen = 'companyTutor'">
+		     AND USER_ID NOT IN (SELECT TUTOR_ID FROM COMPANY)
+		   </if>
+		 ORDER BY USER_NAME  
+	) DATA LIMIT #{limitStart},#{limitUnit}    
+</select>
+
+<select id="userSearchTotal" parameterType="Comm" resultType="Member">
+SELECT COUNT(*) CNT
+  FROM USER
+ WHERE 1 = 1
+   <if test="searchStr != null and searchStr != ''">
+	   <if test="kind == 'USER_ID'">
+	     AND UPPER(USER_ID) LIKE CONCAT('%',UPPER(#{searchStr}),'%') 
+	   </if>
+	   <if test="kind == 'USER_NAME'">
+	     AND UPPER(USER_NAME) LIKE CONCAT('%',UPPER(#{searchStr}),'%') 
+	   </if>
+	   <if test="screen != null and screen = 'companyTutor'">
+	     AND USER_ID NOT IN (SELECT TUTOR_ID FROM COMPANY)
+	   </if>
+   </if>
+ ORDER BY USER_NAME  
+</select>
+
+<select id="requestLogIns" parameterType="Log">
+INSERT INTO REQUEST_LOG(USER_ID,IP,URL,PARAMETER,CREATE_DATE)
+VALUES (#{userId},#{ip},#{url},#{parameter},CURRENT_TIMESTAMP) 
+</select>
+
+<select id="ddQuestGroup" resultType="Code">
+SELECT QG_ID DD_KEY
+       ,GROUP_NAME DD_VALUE
+  FROM QUEST_GROUP
+ WHERE USE_YN = 'Y'
+ ORDER BY 2 	
+</select>
+
+
+<select id="getSetting" parameterType="String" resultType="String">
+	SELECT OPTION_VALUE 
+	  FROM SETTING
+	 WHERE OPTION_KEY = #{id} 
+</select>
+
+
+    <select id="getFavoriteCourse" resultType="course">
+		SELECT * 
+		  FROM (
+		  		SELECT '1' KIND,
+		  		       A.COURSE_ID,
+				       B.COURSE_NAME,
+				       0 POSTSCRIPT_EVAL
+				  FROM COURSE A LEFT OUTER JOIN COURSE_CODE B ON A.COURSE_CODE = B.COURSE_CODE
+				 WHERE A.COURSE_KIND = 'NORMAL'
+				   AND A.OPEN_YN = 'Y'
+				   AND A.POPULAR_YN = 'Y'
+			     UNION ALL 
+		  		SELECT '2' KIND,
+		  		       A.COURSE_ID,
+				       B.COURSE_NAME,
+				       IFNULL((SELECT SUM(EVAL) FROM POSTSCRIPT WHERE COURSE_ID = A.COURSE_ID),0) POSTSCRIPT_EVAL
+				  FROM COURSE A LEFT OUTER JOIN COURSE_CODE B ON A.COURSE_CODE = B.COURSE_CODE
+				 WHERE A.COURSE_KIND = 'NORMAL'
+				   AND A.OPEN_YN = 'Y'
+				   AND A.COURSE_ID NOT IN (SELECT COURSE_ID FROM COURSE WHERE COURSE_KIND = 'NORMAL' AND OPEN_YN = 'Y' AND POPULAR_YN = 'Y')
+				 ORDER BY KIND, POSTSCRIPT_EVAL DESC
+				 ) MAS LIMIT 0,3
+    </select>
+    
+    <select id="getBankList" resultType="Bank">
+		SELECT SEQ, BANK_NAME, ACC_NO, USER 
+		  FROM BANK
+		 WHERE USE_YN = 'Y' 
+		 ORDER BY BANK_NAME
+    </select>
+    
+	<select id="getDdMail" resultType="Code">
+	SELECT EMAIL DD_KEY,
+	       KIND DD_VALUE
+	  FROM MAIL
+	 ORDER BY 1
+	</select>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <select id="getDdCategory" parameterType="String" resultType="Code">
+    	SELECT CODE DD_KEY
+    		   ,CODE_NAME DD_VALUE 
+    	  FROM CATEGORY
+    	 WHERE USE_YN = 'Y'
+    	   AND PARENT_CODE = #{id} 
+    	 ORDER BY CODE 	
+    </select>
+	
+    <select id="_getDdMainCode" resultType="Code">
+    	SELECT M_CODE DD_KEY
+    		   ,M_CODE_NAME DD_VALUE 
+    	  FROM MAIN_CATEGORY
+    	 WHERE USE_YN = 'Y' 
+    	 ORDER BY M_CODE 	
+    </select>
+
+   	<select id="_getDdSubCode" parameterType="Code" resultType="Code">
+    	SELECT S_CODE DD_KEY
+    		   ,S_CODE_NAME DD_VALUE
+    	  FROM SUB_CATEGORY
+    	 WHERE USE_YN = 'Y' 
+    	 ORDER BY M_CODE 	
+    </select>
+
+   	<select id="getDdCodeKeyDdMain" parameterType="String" resultType="Code">
+    	SELECT DD_KEY
+    		   ,DD_VALUE
+    	  FROM CODE
+    	 WHERE DD_MAIN = #{id} 
+    	 ORDER BY ORD 	
+    </select>
+
+   	<select id="getDdCourseCodeAll" resultType="Code">
+		SELECT COURSE_CODE DD_KEY
+		       ,COURSE_NAME DD_VALUE
+		  FROM COURSE_CODE
+		 ORDER BY 2 	
+    </select>
+
+   	<select id="getDdCourseCodeKeyCode" parameterType="String" resultType="Code">
+		SELECT COURSE_CODE DD_KEY
+		       ,COURSE_NAME DD_VALUE
+		  FROM COURSE_CODE
+		 WHERE CODE = #{id}
+		 ORDER BY 2 	
+    </select>
+
+   	<select id="getDdCourseCodeAllContainSubCode" resultType="Code">
+		SELECT A.COURSE_CODE DD_KEY
+		       ,CONCAT(B.CODE_NAME,' - ',A.COURSE_NAME) DD_VALUE
+		  FROM COURSE_CODE A, CATEGORY B
+		 WHERE A.CODE = B.CODE
+		 ORDER BY 2 	
+    </select>
+
+
+
+	<!-- 강좌개설에서 사용할 강좌상태 -->
+   	<select id="getDdStatusForCourse" resultType="Code">
+    	SELECT DD_KEY
+    		   ,DD_VALUE
+    	  FROM CODE
+    	 WHERE DD_MAIN = 'COURSE_STATUS'
+    	   AND DD_KEY IN ('PS','PC') 
+    	 ORDER BY ORD 	
+    </select>
+
+	<!-- 강좌관리에서 사용할 강좌상태 -->
+   	<select id="getDdStatusForCourseManage" resultType="Code">
+    	SELECT DD_KEY
+    		   ,DD_VALUE
+    	  FROM CODE
+    	 WHERE DD_MAIN = 'COURSE_STATUS'
+    	   AND DD_KEY NOT IN ('PS','PC') 
+    	 ORDER BY ORD 	
+    </select>
+
+	<!-- 기업강좌관리에서 사용할 강좌상태 -->
+   	<select id="getDdStatusForCompanyCourseManage" resultType="Code">
+    	SELECT DD_KEY
+    		   ,DD_VALUE
+    	  FROM CODE
+    	 WHERE DD_MAIN = 'COURSE_STATUS'
+    	   AND DD_KEY IN ('CS','CP','CC','CD') 
+    	 ORDER BY ORD 	
+    </select>
+
+	<!-- 교수의 강좌리스트에서 사용할 강좌상태 -->
+   	<select id="getDdStatusForProfessor" resultType="Code">
+    	SELECT DD_KEY
+    		   ,DD_VALUE
+    	  FROM CODE
+    	 WHERE DD_MAIN = 'COURSE_STATUS'
+    	   AND DD_KEY IN ('CS','CP','CC','CD')
+    	 ORDER BY ORD 	
+    </select>
+
+    <!-- Zipcode를 가져온다. -->
+   	<select id="getZipcode" parameterType="String" resultType="com.qp.lms.ns.model.ZipcodeVO">
+		SELECT ZIPCODE HOME_ZIP, 
+		       LEFT(ZIPCODE,3) HOME_ZIP1,
+		       RIGHT(ZIPCODE,3) HOME_ZIP2,
+		       CONCAT(SIDO,IFNULL(CONCAT(' ',GUGUN),'')
+		                  ,IFNULL(CONCAT(' ',DONG),'')
+		                  ,IFNULL(CONCAT(' ',RI),'')
+		                  ,IFNULL(CONCAT(' ',BLDG),'')
+		                  ,IFNULL(CONCAT(' ',ST_BUNJI),'')
+		                  ,IFNULL(CONCAT('~',ED_BUNJI),'')
+		                  ) HOME_ADDR,
+		       CONCAT(SIDO,IFNULL(CONCAT(' ',GUGUN),'')
+		                  ,IFNULL(CONCAT(' ',DONG),'')
+		                  ,IFNULL(CONCAT(' ',RI),'')
+		                  ,IFNULL(CONCAT(' ',BLDG),'')
+		                  ) HOME_ADDR1,
+		       SEQ
+		  FROM ZIPCODE 
+		 WHERE DONG LIKE CONCAT('%',#{id},'%') OR RI LIKE CONCAT('%',#{id},'%')
+		 ORDER BY SEQ 	
+    </select>
+
+	<!-- 과정의 레포트,시험,토론,강의진도 비율 및 여부를 가져온다. -->
+    <select id="courseForRate" parameterType="Condi" resultType="Course">
+		SELECT COURSE_ID,
+		       REPORT_RATE,
+		       EXAM_RATE,
+		       DISCUSSION_RATE,
+		       PROGRESS_RATE,
+		       IF(REPORT_RATE > 0,'Y','N') IS_REPORT,
+		       IF(EXAM_RATE > 0,'Y','N') IS_EXAM,
+		       IF(DISCUSSION_RATE > 0,'Y','N') IS_DISCUSSION,
+		       IF(PROGRESS_RATE > 0,'Y','N') IS_PROGRESS
+		  FROM COURSE 
+		 WHERE COURSE_ID = #{courseId}
+    </select>
+
+    
+</mapper>

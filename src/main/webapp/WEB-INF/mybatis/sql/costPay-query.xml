@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="costPay">
+		
+	<select id="costPayList" parameterType="CostPay" resultType="CostPay">
+	<![CDATA[
+	SELECT DATA.* FROM (
+		SELECT D.CATEGORY_NAME,
+		       A.*,
+		       C.COURSE_NAME,
+		       (SELECT DD_VALUE FROM CODE WHERE DD_MAIN = 'COURSE_KIND' AND DD_KEY = B.COURSE_KIND) COURSE_KIND_NAME,
+		       B.CHASU
+		  FROM (SELECT COURSE_ID,
+				       SUM(TOTAL_COST) PAYMENT_COST,
+				       SUM(COMPANY_COST) COMPANY_COST,
+				       SUM(TEACHER_COST) TEACHER_COST,
+				       SUM(TUTOR_COST) TUTOR_COST
+				  FROM COST
+				 GROUP BY COURSE_ID) A 
+			    LEFT OUTER JOIN COURSE B ON B.COURSE_ID = A.COURSE_ID
+			    LEFT OUTER JOIN COURSE_CODE C ON C.COURSE_CODE = B.COURSE_CODE
+			    LEFT OUTER JOIN (
+				   SELECT C3.CODE C3_CODE,
+						  C2.CODE C2_CODE,
+						  C1.CODE C1_CODE,
+						  CONCAT(C1.CODE_NAME,' > ',C2.CODE_NAME,' > ',C3.CODE_NAME) CATEGORY_NAME
+					 FROM CATEGORY C3 LEFT OUTER JOIN CATEGORY C2 ON C3.PARENT_CODE = C2.CODE
+					  		          LEFT OUTER JOIN CATEGORY C1 ON C2.PARENT_CODE = C1.CODE
+					WHERE C3.DEPTH = 3) D ON D.C3_CODE = C.CODE
+	]]>
+	    WHERE 1 = 1
+		  <if test="c1Code != null and c1Code != ''"> AND D.C1_CODE = #{c1Code}</if>
+		  <if test="c2Code != null and c2Code != ''"> AND D.C2_CODE = #{c2Code}</if>
+		  <if test="c3Code != null and c3Code != ''"> AND D.C3_CODE = #{c3Code}</if>
+	      <if test="courseName != null and courseName != ''"> AND C.COURSE_NAME LIKE CONCAT('%',#{courseName},'%')</if>
+		 ORDER BY D.CATEGORY_NAME,C.COURSE_NAME
+	 ) DATA LIMIT #{limitStart},#{limitUnit}
+	</select>
+	
+	<select id="costPayListTotal" parameterType="CostPay" resultType="CostPay">
+ 	<![CDATA[
+	SELECT DATA.* FROM (
+		SELECT COUNT(*) CNT
+		  FROM (SELECT COURSE_ID,
+				       SUM(TOTAL_COST) PAYMENT_COST,
+				       SUM(COMPANY_COST) COMPANY_COST,
+				       SUM(TEACHER_COST) TEACHER_COST,
+				       SUM(TUTOR_COST) TUTOR_COST
+				  FROM COST
+				 GROUP BY COURSE_ID) A 
+			    LEFT OUTER JOIN COURSE B ON B.COURSE_ID = A.COURSE_ID
+			    LEFT OUTER JOIN COURSE_CODE C ON C.COURSE_CODE = B.COURSE_CODE
+			    LEFT OUTER JOIN (
+				   SELECT C3.CODE C3_CODE,
+						  C2.CODE C2_CODE,
+						  C1.CODE C1_CODE,
+						  CONCAT(C1.CODE_NAME,' > ',C2.CODE_NAME,' > ',C3.CODE_NAME) CATEGORY_NAME
+					 FROM CATEGORY C3 LEFT OUTER JOIN CATEGORY C2 ON C3.PARENT_CODE = C2.CODE
+					  		          LEFT OUTER JOIN CATEGORY C1 ON C2.PARENT_CODE = C1.CODE
+					WHERE C3.DEPTH = 3) D ON D.C3_CODE = C.CODE
+	]]>
+	    WHERE 1 = 1
+		  <if test="c1Code != null and c1Code != ''"> AND D.C1_CODE = #{c1Code}</if>
+		  <if test="c2Code != null and c2Code != ''"> AND D.C2_CODE = #{c2Code}</if>
+		  <if test="c3Code != null and c3Code != ''"> AND D.C3_CODE = #{c3Code}</if>
+	      <if test="courseName != null and courseName != ''"> AND C.COURSE_NAME LIKE CONCAT('%',#{courseName},'%')</if>
+	 ) DATA
+	</select>
+
+	<select id="tutorCostPayList" parameterType="CostPay" resultType="CostPay">
+	<![CDATA[
+	SELECT DATA.* FROM (
+		SELECT D.CATEGORY_NAME,
+		       A.*,
+		       C.COURSE_NAME,
+		       (SELECT DD_VALUE FROM CODE WHERE DD_MAIN = 'COURSE_KIND' AND DD_KEY = B.COURSE_KIND) COURSE_KIND_NAME,
+		       B.CHASU
+		  FROM (SELECT COURSE_ID,
+				       SUM(TOTAL_COST) PAYMENT_COST,
+				       SUM(COMPANY_COST) COMPANY_COST,
+				       SUM(TEACHER_COST) TEACHER_COST,
+				       SUM(TUTOR_COST) TUTOR_COST
+				  FROM COST
+				 WHERE COST_ID IN (SELECT DISTINCT COST_ID 
+				                     FROM COURSE_REGISTER 
+				                    WHERE COURSE_ID IN (SELECT COURSE_ID FROM COURSE WHERE TUTOR_ID = #{userId})) 
+				 GROUP BY COURSE_ID) A 
+			    LEFT OUTER JOIN COURSE B ON B.COURSE_ID = A.COURSE_ID
+			    LEFT OUTER JOIN COURSE_CODE C ON C.COURSE_CODE = B.COURSE_CODE
+			    LEFT OUTER JOIN (
+				   SELECT C3.CODE C3_CODE,
+						  C2.CODE C2_CODE,
+						  C1.CODE C1_CODE,
+						  CONCAT(C1.CODE_NAME,' > ',C2.CODE_NAME,' > ',C3.CODE_NAME) CATEGORY_NAME
+					 FROM CATEGORY C3 LEFT OUTER JOIN CATEGORY C2 ON C3.PARENT_CODE = C2.CODE
+					  		          LEFT OUTER JOIN CATEGORY C1 ON C2.PARENT_CODE = C1.CODE
+					WHERE C3.DEPTH = 3) D ON D.C3_CODE = C.CODE
+	]]>
+	    WHERE 1 = 1
+	     <if test="courseName != null and courseName != ''"> AND C.COURSE_NAME LIKE CONCAT('%',#{courseName},'%')</if>
+		 ORDER BY D.CATEGORY_NAME,C.COURSE_NAME
+	 ) DATA LIMIT #{limitStart},#{limitUnit}
+	</select>
+	
+	<select id="tutorCostPayListTotal" parameterType="CostPay" resultType="CostPay">
+ 	<![CDATA[
+	SELECT DATA.* FROM (
+		SELECT COUNT(*) CNT
+		  FROM (SELECT COURSE_ID,
+				       SUM(TOTAL_COST) PAYMENT_COST,
+				       SUM(COMPANY_COST) COMPANY_COST,
+				       SUM(TEACHER_COST) TEACHER_COST,
+				       SUM(TUTOR_COST) TUTOR_COST
+				  FROM COST
+				 WHERE COST_ID IN (SELECT DISTINCT COST_ID 
+				                     FROM COURSE_REGISTER 
+				                    WHERE COURSE_ID IN (SELECT COURSE_ID FROM COURSE WHERE TUTOR_ID = #{userId})) 
+				 GROUP BY COURSE_ID) A 
+			    LEFT OUTER JOIN COURSE B ON B.COURSE_ID = A.COURSE_ID
+			    LEFT OUTER JOIN COURSE_CODE C ON C.COURSE_CODE = B.COURSE_CODE
+			    LEFT OUTER JOIN (
+				   SELECT C3.CODE C3_CODE,
+						  C2.CODE C2_CODE,
+						  C1.CODE C1_CODE,
+						  CONCAT(C1.CODE_NAME,' > ',C2.CODE_NAME,' > ',C3.CODE_NAME) CATEGORY_NAME
+					 FROM CATEGORY C3 LEFT OUTER JOIN CATEGORY C2 ON C3.PARENT_CODE = C2.CODE
+					  		          LEFT OUTER JOIN CATEGORY C1 ON C2.PARENT_CODE = C1.CODE
+					WHERE C3.DEPTH = 3) D ON D.C3_CODE = C.CODE
+	]]>
+	    WHERE 1 = 1
+	     <if test="courseName != null and courseName != ''"> AND C.COURSE_NAME LIKE CONCAT('%',#{courseName},'%')</if>
+	 ) DATA
+	</select>
+
+	<select id="teacherCostPayList" parameterType="CostPay" resultType="CostPay">
+	<![CDATA[
+	SELECT DATA.* FROM (
+		SELECT D.CATEGORY_NAME,
+		       A.*,
+		       C.COURSE_NAME,
+		       (SELECT DD_VALUE FROM CODE WHERE DD_MAIN = 'COURSE_KIND' AND DD_KEY = B.COURSE_KIND) COURSE_KIND_NAME,
+		       B.CHASU
+		  FROM (SELECT COURSE_ID,
+				       SUM(TOTAL_COST) PAYMENT_COST,
+				       SUM(COMPANY_COST) COMPANY_COST,
+				       SUM(TEACHER_COST) TEACHER_COST,
+				       SUM(TUTOR_COST) TUTOR_COST
+				  FROM COST
+				 WHERE COST_ID IN (SELECT DISTINCT COST_ID 
+				                     FROM COURSE_REGISTER 
+				                    WHERE COURSE_ID IN (SELECT COURSE_ID 
+				                                          FROM COURSE 
+				                                         WHERE COURSE_CODE IN (SELECT COURSE_CODE FROM COURSE_CODE WHERE TEACHER_ID = #{userId})))  
+				 GROUP BY COURSE_ID) A 
+			    LEFT OUTER JOIN COURSE B ON B.COURSE_ID = A.COURSE_ID
+			    LEFT OUTER JOIN COURSE_CODE C ON C.COURSE_CODE = B.COURSE_CODE
+			    LEFT OUTER JOIN (
+				   SELECT C3.CODE C3_CODE,
+						  C2.CODE C2_CODE,
+						  C1.CODE C1_CODE,
+						  CONCAT(C1.CODE_NAME,' > ',C2.CODE_NAME,' > ',C3.CODE_NAME) CATEGORY_NAME
+					 FROM CATEGORY C3 LEFT OUTER JOIN CATEGORY C2 ON C3.PARENT_CODE = C2.CODE
+					  		          LEFT OUTER JOIN CATEGORY C1 ON C2.PARENT_CODE = C1.CODE
+					WHERE C3.DEPTH = 3) D ON D.C3_CODE = C.CODE
+	]]>
+	    WHERE 1 = 1
+	     <if test="courseName != null and courseName != ''"> AND C.COURSE_NAME LIKE CONCAT('%',#{courseName},'%')</if>
+		 ORDER BY D.CATEGORY_NAME,C.COURSE_NAME
+	 ) DATA LIMIT #{limitStart},#{limitUnit}
+	</select>
+	
+	<select id="teacherCostPayListTotal" parameterType="CostPay" resultType="CostPay">
+ 	<![CDATA[
+	SELECT DATA.* FROM (
+		SELECT COUNT(*) CNT
+		  FROM (SELECT COURSE_ID,
+				       SUM(TOTAL_COST) PAYMENT_COST,
+				       SUM(COMPANY_COST) COMPANY_COST,
+				       SUM(TEACHER_COST) TEACHER_COST,
+				       SUM(TUTOR_COST) TUTOR_COST
+				  FROM COST
+				 WHERE COST_ID IN (SELECT DISTINCT COST_ID 
+				                     FROM COURSE_REGISTER 
+				                    WHERE COURSE_ID IN (SELECT COURSE_ID 
+				                                          FROM COURSE 
+				                                         WHERE COURSE_CODE IN (SELECT COURSE_CODE FROM COURSE_CODE WHERE TEACHER_ID = #{userId}))) 
+				 GROUP BY COURSE_ID) A 
+			    LEFT OUTER JOIN COURSE B ON B.COURSE_ID = A.COURSE_ID
+			    LEFT OUTER JOIN COURSE_CODE C ON C.COURSE_CODE = B.COURSE_CODE
+			    LEFT OUTER JOIN (
+				   SELECT C3.CODE C3_CODE,
+						  C2.CODE C2_CODE,
+						  C1.CODE C1_CODE,
+						  CONCAT(C1.CODE_NAME,' > ',C2.CODE_NAME,' > ',C3.CODE_NAME) CATEGORY_NAME
+					 FROM CATEGORY C3 LEFT OUTER JOIN CATEGORY C2 ON C3.PARENT_CODE = C2.CODE
+					  		          LEFT OUTER JOIN CATEGORY C1 ON C2.PARENT_CODE = C1.CODE
+					WHERE C3.DEPTH = 3) D ON D.C3_CODE = C.CODE
+	]]>
+	    WHERE 1 = 1
+	     <if test="courseName != null and courseName != ''"> AND C.COURSE_NAME LIKE CONCAT('%',#{courseName},'%')</if>
+	 ) DATA
+	</select>
+		
+	<select id="costPayData" parameterType="CostPay" resultType="CostPay">
+	SELECT D.CATEGORY_NAME,
+	       A.*,
+	       C.COURSE_NAME,
+	       (SELECT DD_VALUE FROM CODE WHERE DD_MAIN = 'COURSE_KIND' AND DD_KEY = B.COURSE_KIND) COURSE_KIND_NAME,
+	       B.CHASU
+	  FROM (SELECT COURSE_ID,
+			       SUM(TOTAL_COST) PAYMENT_COST,
+			       SUM(COMPANY_COST) COMPANY_COST,
+			       SUM(TEACHER_COST) TEACHER_COST,
+			       SUM(TUTOR_COST) TUTOR_COST
+			  FROM COST
+			 GROUP BY COURSE_ID) A 
+		    LEFT OUTER JOIN COURSE B ON B.COURSE_ID = A.COURSE_ID
+		    LEFT OUTER JOIN COURSE_CODE C ON C.COURSE_CODE = B.COURSE_CODE
+		    LEFT OUTER JOIN (
+			   SELECT C3.CODE C3_CODE,
+					  C2.CODE C2_CODE,
+					  C1.CODE C1_CODE,
+					  CONCAT(C1.CODE_NAME,' > ',C2.CODE_NAME,' > ',C3.CODE_NAME) CATEGORY_NAME
+				 FROM CATEGORY C3 LEFT OUTER JOIN CATEGORY C2 ON C3.PARENT_CODE = C2.CODE
+				  		          LEFT OUTER JOIN CATEGORY C1 ON C2.PARENT_CODE = C1.CODE
+				WHERE C3.DEPTH = 3) D ON D.C3_CODE = C.CODE
+	 WHERE A.COURSE_ID = #{courseId}
+	</select>	
+
+	
+	<select id="costPayDataList" parameterType="CostPay" resultType="CostPay">
+	SELECT COST_ID,
+	       TOTAL_COST,
+	       COMPANY_COST,
+	       TEACHER_COST,
+	       TEACHER_BANK,
+	       TEACHER_ACC_NUM,
+	       TUTOR_COST,
+	       TUTOR_BANK,
+	       TUTOR_ACC_NUM,
+	       PAYMENT_DATE 
+	  FROM COST 
+	 WHERE COURSE_ID = #{courseId}
+	 ORDER BY PAYMENT_DATE
+	</select>
+
+	<select id="costPayRegisterDataList" parameterType="CostPay" resultType="CostPay">
+	SELECT A.COURSE_ID,
+	       A.USER_ID,
+	       B.USER_NAME,
+	       B.EMAIL,
+	       B.MOBILE,
+	       A.COURSE_COST PAYMENT_COST
+	  FROM COURSE_REGISTER A LEFT OUTER JOIN USER B ON B.USER_ID = A.USER_ID
+	 WHERE COURSE_ID = #{courseId}
+	   AND COST_ID = #{costId} 
+	</select>
+        
+</mapper>

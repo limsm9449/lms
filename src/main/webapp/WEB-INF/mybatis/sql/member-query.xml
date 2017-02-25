@@ -1,0 +1,329 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="member">
+
+    <select id="memberList" parameterType="Member" resultType="Member">
+		SELECT DATA.* FROM (
+			SELECT USER_ID,
+			       USER_NAME,
+			       ADMIN_YN,
+			       (SELECT DD_VALUE FROM CODE WHERE DD_MAIN = 'ADMIN_AUH' AND DD_KEY = A.ADMIN_YN) ADMIN_YN_NAME,
+			       TEACHER_YN,
+			       TUTOR_YN,
+			       EMAIL,
+			       MOBILE,
+			       IF(RETIRED_YN = 'N','',RETIRED_YN) RETIRED_YN,
+			       DATE_FORMAT(CREATE_DATE, '%Y/%m/%d') CREATE_DATE,
+			       IF(CERTIFICATION_YN='Y','인증','미인증') CERTIFICATION_YN_NAME
+			  FROM USER A
+			 WHERE 1 = 1
+		       <if test="searchStr != null and searchStr != ''">
+			     <if test="searchKind == 'USER_ID'">
+			       AND UPPER(USER_ID) LIKE CONCAT('%',UPPER(#{searchStr}),'%') 
+			     </if>
+			     <if test="searchKind == 'USER_NAME'">
+			       AND UPPER(USER_NAME) LIKE CONCAT('%',UPPER(#{searchStr}),'%') 
+			     </if>
+			     <if test="searchKind == 'EMAIL'">
+			       AND UPPER(EMAIL) LIKE CONCAT('%',UPPER(#{searchStr}),'%') 
+			     </if>
+			     <if test="searchKind == 'MOBILE'">
+			       AND UPPER(MOBILE) LIKE CONCAT('%',UPPER(#{searchStr}),'%') 
+			     </if>
+		       </if>			 
+		       <if test="userKind != null and userKind == 'ADMIN'">
+		         AND ADMIN_YN IN ('A','M','C')
+		       </if>			 
+		       <if test="userKind != null and userKind == 'TEACHER'">
+		         AND TEACHER_YN = 'Y'
+		       </if>			 
+		       <if test="userKind != null and userKind == 'TUTOR'">
+		         AND TUTOR_YN = 'Y'
+		       </if>			 
+		       <if test="userKind != null and userKind == 'USER'">
+		         AND ADMIN_YN = 'N' AND TEACHER_YN = 'N' AND TUTOR_YN = 'N'
+		       </if>			 
+			 ORDER BY USER_NAME
+		) DATA <if test="isExcel == 'N'.toString()">LIMIT #{limitStart},#{limitUnit}</if>  
+    </select>	
+
+    <select id="memberTotal" parameterType="Member" resultType="Member">
+		SELECT COUNT(*) CNT
+		  FROM USER
+		 WHERE 1 = 1
+	       <if test="searchStr != null and searchStr != ''">
+		     <if test="searchKind == 'USER_ID'">
+		       AND UPPER(USER_ID) LIKE CONCAT('%',UPPER(#{searchStr}),'%') 
+		     </if>
+		     <if test="searchKind == 'USER_NAME'">
+		       AND UPPER(USER_NAME) LIKE CONCAT('%',UPPER(#{searchStr}),'%') 
+		     </if>
+		     <if test="searchKind == 'EMAIL'">
+		       AND UPPER(EMAIL) LIKE CONCAT('%',UPPER(#{searchStr}),'%') 
+		     </if>
+		     <if test="searchKind == 'MOBILE'">
+		       AND UPPER(MOBILE) LIKE CONCAT('%',UPPER(#{searchStr}),'%') 
+		     </if>
+	       </if>			 
+	       <if test="userKind != null and userKind == 'ADMIN'">
+	         AND ADMIN_YN IN ('A','M','C')
+	       </if>			 
+	       <if test="userKind != null and userKind == 'TEACHER'">
+	         AND TEACHER_YN = 'Y'
+	       </if>			 
+	       <if test="userKind != null and userKind == 'TUTOR'">
+	         AND TUTOR_YN = 'Y'
+	       </if>			 
+	       <if test="userKind != null and userKind == 'USER'">
+	         AND ADMIN_YN = 'N' AND TEACHER_YN = 'N' AND TUTOR_YN = 'N'
+	       </if>			 
+    </select>
+    	
+    <select id="isExistUserId" parameterType="Member" resultType="Member">
+    	SELECT COUNT(*) CNT
+    	  FROM USER
+    	 WHERE USER_ID = #{userId}
+    </select>
+
+    <select id="isExistEmail" parameterType="Member" resultType="Member">
+    	SELECT COUNT(*) CNT
+    	  FROM USER
+    	 WHERE EMAIL = #{email}
+    </select>
+
+    <select id="userData" parameterType="Member" resultType="Member">
+		SELECT USER_ID,
+		       USER_NAME,
+		       EMAIL,
+		       B.ZIPCODE HOME_ZIP,
+		       HOME_ADDR,
+		       HOME_TEL,
+		       MOBILE,
+		       JOB,
+			   (SELECT DD_VALUE FROM CODE WHERE DD_MAIN = 'JOB' AND DD_KEY = A.JOB) JOB_NAME,
+		       IF(RETIRED_YN = 'N','',RETIRED_YN) RETIRED_YN,
+		       RETIRED_REASON,
+		       COMP_CD,
+		       CONCAT(B.SIDO,IFNULL(CONCAT(' ',B.GUGUN),'')
+			                  ,IFNULL(CONCAT(' ',B.DONG),'')
+			                  ,IFNULL(CONCAT(' ',B.RI),'')
+			                  ,IFNULL(CONCAT(' ',B.BLDG),'')
+		    	              ) HOME_ADDR1,
+		       HOME_ZIPCODE_SEQ,
+		       A.ADMIN_YN,
+		       (SELECT DD_VALUE FROM CODE WHERE DD_MAIN = 'ADMIN_AUH' AND DD_KEY = A.ADMIN_YN) ADMIN_YN_NAME,
+		       A.TEACHER_YN,
+		       A.TUTOR_YN,
+		       A.SEX,
+		       (SELECT DD_VALUE FROM CODE WHERE DD_MAIN = 'SEX' AND DD_KEY = A.SEX) SEX_NAME,
+		       A.BIRTH_DAY,
+		       A.CERTIFICATION_YN,
+		       A.CERTIFICATION_KEY
+		  FROM USER A LEFT OUTER JOIN ZIPCODE B ON A.HOME_ZIPCODE_SEQ = B.SEQ
+		 WHERE USER_ID = #{userId}
+    </select>
+
+    <select id="userInsert" parameterType="Member">
+    	INSERT INTO USER(USER_ID, USER_NAME, EMAIL, USER_PASSWORD, 
+    	                 HOME_ZIPCODE_SEQ, HOME_ADDR, HOME_TEL, MOBILE, JOB, 
+    	                 COMP_CD, RETIRED_YN, CREATE_DATE,
+    	                 ADMIN_YN, TEACHER_YN, TUTOR_YN,
+    	                 SEX,BIRTH_DAY,
+    	                 CERTIFICATION_YN,CERTIFICATION_KEY)
+    	VALUES (#{userId},#{userName},#{email},PASSWORD(#{userPassword}),
+    	        #{homeZipcodeSeq},#{homeAddr},#{homeTel},#{mobile},#{job},
+    	        #{compCd},'N',CURRENT_TIMESTAMP,
+    	        #{adminYn},#{teacherYn},#{tutorYn},
+    	        #{sex},#{birthDay},
+    	        #{certificationYn},#{certificationKey}
+    	        )
+    </select>
+
+    <select id="userUpdate" parameterType="Member">
+    	UPDATE USER
+    	   SET USER_NAME = #{userName},
+    	       EMAIL = #{email},
+    	       HOME_ZIPCODE_SEQ = #{homeZipcodeSeq}, 
+    	       HOME_ADDR = #{homeAddr}, 
+    	       HOME_TEL = #{homeTel}, 
+    	       MOBILE = #{mobile}, 
+    	       JOB = #{job}, 
+    	       COMP_CD = #{compCd}, 
+    	       SEX = #{sex},
+    	       BIRTH_DAY = #{birthDay},
+    	       UPDATE_DATE = CURRENT_TIMESTAMP
+    	 WHERE USER_ID = #{userId} 
+    </select>
+
+    <select id="userUpdateForAdmin" parameterType="Member">
+    	UPDATE USER
+    	   SET USER_NAME = #{userName},
+    	       EMAIL = #{email},
+    	       HOME_ZIPCODE_SEQ = #{homeZipcodeSeq}, 
+    	       HOME_ADDR = #{homeAddr}, 
+    	       HOME_TEL = #{homeTel}, 
+    	       MOBILE = #{mobile}, 
+    	       JOB = #{job}, 
+    	       COMP_CD = #{compCd}, 
+    	       ADMIN_YN = #{adminYn},
+    	       TEACHER_YN = #{teacherYn},
+    	       TUTOR_YN = #{tutorYn},
+    	       SEX = #{sex},
+    	       BIRTH_DAY = #{birthDay},
+    	       UPDATE_DATE = CURRENT_TIMESTAMP
+    	 WHERE USER_ID = #{userId} 
+    </select>
+    
+    <select id="isCurrentPassword" parameterType="Member" resultType="Member">
+    	SELECT COUNT(*) CNT
+    	  FROM USER
+    	 WHERE USER_ID = #{userId}
+    	   AND USER_PASSWORD = PASSWORD(#{userPassword})
+    </select>
+    
+    <select id="userChangePasswordUpdate" parameterType="Member">
+    	UPDATE USER
+    	   SET USER_PASSWORD = PASSWORD(#{newUserPassword}),
+    	       UPDATE_DATE = CURRENT_TIMESTAMP
+    	 WHERE USER_ID = #{userId} 
+    </select>
+
+    <select id="userRetiredUpdate" parameterType="Member">
+    	UPDATE USER
+    	   SET RETIRED_YN = 'Y',
+    	       RETIRED_REASON = #{retiredReason},
+    	       UPDATE_DATE = CURRENT_TIMESTAMP
+    	 WHERE USER_ID = #{userId} 
+    </select>
+
+    <select id="reJoin" parameterType="Member">
+    	UPDATE USER
+    	   SET RETIRED_YN = 'N',
+    	       RETIRED_REASON = '',
+    	       UPDATE_DATE = CURRENT_TIMESTAMP
+    	 WHERE USER_ID = #{userId} 
+    </select>
+    
+    <select id="passwordReset" parameterType="Member">
+    	UPDATE USER
+    	   SET USER_PASSWORD = PASSWORD(#{newUserPassword}),
+    	       UPDATE_DATE = CURRENT_TIMESTAMP
+    	 WHERE USER_ID = #{userId} 
+    </select>
+
+    <select id="registerCourseCnt" parameterType="Member" resultType="Member">
+		SELECT COUNT(*) CNT
+		  FROM COURSE_REGISTER
+		 WHERE USER_ID = #{userId} 
+    </select>
+
+    <select id="userDelete" parameterType="Member">
+    	DELETE FROM USER
+    	 WHERE USER_ID = #{userId} 
+    </select>
+    
+   	<select id="certificationKeyUser" parameterType="Member" resultType="Member">
+		SELECT USER_ID
+		  FROM USER
+		 WHERE CERTIFICATION_KEY = #{certificationKey} 
+    </select>
+    
+    <select id="userCertificationUpd" parameterType="Member">
+    	UPDATE USER
+    	   SET CERTIFICATION_YN = 'Y'
+    	 WHERE USER_ID = #{userId} 
+    </select>
+    
+    <select id="companyTutor" parameterType="String" resultType="Member">
+	SELECT EMAIL
+	  FROM USER
+	 WHERE USER_ID = (SELECT TUTOR_ID FROM COMPANY WHERE COMP_CD = #{id}) 
+	</select>
+    
+    <select id="joinCheck" parameterType="Member" resultType="Member">
+    	SELECT COUNT(*) CNT
+    	  FROM USER
+    	 WHERE USER_NAME = #{userName}
+    	   AND BIRTH_DAY = #{birthDay}
+    </select>
+    
+    <select id="userUpdateForUser" parameterType="Member">
+    	UPDATE USER
+    	   SET EMAIL = #{email},
+    	       HOME_TEL = #{homeTel}, 
+    	       MOBILE = #{mobile}, 
+    	       UPDATE_DATE = CURRENT_TIMESTAMP
+    	 WHERE USER_ID = #{userId} 
+    </select>
+
+
+    <select id="teacherList" parameterType="Member" resultType="Member">
+		SELECT DATA.* FROM (
+			SELECT USER_ID,
+			       USER_NAME,
+			       EMAIL,
+			       MOBILE,
+			       PICTURE,
+			       IF(PICTURE IS NULL,'N','Y') PICTURE_YN,
+                   IF(CAREER IS NULL,'N','Y') CAREER_YN,
+			       DATE_FORMAT(CREATE_DATE, '%Y/%m/%d') CREATE_DATE
+			  FROM USER A
+			 WHERE 1 = 1
+  	           AND TEACHER_YN = 'Y'
+		       <if test="searchStr != null and searchStr != ''">
+			     <if test="searchKind == 'USER_ID'">
+			       AND UPPER(USER_ID) LIKE CONCAT('%',UPPER(#{searchStr}),'%') 
+			     </if>
+			     <if test="searchKind == 'USER_NAME'">
+			       AND UPPER(USER_NAME) LIKE CONCAT('%',UPPER(#{searchStr}),'%') 
+			     </if>
+		       </if>			 
+			 ORDER BY USER_NAME
+		) DATA <if test="isExcel == 'N'.toString()">LIMIT #{limitStart},#{limitUnit}</if>  
+    </select>	
+
+    <select id="teacherTotal" parameterType="Member" resultType="Member">
+		SELECT COUNT(*) CNT
+		  FROM USER
+		 WHERE 1 = 1
+           AND TEACHER_YN = 'Y'
+	       <if test="searchStr != null and searchStr != ''">
+		     <if test="searchKind == 'USER_ID'">
+		       AND UPPER(USER_ID) LIKE CONCAT('%',UPPER(#{searchStr}),'%') 
+		     </if>
+		     <if test="searchKind == 'USER_NAME'">
+		       AND UPPER(USER_NAME) LIKE CONCAT('%',UPPER(#{searchStr}),'%') 
+		     </if>
+	       </if>			 
+    </select>
+
+    <select id="teacherData" parameterType="Member" resultType="Member">
+		SELECT USER_ID,
+		       USER_NAME,
+		       SEX,
+		       EMAIL,
+		       MOBILE,
+		       PICTURE,
+		       CAREER
+		  FROM USER
+		 WHERE USER_ID = #{userId}
+    </select>
+
+    <select id="teacherUpdate" parameterType="Member">
+    	UPDATE USER
+    	   SET CAREER = #{career},
+    	       UPDATE_DATE = CURRENT_TIMESTAMP
+    	 WHERE USER_ID = #{userId} 
+    </select>
+
+    <select id="teacherPictureUpdate" parameterType="Member">
+    	UPDATE USER
+    	   SET PICTURE = #{picture},
+    	       UPDATE_DATE = CURRENT_TIMESTAMP
+    	 WHERE USER_ID = #{userId} 
+    </select>
+
+   
+</mapper>

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "HTTP://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+	<settings>
+		<setting name="cacheEnabled" value="true" />
+		<setting name="lazyLoadingEnabled" value="false" />
+		<setting name="aggressiveLazyLoading" value="true" />
+		<setting name="multipleResultSetsEnabled" value="true" />
+		<setting name="useColumnLabel" value="true" />
+		<!-- <setting name="autoMappingBehavior" value="false" /> -->
+		<setting name="useGeneratedKeys" value="true" />
+		<setting name="defaultExecutorType" value="REUSE" />
+		<setting name="defaultStatementTimeout" value="5000" />
+		<setting name="mapUnderscoreToCamelCase" value="true" />
+	</settings>
+	  
+	<typeAliases>
+		<typeAlias alias="Comm" type="com.qp.lms.common.model.CommVO"/>
+		<typeAlias alias="Category" type="com.qp.lms.category.model.CategoryVO"/>
+		<typeAlias alias="CourseCode" type="com.qp.lms.course.model.CourseCodeVO"/>
+		<typeAlias alias="CourseResource" type="com.qp.lms.course.model.CourseResourceVO"/>
+		<typeAlias alias="CourseExam" type="com.qp.lms.course.model.CourseExamVO"/>
+		<typeAlias alias="CourseMaster" type="com.qp.lms.course.model.CourseMasterVO"/>
+		<typeAlias alias="CourseManage" type="com.qp.lms.course.model.CourseManageVO"/>
+		<typeAlias alias="NormalCourse" type="com.qp.lms.course.model.NormalCourseVO"/>
+		<typeAlias alias="CompanyCourse" type="com.qp.lms.company.model.CompanyCourseVO"/>
+		<typeAlias alias="Company" type="com.qp.lms.company.model.CompanyVO"/>
+		<typeAlias alias="CompanyUser" type="com.qp.lms.company.model.CompanyUserVO"/>
+		<typeAlias alias="ApprovalNormal" type="com.qp.lms.approval.model.ApprovalNormalVO"/>
+		<typeAlias alias="ApprovalCompany" type="com.qp.lms.approval.model.ApprovalCompanyVO"/>
+		<typeAlias alias="Register" type="com.qp.lms.course.model.RegisterVO"/>
+		<typeAlias alias="Main" type="com.qp.lms.main.model.MainVO"/>
+		<typeAlias alias="Point" type="com.qp.lms.point.model.PointVO"/>
+		<typeAlias alias="CostApproval" type="com.qp.lms.cost.model.CostApprovalVO"/>
+		<typeAlias alias="CostRate" type="com.qp.lms.cost.model.CostRateVO"/>
+		<typeAlias alias="CostNotPay" type="com.qp.lms.cost.model.CostNotPayVO"/>
+		<typeAlias alias="CostPay" type="com.qp.lms.cost.model.CostPayVO"/>
+
+		<typeAlias alias="Code" type="com.qp.lms.common.CodeVO"/>
+		<typeAlias alias="Board" type="com.qp.lms.board.model.BoardVO"/>
+		<typeAlias alias="BoardFaq" type="com.qp.lms.board.model.BoardFaqVO"/>
+		<typeAlias alias="BoardDiscussion" type="com.qp.lms.board.model.BoardDiscussionVO"/>
+		<typeAlias alias="Reply" type="com.qp.lms.board.model.ReplyVO"/>
+		<typeAlias alias="Attach" type="com.qp.lms.board.model.AttachVO"/>
+
+		<typeAlias alias="Education" type="com.qp.lms.education.model.EducationVO"/>
+		<typeAlias alias="Condi" type="com.qp.lms.common.CondiVO"/>
+		<typeAlias alias="Ns" type="com.qp.lms.ns.model.NsVO"/>
+		<typeAlias alias="Course" type="com.qp.lms.course.model.CourseVO"/>
+		<typeAlias alias="Evaluation" type="com.qp.lms.evaluation.model.EvaluationVO"/>
+		<typeAlias alias="Guest" type="com.qp.lms.guest.model.GuestVO"/>
+		<typeAlias alias="User" type="com.qp.lms.user.model.UserVO"/>
+		<typeAlias alias="Member" type="com.qp.lms.member.model.MemberVO"/>
+		
+		<typeAlias alias="CompUser" type="com.qp.lms.compManager.model.CompUserVO"/>
+		<typeAlias alias="CompCourseReg" type="com.qp.lms.compManager.model.CompCourseRegVO"/>
+		<typeAlias alias="CompCourse" type="com.qp.lms.compManager.model.CompCourseVO"/>
+		<typeAlias alias="CompCostApproval" type="com.qp.lms.compManager.model.CompCostApprovalVO"/>
+
+		<typeAlias alias="Log" type="com.qp.lms.common.model.LogVO"/>
+		<typeAlias alias="Quest" type="com.qp.lms.quest.model.QuestVO"/>
+		<typeAlias alias="PostScript" type="com.qp.lms.postscript.model.PostScriptVO"/>
+		<typeAlias alias="Exam" type="com.qp.lms.exam.model.ExamVO"/>
+		<typeAlias alias="Counsel" type="com.qp.lms.counsel.model.CounselVO"/>
+		<typeAlias alias="Bank" type="com.qp.lms.guest.model.BankVO"/>
+
+		<typeAlias alias="CourseImage" type="com.qp.lms.course.model.CourseImageVO"/>
+		<typeAlias alias="Setting" type="com.qp.lms.setting.model.SettingVO"/>
+		<typeAlias alias="System" type="com.qp.lms.system.model.SystemVO"/>
+		
+	</typeAliases>
+	
+</configuration>

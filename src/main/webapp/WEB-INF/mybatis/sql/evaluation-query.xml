@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="evaluation">
+
+	<select id="courseList" parameterType="Evaluation" resultType="Evaluation">
+	<![CDATA[
+	SELECT DATA.* FROM (
+		SELECT F.CATEGORY_NAME,
+		       A.COURSE_ID,
+		       A.COURSE_CODE,
+		       C.COURSE_NAME,
+		       A.CHASU,
+		       B.REPORT_CNT,
+		       B.EXAM_CNT,
+		       B.DISCUSSION_CNT,
+		       B.PROGRESS_CNT,
+		       B.TOTAL_CNT
+		  FROM COURSE A JOIN (SELECT COURSE_ID,
+							         SUM(IF(REPORT > 0,1,0)) REPORT_CNT, 
+							         SUM(IF(EXAM > 0,1,0)) EXAM_CNT, 
+							         SUM(IF(DISCUSSION > 0,1,0)) DISCUSSION_CNT,
+							         SUM(IF(PROGRESS > 0,1,0)) PROGRESS_CNT, 
+							         COUNT(*) TOTAL_CNT
+  							    FROM COURSE_EVAL
+							   GROUP BY COURSE_ID) B ON A.COURSE_ID = B.COURSE_ID
+		                LEFT OUTER JOIN COURSE_CODE C ON A.COURSE_CODE = C.COURSE_CODE
+		                LEFT OUTER JOIN (
+							   SELECT C3.CODE C3_CODE,
+								  C2.CODE C2_CODE,
+								  C1.CODE C1_CODE,
+								  CONCAT(C1.CODE_NAME,' > ',C2.CODE_NAME,' > ',C3.CODE_NAME) CATEGORY_NAME
+								 FROM CATEGORY C3 LEFT OUTER JOIN CATEGORY C2 ON C3.PARENT_CODE = C2.CODE
+									      LEFT OUTER JOIN CATEGORY C1 ON C2.PARENT_CODE = C1.CODE
+							    WHERE C3.DEPTH = 3) F ON F.C3_CODE = C.CODE
+		 WHERE 1 = 1
+	]]>
+		   <if test="c1Code != null and c1Code != ''"> AND F.C1_CODE = #{c1Code}</if>
+		   <if test="c2Code != null and c2Code != ''"> AND F.C2_CODE = #{c2Code}</if>
+		   <if test="c3Code != null and c3Code != ''"> AND F.C3_CODE = #{c3Code}</if>
+		   <if test="courseName != null and courseName != ''"> AND C.COURSE_NAME LIKE CONCAT('%',#{courseName},'%')</if>
+		 ORDER BY C.COURSE_NAME,A.CHASU,6
+	 ) DATA LIMIT #{limitStart},#{limitUnit}
+	</select>
+	
+	<select id="courseTotal" resultType="Evaluation">
+	<![CDATA[
+		SELECT COUNT(*) CNT 
+		  FROM COURSE A LEFT OUTER JOIN COURSE_CODE C ON A.COURSE_CODE = C.COURSE_CODE
+		                LEFT OUTER JOIN (
+							   SELECT C3.CODE C3_CODE,
+								  C2.CODE C2_CODE,
+								  C1.CODE C1_CODE,
+								  CONCAT(C1.CODE_NAME,' > ',C2.CODE_NAME,' > ',C3.CODE_NAME) CATEGORY_NAME
+								 FROM CATEGORY C3 LEFT OUTER JOIN CATEGORY C2 ON C3.PARENT_CODE = C2.CODE
+									      LEFT OUTER JOIN CATEGORY C1 ON C2.PARENT_CODE = C1.CODE
+							    WHERE C3.DEPTH = 3) F ON F.C3_CODE = C.CODE
+		 WHERE 1 = 1
+	]]>
+		   <if test="c1Code != null and c1Code != ''"> AND F.C1_CODE = #{c1Code}</if>
+		   <if test="c2Code != null and c2Code != ''"> AND F.C2_CODE = #{c2Code}</if>
+		   <if test="c3Code != null and c3Code != ''"> AND F.C3_CODE = #{c3Code}</if>
+		   <if test="courseName != null and courseName != ''"> AND C.COURSE_NAME LIKE CONCAT('%',#{courseName},'%')</if>
+	</select>
+	       
+	<select id="courseEvalList" parameterType="Evaluation" resultType="Evaluation">
+	SELECT DATA.* FROM (
+		SELECT A.COURSE_ID,
+		       A.USER_ID,
+		       C.USER_NAME,
+		       ROUND(B.REPORT_RATE * A.REPORT / 100) REPORT,
+		       ROUND(B.EXAM_RATE * A.EXAM / 100) EXAM,
+		       ROUND(B.DISCUSSION_RATE * A.DISCUSSION / 100) DISCUSSION,
+		       ROUND(B.PROGRESS_RATE * A.PROGRESS / 100) PROGRESS,
+		       A.TOTAL
+		  FROM COURSE_EVAL A LEFT OUTER JOIN COURSE B ON A.COURSE_ID = B.COURSE_ID
+		                     LEFT OUTER JOIN USER C ON A.USER_ID = C.USER_ID
+		 WHERE A.COURSE_ID = #{courseId} 
+	       <if test="searchStr != null and searchStr != ''">
+		     <if test="searchKind == 'USER_ID'">
+		       AND UPPER(A.USER_ID) LIKE CONCAT('%',UPPER(#{searchStr}),'%') 
+		     </if>
+		     <if test="searchKind == 'USER_NAME'">
+		       AND UPPER(C.USER_NAME) LIKE CONCAT('%',UPPER(#{searchStr}),'%') 
+		     </if>
+	       </if>
+		 ORDER BY C.USER_NAME
+	 ) DATA LIMIT #{limitStart},#{limitUnit}
+	</select>
+	
+	<select id="courseEvalTotal" resultType="Evaluation">
+		SELECT COUNT(*) CNT 
+		  FROM COURSE_EVAL A LEFT OUTER JOIN COURSE B ON A.COURSE_ID = B.COURSE_ID
+		                     LEFT OUTER JOIN USER C ON A.USER_ID = C.USER_ID
+		 WHERE A.COURSE_ID = #{courseId} 
+	       <if test="searchStr != null and searchStr != ''">
+		     <if test="searchKind == 'USER_ID'">
+		       AND UPPER(A.USER_ID) LIKE CONCAT('%',UPPER(#{searchStr}),'%') 
+		     </if>
+		     <if test="searchKind == 'USER_NAME'">
+		       AND UPPER(C.USER_NAME) LIKE CONCAT('%',UPPER(#{searchStr}),'%') 
+		     </if>
+	       </if>
+	</select>
+	       
+    <!-- 평가점수를 가져온다. -->
+    <select id="courseEvalData" parameterType="Evaluation" resultType="Evaluation">
+		SELECT TOTAL,
+		       ROUND(B.REPORT_RATE * REPORT / 100) REPORT_CALC,
+		       ROUND(B.EXAM_RATE * EXAM / 100) EXAM_CALC,
+		       ROUND(B.DISCUSSION_RATE * DISCUSSION / 100) DISCUSSION_CALC,
+		       ROUND(B.PROGRESS_RATE * PROGRESS / 100) PROGRESS_CALC,
+		       REPORT,
+		       EXAM,
+		       DISCUSSION,
+		       PROGRESS,
+		       B.REPORT_RATE,
+		       B.EXAM_RATE,
+		       B.DISCUSSION_RATE,
+		       B.PROGRESS_RATE,
+		       A.COMPLETE_YN
+		  FROM COURSE_EVAL A LEFT OUTER JOIN COURSE B ON A.COURSE_ID = B.COURSE_ID
+		 WHERE A.COURSE_ID = #{courseId}
+		   AND A.USER_ID = #{userId}
+    </select>	
+
+    <!-- 주차별 강좌 데이타를 가져온다. -->
+    <select id="courseWeekList" parameterType="Evaluation" resultType="Evaluation">
+		SELECT A.WEEK,
+		       C.TITLE TITLE,
+		       A.PROGRESS_RATE,
+		       DATE_FORMAT(A.STUDY_START, '%y.%m.%d %H:%i') STUDY_START,
+		       DATE_FORMAT(A.STUDY_END, '%y.%m.%d %H:%i') STUDY_END
+		  FROM COURSE_WEEK A LEFT OUTER JOIN COURSE B ON A.COURSE_ID = B.COURSE_ID
+		                     LEFT OUTER JOIN COURSE_RESOURCE C ON B.COURSE_CODE = C.COURSE_CODE AND A.WEEK = C.WEEK
+		 WHERE A.COURSE_ID = #{courseId}
+		   AND A.USER_ID = #{userId}
+		 ORDER BY A.WEEK
+    </select>	
+
+ 	
+        
+</mapper>

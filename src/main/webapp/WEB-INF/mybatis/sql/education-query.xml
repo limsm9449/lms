@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="education">
+	
+	<!-- 과정 정보를 가져온다. -->
+    <select id="courseData" parameterType="Education" resultType="Course">
+		SELECT B.COURSE_NAME,
+		       B.DIRECTORY,
+		       A.REPORT_RATE,
+		       A.EXAM_RATE,
+		       A.DISCUSSION_RATE,
+		       A.PROGRESS_RATE,
+		       IF(A.REPORT_RATE > 0,'Y','N') IS_REPORT,
+		       IF(A.EXAM_RATE > 0,'Y','N') IS_EXAM,
+		       IF(A.DISCUSSION_RATE > 0,'Y','N') IS_DISCUSSION,
+		       IF(A.PROGRESS_RATE > 0,'Y','N') IS_PROGRESS,
+		       IF(C.LAST_WEEK IS NULL,1,C.LAST_WEEK) LAST_WEEK,
+		       IF(C.LAST_PAGE IS NULL,1,C.LAST_PAGE) LAST_PAGE,
+		       (SELECT COUNT(*) FROM COURSE_RESOURCE WHERE COURSE_CODE = B.COURSE_CODE) TOTAL_WEEK,
+		       H_PX,
+	       	   V_PX
+		  FROM COURSE A LEFT OUTER JOIN COURSE_CODE B ON A.COURSE_CODE = B.COURSE_CODE 
+		                LEFT OUTER JOIN COURSE_EVAL C ON A.COURSE_ID = C.COURSE_ID
+		 WHERE A.COURSE_ID = #{courseId}
+		   AND C.USER_ID = #{userId}
+    </select>    
+
+	<!-- 과정 정보를 가져온다.(Sample) -->
+    <select id="courseSampleData" parameterType="Education" resultType="Course">
+		SELECT B.COURSE_NAME,
+		       B.DIRECTORY,
+		       A.REPORT_RATE,
+		       A.EXAM_RATE,
+		       A.DISCUSSION_RATE,
+		       A.PROGRESS_RATE,
+		       IF(A.REPORT_RATE > 0,'Y','N') IS_REPORT,
+		       IF(A.EXAM_RATE > 0,'Y','N') IS_EXAM,
+		       IF(A.DISCUSSION_RATE > 0,'Y','N') IS_DISCUSSION,
+		       IF(A.PROGRESS_RATE > 0,'Y','N') IS_PROGRESS,
+		       1 LAST_WEEK,
+		       1 LAST_PAGE,
+		       (SELECT COUNT(*) FROM COURSE_RESOURCE WHERE COURSE_CODE = B.COURSE_CODE) TOTAL_WEEK,
+		       H_PX,
+	       	   V_PX
+		  FROM COURSE A LEFT OUTER JOIN COURSE_CODE B ON A.COURSE_CODE = B.COURSE_CODE 
+		 WHERE A.COURSE_ID = #{courseId}
+    </select>    
+
+	<!-- 과정 제목을 가져온다. -->
+    <select id="courseResourceList" parameterType="Education" resultType="CourseResource">
+		 SELECT A.TITLE,
+		        IF(C.WEEK IS NULL,'0',A.WEEK) WEEK,
+		        IF(C.WEEK IS NULL,'',A.DIRECTORY) DIRECTORY,
+		        IF(C.WEEK IS NULL,'',B.DIRECTORY) ROOT_DIRECTORY,
+		        IF(C.WEEK IS NULL,0,A.PAGE_CNT) PAGE_CNT,
+		        A.PREVIEW_PAGE
+           FROM COURSE_RESOURCE A LEFT OUTER JOIN COURSE_CODE B ON A.COURSE_CODE = B.COURSE_CODE
+                                  LEFT OUTER JOIN (SELECT WEEK FROM COURSE_WEEK WHERE COURSE_ID = #{courseId} AND USER_ID = #{userId}) C ON C.WEEK = A.WEEK
+		  WHERE A.COURSE_CODE = ( SELECT COURSE_CODE FROM COURSE WHERE COURSE_ID = #{courseId})
+		  ORDER BY A.WEEK
+    </select>
+
+	<!-- 과정코드 정보를 가져온다. -->
+    <select id="courseCodeData" parameterType="Education" resultType="Course">
+		SELECT COURSE_NAME,
+		       DIRECTORY,
+		       (SELECT COUNT(*) FROM COURSE_RESOURCE WHERE COURSE_CODE = A.COURSE_CODE) TOTAL_WEEK
+		  FROM COURSE_CODE A 
+		 WHERE COURSE_CODE = #{courseCode}
+    </select>    
+
+	<!-- 과정 제목을 가져온다. -->
+    <select id="courseCodeResourceList" parameterType="Education" resultType="CourseResource">
+		 SELECT A.TITLE,
+		        A.WEEK,
+		        A.DIRECTORY,
+		        B.DIRECTORY ROOT_DIRECTORY,
+		        A.PAGE_CNT,
+		        A.PREVIEW_PAGE
+           FROM COURSE_RESOURCE A LEFT OUTER JOIN COURSE_CODE B ON A.COURSE_CODE = B.COURSE_CODE
+		  WHERE A.COURSE_CODE = #{courseCode}
+		  ORDER BY A.WEEK
+    </select>
+
+	<!-- 페이지 데이타를 가져온다. -->
+    <select id="weekPageKey" parameterType="Evaluation" resultType="Evaluation">
+		SELECT COURSE_ID,
+		       USER_ID,
+		       WEEK,
+		       PAGE,
+		       STUDY_START,
+		       STUDY_END
+		  FROM COURSE_WEEK_PAGE
+ 		 WHERE COURSE_ID = #{courseId}
+		   AND USER_ID = #{userId}
+		   AND WEEK = #{week}
+		   AND PAGE = #{page}
+    </select>	
+
+ 	<!-- 페이지 시작시 데이타를 입력한다. -->
+    <select id="insWeekPage" parameterType="Evaluation">
+		INSERT INTO COURSE_WEEK_PAGE(COURSE_ID,USER_ID,WEEK,PAGE,STUDY_START)
+		VALUES (#{courseId},#{userId},#{week},#{page},CURRENT_TIMESTAMP)
+    </select>	
+
+ 	<!-- 페이지 종료시 데이타를 수정한다. -->
+    <select id="updWeekPageKey" parameterType="Evaluation">
+		UPDATE COURSE_WEEK_PAGE
+		   SET STUDY_END = CURRENT_TIMESTAMP
+ 		 WHERE COURSE_ID = #{courseId}
+		   AND USER_ID = #{userId}
+		   AND WEEK = #{week}
+		   AND PAGE = #{page}
+    </select>	
+
+ 	<!-- 주별 과정 진행을 수정한다. -->
+    <select id="updWeekKey" parameterType="Evaluation">
+		UPDATE COURSE_WEEK A
+		   SET PROGRESS_RATE = (SELECT COUNT(*)
+		                          FROM COURSE_WEEK_PAGE
+		                         WHERE COURSE_ID = A.COURSE_ID
+		                           AND USER_ID = A.USER_ID
+		                           AND WEEK = A.WEEK
+		                           AND STUDY_END IS NOT NULL ) * 100 / 
+		                       (SELECT N.PAGE_CNT 
+		                          FROM COURSE M LEFT OUTER JOIN COURSE_RESOURCE N ON M.COURSE_CODE = N.COURSE_CODE
+		                         WHERE M.COURSE_ID = A.COURSE_ID AND N.WEEK = A.WEEK ),
+		       STUDY_START =  (SELECT MIN(STUDY_START)
+		                         FROM COURSE_WEEK_PAGE
+		                        WHERE COURSE_ID = A.COURSE_ID
+		                          AND USER_ID = A.USER_ID
+		                          AND WEEK = A.WEEK ),
+		       STUDY_END =  (SELECT MAX(STUDY_END)
+		                       FROM COURSE_WEEK_PAGE
+		                      WHERE COURSE_ID = A.COURSE_ID
+		                        AND USER_ID = A.USER_ID
+		                        AND WEEK = A.WEEK )
+		 WHERE COURSE_ID = #{courseId}
+		   AND USER_ID = #{userId}
+		   AND WEEK = #{week}
+    </select>	
+
+ 	<!-- 과정 진행 비율을 수정한다. -->
+    <select id="updEvalKeyForProgress" parameterType="Evaluation">
+		UPDATE COURSE_EVAL A
+		   SET PROGRESS = ROUND((SELECT SUM(PROGRESS_RATE) FROM COURSE_WEEK WHERE COURSE_ID = A.COURSE_ID AND USER_ID = A.USER_ID) * 100 / 
+		                        (100 * ( SELECT COUNT(*) FROM COURSE_WEEK WHERE COURSE_ID = A.COURSE_ID AND USER_ID = A.USER_ID)))
+		 WHERE COURSE_ID = #{courseId}
+		   AND USER_ID = #{userId}
+    </select>	
+
+ 	<!-- 전체 점수를 수정한다. -->
+    <select id="updEvalKeyForTotal" parameterType="Evaluation">
+		UPDATE COURSE_EVAL A
+		   SET TOTAL = ROUND((REPORT * (SELECT REPORT_RATE FROM COURSE WHERE COURSE_ID = A.COURSE_ID) / 100) + 
+                             (EXAM * (SELECT EXAM_RATE FROM COURSE WHERE COURSE_ID = A.COURSE_ID) / 100) +
+                             (DISCUSSION * (SELECT DISCUSSION_RATE FROM COURSE WHERE COURSE_ID = A.COURSE_ID) / 100) +
+                             (PROGRESS * (SELECT PROGRESS_RATE FROM COURSE WHERE COURSE_ID = A.COURSE_ID) / 100))
+		       ,UPDATE_DATE = CURRENT_TIMESTAMP
+    	       ,UPDATE_USER = #{userId}
+		 WHERE COURSE_ID = #{courseId}
+		   AND USER_ID = #{userId}
+    </select>	
+
+ 	<!-- 마직막 강의 내용을 저장한다. -->
+    <select id="updEvalKeyForLastEducation" parameterType="Evaluation">
+		UPDATE COURSE_EVAL A
+		   SET LAST_WEEK = #{week}
+		       ,LAST_PAGE = #{page}
+		       ,UPDATE_DATE = CURRENT_TIMESTAMP
+    	       ,UPDATE_USER = #{userId}
+		 WHERE COURSE_ID = #{courseId}
+		   AND USER_ID = #{userId}
+    </select>	
+
+	<!-- 과정 제목을 가져온다.(전체) -->
+    <select id="courseResourceAllList" parameterType="Education" resultType="CourseResource">
+		 SELECT A.TITLE,
+		        A.WEEK,
+		        A.DIRECTORY,
+		        B.DIRECTORY ROOT_DIRECTORY,
+		        A.PAGE_CNT,
+		        A.PREVIEW_PAGE
+           FROM COURSE_RESOURCE A LEFT OUTER JOIN COURSE_CODE B ON A.COURSE_CODE = B.COURSE_CODE
+		  WHERE A.COURSE_CODE = ( SELECT COURSE_CODE FROM COURSE WHERE COURSE_ID = #{courseId})
+		  ORDER BY A.WEEK
+    </select>
+
+        
+</mapper>

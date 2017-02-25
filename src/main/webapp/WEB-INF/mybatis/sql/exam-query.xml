@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="exam">
+
+	<!-- 사용자 시험  -->
+	<select id="userExamNewList" parameterType="Exam" resultType="Exam">
+	SELECT SEQ,
+	       TYPE,
+	       QUESTION, 
+	       QA1,
+	       QA2,
+	       QA3,
+	       QA4
+	  FROM COURSE_EXAM
+	 WHERE COURSE_CODE = (SELECT COURSE_CODE FROM COURSE WHERE COURSE_ID = #{courseId})
+	</select>
+	
+	<select id="userExamIns" parameterType="Exam">
+	INSERT INTO USER_EXAM(COURSE_ID,USER_ID,SEQ,ANSWER,CREATE_DATE)
+	VALUES (#{courseId},#{userId},#{seq},#{answer},CURRENT_TIMESTAMP)
+	</select>
+		
+	<select id="userExamInsertFlagUpd" parameterType="Exam">
+	UPDATE COURSE_EVAL
+	   SET EXAM_YN = 'Y',
+	       E_TO_DATE = CURRENT_TIMESTAMP
+	 WHERE COURSE_ID = #{courseId}
+	   AND USER_ID = #{userId}
+	</select>
+	
+	
+	<!-- 강좌별 설문지 통계 -->
+
+    <select id="examManageList" parameterType="Exam" resultType="Exam">
+	<![CDATA[
+	SELECT DATA.* FROM (
+	    SELECT D.CATEGORY_NAME
+	           ,A.COURSE_ID
+		       ,A.COURSE_CODE
+		       ,B.COURSE_NAME
+		       ,IFNULL(E.OVER90,0) OVER90
+		       ,IFNULL(E.OVER80,0) OVER80
+		       ,IFNULL(E.OVER70,0) OVER70
+		       ,IFNULL(E.UNDER70,0) UNDER70
+		  FROM COURSE A LEFT OUTER JOIN COURSE_CODE B ON A.COURSE_CODE = B.COURSE_CODE
+		                LEFT OUTER JOIN (
+							   SELECT C3.CODE C3_CODE,
+								  C2.CODE C2_CODE,
+								  C1.CODE C1_CODE,
+								  CONCAT(C1.CODE_NAME,' > ',C2.CODE_NAME,' > ',C3.CODE_NAME) CATEGORY_NAME
+								 FROM CATEGORY C3 LEFT OUTER JOIN CATEGORY C2 ON C3.PARENT_CODE = C2.CODE
+									      LEFT OUTER JOIN CATEGORY C1 ON C2.PARENT_CODE = C1.CODE
+							    WHERE C3.DEPTH = 3) D ON B.CODE = D.C3_CODE
+					    LEFT OUTER JOIN (
+					    	SELECT COURSE_ID,
+							       SUM(IF(EXAM >= 90,1,0)) OVER90,
+							       SUM(IF(EXAM >= 80,1,0)) OVER80,
+							       SUM(IF(EXAM >= 70,1,0)) OVER70,
+							       SUM(IF(EXAM < 70,1,0)) UNDER70
+							  FROM COURSE_EVAL
+							 WHERE EXAM > 0 
+							 GROUP BY COURSE_ID ) E ON E.COURSE_ID = A.COURSE_ID
+		 WHERE A.COURSE_KIND IN ('NORMAL','COMPANY')
+	]]>
+		   <if test="c1Code != null and c1Code != ''"> AND D.C1_CODE = #{c1Code}</if>
+		   <if test="c2Code != null and c2Code != ''"> AND D.C2_CODE = #{c2Code}</if>
+		   <if test="c3Code != null and c3Code != ''"> AND D.C3_CODE = #{c3Code}</if>
+		   <if test="courseName != null and courseName != ''"> AND B.COURSE_NAME LIKE CONCAT('%',#{courseName},'%')</if>
+	 ORDER BY D.CATEGORY_NAME,B.COURSE_NAME,A.CHASU DESC  
+	) DATA LIMIT #{limitStart},#{limitUnit}
+    </select>	
+
+    <select id="examManageTotal" parameterType="Exam" resultType="Exam">
+	<![CDATA[
+    SELECT COUNT(*) CNT
+	  FROM COURSE A LEFT OUTER JOIN COURSE_CODE B ON A.COURSE_CODE = B.COURSE_CODE
+	                LEFT OUTER JOIN (
+						   SELECT C3.CODE C3_CODE,
+							  C2.CODE C2_CODE,
+							  C1.CODE C1_CODE,
+							  CONCAT(C1.CODE_NAME,' > ',C2.CODE_NAME,' > ',C3.CODE_NAME) CATEGORY_NAME
+							 FROM CATEGORY C3 LEFT OUTER JOIN CATEGORY C2 ON C3.PARENT_CODE = C2.CODE
+								      LEFT OUTER JOIN CATEGORY C1 ON C2.PARENT_CODE = C1.CODE
+						    WHERE C3.DEPTH = 3) D ON B.CODE = D.C3_CODE
+	 WHERE A.COURSE_KIND IN ('NORMAL','COMPANY')
+	]]>
+	   <if test="c1Code != null and c1Code != ''"> AND D.C1_CODE = #{c1Code}</if>
+	   <if test="c2Code != null and c2Code != ''"> AND D.C2_CODE = #{c2Code}</if>
+	   <if test="c3Code != null and c3Code != ''"> AND D.C3_CODE = #{c3Code}</if>
+	   <if test="courseName != null and courseName != ''"> AND B.COURSE_NAME LIKE CONCAT('%',#{courseName},'%')</if>   
+    </select>	
+	
+    <select id="examUserManageList" parameterType="Exam" resultType="Exam">
+	SELECT DATA.* FROM (
+	    SELECT A.USER_ID
+	           ,B.USER_NAME
+		       ,B.EMAIL
+		       ,B.MOBILE
+		       ,C.EXAM
+		       ,C.COMPLETE_YN
+		  FROM COURSE_REGISTER A LEFT OUTER JOIN USER B ON A.USER_ID = B.USER_ID
+					             LEFT OUTER JOIN COURSE_EVAL C ON C.COURSE_ID = A.COURSE_ID AND C.USER_ID = A.USER_ID
+		 WHERE A.COURSE_ID = #{courseId}
+	       <if test="searchStr != null and searchStr != ''">
+		     <if test="searchKind == 'USER_ID'">
+		       AND UPPER(A.USER_ID) LIKE CONCAT('%',UPPER(#{searchStr}),'%') 
+		     </if>
+		     <if test="searchKind == 'USER_NAME'">
+		       AND UPPER(B.USER_NAME) LIKE CONCAT('%',UPPER(#{searchStr}),'%') 
+		     </if>
+	       </if>			 
+	 	ORDER BY B.USER_NAME
+	) DATA LIMIT #{limitStart},#{limitUnit}
+    </select>	
+
+    <select id="examUserManageTotal" parameterType="Exam" resultType="Exam">
+    SELECT COUNT(*) CNT
+	  FROM COURSE_REGISTER A LEFT OUTER JOIN USER B ON A.USER_ID = B.USER_ID
+	 WHERE A.COURSE_ID = #{courseId}
+       <if test="searchStr != null and searchStr != ''">
+	     <if test="searchKind == 'USER_ID'">
+	       AND UPPER(A.USER_ID) LIKE CONCAT('%',UPPER(#{searchStr}),'%') 
+	     </if>
+	     <if test="searchKind == 'USER_NAME'">
+	       AND UPPER(B.USER_NAME) LIKE CONCAT('%',UPPER(#{searchStr}),'%') 
+	     </if>
+       </if>
+    </select>	
+
+    <select id="examUserDetail" parameterType="Exam" resultType="Exam">
+	SELECT C.SEQ,
+	       C.QUESTION,
+	       C.TYPE,
+	       A.ANSWER USER_ANSWER,
+	       C.ANSWER	       
+	  FROM USER_EXAM A JOIN COURSE B ON B.COURSE_ID = A.COURSE_ID
+	  	           JOIN COURSE_EXAM C ON C.COURSE_CODE = B.COURSE_CODE AND C.SEQ = A.SEQ
+	 WHERE A.COURSE_ID = #{courseId}
+	   AND A.USER_ID = #{userId}
+    </select>	
+    
+    
+    
+    <select id="userExamValuation" parameterType="Exam">
+    UPDATE COURSE_EVAL M
+	   SET EXAM = ( SELECT SUM(IF(A.ANSWER = C.ANSWER,C.GRADE,0)) AA 
+					  FROM USER_EXAM A JOIN COURSE B ON B.COURSE_ID = A.COURSE_ID
+							   JOIN COURSE_EXAM C ON C.COURSE_CODE = B.COURSE_CODE AND C.SEQ = A.SEQ
+					 WHERE A.COURSE_ID = M.COURSE_ID                 
+					   AND A.USER_ID = M.USER_ID)
+	 WHERE COURSE_ID = #{courseId}
+	   AND USER_ID = #{userId}
+    </select>	
+    
+    
+            
+</mapper>

@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="approvalCompany">
+	
+<select id="approvalCompanyList" parameterType="ApprovalCompany" resultType="ApprovalCompany">
+<![CDATA[
+SELECT DATA.* FROM (
+	SELECT A.COURSE_ID,
+	       E.CATEGORY_NAME,
+	       D.COURSE_CODE,	
+	       D.COURSE_NAME,	
+	       A.CHASU,
+	       A.COMP_CD,
+	       C.COMP_NAME,
+	       B.PAYMENT_COST,
+	       DATE_FORMAT(B.PAYMENT_DATE, '%y.%m.%d %T') PAYMENT_DATE,
+	       (SELECT COUNT(*) FROM COURSE_REGISTER WHERE COURSE_ID = A.COURSE_ID AND USER_KIND = 'U') EMP_CNT
+	  FROM COURSE A JOIN COURSE_REGISTER B ON A.COURSE_ID = B.COURSE_ID AND B.STATUS = 'A' AND USER_KIND = 'C'
+	                LEFT OUTER JOIN COMPANY C ON A.COMP_CD = C.COMP_CD
+	                LEFT OUTER JOIN COURSE_CODE D ON A.COURSE_CODE = D.COURSE_CODE
+	                LEFT OUTER JOIN (
+						   SELECT C3.CODE C3_CODE,
+							  C2.CODE C2_CODE,
+							  C1.CODE C1_CODE,
+							  CONCAT(C1.CODE_NAME,' > ',C2.CODE_NAME,' > ',C3.CODE_NAME) CATEGORY_NAME
+							 FROM CATEGORY C3 LEFT OUTER JOIN CATEGORY C2 ON C3.PARENT_CODE = C2.CODE
+								      LEFT OUTER JOIN CATEGORY C1 ON C2.PARENT_CODE = C1.CODE
+						    WHERE C3.DEPTH = 3) E ON D.CODE = E.C3_CODE
+	 WHERE A.COURSE_KIND = 'COMPANY'
+]]>
+	   <if test="c1Code != null and c1Code != ''"> AND E.C1_CODE = #{c1Code}</if>
+	   <if test="c2Code != null and c2Code != ''"> AND E.C2_CODE = #{c2Code}</if>
+	   <if test="c3Code != null and c3Code != ''"> AND E.C3_CODE = #{c3Code}</if>
+	   <if test="courseCode != null and courseCode != ''"> AND A.COURSE_CODE = #{courseCode}</if>
+	 ORDER BY E.CATEGORY_NAME,D.COURSE_NAME,A.CHASU DESC
+ ) DATA LIMIT #{limitStart},#{limitUnit}
+</select>
+
+<select id="approvalCompanyTotal" parameterType="ApprovalCompany" resultType="ApprovalCompany">
+<![CDATA[
+	SELECT COUNT(*) CNT
+	  FROM COURSE A JOIN COURSE_REGISTER B ON A.COURSE_ID = B.COURSE_ID AND B.STATUS = 'A' AND USER_KIND = 'C'
+	                LEFT OUTER JOIN COMPANY C ON A.COMP_CD = C.COMP_CD
+	                LEFT OUTER JOIN COURSE_CODE D ON A.COURSE_CODE = D.COURSE_CODE
+	                LEFT OUTER JOIN (
+						   SELECT C3.CODE C3_CODE,
+							  C2.CODE C2_CODE,
+							  C1.CODE C1_CODE,
+							  CONCAT(C1.CODE_NAME,' > ',C2.CODE_NAME,' > ',C3.CODE_NAME) CATEGORY_NAME
+							 FROM CATEGORY C3 LEFT OUTER JOIN CATEGORY C2 ON C3.PARENT_CODE = C2.CODE
+								      LEFT OUTER JOIN CATEGORY C1 ON C2.PARENT_CODE = C1.CODE
+						    WHERE C3.DEPTH = 3) E ON D.CODE = E.C3_CODE
+	 WHERE A.COURSE_KIND = 'COMPANY'
+]]>
+	   <if test="c1Code != null and c1Code != ''"> AND E.C1_CODE = #{c1Code}</if>
+	   <if test="c2Code != null and c2Code != ''"> AND E.C2_CODE = #{c2Code}</if>
+	   <if test="c3Code != null and c3Code != ''"> AND E.C3_CODE = #{c3Code}</if>
+	   <if test="courseCode != null and courseCode != ''"> AND A.COURSE_CODE = #{courseCode}</if>
+</select>
+
+<select id="approvalCompanyData" parameterType="ApprovalCompany" resultType="ApprovalCompany">
+SELECT *
+  FROM COURSE_REGISTER
+ WHERE COURSE_ID = #{courseId}
+   AND USER_KIND = 'C'
+</select>
+
+<select id="waitingApprovalCompanyList" parameterType="ApprovalCompany" resultType="ApprovalCompany">
+<![CDATA[
+SELECT DATA.* FROM (
+	SELECT A.COURSE_ID,
+	       E.CATEGORY_NAME,
+	       D.COURSE_CODE,	
+	       D.COURSE_NAME,	
+	       A.CHASU,
+	       A.COMP_CD,
+	       C.COMP_NAME,
+	       B.PAYMENT_COST,
+	       B.PAYMENT_BANK,
+	       (SELECT COUNT(*) FROM COURSE_REGISTER WHERE COURSE_ID = A.COURSE_ID AND USER_KIND = 'U') EMP_CNT
+	  FROM COURSE A JOIN COURSE_REGISTER B ON A.COURSE_ID = B.COURSE_ID AND B.STATUS = 'Y' AND B.USER_KIND = 'C'
+	                LEFT OUTER JOIN COMPANY C ON A.COMP_CD = C.COMP_CD
+	                LEFT OUTER JOIN COURSE_CODE D ON A.COURSE_CODE = D.COURSE_CODE
+	                LEFT OUTER JOIN (
+						   SELECT C3.CODE C3_CODE,
+							  C2.CODE C2_CODE,
+							  C1.CODE C1_CODE,
+							  CONCAT(C1.CODE_NAME,' > ',C2.CODE_NAME,' > ',C3.CODE_NAME) CATEGORY_NAME
+							 FROM CATEGORY C3 LEFT OUTER JOIN CATEGORY C2 ON C3.PARENT_CODE = C2.CODE
+								      LEFT OUTER JOIN CATEGORY C1 ON C2.PARENT_CODE = C1.CODE
+						    WHERE C3.DEPTH = 3) E ON D.CODE = E.C3_CODE
+	 WHERE A.COURSE_KIND = 'COMPANY'
+]]>
+	   <if test="c1Code != null and c1Code != ''"> AND E.C1_CODE = #{c1Code}</if>
+	   <if test="c2Code != null and c2Code != ''"> AND E.C2_CODE = #{c2Code}</if>
+	   <if test="c3Code != null and c3Code != ''"> AND E.C3_CODE = #{c3Code}</if>
+	   <if test="courseCode != null and courseCode != ''"> AND A.COURSE_CODE = #{courseCode}</if>
+	 ORDER BY E.CATEGORY_NAME,D.COURSE_NAME,A.CHASU DESC
+ ) DATA LIMIT #{limitStart},#{limitUnit}
+</select>
+
+<select id="waitingApprovalCompanyTotal" parameterType="ApprovalCompany" resultType="ApprovalCompany">
+<![CDATA[
+	SELECT COUNT(*) CNT
+	  FROM COURSE A JOIN COURSE_REGISTER B ON A.COURSE_ID = B.COURSE_ID AND B.STATUS = 'Y' AND USER_KIND = 'C'
+	                LEFT OUTER JOIN COMPANY C ON A.COMP_CD = C.COMP_CD
+	                LEFT OUTER JOIN COURSE_CODE D ON A.COURSE_CODE = D.COURSE_CODE
+	                LEFT OUTER JOIN (
+						   SELECT C3.CODE C3_CODE,
+							  C2.CODE C2_CODE,
+							  C1.CODE C1_CODE,
+							  CONCAT(C1.CODE_NAME,' > ',C2.CODE_NAME,' > ',C3.CODE_NAME) CATEGORY_NAME
+							 FROM CATEGORY C3 LEFT OUTER JOIN CATEGORY C2 ON C3.PARENT_CODE = C2.CODE
+								      LEFT OUTER JOIN CATEGORY C1 ON C2.PARENT_CODE = C1.CODE
+						    WHERE C3.DEPTH = 3) E ON D.CODE = E.C3_CODE
+	 WHERE A.COURSE_KIND = 'COMPANY'
+]]>
+	   <if test="c1Code != null and c1Code != ''"> AND E.C1_CODE = #{c1Code}</if>
+	   <if test="c2Code != null and c2Code != ''"> AND E.C2_CODE = #{c2Code}</if>
+	   <if test="c3Code != null and c3Code != ''"> AND E.C3_CODE = #{c3Code}</if>
+	   <if test="courseCode != null and courseCode != ''"> AND A.COURSE_CODE = #{courseCode}</if>
+</select>
+
+<select id="refundCompanyList" parameterType="ApprovalCompany" resultType="ApprovalCompany">
+<![CDATA[
+SELECT DATA.* FROM (
+	SELECT A.COURSE_ID,
+	       E.CATEGORY_NAME,
+	       D.COURSE_CODE,	
+	       D.COURSE_NAME,	
+	       A.CHASU,
+	       A.COMP_CD,
+	       C.COMP_NAME,
+	       B.PAYMENT_COST,
+	       DATE_FORMAT(B.PAYMENT_DATE, '%y.%m.%d %T') PAYMENT_DATE,
+	       B.REFUND_COST,
+	       B.REFUND_BANK,
+	       B.REFUND_ACC_NUM,
+	       DATE_FORMAT(B.REFUND_DATE, '%y.%m.%d %T') REFUND_DATE,
+	       (SELECT COUNT(*) FROM COURSE_REGISTER WHERE COURSE_ID = A.COURSE_ID AND USER_KIND = 'U') EMP_CNT
+	  FROM COURSE A JOIN COURSE_REGISTER B ON A.COURSE_ID = B.COURSE_ID AND B.STATUS = 'R' AND USER_KIND = 'C'
+	                LEFT OUTER JOIN COMPANY C ON A.COMP_CD = C.COMP_CD
+	                LEFT OUTER JOIN COURSE_CODE D ON A.COURSE_CODE = D.COURSE_CODE
+	                LEFT OUTER JOIN (
+						   SELECT C3.CODE C3_CODE,
+							  C2.CODE C2_CODE,
+							  C1.CODE C1_CODE,
+							  CONCAT(C1.CODE_NAME,' > ',C2.CODE_NAME,' > ',C3.CODE_NAME) CATEGORY_NAME
+							 FROM CATEGORY C3 LEFT OUTER JOIN CATEGORY C2 ON C3.PARENT_CODE = C2.CODE
+								      LEFT OUTER JOIN CATEGORY C1 ON C2.PARENT_CODE = C1.CODE
+						    WHERE C3.DEPTH = 3) E ON D.CODE = E.C3_CODE
+	 WHERE A.COURSE_KIND = 'COMPANY'
+]]>
+	   <if test="c1Code != null and c1Code != ''"> AND E.C1_CODE = #{c1Code}</if>
+	   <if test="c2Code != null and c2Code != ''"> AND E.C2_CODE = #{c2Code}</if>
+	   <if test="c3Code != null and c3Code != ''"> AND E.C3_CODE = #{c3Code}</if>
+	   <if test="courseCode != null and courseCode != ''"> AND A.COURSE_CODE = #{courseCode}</if>
+	 ORDER BY E.CATEGORY_NAME,D.COURSE_NAME,A.CHASU DESC
+ ) DATA LIMIT #{limitStart},#{limitUnit}
+</select>
+
+<select id="refundCompanyTotal" parameterType="ApprovalCompany" resultType="ApprovalCompany">
+<![CDATA[
+	SELECT COUNT(*) CNT
+	  FROM COURSE A JOIN COURSE_REGISTER B ON A.COURSE_ID = B.COURSE_ID AND B.STATUS = 'R' AND USER_KIND = 'C'
+	                LEFT OUTER JOIN COMPANY C ON A.COMP_CD = C.COMP_CD
+	                LEFT OUTER JOIN COURSE_CODE D ON A.COURSE_CODE = D.COURSE_CODE
+	                LEFT OUTER JOIN (
+						   SELECT C3.CODE C3_CODE,
+							  C2.CODE C2_CODE,
+							  C1.CODE C1_CODE,
+							  CONCAT(C1.CODE_NAME,' > ',C2.CODE_NAME,' > ',C3.CODE_NAME) CATEGORY_NAME
+							 FROM CATEGORY C3 LEFT OUTER JOIN CATEGORY C2 ON C3.PARENT_CODE = C2.CODE
+								      LEFT OUTER JOIN CATEGORY C1 ON C2.PARENT_CODE = C1.CODE
+						    WHERE C3.DEPTH = 3) E ON D.CODE = E.C3_CODE
+	 WHERE A.COURSE_KIND = 'COMPANY'
+]]>
+	   <if test="c1Code != null and c1Code != ''"> AND E.C1_CODE = #{c1Code}</if>
+	   <if test="c2Code != null and c2Code != ''"> AND E.C2_CODE = #{c2Code}</if>
+	   <if test="c3Code != null and c3Code != ''"> AND E.C3_CODE = #{c3Code}</if>
+	   <if test="courseCode != null and courseCode != ''"> AND A.COURSE_CODE = #{courseCode}</if>
+</select>
+
+<select id="paymentConfirm" parameterType="ApprovalCompany">
+UPDATE COURSE_REGISTER
+   SET STATUS = 'A',
+       PAYMENT_DATE = CURRENT_TIMESTAMP,
+       UPDATE_DATE = CURRENT_TIMESTAMP,
+       UPDATE_USER = #{updateUser}
+ WHERE COURSE_ID = #{courseId}   
+   AND USER_KIND = 'C'
+</select>
+
+<select id="courseEvalIns" parameterType="ApprovalCompany">
+INSERT INTO COURSE_EVAL(COURSE_ID,USER_ID,REPORT,EXAM,DISCUSSION,PROGRESS,TOTAL,LAST_WEEK,LAST_PAGE,CREATE_DATE,CREATE_USER)
+SELECT A.COURSE_ID,B.USER_ID,0,0,0,0,0,1,1,CURRENT_TIMESTAMP,#{createUser}
+  FROM COURSE A JOIN COURSE_REGISTER B ON B.COURSE_ID = A.COURSE_ID AND USER_KIND = 'U'
+ WHERE A.COURSE_ID = #{courseId} 
+</select>
+
+<select id="courseWeekIns" parameterType="ApprovalCompany">
+INSERT INTO COURSE_WEEK(COURSE_ID,USER_ID,WEEK,PROGRESS_RATE,STUDY_START,STUDY_END)
+SELECT A.COURSE_ID,B.USER_ID,C.WEEK,0,NULL,NULL
+  FROM COURSE A JOIN COURSE_REGISTER B ON B.COURSE_ID = A.COURSE_ID AND USER_KIND = 'U'
+                JOIN COURSE_RESOURCE C ON C.COURSE_CODE = A.COURSE_CODE
+ WHERE A.COURSE_ID = #{courseId} 
+</select>    
+
+<select id="approvalCompanyRefundUpd" parameterType="ApprovalCompany">
+UPDATE COURSE_REGISTER
+   SET STATUS = 'R',
+       REFUND_COST = #{refundCost},
+       REFUND_BANK = #{refundBank},
+       REFUND_ACC_NUM = #{refundAccNum},
+       REFUND_DATE = CURRENT_TIMESTAMP,
+       UPDATE_DATE = CURRENT_TIMESTAMP,
+       UPDATE_USER = #{updateUser}
+ WHERE COURSE_ID = #{courseId}   
+   AND USER_KIND = 'C'
+</select>
+
+<select id="userPaymentConfirm" parameterType="ApprovalCompany">
+UPDATE COURSE_REGISTER
+   SET STATUS = 'A',
+       UPDATE_DATE = CURRENT_TIMESTAMP,
+       UPDATE_USER = #{updateUser}
+ WHERE COURSE_ID = #{courseId}   
+   AND USER_KIND = 'U'
+</select>
+
+<select id="approvalCompanyUserRefundUpd" parameterType="ApprovalCompany">
+UPDATE COURSE_REGISTER
+   SET STATUS = 'R',
+       REFUND_DATE = CURRENT_TIMESTAMP,
+       UPDATE_DATE = CURRENT_TIMESTAMP,
+       UPDATE_USER = #{updateUser}
+ WHERE COURSE_ID = #{courseId}   
+   AND USER_KIND = 'U'
+</select>
+
+
+
+
+        
+</mapper>

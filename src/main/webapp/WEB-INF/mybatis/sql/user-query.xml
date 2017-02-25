@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="user">
+
+	<select id="courseData" parameterType="User" resultType="Course">
+	<![CDATA[ 
+		SELECT A.COURSE_ID
+		       ,A.COURSE_CODE
+		       ,B.COURSE_NAME
+		       ,B.TEACHER_ID
+		       ,C.USER_NAME TEACHER_NAME
+		       ,(SELECT COUNT(*) FROM COURSE_RESOURCE WHERE COURSE_CODE = A.COURSE_CODE) WEEK_CNT
+		       ,DATE_FORMAT(D.CONFIRM_DATE,'%y.%m.%d') C_FROM_DATE
+		       ,DATE_FORMAT(DATE_ADD(D.CONFIRM_DATE,INTERVAL A.C_PERIOD DAY),'%y.%m.%d') C_TO_DATE
+		       ,IF(DATEDIFF(DATE_ADD(D.CONFIRM_DATE,INTERVAL A.C_PERIOD DAY),CURDATE()) < 0,0,DATEDIFF(DATE_ADD(D.CONFIRM_DATE,INTERVAL A.C_PERIOD DAY),CURDATE())) REMAIN_DAY
+		       ,B.H_PX
+		       ,B.V_PX
+		  FROM COURSE A LEFT JOIN COURSE_CODE AS B ON (A.COURSE_CODE = B.COURSE_CODE )
+		                LEFT JOIN USER AS C ON (B.TEACHER_ID = C.USER_ID)
+		                JOIN (SELECT * FROM COURSE_REGISTER WHERE USER_ID = #{userId}) D ON (D.COURSE_ID = A.COURSE_ID)
+		 WHERE A.COURSE_ID = #{courseId}
+	]]> 
+    </select>
+
+	<select id="courseList" parameterType="User" resultType="Course">
+	SELECT DATA.* FROM (
+		SELECT A.COURSE_ID,
+		       B.COURSE_NAME,
+		       A.COURSE_CODE,
+		       A.COURSE_COST,
+		       C.CATEGORY_NAME,
+		       B.H_Px,
+		       B.V_Px,
+		       (SELECT COUNT(*) FROM COURSE_REGISTER WHERE COURSE_ID = A.COURSE_ID AND USER_ID = #{userId}) CNT 
+		  FROM COURSE A LEFT OUTER JOIN COURSE_CODE B ON A.COURSE_CODE = B.COURSE_CODE
+						  LEFT OUTER JOIN (
+								   SELECT C3.CODE C3_CODE,
+									  C2.CODE C2_CODE,
+									  C1.CODE C1_CODE,
+									  CONCAT(C1.CODE_NAME,' > ',C2.CODE_NAME,' > ',C3.CODE_NAME) CATEGORY_NAME
+									 FROM CATEGORY C3 LEFT OUTER JOIN CATEGORY C2 ON C3.PARENT_CODE = C2.CODE
+										      LEFT OUTER JOIN CATEGORY C1 ON C2.PARENT_CODE = C1.CODE
+								    WHERE C3.DEPTH = 3) C ON B.CODE = C.C3_CODE
+		 WHERE A.COURSE_KIND = 'NORMAL'
+		   AND A.OPEN_YN = 'Y'
+		   <if test="c1Code != null and c1Code != ''"> AND C.C1_CODE = #{c1Code}</if>
+		   <if test="c2Code != null and c2Code != ''"> AND C.C2_CODE = #{c2Code}</if>
+		   <if test="c3Code != null and c3Code != ''"> AND C.C3_CODE = #{c3Code}</if>
+		   <if test="courseName != null and courseName != ''"> AND B.COURSE_NAME LIKE CONCAT('%',#{courseName},'%')</if>
+		 ORDER BY B.COURSE_NAME
+	) DATA LIMIT #{limitStart},#{limitUnit}
+	</select>
+	
+	<select id="courseTotal" parameterType="User" resultType="Course">
+		SELECT COUNT(*) CNT
+		  FROM COURSE A LEFT OUTER JOIN COURSE_CODE B ON A.COURSE_CODE = B.COURSE_CODE
+						  LEFT OUTER JOIN (
+								   SELECT C3.CODE C3_CODE,
+									  C2.CODE C2_CODE,
+									  C1.CODE C1_CODE,
+									  CONCAT(C1.CODE_NAME,' > ',C2.CODE_NAME,' > ',C3.CODE_NAME) CATEGORY_NAME
+									 FROM CATEGORY C3 LEFT OUTER JOIN CATEGORY C2 ON C3.PARENT_CODE = C2.CODE
+										      LEFT OUTER JOIN CATEGORY C1 ON C2.PARENT_CODE = C1.CODE
+								    WHERE C3.DEPTH = 3) C ON B.CODE = C.C3_CODE
+		 WHERE A.COURSE_KIND = 'NORMAL'
+		   AND A.OPEN_YN = 'Y'
+		   <if test="c1Code != null and c1Code != ''"> AND C.C1_CODE = #{c1Code}</if>
+		   <if test="c2Code != null and c2Code != ''"> AND C.C2_CODE = #{c2Code}</if>
+		   <if test="c3Code != null and c3Code != ''"> AND C.C3_CODE = #{c3Code}</if>
+		   <if test="courseName != null and courseName != ''"> AND B.COURSE_NAME LIKE CONCAT('%',#{courseName},'%')</if>
+	</select>
+
+</mapper>

@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="postscript">
+
+    <select id="postscriptList" parameterType="PostScript" resultType="PostScript">
+	<![CDATA[
+	SELECT DATA.* FROM (
+	    SELECT D.CATEGORY_NAME
+	           ,A.COURSE_ID
+		       ,A.COURSE_CODE
+		       ,B.COURSE_NAME
+		       ,IFNULL(E.EVAL_CNT2,0) EVAL_CNT2
+		       ,IFNULL(E.EVAL_CNT4,0) EVAL_CNT4
+		       ,IFNULL(E.EVAL_CNT6,0) EVAL_CNT6
+		       ,IFNULL(E.EVAL_CNT8,0) EVAL_CNT8
+		       ,IFNULL(E.EVAL_CNT10,0) EVAL_CNT10
+		       ,IFNULL(E.EVAL_AVG,0) EVAL_AVG
+		  FROM COURSE A LEFT OUTER JOIN COURSE_CODE B ON A.COURSE_CODE = B.COURSE_CODE
+		                LEFT OUTER JOIN (
+							   SELECT C3.CODE C3_CODE,
+								  C2.CODE C2_CODE,
+								  C1.CODE C1_CODE,
+								  CONCAT(C1.CODE_NAME,' > ',C2.CODE_NAME,' > ',C3.CODE_NAME) CATEGORY_NAME
+								 FROM CATEGORY C3 LEFT OUTER JOIN CATEGORY C2 ON C3.PARENT_CODE = C2.CODE
+									      LEFT OUTER JOIN CATEGORY C1 ON C2.PARENT_CODE = C1.CODE
+							    WHERE C3.DEPTH = 3) D ON B.CODE = D.C3_CODE
+					    LEFT OUTER JOIN (
+					    	SELECT COURSE_ID,
+							       SUM(IF(EVAL = '2',1,0)) EVAL_CNT2,
+							       SUM(IF(EVAL = '4',1,0)) EVAL_CNT4,
+							       SUM(IF(EVAL = '6',1,0)) EVAL_CNT6,
+							       SUM(IF(EVAL = '8',1,0)) EVAL_CNT8,
+							       SUM(IF(EVAL = '10',1,0)) EVAL_CNT10,
+							       AVG(EVAL) EVAL_AVG
+							  FROM POSTSCRIPT 
+							 GROUP BY COURSE_ID ) E ON E.COURSE_ID = A.COURSE_ID
+		 WHERE A.COURSE_KIND IN ('NORMAL','COMPANY')
+	]]>
+		   <if test="c1Code != null and c1Code != ''"> AND D.C1_CODE = #{c1Code}</if>
+		   <if test="c2Code != null and c2Code != ''"> AND D.C2_CODE = #{c2Code}</if>
+		   <if test="c3Code != null and c3Code != ''"> AND D.C3_CODE = #{c3Code}</if>
+		   <if test="courseName != null and courseName != ''"> AND B.COURSE_NAME LIKE CONCAT('%',#{courseName},'%')</if>
+	 ORDER BY D.CATEGORY_NAME,B.COURSE_NAME,A.CHASU DESC  
+	) DATA LIMIT #{limitStart},#{limitUnit}
+
+    </select>	
+
+    <select id="postscriptTotal" parameterType="PostScript" resultType="PostScript">
+	<![CDATA[
+    SELECT COUNT(*) CNT
+	  FROM COURSE A LEFT OUTER JOIN COURSE_CODE B ON A.COURSE_CODE = B.COURSE_CODE
+	                LEFT OUTER JOIN (
+						   SELECT C3.CODE C3_CODE,
+							  C2.CODE C2_CODE,
+							  C1.CODE C1_CODE,
+							  CONCAT(C1.CODE_NAME,' > ',C2.CODE_NAME,' > ',C3.CODE_NAME) CATEGORY_NAME
+							 FROM CATEGORY C3 LEFT OUTER JOIN CATEGORY C2 ON C3.PARENT_CODE = C2.CODE
+								      LEFT OUTER JOIN CATEGORY C1 ON C2.PARENT_CODE = C1.CODE
+						    WHERE C3.DEPTH = 3) D ON B.CODE = D.C3_CODE
+	 WHERE A.COURSE_KIND IN ('NORMAL','COMPANY')
+	]]>
+	   <if test="c1Code != null and c1Code != ''"> AND D.C1_CODE = #{c1Code}</if>
+	   <if test="c2Code != null and c2Code != ''"> AND D.C2_CODE = #{c2Code}</if>
+	   <if test="c3Code != null and c3Code != ''"> AND D.C3_CODE = #{c3Code}</if>
+	   <if test="courseName != null and courseName != ''"> AND B.COURSE_NAME LIKE CONCAT('%',#{courseName},'%')</if> 
+    </select>		
+
+    <select id="postscriptUserList" parameterType="PostScript" resultType="PostScript">
+	SELECT DATA.* FROM (
+	    SELECT A.USER_ID
+	           ,B.USER_NAME
+		       ,B.EMAIL
+		       ,B.MOBILE
+		       ,IFNULL(C.EVAL,0) EVAL
+	       	   ,C.CONTENTS
+		  FROM COURSE_REGISTER A LEFT OUTER JOIN USER B ON A.USER_ID = B.USER_ID
+					             LEFT OUTER JOIN POSTSCRIPT C ON C.COURSE_ID = A.COURSE_ID AND C.USER_ID = A.USER_ID
+		 WHERE A.COURSE_ID = #{courseId}
+	       <if test="searchStr != null and searchStr != ''">
+		     <if test="searchKind == 'USER_ID'">
+		       AND UPPER(A.USER_ID) LIKE CONCAT('%',UPPER(#{searchStr}),'%') 
+		     </if>
+		     <if test="searchKind == 'USER_NAME'">
+		       AND UPPER(B.USER_NAME) LIKE CONCAT('%',UPPER(#{searchStr}),'%') 
+		     </if>
+	       </if>			 
+	 	ORDER BY B.USER_NAME
+	) DATA LIMIT #{limitStart},#{limitUnit}
+    </select>	
+
+    <select id="postscriptUserTotal" parameterType="PostScript" resultType="PostScript">
+    SELECT COUNT(*) CNT
+	  FROM COURSE_REGISTER A LEFT OUTER JOIN USER B ON A.USER_ID = B.USER_ID
+	 WHERE A.COURSE_ID = #{courseId}
+       <if test="searchStr != null and searchStr != ''">
+	     <if test="searchKind == 'USER_ID'">
+	       AND UPPER(A.USER_ID) LIKE CONCAT('%',UPPER(#{searchStr}),'%') 
+	     </if>
+	     <if test="searchKind == 'USER_NAME'">
+	       AND UPPER(B.USER_NAME) LIKE CONCAT('%',UPPER(#{searchStr}),'%') 
+	     </if>
+       </if>
+    </select>	
+             
+    <select id="postscriptData" parameterType="PostScript" resultType="PostScript">
+    SELECT EVAL,
+           CONTENTS
+	  FROM POSTSCRIPT
+	 WHERE COURSE_ID = #{courseId}
+	   AND USER_ID = #{userId}
+    </select>		
+         
+   	<select id="postscriptIns" parameterType="PostScript">
+	INSERT INTO POSTSCRIPT(COURSE_ID,USER_ID,CONTENTS,EVAL,CREATE_DATE)
+	VALUES (#{courseId},#{userId},#{contents},#{eval},CURRENT_TIMESTAMP)
+	</select>
+</mapper>

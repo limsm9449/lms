@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="compCourse">
+	
+		
+	<select id="compCourseList" parameterType="CompCourse" resultType="CompCourse">
+	<![CDATA[
+		SELECT DATA.* FROM (
+		    SELECT D.CATEGORY_NAME
+		           ,A.COURSE_ID
+			       ,A.COURSE_CODE
+			       ,B.COURSE_NAME
+			       ,A.COMP_CD
+			       ,(SELECT COMP_NAME FROM COMPANY WHERE COMP_CD = A.COMP_CD) COMP_NAME
+			       ,E.TUTOR_ID
+			       ,(SELECT USER_NAME FROM USER WHERE USER_ID = E.TUTOR_ID) TUTOR_NAME
+			       ,A.CHASU
+			       ,A.C_PERIOD
+			       ,A.OPEN_YN
+			       ,(SELECT COUNT(*) FROM COURSE_REGISTER WHERE COURSE_ID = A.COURSE_ID AND STATUS = 'A') A_CNT
+			  FROM COURSE  A 
+			                LEFT OUTER JOIN COURSE_CODE B ON A.COURSE_CODE = B.COURSE_CODE
+			                LEFT OUTER JOIN CATEGORY C ON B.CODE = C.CODE 
+			                LEFT OUTER JOIN (
+								   SELECT C3.CODE C3_CODE,
+									  C2.CODE C2_CODE,
+									  C1.CODE C1_CODE,
+									  CONCAT(C1.CODE_NAME,' > ',C2.CODE_NAME,' > ',C3.CODE_NAME) CATEGORY_NAME
+									 FROM CATEGORY C3 LEFT OUTER JOIN CATEGORY C2 ON C3.PARENT_CODE = C2.CODE
+										      LEFT OUTER JOIN CATEGORY C1 ON C2.PARENT_CODE = C1.CODE
+								    WHERE C3.DEPTH = 3) D ON B.CODE = D.C3_CODE
+					        LEFT OUTER JOIN COMPANY E ON A.COMP_CD = E.COMP_CD
+			 WHERE A.COURSE_KIND = 'COMPANY'
+			   AND A.COMP_CD IN (SELECT COMP_CD FROM COMPANY WHERE TUTOR_ID = #{userId}) 
+	]]>
+			   <if test="courseName != null and courseName != ''"> AND B.COURSE_NAME LIKE CONCAT('%',#{courseName},'%')</if>
+	 	ORDER BY D.CATEGORY_NAME,B.COURSE_NAME,A.CHASU DESC  
+		) DATA LIMIT #{limitStart},#{limitUnit}
+	</select>
+	
+	<select id="compCourseTotal" parameterType="CompCourse" resultType="CompCourse">
+	<![CDATA[
+		SELECT COUNT(*) CNT
+		  FROM COURSE A 
+		                LEFT OUTER JOIN COURSE_CODE B ON A.COURSE_CODE = B.COURSE_CODE
+		                LEFT OUTER JOIN CATEGORY C ON B.CODE = C.CODE 
+		                LEFT OUTER JOIN (
+							   SELECT C3.CODE C3_CODE,
+								  C2.CODE C2_CODE,
+								  C1.CODE C1_CODE,
+								  CONCAT(C1.CODE_NAME,' > ',C2.CODE_NAME,' > ',C3.CODE_NAME) CATEGORY_NAME
+								 FROM CATEGORY C3 LEFT OUTER JOIN CATEGORY C2 ON C3.PARENT_CODE = C2.CODE
+									      LEFT OUTER JOIN CATEGORY C1 ON C2.PARENT_CODE = C1.CODE
+							    WHERE C3.DEPTH = 3) D ON B.CODE = D.C3_CODE
+		 WHERE A.COURSE_KIND = 'COMPANY'
+		   AND A.COMP_CD IN (SELECT COMP_CD FROM COMPANY WHERE TUTOR_ID = #{userId}) 
+	]]>
+  	       <if test="courseName != null and courseName != ''"> AND B.COURSE_NAME LIKE CONCAT('%',#{courseName},'%')</if>
+	</select>
+
+</mapper>
