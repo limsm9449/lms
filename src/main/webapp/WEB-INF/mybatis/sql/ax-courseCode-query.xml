@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="axCourseCode">
+	
+<select id="axCourseCodeList" parameterType="hashMap" resultType="hashMap">
+	SELECT B.CATEGORY_NAME,
+	       A.COURSE_NAME,
+	       A.COURSE_CODE,
+	       A.TEACHER_ID,
+	       C.USER_NAME TEACHER_NAME,
+	       A.H_PX,
+	       A.V_PX,
+	       A.DIRECTORY,
+	       A.POINT,
+	       A.USE_YN,
+	       A.QG_ID,
+	       A.CODE,
+	       IF(IFNULL(A.QG_ID,0) > 0,'Y','N') QUEST_GROUP_YN,
+	       D.GROUP_NAME QUEST_GROUP_NAME,
+	       (SELECT COUNT(*) FROM COURSE_RESOURCE WHERE COURSE_CODE = A.COURSE_CODE) WEEK_CNT,
+	       DATE_FORMAT(IFNULL(A.UPDATE_DATE, A.CREATE_DATE), '%y.%m.%d %H:%i') LAST_UPDATE_DATE,
+	       IFNULL(U2.USER_NAME, U1.USER_NAME) LAST_UPDATE_USER,
+		   'N' NEW_FLAG,
+		   IF(A.COURSE_CODE = NEXT_DATA.COURSE_CODE, 'Y', 'N') NEXT_CREATE_FLAG
+	  FROM COURSE_CODE A LEFT OUTER JOIN (
+					           SELECT C3.CODE C3_CODE,
+					                  C2.CODE C2_CODE,
+					                  C1.CODE C1_CODE,
+					                  CONCAT(C1.CODE_NAME,' > ',C2.CODE_NAME,' > ',C3.CODE_NAME) CATEGORY_NAME
+						     	 FROM CATEGORY C3 LEFT OUTER JOIN CATEGORY C2 ON C3.PARENT_CODE = C2.CODE
+						                          LEFT OUTER JOIN CATEGORY C1 ON C2.PARENT_CODE = C1.CODE
+					            WHERE C3.DEPTH = 3) B ON A.CODE = B.C3_CODE
+	                     LEFT OUTER JOIN USER C ON A.TEACHER_ID = C.USER_ID
+	                     LEFT OUTER JOIN QUEST_GROUP D ON A.QG_ID = D.QG_ID
+	                     LEFT OUTER JOIN USER U1 ON A.CREATE_USER = U1.USER_ID
+		  	             LEFT OUTER JOIN USER U2 ON A.UPDATE_USER = U2.USER_ID
+		  	             LEFT OUTER JOIN COURSE_MASTER NEXT_DATA ON NEXT_DATA.COURSE_CODE = A.COURSE_CODE
+	 WHERE 1 = 1                    
+	  <if test="LEVEL1_CODE != null and LEVEL1_CODE != ''"> 
+	  	AND B.C1_CODE = #{LEVEL1_CODE}
+	  </if>
+	  <if test="LEVEL2_CODE != null and LEVEL2_CODE != ''"> 
+	  	AND B.C2_CODE = #{LEVEL2_CODE}
+	  </if>
+	  <if test="LEVEL3_CODE != null and LEVEL3_CODE != ''"> 
+	  	AND B.C3_CODE = #{LEVEL3_CODE}
+	  </if>
+	  <if test="courseName != null and courseName != ''"> 
+	  	AND A.COURSE_NAME LIKE CONCAT('%',#{courseName},'%')
+	  </if>
+	  <if test="useYn != null and useYn != ''"> 
+	  	AND A.USE_YN = #{useYn}
+	  </if>
+	 ORDER BY B.CATEGORY_NAME,A.COURSE_NAME
+</select>
+
+<insert id="axCourseCodeInsert" parameterType="hashMap">
+	INSERT INTO COURSE_CODE(COURSE_CODE,COURSE_NAME,TEACHER_ID,H_PX,V_PX,CODE,DIRECTORY,USE_YN,POINT,CREATE_DATE,CREATE_USER,COMPANY_RATE,QG_ID)
+	VALUES (#{COURSE_CODE},#{COURSE_NAME},#{TEACHER_ID},#{H_PX},#{V_PX},#{CODE},#{DIRECTORY},#{USE_YN},#{POINT},CURRENT_TIMESTAMP,#{SESSION_USER_ID},100,#{QG_ID})
+</insert>
+
+<update id="axCourseCodeUpdate" parameterType="hashMap">
+	UPDATE COURSE_CODE
+	   SET COURSE_NAME = #{COURSE_NAME}
+	       ,TEACHER_ID = #{TEACHER_ID}
+	       ,H_PX = #{H_PX}
+	       ,V_PX = #{V_PX}
+	       ,DIRECTORY = #{DIRECTORY}
+	       ,USE_YN = #{USE_YN}
+	       ,POINT = #{POINT}
+	       ,UPDATE_DATE = CURRENT_TIMESTAMP
+	       ,UPDATE_USER = #{SESSION_USER_ID}
+	       ,QG_ID = #{QG_ID}
+	 WHERE COURSE_CODE = #{COURSE_CODE}   
+</update>
+
+<delete id="axCourseCodeDelete" parameterType="hashMap">
+	DELETE FROM COURSE_CODE
+	 WHERE COURSE_CODE = #{COURSE_CODE}   
+</delete>
+	
+
+<select id="axCourseResourceList" parameterType="hashMap" resultType="hashMap">
+	SELECT COURSE_CODE,
+		   TITLE,
+		   WEEK,
+		   DIRECTORY,
+		   PAGE_CNT,
+		   PREVIEW_PAGE,
+		   'N' NEW_FLAG
+	  FROM COURSE_RESOURCE
+	 WHERE COURSE_CODE = #{COURSE_CODE}
+	 ORDER BY WEEK
+</select>
+
+<insert id="axCourseResourceInsert" parameterType="hashMap">
+	INSERT INTO COURSE_RESOURCE(COURSE_CODE,TITLE,WEEK,DIRECTORY,PAGE_CNT,PREVIEW_PAGE,CREATE_DATE,CREATE_USER)
+	VALUES (#{COURSE_CODE},#{TITLE},#{WEEK},#{DIRECTORY},#{PAGE_CNT},#{PREVIEW_PAGE},CURRENT_TIMESTAMP,#{SESSION_USER_ID})
+</insert>
+
+<delete id="axCourseResourceAllDelete" parameterType="hashMap">
+	DELETE FROM COURSE_RESOURCE
+	 WHERE COURSE_CODE = #{COURSE_CODE}   
+</delete>
+
+
+
+   
+        
+</mapper>

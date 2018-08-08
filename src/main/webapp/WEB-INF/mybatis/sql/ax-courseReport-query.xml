@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="axCourseReport">
+		
+	<select id="axCourseReportList" parameterType="hashmap" resultType="hashmap">
+		SELECT 	C.CATEGORY_NAME,
+		       	B.COURSE_NAME,
+		       	B.COURSE_CODE,
+		       	A.SEQ,
+		       	A.TITLE,
+                A.USE_YN,
+		       	DATE_FORMAT(IFNULL(A.UPDATE_DATE, A.CREATE_DATE), '%y.%m.%d %H:%i') LAST_UPDATE_DATE,
+		       	IFNULL(U2.USER_NAME, U1.USER_NAME) LAST_UPDATE_USER,
+			    'N' NEW_FLAG
+		  FROM COURSE_REPORT A 	
+					LEFT OUTER JOIN COURSE_CODE B ON B.COURSE_CODE = A.COURSE_CODE   
+					LEFT OUTER JOIN (
+					   SELECT C3.CODE C3_CODE,
+							  C2.CODE C2_CODE,
+							  C1.CODE C1_CODE,
+							  CONCAT(C1.CODE_NAME,' > ',C2.CODE_NAME,' > ',C3.CODE_NAME) CATEGORY_NAME
+						 FROM CATEGORY C3 LEFT OUTER JOIN CATEGORY C2 ON C3.PARENT_CODE = C2.CODE
+										  LEFT OUTER JOIN CATEGORY C1 ON C2.PARENT_CODE = C1.CODE
+						WHERE C3.DEPTH = 3) C ON C.C3_CODE = B.CODE
+		            LEFT OUTER JOIN COURSE_MASTER D ON D.COURSE_CODE = A.COURSE_CODE
+				    LEFT OUTER JOIN USER U1 ON A.CREATE_USER = U1.USER_ID
+	  	            LEFT OUTER JOIN USER U2 ON A.UPDATE_USER = U2.USER_ID  
+		 WHERE D.REPORT_RATE > 0
+		   AND A.USE_YN = 'Y'
+		  <if test="LEVEL1_CODE != null and LEVEL1_CODE != ''"> 
+		  	AND C.C1_CODE = #{LEVEL1_CODE}
+		  </if>
+		  <if test="LEVEL2_CODE != null and LEVEL2_CODE != ''"> 
+		  	AND C.C2_CODE = #{LEVEL2_CODE}
+		  </if>
+		  <if test="LEVEL3_CODE != null and LEVEL3_CODE != ''"> 
+		  	AND C.C3_CODE = #{LEVEL3_CODE}
+		  </if>
+		  <if test="courseName != null and courseName != ''"> 
+		  	AND A.COURSE_NAME LIKE CONCAT('%',#{courseName},'%')
+		  </if>
+		 ORDER BY C.CATEGORY_NAME, B.COURSE_NAME, A.TITLE
+	</select>
+
+	<insert id="axCourseReportInsert" parameterType="hashmap">
+		INSERT INTO COURSE_REPORT ( COURSE_CODE, TITLE, CONTENTS, USE_YN, CREATE_DATE, CREATE_USER )
+		VALUES ( #{COURSE_CODE}, #{TITLE}, #{CONTENTS}, #{USE_YN}, CURRENT_TIMESTAMP, #{SESSION_USER_ID} )
+	</insert>  
+	
+	<update id="axCourseReportUpdate" parameterType="hashmap">
+		UPDATE 	COURSE_REPORT
+		   SET 	TITLE = #{TITLE}
+				,CONTENTS = #{CONTENTS}
+				,USE_YN = #{USE_YN}
+		       	,UPDATE_DATE = CURRENT_TIMESTAMP
+		       	,UPDATE_USER = #{SESSION_USER_ID}
+		 WHERE 	SEQ = #{SEQ}
+	</update>    
+	
+	<delete id="axCourseReportDelete" parameterType="hashmap">
+		DELETE 	FROM COURSE_REPORT
+		 WHERE 	SEQ = #{SEQ}
+	</delete> 
+
+	<select id="axCourseReportContentsList" parameterType="hashmap" resultType="hashmap">
+		SELECT 	SEQ, CONTENTS
+		  FROM 	COURSE_REPORT  
+		 WHERE 	SEQ = #{SEQ}
+	</select>
+
+	<update id="axCourseReportContentsUpdate" parameterType="hashmap">
+		UPDATE 	COURSE_REPORT
+		   SET 	CONTENTS = #{CONTENTS}
+		       	,UPDATE_DATE = CURRENT_TIMESTAMP
+		       	,UPDATE_USER = #{SESSION_USER_ID}
+		 WHERE 	SEQ = #{SEQ}
+	</update> 	   
+
+        
+</mapper>

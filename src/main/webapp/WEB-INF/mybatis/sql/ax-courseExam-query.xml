@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="axCourseExam">
+		
+	<select id="axCourseExamList" parameterType="hashmap" resultType="hashmap">
+		SELECT B.CATEGORY_NAME,
+		       A.COURSE_NAME,
+		       A.COURSE_CODE,
+		       ifnull(E.QUESTION_ALL_CNT, 0) QUESTION_ALL_CNT,
+		       ifnull(D.QUESTION_TYPE_CNT, 0) QUESTION_TYPE_CNT,
+		       C.EXAM_RATE,
+		       (SELECT COUNT(*) FROM COURSE_RESOURCE WHERE COURSE_CODE = A.COURSE_CODE) WEEK_CNT
+		  FROM COURSE_CODE A LEFT OUTER JOIN (
+					           SELECT C3.CODE C3_CODE,
+					                  C2.CODE C2_CODE,
+					                  C1.CODE C1_CODE,
+					                  CONCAT(C1.CODE_NAME,' > ',C2.CODE_NAME,' > ',C3.CODE_NAME) CATEGORY_NAME
+						     	 FROM CATEGORY C3 LEFT OUTER JOIN CATEGORY C2 ON C3.PARENT_CODE = C2.CODE
+						                          LEFT OUTER JOIN CATEGORY C1 ON C2.PARENT_CODE = C1.CODE
+					            WHERE C3.DEPTH = 3) B ON A.CODE = B.C3_CODE
+		                     JOIN COURSE_MASTER C ON C.COURSE_CODE = A.COURSE_CODE
+		                     LEFT OUTER JOIN (
+		                     	SELECT  COURSE_CODE,
+		                     			COUNT(*) QUESTION_TYPE_CNT
+		                     	FROM	COURSE_EXAM_TYPE
+		                     	WHERE	USE_YN = 'Y'
+		                     	GROUP 	BY COURSE_CODE ) D ON D.COURSE_CODE = A.COURSE_CODE   
+		                     LEFT OUTER JOIN (
+		                     	SELECT  COURSE_CODE,
+		                     			COUNT(*) QUESTION_ALL_CNT
+		                     	FROM	COURSE_EXAM
+		                     	WHERE	USE_YN = 'Y'
+		                     	GROUP 	BY COURSE_CODE ) E ON E.COURSE_CODE = A.COURSE_CODE   
+		 WHERE C.EXAM_RATE > 0
+		   AND A.USE_YN = 'Y'
+		  <if test="LEVEL1_CODE != null and LEVEL1_CODE != ''"> 
+		  	AND B.C1_CODE = #{LEVEL1_CODE}
+		  </if>
+		  <if test="LEVEL2_CODE != null and LEVEL2_CODE != ''"> 
+		  	AND B.C2_CODE = #{LEVEL2_CODE}
+		  </if>
+		  <if test="LEVEL3_CODE != null and LEVEL3_CODE != ''"> 
+		  	AND B.C3_CODE = #{LEVEL3_CODE}
+		  </if>
+		  <if test="courseName != null and courseName != ''"> 
+		  	AND A.COURSE_NAME LIKE CONCAT('%',#{courseName},'%')
+		  </if>
+		 ORDER BY B.CATEGORY_NAME,A.COURSE_NAME
+	</select>
+
+	<select id="axCourseExamQuestionList" parameterType="hashmap" resultType="hashmap">
+		SELECT 	A.COURSE_CODE, A.SEQ, A.TYPE, A.QUESTION, A.QA1, A.QA2, A.QA3, A.QA4, A.ANSWER, A.WEEK, A.LEVEL, A.USE_YN, A.ORD,
+		       	DATE_FORMAT(IFNULL(A.UPDATE_DATE, A.CREATE_DATE), '%y.%m.%d %H:%i') LAST_UPDATE_DATE,
+		       	IFNULL(U2.USER_NAME, U1.USER_NAME) LAST_UPDATE_USER,
+			    'N' NEW_FLAG
+		  FROM 	COURSE_EXAM A LEFT OUTER JOIN USER U1 ON A.CREATE_USER = U1.USER_ID
+		  	                 LEFT OUTER JOIN USER U2 ON A.UPDATE_USER = U2.USER_ID   
+		 WHERE 	A.COURSE_CODE = #{COURSE_CODE}
+		 ORDER 	BY A.ORD
+	</select>
+
+	<insert id="axCourseExamQuestionInsert" parameterType="hashmap">
+		INSERT INTO COURSE_EXAM ( COURSE_CODE, SEQ, TYPE, QUESTION, QA1, QA2, QA3, QA4, ANSWER, WEEK, LEVEL, USE_YN, ORD, CREATE_DATE, CREATE_USER )
+		VALUES ( #{COURSE_CODE}, #{SEQ}, #{TYPE}, #{QUESTION}, #{QA1}, #{QA2}, #{QA3}, #{QA4}, #{ANSWER}, IFNULL(#{WEEK}, 1), IFNULL(#{LEVEL}, 3), #{USE_YN}, #{ORD}, CURRENT_TIMESTAMP, #{SESSION_USER_ID} )
+	</insert>  
+	
+	<update id="axCourseExamQuestionUpdate" parameterType="hashmap">
+		UPDATE 	COURSE_EXAM
+		   SET 	TYPE = #{TYPE}
+				,QUESTION = #{QUESTION}
+				,QA1 = #{QA1}
+				,QA2 = #{QA2}
+				,QA3 = #{QA3}
+				,QA4 = #{QA4}
+				,ANSWER = #{ANSWER}
+				,WEEK = IFNULL(#{WEEK}, 1)
+				,LEVEL = IFNULL(#{LEVEL}, 3)
+				,USE_YN = #{USE_YN}
+				,ORD = #{ORD}
+		       	,UPDATE_DATE = CURRENT_TIMESTAMP
+		       	,UPDATE_USER = #{SESSION_USER_ID}
+		 WHERE 	COURSE_CODE = #{COURSE_CODE}
+		   AND 	SEQ = #{SEQ}
+	</update>    
+	
+	<delete id="axCourseExamQuestionDelete" parameterType="hashmap">
+		DELETE 	FROM COURSE_EXAM
+		 WHERE 	COURSE_CODE = #{COURSE_CODE}
+		   AND 	SEQ = #{SEQ}
+	</delete> 
+			
+	   
+
+        
+</mapper>

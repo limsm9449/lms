@@ -1,0 +1,44 @@
+1. bom.xml에 plugin 추가
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>2.5.1</version>
+                <configuration>
+                    <source>1.7</source>
+                    <target>1.7</target>
+                    <encoding>UTF-8</encoding>
+                    <compilerArgument>-Xlint:all</compilerArgument>
+                    <showWarnings>true</showWarnings>
+                    <showDeprecation>true</showDeprecation>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>tomcat-maven-plugin</artifactId>
+                <configuration>
+                    <url>http://localhost:8080/manager/text</url>
+                    <server>TomcatServer</server>
+                    <path>/lms</path>
+                </configuration>
+            </plugin>
+
+2. tomcat > conf > tomcat-users.xml에 다음 추가
+
+  <role rolename="manager-script"/>
+  <role rolename="manager-gui"/>
+  <user username="tomcat" password="tomcat1234" roles="manager-gui,manager-script"/>
+            
+2. C:\Users\Administrator\.m2의 setting.xml에 다음 추가
+
+	<server>
+      <id>TomcatServer</id>
+      <username>tomcat</username>
+      <password>tomcat1234</password>
+    </server>
+    
+3. project > run as > run configurations
+Maven Build에서 new 클릭
+
+base directory에 lms 선택
+goals에 clean tomcat:undeploy tomcat:deploy 입력

@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="axCourse">
+	
+	<select id="axCourseList" parameterType="hashmap" resultType="hashmap">
+	    SELECT 	C.CATEGORY_NAME
+	           	,A.COURSE_ID
+		       	,A.COURSE_CODE
+		       	,B.COURSE_NAME
+               	,A.YEAR
+				,A.MONTH
+				,A.CHASU
+               	,A.COMP_CD
+		       	,A.TUTOR_ID
+		       	,A.COURSE_COST
+		       	,A.C_PERIOD
+		       	,A.OPEN_YN
+		       	,IFNULL(E.Y_CNT, 0) Y_CNT
+		       	,IFNULL(E.A_CNT, 0) A_CNT
+		       	,IFNULL(A.CHASU, 0) CHASU
+               	,A.REPORT_RATE
+				,A.EXAM_RATE
+				,A.DISCUSSION_RATE
+				,A.PROGRESS_RATE
+                ,A.POPULAR_YN
+                ,A.COURSE_EXAM_TYPE_ID
+                ,F.TYPE_NAME COURSE_EXAM_TYPE_NAME
+                ,A.TERM_YN
+                ,A.TERM_PEROID_FROM
+                ,A.TERM_PEROID_TO
+                ,A.STUDY_PERIOD_FROM
+                ,A.STUDY_PERIOD_TO
+                ,A.REPORT_FAIL_RATE
+                ,A.EXAM_FAIL_RATE
+                ,A.DISCUSSION_FAIL_RATE
+                ,A.PROGRESS_FAIL_RATE
+                ,A.TOTAL_FAIL
+				,DATE_FORMAT(IFNULL(A.UPDATE_DATE, A.CREATE_DATE), '%y.%m.%d %H:%i') LAST_UPDATE_DATE
+				,IFNULL(U2.USER_NAME, U1.USER_NAME) LAST_UPDATE_USER
+				,'N' NEW_FLAG
+		  FROM COURSE A LEFT OUTER JOIN COURSE_CODE B ON A.COURSE_CODE = B.COURSE_CODE
+		                LEFT OUTER JOIN (
+							   SELECT C3.CODE C3_CODE, C2.CODE C2_CODE, C1.CODE C1_CODE,
+									  CONCAT(C1.CODE_NAME,' > ',C2.CODE_NAME,' > ',C3.CODE_NAME) CATEGORY_NAME
+								 FROM CATEGORY C3 LEFT OUTER JOIN CATEGORY C2 ON C3.PARENT_CODE = C2.CODE
+									      LEFT OUTER JOIN CATEGORY C1 ON C2.PARENT_CODE = C1.CODE
+							    WHERE C3.DEPTH = 3) C ON B.CODE = C.C3_CODE
+                        LEFT OUTER JOIN (
+							SELECT  COURSE_ID,
+									SUM(IF(STATUS = 'Y', 1, 0)) Y_CNT,
+                                    SUM(IF(STATUS = 'A', 1, 0)) A_CNT
+                            FROM 	COURSE_REGISTER
+                            GROUP 	BY COURSE_ID ) E ON E.COURSE_ID = A.COURSE_ID
+						LEFT OUTER JOIN COURSE_EXAM_TYPE F ON F.SEQ = A.COURSE_EXAM_TYPE_ID
+	                    LEFT OUTER JOIN USER U1 ON A.CREATE_USER = U1.USER_ID
+		  	            LEFT OUTER JOIN USER U2 ON A.UPDATE_USER = U2.USER_ID                        
+		 WHERE 1 = 1
+		   <if test="LEVEL1_CODE != null and LEVEL1_CODE != ''"> AND C.C1_CODE = #{LEVEL1_CODE}</if>
+		   <if test="LEVEL2_CODE != null and LEVEL2_CODE != ''"> AND C.C2_CODE = #{LEVEL2_CODE}</if>
+		   <if test="LEVEL3_CODE != null and LEVEL3_CODE != ''"> AND C.C3_CODE = #{LEVEL3_CODE}</if>
+		   <if test="courseName != null and courseName != ''"> AND B.COURSE_NAME LIKE CONCAT('%',#{courseName},'%')</if>
+	 ORDER BY C.CATEGORY_NAME,B.COURSE_NAME,A.YEAR,A.MONTH,A.CHASU  
+	</select>
+   
+	<insert id="axCourseInsert" parameterType="hashMap">
+		INSERT INTO COURSE(COURSE_CODE, YEAR, MONTH, CHASU, COURSE_COST, TUTOR_ID, COMP_CD, 
+					REPORT_RATE, EXAM_RATE, DISCUSSION_RATE, PROGRESS_RATE, OPEN_YN, C_PERIOD, POPULAR_YN, 
+					COURSE_EXAM_TYPE_ID, TERM_YN, TERM_PEROID_FROM, TERM_PEROID_TO, STUDY_PERIOD_FROM, STUDY_PERIOD_TO, 
+					REPORT_FAIL_RATE, EXAM_FAIL_RATE, DISCUSSION_FAIL_RATE, PROGRESS_FAIL_RATE, TOTAL_FAIL, CREATE_DATE, CREATE_USER)
+		VALUES (#{COURSE_CODE}, DATE_FORMAT(NOW(), '%Y'), DATE_FORMAT(NOW(), '%m'), #{CHASU},#{COURSE_COST}, #{TUTOR_ID}, #{COMP_CD}, 
+					#{REPORT_RATE}, #{EXAM_RATE}, #{DISCUSSION_RATE}, #{PROGRESS_RATE}, #{OPEN_YN}, #{C_PERIOD}, #{POPULAR_YN}, 
+					#{COURSE_EXAM_TYPE_ID}, #{TERM_YN}, #{TERM_PEROID_FROM}, #{TERM_PEROID_TO}, #{STUDY_PERIOD_FROM}, #{STUDY_PERIOD_TO}, 
+					#{REPORT_FAIL_RATE}, #{EXAM_FAIL_RATE}, #{DISCUSSION_FAIL_RATE}, #{PROGRESS_FAIL_RATE}, #{TOTAL_FAIL},CURRENT_TIMESTAMP,#{SESSION_USER_ID})
+	</insert>
+	
+	<update id="axCourseUpdate" parameterType="hashMap">
+		UPDATE 	COURSE
+		   SET 	COURSE_COST = #{COURSE_COST}
+				,TUTOR_ID = #{TUTOR_ID}
+				,COMP_CD = #{COMP_CD}
+				,REPORT_RATE = #{REPORT_RATE}
+				,EXAM_RATE = #{EXAM_RATE}
+				,DISCUSSION_RATE = #{DISCUSSION_RATE}
+				,PROGRESS_RATE = #{PROGRESS_RATE}
+				,OPEN_YN = #{OPEN_YN}
+				,C_PERIOD = #{C_PERIOD}
+				,POPULAR_YN = #{POPULAR_YN}
+				,COURSE_EXAM_TYPE_ID = #{COURSE_EXAM_TYPE_ID}
+				,TERM_YN = #{TERM_YN}
+				,TERM_PEROID_FROM = #{TERM_PEROID_FROM}
+				,TERM_PEROID_TO = #{TERM_PEROID_TO}
+				,STUDY_PERIOD_FROM = #{STUDY_PERIOD_FROM}
+				,STUDY_PERIOD_TO = #{STUDY_PERIOD_TO}
+				,REPORT_FAIL_RATE = #{REPORT_FAIL_RATE}
+				,EXAM_FAIL_RATE = #{EXAM_FAIL_RATE}
+				,DISCUSSION_FAIL_RATE = #{DISCUSSION_FAIL_RATE}
+				,PROGRESS_FAIL_RATE = #{PROGRESS_FAIL_RATE}
+				,TOTAL_FAIL = #{TOTAL_FAIL}
+		       	,UPDATE_DATE = CURRENT_TIMESTAMP
+		       	,UPDATE_USER = #{SESSION_USER_ID}
+		 WHERE COURSE_ID = #{COURSE_ID}   
+	</update>
+	
+	<delete id="axCourseDelete" parameterType="hashMap">
+		DELETE FROM COURSE
+		 WHERE COURSE_ID = #{COURSE_ID}    
+	</delete>
+
+	<select id="axCourseMaxChasu" parameterType="hashmap" resultType="int">
+		SELECT 	IFNULL(MAX(CHASU) + 1, 1) CHASU
+		FROM 	COURSE
+		WHERE 	COURSE_CODE = #{COURSE_CODE} 
+	</select>
+        
+</mapper>

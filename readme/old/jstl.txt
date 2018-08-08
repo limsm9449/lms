@@ -1,0 +1,1 @@
+<c:if test="${set.data.professor eq row.ddKey}">selected</c:if>

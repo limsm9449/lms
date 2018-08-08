@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="axComm">
+
+	<select id="axDdCategoryLevel1" resultType="hashmap">
+		SELECT CODE value,
+		       CODE_NAME text
+		  FROM CATEGORY
+		 WHERE USE_YN = 'Y'
+		   AND DEPTH = 1
+		 ORDER BY 2  
+	</select>
+	
+	<select id="axDdCategoryLevel2" parameterType="hashmap" resultType="hashmap">
+		SELECT CODE value,
+		       CODE_NAME text
+		  FROM CATEGORY
+		 WHERE USE_YN = 'Y'
+		   AND DEPTH = 2
+		   AND PARENT_CODE = #{LEVEL1_CODE} 
+		 ORDER BY 2  
+	</select>
+	
+	<select id="axDdCategoryLevel3" parameterType="hashmap" resultType="hashmap">
+		SELECT CODE value,
+		       CODE_NAME text
+		  FROM CATEGORY
+		 WHERE USE_YN = 'Y'
+		   AND DEPTH = 3
+		   AND PARENT_CODE = #{LEVEL2_CODE} 
+		 ORDER BY 2  
+	</select>
+	
+	<select id="axDdTeacher" resultType="hashmap">
+		SELECT USER_ID value,
+		       USER_NAME text
+		  FROM USER
+		 WHERE TEACHER_YN = 'Y'
+		 ORDER BY 2
+	</select>
+
+	<select id="axDdTutor" resultType="hashmap">
+		SELECT USER_ID value,
+		       USER_NAME text
+		  FROM USER
+		 WHERE TUTOR_YN = 'Y'
+		 ORDER BY COMP_CD, USER_NAME
+	</select>
+	
+	<select id="axDdQuestGroup" resultType="hashmap">
+		SELECT QG_ID value
+		       ,GROUP_NAME text
+		  FROM QUEST_GROUP
+		 WHERE USE_YN = 'Y'
+		 ORDER BY 2 	
+	</select>
+
+	<select id="axDdCourseCode" resultType="hashmap">
+		SELECT COURSE_CODE value
+		       ,COURSE_NAME text
+		  FROM COURSE_CODE
+		 WHERE USE_YN = 'Y'
+		   AND CODE = #{LEVEL3_CODE}
+		 ORDER BY 2 	
+	</select>
+	
+	<select id="axDdExamCourseCode" resultType="hashmap">
+		SELECT A.COURSE_CODE value
+		       ,A.COURSE_NAME text
+		       ,C.QUESTION_CNT
+		  FROM COURSE_CODE A 	LEFT JOIN COURSE_MASTER B ON A.COURSE_CODE = B.COURSE_CODE
+		  						LEFT JOIN (
+		  							SELECT 	COURSE_CODE,
+		  									COUNT(*) QUESTION_CNT
+		  							FROM 	COURSE_EXAM
+		  							WHERE 	USE_YN = 'Y'
+		  							GROUP 	BY COURSE_CODE ) C ON A.COURSE_CODE = C.COURSE_CODE
+		 WHERE B.EXAM_RATE > 0
+		   AND A.CODE = #{LEVEL3_CODE}
+		 ORDER BY 2 	
+	</select>
+	
+	<select id="axMaxCourseCode" parameterType="hashmap" resultType="hashmap">
+		SELECT  DATE_FORMAT(NOW(), '%Y%m') YYYYMMDD,
+				IFNULL(MAX(CAST(SUBSTR(COURSE_CODE,7,3) AS UNSIGNED)), 0) MAX_SEQ
+		FROM 	COURSE_CODE
+		WHERE 	COURSE_CODE LIKE CONCAT(DATE_FORMAT(NOW(), '%Y%m'),'%')
+	</select>
+
+	<select id="axDdCompany" resultType="hashmap">
+		SELECT 	1 ORD
+				,COMP_CD value
+		        ,COMP_NAME text
+		        ,TUTOR_ID
+		  FROM  COMPANY
+		 WHERE	COMP_CD = 'B2C' 
+		 UNION 	ALL
+		SELECT 	2 ORD
+				,COMP_CD value
+		        ,COMP_NAME text
+		        ,TUTOR_ID
+		  FROM  COMPANY
+		 WHERE	COMP_CD != 'B2C'
+		 ORDER BY 1, 2 	
+	</select>
+	
+	<select id="axDdExamType" resultType="hashmap">
+		SELECT 	SEQ value
+		        ,TYPE_NAME text
+		  FROM  COURSE_EXAM_TYPE
+		 WHERE	COURSE_CODE = #{COURSE_CODE} 
+		 ORDER BY 1, 2 	
+	</select>
+
+	<select id="axDdReportCourseCode" resultType="hashmap">
+		SELECT A.COURSE_CODE value
+		       ,A.COURSE_NAME text
+		  FROM COURSE_CODE A 	LEFT JOIN COURSE_MASTER B ON A.COURSE_CODE = B.COURSE_CODE
+		 WHERE B.REPORT_RATE > 0
+		   AND A.CODE = #{LEVEL3_CODE}
+		 ORDER BY 2 	
+	</select>
+	
+
+    
+</mapper>

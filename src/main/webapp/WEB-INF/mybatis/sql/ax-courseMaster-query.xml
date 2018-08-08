@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="axCourseMaster">
+		
+	<select id="axCourseMasterList" parameterType="hashmap" resultType="hashmap">
+		SELECT 	C.CATEGORY_NAME, A.COURSE_CODE, B.COURSE_NAME, A.TUTOR_ID, 
+				IF(LENGTH(A.LEARING_GOAL) > 0, 'Y','N') LEARING_GOAL_YN,
+				IF(LENGTH(A.LEARING_CONTENT) > 0, 'Y','N') LEARING_CONTENT_YN,
+				IF(LENGTH(A.EVAL_METHOD) > 0, 'Y','N') EVAL_METHOD_YN,
+				IF(LENGTH(A.LEARING_TARGET) > 0, 'Y','N') LEARING_TARGET_YN,
+				IF(LENGTH(A.LEARING_COST) > 0, 'Y','N') LEARING_COST_YN,
+				A.SWF, A.B_IMG, A.C_IMG, A.M_IMG1, A.M_IMG2, A.M_IMG3, A.S_IMG1, A.S_IMG2, A.S_IMG3,
+				A.COURSE_COST, A.WEEK_COST_YN, A.REPORT_RATE, A.EXAM_RATE, A.DISCUSSION_RATE, A.PROGRESS_RATE, A.PROMOTION_VIDEO_YN, A.SWF, 
+				A.B_IMG, A.C_IMG, A.M_IMG1, A.M_IMG2, A.M_IMG3, A.S_IMG1, A.S_IMG2, A.S_IMG3,
+		       	DATE_FORMAT(IFNULL(A.UPDATE_DATE, A.CREATE_DATE), '%y.%m.%d %H:%i') LAST_UPDATE_DATE,
+		       	IFNULL(U2.USER_NAME, U1.USER_NAME) LAST_UPDATE_USER,
+			    'N' NEW_FLAG,
+		   		IF(A.COURSE_CODE = NEXT_DATA.COURSE_CODE, 'Y', 'N') NEXT_CREATE_FLAG
+		  FROM COURSE_MASTER A 	LEFT JOIN COURSE_CODE B ON A.COURSE_CODE = B.COURSE_CODE AND B.USE_YN = 'Y'
+		  						LEFT OUTER JOIN (
+						           SELECT C3.CODE C3_CODE,
+						                  C2.CODE C2_CODE,
+						                  C1.CODE C1_CODE,
+						                  CONCAT(C1.CODE_NAME,' > ',C2.CODE_NAME,' > ',C3.CODE_NAME) CATEGORY_NAME
+							     	 FROM CATEGORY C3 LEFT OUTER JOIN CATEGORY C2 ON C3.PARENT_CODE = C2.CODE
+							                          LEFT OUTER JOIN CATEGORY C1 ON C2.PARENT_CODE = C1.CODE
+						            WHERE C3.DEPTH = 3) C ON B.CODE = C.C3_CODE
+					            LEFT OUTER JOIN USER U1 ON A.CREATE_USER = U1.USER_ID
+		  	                 	LEFT OUTER JOIN USER U2 ON A.UPDATE_USER = U2.USER_ID  
+		  	                 	LEFT OUTER JOIN (
+		  	                 		SELECT 	COURSE_CODE, COUNT(*) CNT
+		  	                 		FROM 	COURSE_EXAM
+		  	                 		GROUP 	BY COURSE_CODE ) NEXT_DATA ON NEXT_DATA.COURSE_CODE = A.COURSE_CODE
+		 WHERE 1 = 1
+		  <if test="LEVEL1_CODE != null and LEVEL1_CODE != ''"> 
+		  	AND C.C1_CODE = #{LEVEL1_CODE}
+		  </if>
+		  <if test="LEVEL2_CODE != null and LEVEL2_CODE != ''"> 
+		  	AND C.C2_CODE = #{LEVEL2_CODE}
+		  </if>
+		  <if test="LEVEL3_CODE != null and LEVEL3_CODE != ''"> 
+		  	AND C.C3_CODE = #{LEVEL3_CODE}
+		  </if>
+		  <if test="courseName != null and courseName != ''"> 
+		  	AND B.COURSE_NAME LIKE CONCAT('%',#{courseName},'%')
+		  </if>
+		 ORDER BY C.CATEGORY_NAME,B.COURSE_NAME
+	</select>
+
+	<insert id="axCourseMasterInsert" parameterType="hashmap">
+		INSERT INTO COURSE_MASTER ( COURSE_CODE, TUTOR_ID, COURSE_COST, WEEK_COST_YN, REPORT_RATE, EXAM_RATE, DISCUSSION_RATE, PROGRESS_RATE, PROMOTION_VIDEO_YN, CREATE_DATE, CREATE_USER )
+		VALUES ( #{COURSE_CODE}, #{TUTOR_ID}, #{COURSE_COST}, #{WEEK_COST_YN}, #{REPORT_RATE}, #{EXAM_RATE}, #{DISCUSSION_RATE}, #{PROGRESS_RATE}, #{PROMOTION_VIDEO_YN}, CURRENT_TIMESTAMP, #{SESSION_USER_ID} )
+	</insert>  
+	
+	<update id="axCourseMasterUpdate" parameterType="hashmap">
+		UPDATE 	COURSE_MASTER
+		   SET 	TUTOR_ID = #{TUTOR_ID}
+				,COURSE_COST = #{COURSE_COST}
+				,WEEK_COST_YN = #{WEEK_COST_YN}
+				,REPORT_RATE = #{REPORT_RATE}
+				,EXAM_RATE = #{EXAM_RATE}
+				,DISCUSSION_RATE = #{DISCUSSION_RATE}
+				,PROGRESS_RATE = #{PROGRESS_RATE}
+				,PROMOTION_VIDEO_YN = #{PROMOTION_VIDEO_YN}
+		       	,UPDATE_DATE = CURRENT_TIMESTAMP
+		       	,UPDATE_USER = #{SESSION_USER_ID}
+		 WHERE 	COURSE_CODE = #{COURSE_CODE}
+	</update>    
+	
+	<delete id="axCourseMasterDelete" parameterType="hashmap">
+		DELETE 	FROM COURSE_MASTER
+		 WHERE 	COURSE_CODE = #{COURSE_CODE}
+	</delete> 
+
+
+
+	<select id="axCourseMasterContentsList" parameterType="hashmap" resultType="hashmap">
+		SELECT 	LEARING_GOAL, LEARING_CONTENT, EVAL_METHOD, LEARING_TARGET, LEARING_COST
+		  FROM 	COURSE_MASTER  
+		 WHERE 	COURSE_CODE = #{COURSE_CODE}
+	</select>
+
+	<update id="axCourseMasterContentsUpdate" parameterType="hashmap">
+		UPDATE 	COURSE_MASTER
+		   SET 	LEARING_GOAL = #{LEARING_GOAL}
+				,LEARING_CONTENT = #{LEARING_CONTENT}
+				,EVAL_METHOD = #{EVAL_METHOD}
+				,LEARING_TARGET = #{LEARING_TARGET}
+				,LEARING_COST = #{LEARING_COST}
+		       	,UPDATE_DATE = CURRENT_TIMESTAMP
+		       	,UPDATE_USER = #{SESSION_USER_ID}
+		 WHERE 	COURSE_CODE = #{COURSE_CODE}
+	</update>    
+
+	<select id="axCourseMasterImageList" parameterType="hashmap" resultType="hashmap">
+		SELECT 	SWF, B_IMG, C_IMG, M_IMG1, M_IMG2, M_IMG3, S_IMG1, S_IMG2, S_IMG3
+		  FROM 	COURSE_MASTER  
+		 WHERE 	COURSE_CODE = #{COURSE_CODE}
+	</select>
+	
+	<update id="axCourseMasterImageUpdate" parameterType="hashmap">
+		UPDATE 	COURSE_MASTER
+		   SET 	UPDATE_DATE = CURRENT_TIMESTAMP
+		   		,UPDATE_USER = #{SESSION_USER_ID}
+		   <if test="kind != null and kind == 'SWF'"> ,SWF = 'Y'</if>
+		   <if test="kind != null and kind == 'B_IMG'"> ,B_IMG = 'Y'</if>
+		   <if test="kind != null and kind == 'C_IMG'"> ,C_IMG = 'Y'</if>
+		   <if test="kind != null and kind == 'M_IMG1'"> ,M_IMG1 = 'Y'</if>
+		   <if test="kind != null and kind == 'M_IMG2'"> ,M_IMG2 = 'Y'</if>
+		   <if test="kind != null and kind == 'M_IMG3'"> ,M_IMG3 = 'Y'</if>
+		   <if test="kind != null and kind == 'S_IMG1'"> ,S_IMG1 = 'Y'</if>
+		   <if test="kind != null and kind == 'S_IMG2'"> ,S_IMG2 = 'Y'</if>
+		   <if test="kind != null and kind == 'S_IMG3'"> ,S_IMG3 = 'Y'</if>
+		 WHERE COURSE_CODE = #{COURSE_CODE} 
+	</update>
+
+        
+</mapper>

@@ -1,0 +1,76 @@
+- 서버 tomcat의 server.xml를 다음과 같이 설정함
+
+ 
+<Server port="8048" shutdown="SHUTDOWN">
+
+  <Listener className="org.apache.catalina.core.AprLifecycleListener" SSLEngine="on" />
+  <Listener className="org.apache.catalina.core.JasperListener" />
+  <Listener className="org.apache.catalina.mbeans.ServerLifecycleListener" />
+  <Listener className="org.apache.catalina.mbeans.GlobalResourcesLifecycleListener" />
+
+  <GlobalNamingResources>
+
+    <Environment name="simpleValue" type="java.lang.Integer" value="30"/>
+
+    <Resource name="UserDatabase" auth="Container"
+              type="org.apache.catalina.UserDatabase"
+              description="User database that can be updated and saved"
+              factory="org.apache.catalina.users.MemoryUserDatabaseFactory"
+              pathname="conf/tomcat-users.xml" />
+
+  </GlobalNamingResources>
+
+  <Service name="qlearning">
+
+    <!-- Do not modify the specified port number! -->
+    <Connector port="8047"
+               enableLookups="false" protocol="AJP/1.3" />
+
+    <Engine name="qlearning" defaultHost="qlearning.co.kr">
+
+      <Realm className="org.apache.catalina.realm.UserDatabaseRealm"
+             resourceName="UserDatabase"/>
+
+      <Host name="qlearning.co.kr" appBase="/home/hosting_users/qlearning"
+            unpackWARs="true" autoDeploy="true"
+            xmlValidation="false" xmlNamespaceAware="false">
+
+        <Context path="" docBase="www">
+        
+
+	  <!-- Mysql JNDI -->
+          <!-- Resource name="jdbc/qlearning"
+                    auth="Container"
+                    type="javax.sql.DataSource"
+                    driverClassName="com.mysql.jdbc.Driver"
+                    url="jdbc:mysql://localhost/dbname"
+                    username="dbuser"
+                    password="dbpasswd"
+                    maxActive="20"
+                    maxIdle="10"
+                    maxWait="3000"/ -->
+
+          <!-- Oracle JNDI -->          
+          <!-- Resource name="jdbc/qlearning"
+                    auth="Container"
+                    type="javax.sql.DataSource"
+                    driverClassName="oracle.jdbc.driver.OracleDriver"
+                    url="jdbc:oracle:thin:@IP:1521:ORCL"
+                    username="dbuser"
+                    password="dbpasswd"
+                    maxActive="10"
+                    maxIdle="5"
+                    maxWait="3000"/ -->                    
+
+        </Context>
+        
+        <Context path="/cImage" docBase="cImage" debug="0" />
+		<Context path="/cContents" docBase="cContents" debug="0" />
+		<Context path="/cu" docBase="cu" debug="0" />
+      </Host>
+
+    </Engine>
+
+  </Service>
+
+</Server>

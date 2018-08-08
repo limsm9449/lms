@@ -1,0 +1,37 @@
+f_submit('/board/reply',{urlParams:'pSeq=${set.condiVO.seq}&kind=${set.condiVO.kind}',iframe:'replyFrame'},hFrm);
+	
+<img src="<c:url value="/resources/images/btn/btn_reply_add.gif"/>" alt="추가">
+
+<c:if test="${set.userId eq set.data.userId}"></c:if>
+	
+<c:choose>
+	<c:when test="">
+	</c:when>
+	<c:otherwise>
+	</c:otherwise>
+</c:choose>
+						
+<%=request.getContextPath()%>	
+
+
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<c:out value="" escapeXml="true" />
+
+
++ 트랜잭션
+    	SqlSessionTemplate sqlSessionTemplate = (SqlSessionTemplate)getSqlSession();
+		SqlSession session = sqlSessionTemplate.getSqlSessionFactory().openSession();
+		Connection conn = session.getConnection();
+    	conn.setAutoCommit(false);
+    	try {
+    	   	conn.commit();
+    	} catch (Exception e) {
+    		conn.rollback();
+			e.printStackTrace();
+		} finally {
+			if ( session != null ) session.close();
+		}
+
+
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+><fmt:formatNumber value="${row.paymentCost}" type="number"/>		

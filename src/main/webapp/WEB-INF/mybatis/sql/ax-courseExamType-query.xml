@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="axCourseExamType">
+		
+	<select id="axCourseExamTypeList" parameterType="hashmap" resultType="hashmap">
+		SELECT 	A.SEQ, C.CATEGORY_NAME, A.COURSE_CODE, B.COURSE_NAME, A.TYPE_NAME, A.QUESTION_CNT, A.USE_YN, 
+				IFNULL(D.STANDARD_CNT1, 0) STANDARD_CNT1,
+				IFNULL(D.STANDARD_QUESTION_CNT_G1, 0) STANDARD_QUESTION_CNT_G1,
+				IFNULL(D.STANDARD_QUESTION_CNT_J1, 0) STANDARD_QUESTION_CNT_J1,
+				IFNULL(D.STANDARD_CNT2, 0) STANDARD_CNT2, 
+				IFNULL(D.STANDARD_QUESTION_CNT_G2, 0) STANDARD_QUESTION_CNT_G2,
+				IFNULL(D.STANDARD_QUESTION_CNT_J2, 0) STANDARD_QUESTION_CNT_J2,
+				IFNULL(E.QUESTION_ALL_CNT, 0) QUESTION_ALL_CNT, 
+				IFNULL(F.WEEK_CNT, 0) WEEK_CNT,
+				IFNULL(A.TOTAL_RATIO, 0) TOTAL_RATIO,
+				IFNULL(A.WEEK_RATIO, 0) WEEK_RATIO,
+		       	DATE_FORMAT(IFNULL(A.UPDATE_DATE, A.CREATE_DATE), '%y.%m.%d %H:%i') LAST_UPDATE_DATE,
+		       	IFNULL(U2.USER_NAME, U1.USER_NAME) LAST_UPDATE_USER,
+			    'N' NEW_FLAG
+		  FROM COURSE_EXAM_TYPE A 	
+		  				LEFT JOIN COURSE_CODE B ON A.COURSE_CODE = B.COURSE_CODE AND B.USE_YN = 'Y'
+		  				LEFT OUTER JOIN (
+						           SELECT C3.CODE C3_CODE,
+						                  C2.CODE C2_CODE,
+						                  C1.CODE C1_CODE,
+						                  CONCAT(C1.CODE_NAME,' > ',C2.CODE_NAME,' > ',C3.CODE_NAME) CATEGORY_NAME
+							     	 FROM CATEGORY C3 LEFT OUTER JOIN CATEGORY C2 ON C3.PARENT_CODE = C2.CODE
+							                          LEFT OUTER JOIN CATEGORY C1 ON C2.PARENT_CODE = C1.CODE
+						            WHERE C3.DEPTH = 3) C ON B.CODE = C.C3_CODE
+						LEFT OUTER JOIN (
+		                     	SELECT  EXAM_TYPE_SEQ,
+		                     			SUM(IF(EXAM_KIND = 'TOTAL', 1, 0)) STANDARD_CNT1,
+		                     			SUM(IF(EXAM_KIND = 'TOTAL' AND TYPE = 'G', QUESTION_CNT, 0)) STANDARD_QUESTION_CNT_G1,
+		                     			SUM(IF(EXAM_KIND = 'TOTAL' AND TYPE = 'J', QUESTION_CNT, 0)) STANDARD_QUESTION_CNT_J1,
+		                     			SUM(IF(EXAM_KIND = 'WEEK', 1, 0)) STANDARD_CNT2,
+		                     			SUM(IF(EXAM_KIND = 'WEEK' AND TYPE = 'G', QUESTION_CNT, 0)) STANDARD_QUESTION_CNT_G2,
+		                     			SUM(IF(EXAM_KIND = 'WEEK' AND TYPE = 'J', QUESTION_CNT, 0)) STANDARD_QUESTION_CNT_J2
+		                     	FROM	COURSE_EXAM_TYPE_STANDARD
+		                     	WHERE	USE_YN = 'Y'
+		                     	GROUP 	BY EXAM_TYPE_SEQ ) D ON D.EXAM_TYPE_SEQ = A.SEQ 
+		               	LEFT OUTER JOIN (
+		                     	SELECT  COURSE_CODE,
+		                     			COUNT(*) QUESTION_ALL_CNT
+		                     	FROM	COURSE_EXAM
+		                     	WHERE	USE_YN = 'Y'
+		                     	GROUP 	BY COURSE_CODE ) E ON E.COURSE_CODE = A.COURSE_CODE  
+		              	LEFT OUTER JOIN (
+		              			SELECT 	COURSE_CODE, COUNT(*) WEEK_CNT 
+		              			FROM 	COURSE_RESOURCE 
+		              			GROUP	BY COURSE_CODE) F ON F.COURSE_CODE = A.COURSE_CODE
+					    LEFT OUTER JOIN USER U1 ON A.CREATE_USER = U1.USER_ID
+		  	            LEFT OUTER JOIN USER U2 ON A.UPDATE_USER = U2.USER_ID  
+		 WHERE 1 = 1
+		  <if test="LEVEL1_CODE != null and LEVEL1_CODE != ''"> 
+		  	AND C.C1_CODE = #{LEVEL1_CODE}
+		  </if>
+		  <if test="LEVEL2_CODE != null and LEVEL2_CODE != ''"> 
+		  	AND C.C2_CODE = #{LEVEL2_CODE}
+		  </if>
+		  <if test="LEVEL3_CODE != null and LEVEL3_CODE != ''"> 
+		  	AND C.C3_CODE = #{LEVEL3_CODE}
+		  </if>
+		  <if test="courseName != null and courseName != ''"> 
+		  	AND B.COURSE_NAME LIKE CONCAT('%',#{courseName},'%')
+		  </if>
+		 ORDER BY C.CATEGORY_NAME,B.COURSE_NAME
+	</select>
+
+	<insert id="axCourseExamTypeInsert" parameterType="hashmap">
+		INSERT INTO COURSE_EXAM_TYPE ( COURSE_CODE, TYPE_NAME, QUESTION_CNT, USE_YN, TOTAL_RATIO, WEEK_RATIO, CREATE_DATE, CREATE_USER )
+		VALUES ( #{COURSE_CODE}, #{TYPE_NAME}, #{QUESTION_CNT}, #{USE_YN}, #{TOTAL_RATIO}, #{WEEK_RATIO}, CURRENT_TIMESTAMP, #{SESSION_USER_ID} )
+	</insert>  
+	
+	<update id="axCourseExamTypeUpdate" parameterType="hashmap">
+		UPDATE 	COURSE_EXAM_TYPE
+		   SET 	TYPE_NAME = #{TYPE_NAME}
+				,QUESTION_CNT = #{QUESTION_CNT}
+				,USE_YN = #{USE_YN}
+				,TOTAL_RATIO = #{TOTAL_RATIO}
+				,WEEK_RATIO = #{WEEK_RATIO}
+		       	,UPDATE_DATE = CURRENT_TIMESTAMP
+		       	,UPDATE_USER = #{SESSION_USER_ID}
+		 WHERE 	SEQ = #{SEQ}
+	</update>    
+ 
+	<delete id="axCourseExamTypeDelete" parameterType="hashmap">
+		DELETE 	FROM COURSE_EXAM_TYPE
+		 WHERE 	SEQ = #{SEQ}
+	</delete> 
+
+<select id="axCourseExamTypeStandardList" parameterType="hashmap" resultType="hashmap">
+		SELECT 	A.SEQ, A.EXAM_TYPE_SEQ, A.EXAM_KIND, A.WEEK_FROM, A.WEEK_TO, A.TYPE, A.LEVEL, A.QUESTION_CNT, A.USE_YN,
+		       	DATE_FORMAT(IFNULL(A.UPDATE_DATE, A.CREATE_DATE), '%y.%m.%d %H:%i') LAST_UPDATE_DATE,
+		       	IFNULL(U2.USER_NAME, U1.USER_NAME) LAST_UPDATE_USER,
+			    'N' NEW_FLAG
+		  FROM 	COURSE_EXAM_TYPE_STANDARD A 
+		  				LEFT OUTER JOIN USER U1 ON A.CREATE_USER = U1.USER_ID
+		  	            LEFT OUTER JOIN USER U2 ON A.UPDATE_USER = U2.USER_ID   
+		 WHERE 	A.EXAM_TYPE_SEQ = #{EXAM_TYPE_SEQ}
+		 ORDER 	BY A.EXAM_KIND, A.WEEK_FROM
+	</select>
+
+	<insert id="axCourseExamTypeStandardInsert" parameterType="hashmap">
+		INSERT INTO COURSE_EXAM_TYPE_STANDARD ( EXAM_TYPE_SEQ, EXAM_KIND, WEEK_FROM, WEEK_TO, TYPE, LEVEL, QUESTION_CNT, USE_YN, CREATE_DATE, CREATE_USER )
+		VALUES ( #{EXAM_TYPE_SEQ}, #{EXAM_KIND}, #{WEEK_FROM}, #{WEEK_TO}, #{TYPE}, #{LEVEL}, #{QUESTION_CNT}, #{USE_YN}, CURRENT_TIMESTAMP, #{SESSION_USER_ID} )
+	</insert>  
+	
+	<update id="axCourseExamTypeStandardUpdate" parameterType="hashmap">
+		UPDATE 	COURSE_EXAM_TYPE_STANDARD
+		   SET 	EXAM_KIND = #{EXAM_KIND}
+				,WEEK_FROM = #{WEEK_FROM}
+				,WEEK_TO = #{WEEK_TO}
+				,TYPE = #{TYPE}
+				,LEVEL = #{LEVEL}
+				,QUESTION_CNT = #{QUESTION_CNT}
+				,USE_YN = #{USE_YN}
+		       	,UPDATE_DATE = CURRENT_TIMESTAMP
+		       	,UPDATE_USER = #{SESSION_USER_ID}
+		 WHERE 	SEQ = #{SEQ}
+	</update>    
+	
+	<delete id="axCourseExamTypeStandardDelete" parameterType="hashmap">
+		DELETE 	FROM COURSE_EXAM_TYPE_STANDARD
+		 WHERE 	SEQ = #{SEQ}
+	</delete>  
+
+
+        
+</mapper>

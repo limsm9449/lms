@@ -1,0 +1,15 @@
+오늘 일자 구하기
+ - 년월일 : 
+      select DATE_FORMAT(CURDATE(), '%Y%m%d') from dual;
+ - 년월일시분초 : 
+      select DATE_FORMAT(NOW(), '%Y%m%d%H%i%s') from dual;
+
+* 어제 일자 구하기
+ - 년월일 :
+      select DATE_FORMAT(CURDATE()-1, '%Y%m%d') from dual;
+      select DATE_FORMAT(CURDATE() - INTERVAL 1 DAY, '%Y%m%d') from dual;
+ - 년월일시분초 : 
+      select DATE_FORMAT(NOW()-INTERVAL 1 DAY, '%Y%m%d%H%i%s') from dual;
+
+
+
