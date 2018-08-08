@@ -41,7 +41,7 @@
 	
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
 	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-		<beans:property name="prefix" value="/WEB-INF/views/" />
+		<beans:property name="prefix" value="" />
 		<beans:property name="suffix" value=".jsp" />
 		<beans:property name="order">
 			<beans:value>2</beans:value>
@@ -108,7 +108,8 @@
 	
 	<!-- Interface 구현없이 Transaction을 하도록 설정 --> 
 	<tx:annotation-driven proxy-target-class="true"/>
-    
+ 
+
 
 
 

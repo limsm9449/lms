@@ -5,6 +5,9 @@
 <mapper namespace="comm">
 
 
+
+
+
 <select id="ddTeacher" resultType="Code">
 SELECT USER_ID DD_KEY,
        USER_NAME DD_VALUE

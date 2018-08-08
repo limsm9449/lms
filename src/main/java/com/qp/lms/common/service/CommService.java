@@ -1,6 +1,7 @@
 package com.qp.lms.common.service;
 
 import java.io.File;
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
@@ -29,6 +30,49 @@ public class CommService {
 	@Autowired
 	private DdService ddService;
 
+	public HashMap<String, Object> getDd(HashMap<String, Object> paramMap) throws Exception {
+		HashMap<String, Object> hm = new HashMap<String, Object>();
+		
+		String[] ddKinds = ((String)paramMap.get("DD_KIND")).split(",");
+		for ( int i = 0; i < ddKinds.length; i++ ) {
+			if ( "CategoryLevel1".equals(ddKinds[i]) ) {
+				List<HashMap<String, Object>> list = sqlSession.selectList("axComm.axDdCategoryLevel1", paramMap);
+		    	hm.put(ddKinds[i], list);
+			} else if ( "CategoryLevel2".equals(ddKinds[i]) ) {
+		    	hm.put(ddKinds[i], sqlSession.selectList("axComm.axDdCategoryLevel2", paramMap));
+			} else if ( "CategoryLevel3".equals(ddKinds[i]) ) {
+		    	hm.put(ddKinds[i], sqlSession.selectList("axComm.axDdCategoryLevel3", paramMap));
+			} else if ( "Teacher".equals(ddKinds[i]) ) {
+		    	hm.put(ddKinds[i], sqlSession.selectList("axComm.axDdTeacher", paramMap));
+			} else if ( "Tutor".equals(ddKinds[i]) ) {
+		    	hm.put(ddKinds[i], sqlSession.selectList("axComm.axDdTutor", paramMap));
+			} else if ( "QuestGroup".equals(ddKinds[i]) ) {
+		    	hm.put(ddKinds[i], sqlSession.selectList("axComm.axDdQuestGroup", paramMap));
+			} else if ( "CourseCode".equals(ddKinds[i]) ) {
+		    	hm.put(ddKinds[i], sqlSession.selectList("axComm.axDdCourseCode", paramMap));
+			} else if ( "ExamCourseCode".equals(ddKinds[i]) ) {
+		    	hm.put(ddKinds[i], sqlSession.selectList("axComm.axDdExamCourseCode", paramMap));
+			} else if ( "Company".equals(ddKinds[i]) ) {
+		    	hm.put(ddKinds[i], sqlSession.selectList("axComm.axDdCompany", paramMap));
+			} else if ( "ExamType".equals(ddKinds[i]) ) {
+		    	hm.put(ddKinds[i], sqlSession.selectList("axComm.axDdExamType", paramMap));
+			} else if ( "ReportCourseCode".equals(ddKinds[i]) ) {
+		    	hm.put(ddKinds[i], sqlSession.selectList("axComm.axDdReportCourseCode", paramMap));
+			}
+		}
+		
+    	return hm;
+    }
+		
+	public HashMap<String, Object> getMaxCourseCode(HashMap<String, Object> paramMap) throws Exception {
+		HashMap<String, Object> hm = new HashMap<String, Object>();
+		
+		List<HashMap<String, Object>> list = sqlSession.selectList("axComm.axMaxCourseCode", paramMap);
+    	hm.put("list", list);
+		
+    	return hm;
+    }
+		
     /**
      * 중분류 카테고리를 가져온다.
      * @param courseCode

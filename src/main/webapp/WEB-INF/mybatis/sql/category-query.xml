@@ -4,6 +4,81 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="category">
 
+<select id="axCategoryLevel1" resultType="hashmap">
+	SELECT  CODE,
+		    CODE_NAME,
+		    USE_YN,
+		    'N' NEW_FLAG
+	  FROM CATEGORY
+	 WHERE DEPTH = 1
+	 ORDER BY 1  
+</select>
+
+<select id="axCategoryLevel2" resultType="hashmap">
+	SELECT  A.CODE,
+		    A.CODE_NAME,
+		    B.CODE LEVEL1_CODE,
+		    B.CODE_NAME LEVEL1_NAME,
+		    A.USE_YN,
+		    'N' NEW_FLAG
+	  FROM CATEGORY A LEFT OUTER JOIN CATEGORY B ON A.PARENT_CODE = B.CODE AND B.DEPTH = 1
+	 WHERE A.DEPTH = 2
+	 <if test="LEVEL1_CODE != null and LEVEL1_CODE != ''">
+	     AND A.PARENT_CODE = #{LEVEL1_CODE} 
+	 </if>
+	 ORDER BY 1, 3  
+</select>
+
+<select id="axCategoryLevel3" resultType="hashmap">
+	SELECT  A.CODE,
+		    A.CODE_NAME,
+		    B.CODE LEVEL2_CODE,
+		    B.CODE_NAME LEVEL2_NAME,
+		    C.CODE LEVEL1_CODE,
+		    C.CODE_NAME LEVEL1_NAME,
+		    A.USE_YN,
+		    'N' NEW_FLAG
+	  FROM CATEGORY A LEFT OUTER JOIN CATEGORY B ON A.PARENT_CODE = B.CODE AND B.DEPTH = 2
+	                  LEFT OUTER JOIN CATEGORY C ON B.PARENT_CODE = C.CODE AND C.DEPTH = 1
+	 WHERE A.DEPTH = 3
+	 <if test="LEVEL2_CODE != null and LEVEL2_CODE != ''">
+	     AND A.PARENT_CODE = #{LEVEL2_CODE} 
+	 </if>
+	 ORDER BY 1, 3, 5  
+</select>
+
+<insert id="axCategoryInsert" parameterType="hashmap">
+	INSERT INTO CATEGORY ( CODE, CODE_NAME, USE_YN, PARENT_CODE, DEPTH, CREATE_DATE, CREATE_USER )
+	VALUES ( #{CODE}, #{CODE_NAME}, #{USE_YN}, #{PARENT_CODE}, #{DEPTH}, CURRENT_TIMESTAMP, #{SESSION_USER_ID} )
+</insert>  
+
+<update id="axCategoryUpdate" parameterType="hashmap">
+	UPDATE CATEGORY
+	   SET CODE_NAME = #{CODE_NAME}
+	       ,USE_YN = #{USE_YN}
+	       ,UPDATE_DATE = CURRENT_TIMESTAMP
+	       ,UPDATE_USER = #{SESSION_USER_ID}
+	 WHERE CODE = #{CODE}   
+</update>    
+
+<delete id="axCategoryDelete" parameterType="hashmap">
+	DELETE FROM CATEGORY
+	 WHERE CODE = #{CODE}   
+</delete>  
+
+<select id="axCategoryPk" parameterType="hashmap" resultType="int">
+SELECT COUNT(*) CNT
+  FROM CATEGORY
+ WHERE CODE = #{CODE}
+</select>
+
+
+
+
+
+
+
+
 <select id="ddCategory1Depth" resultType="Code">
 SELECT CODE DD_KEY,
        CODE_NAME DD_VALUE

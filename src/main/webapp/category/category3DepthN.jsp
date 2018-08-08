@@ -124,11 +124,11 @@ function f_close() {
     					</td>
     				</tr>
     				<tr>
-    					<th>중분류 코드</th>
+    					<th>소분류 코드</th>
     					<td class="no_line input_l"><input id="code" name="code"/></td>
     				</tr>
     				<tr>
-    					<th>중분류명</th>
+    					<th>소분류명</th>
     					<td class="no_line input_l"><input id="codeName" name="codeName"/></td>
     				</tr>
     			</tbody>

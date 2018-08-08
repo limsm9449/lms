@@ -648,3 +648,276 @@ function checkThousand(num) {
 	}
     return commaValue;
 }
+
+
+
+
+
+
+
+
+function gfn_validationCheck( gridObj, fieldParams ) {
+	var modified = gridObj.getList("modified");
+	var deleted = gridObj.getList("deleted");
+	//console.log(modified);
+	for ( var i = 0; i < modified.length; i++ ) {
+		for (var field in fieldParams) {
+			if ( field == "DUP_FIELDS" ) {
+				continue;
+			}
+				
+			var fieldInfo = fieldParams[field];
+			var fieldValue = gfn_string(modified[i][field]);
+			
+			if ( fieldInfo.mendatory ) {
+				if ( fieldInfo.except ) {
+					if ( modified[i][fieldInfo.except.field] == fieldInfo.except.value ) {
+						continue;
+					}
+				}
+				
+				if ( fieldValue == "" ) {
+					mask.open();
+					dialog.alert( { msg : (modified[i].__index + 1) + "라인의 " + fieldInfo.colName + "은(는) " + "필수입력 입니다." }, function () { mask.close(); });
+
+					return false;
+				}
+			} 
+			if ( fieldInfo.length && fieldValue.length != fieldInfo.length ) {
+				mask.open();
+				dialog.alert( { msg : (modified[i].__index + 1) + "라인의 " + fieldInfo.colName + "은(는) " + fieldInfo.length + "자리를 입력해야 합니다." }, function () { mask.close(); } );
+				
+				return false;
+			}
+			if ( fieldInfo.type == "number" ) {
+				if ( !$.isNumeric(fieldValue) ) {
+					mask.open();
+					dialog.alert( { msg : (modified[i].__index + 1) + "라인의 " + fieldInfo.colName + "은(는) 정수를 입력해야 합니다." }, function () { mask.close(); } );
+					
+					return false;
+				}
+			}
+		}
+	}
+
+	//중복체크
+	if ( fieldParams.DUP_FIELDS != undefined ) {
+		var dupfields = ( fieldParams.DUP_FIELDS || "" ).split(",");
+		var allList = gridObj.getList();
+		var isDup = false;
+		var pk = {};
+		for ( var i = 0; i < allList.length; i++ ) {
+			var pkData = "";
+			for ( var m = 0; m < dupfields.length; m++ ) {
+				pkData += allList[i][dupfields[m]];
+			}
+			
+			if ( pk[pkData] != undefined ) {
+				mask.open();
+				dialog.alert( { msg : (allList[i].__index + 1) + "라인의 데이타가 중복입니다." }, function () { mask.close(); } );
+				
+				return false;
+			} else {
+				pk[pkData] = pkData;
+			}
+		}
+	}
+	
+	if ( modified.length == 0 && deleted.length == 0 ) {
+		mask.open();
+		dialog.alert( { msg : "수정된 데이타가 없습니다." }, function () { mask.close(); } );
+		
+		return false;
+	}
+	
+	return true;
+}
+
+function gfn_string(val) {
+	console.log(val);
+	if ( val == undefined || val == null ) {
+		return "";
+	} else {
+		return (val + "").trim();
+	}
+}
+
+function gfn_getSaveData( gridObj, isAll ) {
+	var saveData = {};
+	
+	if ( isAll ) {
+		saveData.modified = gridObj.getList();
+	} else {
+		saveData.modified = gridObj.getList("modified");
+		saveData.deleted = gridObj.getList("deleted");
+	}
+	
+	
+	
+	return saveData;
+}
+
+function gfn_makeAx5Grid(gridId, columns, datas, options) {
+	ax5.ui.grid.tmpl.page_status = function(){
+        return '<span>{{dataRowCount}} 건</span>';
+    };
+    
+	tOptions = options || {};
+	gfn_log(tOptions);
+	var gridObj = new ax5.ui.grid({
+        target : $('[data-ax5grid="' + gridId + '"]'),
+        frozenColumnIndex: gfn_defined(tOptions.frozenColumnIndex, 0),
+        frozenRowIndex: gfn_defined(tOptions.frozenRowIndex, 0),
+        showLineNumber : gfn_defined(tOptions.showLineNumber, true),
+        showRowSelector : gfn_defined(tOptions.showRowSelector, true),
+        multipleSelect : gfn_defined(tOptions.multipleSelect, false),
+        lineNumberColumnWidth : gfn_defined(tOptions.lineNumberColumnWidth, 40),
+        rowSelectorColumnWidth : gfn_defined(tOptions.rowSelectorColumnWidth, 28),
+        virtualScrollY : gfn_defined(tOptions.virtualScrollY, true),
+        virtualScrollX : gfn_defined(tOptions.virtualScrollX, false),
+        sortable : gfn_defined(tOptions.sortable, true), 
+        multiSort : gfn_defined(tOptions.multiSort, false),
+        remoteSort : gfn_defined(tOptions.remoteSort, false), 
+        header: {
+            align : "center",
+            columnHeight : 28
+        },
+        body: {
+            align : "center",
+            columnHeight : 28,
+            onClick: function () {
+            	if ( $.isFunction(fn_gridEvent) ) {
+            		fn_gridEvent("Click", this);
+    			}
+            },
+            onDBLClick: function () {
+            	if ( $.isFunction(fn_gridEvent) ) {
+            		fn_gridEvent("DBLClick", this);
+    			}
+            },
+            onDataChanged: function () {
+            	if ( $.isFunction(fn_gridEvent) ) {
+            		fn_gridEvent("DataChanged", this);
+    			}
+            }
+        },
+        columns : columns
+    });
+	
+	if ( datas ) {
+		gridObj.setData(datas);
+	}
+	
+	return gridObj;
+}
+	
+function gfn_defined(def, initValue) {
+	if ( def != undefined ) {
+		return def;
+	} else {
+		return initValue;
+	}
+}
+
+function gfn_callAjax(url, params, callback, id, options) {
+	var tOptions = options || {};
+	$.ajax({
+		url : context + url,
+		type : tOptions.type || "POST",
+		async : tOptions.async || true,
+		dataType :"json",
+		contentType : "application/json; charset=UTF-8",
+		data : JSON.stringify(params || {}),
+		success : function(data){
+			gfn_log(data);
+			
+			if ( $.isFunction(callback) ) {
+				callback(data, id);
+			}
+		},
+		error : function(e) {
+			alert(resource.msg.systemError);
+		}
+	})
+}
+
+function gfn_log(str) {
+	console.log(arguments);
+	console.log(str);
+}
+
+function gfn_showPopupDiv(popupDivId){
+    // 화면의 높이와 너비를 변수로 만듭니다.
+    var maskHeight = $(document).height();
+    var maskWidth = $(window).width();
+
+    // 마스크의 높이와 너비를 화면의 높이와 너비 변수로 설정합니다.
+    $('.mask').css({'width':maskWidth,'height':maskHeight});
+
+    // fade 애니메이션 : 1초 동안 검게 됐다가 80%의 불투명으로 변합니다.
+    $('.mask').fadeTo("slow",0.2);
+
+    // 레이어 팝업을 가운데로 띄우기 위해 화면의 높이와 너비의 가운데 값과 스크롤 값을 더하여 변수로 만듭니다.
+    var left = ( $(window).scrollLeft() + ( $(window).width() - $('#' + popupDivId).width()) / 2 );
+    var top = ( $(window).scrollTop() + ( $(window).height() - $('#' + popupDivId).height()) / 2 );
+
+    // css 스타일을 변경합니다.
+    $('#' + popupDivId).css({'left':left,'top':top, 'position':'absolute'});
+
+    // 레이어 팝업을 띄웁니다.
+    $('#' + popupDivId).show();
+}
+
+function gfn_hidePopupDiv(popupDivId) {
+	$('.mask').hide();
+    $('#' + popupDivId).hide();
+}
+
+function gfn_cbRefresh(id, options, isAll) {
+	$("#" + id).find("option").remove();
+	
+	if ( isAll ) {
+		$("#" + id).append("<option value=''>전체</option>")
+	}
+	for ( var i = 0; i < options.length; i++ ) {
+		$("#" + id).append("<option value='" + options[i].value + "'>" + options[i].text + "</option>")
+	}
+
+	$("#" + id + "option:eq(0)").attr("selected", "selected");
+}
+
+function gfn_cbRemove(id) {
+	$("#" + id).find("option").remove();
+}
+
+function gfn_getUrlParams(key) {
+	var rtn = {};
+	var tmp1 = location.href.split("?");
+	if ( tmp1.length == 2 ) {
+		var tmp2 = tmp1[1].split("&");
+		
+		for ( var i = 0; i < tmp2.length; i++ ) {
+			var tmp3 = tmp2[i].split("=");
+			rtn[tmp3[0]] = tmp3[1];
+		}
+	}
+	
+	if ( key ) {
+		return rtn[key];
+	} else {
+		return rtn;
+	}
+}
+
+function gfn_getValueInList(list, keyField, value, valueField) {
+	if ( list ) {
+		for ( var i = 0; i < list.length; i++ ) {
+			if ( list[i][keyField] == value ) {
+				return list[i][valueField];
+			}		
+		}
+	}
+	
+	return "";
+}
+

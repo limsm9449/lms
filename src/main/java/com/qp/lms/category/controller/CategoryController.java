@@ -2,19 +2,28 @@ package com.qp.lms.category.controller;
 
 
 
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.qp.lms.category.model.CategorySet;
 import com.qp.lms.category.model.CategoryVO;
 import com.qp.lms.category.service.CategoryService;
 import com.qp.lms.common.CommUtil;
+import com.qp.lms.common.Constant;
 
 @Controller
 public class CategoryController {
@@ -24,6 +33,8 @@ public class CategoryController {
 	    @Autowired
 	    private CategoryService svr;
 
+	    
+	    
 	    /**
 	     * 카테고리 조회
 	     * @param vo

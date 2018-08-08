@@ -2,7 +2,10 @@ package com.qp.lms.common.controller;
 
 
 
-import net.sf.json.JSONArray;
+import java.util.HashMap;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,16 +13,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.qp.lms.category.model.CategorySet;
 import com.qp.lms.category.model.CategoryVO;
+import com.qp.lms.common.Constant;
 import com.qp.lms.common.model.CommSet;
 import com.qp.lms.common.model.CommVO;
 import com.qp.lms.common.service.CommService;
-import com.qp.lms.ns.model.NsVO;
-import com.qp.lms.user.model.UserVO;
+
+import net.sf.json.JSONArray;
 
 @Controller
 public class CommController {
@@ -28,6 +35,41 @@ public class CommController {
 
 	    @Autowired
 	    private CommService svr;
+	    
+	   
+	    @RequestMapping(value = "/common/openPage", method = RequestMethod.POST)
+	    public String openPage(@RequestParam("page") String page, HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+	        return page;
+	    }
+	    
+	    @RequestMapping(value = "/common/getDd", method = RequestMethod.POST, consumes = "application/json" )
+	    public @ResponseBody HashMap<String,Object> getDd(@RequestBody HashMap<String, Object> paramMap, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	    	HashMap<String, Object> hm = new HashMap<String, Object>();
+	    	
+    		try {
+	    		hm = svr.getDd(paramMap);
+	    	} catch ( Exception e ) {
+	    		e.printStackTrace();
+	    		hm.put("RtnMode", Constant.mode.ERROR.name());
+	    	}
+
+	        return hm;
+	    }
+	    
+	    @RequestMapping(value = "/common/getMaxCourseCode", method = RequestMethod.POST, consumes = "application/json" )
+	    public @ResponseBody HashMap<String,Object> getMaxCourseCode(@RequestBody HashMap<String, Object> paramMap, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	    	HashMap<String, Object> hm = new HashMap<String, Object>();
+	    	
+    		try {
+	    		hm = svr.getMaxCourseCode(paramMap);
+	    	} catch ( Exception e ) {
+	    		e.printStackTrace();
+	    		hm.put("RtnMode", Constant.mode.ERROR.name());
+	    	}
+
+	        return hm;
+	    }
 	    
 	    /**
 	     * 카테고리 중분류

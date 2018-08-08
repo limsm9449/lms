@@ -58,6 +58,12 @@ function lfn_btn(pKind, pParam) {
 		document.frm.submit();
 	} else if ( pKind =="refresh" ) {
 		gfn_goPage(preUrl + "attachU",$("#frm").serialize());
+	} else if ( pKind =="download" ) {
+		$("#seq").val(pParam.seq);
+		document.frm.action = context + preUrl + "attachDownload.do";
+		document.frm.target = "tranFrameS";
+		document.frm.method = "POST";	
+		document.frm.submit();		
 	} 
 }	
 
@@ -98,7 +104,7 @@ function lfn_btn(pKind, pParam) {
 					  <div class="scroll">
 					    <ul>
 <c:forEach var="row" items="${set.list}" varStatus="idx">
-    					  <li>${row.orgFileName} <a href="javascript:" class="grayBtn" onclick="javascript:lfn_btn('delete',{seq:'${row.seq}'}); return false;">삭제</a><span><fmt:formatNumber value="${row.fileSize/1000}" pattern="#,##0"/> KB</span></li>
+    					  <li><a href="#" onclick="javascript:lfn_btn('download',{seq:'${row.seq}'}); return false;">${row.orgFileName}</a> <a href="javascript:" class="grayBtn" onclick="javascript:lfn_btn('delete',{seq:'${row.seq}'}); return false;">삭제</a><span><fmt:formatNumber value="${row.fileSize/1000}" pattern="#,##0"/> KB</span></li>
 </c:forEach>
     					</ul>
   					</div>

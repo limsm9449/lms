@@ -56,7 +56,24 @@ function f_goMenu(pDoUrl,pParam) {
 	document.frm.submit();
 }
 
+var pageObj = {
+	axCategoryLevel1List : 	{	page : "/ax/category/axCategoryLevel1List"	},
+	axCategoryLevel2List : 	{	page : "/ax/category/axCategoryLevel2List"	},
+	axCategoryLevel3List : 	{	page : "/ax/category/axCategoryLevel3List"	},
+	axQuestGroupList : 		{	page : "/ax/quest/axQuestGroupList"	},
+	axCourseCodeList : 		{	page : "/ax/course/axCourseCodeList"	},
+	axCourseMasterList : 	{	page : "/ax/course/axCourseMasterList"	},
+	axCourseReportList : 	{	page : "/ax/course/axCourseReportList"	},
+	axCourseExamList : 		{	page : "/ax/course/axCourseExamList"	},
+	axCourseExamTypeList :	{	page : "/ax/course/axCourseExamTypeList"	},
+	axCourseList :			{	page : "/ax/course/axCourseList"	}
+}
 
+
+function gfn_openMenu(pageId) {
+	console.log(pageObj[pageId].page);
+	f_menuContent("/common/openPage", {urlParams : "page=" + pageObj[pageId].page});
+}
 </script> 
 
 <body>
@@ -86,8 +103,37 @@ function f_goMenu(pDoUrl,pParam) {
 	    	<!-- snb -->
 	    	<div id="menu">
         		<ul class="snb">
+          			<li><a href="#" class="mainMenu linker" onclick="gfn_menu(this);"><span>카테고리 관리(New)</span></a>
+			            <ul style="display:none" class="subMenuUl">
+			              	<li><a href="#" class="subMenu linker" onclick="gfn_openMenu('axCategoryLevel1List'); gfn_subMenu(this);"><span>대분류 관리</span></a></li>
+			              	<li><a href="#" class="subMenu linker" onclick="gfn_openMenu('axCategoryLevel2List'); gfn_subMenu(this);"><span>중분류 관리</span></a></li>
+			              	<li><a href="#" class="subMenu linker" onclick="gfn_openMenu('axCategoryLevel3List'); gfn_subMenu(this);"><span>소분류 관리</span></a></li>
+			         	</ul>
+	          		</li>
+	          		<li><a href="#" class="mainMenu linker" onclick="gfn_menu(this)"><span>설문지 관리(New)</span></a>
+			            <ul style="display:none" class="subMenuUl">
+			              	<li><a href="#" class="subMenu linker" onclick="gfn_openMenu('axQuestGroupList'); gfn_subMenu(this);"><span>설문지 그룹관리</span></a></li>
+			         	</ul>
+			      	</li>
+	          		<li><a href="#" class="mainMenu linker" onclick="gfn_menu(this)"><span>과정 관리(New)</span></a>
+			            <ul style="display:none" class="subMenuUl">
+			              	<li><a href="#" class="subMenu linker" onclick="gfn_openMenu('axCourseCodeList'); gfn_subMenu(this);"><span>과정 코드 관리</span></a></li>
+			              	<li><a href="#" class="subMenu linker" onclick="gfn_openMenu('axCourseMasterList'); gfn_subMenu(this);"><span>과정 Master 관리</span></a></li>
+			              	<li><a href="#" class="subMenu linker" onclick="gfn_openMenu('axCourseReportList'); gfn_subMenu(this);"><span>과정 레포트 관리</span></a></li>
+			              	<li><a href="#" class="subMenu linker" onclick="gfn_openMenu('axCourseExamList'); gfn_subMenu(this);"><span>과정 시험 관리</span></a></li>
+			              	<li><a href="#" class="subMenu linker" onclick="gfn_openMenu('axCourseExamTypeList'); gfn_subMenu(this);"><span>과정 시험 유형 관리</span></a></li>
+			         	</ul>
+			      	</li>
+	          		<li><a href="#" class="mainMenu linker" onclick="gfn_menu(this)"><span>강의 관리(New)</span></a>
+			            <ul style="display:none" class="subMenuUl">
+			              	<li><a href="#" class="subMenu linker" onclick="gfn_openMenu('axCourseList'); gfn_subMenu(this);"><span>강의 관리</span></a></li>
+			         	</ul>
+			      	</li>
 <c:if test="${set.loginVO.adminYn eq 'A'}">	
-          			<li><a href="#" class="mainMenu linker" onclick="f_menuContent('/category/categoryList'); gfn_menu(this);"><span>카테고리 관리</span></a>
+          			<li><a href="#" class="mainMenu linker" onclick="gfn_menu(this);"><span>카테고리 관리</span></a>
+			            <ul style="display:none" class="subMenuUl">
+			              	<li><a href="#" class="subMenu linker" onclick="f_menuContent('/category/categoryList'); gfn_subMenu(this);"><span>카테고리 관리(Old)</span></a></li>
+			         	</ul>
 	          		</li>
 </c:if>	
 <c:if test="${set.loginVO.adminYn eq 'C' || set.loginVO.adminYn eq 'A'}">	

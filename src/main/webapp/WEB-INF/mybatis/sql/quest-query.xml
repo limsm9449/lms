@@ -6,6 +6,90 @@
 
 	<!-- 설문지 그룹 관리 -->
 
+    <select id="axQuestGroupList" parameterType="Quest" resultType="hashmap">
+		SELECT A.QG_ID,
+		       A.GROUP_NAME,
+		       A.USE_YN,
+		       (SELECT COUNT(*) FROM QUEST WHERE QG_ID = A.QG_ID) CNT,
+		       DATE_FORMAT(IFNULL(A.UPDATE_DATE, A.CREATE_DATE), '%y.%m.%d %H:%i') LAST_UPDATE_DATE,
+		       IFNULL(C.USER_NAME, B.USER_NAME) LAST_UPDATE_USER,
+		       'N' NEW_FLAG
+		  FROM QUEST_GROUP A LEFT OUTER JOIN USER B ON A.CREATE_USER = B.USER_ID
+		  	                 LEFT OUTER JOIN USER C ON A.UPDATE_USER = C.USER_ID 
+		 WHERE 1 = 1
+	  	   <if test="useYn != null and useYn != ''"> AND USE_YN = #{useYn}</if>
+	  	   <if test="groupName != null and groupName != ''"> AND GROUP_NAME LIKE CONCAT('%',#{groupName},'%')</if>	   
+		 ORDER BY A.GROUP_NAME
+    </select>	
+
+	<insert id="axQuestGroupInsert" parameterType="hashmap">
+		INSERT INTO QUEST_GROUP(QG_ID,GROUP_NAME,USE_YN,CREATE_DATE,CREATE_USER)
+		VALUES (#{QG_ID},#{GROUP_NAME},#{USE_YN},CURRENT_TIMESTAMP,#{SESSION_USER_ID})
+	</insert>
+
+	<update id="axQuestGroupUpdate" parameterType="hashmap">
+		UPDATE QUEST_GROUP
+		   SET GROUP_NAME = #{GROUP_NAME},
+		       USE_YN = #{USE_YN},
+		       UPDATE_DATE = CURRENT_TIMESTAMP,
+		       UPDATE_USER = #{SESSION_USER_ID}
+		 WHERE QG_ID = #{QG_ID}
+	</update>
+
+	<delete id="axQuestGroupDelete" parameterType="hashmap">
+		DELETE FROM QUEST_GROUP
+		 WHERE QG_ID = #{QG_ID}
+	</delete>
+
+    <select id="axQuestList" parameterType="hashmap" resultType="hashmap">
+		SELECT QG_ID, 
+		       SEQ,
+		       TYPE,
+		       QUESTION, 
+		       QA1,
+		       QA2,
+		       QA3,
+		       QA4,
+		       USE_YN,
+		       ORD,
+		       DATE_FORMAT(IFNULL(A.UPDATE_DATE, A.CREATE_DATE), '%y.%m.%d %H:%i') LAST_UPDATE_DATE,
+		       IFNULL(C.USER_NAME, B.USER_NAME) LAST_UPDATE_USER,
+		       'N' NEW_FLAG
+		  FROM QUEST A LEFT OUTER JOIN USER B ON A.CREATE_USER = B.USER_ID
+		  	           LEFT OUTER JOIN USER C ON A.UPDATE_USER = C.USER_ID
+		 WHERE QG_ID = #{QG_ID} 
+		 ORDER BY ORD
+    </select>	
+
+	<insert id="axQuestInsert" parameterType="hashmap">
+		INSERT INTO QUEST(QG_ID, SEQ, TYPE, QUESTION, QA1, QA2, QA3, QA4, USE_YN, ORD, CREATE_DATE, CREATE_USER)
+		VALUES (#{QG_ID},#{SEQ},#{TYPE},#{QUESTION},#{QA1},#{QA2},#{QA3}, #{QA4}, #{USE_YN}, #{ORD},CURRENT_TIMESTAMP,#{SESSION_USER_ID})
+	</insert>
+
+	<update id="axQuestUpdate" parameterType="hashmap">
+		UPDATE QUEST
+		   SET TYPE = #{TYPE}
+		       ,QUESTION = #{QUESTION}
+		       ,QA1 = #{QA1}
+		       ,QA2 = #{QA2}
+		       ,QA3 = #{QA3}
+		       ,QA4 = #{QA4}
+		       ,USE_YN = #{USE_YN}
+		       ,ORD = #{ORD}
+		       ,UPDATE_DATE = CURRENT_TIMESTAMP
+		       ,UPDATE_USER = #{SESSION_USER_ID}
+		 WHERE QG_ID = #{QG_ID}   
+		   AND SEQ = #{SEQ} 
+	</update>  
+
+	<delete id="axQuestDelete" parameterType="hashmap">
+		DELETE FROM QUEST
+		 WHERE QG_ID = #{QG_ID}   
+		   AND SEQ = #{SEQ} 
+	</delete>  
+
+
+
     <select id="questGroupList" parameterType="Quest" resultType="Quest">
 	SELECT DATA.* FROM (
 		SELECT QG_ID,
