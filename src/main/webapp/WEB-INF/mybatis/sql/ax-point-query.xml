@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="axPoint">
+
+	<select id="axPointList" resultType="hashmap">
+		SELECT 	A.USER_ID
+				,B.USER_NAME
+				,A.IN_POINT
+				,A.OUT_POINT
+				,A.REMAIN_POINT
+				,B.EMAIL
+				,B.MOBILE
+		FROM 	(
+					SELECT 	USER_ID, 
+							SUM(IN_POINT) IN_POINT, 
+							SUM(OUT_POINT) OUT_POINT, 
+							SUM(IN_POINT) - SUM(OUT_POINT) REMAIN_POINT
+					FROM 	POINT 
+					GROUP 	BY USER_ID
+				) A LEFT OUTER JOIN USER B ON B.USER_ID = A.USER_ID
+	 	WHERE 	1 = 1
+		<if test="SEARCH_STR != null and SEARCH_STR != ''">
+			AND ( UPPER(A.USER_NAME) LIKE CONCAT('%',UPPER(#{SEARCH_STR}),'%') OR UPPER(A.USER_ID) LIKE CONCAT('%',UPPER(#{SEARCH_STR}),'%') )
+		</if>			 
+		ORDER BY USER_NAME
+	</select>
+	
+	
+        
+</mapper>

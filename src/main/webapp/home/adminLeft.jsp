@@ -66,13 +66,16 @@ var pageObj = {
 	axCourseReportList : 	{	page : "/ax/course/axCourseReportList"	},
 	axCourseExamList : 		{	page : "/ax/course/axCourseExamList"	},
 	axCourseExamTypeList :	{	page : "/ax/course/axCourseExamTypeList"	},
-	axCourseList :			{	page : "/ax/course/axCourseList"	}
+	axCourseList :			{	page : "/ax/course/axCourseList"	},
+	axAccountList :			{	page : "/ax/account/axAccountList"	},
+	axCompanyList :			{	page : "/ax/account/axCompanyList"	},
+	axPointList :			{	page : "/ax/account/axPointList"	}
 }
 
 
 function gfn_openMenu(pageId) {
 	console.log(pageObj[pageId].page);
-	f_menuContent("/common/openPage", {urlParams : "page=" + pageObj[pageId].page});
+	f_menuContent("/common/axOpenPage", {urlParams : "page=" + pageObj[pageId].page});
 }
 </script> 
 
@@ -127,6 +130,13 @@ function gfn_openMenu(pageId) {
 	          		<li><a href="#" class="mainMenu linker" onclick="gfn_menu(this)"><span>강의 관리(New)</span></a>
 			            <ul style="display:none" class="subMenuUl">
 			              	<li><a href="#" class="subMenu linker" onclick="gfn_openMenu('axCourseList'); gfn_subMenu(this);"><span>강의 관리</span></a></li>
+			         	</ul>
+			      	</li>
+	          		<li><a href="#" class="mainMenu linker" onclick="gfn_menu(this)"><span>계정 관리(New)</span></a>
+			            <ul style="display:none" class="subMenuUl">
+			              	<li><a href="#" class="subMenu linker" onclick="gfn_openMenu('axAccountList'); gfn_subMenu(this);"><span>사용자 관리</span></a></li>
+			              	<li><a href="#" class="subMenu linker" onclick="gfn_openMenu('axCompanyList'); gfn_subMenu(this);"><span>회사 관리</span></a></li>
+			              	<li><a href="#" class="subMenu linker" onclick="gfn_openMenu('axPointList'); gfn_subMenu(this);"><span>포인트 관리</span></a></li>
 			         	</ul>
 			      	</li>
 <c:if test="${set.loginVO.adminYn eq 'A'}">	

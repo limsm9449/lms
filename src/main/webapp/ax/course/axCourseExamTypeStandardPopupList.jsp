@@ -204,7 +204,7 @@ $(document.body).ready(function () {
 	            fn_search();
 	            break;
             case "add":
-            	grid.addRow({NEW_FLAG : "Y", EXAM_TYPE_SEQ : params.EXAM_TYPE_SEQ, EXAM_KIND : "LAST", WEEK_FROM : 1, WEEK_TO : 1, LEVEL : 3, QUESTION_CNT : 0, USE_YN : "Y"}, "last", {focus: "END"});
+            	grid.addRow({NEW_FLAG : "Y", EXAM_TYPE_SEQ : params.EXAM_TYPE_SEQ, EXAM_KIND : "TOTAL", WEEK_FROM : 1, WEEK_TO : 1, LEVEL : 3, QUESTION_CNT : 0, USE_YN : "Y"}, "last", {focus: "END"});
                 break;
             case "delete":
                 grid.deleteRow("selected");

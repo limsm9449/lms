@@ -36,7 +36,7 @@ public class CommController {
 	    @Autowired
 	    private CommService svr;
 	    
-	   
+	   /*
 	    @RequestMapping(value = "/common/openPage", method = RequestMethod.POST)
 	    public String openPage(@RequestParam("page") String page, HttpServletRequest request, HttpServletResponse response) throws Exception {
 
@@ -70,6 +70,8 @@ public class CommController {
 
 	        return hm;
 	    }
+	    
+	    */
 	    
 	    /**
 	     * 카테고리 중분류

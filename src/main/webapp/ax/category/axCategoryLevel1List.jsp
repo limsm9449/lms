@@ -21,6 +21,10 @@ var dialog = new ax5.ui.dialog( { title: '<i class="axi axi-ion-alert"></i> Aler
 var grid = null;
 
 $(document.body).ready(function () {
+	$( window ).resize( function() {
+		gfn_gridResize("grid-parent", grid, 135); 
+	} );
+	
     confirmDialog.setConfig({
         theme: "danger"
     });
@@ -71,6 +75,8 @@ $(document.body).ready(function () {
 	  		showRowSelector : false
 	  	}
 	);
+	
+	$(window).trigger("resize");
 	
     $('[data-grid-control]').click(function () {
         switch (this.getAttribute("data-grid-control")) {

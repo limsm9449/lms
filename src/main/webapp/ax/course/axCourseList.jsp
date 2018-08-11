@@ -25,13 +25,17 @@ var params = {};
 var dd = {};
 
 $(document.body).ready(function () {
+	$( window ).resize( function() {
+		gfn_gridResize("grid-parent", grid);
+	} );
+	
     confirmDialog.setConfig({
         theme: "danger"
     });
 
-    $('#example38').multiselect({includeSelectAllOption: true});
+    $('#MCB_COMPANY').multiselect();
     
-    gfn_callAjax("/common/getDd.do", { DD_KIND : "CategoryLevel1,Tutor,Company" }, fn_callbackAjax, "dd", { async : false });
+    gfn_callAjax("/common/axDd.do", { DD_KIND : "CategoryLevel1,Tutor,Company" }, fn_callbackAjax, "dd", { async : false });
     
     $('[data-grid-control]').click(function () {
         switch (this.getAttribute("data-grid-control")) {
@@ -54,6 +58,10 @@ $(document.body).ready(function () {
             		dialog.alert( { msg : "과정을 선택하셔야 합니다." }, function () { mask.close();	} );
             		return;
             	}
+            	
+            	$('#MCB_COMPANY').multiselect('deselectAll', false);
+            	$('#MCB_COMPANY').multiselect('rebuild');
+            	
 		    	gfn_showPopupDiv("companyDiv");
 
 		    	break;
@@ -88,8 +96,8 @@ $(document.body).ready(function () {
             		mask.open();
             		dialog.alert( { msg : "과정을 선택하셔야 합니다." }, function () { mask.close();	} );
             	} else {
-            		var urlParams = "page=/ax/course/axCourseMasterContentsPopup";
-            		urlParams += "&COURSE_CODE=" + row[0]["COURSE_CODE"] + "&IS_VIEW=Y";
+            		var urlParams = "page=/ax/course/axCourseContentsPopup";
+            		urlParams += "&COURSE_ID=" + row[0]["COURSE_ID"];
             		
             		f_popup('/common/openPage', {displayName:'courseContentsPopup',option:'width=900,height=600', urlParams:urlParams});
             	}
@@ -435,11 +443,11 @@ function fn_makeGrid() {
 	  		frozenColumnIndex : 5
 	  	}
 	);
+	
+	$(window).trigger("resize");
 }
 
 function fn_hidePopupDiv(popupDivId) {
-	gfn_hidePopupDiv(popupDivId);
-	
 	if ( popupDivId == "insDiv" ) {
 		if ( $("#INS_CB_LEVEL1 option:selected").val() == "" || $("#INS_CB_LEVEL2 option:selected").val() == "" || $("#INS_CB_LEVEL3 option:selected").val() == "" ) {
 			mask.open();
@@ -474,10 +482,50 @@ function fn_hidePopupDiv(popupDivId) {
 				C_PERIOD : 0
 			}, "last", {focus: "END"});
 	} else if ( popupDivId == "examTypeDiv" ) {
+		if ( $("#CB_EXAM_TYPE option:selected").val() == "" ) {
+			mask.open();
+			dialog.alert( { msg : "시험 유형을 선택하셔야 합니다." }, function () { mask.close(); } );
+			return;
+		} 
+
 		var row = grid.getList("selected");
 		grid.setValue(row[0].__index, "COURSE_EXAM_TYPE_ID", $("#CB_EXAM_TYPE option:selected").val());
 		grid.setValue(row[0].__index, "COURSE_EXAM_TYPE_NAME", $("#CB_EXAM_TYPE option:selected").text());
+	} else if ( popupDivId == "companyDiv" ) {
+		var companys = $("#MCB_COMPANY").val();
+		if ( companys.length == 0 ) {
+			mask.open();
+			dialog.alert( { msg : " 회사를 선택하셔야 합니다." }, function () { mask.close(); } );
+			return;
+		} 
+
+		var row = grid.getList("selected");
+		for ( var i = 0; i < companys.length; i++ ) {
+			grid.addRow( 
+				{
+					NEW_FLAG : "Y", 
+					CATEGORY_NAME : row[0].CATEGORY_NAME, 
+					CODE : row[0].CODE, 
+					COURSE_CODE : row[0].COURSE_CODE, 
+					COURSE_NAME : row[0].COURSE_NAME, 
+					COMP_CD : companys[i],
+					TUTOR_ID : gfn_getValueInList(dd.Company, "value",  companys[i], "TUTOR_ID"),
+					COURSE_COST : 0,
+					REPORT_RATE : 0,
+					EXAM_RATE : 0,
+					DISCUSSION_RATE : 0,
+					PROGRESS_RATE : 100,
+					REPORT_FAIL_RATE : 0,
+					EXAM_FAIL_RATE : 0,
+					DISCUSSION_FAIL_RATE : 0,
+					PROGRESS_FAIL_RATE : 0,
+					TOTAL_FAIL_RATE : 0,
+					C_PERIOD : 0
+				}, "last", {focus: "END"});
+		}
 	}
+
+	gfn_hidePopupDiv(popupDivId);
 }
 
 function fn_params() {
@@ -545,6 +593,9 @@ function fn_callbackAjax(data, id) {
 		
 		fn_makeGrid();
 		fn_search();
+		
+		gfn_mcbRefresh("MCB_COMPANY", data.Company, false);
+		$('#MCB_COMPANY').multiselect('rebuild');
 	} else if ( id == "CB_LEVEL1" ){
 		gfn_cbRefresh("CB_LEVEL2", data.CategoryLevel2, true);
 	} else if ( id == "CB_LEVEL2" ){
@@ -572,7 +623,7 @@ function fn_gridEvent(event, obj) {
 		if ( obj.column.key == "COURSE_EXAM_TYPE_NAME" ) {
 	    	gfn_showPopupDiv("examTypeDiv");
 			
-	    	gfn_callAjax("/common/getDd.do", { DD_KIND : "ExamType", COURSE_CODE : obj.item.COURSE_CODE }, fn_callbackAjax, "ExamType", { async : false });
+	    	gfn_callAjax("/common/axDd.do", { DD_KIND : "ExamType", COURSE_CODE : obj.item.COURSE_CODE }, fn_callbackAjax, "ExamType", { async : false });
 		}
 	} else if ( event == "DataChanged" ) {
 		if ( obj.key == "COMP_CD" && obj.item.COMP_CD != "B2C" ) {
@@ -586,15 +637,15 @@ function fn_gridEvent(event, obj) {
 
 function fn_cbChange(id) {
 	if ( id == "CB_LEVEL1" ) {
-	    gfn_callAjax("/common/getDd.do", { DD_KIND : "CategoryLevel2", LEVEL1_CODE : $("#CB_LEVEL1 option:selected").val()}, fn_callbackAjax, "CB_LEVEL1", { async : false });
+	    gfn_callAjax("/common/axDd.do", { DD_KIND : "CategoryLevel2", LEVEL1_CODE : $("#CB_LEVEL1 option:selected").val()}, fn_callbackAjax, "CB_LEVEL1", { async : false });
 	} else  if ( id == "CB_LEVEL2" ) {
-	    gfn_callAjax("/common/getDd.do", { DD_KIND : "CategoryLevel3", LEVEL2_CODE : $("#CB_LEVEL2 option:selected").val()}, fn_callbackAjax, "CB_LEVEL2", { async : false });
+	    gfn_callAjax("/common/axDd.do", { DD_KIND : "CategoryLevel3", LEVEL2_CODE : $("#CB_LEVEL2 option:selected").val()}, fn_callbackAjax, "CB_LEVEL2", { async : false });
 	} else  if ( id == "INS_CB_LEVEL1" ) {
-	    gfn_callAjax("/common/getDd.do", { DD_KIND : "CategoryLevel2", LEVEL1_CODE : $("#INS_CB_LEVEL1 option:selected").val()}, fn_callbackAjax, "INS_CB_LEVEL1", { async : false });
+	    gfn_callAjax("/common/axDd.do", { DD_KIND : "CategoryLevel2", LEVEL1_CODE : $("#INS_CB_LEVEL1 option:selected").val()}, fn_callbackAjax, "INS_CB_LEVEL1", { async : false });
 	} else  if ( id == "INS_CB_LEVEL2" ) {
-	    gfn_callAjax("/common/getDd.do", { DD_KIND : "CategoryLevel3", LEVEL2_CODE : $("#INS_CB_LEVEL2 option:selected").val()}, fn_callbackAjax, "INS_CB_LEVEL2", { async : false });
+	    gfn_callAjax("/common/axDd.do", { DD_KIND : "CategoryLevel3", LEVEL2_CODE : $("#INS_CB_LEVEL2 option:selected").val()}, fn_callbackAjax, "INS_CB_LEVEL2", { async : false });
 	} else  if ( id == "INS_CB_LEVEL3" ) {
-	    gfn_callAjax("/common/getDd.do", { DD_KIND : "CourseCode", LEVEL3_CODE : $("#INS_CB_LEVEL3 option:selected").val()}, fn_callbackAjax, "INS_CB_COURSE_CODE", { async : false });
+	    gfn_callAjax("/common/axDd.do", { DD_KIND : "CourseCode", LEVEL3_CODE : $("#INS_CB_LEVEL3 option:selected").val()}, fn_callbackAjax, "INS_CB_COURSE_CODE", { async : false });
 	}
 }
 
@@ -625,19 +676,6 @@ function fn_cbChange(id) {
 	<input type="text" class="search_input" id="courseName" name="courseName" value="" />
 </div>
 
-	<select id="example38" multiple="multiple">
-		<option value="Javascript">Javascript</option>
-		<option value="Python">Python</option>
-		<option value="LISP">LISP</option>
-		<option value="C++">C++</option>
-		<option value="C++">C++</option>
-		<option value="C++">C++</option>
-		<option value="C++">C++</option>
-		<option value="C++">C++</option>
-		<option value="jQuery">jQuery</option>
-		<option value="Ruby">Ruby</option>
-	</select>
-
 <div style="height:10px"></div>
 
 <div>
@@ -648,7 +686,7 @@ function fn_cbChange(id) {
     <button class="btn btn-default" data-grid-control="reset">초기화</button>
     <button class="btn btn-default" data-grid-control="save">저장</button>
     <button class="btn btn-default" data-grid-control="export">엑셀</button>
-    <button class="btn btn-default" data-grid-control="viewContent">강의 학습내용</button>
+    <button class="btn btn-default" data-grid-control="viewContent">학습내용 편집</button>
     <button class="btn btn-default" data-grid-control="viewImage">강의 이미지</button>
 </div>
 
@@ -694,22 +732,15 @@ function fn_cbChange(id) {
 </div>
 
 <div class="popupDiv" id="companyDiv" style="width:300px; height:200px;">
-	회사
+	복사할 회사 선택
 	<div class="btn-group">
-	<select id="example37" multiple="multiple">
-		<option value="Javascript">Javascript</option>
-		<option value="Python">Python</option>
-		<option value="LISP">LISP</option>
-		<option value="C++">C++</option>
-		<option value="C++">C++</option>
-		<option value="C++">C++</option>
-		<option value="C++">C++</option>
-		<option value="C++">C++</option>
-		<option value="jQuery">jQuery</option>
-		<option value="Ruby">Ruby</option>
+	<select id="MCB_COMPANY" multiple="multiple">
+		<option>a</option>
+		<option>b</option>
+		<option>c</option>
 	</select>
 	<div style="height:30px"></div>
-	<input type="button" href="#" value="확인" onclick="fn_hidePopupDiv('companyDiv')"/>
+	<input type="button" href="#" value="복사" onclick="fn_hidePopupDiv('companyDiv')"/>
     <input type="button" href="#" value="닫기" onclick="gfn_hidePopupDiv('companyDiv');"/>
 </div>
 

@@ -26,6 +26,7 @@ function lfn_enter() {
  * 화면 리사이즈
  */
 function gfn_resize() {
+	/*
   	var bHeight = 95;
 
   	var cHeight = 0;
@@ -54,7 +55,10 @@ function gfn_resize() {
   		$('.bottom').css('top', (lc + 10) +'px');
   		$('#left').height(lc + 10);
 	}
-
+	*/
+  	$('#left').height($(window).height());
+  	$('#content').height($(window).height());
+	
   	//$('html, body').scrollTop(0);
 }
 
@@ -763,7 +767,7 @@ function gfn_makeAx5Grid(gridId, columns, datas, options) {
     };
     
 	tOptions = options || {};
-	gfn_log(tOptions);
+	//gfn_log(tOptions);
 	var gridObj = new ax5.ui.grid({
         target : $('[data-ax5grid="' + gridId + '"]'),
         frozenColumnIndex: gfn_defined(tOptions.frozenColumnIndex, 0),
@@ -829,8 +833,7 @@ function gfn_callAjax(url, params, callback, id, options) {
 		contentType : "application/json; charset=UTF-8",
 		data : JSON.stringify(params || {}),
 		success : function(data){
-			gfn_log(data);
-			
+			//gfn_log(data);
 			if ( $.isFunction(callback) ) {
 				callback(data, id);
 			}
@@ -886,6 +889,25 @@ function gfn_cbRefresh(id, options, isAll) {
 	$("#" + id + "option:eq(0)").attr("selected", "selected");
 }
 
+function gfn_mcbRefresh(id, options, isAll, _params) {
+	var params = _params || {};
+	
+	$("#" + id).find("option").remove();
+	
+	if ( isAll ) {
+		$("#" + id).append("<option value=''>전체</option>")
+	}
+	for ( var i = 0; i < options.length; i++ ) {
+		if ( params.except == undefined || params.except == "" || ("," + params.except + ",").indexOf("," + options[i].value + ",") < 0 ) {
+			$("#" + id).append("<option value='" + options[i].value + "'>" + options[i].text + "</option>")
+		}
+	}
+
+	$("#" + id + "option:eq(0)").attr("selected", "selected");
+	
+	$('#' + id).multiselect('rebuild');
+}
+
 function gfn_cbRemove(id) {
 	$("#" + id).find("option").remove();
 }
@@ -909,7 +931,7 @@ function gfn_getUrlParams(key) {
 	}
 }
 
-function gfn_getValueInList(list, keyField, value, valueField) {
+function gfn_getValueInList(list, keyField, value, valueField, isValue) {
 	if ( list ) {
 		for ( var i = 0; i < list.length; i++ ) {
 			if ( list[i][keyField] == value ) {
@@ -918,6 +940,20 @@ function gfn_getValueInList(list, keyField, value, valueField) {
 		}
 	}
 	
-	return "";
+	if ( isValue && isValue == true ) {
+		return value;
+	} else {
+		return "";
+	}
+}
+
+function gfn_gridResize(gridParentId, gridObj, minusHeight) {
+	if ( minusHeight != undefined ) {
+		$("#" + gridParentId).height($(window).height() - minusHeight);
+		gridObj.setHeight($(window).height() - minusHeight);
+	} else {
+		$("#" + gridParentId).height($(window).height() - 170);
+		gridObj.setHeight($(window).height() - 170);
+	}
 }
 

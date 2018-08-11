@@ -35,8 +35,7 @@ function lfn_resize() {
 
 <div class="top"><div id="header"></div></div>
 <div class="left"><iframe src="/adminLeft.do" name="left" id="left" scrolling="no" frameborder="0" border="0"></iframe></div>
-<div class="right"><iframe src="content.jsp" name="content" id="content" scrolling="no" frameborder="0" border="0" style="height:auto;"></iframe></div>
-<div class="bottom"><iframe src="/adminBottom.do" name="bottom" id="bottom" scrolling="no" frameborder="0" border="0"></iframe></div>
+<div class="right"><iframe src="content.jsp" name="content" id="content" scrolling="no" frameborder="0" border="0" style="height:100%;width:100%"></iframe></div>
 
 </body>
 

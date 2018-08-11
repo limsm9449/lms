@@ -1,11 +1,17 @@
 <%@ page contentType="text/html;charset=utf-8"%>
 <%@ page import="com.qp.lms.common.SessionUtil"%>
+<%@ page import="java.text.SimpleDateFormat"%>
+<%@ page import="java.util.Date"%>
 
 <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
 <%
-	String version = "20180805";
+	Date today = new Date();
+	SimpleDateFormat date = new SimpleDateFormat("yyyy/MM/dd");
+	SimpleDateFormat time = new SimpleDateFormat("hh:mm:ss a");
+    
+	String version = date.format(today) + time.format(today);
 %>
 
 
@@ -29,6 +35,12 @@
 <%-- CLEditor --%>
 <link rel="stylesheet" type="text/css" href="/resources/CLEditor/jquery.cleditor.css" />
 <script type="text/javascript" src="/resources/CLEditor/jquery.cleditor.min.js"></script>
+
+<!-- bootstrap -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+
 
 <%-- multiselect --%>
 <link rel="stylesheet" type="text/css" href="/resources/multiselect/css/bootstrap-multiselect.css" />

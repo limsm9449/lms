@@ -25,11 +25,15 @@ var params = {};
 var dd;
 
 $(document.body).ready(function () {
+	$( window ).resize( function() {
+		gfn_gridResize("grid-parent", grid);
+	} );
+	
     confirmDialog.setConfig({
         theme: "danger"
     });
 
-    gfn_callAjax("/common/getDd.do", { DD_KIND : "CategoryLevel1,Teacher,QuestGroup" }, fn_callbackAjax, "dd", { async : false });
+    gfn_callAjax("/common/axDd.do", { DD_KIND : "CategoryLevel1,Teacher,QuestGroup" }, fn_callbackAjax, "dd", { async : false });
     
     $('[data-grid-control]').click(function () {
         switch (this.getAttribute("data-grid-control")) {
@@ -233,6 +237,8 @@ function fn_makeGrid() {
 	  		showRowSelector : false
 	  	}
 	);
+	
+	$(window).trigger("resize");
 }
 
 function fn_hidePopupDiv(popupDivId) {
@@ -243,7 +249,7 @@ function fn_hidePopupDiv(popupDivId) {
 		dialog.alert( { msg : "대/중/소분류를 선택하셔야 합니다." }, function () { mask.close(); } );
 	} else {
 		$.ajax({
-			url : context + "/common/getMaxCourseCode.do",
+			url : context + "/common/axMaxCourseCode.do",
 			type : "POST",
 			async : false,
 			dataType :"json",
@@ -362,13 +368,13 @@ function fn_gridEvent(event, obj) {
 
 function fn_cbChange(id) {
 	if ( id == "CB_LEVEL1" ) {
-	    gfn_callAjax("/common/getDd.do", { DD_KIND : "CategoryLevel2", LEVEL1_CODE : $("#CB_LEVEL1 option:selected").val()}, fn_callbackAjax, "CB_LEVEL1", { async : false });
+	    gfn_callAjax("/common/axDd.do", { DD_KIND : "CategoryLevel2", LEVEL1_CODE : $("#CB_LEVEL1 option:selected").val()}, fn_callbackAjax, "CB_LEVEL1", { async : false });
 	} else  if ( id == "CB_LEVEL2" ) {
-	    gfn_callAjax("/common/getDd.do", { DD_KIND : "CategoryLevel3", LEVEL2_CODE : $("#CB_LEVEL2 option:selected").val()}, fn_callbackAjax, "CB_LEVEL2", { async : false });
+	    gfn_callAjax("/common/axDd.do", { DD_KIND : "CategoryLevel3", LEVEL2_CODE : $("#CB_LEVEL2 option:selected").val()}, fn_callbackAjax, "CB_LEVEL2", { async : false });
 	} else  if ( id == "INS_CB_LEVEL1" ) {
-	    gfn_callAjax("/common/getDd.do", { DD_KIND : "CategoryLevel2", LEVEL1_CODE : $("#INS_CB_LEVEL1 option:selected").val()}, fn_callbackAjax, "INS_CB_LEVEL1", { async : false });
+	    gfn_callAjax("/common/axDd.do", { DD_KIND : "CategoryLevel2", LEVEL1_CODE : $("#INS_CB_LEVEL1 option:selected").val()}, fn_callbackAjax, "INS_CB_LEVEL1", { async : false });
 	} else  if ( id == "INS_CB_LEVEL2" ) {
-	    gfn_callAjax("/common/getDd.do", { DD_KIND : "CategoryLevel3", LEVEL2_CODE : $("#INS_CB_LEVEL2 option:selected").val()}, fn_callbackAjax, "INS_CB_LEVEL2", { async : false });
+	    gfn_callAjax("/common/axDd.do", { DD_KIND : "CategoryLevel3", LEVEL2_CODE : $("#INS_CB_LEVEL2 option:selected").val()}, fn_callbackAjax, "INS_CB_LEVEL2", { async : false });
 	}
 }
 

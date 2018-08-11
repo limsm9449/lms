@@ -23,6 +23,10 @@ var grid = null;
 var params = {};
 
 $(document.body).ready(function () {
+	$( window ).resize( function() {
+		gfn_gridResize("grid-parent", grid);
+	} );
+	
     confirmDialog.setConfig({
         theme: "danger"
     });
@@ -75,6 +79,8 @@ $(document.body).ready(function () {
 	  		showRowSelector : false
 	  	}
 	);
+	
+	$(window).trigger("resize");
 	
     $('[data-grid-control]').click(function () {
         switch (this.getAttribute("data-grid-control")) {

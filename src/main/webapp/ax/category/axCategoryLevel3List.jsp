@@ -24,6 +24,10 @@ var grid = null;
 var params = {};
 
 $(document.body).ready(function () {
+	$( window ).resize( function() {
+		gfn_gridResize("grid-parent", grid);
+	} );
+	
     confirmDialog.setConfig({
         theme: "danger"
     });
@@ -95,6 +99,8 @@ $(document.body).ready(function () {
 	  	}
 	);
 	
+	$(window).trigger("resize");
+	
     $('[data-grid-control]').click(function () {
         switch (this.getAttribute("data-grid-control")) {
 		    case "search":
@@ -123,7 +129,7 @@ $(document.body).ready(function () {
         }
     });
     
-    gfn_callAjax("/common/getDd.do", { DD_KIND : "CategoryLevel1" }, fn_callbackAjax, "dd", { async : false });
+    gfn_callAjax("/common/axDd.do", { DD_KIND : "CategoryLevel1" }, fn_callbackAjax, "dd", { async : false });
     
     fn_search();
 });
@@ -221,9 +227,9 @@ function fn_gridEvent(event, obj) {
 
 function fn_cbChange(id) {
 	if ( id == "CB_LEVEL1" ) {
-	    gfn_callAjax("/common/getDd.do", { DD_KIND : "CategoryLevel2", LEVEL1_CODE : $("#CB_LEVEL1 option:selected").val()}, fn_callbackAjax, "CB_LEVEL1", { async : false });
+	    gfn_callAjax("/common/axDd.do", { DD_KIND : "CategoryLevel2", LEVEL1_CODE : $("#CB_LEVEL1 option:selected").val()}, fn_callbackAjax, "CB_LEVEL1", { async : false });
 	} else  if ( id == "INS_CB_LEVEL1" ) {
-	    gfn_callAjax("/common/getDd.do", { DD_KIND : "CategoryLevel2", LEVEL1_CODE : $("#INS_CB_LEVEL1 option:selected").val()}, fn_callbackAjax, "INS_CB_LEVEL1", { async : false });
+	    gfn_callAjax("/common/axDd.do", { DD_KIND : "CategoryLevel2", LEVEL1_CODE : $("#INS_CB_LEVEL1 option:selected").val()}, fn_callbackAjax, "INS_CB_LEVEL1", { async : false });
 	}
 }
 

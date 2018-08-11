@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="axCompany">
+
+	<select id="axCompanyList" resultType="hashmap">
+		SELECT 	A.*
+				,IFNULL(B.CNT, 0) EMPLOYEE_CNT
+				,DATE_FORMAT(IFNULL(A.UPDATE_DATE, A.CREATE_DATE), '%y.%m.%d %H:%i') LAST_UPDATE_DATE
+				,IFNULL(U2.USER_NAME, U1.USER_NAME) LAST_UPDATE_USER
+				,'N' NEW_FLAG
+		FROM 	COMPANY A
+					LEFT OUTER JOIN (
+						SELECT 	COMP_CD, COUNT(*) CNT
+                        FROM 	USER
+                        GROUP 	BY COMP_CD ) B ON B.COMP_CD = A.COMP_CD
+                    LEFT OUTER JOIN USER U1 ON A.CREATE_USER = U1.USER_ID
+	  	            LEFT OUTER JOIN USER U2 ON A.UPDATE_USER = U2.USER_ID                 
+	 	WHERE 	1 = 1
+		<if test="SEARCH_STR != null and SEARCH_STR != ''">
+		  AND ( UPPER(A.COMP_ID) LIKE CONCAT('%',UPPER(#{SEARCH_STR}),'%') OR UPPER(A.COMP_NAME) LIKE CONCAT('%',UPPER(#{SEARCH_STR}),'%') )
+		</if>			 
+		ORDER BY COMP_NAME
+	</select>
+	
+	<insert id="axCompanyInsert" parameterType="hashmap">
+		INSERT INTO COMPANY(COMP_CD, COMP_NAME, SUB_DOMAIN, ADDR, ZIPCODE, 
+						COMP_TEL, FAX, TUTOR_ID, BUSINESS_NO, OWNER_NAME, LOGIN_IMG, GNB_IMG, 
+    	                CREATE_DATE, CREATE_USER)
+    	VALUES (#{COMP_CD}, #{COMP_NAME}, #{SUB_DOMAIN}, #{ADDR}, #{ZIPCODE}, 
+    			#{COMP_TEL}, #{FAX}, #{TUTOR_ID}, #{BUSINESS_NO}, #{OWNER_NAME}, 'Y', 'Y',
+    	        CURRENT_TIMESTAMP, #{SESSION_USER_ID})
+	</insert>  
+	
+	<update id="axCompanyUpdate" parameterType="hashmap">
+		UPDATE 	COMPANY
+    	   SET 	COMP_NAME = #{COMP_NAME}
+				,SUB_DOMAIN = #{SUB_DOMAIN}
+				,ADDR = #{ADDR}
+				,ZIPCODE = #{ZIPCODE}
+				,COMP_TEL = #{COMP_TEL}
+				,FAX = #{FAX}
+				,TUTOR_ID = #{TUTOR_ID}
+				,BUSINESS_NO = #{BUSINESS_NO}
+				,OWNER_NAME = #{OWNER_NAME}
+				,LOGIN_IMG = #{LOGIN_IMG}
+				,GNB_IMG = #{GNB_IMG}
+    	       	,UPDATE_DATE = CURRENT_TIMESTAMP
+    	       	,UPDATE_USER = #{SESSION_USER_ID}
+    	 WHERE 	COMP_CD = #{COMP_CD}
+	</update>    
+	
+	<delete id="axCompanyDelete" parameterType="hashmap">
+		DELETE FROM COMPANY
+		 WHERE COMP_CD = #{COMP_CD}
+	</delete>  
+	
+	<select id="axCompanyPk" parameterType="hashmap" resultType="int">
+		SELECT 	COUNT(*) CNT
+    	FROM 	COMPANY
+    	WHERE 	COMP_CD = #{COMP_CD}
+	</select>
+        
+</mapper>

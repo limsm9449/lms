@@ -46,7 +46,15 @@ public class AxCourseService {
 
 			if ( "Y".equals((String)row.get("NEW_FLAG")) ) {
 				row.put("CHASU", sqlSession.selectOne("axCourse.axCourseMaxChasu", row));
-				
+
+				//과정 Master 내용 복사
+				HashMap<String, Object> courseMaster = sqlSession.selectOne("axCourse.axCourseMasterContents", row);
+				row.put("LEARING_GOAL", courseMaster.get("LEARING_GOAL"));
+				row.put("LEARING_CONTENT", courseMaster.get("LEARING_CONTENT"));
+				row.put("EVAL_METHOD", courseMaster.get("EVAL_METHOD"));
+				row.put("LEARING_TARGET", courseMaster.get("LEARING_TARGET"));
+				row.put("LEARING_COST", courseMaster.get("LEARING_COST"));
+
 				sqlSession.insert("axCourse.axCourseInsert", row);
 			} else {
 				sqlSession.update("axCourse.axCourseUpdate", row);
@@ -63,5 +71,26 @@ public class AxCourseService {
     	return hm;
     }
 	
+	public HashMap<String, Object> axCourseContentsList(HashMap<String, Object> paramMap) throws Exception {
+		HashMap<String, Object> hm = new HashMap<String, Object>();
+		
+    	List<HashMap<String, Object>> list = sqlSession.selectList("axCourse.axCourseContents", paramMap);
+    	hm.put("list", list);
+        
+    	return hm;
+    }
+	
+	@Transactional(propagation=Propagation.REQUIRED, rollbackFor={Throwable.class})
+    public HashMap<String, Object>  axCourseContentsSave(HashMap<String, Object> paramMap) throws Exception {
+		HashMap<String, Object> hm = new HashMap<String, Object>();
+		
+		paramMap.put("SESSION_USER_ID", SessionUtil.getSessionUserId());
+		
+		sqlSession.update("axCourse.axCourseContentsUpdate", paramMap);
+
+		hm.put("RtnMode", Constant.mode.OK.name());
+		
+    	return hm;
+    }
 	
 }

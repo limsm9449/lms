@@ -48,6 +48,17 @@
 		 WHERE TUTOR_YN = 'Y'
 		 ORDER BY COMP_CD, USER_NAME
 	</select>
+
+	<select id="axDdCompanyTutor" resultType="hashmap">
+		SELECT USER_ID value,
+		       USER_NAME text
+		  FROM USER
+		 WHERE TUTOR_YN = 'Y'
+		   AND COMP_CD IS NOT NULL
+           AND COMP_CD != ''
+           AND COMP_CD != 'B2C'
+		 ORDER BY COMP_CD, USER_NAME
+	</select>
 	
 	<select id="axDdQuestGroup" resultType="hashmap">
 		SELECT QG_ID value
@@ -123,6 +134,13 @@
 		 ORDER BY 2 	
 	</select>
 	
+	<select id="axDdCode" resultType="hashmap">
+		SELECT 	DD_KEY value
+		        ,DD_VALUE text
+		  FROM  CODE
+		 WHERE	DD_MAIN = #{DD_MAIN} 
+		 ORDER BY ORD 	
+	</select>
 
     
 </mapper>

@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="axAccount">
+
+	<select id="axAccountList" resultType="hashmap">
+		SELECT 	A.*
+				,IFNULL(B.CNT, 0) COURSE_CNT
+				,DATE_FORMAT(IFNULL(A.UPDATE_DATE, A.CREATE_DATE), '%y.%m.%d %H:%i') LAST_UPDATE_DATE
+				,IFNULL(U2.USER_NAME, U1.USER_NAME) LAST_UPDATE_USER
+				,'N' NEW_FLAG
+		FROM 	USER A
+					LEFT OUTER JOIN (
+						SELECT 	USER_ID, COUNT(*) CNT 
+				        FROM 	COURSE_REGISTER
+				        GROUP 	BY USER_ID
+					) B ON B.USER_ID = A.USER_ID 
+                    LEFT OUTER JOIN USER U1 ON A.CREATE_USER = U1.USER_ID
+	  	            LEFT OUTER JOIN USER U2 ON A.UPDATE_USER = U2.USER_ID                 
+	 	WHERE 	1 = 1
+		<if test="SEARCH_STR != null and SEARCH_STR != ''">
+			<if test="CB_SEARCHKIND == 'USER_ID'">
+			  AND UPPER(A.USER_ID) LIKE CONCAT('%',UPPER(#{SEARCH_STR}),'%') 
+			</if>
+			<if test="CB_SEARCHKIND == 'USER_NAME'">
+			  AND UPPER(A.USER_NAME) LIKE CONCAT('%',UPPER(#{SEARCH_STR}),'%') 
+			</if>
+			<if test="CB_SEARCHKIND == 'EMAIL'">
+			  AND UPPER(A.EMAIL) LIKE CONCAT('%',UPPER(#{SEARCH_STR}),'%') 
+			</if>
+			<if test="CB_SEARCHKIND == 'MOBILE'">
+			  AND UPPER(A.MOBILE) LIKE CONCAT('%',UPPER(#{SEARCH_STR}),'%') 
+			</if>
+		</if>			 
+		<if test="CB_USERKIND != null and CB_USERKIND == 'ADMIN'">
+		   AND A.ADMIN_YN IN ('A','M','C')
+		</if>			 
+		<if test="CB_USERKIND != null and CB_USERKIND == 'TEACHER'">
+		   AND A.TEACHER_YN = 'Y'
+		</if>			 
+		<if test="CB_USERKIND != null and CB_USERKIND == 'TUTOR'">
+		   AND A.TUTOR_YN = 'Y'
+		</if>			 
+		<if test="CB_USERKIND != null and CB_USERKIND == 'USER'">
+		   AND A.ADMIN_YN = 'N' AND A.TEACHER_YN = 'N' AND A.TUTOR_YN = 'N'
+		</if>			 
+		ORDER BY USER_NAME
+	</select>
+	
+	<insert id="axAccountInsert" parameterType="hashmap">
+		INSERT INTO USER(USER_ID, USER_NAME, EMAIL, USER_PASSWORD, 
+    	                 HOME_ZIPCODE, HOME_ADDR, HOME_TEL, MOBILE, JOB, 
+    	                 COMP_CD, RETIRED_YN, ADMIN_YN, TEACHER_YN, TUTOR_YN,
+    	                 SEX,BIRTH_DAY, CERTIFICATION_YN,CERTIFICATION_KEY, 
+    	                 CREATE_DATE, CREATE_USER)
+    	VALUES (#{USER_ID},#{USER_NAME},#{EMAIL},PASSWORD(#{USER_PASSWORD}),
+    	        #{HOME_ZIPCODE},#{HOME_ADDR},#{HOME_TEL},#{MOBILE},#{JOB},
+    	        #{COMP_CD},'N', #{ADMIN_YN},#{TEACHER_YN},#{TUTOR_YN},
+    	        #{SEX},#{BIRTH_DAY}, 'Y', '',
+    	        CURRENT_TIMESTAMP, #{SESSION_USER_ID})
+	</insert>  
+	
+	<update id="axAccountUpdate" parameterType="hashmap">
+		UPDATE USER
+    	   SET USER_NAME = #{USER_NAME},
+    	       EMAIL = #{EMAIL},
+    	       HOME_ZIPCODE = #{HOME_ZIPCODE}, 
+    	       HOME_ADDR = #{HOME_ADDR}, 
+    	       HOME_TEL = #{HOME_TEL}, 
+    	       MOBILE = #{MOBILE}, 
+    	       JOB = #{JOB}, 
+    	       COMP_CD = #{COMP_CD}, 
+    	       SEX = #{SEX},
+    	       BIRTH_DAY = #{BIRTH_DAY}, 
+    	       ADMIN_YN = #{ADMIN_YN},
+    	       TEACHER_YN = #{TEACHER_YN},
+    	       TUTOR_YN = #{TUTOR_YN},
+    	       UPDATE_DATE = CURRENT_TIMESTAMP,
+    	       UPDATE_USER = #{SESSION_USER_ID}
+    	 WHERE USER_ID = #{USER_ID} 
+	</update>    
+	
+	<delete id="axAccountDelete" parameterType="hashmap">
+		DELETE FROM USER
+		 WHERE USER_ID = #{USER_ID}  
+	</delete>  
+	
+	<select id="axAccountPk" parameterType="hashmap" resultType="int">
+		SELECT 	COUNT(*) CNT
+    	FROM 	USER
+    	WHERE 	USER_ID = #{USER_ID}
+	</select>
+
+	<update id="axChangePassword" parameterType="hashmap">
+    	UPDATE 	USER
+    	SET 	USER_PASSWORD = PASSWORD(#{USER_PASSWORD}),
+    	       	UPDATE_DATE = CURRENT_TIMESTAMP
+    	 WHERE 	USER_ID = #{USER_ID} 
+    </update>
+        
+</mapper>

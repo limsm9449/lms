@@ -52,5 +52,31 @@ public class AxCourseController {
         return hm;
     }
 
+    @RequestMapping(value = "/course/axCourseContentsList", method = RequestMethod.POST, consumes = "application/json" )
+    public @ResponseBody HashMap<String,Object> axCourseContentsList(@RequestBody HashMap<String, Object> paramMap, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    	HashMap<String, Object> hm = new HashMap<String, Object>();
+
+    	try {
+    		hm = svr.axCourseContentsList(paramMap);
+    	} catch ( Exception e ) {
+    		e.printStackTrace();
+    	}
+
+        return hm;
+    }
+    
+    @RequestMapping(value = "/course/axCourseContentsSave", method = RequestMethod.POST, consumes = "application/json" )
+    public @ResponseBody HashMap<String,Object> axCourseContentsSave(@RequestBody HashMap<String, Object> paramMap, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    	HashMap<String, Object> hm = new HashMap<String, Object>();
+    	
+		try {
+    		hm = svr.axCourseContentsSave(paramMap);
+    	} catch ( Exception e ) {
+    		e.printStackTrace();
+    		hm.put("RtnMode", Constant.mode.ERROR.name());
+    	}
+
+        return hm;
+    }
 
 }
