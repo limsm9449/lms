@@ -6,7 +6,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="ko" xml:lang="ko">
 <head>
-<meta http-equiv="X-UA-Compatible" content="IE=8,chrome=1"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
 <title>
 </title>
 
@@ -82,7 +82,7 @@ $(document.body).ready(function () {
             		var urlParams = "page=/ax/course/axCourseResourcePopupList";
             		urlParams += "&COURSE_CODE=" + row[0]["COURSE_CODE"];
             		
-            		f_popup('/common/openPage', {displayName:'courseResourcePopup',option:'width=1100,height=820', urlParams:urlParams});
+            		f_popup('/common/axOpenPage', {displayName:'courseResourcePopup',option:'width=1100,height=820', urlParams:urlParams});
             	} else {
             		mask.open();
             		dialog.alert( { msg : "신규로 추가한 경우는 저장후에 주차를 편집하셔야 합니다." }, function () { mask.close();	} );
@@ -180,7 +180,7 @@ function fn_makeGrid() {
                 }
 	        },{
 	            key : "POINT",
-	            label : "표인트",
+	            label : "포인트",
 	            width : 90,
 	            align : "right",
 	            editor : { 

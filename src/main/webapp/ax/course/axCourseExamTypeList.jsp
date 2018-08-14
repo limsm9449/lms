@@ -6,7 +6,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="ko" xml:lang="ko">
 <head>
-<meta http-equiv="X-UA-Compatible" content="IE=8,chrome=1"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
 <title>
 </title>
 
@@ -83,7 +83,7 @@ $(document.body).ready(function () {
             		var urlParams = "page=/ax/course/axCourseExamTypeStandardPopupList";
             		urlParams += "&EXAM_TYPE_SEQ=" + row[0]["SEQ"] + "&WEEK_CNT=" + row[0]["WEEK_CNT"] + "&QUESTION_CNT=" + row[0]["QUESTION_CNT"];
             		
-            		f_popup('/common/openPage', {displayName:'courseExamTypeStandard',option:'width=900,height=500', urlParams:urlParams});
+            		f_popup('/common/axOpenPage', {displayName:'courseExamTypeStandard',option:'width=900,height=500', urlParams:urlParams});
             	} else {
             		mask.open();
             		dialog.alert( { msg : "신규로 추가한 경우는 저장후에 유형 기준을 편집하셔야 합니다." }, function () { mask.close();	} );
@@ -160,7 +160,7 @@ function fn_makeGrid() {
 			        	align : "right"
 			        },{
 			        	key : "STANDARD_QUESTION_CNT_G1", 
-			        	label : "객간식 문항수", 
+			        	label : "객관식 문항수", 
 			            width : 100,
 			        	align : "right"
 			        },{
@@ -411,6 +411,7 @@ function fn_cbChange(id) {
     <button class="btn btn-default" data-grid-control="save">저장</button>
     <button class="btn btn-default" data-grid-control="export">엑셀</button>
     <button class="btn btn-default" data-grid-control="editDetail">유형 기준 편집</button>
+    <button class="btn btn-default" data-grid-control="preview">미리보기(나중에)</button>
 </div>
 
 <div style="height:10px"></div>

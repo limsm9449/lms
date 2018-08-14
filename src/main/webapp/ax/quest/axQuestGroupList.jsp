@@ -6,7 +6,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="ko" xml:lang="ko">
 <head>
-<meta http-equiv="X-UA-Compatible" content="IE=8,chrome=1"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
 <title>
 </title>
 
@@ -112,7 +112,7 @@ $(document.body).ready(function () {
             		var urlParams = "page=/ax/quest/axQuestPopupList";
             		urlParams += "&QG_ID=" + row[0]["QG_ID"];
             		
-            		f_popup('/common/openPage', {displayName:'questPopup',option:'width=1100,height=820', urlParams:urlParams});
+            		f_popup('/common/axOpenPage', {displayName:'questPopup',option:'width=1100,height=820', urlParams:urlParams});
             	} else {
             		mask.open();
             		dialog.alert( { msg : "신규로 추가한 경우는 저장후에 설문지를 편집하셔야 합니다." }, function () { mask.close();	} );
@@ -211,6 +211,7 @@ function fn_gridEvent(event, obj) {
     <button class="btn btn-default" data-grid-control="save">저장</button>
     <button class="btn btn-default" data-grid-control="export">엑셀</button>
     <button class="btn btn-default" data-grid-control="editDetail">설문지 편집</button>
+    <button class="btn btn-default" data-grid-control="preview">미리보기(나중에)</button>
 </div>
 
 <div style="height:10px"></div>

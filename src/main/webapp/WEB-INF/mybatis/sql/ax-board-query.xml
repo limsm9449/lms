@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="axBoard">
+
+	<select id="axBoardReportList" resultType="hashmap">
+		SELECT 	A.SEQ,
+		       	A.COURSE_ID,
+		       	TITLE,
+		       	A.USER_ID,
+		       	B.USER_NAME,
+		       	USER_IP,
+		       	VIEW_CNT,
+		       	DATE_FORMAT(IFNULL(A.UPDATE_DATE,A.CREATE_DATE), '%y.%m.%d %H:%i') CREATE_DATE,
+		       	IF(A.USER_ID = #{USER_ID}, 'Y','N') MY_BOARD_YN
+		FROM 	BOARD_REPORT A LEFT OUTER JOIN USER B ON A.USER_ID = B.USER_ID
+		WHERE 	A.COURSE_ID = #{COURSE_ID}
+		<if test="SEARCH_STR != null and SEARCH_STR != ''">
+			AND ( UPPER(A.TITLE) LIKE CONCAT('%',UPPER(#{SEARCH_STR}),'%') OR UPPER(A.USER_ID) LIKE CONCAT('%',UPPER(#{SEARCH_STR}),'%') OR UPPER(B.USER_NAME) LIKE CONCAT('%',UPPER(#{SEARCH_STR}),'%') )
+		</if>			 
+		ORDER 	BY 8 DESC
+	</select>
+
+	<select id="axBoardReportOne" resultType="hashmap">
+		SELECT 	SEQ,
+		       	COURSE_ID,
+		       	TITLE,
+		       	CONTENTS
+		FROM 	BOARD_REPORT
+		WHERE 	SEQ = #{SEQ}
+	</select>
+	
+	<insert id="axBoardReportInsert" parameterType="hashmap">
+		INSERT INTO BOARD_REPORT (COURSE_ID,TITLE,CONTENTS,USER_ID,USER_IP,VIEW_CNT,CREATE_DATE)
+		VALUES (#{COURSE_ID},#{TITLE},#{CONTENTS},#{USER_ID},#{USER_IP},0,CURRENT_TIMESTAMP)
+    </insert>	
+    
+    <update id="axBoardReportUpdate" parameterType="hashmap">
+		UPDATE BOARD_REPORT
+		   SET TITLE = #{TITLE},
+		       CONTENTS = #{CONTENTS},
+		       UPDATE_DATE = CURRENT_TIMESTAMP
+		 WHERE SEQ = #{SEQ}
+    </update>	
+
+	<!-- 조회수 증가 -->
+    <update id="axBoardReportViewCntUpd" parameterType="hashmap">
+		UPDATE BOARD_REPORT
+		   SET VIEW_CNT = VIEW_CNT + 1
+		 WHERE SEQ = #{SEQ}
+    </update>	
+
+	<!-- 자료실 게시판 삭제 -->
+    <delete id="axBoardReportDelete" parameterType="hashmap">
+		DELETE FROM BOARD_REPORT
+		 WHERE SEQ = #{SEQ}
+    </delete>	
+        
+</mapper>

@@ -66,6 +66,14 @@ public class AxCommService {
 			} else if ( "AdminAuth".equals(ddKinds[i]) ) {
 				paramMap.put("DD_MAIN", "ADMIN_AUTH");
 		    	hm.put(ddKinds[i], sqlSession.selectList("axComm.axDdCode", paramMap));
+			} else if ( "ApprovalStatus".equals(ddKinds[i]) ) {
+				paramMap.put("DD_MAIN", "APPROVAL_STATUS");
+		    	hm.put(ddKinds[i], sqlSession.selectList("axComm.axDdCode", paramMap));
+			} else if ( "PaymentKind".equals(ddKinds[i]) ) {
+				paramMap.put("DD_MAIN", "PAYMENT_KIND");
+		    	hm.put(ddKinds[i], sqlSession.selectList("axComm.axDdCode", paramMap));
+			} else if ( "Bank".equals(ddKinds[i]) ) {
+		    	hm.put(ddKinds[i], sqlSession.selectList("axComm.axDdBank", paramMap));
 			}
 		}
 		
@@ -80,5 +88,5 @@ public class AxCommService {
 		
     	return hm;
     }
-
+	
 }

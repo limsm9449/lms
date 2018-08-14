@@ -56,7 +56,7 @@ function gfn_resize() {
   		$('#left').height(lc + 10);
 	}
 	*/
-  	$('#left').height($(window).height());
+  	$('#left').height($(window).height() + 100);
   	$('#content').height($(window).height());
 	
   	//$('html, body').scrollTop(0);
@@ -390,7 +390,7 @@ function f_popup(pDoUrl,pParam) {
 	var displayName = "";
 	var option = "";
 	if ( pParam != undefined && pParam.urlParams != undefined )
-		params = "?" + pParam.urlParams;
+		params = "?" + pParam.urlParams + "&timestamp=" + timestamp;
 	if ( pParam != undefined && pParam.displayName != undefined )
 		displayName = pParam.displayName;
 	if ( pParam != undefined && pParam.option != undefined )
@@ -955,5 +955,46 @@ function gfn_gridResize(gridParentId, gridObj, minusHeight) {
 		$("#" + gridParentId).height($(window).height() - 170);
 		gridObj.setHeight($(window).height() - 170);
 	}
+}
+
+function gfn_initDatepicker(objId) {
+	$("#" + objId).datepicker({ 
+		changeMonth: true,
+		changeYear: true,
+		showMonthAfterYear: true,
+		autoSize: false,
+		buttonImage: "/resources/datepicker/images/calendar.gif",
+		buttonImageOnly: true,
+		showOn: "button",
+		beforeShow: function(input) {
+		   	var i_offset= $(input).offset();
+		   	setTimeout(function(){
+		      	$('#ui-datepicker-div').css({'top':i_offset.top + 20 + document.body.scrollTop, 'bottom':'', 'left':i_offset.left});      //datepicker의 div의 포지션을 강제로 input 위치에 그리고 좌측은 모바일이여서 작기때문에 무조건 10px에 놓았다.
+		   	})
+		} 
+	});
+}
+
+function gfn_currentDay(dt, delimiter) {
+	delimiter = delimiter || "";
+	
+	var newDate = null;
+	
+	if ( dt ) {
+		newDate = dt;
+	} else {
+		newDate = new Date();
+	}
+	var year = newDate.getFullYear();
+	var month = newDate.getMonth() + 1;
+	var day = newDate.getDate();
+	
+	return year + delimiter + (month < 10 ? "0" : "") + month + delimiter + (day < 10 ? "0" : "") + day;
+}
+
+function gfn_addDay(dt, addDay, delimiter) {
+	var dt = new Date(dt.substring(0,4), parseInt(dt.substring(4,6)) - 1, parseInt(dt.substring(6,8)) + addDay);
+	
+	return gfn_currentDay(dt, delimiter);
 }
 

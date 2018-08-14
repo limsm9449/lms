@@ -6,7 +6,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="ko" xml:lang="ko">
 <head>
-<meta http-equiv="X-UA-Compatible" content="IE=8,chrome=1"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
 <title>
 </title>
 
@@ -154,7 +154,7 @@ function fn_search() {
 
 function fn_save() {
 	var fieldParams = {
-			DUP_FIELDS : "CODE",	
+		DUP_FIELDS : "CODE",	
    		CODE : { mendatory : true, length : 5, colName : "중분류 코드" },
    		CODE_NAME : { mendatory : true, colName : "중분류 코드명" }
    	};

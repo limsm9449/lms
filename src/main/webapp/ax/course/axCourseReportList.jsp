@@ -6,7 +6,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="ko" xml:lang="ko">
 <head>
-<meta http-equiv="X-UA-Compatible" content="IE=8,chrome=1"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
 <title>
 </title>
 
@@ -87,7 +87,7 @@ $(document.body).ready(function () {
             		var urlParams = "page=/ax/course/axCourseReportContentsPopup";
             		urlParams += "&SEQ=" + row[0]["SEQ"];
             		
-            		f_popup('/common/openPage', {displayName:'courseReportContentsPopup',option:'width=800,height=620', urlParams:urlParams});
+            		f_popup('/common/axOpenPage', {displayName:'courseReportContentsPopup',option:'width=800,height=620', urlParams:urlParams});
             	}
             		
                 break;

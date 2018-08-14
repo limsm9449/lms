@@ -43,7 +43,7 @@
 									 FROM CATEGORY C3 LEFT OUTER JOIN CATEGORY C2 ON C3.PARENT_CODE = C2.CODE
 										      LEFT OUTER JOIN CATEGORY C1 ON C2.PARENT_CODE = C1.CODE
 								    WHERE C3.DEPTH = 3) C ON B.CODE = C.C3_CODE
-		 WHERE A.COURSE_KIND = 'NORMAL'
+		 WHERE A.COMP_CD = 'B2C'
 		   AND A.OPEN_YN = 'Y'
 		   <if test="c1Code != null and c1Code != ''"> AND C.C1_CODE = #{c1Code}</if>
 		   <if test="c2Code != null and c2Code != ''"> AND C.C2_CODE = #{c2Code}</if>

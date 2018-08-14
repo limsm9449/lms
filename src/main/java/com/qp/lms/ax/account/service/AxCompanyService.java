@@ -67,7 +67,28 @@ public class AxCompanyService {
     	return hm;
     }
 	
+	public HashMap<String, Object> axCompanyImageList(HashMap<String, Object> paramMap) throws Exception {
+		HashMap<String, Object> hm = new HashMap<String, Object>();
+		
+    	HashMap<String, Object> row = sqlSession.selectOne("axCompany.axCompanyOne", paramMap);
+    	hm.put("row", row);
+        
+    	return hm;
+    }
+	
+	@Transactional(propagation=Propagation.REQUIRED, rollbackFor={Throwable.class})
+    public HashMap<String, Object> axCompanyImageUpload(HashMap<String, Object> paramMap) throws Exception {
+		HashMap<String, Object> hm = new HashMap<String, Object>();
+		
+		paramMap.put("SESSION_USER_ID", SessionUtil.getSessionUserId());
+		
+		sqlSession.update("axCompany.axCompanyImageUpdate", paramMap);
 
+		hm.put("RtnMode", Constant.mode.OK.name());
+		
+    	return hm;
+    }
+	
 	
     
     

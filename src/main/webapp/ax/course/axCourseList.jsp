@@ -6,7 +6,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="ko" xml:lang="ko">
 <head>
-<meta http-equiv="X-UA-Compatible" content="IE=8,chrome=1"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
 <title>
 </title>
 
@@ -99,7 +99,7 @@ $(document.body).ready(function () {
             		var urlParams = "page=/ax/course/axCourseContentsPopup";
             		urlParams += "&COURSE_ID=" + row[0]["COURSE_ID"];
             		
-            		f_popup('/common/openPage', {displayName:'courseContentsPopup',option:'width=900,height=600', urlParams:urlParams});
+            		f_popup('/common/axOpenPage', {displayName:'courseContentsPopup',option:'width=900,height=600', urlParams:urlParams});
             	}
             		
                 break;
@@ -112,7 +112,7 @@ $(document.body).ready(function () {
             		var urlParams = "page=/ax/course/axCourseMasterImagePopup";
             		urlParams += "&COURSE_CODE=" + row[0]["COURSE_CODE"] + "&IS_VIEW=Y";
             		
-            		f_popup('/common/openPage', {displayName:'courseImagePopup',option:'width=900,height=650', urlParams:urlParams});
+            		f_popup('/common/axOpenPage', {displayName:'courseImagePopup',option:'width=900,height=650', urlParams:urlParams});
             	}
             		
                 break;
@@ -128,6 +128,11 @@ function fn_makeGrid() {
 	        },{
 	            key : "COURSE_EXAM_TYPE_ID",
 	            width : 0
+	        },{
+	            key : "COURSE_ID",
+	            label : "ID",
+	            width : 50,
+	            align : "left"
 	        },{
 	            key : "CATEGORY_NAME",
 	            label : "카테고리",

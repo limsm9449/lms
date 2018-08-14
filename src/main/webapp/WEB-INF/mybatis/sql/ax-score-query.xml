@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="axScore">
+
+	<select id="axScoreList" parameterType="hashmap" resultType="hashmap">
+		SELECT 	CAT.CATEGORY_NAME
+				,A.COURSE_ID
+				,A.COURSE_CODE
+				,B.COURSE_NAME
+				,A.YEAR
+				,A.MONTH
+				,A.CHASU
+				,A.COMP_CD
+				,IFNULL(C.REPORT_CNT,0) REPORT_CNT
+				,IFNULL(C.EXAM_CNT,0) EXAM_CNT
+				,IFNULL(C.DISCUSSION_CNT,0) DISCUSSION_CNT
+				,IFNULL(C.PROGRESS_CNT,0) PROGRESS_CNT
+				,IFNULL(C.TOTAL_CNT,0) TOTAL_CNT
+				,IFNULL(C.REPORT_SUBMIT_CNT,0) REPORT_SUBMIT_CNT
+				,IFNULL(D.QUEST_CNT,0) QUEST_CNT
+		FROM 	COURSE A 
+		                LEFT OUTER JOIN COURSE_CODE B ON B.COURSE_CODE = A.COURSE_CODE
+						LEFT OUTER JOIN (
+							SELECT 	C3.CODE C3_CODE, C2.CODE C2_CODE, C1.CODE C1_CODE,
+									CONCAT(C1.CODE_NAME,' > ',C2.CODE_NAME,' > ',C3.CODE_NAME) CATEGORY_NAME
+							FROM 	CATEGORY C3 
+										LEFT OUTER JOIN CATEGORY C2 ON C3.PARENT_CODE = C2.CODE
+									  	LEFT OUTER JOIN CATEGORY C1 ON C2.PARENT_CODE = C1.CODE
+							WHERE 	C3.DEPTH = 3) CAT ON B.CODE = CAT.C3_CODE
+						LEFT OUTER JOIN (
+							SELECT 	A.COURSE_ID
+									,SUM(IF(B.REPORT > 0,1,0)) REPORT_CNT
+									,SUM(IF(B.EXAM > 0,1,0)) EXAM_CNT 
+									,SUM(IF(B.DISCUSSION > 0,1,0)) DISCUSSION_CNT
+									,SUM(IF(B.PROGRESS > 0,1,0)) PROGRESS_CNT
+									,COUNT(*) TOTAL_CNT
+									,SUM(IF(B.REPORT_YN = 'Y',1,0)) REPORT_SUBMIT_CNT
+							FROM	COURSE_REGISTER A
+										LEFT OUTER JOIN COURSE_EVAL B ON B.COURSE_ID = A.COURSE_ID AND B.USER_ID = A.USER_ID
+							WHERE 	A.STATUS = 'A'
+							GROUP 	BY A.COURSE_ID ) C ON C.COURSE_ID = A.COURSE_ID
+						LEFT OUTER JOIN (
+							SELECT  COURSE_ID, COUNT(USER_ID) QUEST_CNT
+		                    FROM 	(
+										SELECT 	COURSE_ID, USER_ID, COUNT(*) CNT
+										FROM	USER_QUEST
+		                                WHERE 	ANSWER IS NOT NULL
+										GROUP BY COURSE_ID, USER_ID
+									) A
+							WHERE	CNT > 0
+							GROUP 	BY COURSE_ID ) D ON D.COURSE_ID = A.COURSE_ID
+		WHERE 	1 = 1
+		AND		A.OPEN_YN = 'Y'
+<if test="LEVEL1_CODE != null and LEVEL1_CODE != ''"> AND CAT.C1_CODE = #{LEVEL1_CODE}</if>
+<if test="LEVEL2_CODE != null and LEVEL2_CODE != ''"> AND CAT.C2_CODE = #{LEVEL2_CODE}</if>
+<if test="LEVEL3_CODE != null and LEVEL3_CODE != ''"> AND CAT.C3_CODE = #{LEVEL3_CODE}</if>		
+<if test="SEARCH_COURSE != null and SEARCH_COURSE != ''"> 
+		AND 	( UPPER(A.COURSE_CODE) LIKE CONCAT('%',UPPER(#{SEARCH_COURSE}),'%') OR UPPER(B.COURSE_NAME) LIKE CONCAT('%',UPPER(#{SEARCH_COURSE}),'%') )
+</if>		
+		ORDER 	BY CAT.CATEGORY_NAME,B.COURSE_NAME,A.YEAR,A.MONTH,A.CHASU  
+	</select>
+        
+	<select id="axUserScoreList" resultType="hashmap">
+		SELECT 	B.COURSE_ID
+				,B.USER_ID
+		        ,U.USER_NAME
+		        ,B.REPORT
+		        ,B.EXAM
+		        ,B.DISCUSSION
+		        ,B.PROGRESS
+		        ,B.TOTAL
+		        ,B.LAST_WEEK
+		        ,B.LAST_PAGE
+		        ,DATE_FORMAT(B.E_FROM_DATE, '%y.%m.%d %H:%i') E_FROM_DATE
+		        ,DATE_FORMAT(B.E_TO_DATE, '%y.%m.%d %H:%i') E_TO_DATE
+		        ,B.REPORT_YN
+		        ,B.QUEST_YN
+		        ,B.COMPLETE_YN
+		        ,IF(C.REPORT_RATE > 0, 'Y', 'N') C_REPORT_YN
+		        ,IF(C.DISCUSSION_RATE > 0, 'Y', 'N') C_DISCUSSION_YN
+		        ,C.REPORT_RATE
+		        ,C.EXAM_RATE
+		        ,C.DISCUSSION_RATE
+		        ,C.PROGRESS_RATE
+		FROM	COURSE_REGISTER A
+					LEFT OUTER JOIN COURSE_EVAL B ON B.COURSE_ID = A.COURSE_ID AND B.USER_ID = A.USER_ID
+		            LEFT OUTER JOIN USER U ON U.USER_ID = A.USER_ID
+            		LEFT OUTER JOIN COURSE C ON C.COURSE_ID = A.COURSE_ID
+		WHERE 	A.STATUS = 'A'
+		AND		A.COURSE_ID = #{COURSE_ID}
+<if test="SEARCH_USER != null and SEARCH_USER != ''">
+		AND 	( UPPER(B.USER_ID) LIKE CONCAT('%',UPPER(#{SEARCH_USER}),'%') OR UPPER(U.USER_NAME) LIKE CONCAT('%',UPPER(#{SEARCH_USER}),'%') )
+</if>
+		GROUP 	BY U.USER_NAME
+	</select>        
+	
+	<update id="axUserScoreUpdateReportDiscussion" parameterType="hashmap">
+    	UPDATE 	COURSE_EVAL
+    	SET 	REPORT = #{REPORT},
+    	       	DISCUSSION = #{DISCUSSION}
+    	 WHERE 	COURSE_ID = #{COURSE_ID}
+    	 AND    USER_ID = #{USER_ID}
+    </update>
+
+	<update id="axUserScoreUpdateTotal" parameterType="hashmap">
+    	UPDATE 	COURSE_EVAL
+    	SET 	TOTAL = REPORT * ((SELECT REPORT_RATE FROM COURSE WHERE COURSE_ID = #{COURSE_ID}) / 100) +
+						EXAM * ((SELECT EXAM_RATE FROM COURSE WHERE COURSE_ID = #{COURSE_ID}) / 100) +
+						DISCUSSION * ((SELECT DISCUSSION_RATE FROM COURSE WHERE COURSE_ID = #{COURSE_ID}) / 100) +
+						PROGRESS * ((SELECT PROGRESS_RATE FROM COURSE WHERE COURSE_ID = #{COURSE_ID}) / 100)
+    	 WHERE 	COURSE_ID = #{COURSE_ID}
+    	 AND    USER_ID = #{USER_ID}
+    </update>
+
+	<select id="axUserScoreWeekList" resultType="hashmap">
+		SELECT 	A.COURSE_ID
+				,A.USER_ID
+		        ,U.USER_NAME
+		        ,A.WEEK
+                ,C.TITLE
+                ,IFNULL(A.PROGRESS_RATE, 0) PROGRESS_RATE
+		        ,DATE_FORMAT(A.STUDY_START, '%y.%m.%d %H:%i') STUDY_START
+		        ,DATE_FORMAT(A.STUDY_END, '%y.%m.%d %H:%i') STUDY_END
+		FROM	COURSE_WEEK A
+					JOIN COURSE B ON B.COURSE_ID = A.COURSE_ID
+                    JOIN COURSE_RESOURCE C ON C.COURSE_CODE = B.COURSE_CODE AND C.WEEK = A.WEEK
+		            LEFT OUTER JOIN USER U ON U.USER_ID = A.USER_ID
+		WHERE 	A.COURSE_ID = #{COURSE_ID}
+		AND		A.USER_ID = #{USER_ID}
+		ORDER 	BY A.WEEK
+	</select>        
+
+	<select id="axUserScoreWeekCount" parameterType="hashmap" resultType="int">
+		SELECT 	COUNT(*) CNT
+		FROM	COURSE_WEEK
+		WHERE 	COURSE_ID = #{COURSE_ID}
+		AND		USER_ID = #{USER_ID}
+	</select>        
+
+	<insert id="axUserScoreWeekInsert" parameterType="hashmap">
+		INSERT 	INTO COURSE_WEEK( COURSE_ID, USER_ID, WEEK )
+		SELECT  #{COURSE_ID} COURSE_ID, #{USER_ID} USER_ID, WEEK
+		FROM 	COURSE_RESOURCE
+		WHERE	COURSE_CODE = (SELECT COURSE_CODE FROM COURSE WHERE COURSE_ID = #{COURSE_ID})
+	</insert>        
+    
+</mapper>

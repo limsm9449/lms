@@ -6,7 +6,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="ko" xml:lang="ko">
 <head>
-<meta http-equiv="X-UA-Compatible" content="IE=8,chrome=1"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
 <title>
 </title>
 
@@ -67,6 +67,58 @@ $(document.body).ready(function () {
                 break;
             case "export":
                 grid.exportExcel("사용자관리.xls");
+                break;
+            case "passwordReset" :
+            	var row = grid.getList("selected");
+            	if ( row.length == 0 ) {
+            		mask.open();
+            		dialog.alert( { msg : "사용자를 선택하셔야 합니다." }, function () { mask.close();	} );
+            		return;
+            	} else {
+            		confirmDialog.confirm(
+            	       		{  	title: "Confirm", msg: '패스워드를 초기화 하시겠습니까?' }, 
+            	           	function(){
+            	             	if ( this.key == "ok" ) {
+            	             		var saveParam = {
+            	             			USER_ID : row[0].USER_ID,
+            	             			EMAIL : row[0].EMAIL
+            	             		}
+            	             		gfn_callAjax("/account/axPasswordReset.do", saveParam, fn_callbackAjax, "passwordReset");
+            	               	} else {
+            	               		mask.close();
+            	               	}
+            	           	}
+            	       	);
+            	}
+                break;
+            case "reSendCertification" :
+            	var row = grid.getList("selected");
+            	if ( row.length == 0 ) {
+            		mask.open();
+            		dialog.alert( { msg : "사용자를 선택하셔야 합니다." }, function () { mask.close();	} );
+            		return;
+            	} else {
+            		if ( row[0].CERTIFICATION_YN == "Y" ) {
+            			mask.open();
+                		dialog.alert( { msg : "인증 처리된 사용자입니다." }, function () { mask.close();	} );
+            			return;
+            		}
+            		confirmDialog.confirm(
+            	       		{  	title: "Confirm", msg: '인증메일 재발송을 하시겠습니까?' }, 
+            	           	function(){
+            	             	if ( this.key == "ok" ) {
+            	             		var saveParam = {
+            	             			USER_ID : row[0].USER_ID,
+            	             			USER_NAME : row[0].USER_NAME,
+            	             			EMAIL : row[0].EMAIL	
+            	             		}
+            	             		gfn_callAjax("/account/axReSendCertification.do", saveParam, fn_callbackAjax, "reSendCertification");
+            	               	} else {
+            	               		mask.close();
+            	               	}
+            	           	}
+            	       	);
+            	}
                 break;
         }
     });
@@ -249,6 +301,28 @@ function fn_makeGrid() {
 	        	label : "인증 여부", 
 	            width : 90,
 	        	align : "center"
+	        },{
+	            key : "BANK",
+	            label : "환불은행",
+	            width : 80,
+	            align : "left",
+	            editor : { 
+	            	type : "text"
+				},
+				styleClass: function () {
+                    return "grid-cell-edit";
+                }
+	        },{
+	            key : "ACC_NUM",
+	            label : "환불계좌번호",
+	            width : 120,
+	            align : "left",
+	            editor : { 
+	            	type : "text"
+				},
+				styleClass: function () {
+                    return "grid-cell-edit";
+                }
 			},{
 			  	key : undefined, 
 			  	label: "관리자", 
@@ -373,16 +447,29 @@ function fn_save() {
 }
 
 function fn_callbackAjax(data, id) {
-	//console.log("fn_callbackAjax : " + id);
+	if ( data.RtnMode == "ERROR" ) {
+		mask.open();
+		dialog.alert( { msg : "처리시 오류가 발생했습니다. 관리자에게 문의하세요." }, function () { mask.close();	fn_search(); } );
+		return;
+	}
+	
 	if ( id == "search" ) {
 		grid.setData(data.list);
-		
-		//mask.close();
 	} else if ( id == "save" ){
 		mask.close();
 
 		mask.open();
 		dialog.alert( { msg : "저장 되었습니다." }, function () { mask.close();	fn_search(); } );
+	} else if ( id == "passwordReset" ){
+		mask.close();
+
+		mask.open();
+		dialog.alert( { msg : "패스워드가 초기화 되었습니다." }, function () { mask.close();	fn_search(); } );
+	} else if ( id == "reSendCertification" ){
+		mask.close();
+
+		mask.open();
+		dialog.alert( { msg : "인증메일을 재발송 하였습니다." }, function () { mask.close();	fn_search(); } );
 	} else if ( id == "dd" ){
 		dd = $.extend({}, data);
 
@@ -438,6 +525,8 @@ function fn_gridEvent(event, obj) {
     <button class="btn btn-default" data-grid-control="reset">초기화</button>
     <button class="btn btn-default" data-grid-control="save">저장</button>
     <button class="btn btn-default" data-grid-control="export">엑셀</button>
+    <button class="btn btn-default" data-grid-control="passwordReset">패스워드 초기화</button>
+    <button class="btn btn-default" data-grid-control="reSendCertification">인증메일 재발송</button>
 </div> 
 
 <div style="height:10px"></div>

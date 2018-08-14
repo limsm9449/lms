@@ -142,5 +142,49 @@
 		 ORDER BY ORD 	
 	</select>
 
+	<select id="axDdBank" resultType="hashmap">
+		SELECT 	SEQ value
+		        ,CONCAT(BANK_NAME,' ',ACC_NO,' ',USER) text
+		FROM  	BANK
+       	WHERE 	USE_YN = 'Y'
+		ORDER 	BY 2	
+	</select>
+    
+    <select id="lastInsertId" resultType="String">
+		SELECT LAST_INSERT_ID() LAST_ID
+	</select>
+
+    <insert id="axAttachFromTempAttachToAttachInsert" parameterType="hashmap">
+		INSERT INTO ATTACH (KIND,P_SEQ,FILE_NAME,FILE_SIZE,FILE_PATH,ORG_FILE_NAME,CREATE_DATE)
+		SELECT KIND,#{P_SEQ},FILE_NAME,FILE_SIZE,FILE_PATH,ORG_FILE_NAME,CREATE_DATE
+		  FROM ATTACH_TEMP
+		 WHERE USER_ID = #{USER_ID}
+    </insert>	
+
+	<delete id="axAttachTempDelete" parameterType="hashmap">
+		DELETE FROM ATTACH_TEMP
+		 WHERE USER_ID = #{USER_ID}
+    </delete>		    
+    
+    <select id="axAttachList" parameterType="hashmap" resultType="hashmap">
+		SELECT SEQ,
+		       KIND,
+		       P_SEQ,
+		       FILE_NAME,
+		       FILE_SIZE,
+		       FILE_PATH,
+		       ORG_FILE_NAME,
+		       CREATE_DATE
+		  FROM ATTACH
+		 WHERE KIND = #{KIND}
+		   AND P_SEQ = #{P_SEQ}
+    </select>
+
+	<delete id="axAttachDelete" parameterType="hashmap">
+		DELETE FROM ATTACH
+		 WHERE KIND = #{KIND}
+		   AND P_SEQ = #{P_SEQ}
+    </delete>		    
+    
     
 </mapper>

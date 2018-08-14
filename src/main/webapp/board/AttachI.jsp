@@ -40,9 +40,11 @@
 var preUrl = "/board/"; 
 
 $(document).ready(function() {
+	/*
 	var bodyHeight = $(document).height();
 	parent.$("#attachFrame").height(bodyHeight);
 	top.gfn_resize();
+	*/
 });
 
 function lfn_btn(pKind, pParam) {

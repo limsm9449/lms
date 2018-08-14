@@ -11,15 +11,12 @@
 		       	,B.COURSE_NAME
                	,A.YEAR
 				,A.MONTH
-				,A.CHASU
+		       	,IFNULL(A.CHASU, 0) CHASU
                	,A.COMP_CD
 		       	,A.TUTOR_ID
 		       	,A.COURSE_COST
 		       	,A.C_PERIOD
 		       	,A.OPEN_YN
-		       	,IFNULL(E.Y_CNT, 0) Y_CNT
-		       	,IFNULL(E.A_CNT, 0) A_CNT
-		       	,IFNULL(A.CHASU, 0) CHASU
                	,A.REPORT_RATE
 				,A.EXAM_RATE
 				,A.DISCUSSION_RATE
@@ -47,12 +44,6 @@
 								 FROM CATEGORY C3 LEFT OUTER JOIN CATEGORY C2 ON C3.PARENT_CODE = C2.CODE
 									      LEFT OUTER JOIN CATEGORY C1 ON C2.PARENT_CODE = C1.CODE
 							    WHERE C3.DEPTH = 3) C ON B.CODE = C.C3_CODE
-                        LEFT OUTER JOIN (
-							SELECT  COURSE_ID,
-									SUM(IF(STATUS = 'Y', 1, 0)) Y_CNT,
-                                    SUM(IF(STATUS = 'A', 1, 0)) A_CNT
-                            FROM 	COURSE_REGISTER
-                            GROUP 	BY COURSE_ID ) E ON E.COURSE_ID = A.COURSE_ID
 						LEFT OUTER JOIN COURSE_EXAM_TYPE F ON F.SEQ = A.COURSE_EXAM_TYPE_ID
 	                    LEFT OUTER JOIN USER U1 ON A.CREATE_USER = U1.USER_ID
 		  	            LEFT OUTER JOIN USER U2 ON A.UPDATE_USER = U2.USER_ID                        

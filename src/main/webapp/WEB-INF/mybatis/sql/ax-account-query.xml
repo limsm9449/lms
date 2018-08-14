@@ -53,11 +53,13 @@
     	                 HOME_ZIPCODE, HOME_ADDR, HOME_TEL, MOBILE, JOB, 
     	                 COMP_CD, RETIRED_YN, ADMIN_YN, TEACHER_YN, TUTOR_YN,
     	                 SEX,BIRTH_DAY, CERTIFICATION_YN,CERTIFICATION_KEY, 
+    	                 BANK, ACC_NUM,
     	                 CREATE_DATE, CREATE_USER)
     	VALUES (#{USER_ID},#{USER_NAME},#{EMAIL},PASSWORD(#{USER_PASSWORD}),
     	        #{HOME_ZIPCODE},#{HOME_ADDR},#{HOME_TEL},#{MOBILE},#{JOB},
     	        #{COMP_CD},'N', #{ADMIN_YN},#{TEACHER_YN},#{TUTOR_YN},
     	        #{SEX},#{BIRTH_DAY}, 'Y', '',
+    	        #{BANK},#{ACC_NUM},
     	        CURRENT_TIMESTAMP, #{SESSION_USER_ID})
 	</insert>  
 	
@@ -76,6 +78,8 @@
     	       ADMIN_YN = #{ADMIN_YN},
     	       TEACHER_YN = #{TEACHER_YN},
     	       TUTOR_YN = #{TUTOR_YN},
+    	       BANK = #{BANK},
+    	       ACC_NUM = #{ACC_NUM},
     	       UPDATE_DATE = CURRENT_TIMESTAMP,
     	       UPDATE_USER = #{SESSION_USER_ID}
     	 WHERE USER_ID = #{USER_ID} 
@@ -95,6 +99,14 @@
 	<update id="axChangePassword" parameterType="hashmap">
     	UPDATE 	USER
     	SET 	USER_PASSWORD = PASSWORD(#{USER_PASSWORD}),
+    	       	UPDATE_DATE = CURRENT_TIMESTAMP
+    	 WHERE 	USER_ID = #{USER_ID} 
+    </update>
+
+	<update id="axChangeCertification" parameterType="hashmap">
+    	UPDATE 	USER
+    	SET 	CERTIFICATION_KEY = #{CERTIFICATION_KEY},
+    	       	CERTIFICATION_YN = 'N',
     	       	UPDATE_DATE = CURRENT_TIMESTAMP
     	 WHERE 	USER_ID = #{USER_ID} 
     </update>

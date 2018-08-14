@@ -67,14 +67,24 @@ var pageObj = {
 	axCourseExamList : 		{	page : "/ax/course/axCourseExamList"	},
 	axCourseExamTypeList :	{	page : "/ax/course/axCourseExamTypeList"	},
 	axCourseList :			{	page : "/ax/course/axCourseList"	},
+	axCostList :			{	page : "/ax/cost/axCostList"	},
+	axScoreList :			{	page : "/ax/score/axScoreList"	},
+	axUserScoreList :		{	page : "/ax/score/axUserScoreList"	},
 	axAccountList :			{	page : "/ax/account/axAccountList"	},
 	axCompanyList :			{	page : "/ax/account/axCompanyList"	},
-	axPointList :			{	page : "/ax/account/axPointList"	}
+	axPointList :			{	page : "/ax/account/axPointList"	},
+	axBoardReportList :		{	page : "/ax/board/axBoardReportList"	}
+	
 }
 
+var pageParam = {}
 
-function gfn_openMenu(pageId) {
-	console.log(pageObj[pageId].page);
+function gfn_openMenu(pageId, params) {
+	if ( params ) {
+		pageParam["axUserScoreList"] = params;
+	}
+
+	//console.log(pageObj[pageId].page);
 	f_menuContent("/common/axOpenPage", {urlParams : "page=" + pageObj[pageId].page});
 }
 </script> 
@@ -113,10 +123,7 @@ function gfn_openMenu(pageId) {
 			              	<li><a href="#" class="subMenu linker" onclick="gfn_openMenu('axCategoryLevel3List'); gfn_subMenu(this);"><span>소분류 관리</span></a></li>
 			         	</ul>
 	          		</li>
-	          		<li><a href="#" class="mainMenu linker" onclick="gfn_menu(this)"><span>설문지 관리(New)</span></a>
-			            <ul style="display:none" class="subMenuUl">
-			              	<li><a href="#" class="subMenu linker" onclick="gfn_openMenu('axQuestGroupList'); gfn_subMenu(this);"><span>설문지 그룹관리</span></a></li>
-			         	</ul>
+	          		<li><a href="#" class="mainMenu linker" onclick="gfn_openMenu('axQuestGroupList'); gfn_menu(this)"><span>설문지 관리(New)</span></a>
 			      	</li>
 	          		<li><a href="#" class="mainMenu linker" onclick="gfn_menu(this)"><span>과정 관리(New)</span></a>
 			            <ul style="display:none" class="subMenuUl">
@@ -127,16 +134,25 @@ function gfn_openMenu(pageId) {
 			              	<li><a href="#" class="subMenu linker" onclick="gfn_openMenu('axCourseExamTypeList'); gfn_subMenu(this);"><span>과정 시험 유형 관리</span></a></li>
 			         	</ul>
 			      	</li>
-	          		<li><a href="#" class="mainMenu linker" onclick="gfn_menu(this)"><span>강의 관리(New)</span></a>
+	          		<li><a href="#" class="mainMenu linker" onclick="gfn_openMenu('axCourseList'); gfn_menu(this)"><span>강의 관리(New)</span></a>
+			      	</li>
+	          		<li><a href="#" class="mainMenu linker" onclick="gfn_menu(this)"><span>성적 관리(New)</span></a>
 			            <ul style="display:none" class="subMenuUl">
-			              	<li><a href="#" class="subMenu linker" onclick="gfn_openMenu('axCourseList'); gfn_subMenu(this);"><span>강의 관리</span></a></li>
+			              	<li><a href="#" class="subMenu linker" onclick="gfn_openMenu('axScoreList'); gfn_subMenu(this);"><span>성적 관리</span></a></li>
 			         	</ul>
+			      	</li>
+	          		<li><a href="#" class="mainMenu linker" onclick="gfn_openMenu('axCostList'); gfn_menu(this)"><span>입금 관리(New)</span></a>
 			      	</li>
 	          		<li><a href="#" class="mainMenu linker" onclick="gfn_menu(this)"><span>계정 관리(New)</span></a>
 			            <ul style="display:none" class="subMenuUl">
 			              	<li><a href="#" class="subMenu linker" onclick="gfn_openMenu('axAccountList'); gfn_subMenu(this);"><span>사용자 관리</span></a></li>
 			              	<li><a href="#" class="subMenu linker" onclick="gfn_openMenu('axCompanyList'); gfn_subMenu(this);"><span>회사 관리</span></a></li>
 			              	<li><a href="#" class="subMenu linker" onclick="gfn_openMenu('axPointList'); gfn_subMenu(this);"><span>포인트 관리</span></a></li>
+			         	</ul>
+			      	</li>
+	          		<li><a href="#" class="mainMenu linker" onclick="gfn_menu(this)"><span>게시물 관리(New)</span></a>
+			            <ul style="display:none" class="subMenuUl">
+			              	<li><a href="#" class="subMenu linker" onclick="gfn_openMenu('axBoardReportList'); gfn_subMenu(this);"><span>레포트</span></a></li>
 			         	</ul>
 			      	</li>
 <c:if test="${set.loginVO.adminYn eq 'A'}">	

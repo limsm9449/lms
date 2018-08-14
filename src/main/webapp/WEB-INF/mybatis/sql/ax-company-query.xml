@@ -19,7 +19,7 @@
 	  	            LEFT OUTER JOIN USER U2 ON A.UPDATE_USER = U2.USER_ID                 
 	 	WHERE 	1 = 1
 		<if test="SEARCH_STR != null and SEARCH_STR != ''">
-		  AND ( UPPER(A.COMP_ID) LIKE CONCAT('%',UPPER(#{SEARCH_STR}),'%') OR UPPER(A.COMP_NAME) LIKE CONCAT('%',UPPER(#{SEARCH_STR}),'%') )
+		  AND ( UPPER(A.COMP_CD) LIKE CONCAT('%',UPPER(#{SEARCH_STR}),'%') OR UPPER(A.COMP_NAME) LIKE CONCAT('%',UPPER(#{SEARCH_STR}),'%') )
 		</if>			 
 		ORDER BY COMP_NAME
 	</select>
@@ -61,5 +61,20 @@
     	FROM 	COMPANY
     	WHERE 	COMP_CD = #{COMP_CD}
 	</select>
+
+	<select id="axCompanyOne" resultType="hashmap">
+		SELECT 	A.*
+		FROM 	COMPANY A                 
+	 	WHERE 	COMP_CD = #{COMP_CD}
+	</select>
+
+	<update id="axCompanyImageUpdate" parameterType="hashmap">
+		UPDATE 	COMPANY
+    	   SET 	UPDATE_DATE = CURRENT_TIMESTAMP
+    	       	,UPDATE_USER = #{SESSION_USER_ID}
+		   <if test="kind != null and kind == 'LOGIN'"> ,LOGIN_IMG = 'Y'</if>
+		   <if test="kind != null and kind == 'GNB'"> ,GNB_IMG = 'Y'</if>
+    	 WHERE 	COMP_CD = #{COMP_CD}
+	</update>    
         
 </mapper>

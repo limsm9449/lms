@@ -6,7 +6,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="ko" xml:lang="ko">
 <head>
-<meta http-equiv="X-UA-Compatible" content="IE=8,chrome=1"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
 <title>
 </title>
 
@@ -68,6 +68,22 @@ $(document.body).ready(function () {
             case "export":
                 grid.exportExcel("회사관리.xls");
                 break;
+            case "editImage":
+            	var row = grid.getList("selected");
+            	if ( row.length == 0 ) {
+            		mask.open();
+            		dialog.alert( { msg : "회사를 선택하셔야 합니다." }, function () { mask.close();	} );
+            	} else if ( row[0]["NEW_FLAG"] == "Y" ) {
+            		mask.open();
+            		dialog.alert( { msg : "신규로 추가한 경우는 저장후에 이미지를 편집하셔야 합니다." }, function () { mask.close();	} );
+            	} else {
+            		var urlParams = "page=/ax/account/axCompanyImagePopup";
+            		urlParams += "&COMP_CD=" + row[0]["COMP_CD"];
+            		
+            		f_popup('/common/axOpenPage', {displayName:'companyImagePopup',option:'width=900,height=650', urlParams:urlParams});
+            	}
+            		
+                break;
         }
     });
 });
@@ -75,9 +91,6 @@ $(document.body).ready(function () {
 function fn_makeGrid() {
 	grid = gfn_makeAx5Grid("first-grid",
 		[ 	{
-	            key : "NEW_FLAG",
-	            width : 0
-	        },{
 	            key : "COMP_CD",
 	            label : "회사코드",
 	            width : 100,
@@ -207,12 +220,12 @@ function fn_makeGrid() {
 			},{
 	        	key : "LOGIN_IMG", 
 	        	label : "로그인화면 이미지", 
-	            width : 120,
+	            width : 140,
 	        	align : "center"
 			},{
 	        	key : "GNB_IMG", 
 	        	label : "타이틀 로고 이미지", 
-	            width : 120,
+	            width : 140,
 	        	align : "center"
 			},{
 	        	key : "EMPLOYEE_CNT", 
@@ -280,7 +293,12 @@ function fn_save() {
 }
 
 function fn_callbackAjax(data, id) {
-	//console.log("fn_callbackAjax : " + id);
+	if ( data.RtnMode == "ERROR" ) {
+		mask.open();
+		dialog.alert( { msg : "처리시 오류가 발생했습니다. 관리자에게 문의하세요." }, function () { mask.close();	fn_search(); } );
+		return;
+	}
+	
 	if ( id == "search" ) {
 		grid.setData(data.list);
 		
@@ -330,6 +348,7 @@ function fn_gridEvent(event, obj) {
     <button class="btn btn-default" data-grid-control="reset">초기화</button>
     <button class="btn btn-default" data-grid-control="save">저장</button>
     <button class="btn btn-default" data-grid-control="export">엑셀</button>
+    <button class="btn btn-default" data-grid-control="editImage">이미지 관리</button>
 </div> 
 
 <div style="height:10px"></div>

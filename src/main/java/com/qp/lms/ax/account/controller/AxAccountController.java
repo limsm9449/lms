@@ -54,7 +54,31 @@ public class AxAccountController {
 	        return hm;
 	    }
 	    
+	    @RequestMapping(value = "/account/axPasswordReset", method = RequestMethod.POST, consumes = "application/json" )
+	    public @ResponseBody HashMap<String,Object> axPasswordReset(@RequestBody HashMap<String, Object> paramMap, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	    	HashMap<String, Object> hm = new HashMap<String, Object>();
+
+	    	try {
+	    		hm = svr.axPasswordReset(paramMap);
+	    	} catch ( Exception e ) {
+	    		e.printStackTrace();
+	    	}
+
+	        return hm;
+	    }
 	    
+	    @RequestMapping(value = "/account/axReSendCertification", method = RequestMethod.POST, consumes = "application/json" )
+	    public @ResponseBody HashMap<String,Object> axReSendCertification(@RequestBody HashMap<String, Object> paramMap, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	    	HashMap<String, Object> hm = new HashMap<String, Object>();
+
+	    	try {
+	    		hm = svr.axReSendCertification(paramMap);
+	    	} catch ( Exception e ) {
+	    		e.printStackTrace();
+	    	}
+
+	        return hm;
+	    }
 	    
 	    
 	    

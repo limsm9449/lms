@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="axCost">
+
+	<select id="axCostList" resultType="hashmap">
+		SELECT 	A.APPROVAL_ID,
+				A.USER_ID,
+				U3.USER_NAME,
+				A.STATUS,
+				A.TOTAL_COST,
+				A.PAYMENT_POINT,
+				A.PAYMENT_COST,
+				A.PAYMENT_KIND,
+				A.PAYMENT_BANK,
+				DATE_FORMAT(A.PAYMENT_DATE, '%y.%m.%d %T') PAYMENT_DATE,
+				A.REFUND_KIND,
+				A.REFUND_COST,
+				A.REFUND_BANK,
+				A.REFUND_ACC_NUM,
+				DATE_FORMAT(A.REFUND_DATE, '%y.%m.%d %T') REFUND_DATE,
+				B.CNT COURSE_CNT,
+                U3.BANK,
+				U3.ACC_NUM,
+				DATE_FORMAT(IFNULL(A.UPDATE_DATE, A.CREATE_DATE), '%y.%m.%d %H:%i') LAST_UPDATE_DATE,
+				IFNULL(U2.USER_NAME, U1.USER_NAME) LAST_UPDATE_USER,
+				DATE_FORMAT(A.CREATE_DATE, '%y.%m.%d %H:%i') REQUEST_DATE,
+				'N' UPD_FLAG
+		FROM 	APPROVAL A 
+					LEFT OUTER JOIN (
+						SELECT 	APPROVAL_ID, COUNT(*) CNT 
+		                FROM 	COURSE_REGISTER 
+		                GROUP	BY APPROVAL_ID ) B ON B.APPROVAL_ID = A.APPROVAL_ID
+					LEFT OUTER JOIN USER U1 ON A.CREATE_USER = U1.USER_ID
+					LEFT OUTER JOIN USER U2 ON A.UPDATE_USER = U2.USER_ID                 
+		            LEFT OUTER JOIN USER U3 ON U3.USER_ID = A.USER_ID
+		WHERE 	1 = 1
+		AND		DATE_FORMAT(A.CREATE_DATE, '%Y-%m-%d') BETWEEN #{FROM_DT} AND #{TO_DT}		
+		<if test="USER != null and USER != ''">
+		  AND ( UPPER(A.USER_ID) LIKE CONCAT('%',UPPER(#{USER}),'%') OR UPPER(U3.USER_NAME) LIKE CONCAT('%',UPPER(#{USER}),'%') )
+		</if>			 
+		<if test="CB_SEARCH_STATUS != null and CB_SEARCH_STATUS != ''">
+			AND	A.STATUS = #{CB_SEARCH_STATUS}
+		</if>
+		ORDER 	BY A.CREATE_DATE DESC
+	</select>
+	
+	<update id="axCostUpdateForStatus" parameterType="hashmap">
+		UPDATE APPROVAL
+    	   SET STATUS = #{STATUS},
+    	       UPDATE_DATE = CURRENT_TIMESTAMP,
+    	       UPDATE_USER = #{SESSION_USER_ID}
+    	 WHERE APPROVAL_ID = #{APPROVAL_ID} 
+	</update>  
+
+	<update id="axCostUpdateForRefund" parameterType="hashmap">
+		UPDATE APPROVAL
+    	   SET STATUS = #{STATUS},
+    	       REFUND_KIND = #{REFUND_KIND},
+    	       REFUND_COST = #{REFUND_COST}, 
+    	       REFUND_BANK = #{REFUND_BANK}, 
+    	       REFUND_ACC_NUM = #{REFUND_ACC_NUM}, 
+    	       REFUND_DATE = CURRENT_TIMESTAMP, 
+    	       UPDATE_DATE = CURRENT_TIMESTAMP,
+    	       UPDATE_USER = #{SESSION_USER_ID}
+    	 WHERE APPROVAL_ID = #{APPROVAL_ID} 
+	</update>  
+
+	<update id="axRegisterStatusUpd" parameterType="hashmap">
+		UPDATE 	COURSE_REGISTER
+	       SET 	STATUS = #{STATUS},
+	       		CONFIRM_DATE = CURRENT_TIMESTAMP,
+	  	       	UPDATE_DATE = CURRENT_TIMESTAMP,
+		       	UPDATE_USER = #{SESSION_USER_ID}
+	     WHERE 	APPROVAL_ID = #{APPROVAL_ID}
+	</update>        
+</mapper>

@@ -6,7 +6,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="ko" xml:lang="ko">
 <head>
-<meta http-equiv="X-UA-Compatible" content="IE=8,chrome=1"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
 <title>
 </title>
 
@@ -56,7 +56,7 @@ $(document.body).ready(function () {
             		var urlParams = "page=/ax/course/axCourseExamQuestionPopupList";
             		urlParams += "&COURSE_CODE=" + row[0]["COURSE_CODE"] + "&WEEK_CNT=" + row[0]["WEEK_CNT"];
             		
-            		f_popup('/common/openPage', {displayName:'courseQuestionPopup',option:'width=1100,height=820', urlParams:urlParams});
+            		f_popup('/common/axOpenPage', {displayName:'courseQuestionPopup',option:'width=1100,height=820', urlParams:urlParams});
             	}
             		
                 break;
@@ -193,6 +193,7 @@ function fn_cbChange(id) {
     <button class="btn btn-default" data-grid-control="search">검색</button>
     <button class="btn btn-default" data-grid-control="export">엑셀</button>
     <button class="btn btn-default" data-grid-control="editDetail">문항 편집</button>
+    <button class="btn btn-default" data-grid-control="preview">미리보기(나중에)</button>
 </div>
 
 <div style="height:10px"></div>
