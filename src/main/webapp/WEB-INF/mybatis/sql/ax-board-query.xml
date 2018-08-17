@@ -56,5 +56,107 @@
 		DELETE FROM BOARD_REPORT
 		 WHERE SEQ = #{SEQ}
     </delete>	
+    
+   	<select id="axBoardDataList" resultType="hashmap">
+		SELECT 	A.SEQ,
+		       	A.COURSE_ID,
+		       	TITLE,
+		       	A.USER_ID,
+		       	B.USER_NAME,
+		       	USER_IP,
+		       	VIEW_CNT,
+		       	DATE_FORMAT(IFNULL(A.UPDATE_DATE,A.CREATE_DATE), '%y.%m.%d %H:%i') CREATE_DATE,
+		       	IF(A.USER_ID = #{USER_ID}, 'Y','N') MY_BOARD_YN
+		FROM 	BOARD_DATA A LEFT OUTER JOIN USER B ON A.USER_ID = B.USER_ID
+		WHERE 	A.COURSE_ID = #{COURSE_ID}
+		<if test="SEARCH_STR != null and SEARCH_STR != ''">
+			AND ( UPPER(A.TITLE) LIKE CONCAT('%',UPPER(#{SEARCH_STR}),'%') OR UPPER(A.USER_ID) LIKE CONCAT('%',UPPER(#{SEARCH_STR}),'%') OR UPPER(B.USER_NAME) LIKE CONCAT('%',UPPER(#{SEARCH_STR}),'%') )
+		</if>			 
+		ORDER 	BY 8 DESC
+	</select>
+
+	<select id="axBoardDataOne" resultType="hashmap">
+		SELECT 	SEQ,
+		       	COURSE_ID,
+		       	TITLE,
+		       	CONTENTS
+		FROM 	BOARD_DATA
+		WHERE 	SEQ = #{SEQ}
+	</select>
+	
+	<insert id="axBoardDataInsert" parameterType="hashmap">
+		INSERT INTO BOARD_DATA (COURSE_ID,TITLE,CONTENTS,USER_ID,USER_IP,VIEW_CNT,CREATE_DATE)
+		VALUES (#{COURSE_ID},#{TITLE},#{CONTENTS},#{USER_ID},#{USER_IP},0,CURRENT_TIMESTAMP)
+    </insert>	
+    
+    <update id="axBoardDataUpdate" parameterType="hashmap">
+		UPDATE BOARD_DATA
+		   SET TITLE = #{TITLE},
+		       CONTENTS = #{CONTENTS},
+		       UPDATE_DATE = CURRENT_TIMESTAMP
+		 WHERE SEQ = #{SEQ}
+    </update>	
+
+	<!-- 조회수 증가 -->
+    <update id="axBoardDataViewCntUpd" parameterType="hashmap">
+		UPDATE BOARD_DATA
+		   SET VIEW_CNT = VIEW_CNT + 1
+		 WHERE SEQ = #{SEQ}
+    </update>	
+
+	<!-- 자료실 게시판 삭제 -->
+    <delete id="axBoardDataDelete" parameterType="hashmap">
+		DELETE FROM BOARD_DATA
+		 WHERE SEQ = #{SEQ}
+    </delete>
+    
+    
+    
+   	<select id="axBoardNoticeList" resultType="hashmap">
+		SELECT 	A.SEQ,
+		       	A.COURSE_ID,
+		       	TITLE,
+		       	VIEW_CNT,
+		       	DATE_FORMAT(IFNULL(A.UPDATE_DATE,A.CREATE_DATE), '%y.%m.%d %H:%i') CREATE_DATE
+		FROM 	BOARD_NOTICE A
+		WHERE 	A.COURSE_ID = #{COURSE_ID}
+		<if test="SEARCH_STR != null and SEARCH_STR != ''">
+			AND UPPER(A.TITLE) LIKE CONCAT('%',UPPER(#{SEARCH_STR}),'%')
+		</if>			 
+		ORDER 	BY 5 DESC
+	</select>
+
+	<select id="axBoardNoticeOne" resultType="hashmap">
+		SELECT 	SEQ,
+		       	COURSE_ID,
+		       	TITLE,
+		       	CONTENTS
+		FROM 	BOARD_NOTICE
+		WHERE 	SEQ = #{SEQ}
+	</select>
+	
+	<insert id="axBoardNoticeInsert" parameterType="hashmap">
+		INSERT INTO BOARD_NOTICE (COURSE_ID,TITLE,CONTENTS,VIEW_CNT,CREATE_DATE)
+		VALUES (#{COURSE_ID},#{TITLE},#{CONTENTS},0,CURRENT_TIMESTAMP)
+    </insert>	
+    
+    <update id="axBoardNoticeUpdate" parameterType="hashmap">
+		UPDATE BOARD_NOTICE
+		   SET TITLE = #{TITLE},
+		       CONTENTS = #{CONTENTS},
+		       UPDATE_DATE = CURRENT_TIMESTAMP
+		 WHERE SEQ = #{SEQ}
+    </update>	
+
+    <update id="axBoardNoticeViewCntUpd" parameterType="hashmap">
+		UPDATE BOARD_NOTICE
+		   SET VIEW_CNT = VIEW_CNT + 1
+		 WHERE SEQ = #{SEQ}
+    </update>	
+
+    <delete id="axBoardNoticeDelete" parameterType="hashmap">
+		DELETE FROM BOARD_NOTICE
+		 WHERE SEQ = #{SEQ}
+    </delete>
         
 </mapper>

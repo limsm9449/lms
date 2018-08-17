@@ -54,7 +54,7 @@ $(document.body).ready(function () {
             	var row = grid.getList("selected");
             	if ( row.length == 0 ) {
             		mask.open();
-            		dialog.alert( { msg : "과정을 선택하셔야 합니다." }, function () { mask.close();	} );
+            		dialog.alert( { msg : "수강생을 선택하셔야 합니다." }, function () { mask.close();	} );
             	} else {
             		var urlParams = "page=/ax/score/axUserScoreWeekPopup";
             		urlParams += "&COURSE_ID=" + row[0]["COURSE_ID"] + "&USER_ID=" + row[0]["USER_ID"];
@@ -62,6 +62,71 @@ $(document.body).ready(function () {
             		f_popup('/common/axOpenPage', {displayName:'userScoreWeekPopup',option:'width=900,height=600', urlParams:urlParams});
             	}
             		
+                break;
+            case "viewScore":
+            	var row = grid.getList("selected");
+            	var userId = "";
+            	if ( row.length == 1 ) {
+            		userId = row[0]["USER_ID"];
+            	}
+
+            	var urlParams = "page=/ax/score/axUserScoreReportPopup";
+           		urlParams += "&COURSE_ID=" + params.COURSE_ID + "&USER_ID=" + userId;
+           		
+           		f_popup('/common/axOpenPage', {displayName:'userScoreReportPopup',option:'width=1000,height=700', urlParams:urlParams});
+            		
+                break;
+            case "viewWeekExam":
+            	var row = grid.getList("selected");
+            	if ( row.length == 0 ) {
+            		mask.open();
+            		dialog.alert( { msg : "수강생을 선택하셔야 합니다." }, function () { mask.close();	} );
+            	} else {
+	            	var urlParams = "page=/ax/score/axUserScoreExamPopup";
+	           		urlParams += "&COURSE_ID=" + row[0]["COURSE_ID"] + "&USER_ID=" + row[0]["USER_ID"] + "&EXAM_KIND=WEEK";
+	           		
+	           		f_popup('/common/axOpenPage', {displayName:'userScoreExamPopup',option:'width=1000,height=700', urlParams:urlParams});
+            	}
+            	
+                break;
+            case "viewTotalExam":
+            	var row = grid.getList("selected");
+            	if ( row.length == 0 ) {
+            		mask.open();
+            		dialog.alert( { msg : "수강생을 선택하셔야 합니다." }, function () { mask.close();	} );
+            	} else {
+	            	var urlParams = "page=/ax/score/axUserScoreExamPopup";
+	           		urlParams += "&COURSE_ID=" + row[0]["COURSE_ID"] + "&USER_ID=" + row[0]["USER_ID"] + "&EXAM_KIND=TOTAL";
+	           		
+	           		f_popup('/common/axOpenPage', {displayName:'userScoreExamPopup',option:'width=1000,height=700', urlParams:urlParams});
+            	}
+            	
+                break;
+            case "viewQuest":
+            	var row = grid.getList("selected");
+            	if ( row.length == 0 ) {
+            		mask.open();
+            		dialog.alert( { msg : "수강생을 선택하셔야 합니다." }, function () { mask.close();	} );
+            	} else {
+	            	var urlParams = "page=/ax/score/axUserScoreQuestPopup";
+	           		urlParams += "&COURSE_ID=" + row[0]["COURSE_ID"] + "&USER_ID=" + row[0]["USER_ID"];
+	           		
+	           		f_popup('/common/axOpenPage', {displayName:'userScoreQuestPopup',option:'width=1000,height=700', urlParams:urlParams});
+            	}
+            	
+                break;
+            case "viewPostscript":
+            	var row = grid.getList("selected");
+            	if ( row.length == 0 ) {
+            		mask.open();
+            		dialog.alert( { msg : "수강생을 선택하셔야 합니다." }, function () { mask.close();	} );
+            	} else {
+	            	var urlParams = "page=/ax/score/axUserScorePostscriptPopup";
+	           		urlParams += "&COURSE_ID=" + row[0]["COURSE_ID"] + "&USER_ID=" + row[0]["USER_ID"];
+	           		
+	           		f_popup('/common/axOpenPage', {displayName:'userScorePostscriptPopup',option:'width=800,height=500', urlParams:urlParams});
+            	}
+            	
                 break;
         }
     });
@@ -83,9 +148,54 @@ function fn_makeGrid() {
 	            align : "left"
 	        },{
               	key : undefined, 
+              	label: "시험", 
+              	columns: [
+              		{
+			            key : "EXAM_TOTAL",
+			            label : "전체 시험",
+			            width : 90,
+			            align : "right"
+			        },{
+			            key : "TOTAL_RATIO",
+			            label : "%",
+			            width : 50,
+			            align : "right",
+			            formatter : function () {
+			                return this.item.TOTAL_RATIO + " %";
+			           	} 
+			        },{
+			            key : "EXAM_WEEK",
+			            label : "주별 시험",
+			            width : 90,
+			            align : "right"
+			        },{
+			            key : "WEEK_RATIO",
+			            label : "%",
+			            width : 50,
+			            align : "right",
+			            formatter : function () {
+			                return this.item.WEEK_RATIO + " %";
+			           	} 
+              		}
+              	]
+	        },{
+              	key : undefined, 
               	label: "점수", 
               	columns: [	        
-			        {
+              		{
+			            key : "EXAM",
+			            label : "시험",
+			            width : 70,
+			            align : "right"
+			        },{
+			            key : "EXAM_RATE",
+			            label : "%",
+			            width : 50,
+			            align : "right",
+			            formatter : function () {
+			                return this.item.EXAM_RATE + " %";
+			           	} 
+			        },{
 			            key : "REPORT",
 			            label : "레포트",
 			            width : 70,
@@ -106,19 +216,6 @@ function fn_makeGrid() {
 			            align : "right",
 			            formatter : function () {
 			                return this.item.REPORT_RATE + " %";
-			           	} 
-			        },{
-			            key : "EXAM",
-			            label : "시험",
-			            width : 60,
-			            align : "right"
-			        },{
-			            key : "EXAM_RATE",
-			            label : "%",
-			            width : 50,
-			            align : "right",
-			            formatter : function () {
-			                return this.item.EXAM_RATE + " %";
 			           	} 
 			        },{
 			            key : "DISCUSSION",
@@ -157,11 +254,19 @@ function fn_makeGrid() {
 			           	} 
 			        },{
 			            key : "TOTAL",
-			            label : "합계",
-			            width : 50,
+			            label : "총점",
+			            width : 60,
 			            align : "right"
 			        }
 		        ]
+	        },{
+	        	key : "REPORT_NAME", 
+	        	label : "배정 레포트", 
+	            width : 150,
+	        	align : "left", 
+				styleClass: function () {
+                    return "grid-cell-edit2";
+                } 
 	        },{
 	            key : "REPORT_YN",
 	            label : "레포트 제출 여부",
@@ -219,20 +324,23 @@ function fn_makeGrid() {
                     } 
 	        	}
 	        },{
+	            key : "EVAL",
+	            label : "강의 평가 점수",
+	            width : 110,
+	            align : "right"
+	        },{
 	            key : "COMPLETE_YN",
 	            label : "완료 여부",
 	            width : 100,
 	            align : "center", 
 	        	editor : { 
 	        		type : "checkbox", 
-	        		config : {height: 17, trueValue: "Y", falseValue: "N"},
-	            	disabled : function () {
-                        return true;
-                    } 
+	        		config : {height: 17, trueValue: "Y", falseValue: "N"}
 	        	},
 				styleClass: function () {
                     return "grid-cell-edit";
-                }	        }	], 
+                }	        
+	        }	], 
 	  	null,
 	  	{
 	  		showRowSelector : false
@@ -288,6 +396,8 @@ function fn_callbackAjax(data, id) {
 
 		mask.open();
 		dialog.alert( { msg : "저장 되었습니다." }, function () { mask.close();	fn_search(); } );
+	} else if ( id == "CourseReport" ){
+		gfn_cbRefresh("CB_COURSE_REPORT", data.CourseReport, true);
 	}
 }
 
@@ -295,10 +405,32 @@ function fn_gridEvent(event, obj) {
 	if ( event == "Click" ) {
 		obj.self.select(obj.dindex);
 	} else if ( event == "DBLClick" ) {
+		if ( obj.column.key == "REPORT_NAME" ) {
+	    	gfn_showPopupDiv("reportDiv");
+			
+	    	gfn_callAjax("/common/axDd.do", { DD_KIND : "CourseReport", COURSE_CODE : obj.item.COURSE_CODE }, fn_callbackAjax, "CourseReport", { async : false });
+		}
 	} else if ( event == "DataChanged" ) {
 	}
 }
 
+function fn_hidePopupDiv(popupDivId) {
+	if ( popupDivId == "reportDiv" ) {
+		if ( $("#CB_COURSE_REPORT option:selected").val() == "" ) {
+			gfn_hidePopupDiv(popupDivId);
+			
+			mask.open();
+			dialog.alert( { msg : "레포트를 선택하셔야 합니다." }, function () { mask.close(); gfn_showPopupDiv(popupDivId);  } );
+			return;
+		} 
+
+		var row = grid.getList("selected");
+		grid.setValue(row[0].__index, "REPORT_SEQ", $("#CB_COURSE_REPORT option:selected").val());
+		grid.setValue(row[0].__index, "REPORT_NAME", $("#CB_COURSE_REPORT option:selected").text());
+	}
+
+	gfn_hidePopupDiv(popupDivId);
+}
 
 </script>
 
@@ -309,10 +441,12 @@ function fn_gridEvent(event, obj) {
 <h2 id="screenTitle">수강생별 성적 관리</h2>
 <div style="height:10px"></div>
 
-<div>
-	수강생
-	<input type="text" class="search_input" id="SEARCH_USER" name="SEARCH_USER" value="" />
-</div>
+<div class="form-inline">
+	<div class="form-group">
+	  	<label for="SEARCH_USER">수강생</label>
+   		<input type="text" class="form-control" id="SEARCH_USER" placeholder="">
+	</div>
+</div>	
 
 <div style="height:10px"></div>
 
@@ -320,9 +454,10 @@ function fn_gridEvent(event, obj) {
     <button class="btn btn-default" data-grid-control="search">검색</button>
     <button class="btn btn-default" data-grid-control="save">저장</button>
     <button class="btn btn-default" data-grid-control="export">엑셀</button>
-    <button class="btn btn-default" data-grid-control="viewWeek">주차 학습 진행율</button>
-    <button class="btn btn-default" data-grid-control="viewUserScore">제출 레포트</button>
-    <button class="btn btn-default" data-grid-control="viewExam">시험</button>
+    <button class="btn btn-default" data-grid-control="viewWeek">주차별 진도</button>
+    <button class="btn btn-default" data-grid-control="viewScore">제출 레포트</button>
+    <button class="btn btn-default" data-grid-control="viewWeekExam">주별시험</button>
+    <button class="btn btn-default" data-grid-control="viewTotalExam">전체시험</button>
     <button class="btn btn-default" data-grid-control="viewQuest">설문지</button>
     <button class="btn btn-default" data-grid-control="viewPostscript">수강후기</button>
 </div>
@@ -337,6 +472,16 @@ function fn_gridEvent(event, obj) {
 </form>
 
 <div class="mask"></div>
+
+<div class="popupDiv" id="reportDiv" style="width:200px; height:100px;">
+	배정 레포트
+	<select id="CB_COURSE_REPORT">
+	</select>
+	<div style="height:30px"></div>
+	<input type="button" href="#" value="삭제" onclick="fn_hidePopupDiv('examTypeDiv', 'delete')"/>
+	<input type="button" href="#" value="확인" onclick="fn_hidePopupDiv('reportDiv')"/>
+    <input type="button" href="#" value="닫기" onclick="gfn_hidePopupDiv('reportDiv');"/>
+</div>
 
 
 </body>

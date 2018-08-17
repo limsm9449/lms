@@ -36,18 +36,6 @@ $(document.body).ready(function () {
     
 	grid = gfn_makeAx5Grid("first-grid",
 		[ 	{
-	            key : "NEW_FLAG",
-	            width : 0
-	    	},{	
-	            key : "COURSE_CODE",
-	            width : 0
-	        },{
-	            key : "SEQ",
-	            width : 0
-	        },{
-	            key : "ORD",
-	            width : 0
-	        },{
 	        	key : "TYPE", 
 	        	label : "타입", 
 	            width : 100,
@@ -334,6 +322,15 @@ $(document.body).ready(function () {
             	}
 
             	break;
+            case "export":
+                grid.exportExcel("시험 과정 문항 관리.xls");
+                break;
+            case "import":
+            	var urlParams = "page=/ax/common/axExcelUpload";
+        		urlParams += "&SCREEN=Exam&COURSE_CODE=" + gfn_getUrlParams("COURSE_CODE") + "&WEEK_CNT=" + gfn_getUrlParams("WEEK_CNT");
+        		
+        		f_popup('/common/axOpenPage', {displayName:'excelUploadPopup',option:'width=600,height=500', urlParams:urlParams});
+                break;
             case "close" :
             	if ( isSave ) {
             		opener.fn_search();
@@ -410,6 +407,33 @@ function fn_callbackAjax(data, id) {
 		}
 		
 		isSave = true;
+	} else if ( id == "excelUploadList" ){
+		console.log(data.list);
+       	var allList = grid.getList();
+       	var maxSeq = 0;
+       	for ( var i = 0; i < allList.length; i++ ) {
+ 			if ( parseInt(allList[i].SEQ) > maxSeq ) {
+ 				maxSeq = parseInt(allList[i].SEQ);
+ 			}
+       	}
+       	for ( var i = 0; i < data.list.length; i++ ) {
+      		grid.addRow( 
+      			{
+      				NEW_FLAG : "Y", 
+      				COURSE_CODE : params.COURSE_CODE, 
+      				SEQ : maxSeq + i + 1, 
+      				TYPE : data.list[i].TYPE, 
+      				QUESTION : data.list[i].QUESTION, 
+      				QA1 : data.list[i].QA1, 
+      				QA2 : data.list[i].QA2, 
+      				QA3 : data.list[i].QA3, 
+      				QA4 : data.list[i].QA4, 
+      				ANSWER : data.list[i].ANSWER, 
+      				WEEK : data.list[i].WEEK, 
+      				LEVEL : data.list[i].LEVEL, 
+      				USE_YN : data.list[i].USE_YN
+      			}, "last", {focus: "END"});
+		}
 	}
 }
 
@@ -442,6 +466,8 @@ function fn_gridEvent(event, obj) {
     <button class="btn btn-default" data-grid-control="up">Up</button>
     <button class="btn btn-default" data-grid-control="down">Down</button>
     <button class="btn btn-default" data-grid-control="close">닫기</button>
+    <button class="btn btn-default" data-grid-control="export">엑셀</button>
+    <button class="btn btn-default" data-grid-control="import">엑셀 업로드</button>
 </div>
 
 <div style="height:10px"></div>

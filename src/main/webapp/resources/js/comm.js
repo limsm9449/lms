@@ -738,7 +738,6 @@ function gfn_validationCheck( gridObj, fieldParams ) {
 }
 
 function gfn_string(val) {
-	console.log(val);
 	if ( val == undefined || val == null ) {
 		return "";
 	} else {
@@ -755,8 +754,6 @@ function gfn_getSaveData( gridObj, isAll ) {
 		saveData.modified = gridObj.getList("modified");
 		saveData.deleted = gridObj.getList("deleted");
 	}
-	
-	
 	
 	return saveData;
 }
@@ -952,8 +949,8 @@ function gfn_gridResize(gridParentId, gridObj, minusHeight) {
 		$("#" + gridParentId).height($(window).height() - minusHeight);
 		gridObj.setHeight($(window).height() - minusHeight);
 	} else {
-		$("#" + gridParentId).height($(window).height() - 170);
-		gridObj.setHeight($(window).height() - 170);
+		$("#" + gridParentId).height($(window).height() - 190);
+		gridObj.setHeight($(window).height() - 190);
 	}
 }
 
@@ -998,3 +995,10 @@ function gfn_addDay(dt, addDay, delimiter) {
 	return gfn_currentDay(dt, delimiter);
 }
 
+function gfn_isExistStringInString(str, compStr) {
+	if ( ("," + compStr + ",").indexOf("," + str + ",") > -1 ) {
+		return true;
+	} else {
+		return false;
+	}
+}

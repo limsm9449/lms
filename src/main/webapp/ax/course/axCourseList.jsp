@@ -452,17 +452,21 @@ function fn_makeGrid() {
 	$(window).trigger("resize");
 }
 
-function fn_hidePopupDiv(popupDivId) {
+function fn_hidePopupDiv(popupDivId, mode) {
 	if ( popupDivId == "insDiv" ) {
 		if ( $("#INS_CB_LEVEL1 option:selected").val() == "" || $("#INS_CB_LEVEL2 option:selected").val() == "" || $("#INS_CB_LEVEL3 option:selected").val() == "" ) {
+			gfn_hidePopupDiv(popupDivId);
+			
 			mask.open();
-			dialog.alert( { msg : "대/중/소분류를 선택하셔야 합니다." }, function () { mask.close(); } );
+			dialog.alert( { msg : "대/중/소분류를 선택하셔야 합니다." }, function () { mask.close(); gfn_showPopupDiv(popupDivId); } );
 			return;
 		} 
 	
 		if ( $("#INS_CB_COURSE_CODE option:selected").val() == "" ) {
+			gfn_hidePopupDiv(popupDivId);
+
 			mask.open();
-			dialog.alert( { msg : "과정을 선택하셔야 합니다." }, function () { mask.close(); } );
+			dialog.alert( { msg : "과정을 선택하셔야 합니다." }, function () { mask.close(); gfn_showPopupDiv(popupDivId); } );
 			return;
 		} 
 	
@@ -487,20 +491,30 @@ function fn_hidePopupDiv(popupDivId) {
 				C_PERIOD : 0
 			}, "last", {focus: "END"});
 	} else if ( popupDivId == "examTypeDiv" ) {
-		if ( $("#CB_EXAM_TYPE option:selected").val() == "" ) {
-			mask.open();
-			dialog.alert( { msg : "시험 유형을 선택하셔야 합니다." }, function () { mask.close(); } );
-			return;
-		} 
-
-		var row = grid.getList("selected");
-		grid.setValue(row[0].__index, "COURSE_EXAM_TYPE_ID", $("#CB_EXAM_TYPE option:selected").val());
-		grid.setValue(row[0].__index, "COURSE_EXAM_TYPE_NAME", $("#CB_EXAM_TYPE option:selected").text());
+		if ( mode == "delete" ) {
+			var row = grid.getList("selected");
+			grid.setValue(row[0].__index, "COURSE_EXAM_TYPE_ID", '');
+			grid.setValue(row[0].__index, "COURSE_EXAM_TYPE_NAME", '');
+		} else {
+			if ( $("#CB_EXAM_TYPE option:selected").val() == "" ) {
+				gfn_hidePopupDiv(popupDivId);
+				
+				mask.open();
+				dialog.alert( { msg : "시험 유형을 선택하셔야 합니다." }, function () { mask.close(); gfn_showPopupDiv(popupDivId); } );
+				return;
+			} 
+	
+			var row = grid.getList("selected");
+			grid.setValue(row[0].__index, "COURSE_EXAM_TYPE_ID", $("#CB_EXAM_TYPE option:selected").val());
+			grid.setValue(row[0].__index, "COURSE_EXAM_TYPE_NAME", $("#CB_EXAM_TYPE option:selected").text());
+		}
 	} else if ( popupDivId == "companyDiv" ) {
 		var companys = $("#MCB_COMPANY").val();
 		if ( companys.length == 0 ) {
+			gfn_hidePopupDiv(popupDivId);
+			
 			mask.open();
-			dialog.alert( { msg : " 회사를 선택하셔야 합니다." }, function () { mask.close(); } );
+			dialog.alert( { msg : " 회사를 선택하셔야 합니다." }, function () { mask.close(); gfn_showPopupDiv(popupDivId); } );
 			return;
 		} 
 
@@ -732,6 +746,7 @@ function fn_cbChange(id) {
 	<select id="CB_EXAM_TYPE">
 	</select>
 	<div style="height:30px"></div>
+	<input type="button" href="#" value="삭제" onclick="fn_hidePopupDiv('examTypeDiv', 'delete')"/>
 	<input type="button" href="#" value="확인" onclick="fn_hidePopupDiv('examTypeDiv')"/>
     <input type="button" href="#" value="닫기" onclick="gfn_hidePopupDiv('examTypeDiv');"/>
 </div>

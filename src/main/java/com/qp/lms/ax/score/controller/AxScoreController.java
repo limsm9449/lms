@@ -22,63 +22,129 @@ import com.qp.lms.common.Constant;
 @Controller
 public class AxScoreController {
 
-	 private static final Logger logger = LoggerFactory.getLogger(AxScoreController.class);
+	private static final Logger logger = LoggerFactory.getLogger(AxScoreController.class);
 
-	    @Autowired
-	    private AxScoreService svr;
+    @Autowired
+    private AxScoreService svr;
 
-	    @RequestMapping(value = "/score/axScoreList", method = RequestMethod.POST, consumes = "application/json" )
-	    public @ResponseBody HashMap<String,Object> axScoreList(@RequestBody HashMap<String, Object> paramMap, HttpServletRequest request, HttpServletResponse response) throws Exception {
-	    	HashMap<String, Object> hm = new HashMap<String, Object>();
+    @RequestMapping(value = "/score/axScoreList", method = RequestMethod.POST, consumes = "application/json" )
+    public @ResponseBody HashMap<String,Object> axScoreList(@RequestBody HashMap<String, Object> paramMap, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    	HashMap<String, Object> hm = new HashMap<String, Object>();
 
-	    	try {
-	    		hm = svr.axScoreList(paramMap);
-	    	} catch ( Exception e ) {
-	    		e.printStackTrace();
-	    	}
+    	try {
+    		hm = svr.axScoreList(paramMap);
+    	} catch ( Exception e ) {
+    		e.printStackTrace();
+    	}
 
-	        return hm;
-	    }
-	    
-	    @RequestMapping(value = "/score/axUserScoreList", method = RequestMethod.POST, consumes = "application/json" )
-	    public @ResponseBody HashMap<String,Object> axUserScoreList(@RequestBody HashMap<String, Object> paramMap, HttpServletRequest request, HttpServletResponse response) throws Exception {
-	    	HashMap<String, Object> hm = new HashMap<String, Object>();
+        return hm;
+    }
+    
+    @RequestMapping(value = "/score/axUserScoreList", method = RequestMethod.POST, consumes = "application/json" )
+    public @ResponseBody HashMap<String,Object> axUserScoreList(@RequestBody HashMap<String, Object> paramMap, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    	HashMap<String, Object> hm = new HashMap<String, Object>();
 
-	    	try {
-	    		hm = svr.axUserScoreList(paramMap);
-	    	} catch ( Exception e ) {
-	    		e.printStackTrace();
-	    	}
+    	try {
+    		hm = svr.axUserScoreList(paramMap);
+    	} catch ( Exception e ) {
+    		e.printStackTrace();
+    	}
 
-	        return hm;
-	    }
-	    
-	    @RequestMapping(value = "/score/axUserScoreSave", method = RequestMethod.POST, consumes = "application/json" )
-	    public @ResponseBody HashMap<String,Object> axUserScoreUpdateReportDiscussion(@RequestBody HashMap<String, Object> paramMap, HttpServletRequest request, HttpServletResponse response) throws Exception {
-	    	HashMap<String, Object> hm = new HashMap<String, Object>();
+        return hm;
+    }
+    
+    @RequestMapping(value = "/score/axUserScoreSave", method = RequestMethod.POST, consumes = "application/json" )
+    public @ResponseBody HashMap<String,Object> axUserScoreUpdateReportDiscussion(@RequestBody HashMap<String, Object> paramMap, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    	HashMap<String, Object> hm = new HashMap<String, Object>();
 
-	    	try {
-	    		hm = svr.axUserScoreSave(paramMap);
-	    	} catch ( Exception e ) {
-	    		e.printStackTrace();
-	    	}
+    	try {
+    		hm = svr.axUserScoreSave(paramMap);
+    	} catch ( Exception e ) {
+    		e.printStackTrace();
+    	}
 
-	        return hm;
-	    }
-	    
-	    @RequestMapping(value = "/score/axUserScoreWeekList", method = RequestMethod.POST, consumes = "application/json" )
-	    public @ResponseBody HashMap<String,Object> axUserScoreWeekList(@RequestBody HashMap<String, Object> paramMap, HttpServletRequest request, HttpServletResponse response) throws Exception {
-	    	HashMap<String, Object> hm = new HashMap<String, Object>();
+        return hm;
+    }
+    
+    @RequestMapping(value = "/score/axUserScoreWeekList", method = RequestMethod.POST, consumes = "application/json" )
+    public @ResponseBody HashMap<String,Object> axUserScoreWeekList(@RequestBody HashMap<String, Object> paramMap, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    	HashMap<String, Object> hm = new HashMap<String, Object>();
 
-	    	try {
-	    		hm = svr.axUserScoreWeekList(paramMap);
-	    	} catch ( Exception e ) {
-	    		e.printStackTrace();
-	    	}
+    	try {
+    		hm = svr.axUserScoreWeekList(paramMap);
+    	} catch ( Exception e ) {
+    		e.printStackTrace();
+    	}
 
-	        return hm;
-	    }
-	    
+        return hm;
+    }
+
+    @RequestMapping(value = "/score/axUserScoreReportList", method = RequestMethod.POST, consumes = "application/json" )
+    public @ResponseBody HashMap<String,Object> axUserScoreReportList(@RequestBody HashMap<String, Object> paramMap, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    	HashMap<String, Object> hm = new HashMap<String, Object>();
+
+    	try {
+    		hm = svr.axUserScoreReportList(paramMap);
+    	} catch ( Exception e ) {
+    		e.printStackTrace();
+    	}
+
+        return hm;
+    }
+
+    @RequestMapping(value = "/score/axUserScoreExamList", method = RequestMethod.POST, consumes = "application/json" )
+    public @ResponseBody HashMap<String,Object> axUserScoreExamList(@RequestBody HashMap<String, Object> paramMap, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    	HashMap<String, Object> hm = new HashMap<String, Object>();
+
+    	try {
+    		hm = svr.axUserScoreExamList(paramMap);
+    	} catch ( Exception e ) {
+    		e.printStackTrace();
+    	}
+
+        return hm;
+    }
+
+    @RequestMapping(value = "/score/axUserScoreExamSave", method = RequestMethod.POST, consumes = "application/json" )
+    public @ResponseBody HashMap<String,Object> axUserScoreExamSave(@RequestBody HashMap<String, Object> paramMap, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    	HashMap<String, Object> hm = new HashMap<String, Object>();
+
+    	try {
+    		hm = svr.axUserScoreExamSave(paramMap);
+    	} catch ( Exception e ) {
+    		e.printStackTrace();
+    	}
+
+        return hm;
+    }
+
+    @RequestMapping(value = "/score/axUserScoreQuestList", method = RequestMethod.POST, consumes = "application/json" )
+    public @ResponseBody HashMap<String,Object> axUserScoreQuestList(@RequestBody HashMap<String, Object> paramMap, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    	HashMap<String, Object> hm = new HashMap<String, Object>();
+
+    	try {
+    		hm = svr.axUserScoreQuestList(paramMap);
+    	} catch ( Exception e ) {
+    		e.printStackTrace();
+    	}
+
+        return hm;
+    }
+
+    @RequestMapping(value = "/score/axUserScoreQuestOne", method = RequestMethod.POST, consumes = "application/json" )
+    public @ResponseBody HashMap<String,Object> axUserScoreQuestOne(@RequestBody HashMap<String, Object> paramMap, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    	HashMap<String, Object> hm = new HashMap<String, Object>();
+
+    	try {
+    		hm = svr.axUserScoreQuestOne(paramMap);
+    	} catch ( Exception e ) {
+    		e.printStackTrace();
+    	}
+
+        return hm;
+    }
+
+    
 	    
 
 }

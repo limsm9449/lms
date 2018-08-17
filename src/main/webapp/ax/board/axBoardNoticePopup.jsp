@@ -32,25 +32,20 @@ $(document.body).ready(function () {
     $("#CONTENTS").cleditor()[0].refresh();
 
     if ( MODE == "INSERT" ) {
-		$("#attachFrame").attr("src","/board/attachI.do?" + "pSeq=" + SEQ + "&kind=" + KIND);
     } else if ( MODE == "UPDATE" ) {
     	fn_search();
-    	
-   		$("#attachFrame").attr("src","/board/attachU.do?" + "pSeq=" + SEQ + "&kind=" + KIND);
    	} else {
     	fn_search();
     	
     	$("#TITLE").attr("readonly", true);
     	$("#btn_save").hide();
     	
-   		$("#attachFrame").attr("src","/board/attachV.do?" + "pSeq=" + SEQ + "&kind=" + KIND);
-   		
    		//조회수 증가
    		var saveParams = {
  				MODE : "VIEW",
  				SEQ : SEQ
  		};
- 		gfn_callAjax("/board/axBoardReportSave.do", saveParams, fn_callbackAjax, "-");
+ 		gfn_callAjax("/board/axBoardNoticeSave.do", saveParams, fn_callbackAjax, "-");
    	}
 }); 
 
@@ -62,7 +57,7 @@ function fn_params() {
 function fn_search() {
 	fn_params();
 	
-	gfn_callAjax("/board/axBoardReportOne.do", params, fn_callbackAjax, "search");
+	gfn_callAjax("/board/axBoardNoticeOne.do", params, fn_callbackAjax, "search");
 }
 
 function fn_callbackAjax(data, id) {
@@ -123,7 +118,7 @@ function fn_save() {
          				SEQ : SEQ,
          				COURSE_ID : COURSE_ID
          		};
-         		gfn_callAjax("/board/axBoardReportSave.do", saveParams, fn_callbackAjax, "save");
+         		gfn_callAjax("/board/axBoardNoticeSave.do", saveParams, fn_callbackAjax, "save");
            	} else {
            		mask.close();
            	}
@@ -156,12 +151,6 @@ function fn_close() {
     	<label for="inputPassword3" class="col-sm-2 control-label">내용</label>
     	<div class="col-sm-10">
       		<textarea id="CONTENTS" name="CONTENTS"></textarea>
-    	</div>
-  	</div>
-  	<div class="form-group"> 
-    	<label for="inputPassword3" class="col-sm-2 control-label">첨부파일</label>
-    	<div class="col-sm-10">
-      		<iframe id="attachFrame" name="attachFrame" style="width:100%;height:150px"></iframe> 
     	</div>
   	</div>
   	<div class="form-group">

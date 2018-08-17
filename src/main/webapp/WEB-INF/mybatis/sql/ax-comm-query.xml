@@ -125,6 +125,15 @@
 		 ORDER BY 1, 2 	
 	</select>
 
+	<select id="axDdCourseReport" resultType="hashmap">
+		SELECT 	SEQ value
+		        ,TITLE text
+		  FROM  COURSE_REPORT
+		 WHERE	COURSE_CODE = #{COURSE_CODE} 
+		 ORDER BY 1, 2 	
+	</select>
+
+
 	<select id="axDdReportCourseCode" resultType="hashmap">
 		SELECT A.COURSE_CODE value
 		       ,A.COURSE_NAME text

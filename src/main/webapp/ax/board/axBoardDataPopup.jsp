@@ -50,7 +50,7 @@ $(document.body).ready(function () {
  				MODE : "VIEW",
  				SEQ : SEQ
  		};
- 		gfn_callAjax("/board/axBoardReportSave.do", saveParams, fn_callbackAjax, "-");
+ 		gfn_callAjax("/board/axBoardDataSave.do", saveParams, fn_callbackAjax, "-");
    	}
 }); 
 
@@ -62,7 +62,7 @@ function fn_params() {
 function fn_search() {
 	fn_params();
 	
-	gfn_callAjax("/board/axBoardReportOne.do", params, fn_callbackAjax, "search");
+	gfn_callAjax("/board/axBoardDataOne.do", params, fn_callbackAjax, "search");
 }
 
 function fn_callbackAjax(data, id) {
@@ -123,7 +123,7 @@ function fn_save() {
          				SEQ : SEQ,
          				COURSE_ID : COURSE_ID
          		};
-         		gfn_callAjax("/board/axBoardReportSave.do", saveParams, fn_callbackAjax, "save");
+         		gfn_callAjax("/board/axBoardDataSave.do", saveParams, fn_callbackAjax, "save");
            	} else {
            		mask.close();
            	}

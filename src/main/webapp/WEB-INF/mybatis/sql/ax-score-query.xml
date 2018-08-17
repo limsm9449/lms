@@ -67,10 +67,12 @@
 				,B.USER_ID
 		        ,U.USER_NAME
 		        ,B.REPORT
-		        ,B.EXAM
-		        ,B.DISCUSSION
-		        ,B.PROGRESS
-		        ,B.TOTAL
+		        ,IFNULL(B.EXAM_TOTAL,0) EXAM_TOTAL
+		        ,IFNULL(B.EXAM_WEEK,0) EXAM_WEEK
+		        ,IFNULL(B.EXAM,0) EXAM
+		        ,IFNULL(B.DISCUSSION,0) DISCUSSION
+		        ,IFNULL(B.PROGRESS,0) PROGRESS
+		        ,IFNULL(B.TOTAL,0) TOTAL
 		        ,B.LAST_WEEK
 		        ,B.LAST_PAGE
 		        ,DATE_FORMAT(B.E_FROM_DATE, '%y.%m.%d %H:%i') E_FROM_DATE
@@ -84,10 +86,19 @@
 		        ,C.EXAM_RATE
 		        ,C.DISCUSSION_RATE
 		        ,C.PROGRESS_RATE
+                ,F.TOTAL_RATIO
+				,F.WEEK_RATIO
+		        ,B.REPORT_SEQ
+		        ,D.TITLE REPORT_NAME
+                ,C.COURSE_CODE
+                ,IFNULL(E.EVAL, 0) EVAL
 		FROM	COURSE_REGISTER A
 					LEFT OUTER JOIN COURSE_EVAL B ON B.COURSE_ID = A.COURSE_ID AND B.USER_ID = A.USER_ID
 		            LEFT OUTER JOIN USER U ON U.USER_ID = A.USER_ID
             		LEFT OUTER JOIN COURSE C ON C.COURSE_ID = A.COURSE_ID
+            		LEFT OUTER JOIN COURSE_REPORT D ON D.SEQ = B.REPORT_SEQ
+					LEFT OUTER JOIN POSTSCRIPT E ON E.COURSE_ID = A.COURSE_ID AND E.USER_ID = A.USER_ID
+					LEFT OUTER JOIN COURSE_EXAM_TYPE F ON F.SEQ = C.COURSE_EXAM_TYPE_ID
 		WHERE 	A.STATUS = 'A'
 		AND		A.COURSE_ID = #{COURSE_ID}
 <if test="SEARCH_USER != null and SEARCH_USER != ''">
@@ -96,10 +107,11 @@
 		GROUP 	BY U.USER_NAME
 	</select>        
 	
-	<update id="axUserScoreUpdateReportDiscussion" parameterType="hashmap">
+	<update id="axUserScoreUpdate" parameterType="hashmap">
     	UPDATE 	COURSE_EVAL
     	SET 	REPORT = #{REPORT},
-    	       	DISCUSSION = #{DISCUSSION}
+    	       	DISCUSSION = #{DISCUSSION},
+    	       	REPORT_SEQ = #{REPORT_SEQ}
     	 WHERE 	COURSE_ID = #{COURSE_ID}
     	 AND    USER_ID = #{USER_ID}
     </update>
@@ -146,4 +158,172 @@
 		WHERE	COURSE_CODE = (SELECT COURSE_CODE FROM COURSE WHERE COURSE_ID = #{COURSE_ID})
 	</insert>        
     
+    <select id="axUserScoreReportList" resultType="hashmap">
+		SELECT 	A.SEQ,
+		       	A.COURSE_ID,
+		       	TITLE,
+		       	A.USER_ID,
+		       	B.USER_NAME,
+		       	USER_IP,
+		       	VIEW_CNT,
+		       	DATE_FORMAT(IFNULL(A.UPDATE_DATE,A.CREATE_DATE), '%y.%m.%d %H:%i') CREATE_DATE
+		FROM 	BOARD_REPORT A LEFT OUTER JOIN USER B ON A.USER_ID = B.USER_ID
+		WHERE 	A.COURSE_ID = #{COURSE_ID}
+		<if test="SEARCH_STR != null and SEARCH_STR != ''">
+			AND ( UPPER(A.TITLE) LIKE CONCAT('%',UPPER(#{SEARCH_STR}),'%') OR UPPER(A.USER_ID) LIKE CONCAT('%',UPPER(#{SEARCH_STR}),'%') OR UPPER(B.USER_NAME) LIKE CONCAT('%',UPPER(#{SEARCH_STR}),'%') )
+		</if>			 
+		ORDER 	BY 8 DESC
+	</select>
+
+	<select id="axUserScoreExamList" resultType="hashmap">
+		SELECT 	A.COURSE_ID
+				,A.USER_ID
+				,A.EXAM_KIND
+				,A.SEQ
+				,C.TYPE
+				,C.QUESTION
+				,C.QA1
+				,C.QA2
+				,C.QA3
+				,C.QA4
+                ,IF(C.TYPE = 'J', A.ANSWER,
+					IF(A.ANSWER = 1,CONCAT(A.ANSWER,'.',C.QA1),
+						IF(A.ANSWER = 2,CONCAT(A.ANSWER,'.',C.QA2),
+							IF(A.ANSWER = 3,CONCAT(A.ANSWER,'.',C.QA3),
+								IF(A.ANSWER = 4,CONCAT(A.ANSWER,'.',C.QA4),''))))) ANSWER
+		        ,A.ANSWER_YN
+                ,DATE_FORMAT(A.CREATE_DATE, '%y.%m.%d %H:%i') CREATE_DATE
+		FROM	USER_EXAM A
+					JOIN COURSE B ON B.COURSE_ID = A.COURSE_ID
+					JOIN COURSE_EXAM C ON C.COURSE_CODE = B.COURSE_CODE AND C.SEQ = A.SEQ
+		WHERE 	A.COURSE_ID = #{COURSE_ID}
+		AND		A.USER_ID = #{USER_ID}
+		AND		A.EXAM_KIND = #{EXAM_KIND}
+		ORDER 	BY A.SEQ
+	</select>        
+
+	<select id="axUserScoreExamCount" parameterType="hashmap" resultType="int">
+		SELECT 	COUNT(*) CNT
+		FROM	USER_EXAM
+		WHERE 	COURSE_ID = #{COURSE_ID}
+		AND		USER_ID = #{USER_ID}
+		AND		EXAM_KIND = #{EXAM_KIND}
+	</select>        
+
+	<select id="axUserScoreExamStandard" parameterType="hashmap" resultType="hashmap">
+		SELECT 	WEEK_FROM
+				,WEEK_TO
+		        ,TYPE
+		        ,LEVEL
+		        ,QUESTION_CNT
+		        ,EXAM_KIND
+		        ,#{COURSE_ID} COURSE_ID
+		        ,#{USER_ID} USER_ID
+		FROM 	COURSE_EXAM_TYPE_STANDARD
+		WHERE 	EXAM_TYPE_SEQ = (
+						SELECT 	SEQ
+						FROM 	COURSE_EXAM_TYPE
+						WHERE   SEQ = (
+								SELECT 	COURSE_EXAM_TYPE_ID
+								FROM	COURSE 
+								WHERE 	COURSE_ID = #{COURSE_ID}
+							)
+					)
+		AND		EXAM_KIND = #{EXAM_KIND}    
+		AND 	USE_YN = 'Y'
+	</select>      
+	
+	<insert id="axUserScoreExamInsert" parameterType="hashmap">
+		INSERT 	INTO USER_EXAM( COURSE_ID, USER_ID, EXAM_KIND, SEQ, ANSWER, ANSWER_YN, CREATE_USER, CREATE_DATE )
+		SELECT  #{COURSE_ID} COURSE_ID, #{USER_ID} USER_ID, #{EXAM_KIND}, SEQ, '',  'N', #{SESSION_USER_ID}, CURRENT_TIMESTAMP
+		FROM 	COURSE_EXAM
+		WHERE	COURSE_CODE = (	SELECT COURSE_CODE FROM COURSE WHERE COURSE_ID = #{COURSE_ID})
+		AND		USE_YN = 'Y'	
+		AND		WEEK BETWEEN ${WEEK_FROM} AND ${WEEK_TO}
+		AND	 	TYPE = #{TYPE}
+		AND		LEVEL = #{LEVEL}
+        AND	    SEQ NOT IN (SELECT SEQ FROM USER_EXAM WHERE COURSE_ID = #{COURSE_ID} AND USER_ID = #{USER_ID} AND EXAM_KIND = #{EXAM_KIND})
+		ORDER 	BY RAND() 
+		LIMIT 	${QUESTION_CNT}							
+	</insert>   
+
+	<update id="axUserScoreExamUpdate" parameterType="hashmap">
+    	UPDATE 	USER_EXAM
+    	SET 	ANSWER_YN = #{ANSWER_YN}
+		       	,UPDATE_DATE = CURRENT_TIMESTAMP
+		       	,UPDATE_USER = #{SESSION_USER_ID}
+		WHERE 	COURSE_ID = #{COURSE_ID}
+		AND		USER_ID = #{USER_ID}
+		AND		EXAM_KIND = #{EXAM_KIND}
+		AND		SEQ = #{SEQ}
+    </update>
+
+	<update id="axUserScoreExamUpdateExamTypeTotal" parameterType="hashmap">
+    	UPDATE 	COURSE_EVAL
+    	SET 	EXAM_WEEK = (SELECT 100 * ( SUM(IF(ANSWER_YN = 'Y',1,0)) / COUNT(*) ) FROM USER_EXAM WHERE COURSE_ID = #{COURSE_ID} AND USER_ID = #{USER_ID} AND EXAM_KIND = 'WEEK')
+    			,EXAM_TOTAL = (SELECT 100 * ( SUM(IF(ANSWER_YN = 'Y',1,0)) / COUNT(*) ) FROM USER_EXAM WHERE COURSE_ID = #{COURSE_ID} AND USER_ID = #{USER_ID} AND EXAM_KIND = 'TOTAL')
+    	 WHERE 	COURSE_ID = #{COURSE_ID}
+    	 AND    USER_ID = #{USER_ID}
+    </update>
+
+	<update id="axUserScoreUpdateExamTotal" parameterType="hashmap">
+    	UPDATE 	COURSE_EVAL
+    	SET 	EXAM = IF((SELECT TOTAL_RATIO FROM COURSE_EXAM_TYPE WHERE SEQ = (SELECT COURSE_EXAM_TYPE_ID FROM COURSE WHERE COURSE_ID = #{COURSE_ID})) = 100,
+    						EXAM_TOTAL,
+    						IF((SELECT TOTAL_RATIO FROM COURSE_EXAM_TYPE WHERE SEQ = (SELECT COURSE_EXAM_TYPE_ID FROM COURSE WHERE COURSE_ID = #{COURSE_ID})) = 0,
+    							EXAM_WEEK,
+    							EXAM_WEEK * (SELECT WEEK_RATIO FROM COURSE_EXAM_TYPE WHERE SEQ = (SELECT COURSE_EXAM_TYPE_ID FROM COURSE WHERE COURSE_ID = #{COURSE_ID}))  / 100 +
+    							 EXAM_TOTAL * (SELECT TOTAL_RATIO FROM COURSE_EXAM_TYPE WHERE SEQ = (SELECT COURSE_EXAM_TYPE_ID FROM COURSE WHERE COURSE_ID = #{COURSE_ID}))  / 100
+    						)  
+    					)
+    	 WHERE 	COURSE_ID = #{COURSE_ID}
+    	 AND    USER_ID = #{USER_ID}
+    </update>
+    
+	<select id="axUserScoreQuestList" resultType="hashmap">
+		SELECT 	B.ORD
+				,B.TYPE
+				,B.QUESTION
+				,B.QA1
+				,B.QA2
+				,B.QA3
+				,B.QA4
+                ,IF(B.TYPE = 'J', A.ANSWER,
+					IF(A.ANSWER = 1,CONCAT(A.ANSWER,'.',B.QA1),
+						IF(A.ANSWER = 2,CONCAT(A.ANSWER,'.',B.QA2),
+							IF(A.ANSWER = 3,CONCAT(A.ANSWER,'.',B.QA3),
+								IF(A.ANSWER = 4,CONCAT(A.ANSWER,'.',B.QA4),''))))) ANSWER
+		        ,DATE_FORMAT(A.CREATE_DATE, '%y.%m.%d %H:%i') CREATE_DATE
+		FROM	USER_QUEST A
+					JOIN QUEST B ON B.QG_ID = A.QG_ID AND B.SEQ = A.SEQ
+		WHERE 	A.COURSE_ID = #{COURSE_ID}
+		AND		A.USER_ID = #{USER_ID}
+		ORDER 	BY B.ORD
+	</select>        
+
+	<select id="axUserScoreQuestCount" parameterType="hashmap" resultType="int">
+		SELECT 	COUNT(*) CNT
+		FROM	USER_QUEST
+		WHERE 	COURSE_ID = #{COURSE_ID}
+		AND		USER_ID = #{USER_ID}
+	</select>        
+
+	<insert id="axUserScoreQuestInsert" parameterType="hashmap">
+		INSERT 	INTO USER_QUEST( COURSE_ID, USER_ID, QG_ID, SEQ, ANSWER, CREATE_DATE )
+		SELECT  #{COURSE_ID} COURSE_ID, #{USER_ID} USER_ID, QG_ID, SEQ, '', CURRENT_TIMESTAMP
+		FROM 	QUEST
+		WHERE	QG_ID = (	SELECT 	QG_ID
+							FROM	COURSE_CODE
+							WHERE	COURSE_CODE = (SELECT COURSE_CODE FROM COURSE WHERE COURSE_ID = #{COURSE_ID} ) )
+		AND		USE_YN = 'Y'							
+	</insert>   
+	
+	<select id="axUserScoreQuestOne" resultType="hashmap">
+		SELECT 	CONTENTS
+		FROM	POSTSCRIPT
+		WHERE 	COURSE_ID = #{COURSE_ID}
+		AND		USER_ID = #{USER_ID}
+	</select>        
+
 </mapper>
+

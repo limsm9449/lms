@@ -141,12 +141,15 @@ public class CommUtil {
                     break;
                 case HSSFCell.CELL_TYPE_NUMERIC:
                     value = "" + cell.getNumericCellValue();
+                    if ( ".0".equals(value.substring(value.length() - 2)) ) {
+                    	value = value.substring(0, value.length() -2);
+                    }
                     break;
                 case HSSFCell.CELL_TYPE_STRING:
                     value = "" + cell.getStringCellValue();
                     break;
                 case HSSFCell.CELL_TYPE_BLANK:
-                    value = "" + cell.getBooleanCellValue();
+                    value = "";
                     break;
                 case HSSFCell.CELL_TYPE_ERROR:
                     value = "" + cell.getErrorCellValue();
