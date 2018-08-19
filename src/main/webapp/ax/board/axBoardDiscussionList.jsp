@@ -38,7 +38,14 @@ $(document.body).ready(function () {
 	            key : "TITLE",
 	            label : "제목",
 	            width : 500,
-	            align : "left"
+	            align : "left",
+	            formatter : function () {
+	            	var prefix = "";
+	            	for ( var i = 2;  i <= this.item.STEP ; i++ ) {
+	            		prefix += "&nbsp;&nbsp;";
+	            	}
+	                return prefix + this.item.TITLE;
+	           	}
 	        },{
 	            key : "USER_NAME",
 	            label : "작성자",
@@ -69,10 +76,24 @@ $(document.body).ready(function () {
 	            fn_search();
 	            break;
 		    case "add":
-           		var urlParams = "page=/ax/board/axBoardReportPopup";
-           		urlParams += "&MODE=INSERT&SEQ=&COURSE_ID=0&KIND=B_REPORT";
+           		var urlParams = "page=/ax/board/axBoardDiscussionPopup";
+           		urlParams += "&MODE=INSERT&SEQ=&COURSE_ID=0";
            		
-           		f_popup('/common/axOpenPage', {displayName:'boardReportPopup',option:'width=900,height=700', urlParams:urlParams});
+           		f_popup('/common/axOpenPage', {displayName:'boardDiscussionPopup',option:'width=900,height=700', urlParams:urlParams});
+
+		    	break;
+		    case "addReply":
+		    	var row = grid.getList("selected");
+            	if ( row.length == 0 ) {
+            		mask.open();
+            		dialog.alert( { msg : "삭제할 글을 선택하셔야 합니다." }, function () { mask.close();	} );
+            		return;
+            	}
+
+            	var urlParams = "page=/ax/board/axBoardDiscussionPopup";
+           		urlParams += "&MODE=REPLY_INSERT&COURSE_ID=0&SEQ=" + row[0].SEQ;
+           		
+           		f_popup('/common/axOpenPage', {displayName:'boardDiscussionPopup',option:'width=900,height=700', urlParams:urlParams});
 
 		    	break;
 		    case "delete":
@@ -103,7 +124,7 @@ $(document.body).ready(function () {
                      			KIND : "B_REPORT"
                      		};
                      		
-                     		gfn_callAjax("/board/axBoardReportSave.do", saveParams, fn_callbackAjax, "delete");
+                     		gfn_callAjax("/board/axBoardDiscussionSave.do", saveParams, fn_callbackAjax, "delete");
                        	} else {
                        		mask.close();
                        	}
@@ -111,7 +132,7 @@ $(document.body).ready(function () {
                	);
 		    	break;
             case "export":
-                grid.exportExcel("레포트 게시판.xls");
+                grid.exportExcel("토론.xls");
                 break;
         }
     });
@@ -127,7 +148,7 @@ function fn_params() {
 function fn_search() {
 	fn_params();
 	
-	gfn_callAjax("/board/axBoardReportList.do", params, fn_callbackAjax, "search");
+	gfn_callAjax("/board/axBoardDiscussionList.do", params, fn_callbackAjax, "search");
 }
 
 function fn_callbackAjax(data, id) {
@@ -156,10 +177,10 @@ function fn_gridEvent(event, obj) {
 			mode = "UPDATE";
 		}
 		
-   		var urlParams = "page=/ax/board/axBoardReportPopup";
-   		urlParams += "&MODE=" + mode + "&SEQ=" + obj.item["SEQ"] + "&COURSE_ID=0&KIND=B_REPORT";
+   		var urlParams = "page=/ax/board/axBoardDiscussionPopup";
+   		urlParams += "&MODE=" + mode + "&SEQ=" + obj.item["SEQ"] + "&COURSE_ID=0";
    		
-   		f_popup('/common/axOpenPage', {displayName:'boardReportPopup',option:'width=900,height=700', urlParams:urlParams});
+   		f_popup('/common/axOpenPage', {displayName:'boardDiscussionPopup',option:'width=900,height=700', urlParams:urlParams});
 	} else if ( event == "DataChanged" ) {
 	}
 }
@@ -170,7 +191,7 @@ function fn_gridEvent(event, obj) {
 
 <form id="frm" name="frm" method="post">
 
-<h2>레포트</h2>
+<h2>토론</h2>
 <div style="height:10px"></div>
 
 <div>
@@ -183,6 +204,7 @@ function fn_gridEvent(event, obj) {
 <div>
     <button class="btn btn-default" data-grid-control="search">검색</button>
     <button class="btn btn-default" data-grid-control="add">추가</button>
+	<button class="btn btn-default" data-grid-control="addReply">답글 추가</button>
     <button class="btn btn-default" data-grid-control="delete">삭제</button>
     <button class="btn btn-default" data-grid-control="export">엑셀</button>
 </div>

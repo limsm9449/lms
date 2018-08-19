@@ -72,7 +72,7 @@ $(document.body).ready(function () {
            		var urlParams = "page=/ax/board/axBoardDataPopup";
            		urlParams += "&MODE=INSERT&SEQ=&COURSE_ID=0&KIND=B_DATA";
            		
-           		f_popup('/common/axOpenPage', {displayName:'Data',option:'width=900,height=700', urlParams:urlParams});
+           		f_popup('/common/axOpenPage', {displayName:'boardDataPopup',option:'width=900,height=700', urlParams:urlParams});
 
 		    	break;
 		    case "delete":
@@ -170,7 +170,7 @@ function fn_gridEvent(event, obj) {
 
 <form id="frm" name="frm" method="post">
 
-<h2>자료실 게시판</h2>
+<h2>자료실</h2>
 <div style="height:10px"></div>
 
 <div>

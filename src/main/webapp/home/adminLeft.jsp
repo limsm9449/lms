@@ -74,9 +74,13 @@ var pageObj = {
 	axAccountList :			{	page : "/ax/account/axAccountList"	},
 	axCompanyList :			{	page : "/ax/account/axCompanyList"	},
 	axPointList :			{	page : "/ax/account/axPointList"	},
+	axBoardNoticeList :		{	page : "/ax/board/axBoardNoticeList"	},
+	axBoardFaqList :		{	page : "/ax/board/axBoardFaqList"	},
 	axBoardReportList :		{	page : "/ax/board/axBoardReportList"	},
 	axBoardDataList :		{	page : "/ax/board/axBoardDataList"	},
-	axBoardNoticeList :		{	page : "/ax/board/axBoardNoticeList"	},
+	axBoardFreeList :		{	page : "/ax/board/axBoardFreeList"	},
+	axBoardQnaList :		{	page : "/ax/board/axBoardQnaList"	},
+	axBoardDiscussionList :	{	page : "/ax/board/axBoardDiscussionList"	},
 	axSetting :				{	page : "/ax/board/axSetting"	},
 	axMail :				{	page : "/ax/board/axMail"	},
 	axBank :				{	page : "/ax/board/axBank"	},
@@ -161,8 +165,12 @@ function gfn_openMenu(pageId, params) {
 	          		<li><a href="#" class="mainMenu linker" onclick="gfn_menu(this)"><span>게시물 관리(New)</span></a>
 			            <ul style="display:none" class="subMenuUl">
 			              	<li><a href="#" class="subMenu linker" onclick="gfn_openMenu('axBoardNoticeList'); gfn_subMenu(this);"><span>공지사항</span></a></li>
+			              	<li><a href="#" class="subMenu linker" onclick="gfn_openMenu('axBoardFaqList'); gfn_subMenu(this);"><span>FAQ</span></a></li>
+			              	<li><a href="#" class="subMenu linker" onclick="gfn_openMenu('axBoardFreeList'); gfn_subMenu(this);"><span>자유게시판</span></a></li>
 			              	<li><a href="#" class="subMenu linker" onclick="gfn_openMenu('axBoardDataList'); gfn_subMenu(this);"><span>자료실</span></a></li>
 			              	<li><a href="#" class="subMenu linker" onclick="gfn_openMenu('axBoardReportList'); gfn_subMenu(this);"><span>레포트</span></a></li>
+			              	<li><a href="#" class="subMenu linker" onclick="gfn_openMenu('axBoardQnaList'); gfn_subMenu(this);"><span>Q&A</span></a></li>
+			              	<li><a href="#" class="subMenu linker" onclick="gfn_openMenu('axBoardDiscussionList'); gfn_subMenu(this);"><span>토론</span></a></li>
 			         	</ul>
 			      	</li>
 	          		<li><a href="#" class="mainMenu linker" onclick="gfn_menu(this)"><span>설정 관리(New)</span></a>

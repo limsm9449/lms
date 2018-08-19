@@ -28,7 +28,7 @@ var COURSE_ID = gfn_getUrlParams("COURSE_ID");
 var KIND = gfn_getUrlParams("KIND");
 
 $(document.body).ready(function () {
-    $("#CONTENTS").cleditor({height:305});
+    $("#CONTENTS").cleditor({height:490});
     $("#CONTENTS").cleditor()[0].refresh();
 
     if ( MODE == "INSERT" ) {
@@ -138,7 +138,7 @@ function fn_close() {
 
 <body style="padding : 10px">
 
-<h2>게시물 추가</h2>
+<h2>공지사항 게시물</h2>
 
 <form class="form-horizontal">
   	<div class="form-group">

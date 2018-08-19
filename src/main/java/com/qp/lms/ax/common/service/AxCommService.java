@@ -76,6 +76,9 @@ public class AxCommService {
 		    	hm.put(ddKinds[i], sqlSession.selectList("axComm.axDdBank", paramMap));
 			} else if ( "CourseReport".equals(ddKinds[i]) ) {
 		    	hm.put(ddKinds[i], sqlSession.selectList("axComm.axDdCourseReport", paramMap));
+			} else if ( "FaqCategory".equals(ddKinds[i]) ) {
+				paramMap.put("DD_MAIN", "FAQ");
+		    	hm.put(ddKinds[i], sqlSession.selectList("axComm.axDdCode", paramMap));
 			}
 		}
 		

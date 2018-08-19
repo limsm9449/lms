@@ -63,19 +63,6 @@ $(document.body).ready(function () {
             	}
             		
                 break;
-            case "viewScore":
-            	var row = grid.getList("selected");
-            	var userId = "";
-            	if ( row.length == 1 ) {
-            		userId = row[0]["USER_ID"];
-            	}
-
-            	var urlParams = "page=/ax/score/axUserScoreReportPopup";
-           		urlParams += "&COURSE_ID=" + params.COURSE_ID + "&USER_ID=" + userId;
-           		
-           		f_popup('/common/axOpenPage', {displayName:'userScoreReportPopup',option:'width=1000,height=700', urlParams:urlParams});
-            		
-                break;
             case "viewWeekExam":
             	var row = grid.getList("selected");
             	if ( row.length == 0 ) {
@@ -127,6 +114,59 @@ $(document.body).ready(function () {
 	           		f_popup('/common/axOpenPage', {displayName:'userScorePostscriptPopup',option:'width=800,height=500', urlParams:urlParams});
             	}
             	
+                break;
+            case "viewNotice":
+            	var row = grid.getList("selected");
+             	var urlParams = "page=/ax/score/axScoreNoticePopup";
+           		urlParams += "&COURSE_ID=" + params.COURSE_ID;
+           		
+           		f_popup('/common/axOpenPage', {displayName:'scoreNoticePopup',option:'width=1000,height=700', urlParams:urlParams});
+            		
+                break;
+            case "viewFree":
+            	var row = grid.getList("selected");
+             	var urlParams = "page=/ax/score/axScoreFreePopup";
+           		urlParams += "&COURSE_ID=" + params.COURSE_ID;
+           		
+           		f_popup('/common/axOpenPage', {displayName:'scoreFreePopup',option:'width=1000,height=700', urlParams:urlParams});
+            		
+                break;
+            case "viewData":
+            	var row = grid.getList("selected");
+               	var urlParams = "page=/ax/score/axScoreDataPopup";
+           		urlParams += "&COURSE_ID=" + params.COURSE_ID;
+           		
+           		f_popup('/common/axOpenPage', {displayName:'scoreDataPopup',option:'width=1000,height=700', urlParams:urlParams});
+            		
+                break;
+            case "viewReport":
+            	var row = grid.getList("selected");
+            	var userId = "";
+            	if ( row.length == 1 ) {
+            		userId = row[0]["USER_ID"];
+            	}
+
+            	var urlParams = "page=/ax/score/axScoreReportPopup";
+           		urlParams += "&COURSE_ID=" + params.COURSE_ID + "&USER_ID=" + userId;
+           		
+           		f_popup('/common/axOpenPage', {displayName:'scoreReportPopup',option:'width=1000,height=700', urlParams:urlParams});
+            		
+                break;
+            case "viewQna":
+            	var row = grid.getList("selected");
+               	var urlParams = "page=/ax/score/axScoreQnaPopup";
+           		urlParams += "&COURSE_ID=" + params.COURSE_ID;
+           		
+           		f_popup('/common/axOpenPage', {displayName:'scoreQnaPopup',option:'width=1000,height=700', urlParams:urlParams});
+            		
+                break;
+            case "viewDiscussion":
+            	var row = grid.getList("selected");
+               	var urlParams = "page=/ax/score/axScoreDiscussionPopup";
+           		urlParams += "&COURSE_ID=" + params.COURSE_ID;
+           		
+           		f_popup('/common/axOpenPage', {displayName:'scoreDiscussionPopup',option:'width=1000,height=700', urlParams:urlParams});
+            		
                 break;
         }
     });
@@ -455,9 +495,14 @@ function fn_hidePopupDiv(popupDivId) {
     <button class="btn btn-default" data-grid-control="save">저장</button>
     <button class="btn btn-default" data-grid-control="export">엑셀</button>
     <button class="btn btn-default" data-grid-control="viewWeek">주차별 진도</button>
-    <button class="btn btn-default" data-grid-control="viewScore">제출 레포트</button>
     <button class="btn btn-default" data-grid-control="viewWeekExam">주별시험</button>
     <button class="btn btn-default" data-grid-control="viewTotalExam">전체시험</button>
+    <button class="btn btn-default" data-grid-control="viewNotice">공지사항</button>
+    <button class="btn btn-default" data-grid-control="viewFree">자유게시판</button>
+    <button class="btn btn-default" data-grid-control="viewData">자료실</button>
+    <button class="btn btn-default" data-grid-control="viewReport">레포트</button>
+    <button class="btn btn-default" data-grid-control="viewQna">Q&A</button>
+    <button class="btn btn-default" data-grid-control="viewDiscussion">토론</button>
     <button class="btn btn-default" data-grid-control="viewQuest">설문지</button>
     <button class="btn btn-default" data-grid-control="viewPostscript">수강후기</button>
 </div>

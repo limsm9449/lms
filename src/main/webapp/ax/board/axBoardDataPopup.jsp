@@ -143,7 +143,7 @@ function fn_close() {
 
 <body style="padding : 10px">
 
-<h2>게시물 추가</h2>
+<h2>자료실 게시물</h2>
 
 <form class="form-horizontal">
   	<div class="form-group">

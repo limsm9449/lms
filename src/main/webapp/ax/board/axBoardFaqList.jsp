@@ -21,29 +21,91 @@ var dialog = new ax5.ui.dialog( { title: '<i class="axi axi-ion-alert"></i> Aler
 var grid = null;
 
 var params = {}
+var dd = {};
 
 $(document.body).ready(function () {
-	$( window ).resize( function() {
-		gfn_gridResize("grid-parent", grid); 
-	} );
-	
     confirmDialog.setConfig({
         theme: "danger"
     });
     
     $("#CONTENTS").cleditor({height:305});
+	
+    $('[data-grid-control]').click(function () {
+        switch (this.getAttribute("data-grid-control")) {
+	        case "search":
+	            fn_search();
+	            break;
+		    case "add":
+           		var urlParams = "page=/ax/board/axBoardFaqPopup";
+           		urlParams += "&MODE=INSERT&SEQ=";
+           		f_popup('/common/axOpenPage', {displayName:'boardFaqPopup',option:'width=900,height=560', urlParams:urlParams});
+
+		    	break;
+		    case "delete":
+		    	var row = grid.getList("selected");
+            	if ( row.length == 0 ) {
+            		mask.open();
+            		dialog.alert( { msg : "삭제할 글을 선택하셔야 합니다." }, function () { mask.close();	} );
+            		return;
+            	}
+
+            	mask.open();
+               	confirmDialog.confirm(
+               		{
+                       	title: "Confirm",
+                       	msg: '삭제하시겠습니까?'
+                   	}, 
+                   	function(){
+                     	if ( this.key == "ok" ) {
+                     		var saveParams = {
+                     			MODE : "DELETE",
+                     			SEQ : row[0].SEQ,
+                     			COURSE_ID : row[0].COURSE_ID
+                     		};
+                     		
+                     		gfn_callAjax("/board/axBoardFaqSave.do", saveParams, fn_callbackAjax, "delete");
+                       	} else {
+                       		mask.close();
+                       	}
+                   	}
+               	);
+		    	break;
+            case "export":
+                grid.exportExcel("FAQ 게시판.xls");
+                break;
+        }
+    });
     
+    gfn_callAjax("/common/axDd.do", { DD_KIND : "FaqCategory" }, fn_callbackAjax, "dd", { async : false });
+
+    fn_search();
+});
+
+function fn_ddAfter() {
 	grid = gfn_makeAx5Grid("first-grid",
 		[ 	{
+	            key : "CATEGORY",
+	            label : "카테고리",
+	            width : 120,
+	            align : "left", 
+	        	editor: {
+                    type : "select", 
+                    config : {
+                        columnKeys: { optionValue: "value", optionText: "text" },
+                        options: dd.FaqCategory
+                    },
+	            	disabled : function () {
+                        return true;
+                    }
+	        	},
+	            formatter : function () {
+	                return gfn_getValueInList(dd.FaqCategory, "value",  this.item.CATEGORY, "text");
+	           	}
+	        },{
 	            key : "TITLE",
 	            label : "제목",
-	            width : 500,
+	            width : 700,
 	            align : "left"
-	        },{
-	            key : "USER_NAME",
-	            label : "작성자",
-	            width : 120,
-	            align : "center"
 	        },{
 	            key : "CREATE_DATE",
 	            label : "등록일자",
@@ -60,66 +122,14 @@ $(document.body).ready(function () {
 	  		showRowSelector : false
 	  	}
 	);
-	
-	$(window).trigger("resize");
-	
-    $('[data-grid-control]').click(function () {
-        switch (this.getAttribute("data-grid-control")) {
-	        case "search":
-	            fn_search();
-	            break;
-		    case "add":
-           		var urlParams = "page=/ax/board/axBoardReportPopup";
-           		urlParams += "&MODE=INSERT&SEQ=&COURSE_ID=0&KIND=B_REPORT";
-           		
-           		f_popup('/common/axOpenPage', {displayName:'boardReportPopup',option:'width=900,height=700', urlParams:urlParams});
 
-		    	break;
-		    case "delete":
-		    	var row = grid.getList("selected");
-            	if ( row.length == 0 ) {
-            		mask.open();
-            		dialog.alert( { msg : "삭제할 글을 선택하셔야 합니다." }, function () { mask.close();	} );
-            		return;
-            	}
-            	if ( row[0]["MY_BOARD_YN"] == "N" ) {
-            		mask.open();
-            		dialog.alert( { msg : "내가 작성한 글이 아닙니다." }, function () { mask.close();	} );
-            		return;
-            	}
-
-            	mask.open();
-               	confirmDialog.confirm(
-               		{
-                       	title: "Confirm",
-                       	msg: '삭제하시겠습니까?'
-                   	}, 
-                   	function(){
-                     	if ( this.key == "ok" ) {
-                     		var saveParams = {
-                     			MODE : "DELETE",
-                     			SEQ : row[0].SEQ,
-                     			COURSE_ID : row[0].COURSE_ID,
-                     			KIND : "B_REPORT"
-                     		};
-                     		
-                     		gfn_callAjax("/board/axBoardReportSave.do", saveParams, fn_callbackAjax, "delete");
-                       	} else {
-                       		mask.close();
-                       	}
-                   	}
-               	);
-		    	break;
-            case "export":
-                grid.exportExcel("레포트 게시판.xls");
-                break;
-        }
-    });
-    
-    fn_search();
-});
+	$( window ).resize( function() {
+		gfn_gridResize("grid-parent", grid); 
+	} ).resize();
+}
 
 function fn_params() {
+	params.CATEGORY = $("#CB_CATEGORY option:selected").val();	
 	params.SEARCH_STR = $("#SEARCH_STR").val();
 	params.COURSE_ID = "0";	
 }
@@ -127,7 +137,7 @@ function fn_params() {
 function fn_search() {
 	fn_params();
 	
-	gfn_callAjax("/board/axBoardReportList.do", params, fn_callbackAjax, "search");
+	gfn_callAjax("/board/axBoardFaqList.do", params, fn_callbackAjax, "search");
 }
 
 function fn_callbackAjax(data, id) {
@@ -139,27 +149,31 @@ function fn_callbackAjax(data, id) {
 	
 	if ( id == "search" ) {
 		grid.setData(data.list);
+	} else if ( id == "dd" ){
+		dd = $.extend({}, data);
+		
+		gfn_cbRefresh("CB_CATEGORY", data.FaqCategory, true);
+		
+		fn_ddAfter();
 	} else if ( id == "delete" ) {
 		mask.close();
 
 		mask.open();
 		dialog.alert( { msg : "삭제 되었습니다." }, function () { mask.close();	fn_search(); } );
 	}
-}
+} 
 
 function fn_gridEvent(event, obj) {
 	if ( event == "Click" ) {
-		obj.self.select(obj.dindex);
+		obj.self.select(obj.dindex); 
 	} else if ( event == "DBLClick" ) {
-		var mode = ""
-		if ( obj.item["MY_BOARD_YN"] == "Y" ) {
-			mode = "UPDATE";
-		}
+		var mode = "UPDATE";
 		
-   		var urlParams = "page=/ax/board/axBoardReportPopup";
-   		urlParams += "&MODE=" + mode + "&SEQ=" + obj.item["SEQ"] + "&COURSE_ID=0&KIND=B_REPORT";
+   		var urlParams = "page=/ax/board/axBoardFaqPopup";
+   		urlParams += "&MODE=" + mode + "&SEQ=" + obj.item["SEQ"] + "&COURSE_ID=0";
    		
-   		f_popup('/common/axOpenPage', {displayName:'boardReportPopup',option:'width=900,height=700', urlParams:urlParams});
+   		f_popup('/common/axOpenPage', {displayName:'boardFaqPopup',option:'width=900,height=560', urlParams:urlParams});
+   		
 	} else if ( event == "DataChanged" ) {
 	}
 }
@@ -170,10 +184,14 @@ function fn_gridEvent(event, obj) {
 
 <form id="frm" name="frm" method="post">
 
-<h2>레포트</h2>
+<h2>FAQ</h2>
 <div style="height:10px"></div>
 
 <div>
+	카테고리
+	<select id="CB_CATEGORY">
+		<option value="">전체</option>
+	</select>
 	통합검색
 	<input type="text" class="search_input" id="SEARCH_STR" name="SEARCH_STR" value="" />
 </div>

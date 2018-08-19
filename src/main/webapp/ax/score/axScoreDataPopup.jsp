@@ -32,7 +32,7 @@ $(document.body).ready(function () {
    		[ 	{
    	            key : "TITLE",
    	            label : "제목",
-   	            width : 500,
+   	            width : 610,
    	            align : "left"
    	        },{
    	            key : "USER_NAME",
@@ -61,6 +61,48 @@ $(document.body).ready(function () {
 	        case "search":
 	            fn_search();
 	            break;
+		    case "add":
+           		var urlParams = "page=/ax/board/axBoardDataPopup";
+           		urlParams += "&MODE=INSERT&SEQ=&COURSE_ID=" + params.COURSE_ID + "&KIND=B_DATA";
+           		
+           		f_popup('/common/axOpenPage', {displayName:'boarddDataPopup',option:'width=900,height=700', urlParams:urlParams});
+
+		    	break;
+		    case "delete":
+		    	var row = grid.getList("selected");
+            	if ( row.length == 0 ) {
+            		mask.open();
+            		dialog.alert( { msg : "삭제할 글을 선택하셔야 합니다." }, function () { mask.close();	} );
+            		return;
+            	}
+            	if ( row[0]["MY_BOARD_YN"] == "N" ) {
+            		mask.open();
+            		dialog.alert( { msg : "내가 작성한 글이 아닙니다." }, function () { mask.close();	} );
+            		return;
+            	}
+
+            	mask.open();
+               	confirmDialog.confirm(
+               		{
+                       	title: "Confirm",
+                       	msg: '삭제하시겠습니까?'
+                   	}, 
+                   	function(){
+                     	if ( this.key == "ok" ) {
+                     		var saveParams = {
+                     			MODE : "DELETE",
+                     			SEQ : row[0].SEQ,
+                     			COURSE_ID : row[0].COURSE_ID,
+                     			KIND : "B_REPORT"
+                     		};
+                     		
+                     		gfn_callAjax("/board/axBoardDataSave.do", saveParams, fn_callbackAjax, "delete");
+                       	} else {
+                       		mask.close();
+                       	}
+                   	}
+               	);
+		    	break;	
             case "close" :
             	if ( isSave ) {
             		opener.fn_search();
@@ -76,6 +118,7 @@ $(document.body).ready(function () {
 });
 
 function fn_params() {
+	params.SEARCH_STR = $("#SEARCH_STR").val();
 	params.COURSE_ID = gfn_getUrlParams("COURSE_ID");
 }
 
@@ -84,7 +127,7 @@ function fn_search() {
 	
 	fn_params();
 	
-	gfn_callAjax("/score/axUserScoreReportList.do", params, fn_callbackAjax, "search");
+	gfn_callAjax("/board/axBoardDataList.do", params, fn_callbackAjax, "search");
 }
 
 
@@ -93,6 +136,11 @@ function fn_callbackAjax(data, id) {
 	if ( id == "search" ) {
 		grid.setData(data.list);
 		//mask.close();
+	} else if ( id == "delete" ) {
+		mask.close();
+
+		mask.open();
+		dialog.alert( { msg : "삭제 되었습니다." }, function () { mask.close();	fn_search(); } );
 	}
 }
 
@@ -100,10 +148,15 @@ function fn_gridEvent(event, obj) {
 	if ( event == "Click" ) {
 		obj.self.select(obj.dindex);
 	} else if ( event == "DBLClick" ) {
-   		var urlParams = "page=/ax/board/axBoardReportPopup";
-   		urlParams += "&MODE=&SEQ=" + obj.item["SEQ"] + "&COURSE_ID=" + params.COURSE_ID + "&KIND=B_REPORT";
+		var mode = ""
+		if ( obj.item["MY_BOARD_YN"] == "Y" ) {
+			mode = "UPDATE";
+		}
+		
+   		var urlParams = "page=/ax/board/axBoardDataPopup";
+   		urlParams += "&MODE=" + mode + "&SEQ=" + obj.item["SEQ"] + "&COURSE_ID=" + params.COURSE_ID + "&KIND=B_DATA";
    		
-   		f_popup('/common/axOpenPage', {displayName:'boardReportPopup',option:'width=900,height=700', urlParams:urlParams});
+   		f_popup('/common/axOpenPage', {displayName:'boardDataPopup',option:'width=900,height=700', urlParams:urlParams});
 	} else if ( event == "DataChanged" ) {
 	}
 }
@@ -114,7 +167,7 @@ function fn_gridEvent(event, obj) {
 
 <form id="frm" name="frm" method="post">
 
-<h2>제출 레포트</h2>
+<h2>자료실</h2>
 <div style="height:10px"></div>
 
 <div class="form-inline">
@@ -126,8 +179,10 @@ function fn_gridEvent(event, obj) {
 <div style="height:10px"></div> 
 <div class="form-horizontal">
 	<div class="form-group">
-		<div class="col-sm-offset-9 col-sm-3">
+		<div class="col-sm-offset-8 col-sm-4"> 
 		    <button class="btn btn-default" data-grid-control="search">검색</button>
+		    <button class="btn btn-default" data-grid-control="add">추가</button>
+		    <button class="btn btn-default" data-grid-control="delete">삭제</button>
 		    <button class="btn btn-default" data-grid-control="close">닫기</button>
 		</div>
 	</div>

@@ -69,10 +69,10 @@ $(document.body).ready(function () {
 	            fn_search();
 	            break;
 		    case "add":
-           		var urlParams = "page=/ax/board/axBoardReportPopup";
-           		urlParams += "&MODE=INSERT&SEQ=&COURSE_ID=0&KIND=B_REPORT";
+           		var urlParams = "page=/ax/board/axBoardFreePopup";
+           		urlParams += "&MODE=INSERT&SEQ=&COURSE_ID=0";
            		
-           		f_popup('/common/axOpenPage', {displayName:'boardReportPopup',option:'width=900,height=700', urlParams:urlParams});
+           		f_popup('/common/axOpenPage', {displayName:'boardFreePopup',option:'width=900,height=700', urlParams:urlParams});
 
 		    	break;
 		    case "delete":
@@ -103,7 +103,7 @@ $(document.body).ready(function () {
                      			KIND : "B_REPORT"
                      		};
                      		
-                     		gfn_callAjax("/board/axBoardReportSave.do", saveParams, fn_callbackAjax, "delete");
+                     		gfn_callAjax("/board/axBoardFreeSave.do", saveParams, fn_callbackAjax, "delete");
                        	} else {
                        		mask.close();
                        	}
@@ -127,7 +127,7 @@ function fn_params() {
 function fn_search() {
 	fn_params();
 	
-	gfn_callAjax("/board/axBoardReportList.do", params, fn_callbackAjax, "search");
+	gfn_callAjax("/board/axBoardFreeList.do", params, fn_callbackAjax, "search");
 }
 
 function fn_callbackAjax(data, id) {
@@ -156,10 +156,10 @@ function fn_gridEvent(event, obj) {
 			mode = "UPDATE";
 		}
 		
-   		var urlParams = "page=/ax/board/axBoardReportPopup";
-   		urlParams += "&MODE=" + mode + "&SEQ=" + obj.item["SEQ"] + "&COURSE_ID=0&KIND=B_REPORT";
+   		var urlParams = "page=/ax/board/axBoardFreePopup";
+   		urlParams += "&MODE=" + mode + "&SEQ=" + obj.item["SEQ"] + "&COURSE_ID=0";
    		
-   		f_popup('/common/axOpenPage', {displayName:'boardReportPopup',option:'width=900,height=700', urlParams:urlParams});
+   		f_popup('/common/axOpenPage', {displayName:'boardFreePopup',option:'width=900,height=700', urlParams:urlParams});
 	} else if ( event == "DataChanged" ) {
 	}
 }
@@ -170,7 +170,7 @@ function fn_gridEvent(event, obj) {
 
 <form id="frm" name="frm" method="post">
 
-<h2>레포트</h2>
+<h2>자유 게시판</h2>
 <div style="height:10px"></div>
 
 <div>

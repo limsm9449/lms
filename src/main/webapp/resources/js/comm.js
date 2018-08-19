@@ -396,13 +396,14 @@ function f_popup(pDoUrl,pParam) {
 	if ( pParam != undefined && pParam.option != undefined )
 		option = pParam.option;
 
+	option += ",resizable=0";
+	
 	//POST로 넘긴다.
 	window.open("",displayName,option);
 	document.frm.action = context + pDoUrl + ".do" + params;	
 	document.frm.target = displayName;
 	document.frm.method = "POST";	
 	document.frm.submit();
-
 }
 
 formValid = {

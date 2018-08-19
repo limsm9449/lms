@@ -25,32 +25,38 @@ var isSave = false;
 var MODE = gfn_getUrlParams("MODE");
 var SEQ = gfn_getUrlParams("SEQ");
 var COURSE_ID = gfn_getUrlParams("COURSE_ID");
-var KIND = gfn_getUrlParams("KIND");
+var REF = gfn_getUrlParams("REF");
 
 $(document.body).ready(function () {
-    $("#CONTENTS").cleditor({height:305});
+	if ( MODE == "INSERT" || MODE == "UPDATE" ) {
+	    $("#CONTENTS").cleditor({height:490});
+		$("#REPLY_CONTENTS").cleditor({height:0});
+	} else {
+		$("#CONTENTS").cleditor({height:200});
+		$("#REPLY_CONTENTS").cleditor({height:200});
+	}
     $("#CONTENTS").cleditor()[0].refresh();
+    $("#REPLY_CONTENTS").cleditor()[0].refresh();
 
     if ( MODE == "INSERT" ) {
-		$("#attachFrame").attr("src","/board/attachI.do?" + "pSeq=" + SEQ + "&kind=" + KIND);
+    	$("#replyDiv1").hide();
+    	$("#replyDiv2").hide();
     } else if ( MODE == "UPDATE" ) {
+    	$("#replyDiv1").hide();
+    	$("#replyDiv2").hide();
+
     	fn_search();
-    	
-   		$("#attachFrame").attr("src","/board/attachU.do?" + "pSeq=" + SEQ + "&kind=" + KIND);
    	} else {
     	fn_search();
     	
     	$("#TITLE").attr("readonly", true);
-    	$("#btn_save").hide();
-    	
-   		$("#attachFrame").attr("src","/board/attachV.do?" + "pSeq=" + SEQ + "&kind=" + KIND);
    		
    		//조회수 증가
    		var saveParams = {
  				MODE : "VIEW",
  				SEQ : SEQ
  		};
- 		gfn_callAjax("/board/axBoardReportSave.do", saveParams, fn_callbackAjax, "-");
+ 		gfn_callAjax("/board/axBoardDiscussionSave.do", saveParams, fn_callbackAjax, "-");
    	}
 }); 
 
@@ -62,9 +68,10 @@ function fn_params() {
 function fn_search() {
 	fn_params();
 	
-	gfn_callAjax("/board/axBoardReportOne.do", params, fn_callbackAjax, "search");
+	gfn_callAjax("/board/axBoardDiscussionOne.do", params, fn_callbackAjax, "search");
 }
 
+var row;
 function fn_callbackAjax(data, id) {
 	if ( data.RtnMode == "ERROR" ) {
 		mask.open();
@@ -73,9 +80,12 @@ function fn_callbackAjax(data, id) {
 	}
 	
 	if ( id == "search" ) {
+		row = data.row;
+		
 		$('#TITLE').val(data.row.TITLE);
 		
 		$('#CONTENTS').val(data.row.CONTENTS);
+		0.
 		
 		if ( MODE == "UPDATE" ) {
 			$("#CONTENTS").cleditor()[0].refresh();
@@ -97,14 +107,15 @@ function fn_callbackAjax(data, id) {
 	}
 }
 
-
 function fn_save() {
 	if ( $("#TITLE").val() == "" ) {
-		alert("제목을 입력하셔야 합니다.");
+		mask.open();
+		dialog.alert( { msg : "제목을 입력하셔야 합니다." }, function () { mask.close(); } );
 		return;
 	}
 	if ( $("#CONTENTS").val() == "" ) {
-		alert("내용을 입력하셔야 합니다.");
+		mask.open();
+		dialog.alert( { msg : "내용을 입력하셔야 합니다." }, function () { mask.close(); } );
 		return;
 	}
 
@@ -117,13 +128,13 @@ function fn_save() {
        	function(){
          	if ( this.key == "ok" ) {
          		var saveParams = {
-         				TITLE : $('#TITLE').val(),
-         				CONTENTS : $('#CONTENTS').val(),
-         				MODE : MODE,
+         				TITLE : ( MODE == "REPLY_INSERT" || MODE == "" ? $('#REPLY_TITLE').val() : $('#TITLE').val() ),
+         				CONTENTS : ( MODE == "REPLY_INSERT" || MODE == "" ? $('#REPLY_CONTENTS').val() : $('#CONTENTS').val() ),
+         				MODE : ( MODE == "" ? "REPLY_INSERT" : MODE ),
          				SEQ : SEQ,
          				COURSE_ID : COURSE_ID
          		};
-         		gfn_callAjax("/board/axBoardReportSave.do", saveParams, fn_callbackAjax, "save");
+         		gfn_callAjax("/board/axBoardDiscussionSave.do", saveParams, fn_callbackAjax, "save");
            	} else {
            		mask.close();
            	}
@@ -139,11 +150,12 @@ function fn_close() {
 	window.close();
 }
 
+
 </script>
 
 <body style="padding : 10px">
 
-<h2>레포트 게시물</h2>
+<h2>토론 게시물</h2>
 
 <form class="form-horizontal">
   	<div class="form-group">
@@ -153,15 +165,21 @@ function fn_close() {
     	</div>
   	</div>
   	<div class="form-group">
-    	<label for="inputPassword3" class="col-sm-2 control-label">내용</label>
+    	<label for="CONTENTS" class="col-sm-2 control-label">내용</label>
     	<div class="col-sm-10">
       		<textarea id="CONTENTS" name="CONTENTS"></textarea>
     	</div>
   	</div>
-  	<div class="form-group"> 
-    	<label for="inputPassword3" class="col-sm-2 control-label">첨부파일</label>
+  	<div class="form-group" id="replyDiv1">
+    	<label for="TITLE" class="col-sm-2 control-label">답글 제목</label>
     	<div class="col-sm-10">
-      		<iframe id="attachFrame" name="attachFrame" style="width:100%;height:150px"></iframe> 
+      		<input type="text" class="form-control" id="REPLY_TITLE" placeholder="제목">
+    	</div>
+  	</div>
+  	<div class="form-group" id="replyDiv2">
+    	<label for="CONTENTS" class="col-sm-2 control-label">답글 내용</label>
+    	<div class="col-sm-10">
+      		<textarea id="REPLY_CONTENTS" name="REPLY_CONTENTS"></textarea>
     	</div>
   	</div>
   	<div class="form-group">

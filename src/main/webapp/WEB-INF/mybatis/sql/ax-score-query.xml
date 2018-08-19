@@ -158,7 +158,7 @@
 		WHERE	COURSE_CODE = (SELECT COURSE_CODE FROM COURSE WHERE COURSE_ID = #{COURSE_ID})
 	</insert>        
     
-    <select id="axUserScoreReportList" resultType="hashmap">
+    <!--select id="axUserScoreReportList" resultType="hashmap">
 		SELECT 	A.SEQ,
 		       	A.COURSE_ID,
 		       	TITLE,
@@ -173,7 +173,7 @@
 			AND ( UPPER(A.TITLE) LIKE CONCAT('%',UPPER(#{SEARCH_STR}),'%') OR UPPER(A.USER_ID) LIKE CONCAT('%',UPPER(#{SEARCH_STR}),'%') OR UPPER(B.USER_NAME) LIKE CONCAT('%',UPPER(#{SEARCH_STR}),'%') )
 		</if>			 
 		ORDER 	BY 8 DESC
-	</select>
+	</select-->
 
 	<select id="axUserScoreExamList" resultType="hashmap">
 		SELECT 	A.COURSE_ID

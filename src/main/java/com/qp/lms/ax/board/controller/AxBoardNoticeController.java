@@ -54,7 +54,7 @@ public class AxBoardNoticeController {
     }
 
     @RequestMapping(value = "/board/axBoardNoticeSave", method = RequestMethod.POST, consumes = "application/json" )
-    public @ResponseBody HashMap<String,Object> axAccountSave(@RequestBody HashMap<String, Object> paramMap, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public @ResponseBody HashMap<String,Object> axBoardNoticeSave(@RequestBody HashMap<String, Object> paramMap, HttpServletRequest request, HttpServletResponse response) throws Exception {
     	HashMap<String, Object> hm = new HashMap<String, Object>();
     	
 		try {

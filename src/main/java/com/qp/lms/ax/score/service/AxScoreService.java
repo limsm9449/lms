@@ -67,6 +67,7 @@ public class AxScoreService {
     	return hm;
     }
 	
+	/*
 	public HashMap<String, Object> axUserScoreReportList(HashMap<String, Object> paramMap) throws Exception {
 		HashMap<String, Object> hm = new HashMap<String, Object>();
 		
@@ -75,6 +76,7 @@ public class AxScoreService {
         
     	return hm;
     }
+    */
 	
 	@Transactional(propagation=Propagation.REQUIRED, rollbackFor={Throwable.class})
 	public HashMap<String, Object> axUserScoreExamList(HashMap<String, Object> paramMap) throws Exception {

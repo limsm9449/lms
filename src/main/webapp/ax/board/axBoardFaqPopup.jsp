@@ -24,45 +24,42 @@ var isSave = false;
 
 var MODE = gfn_getUrlParams("MODE");
 var SEQ = gfn_getUrlParams("SEQ");
-var COURSE_ID = gfn_getUrlParams("COURSE_ID");
-var KIND = gfn_getUrlParams("KIND");
 
 $(document.body).ready(function () {
     $("#CONTENTS").cleditor({height:305});
     $("#CONTENTS").cleditor()[0].refresh();
 
+    gfn_callAjax("/common/axDd.do", { DD_KIND : "FaqCategory" }, fn_callbackAjax, "dd", { async : false });
+}); 
+
+function fn_ddAfter() {
     if ( MODE == "INSERT" ) {
-		$("#attachFrame").attr("src","/board/attachI.do?" + "pSeq=" + SEQ + "&kind=" + KIND);
     } else if ( MODE == "UPDATE" ) {
     	fn_search();
-    	
-   		$("#attachFrame").attr("src","/board/attachU.do?" + "pSeq=" + SEQ + "&kind=" + KIND);
    	} else {
     	fn_search();
     	
+    	$("#CB_CATEGORY").attr("readonly", true);
     	$("#TITLE").attr("readonly", true);
     	$("#btn_save").hide();
     	
-   		$("#attachFrame").attr("src","/board/attachV.do?" + "pSeq=" + SEQ + "&kind=" + KIND);
-   		
    		//조회수 증가
    		var saveParams = {
  				MODE : "VIEW",
  				SEQ : SEQ
  		};
- 		gfn_callAjax("/board/axBoardReportSave.do", saveParams, fn_callbackAjax, "-");
+ 		gfn_callAjax("/board/axBoardFaqSave.do", saveParams, fn_callbackAjax, "-");
    	}
-}); 
+}
 
 function fn_params() {
 	params.SEQ = SEQ;
-	params.COURSE_ID = COURSE_ID;	 
 }
 
 function fn_search() {
 	fn_params();
 	
-	gfn_callAjax("/board/axBoardReportOne.do", params, fn_callbackAjax, "search");
+	gfn_callAjax("/board/axBoardFaqOne.do", params, fn_callbackAjax, "search");
 }
 
 function fn_callbackAjax(data, id) {
@@ -73,6 +70,7 @@ function fn_callbackAjax(data, id) {
 	}
 	
 	if ( id == "search" ) {
+		$('#CB_CATEGORY').val(data.row.CATEGORY);
 		$('#TITLE').val(data.row.TITLE);
 		
 		$('#CONTENTS').val(data.row.CONTENTS);
@@ -82,6 +80,10 @@ function fn_callbackAjax(data, id) {
 		} else {
 			$("#CONTENTS").cleditor()[0].disable(true).refresh();
 		}
+	} else if ( id == "dd" ){
+		gfn_cbRefresh("CB_CATEGORY", data.FaqCategory, true);
+		
+		fn_ddAfter();
 	} else if ( id == "save" ){
 		mask.close();
 
@@ -99,6 +101,10 @@ function fn_callbackAjax(data, id) {
 
 
 function fn_save() {
+	if ( $("#CB_CATEGORY option:selected").val() == "" ) {
+		alert("카테고리를 선택하셔야 합니다.");
+		return;
+	}
 	if ( $("#TITLE").val() == "" ) {
 		alert("제목을 입력하셔야 합니다.");
 		return;
@@ -117,13 +123,13 @@ function fn_save() {
        	function(){
          	if ( this.key == "ok" ) {
          		var saveParams = {
+         				CATEGORY : $("#CB_CATEGORY option:selected").val(),
          				TITLE : $('#TITLE').val(),
          				CONTENTS : $('#CONTENTS').val(),
          				MODE : MODE,
-         				SEQ : SEQ,
-         				COURSE_ID : COURSE_ID
+         				SEQ : SEQ
          		};
-         		gfn_callAjax("/board/axBoardReportSave.do", saveParams, fn_callbackAjax, "save");
+         		gfn_callAjax("/board/axBoardFaqSave.do", saveParams, fn_callbackAjax, "save");
            	} else {
            		mask.close();
            	}
@@ -143,9 +149,17 @@ function fn_close() {
 
 <body style="padding : 10px">
 
-<h2>레포트 게시물</h2>
+<h2>FAQ 게시물</h2>
 
 <form class="form-horizontal">
+  	<div class="form-group">
+    	<label for="TITLE" class="col-sm-2 control-label">카테고리</label>
+    	<div class="col-sm-10">
+    		<select id="CB_CATEGORY" class="form-control">
+				<option value="">전체</option>
+			</select>
+    	</div>
+  	</div>
   	<div class="form-group">
     	<label for="TITLE" class="col-sm-2 control-label">제목</label>
     	<div class="col-sm-10">
@@ -156,12 +170,6 @@ function fn_close() {
     	<label for="inputPassword3" class="col-sm-2 control-label">내용</label>
     	<div class="col-sm-10">
       		<textarea id="CONTENTS" name="CONTENTS"></textarea>
-    	</div>
-  	</div>
-  	<div class="form-group"> 
-    	<label for="inputPassword3" class="col-sm-2 control-label">첨부파일</label>
-    	<div class="col-sm-10">
-      		<iframe id="attachFrame" name="attachFrame" style="width:100%;height:150px"></iframe> 
     	</div>
   	</div>
   	<div class="form-group">

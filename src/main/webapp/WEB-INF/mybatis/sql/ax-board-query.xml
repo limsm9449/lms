@@ -10,7 +10,6 @@
 		       	TITLE,
 		       	A.USER_ID,
 		       	B.USER_NAME,
-		       	USER_IP,
 		       	VIEW_CNT,
 		       	DATE_FORMAT(IFNULL(A.UPDATE_DATE,A.CREATE_DATE), '%y.%m.%d %H:%i') CREATE_DATE,
 		       	IF(A.USER_ID = #{USER_ID}, 'Y','N') MY_BOARD_YN
@@ -19,7 +18,7 @@
 		<if test="SEARCH_STR != null and SEARCH_STR != ''">
 			AND ( UPPER(A.TITLE) LIKE CONCAT('%',UPPER(#{SEARCH_STR}),'%') OR UPPER(A.USER_ID) LIKE CONCAT('%',UPPER(#{SEARCH_STR}),'%') OR UPPER(B.USER_NAME) LIKE CONCAT('%',UPPER(#{SEARCH_STR}),'%') )
 		</if>			 
-		ORDER 	BY 8 DESC
+		ORDER 	BY 7 DESC
 	</select>
 
 	<select id="axBoardReportOne" resultType="hashmap">
@@ -32,8 +31,8 @@
 	</select>
 	
 	<insert id="axBoardReportInsert" parameterType="hashmap">
-		INSERT INTO BOARD_REPORT (COURSE_ID,TITLE,CONTENTS,USER_ID,USER_IP,VIEW_CNT,CREATE_DATE)
-		VALUES (#{COURSE_ID},#{TITLE},#{CONTENTS},#{USER_ID},#{USER_IP},0,CURRENT_TIMESTAMP)
+		INSERT INTO BOARD_REPORT (COURSE_ID,TITLE,CONTENTS,USER_ID,VIEW_CNT,CREATE_DATE)
+		VALUES (#{COURSE_ID},#{TITLE},#{CONTENTS},#{USER_ID},0,CURRENT_TIMESTAMP)
     </insert>	
     
     <update id="axBoardReportUpdate" parameterType="hashmap">
@@ -44,14 +43,12 @@
 		 WHERE SEQ = #{SEQ}
     </update>	
 
-	<!-- 조회수 증가 -->
     <update id="axBoardReportViewCntUpd" parameterType="hashmap">
 		UPDATE BOARD_REPORT
 		   SET VIEW_CNT = VIEW_CNT + 1
 		 WHERE SEQ = #{SEQ}
     </update>	
 
-	<!-- 자료실 게시판 삭제 -->
     <delete id="axBoardReportDelete" parameterType="hashmap">
 		DELETE FROM BOARD_REPORT
 		 WHERE SEQ = #{SEQ}
@@ -63,7 +60,6 @@
 		       	TITLE,
 		       	A.USER_ID,
 		       	B.USER_NAME,
-		       	USER_IP,
 		       	VIEW_CNT,
 		       	DATE_FORMAT(IFNULL(A.UPDATE_DATE,A.CREATE_DATE), '%y.%m.%d %H:%i') CREATE_DATE,
 		       	IF(A.USER_ID = #{USER_ID}, 'Y','N') MY_BOARD_YN
@@ -72,7 +68,7 @@
 		<if test="SEARCH_STR != null and SEARCH_STR != ''">
 			AND ( UPPER(A.TITLE) LIKE CONCAT('%',UPPER(#{SEARCH_STR}),'%') OR UPPER(A.USER_ID) LIKE CONCAT('%',UPPER(#{SEARCH_STR}),'%') OR UPPER(B.USER_NAME) LIKE CONCAT('%',UPPER(#{SEARCH_STR}),'%') )
 		</if>			 
-		ORDER 	BY 8 DESC
+		ORDER 	BY 7 DESC
 	</select>
 
 	<select id="axBoardDataOne" resultType="hashmap">
@@ -85,8 +81,8 @@
 	</select>
 	
 	<insert id="axBoardDataInsert" parameterType="hashmap">
-		INSERT INTO BOARD_DATA (COURSE_ID,TITLE,CONTENTS,USER_ID,USER_IP,VIEW_CNT,CREATE_DATE)
-		VALUES (#{COURSE_ID},#{TITLE},#{CONTENTS},#{USER_ID},#{USER_IP},0,CURRENT_TIMESTAMP)
+		INSERT INTO BOARD_DATA (COURSE_ID,TITLE,CONTENTS,USER_ID,VIEW_CNT,CREATE_DATE)
+		VALUES (#{COURSE_ID},#{TITLE},#{CONTENTS},#{USER_ID},0,CURRENT_TIMESTAMP)
     </insert>	
     
     <update id="axBoardDataUpdate" parameterType="hashmap">
@@ -97,20 +93,16 @@
 		 WHERE SEQ = #{SEQ}
     </update>	
 
-	<!-- 조회수 증가 -->
     <update id="axBoardDataViewCntUpd" parameterType="hashmap">
 		UPDATE BOARD_DATA
 		   SET VIEW_CNT = VIEW_CNT + 1
 		 WHERE SEQ = #{SEQ}
     </update>	
 
-	<!-- 자료실 게시판 삭제 -->
     <delete id="axBoardDataDelete" parameterType="hashmap">
 		DELETE FROM BOARD_DATA
 		 WHERE SEQ = #{SEQ}
     </delete>
-    
-    
     
    	<select id="axBoardNoticeList" resultType="hashmap">
 		SELECT 	A.SEQ,
@@ -119,11 +111,11 @@
 		       	VIEW_CNT,
 		       	DATE_FORMAT(IFNULL(A.UPDATE_DATE,A.CREATE_DATE), '%y.%m.%d %H:%i') CREATE_DATE
 		FROM 	BOARD_NOTICE A
-		WHERE 	A.COURSE_ID = #{COURSE_ID}
+		WHERE 	A.COURSE_ID IN (0, #{COURSE_ID})
 		<if test="SEARCH_STR != null and SEARCH_STR != ''">
 			AND UPPER(A.TITLE) LIKE CONCAT('%',UPPER(#{SEARCH_STR}),'%')
-		</if>			 
-		ORDER 	BY 5 DESC
+		</if>
+		ORDER 	BY COURSE_ID ASC, 5 DESC
 	</select>
 
 	<select id="axBoardNoticeOne" resultType="hashmap">
@@ -158,5 +150,276 @@
 		DELETE FROM BOARD_NOTICE
 		 WHERE SEQ = #{SEQ}
     </delete>
-        
+
+	<select id="axBoardFaqList" resultType="hashmap">
+		SELECT 	A.SEQ,
+		       	CATEGORY,
+		       	TITLE,
+		       	VIEW_CNT,
+		       	DATE_FORMAT(IFNULL(A.UPDATE_DATE,A.CREATE_DATE), '%y.%m.%d %H:%i') CREATE_DATE
+		FROM 	BOARD_FAQ A
+		WHERE 	1 = 1
+		<if test="SEARCH_STR != null and SEARCH_STR != ''">
+			AND UPPER(A.TITLE) LIKE CONCAT('%',UPPER(#{SEARCH_STR}),'%')
+		</if>
+		ORDER 	BY 5 DESC
+	</select>
+
+	<select id="axBoardFaqOne" resultType="hashmap">
+		SELECT 	SEQ,
+		       	CATEGORY,
+		       	TITLE,
+		       	CONTENTS
+		FROM 	BOARD_FAQ
+		WHERE 	SEQ = #{SEQ}
+	</select>
+	
+	<insert id="axBoardFaqInsert" parameterType="hashmap">
+		INSERT INTO BOARD_FAQ (CATEGORY,TITLE,CONTENTS,VIEW_CNT,CREATE_DATE)
+		VALUES (#{CATEGORY},#{TITLE},#{CONTENTS},0,CURRENT_TIMESTAMP)
+    </insert>	
+    
+    <update id="axBoardFaqUpdate" parameterType="hashmap">
+		UPDATE BOARD_FAQ
+		   SET CATEGORY = #{CATEGORY},
+		   	   TITLE = #{TITLE},
+		       CONTENTS = #{CONTENTS},
+		       UPDATE_DATE = CURRENT_TIMESTAMP
+		 WHERE SEQ = #{SEQ}
+    </update>	
+
+    <update id="axBoardFaqViewCntUpd" parameterType="hashmap">
+		UPDATE BOARD_FAQ
+		   SET VIEW_CNT = VIEW_CNT + 1
+		 WHERE SEQ = #{SEQ}
+    </update>	
+
+    <delete id="axBoardFaqDelete" parameterType="hashmap">
+		DELETE FROM BOARD_FAQ
+		 WHERE SEQ = #{SEQ}
+    </delete>
+         
+    <select id="axBoardFreeList" resultType="hashmap">
+		SELECT 	A.SEQ,
+		       	A.COURSE_ID,
+		       	TITLE,
+		       	A.USER_ID,
+		       	B.USER_NAME,
+		       	VIEW_CNT,
+		       	DATE_FORMAT(IFNULL(A.UPDATE_DATE,A.CREATE_DATE), '%y.%m.%d %H:%i') CREATE_DATE,
+		       	IF(A.USER_ID = #{USER_ID}, 'Y','N') MY_BOARD_YN
+		FROM 	BOARD_FREE A LEFT OUTER JOIN USER B ON A.USER_ID = B.USER_ID
+		WHERE 	A.COURSE_ID = #{COURSE_ID}
+		<if test="SEARCH_STR != null and SEARCH_STR != ''">
+			AND ( UPPER(A.TITLE) LIKE CONCAT('%',UPPER(#{SEARCH_STR}),'%') OR UPPER(A.USER_ID) LIKE CONCAT('%',UPPER(#{SEARCH_STR}),'%') OR UPPER(B.USER_NAME) LIKE CONCAT('%',UPPER(#{SEARCH_STR}),'%') )
+		</if>			 
+		ORDER 	BY 7 DESC
+	</select>
+
+	<select id="axBoardFreeOne" resultType="hashmap">
+		SELECT 	SEQ,
+		       	COURSE_ID,
+		       	TITLE,
+		       	CONTENTS
+		FROM 	BOARD_FREE
+		WHERE 	SEQ = #{SEQ}
+	</select>
+	
+	<insert id="axBoardFreeInsert" parameterType="hashmap">
+		INSERT INTO BOARD_FREE (COURSE_ID,TITLE,CONTENTS,USER_ID,VIEW_CNT,CREATE_DATE)
+		VALUES (#{COURSE_ID},#{TITLE},#{CONTENTS},#{USER_ID},0,CURRENT_TIMESTAMP)
+    </insert>	
+    
+    <update id="axBoardFreeUpdate" parameterType="hashmap">
+		UPDATE BOARD_FREE
+		   SET TITLE = #{TITLE},
+		       CONTENTS = #{CONTENTS},
+		       UPDATE_DATE = CURRENT_TIMESTAMP
+		 WHERE SEQ = #{SEQ}
+    </update>	
+
+    <update id="axBoardFreeViewCntUpd" parameterType="hashmap">
+		UPDATE BOARD_FREE
+		   SET VIEW_CNT = VIEW_CNT + 1
+		 WHERE SEQ = #{SEQ}
+    </update>	
+
+    <delete id="axBoardFreeDelete" parameterType="hashmap">
+		DELETE FROM BOARD_FREE
+		 WHERE SEQ = #{SEQ}
+    </delete>
+    
+    <select id="axBoardReplyList" resultType="hashmap">
+		SELECT 	A.SEQ,
+				A.KIND,
+				A.P_SEQ,
+		       	A.CONTENTS,
+		       	A.USER_ID,
+		       	B.USER_NAME,
+		       	DATE_FORMAT(IFNULL(A.UPDATE_DATE,A.CREATE_DATE), '%y.%m.%d %H:%i') CREATE_DATE,
+		       	IF(A.USER_ID = #{SESSION_USER_ID}, 'Y','N') MY_BOARD_YN,
+		       	'N' NEW_FLAG
+		FROM 	REPLY A LEFT OUTER JOIN USER B ON A.USER_ID = B.USER_ID
+		WHERE 	A.KIND = #{KIND}
+		AND		A.P_SEQ = #{P_SEQ}
+		ORDER 	BY 7 DESC
+	</select>
+
+	<insert id="axBoardReplyInsert" parameterType="hashmap">
+		INSERT INTO REPLY (KIND,P_SEQ,CONTENTS,USER_ID,CREATE_DATE)
+		VALUES (#{KIND},#{P_SEQ},#{CONTENTS},#{SESSION_USER_ID},CURRENT_TIMESTAMP)
+    </insert>	
+    
+    <update id="axBoardReplyUpdate" parameterType="hashmap">
+		UPDATE REPLY
+		   SET CONTENTS = #{CONTENTS},
+		       UPDATE_DATE = CURRENT_TIMESTAMP
+		 WHERE SEQ = #{SEQ}
+    </update>	
+
+    <delete id="axBoardReplyDelete" parameterType="hashmap">
+		DELETE FROM REPLY
+		 WHERE SEQ = #{SEQ}
+    </delete>
+    
+    <select id="axBoardQnaList" resultType="hashmap">
+		SELECT 	A.SEQ,
+		       	A.COURSE_ID,
+		       	TITLE,
+		       	A.USER_ID,
+		       	B.USER_NAME,
+		       	VIEW_CNT,
+		       	DATE_FORMAT(IFNULL(A.UPDATE_DATE,A.CREATE_DATE), '%y.%m.%d %H:%i') CREATE_DATE,
+		       	IF(A.USER_ID = #{USER_ID}, 'Y','N') MY_BOARD_YN,
+                C.CNT REPLY_CNT
+		FROM 	BOARD_QNA A 
+					LEFT OUTER JOIN USER B ON A.USER_ID = B.USER_ID
+					LEFT OUTER JOIN (
+						SELECT 	P_SEQ, COUNT(*) CNT
+						FROM	REPLY
+						WHERE 	KIND = 'QNA'
+						AND 	P_SEQ IN (SELECT SEQ FROM BOARD_QNA WHERE COURSE_ID = #{COURSE_ID})
+						GROUP	BY P_SEQ
+					) C ON C.P_SEQ = A.SEQ
+		WHERE 	A.COURSE_ID = #{COURSE_ID}
+		<if test="SEARCH_STR != null and SEARCH_STR != ''">
+			AND ( UPPER(A.TITLE) LIKE CONCAT('%',UPPER(#{SEARCH_STR}),'%') OR UPPER(A.USER_ID) LIKE CONCAT('%',UPPER(#{SEARCH_STR}),'%') OR UPPER(B.USER_NAME) LIKE CONCAT('%',UPPER(#{SEARCH_STR}),'%') )
+		</if>			 
+		ORDER 	BY 7 DESC
+	</select>
+
+	<select id="axBoardQnaOne" resultType="hashmap">
+		SELECT 	SEQ,
+		       	COURSE_ID,
+		       	TITLE,
+		       	CONTENTS
+		FROM 	BOARD_QNA
+		WHERE 	SEQ = #{SEQ}
+	</select>
+	
+	<insert id="axBoardQnaInsert" parameterType="hashmap">
+		INSERT INTO BOARD_QNA (COURSE_ID,TITLE,CONTENTS,USER_ID,VIEW_CNT,CREATE_DATE)
+		VALUES (#{COURSE_ID},#{TITLE},#{CONTENTS},#{USER_ID},0,CURRENT_TIMESTAMP)
+    </insert>	
+    
+    <update id="axBoardQnaUpdate" parameterType="hashmap">
+		UPDATE BOARD_QNA
+		   SET TITLE = #{TITLE},
+		       CONTENTS = #{CONTENTS},
+		       UPDATE_DATE = CURRENT_TIMESTAMP
+		 WHERE SEQ = #{SEQ}
+    </update>	
+
+    <update id="axBoardQnaViewCntUpd" parameterType="hashmap">
+		UPDATE BOARD_QNA
+		   SET VIEW_CNT = VIEW_CNT + 1
+		 WHERE SEQ = #{SEQ}
+    </update>	
+
+    <delete id="axBoardQnaDelete" parameterType="hashmap">
+		DELETE FROM BOARD_QNA
+		 WHERE SEQ = #{SEQ}
+    </delete>
+    
+    <select id="axBoardDiscussionList" parameterType="hashmap" resultType="hashmap">
+		SELECT 	A.SEQ,
+		       	A.COURSE_ID,
+		       	A.REF,
+		       	A.ORD,
+		       	A.STEP,
+		       	TITLE,
+		       	A.USER_ID,
+		       	B.USER_NAME,
+		       	VIEW_CNT,
+		       	DATE_FORMAT(IFNULL(A.UPDATE_DATE,A.CREATE_DATE), '%y.%m.%d %H:%i') CREATE_DATE,
+		       	IF(A.USER_ID = #{USER_ID}, 'Y','N') MY_BOARD_YN
+		FROM 	BOARD_DISCUSSION A 
+					LEFT OUTER JOIN USER B ON A.USER_ID = B.USER_ID
+		WHERE 	A.COURSE_ID = #{COURSE_ID}
+		<if test="SEARCH_STR != null and SEARCH_STR != ''">
+			AND ( UPPER(A.TITLE) LIKE CONCAT('%',UPPER(#{SEARCH_STR}),'%') OR UPPER(A.USER_ID) LIKE CONCAT('%',UPPER(#{SEARCH_STR}),'%') OR UPPER(B.USER_NAME) LIKE CONCAT('%',UPPER(#{SEARCH_STR}),'%') )
+		</if>			 
+		ORDER 	BY REF DESC,ORD
+	</select>    
+    
+    <!-- 토론 데이타 -->
+	<select id="axBoardDiscussionOne" parameterType="hashmap" resultType="hashmap">
+		SELECT A.SEQ,
+		       A.COURSE_ID,
+		       A.REF,
+		       A.ORD,
+		       A.STEP,
+		       A.TITLE,
+		       A.CONTENTS,
+		       A.USER_ID,
+		       B.USER_NAME,
+		       A.VIEW_CNT,
+		       DATE_FORMAT(IFNULL(A.UPDATE_DATE,A.CREATE_DATE), '%y.%m.%d %H:%i') CREATE_DATE
+		  FROM BOARD_DISCUSSION A LEFT OUTER JOIN USER B ON A.USER_ID = B.USER_ID
+		 WHERE A.SEQ = #{SEQ}
+    </select>
+    
+    <insert id="axBoardDiscussionInsert" parameterType="hashmap">
+		INSERT INTO BOARD_DISCUSSION (COURSE_ID,REF,ORD,STEP,TITLE,CONTENTS,USER_ID,VIEW_CNT,CREATE_DATE)
+		VALUES (#{COURSE_ID},#{REF},1,1,#{TITLE},#{CONTENTS},#{USER_ID},0,CURRENT_TIMESTAMP)
+    </insert>	
+
+    <insert id="axBoardDiscussionReplyInsert" parameterType="hashmap">
+		INSERT INTO BOARD_DISCUSSION (COURSE_ID,REF,ORD,STEP,TITLE,CONTENTS,USER_ID,VIEW_CNT,CREATE_DATE)
+		VALUES (#{COURSE_ID},#{REF},#{ORD} + 1,#{STEP} + 1,#{TITLE},#{CONTENTS},#{USER_ID},0,CURRENT_TIMESTAMP)
+    </insert>	
+
+    <update id="axBoardDiscussionRefUpdate" parameterType="hashmap">
+		UPDATE BOARD_DISCUSSION
+		   SET REF = #{REF}
+		 WHERE SEQ = #{SEQ}
+    </update>	
+    
+    <update id="axBoardDiscussionUpdate" parameterType="hashmap">
+		UPDATE BOARD_DISCUSSION
+		   SET TITLE = #{TITLE},
+		       CONTENTS = #{CONTENTS},
+		       UPDATE_DATE = CURRENT_TIMESTAMP
+		 WHERE SEQ = #{SEQ}
+    </update>	
+
+    <update id="axBoardDiscussionOrdUpdate" parameterType="hashmap">
+		UPDATE BOARD_DISCUSSION
+		   SET ORD = ORD + 1
+		 WHERE COURSE_ID = #{COURSE_ID}
+		   AND REF = #{REF}
+		   AND ORD > #{ORD}
+    </update>	
+
+    <delete id="axBoardDiscussionDelete" parameterType="hashmap">
+		DELETE FROM BOARD_DISCUSSION
+		 WHERE SEQ = #{SEQ}
+    </delete>	
+
+    <update id="axBoardDiscussionViewCntUpd" parameterType="hashmap">
+		UPDATE BOARD_DISCUSSION
+		   SET VIEW_CNT = VIEW_CNT + 1
+		 WHERE SEQ = #{seq}
+    </update>	
+    
 </mapper>
