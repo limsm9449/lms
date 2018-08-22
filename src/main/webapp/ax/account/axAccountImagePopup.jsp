@@ -56,7 +56,7 @@ $(document.body).ready(function () {
         }
     });
     
-    $("#COMP_CD").val(gfn_getUrlParams("COMP_CD"));
+    $("#USER_ID").val(gfn_getUrlParams("USER_ID"));
 
     fn_search();
     
@@ -66,23 +66,20 @@ $(document.body).ready(function () {
 });
 
 function fn_params() {
-	params.COMP_CD = gfn_getUrlParams("COMP_CD");	
+	params.USER_ID = gfn_getUrlParams("USER_ID");	
 }
 
 function fn_search() {
 	fn_params();
 	
-	gfn_callAjax("/account/axCompanyImageList.do", params, fn_callbackAjax, "search");
+	gfn_callAjax("/account/axAccountImageList.do", params, fn_callbackAjax, "search");
 }
 
 function fn_callbackAjax(data, id) {
 	//console.log("fn_callbackAjax : " + id);
 	if ( id == "search" ) {
-		if ( data.row.LOGIN_IMG == "Y" ) {
-			$('#loginImg').attr("src", "/cImage/company/" + data.row.COMP_CD + "_login.jpg");
-		}
-		if ( data.row.GNB_IMG == "Y" ) {
-			$('#gnbImg').attr("src", "/cImage/company/" + data.row.COMP_CD + "_gnb.jpg");
+		if ( data.row.USER_IMG == "Y" ) {
+			$('#userImg').attr("src", "/cImage/user/" + data.row.USER_ID + ".jpg");
 		}
 		//mask.close();
 	} else if ( id == "save" ){
@@ -101,11 +98,7 @@ function fn_callbackAjax(data, id) {
 }
 
 function fn_upload(pParam) {
-	if ( pParam.kind == "LOGIN" && isExtention($("#loginImgFile").val(),"jpg") == false ) {
-		mask.open();
-		dialog.alert( { msg : "JPG 파일을 선택해주세요." }, function () { mask.close();	} );
-		return false;
-	} else if ( pParam.kind == "GNB" && isExtention($("#gnbImgFile").val(),"jpg") == false ) {
+	if ( pParam.kind == "USER" && isExtention($("#userImgFile").val(),"jpg") == false ) {
 		mask.open();
 		dialog.alert( { msg : "JPG 파일을 선택해주세요." }, function () { mask.close();	} );
 		return false;
@@ -113,7 +106,7 @@ function fn_upload(pParam) {
 	
 	$("#kind").val(pParam.kind);
 
-	document.frm.action = context + "/account/axCompanyImageUpload.do";
+	document.frm.action = context + "/account/axAccountImageUpload.do";
 	document.frm.target = "tranFrameS";
 	document.frm.method = "POST";	
 	document.frm.submit();
@@ -134,7 +127,7 @@ function isExtention(fileName, compExt) {
 
 <form id="frm" name="frm" action="" method="post" enctype="multipart/form-data">
 <input id="kind" name="kind" type="hidden" value=""/>
-<input id="COMP_CD" name="COMP_CD" type="hidden" value=""/>
+<input id="USER_ID" name="USER_ID" type="hidden" value=""/>
 
 <h2>이미지 관리</h2>
 <div style="height:10px"></div>
@@ -146,21 +139,12 @@ function isExtention(fileName, compExt) {
 <div style="height:10px"></div>
 
 <div data-ax5layout="ax1" data-config='{layout:"tab-panel"}' style="height:515px;">
-    <div data-tab-panel='{label: "로그인 화면 이미지", "active": "true"}' style="background: #eee;">
+    <div data-tab-panel='{label: "사용자 이미지", "active": "true"}' style="background: #eee;">
         <div style="padding: 10px;">
-            <div class="img_box"><img id="loginImg" src="/cImage/blank.jpg" style="width:650px;height:425px;"/></div>
+            <div class="img_box"><img id="userImg" src="/cImage/blank.jpg" style="width:650px;height:425px;"/></div>
             <div class="file_btn_group">
-		      <a class="grayBtn file_button">Login Image.jpg 파일</a> 
-		      <input type="file" name="loginImgFile" id="loginImgFile" class="hidden_inputfile" title="" onChange="fn_upload({kind:'LOGIN'}); return false;">
-		    </div>
-        </div>
-    </div>
-    <div data-tab-panel='{label: "타이틀 로고 이미지", "active": "false"}' style="background: #ccc;">
-        <div style="padding: 10px;">
-            <div class="img_box"><img id="gnbImg" src="/cImage/blank.jpg" style="width:650px;height:425px;"/></div>
-            <div class="file_btn_group">
-		      <a class="grayBtn file_button">GNB Image.jpg 파일</a> 
-		      <input type="file" name="gnbImgFile" id="gnbImgFile" class="hidden_inputfile" title="" onChange="fn_upload({kind:'GNB'}); return false;">
+		      <a class="grayBtn file_button">User Image.jpg 파일</a> 
+		      <input type="file" name="userImgFile" id="userImgFile" class="hidden_inputfile" title="" onChange="fn_upload({kind:'USER'}); return false;">
 		    </div>
         </div>
     </div>

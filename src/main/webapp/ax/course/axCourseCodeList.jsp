@@ -33,7 +33,7 @@ $(document.body).ready(function () {
         theme: "danger"
     });
 
-    gfn_callAjax("/common/axDd.do", { DD_KIND : "CategoryLevel1,Teacher,QuestGroup" }, fn_callbackAjax, "dd", { async : false });
+    gfn_callAjax("/common/axDd.do", { DD_KIND : "CategoryLevel1,Teacher,QuestGroup,ContentsManager" }, fn_callbackAjax, "dd", { async : false });
     
     $('[data-grid-control]').click(function () {
         switch (this.getAttribute("data-grid-control")) {
@@ -96,12 +96,6 @@ $(document.body).ready(function () {
 function fn_makeGrid() {
 	grid = gfn_makeAx5Grid("first-grid",
 		[ 	{
-	            key : "NEW_FLAG",
-	            width : 0
-	        },{
-	            key : "CODE",
-	            width : 0
-	        },{
 	            key : "CATEGORY_NAME",
 	            label : "카테고리",
 	            width : 150,
@@ -136,6 +130,24 @@ function fn_makeGrid() {
 	        	},
 	            formatter : function () {
 	                return gfn_getValueInList(dd.Teacher, "value",  this.item.TEACHER_ID, "text");
+	           	},
+				styleClass: function () {
+                    return "grid-cell-edit";
+                }
+	        },{
+	        	key : "CONTENTS_MANAGER_ID", 
+	        	label : "컨텐츠 관리자", 
+	            width : 140,
+	        	align : "left", 
+	        	editor: {
+                    type : "select", 
+                    config : {
+                        columnKeys: { optionValue: "value", optionText: "text" },
+                        options: dd.ContentsManager
+                    } 
+	        	},
+	            formatter : function () {
+	                return gfn_getValueInList(dd.ContentsManager, "value",  this.item.CONTENTS_MANAGER_ID, "text");
 	           	},
 				styleClass: function () {
                     return "grid-cell-edit";
@@ -338,6 +350,8 @@ function fn_callbackAjax(data, id) {
 		//mask.close();
 	} else if ( id == "dd" ){
 		dd = $.extend({}, data);
+		
+		dd.ContentsManager = [{value : "", text : ""}].concat(dd.ContentsManager);
 		
 		gfn_cbRefresh("CB_LEVEL1", data.CategoryLevel1, true);
 		gfn_cbRefresh("INS_CB_LEVEL1", data.CategoryLevel1, true);

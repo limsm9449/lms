@@ -32,7 +32,7 @@ $(document.body).ready(function () {
         theme: "danger"
     });
 
-    gfn_callAjax("/common/axDd.do", { DD_KIND : "Company,Job,Sex,AdminAuth" }, fn_callbackAjax, "dd", { async : false });
+    gfn_callAjax("/common/axDd.do", { DD_KIND : "Company,Job,Sex,ZipcodeUrl" }, fn_callbackAjax, "dd", { async : false });
     
     $('[data-grid-control]').click(function () {
         switch (this.getAttribute("data-grid-control")) {
@@ -40,7 +40,17 @@ $(document.body).ready(function () {
 	            fn_search();
 	            break;
             case "add":
-            	grid.addRow({NEW_FLAG : "Y", USER_ID : "******", USER_NAME : "사용자명을 입력하세요.", COMP_CD : "B2C"}, "last", {focus: "END"});
+            	grid.addRow(
+            		{
+            			NEW_FLAG : "Y", 
+            			USER_ID : "******", 
+            			USER_NAME : "사용자명을 입력하세요.", 
+		            	ADMIN_YN : "N",
+		            	SITE_MANAGER_YN : "N",
+		            	CONTENTS_MANAGER_YN : "N",
+		            	TUTOR_YN : "N",
+		            	TEACHER_YN : "N"
+            		}, "last", {focus: "END"});
 
 		    	break;
             case "delete":
@@ -119,6 +129,25 @@ $(document.body).ready(function () {
             	           	}
             	       	);
             	}
+                break;
+            case "zipcodeUrl":
+           		window.open(dd.ZipcodeUrl[0].text, "zipcode","width=900,height=650");
+                break;
+            case "editImage":
+            	var row = grid.getList("selected");
+            	if ( row.length == 0 ) {
+            		mask.open();
+            		dialog.alert( { msg : "사용자를 선택하셔야 합니다." }, function () { mask.close();	} );
+            	} else if ( row[0]["NEW_FLAG"] == "Y" ) {
+            		mask.open();
+            		dialog.alert( { msg : "신규로 추가한 경우는 저장후에 이미지를 편집하셔야 합니다." }, function () { mask.close();	} );
+            	} else {
+            		var urlParams = "page=/ax/account/axAccountImagePopup";
+            		urlParams += "&USER_ID=" + row[0]["USER_ID"];
+            		
+            		f_popup('/common/axOpenPage', {displayName:'accountImagePopup',option:'width=900,height=650', urlParams:urlParams});
+            	}
+            		
                 break;
         }
     });
@@ -301,6 +330,11 @@ function fn_makeGrid() {
 	        	label : "인증 여부", 
 	            width : 90,
 	        	align : "center"
+			},{
+	        	key : "USER_IMG", 
+	        	label : "사용자 이미지", 
+	            width : 110,
+	        	align : "center"
 	        },{
 	            key : "BANK",
 	            label : "환불은행",
@@ -330,18 +364,27 @@ function fn_makeGrid() {
 			        {
 			        	key : "ADMIN_YN", 
 			        	label : "어드민", 
+			            width : 70,
+			        	align : "center", 
+			        	editor : { type : "checkbox", config : {height: 17, trueValue: "Y", falseValue: "N"} },
+						styleClass: function () {
+		                    return "grid-cell-edit";
+		                }
+			        },{
+			        	key : "SITE_MANAGER_YN", 
+			        	label : "사이트 관리자", 
 			            width : 120,
 			        	align : "center", 
-			        	editor: {
-		                    type : "select", 
-		                    config : {
-		                        columnKeys: { optionValue: "value", optionText: "text" },
-		                        options: dd.AdminAuth
-		                    } 
-			        	},
-			            formatter : function () {
-			                return gfn_getValueInList(dd.AdminAuth, "value",  this.item.ADMIN_YN, "text");
-			           	},
+			        	editor : { type : "checkbox", config : {height: 17, trueValue: "Y", falseValue: "N"} },
+						styleClass: function () {
+		                    return "grid-cell-edit";
+		                }
+			        },{
+			        	key : "CONTENTS_MANAGER_YN", 
+			        	label : "컨텐츠 관리자", 
+			            width : 120,
+			        	align : "center", 
+			        	editor : { type : "checkbox", config : {height: 17, trueValue: "Y", falseValue: "N"} },
 						styleClass: function () {
 		                    return "grid-cell-edit";
 		                }
@@ -392,7 +435,8 @@ function fn_makeGrid() {
 	        }	], 
 	  	null,
 	  	{
-	  		showRowSelector : false
+	  		showRowSelector : false,
+	  		frozenColumnIndex : 3 
 	  	}
 	);
 	
@@ -428,8 +472,16 @@ function fn_save() {
    	};
     
    	if ( gfn_validationCheck(grid, fieldParams) ) {
-       	mask.open();
+   		var allList = grid.getList();
+       	for ( var i = 0; i < allList.length; i++ ) {
+       		if ( allList[i].SITE_MANAGER_YN == "Y" && allList[i].COMP_CD == "") {
+    			mask.open();
+    			dialog.alert( { msg : (allList[i].__index + 1) + "라인의 " + "사이트 관리자일 경우 회사를 선택하셔야 합니다." }, function () { mask.close(); } );
+    			return false;
+       		}
+       	}
        	
+       	mask.open();
        	confirmDialog.confirm(
        		{
                	title: "Confirm",
@@ -473,7 +525,7 @@ function fn_callbackAjax(data, id) {
 	} else if ( id == "dd" ){
 		dd = $.extend({}, data);
 
-		dd.AdminAuth = [ {value : "", text : ""} ].concat(dd.AdminAuth);
+		dd.Company = [{value : "", text : ""}].concat(dd.Company);
 		
 		fn_makeGrid();
 		fn_search();
@@ -503,6 +555,7 @@ function fn_gridEvent(event, obj) {
        	<option value="USER_NAME" >사용자명</option>
        	<option value="EMAIL" >이메일</option>
        	<option value="MOBILE" >핸드폰</option>
+       	<option value="COMPANY" >회사</option>
 	</select>
 	<input type="text" class="search_input" id="SEARCH_STR" name="SEARCH_STR" value="" />
 	
@@ -510,9 +563,13 @@ function fn_gridEvent(event, obj) {
 	<select id="CB_USERKIND" name="CB_USERKIND">
 		<option value="" selected>전체</option>
 		<option value="ADMIN">Admin</option>
+		<option value="SITE_MANAGER">사이트 관리자</option>
+		<option value="CONTENTS_MANAGER">컨텐츠 관리자</option>
 		<option value="TEACHER">강사</option>
 		<option value="TUTOR">튜터</option>
 		<option value="USER">사용자</option>
+		<option value="B2C">일반사용자</option>
+		<option value="COMPANY">회사사용자</option>
 	</select>
 </div>
 
@@ -527,6 +584,8 @@ function fn_gridEvent(event, obj) {
     <button class="btn btn-default" data-grid-control="export">엑셀</button>
     <button class="btn btn-default" data-grid-control="passwordReset">패스워드 초기화</button>
     <button class="btn btn-default" data-grid-control="reSendCertification">인증메일 재발송</button>
+    <button class="btn btn-default" data-grid-control="editImage">이미지 관리</button>
+    <button class="btn btn-default" data-grid-control="zipcodeUrl">주소검색</button>
 </div> 
 
 <div style="height:10px"></div>

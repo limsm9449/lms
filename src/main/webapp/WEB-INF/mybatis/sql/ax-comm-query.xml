@@ -54,10 +54,8 @@
 		       USER_NAME text
 		  FROM USER
 		 WHERE TUTOR_YN = 'Y'
-		   AND COMP_CD IS NOT NULL
-           AND COMP_CD != ''
-           AND COMP_CD != 'B2C'
-		 ORDER BY COMP_CD, USER_NAME
+		   AND COMP_CD = #{COMP_CD} 
+		 ORDER BY USER_NAME
 	</select>
 	
 	<select id="axDdQuestGroup" resultType="hashmap">
@@ -158,6 +156,41 @@
        	WHERE 	USE_YN = 'Y'
 		ORDER 	BY 2	
 	</select>
+
+	<select id="axDdSetting" resultType="hashmap">
+		SELECT 	OPTION_KEY value
+		        ,OPTION_VALUE text
+		  FROM  SETTING
+<if test="OPTION_KEY != null and OPTION_KEY != ''">		  
+		 WHERE	OPTION_KEY = #{OPTION_KEY} 
+</if>		 
+		 ORDER BY OPTION_KEY 	
+	</select>
+    
+    <select id="axDdContentsManager" resultType="hashmap">
+		SELECT USER_ID value,
+		       USER_NAME text
+		  FROM USER
+		 WHERE CONTENTS_MANAGER_YN = 'Y'
+		 ORDER BY USER_NAME
+	</select>
+    
+    <select id="axDdCourseTutor" resultType="hashmap">
+		SELECT 	A.TUTOR_ID value,
+				U1.USER_NAME text
+		FROM 	COURSE A
+		  			LEFT OUTER JOIN USER U1 ON A.TUTOR_ID = U1.USER_ID
+		WHERE 	COURSE_ID = #{COURSE_ID}
+        UNION
+		SELECT 	A.TUTOR_ID value,
+				U1.USER_NAME text
+		FROM 	COURSE_TUTOR A
+		  			LEFT OUTER JOIN USER U1 ON A.TUTOR_ID = U1.USER_ID
+		WHERE 	A.COURSE_ID = #{COURSE_ID}
+        AND		A.USE_YN = 'Y'
+		ORDER 	BY 2
+	</select>
+
     
     <select id="lastInsertId" resultType="String">
 		SELECT LAST_INSERT_ID() LAST_ID

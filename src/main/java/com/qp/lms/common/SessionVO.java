@@ -8,10 +8,10 @@ public class SessionVO {
 	private String userId;
 	private String userName;
 	private String adminYn;
-	private String adminKind;
+	private String siteManagerYn;
+	private String contentsManagerYn;
 	private String tutorYn;
 	private String teacherYn;
-	private String compManagerYn;
 	private String userIp;
 	
 	private String downloadAuth;				/** 튜터, 어드민, 강사는 첨부 다운로드 권한이 있다. */
@@ -61,23 +61,23 @@ public class SessionVO {
 	public void setDownloadAuth(String downloadAuth) {
 		this.downloadAuth = downloadAuth;
 	}
-	public String getCompManagerYn() {
-		return compManagerYn;
-	}
-	public void setCompManagerYn(String compManagerYn) {
-		this.compManagerYn = compManagerYn;
-	}
-	public String getAdminKind() {
-		return adminKind;
-	}
-	public void setAdminKind(String adminKind) {
-		this.adminKind = adminKind;
-	}
 	public List<CourseVO> getFavorityCourseList() {
 		return favorityCourseList;
 	}
 	public void setFavorityCourseList(List<CourseVO> favorityCourseList) {
 		this.favorityCourseList = favorityCourseList;
+	}
+	public String getSiteManagerYn() {
+		return siteManagerYn;
+	}
+	public void setSiteManagerYn(String siteManagerYn) {
+		this.siteManagerYn = siteManagerYn;
+	}
+	public String getContentsManagerYn() {
+		return contentsManagerYn;
+	}
+	public void setContentsManagerYn(String contentsManagerYn) {
+		this.contentsManagerYn = contentsManagerYn;
 	}
 	
 		

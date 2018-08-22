@@ -65,12 +65,14 @@ function login() {
 }
 
 function lfn_page() {
-	if ( $("#auth").val() == "ADMIN_A" || $("#auth").val() == "ADMIN_C" || $("#auth").val() == "ADMIN_M") {
+	if ( $("#auth").val() == "ADMIN" ) {
 		page.goAdminHome();
+	} else if ( $("#auth").val() == "CONTENTS_MANAGER") {
+		page.goContentsHome();
+	} else if ( $("#auth").val() == "SITE_MANAGER") {
+		page.goSiteHome();
 	} else if ( $("#auth").val() == "TEACHER") {
 		page.goTeacherHome();
-	} else if ( $("#auth").val() == "C_TUTOR") {
-		page.goCompManagerHome();
 	} else if ( $("#auth").val() == "TUTOR") {
 		page.goTutorHome();
 	}
@@ -112,9 +114,9 @@ function lfn_login(userId) {
 	  					<label for="user_auth" class="input_log_auth">인증</label>
 	  					<select id="auth" name="auth" class="input_log auth">
 	    		          	<option value="">권한 선택</option>
-	    					<option value="ADMIN_A" selected="">Admin</option>
-	    					<option value="ADMIN_C">Contents Admin</option>
-	    					<option value="ADMIN_M">Manage Admin</option>
+	    					<option value="ADMIN" selected="">Admin</option>
+	    					<option value="SITE_MANAGER">사이트 관리자</option>
+	    					<option value="CONTENTS_MANAGER">컨텐츠 관리자</option>
 	    					<option value="TEACHER">Teacher</option>
 	    					<option value="C_TUTOR">Company Manager</option>
 	    					<option value="TUTOR">Tutor</option>

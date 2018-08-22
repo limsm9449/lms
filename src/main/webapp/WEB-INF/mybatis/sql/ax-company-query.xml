@@ -26,10 +26,10 @@
 	
 	<insert id="axCompanyInsert" parameterType="hashmap">
 		INSERT INTO COMPANY(COMP_CD, COMP_NAME, SUB_DOMAIN, ADDR, ZIPCODE, 
-						COMP_TEL, FAX, TUTOR_ID, BUSINESS_NO, OWNER_NAME, LOGIN_IMG, GNB_IMG, 
+						COMP_TEL, FAX,  BUSINESS_NO, OWNER_NAME, LOGIN_IMG, GNB_IMG, 
     	                CREATE_DATE, CREATE_USER)
     	VALUES (#{COMP_CD}, #{COMP_NAME}, #{SUB_DOMAIN}, #{ADDR}, #{ZIPCODE}, 
-    			#{COMP_TEL}, #{FAX}, #{TUTOR_ID}, #{BUSINESS_NO}, #{OWNER_NAME}, 'Y', 'Y',
+    			#{COMP_TEL}, #{FAX}, #{BUSINESS_NO}, #{OWNER_NAME}, 'Y', 'Y',
     	        CURRENT_TIMESTAMP, #{SESSION_USER_ID})
 	</insert>  
 	
@@ -41,7 +41,6 @@
 				,ZIPCODE = #{ZIPCODE}
 				,COMP_TEL = #{COMP_TEL}
 				,FAX = #{FAX}
-				,TUTOR_ID = #{TUTOR_ID}
 				,BUSINESS_NO = #{BUSINESS_NO}
 				,OWNER_NAME = #{OWNER_NAME}
 				,LOGIN_IMG = #{LOGIN_IMG}

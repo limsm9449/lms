@@ -54,30 +54,25 @@ public class LoginController {
    	 	if ( set.getData() != null && !"".equals(set.getData().getUserId()) ) {
    	 		String auth = CommUtil.getString(loginVO.getAuth());
    	 		
-   	 		if ( ("ADMIN_A".equals(auth) && !"A".equals(CommUtil.getString(set.getData().getAdminYn()))) ||
-   	 				("ADMIN_C".equals(auth) && !"C".equals(CommUtil.getString(set.getData().getAdminYn()))) ||
-   	 				("ADMIN_M".equals(auth) && !"M".equals(CommUtil.getString(set.getData().getAdminYn()))) ||
+   	 		if ( ("ADMIN".equals(auth) && !"Y".equals(CommUtil.getString(set.getData().getAdminYn()))) ||
+   	 				("SITE_MANGER".equals(auth) && !"Y".equals(CommUtil.getString(set.getData().getAdminYn()))) ||
+   	 				("CONTENTS_MANAGER".equals(auth) && !"Y".equals(CommUtil.getString(set.getData().getAdminYn()))) ||
    	 				("TEACHER".equals(auth) && !"Y".equals(CommUtil.getString(set.getData().getTeacherYn()))) ||
-   	 				("TUTOR".equals(auth) && !"Y".equals(CommUtil.getString(set.getData().getTutorYn()))) ||
-   	 				("C_TUTOR".equals(auth) && !"Y".equals(CommUtil.getString(set.getData().getCompManagerYn()))) ) {
+   	 				("TUTOR".equals(auth) && !"Y".equals(CommUtil.getString(set.getData().getTutorYn()))) ) {
    	 			set.setIsNotAuth("Y");
    	 		} else {
 	   	 		SessionVO sess = new SessionVO();
 	   	 		sess.setUserId(set.getData().getUserId());
 	   	 		sess.setUserName(set.getData().getUserName());
-	   	 		if ( "A".equals(set.getData().getAdminYn()) || "C".equals(set.getData().getAdminYn()) || "M".equals(set.getData().getAdminYn()) ) {
-	   	 			sess.setAdminYn("Y");
-	   	 		} else {
-	   	 		sess.setAdminYn("N");
-	   	 		}
-	   	 		sess.setAdminKind(set.getData().getAdminYn());
+	   	 		sess.setAdminYn(set.getData().getAdminYn());
+	   	 		sess.setSiteManagerYn(set.getData().getSiteManagerYn());
+	   	 		sess.setContentsManagerYn(set.getData().getContentsManagerYn());
 	   	 		sess.setTutorYn(set.getData().getTutorYn());
 	   	 		sess.setTeacherYn(set.getData().getTeacherYn());
-	   	 		sess.setCompManagerYn(set.getData().getCompManagerYn());
 	   	 		sess.setUserIp(request.getRemoteAddr());
 	
 		    	//첨부자료 다운로드 권한 설정
-		    	if ( "Y".equals(set.getData().getAdminYn()) || "Y".equals(set.getData().getTutorYn()) || "Y".equals(set.getData().getTeacherYn()) )
+		    	if ( "Y".equals(set.getData().getAdminYn()) || "Y".equals(set.getData().getSiteManagerYn()) || "Y".equals(set.getData().getContentsManagerYn()) || "Y".equals(set.getData().getTutorYn()) || "Y".equals(set.getData().getTeacherYn()) )
 		    		sess.setDownloadAuth("Y");
 		    	else
 		    		sess.setDownloadAuth("N");
@@ -114,9 +109,10 @@ public class LoginController {
    	 		sess.setUserId(set.getData().getUserId());
    	 		sess.setUserName(set.getData().getUserName());
    	 		sess.setAdminYn(set.getData().getAdminYn());
+   	 		sess.setSiteManagerYn(set.getData().getSiteManagerYn());
+   	 		sess.setContentsManagerYn(set.getData().getContentsManagerYn());
    	 		sess.setTutorYn(set.getData().getTutorYn());
    	 		sess.setTeacherYn(set.getData().getTeacherYn());
-   	 		sess.setCompManagerYn(set.getData().getCompManagerYn());
    	 		sess.setUserIp(request.getRemoteAddr());
 
 	    	//첨부자료 다운로드 권한 설정

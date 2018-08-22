@@ -93,4 +93,65 @@ public class AxCourseService {
     	return hm;
     }
 	
+	public HashMap<String, Object> axCourseTutorList(HashMap<String, Object> paramMap) throws Exception {
+		HashMap<String, Object> hm = new HashMap<String, Object>();
+		
+    	List<HashMap<String, Object>> list = sqlSession.selectList("axCourse.axCourseTutorList", paramMap);
+    	hm.put("list", list);
+        
+    	return hm;
+    }
+	
+	@Transactional(propagation=Propagation.REQUIRED, rollbackFor={Throwable.class})
+    public HashMap<String, Object>  axCourseTutorSave(HashMap<String, Object> paramMap) throws Exception {
+		HashMap<String, Object> hm = new HashMap<String, Object>();
+		
+		List<HashMap<String, Object>> updList = (List<HashMap<String, Object>>)paramMap.get("modified");
+
+		for ( int i = 0; i < updList.size(); i++ ) {
+			HashMap<String, Object> row = (HashMap<String, Object>)updList.get(i);
+
+			if ( "Y".equals((String)row.get("NEW_FLAG")) ) {
+				sqlSession.insert("axCourse.axCourseTutorInsert", row);
+			} else {
+				sqlSession.update("axCourse.axCourseTutorUpdate", row);
+			}
+		}
+
+		List<HashMap<String, Object>> delList = (List<HashMap<String, Object>>)paramMap.get("deleted");
+		for ( int i = 0; i < delList.size(); i++ ) {
+			sqlSession.delete("axCourse.axCourseTutorDelete", delList.get(i));
+		}
+
+		hm.put("RtnMode", Constant.mode.OK.name());
+		
+    	return hm;
+    }
+	
+	public HashMap<String, Object> axCourseUserTutorList(HashMap<String, Object> paramMap) throws Exception {
+		HashMap<String, Object> hm = new HashMap<String, Object>();
+		
+    	List<HashMap<String, Object>> list = sqlSession.selectList("axCourse.axCourseUserTutorList", paramMap);
+    	hm.put("list", list);
+        
+    	return hm;
+    }
+	
+	@Transactional(propagation=Propagation.REQUIRED, rollbackFor={Throwable.class})
+    public HashMap<String, Object>  axCourseUserTutorSave(HashMap<String, Object> paramMap) throws Exception {
+		HashMap<String, Object> hm = new HashMap<String, Object>();
+		
+		List<HashMap<String, Object>> updList = (List<HashMap<String, Object>>)paramMap.get("modified");
+
+		for ( int i = 0; i < updList.size(); i++ ) {
+			HashMap<String, Object> row = (HashMap<String, Object>)updList.get(i);
+
+			sqlSession.update("axCourse.axCourseUserTutorUpdate", row);
+		}
+
+		hm.put("RtnMode", Constant.mode.OK.name());
+		
+    	return hm;
+    }
+	
 }

@@ -30,6 +30,8 @@ $(document.body).ready(function () {
 		$("#columns").val("TYPE,QUESTION,QA1,QA2,QA3,QA4,USE_YN");
 	} else if ( screen == "Exam" ) {
 		$("#columns").val("TYPE,QUESTION,QA1,QA2,QA3,QA4,ANSWER,WEEK,LEVEL,USE_YN");
+	} else if ( screen == "CourseResource" ) {
+		$("#columns").val("WEEK,TITLE,DIRECTORY,PAGE_CNT,PREVIEW_PAGE");
 	}
 });
 
@@ -129,6 +131,27 @@ function lfn_tran(data) {
 				
 				//기타 데이타 입력
 				data.list[i].COURSE_CODE = gfn_getUrlParams("COURSE_CODE");
+			}
+			if ( isNotValid ) {
+				$("#validArea").text(msg);
+				fn_fileInit();
+				return;
+			}
+		} else if ( screen == "CourseResource" ) {
+			for ( var i = 0; i < data.list.length; i++ ) {
+				var rowMsg = "";
+				if ( data.list[i].PAGE_CNT == "" || isNaN(data.list[i].PAGE_CNT) ) {
+					isNotValid = true;
+					rowMsg += "페이지 오류[정수타입] -> " + data.list[i].PAGE_CNT;
+				} 
+				if ( data.list[i].PREVIEW_PAGE == "" || isNaN(data.list[i].PREVIEW_PAGE) ) {
+					isNotValid = true;
+					rowMsg += "미리보기 페이지 오류[정수타입] -> " + data.list[i].PREVIEW_PAGE;
+				}
+				
+				if ( rowMsg != "" ) {
+					msg += (i + 1) + " 라인 : " + rowMsg + "\n";
+				}
 			}
 			if ( isNotValid ) {
 				$("#validArea").text(msg);

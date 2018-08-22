@@ -1,26 +1,12 @@
 package com.qp.lms.ax.common.service;
 
-import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
-
-import com.qp.lms.board.model.AttachVO;
-import com.qp.lms.category.model.CategorySet;
-import com.qp.lms.common.CodeVO;
-import com.qp.lms.common.CommUtil;
-import com.qp.lms.common.Constant;
-import com.qp.lms.common.SessionUtil;
-import com.qp.lms.common.model.CommSet;
-import com.qp.lms.common.model.CommVO;
-import com.qp.lms.common.model.LogVO;
-import com.qp.lms.course.model.CourseVO;
-import com.qp.lms.member.model.MemberVO;
 
 @Service
 public class AxCommService {
@@ -43,8 +29,8 @@ public class AxCommService {
 		    	hm.put(ddKinds[i], sqlSession.selectList("axComm.axDdTeacher", paramMap));
 			} else if ( "Tutor".equals(ddKinds[i]) ) {
 		    	hm.put(ddKinds[i], sqlSession.selectList("axComm.axDdTutor", paramMap));
-			} else if ( "CompanyTutor".equals(ddKinds[i]) ) {
-		    	hm.put(ddKinds[i], sqlSession.selectList("axComm.axDdCompanyTutor", paramMap));
+			//} else if ( "CompanyTutor".equals(ddKinds[i]) ) {
+		    //	hm.put(ddKinds[i], sqlSession.selectList("axComm.axDdCompanyTutor", paramMap));
 			} else if ( "QuestGroup".equals(ddKinds[i]) ) {
 		    	hm.put(ddKinds[i], sqlSession.selectList("axComm.axDdQuestGroup", paramMap));
 			} else if ( "CourseCode".equals(ddKinds[i]) ) {
@@ -63,9 +49,9 @@ public class AxCommService {
 			} else if ( "Sex".equals(ddKinds[i]) ) {
 				paramMap.put("DD_MAIN", "SEX");
 		    	hm.put(ddKinds[i], sqlSession.selectList("axComm.axDdCode", paramMap));
-			} else if ( "AdminAuth".equals(ddKinds[i]) ) {
-				paramMap.put("DD_MAIN", "ADMIN_AUTH");
-		    	hm.put(ddKinds[i], sqlSession.selectList("axComm.axDdCode", paramMap));
+			//} else if ( "AdminAuth".equals(ddKinds[i]) ) {
+			//	paramMap.put("DD_MAIN", "ADMIN_AUTH");
+		    //	hm.put(ddKinds[i], sqlSession.selectList("axComm.axDdCode", paramMap));
 			} else if ( "ApprovalStatus".equals(ddKinds[i]) ) {
 				paramMap.put("DD_MAIN", "APPROVAL_STATUS");
 		    	hm.put(ddKinds[i], sqlSession.selectList("axComm.axDdCode", paramMap));
@@ -79,6 +65,33 @@ public class AxCommService {
 			} else if ( "FaqCategory".equals(ddKinds[i]) ) {
 				paramMap.put("DD_MAIN", "FAQ");
 		    	hm.put(ddKinds[i], sqlSession.selectList("axComm.axDdCode", paramMap));
+			} else if ( "ZipcodeUrl".equals(ddKinds[i]) ) {
+				paramMap.put("OPTION_KEY", "SEARCH_ZIPCODE");
+		    	hm.put(ddKinds[i], sqlSession.selectList("axComm.axDdSetting", paramMap));
+			} else if ( "OpenKind".equals(ddKinds[i]) ) {
+				paramMap.put("DD_MAIN", "OPEN_KIND");
+		    	hm.put(ddKinds[i], sqlSession.selectList("axComm.axDdCode", paramMap));
+			} else if ( "Year".equals(ddKinds[i]) ) {
+				paramMap.put("OPTION_KEY", "FROM_YEAR");
+				HashMap<String, Object> from = sqlSession.selectOne("axComm.axDdSetting", paramMap);
+				paramMap.put("OPTION_KEY", "TO_YEAR");
+				HashMap<String, Object> to = sqlSession.selectOne("axComm.axDdSetting", paramMap);
+				
+				List<HashMap<String, Object>> list = new ArrayList<HashMap<String, Object>>();
+						
+				int fromYear = Integer.parseInt((String)from.get("text")); 
+				int toYear = Integer.parseInt((String)to.get("text")); 
+				for ( int m = fromYear; m <= toYear; m++ ) {
+					HashMap<String, Object> row = new HashMap<String, Object>();
+					row.put("value", m);
+					row.put("text", m);
+					list.add(row);
+				}
+				hm.put(ddKinds[i], list);
+			} else if ( "ContentsManager".equals(ddKinds[i]) ) {
+		    	hm.put(ddKinds[i], sqlSession.selectList("axComm.axDdContentsManager", paramMap));
+			} else if ( "CourseTutor".equals(ddKinds[i]) ) {
+		    	hm.put(ddKinds[i], sqlSession.selectList("axComm.axDdCourseTutor", paramMap));
 			}
 		}
 		

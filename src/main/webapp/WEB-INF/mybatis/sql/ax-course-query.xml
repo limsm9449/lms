@@ -25,17 +25,19 @@
                 ,A.COURSE_EXAM_TYPE_ID
                 ,F.TYPE_NAME COURSE_EXAM_TYPE_NAME
                 ,A.TERM_YN
-                ,A.TERM_PEROID_FROM
-                ,A.TERM_PEROID_TO
-                ,A.STUDY_PERIOD_FROM
-                ,A.STUDY_PERIOD_TO
+                ,IFNULL(A.TERM_PERIOD_FROM, '') TERM_PERIOD_FROM
+                ,IFNULL(A.TERM_PERIOD_TO, '') TERM_PERIOD_TO
+                ,IFNULL(A.STUDY_PERIOD_FROM, '') STUDY_PERIOD_FROM
+                ,IFNULL(A.STUDY_PERIOD_TO, '') STUDY_PERIOD_TO
                 ,A.REPORT_FAIL_RATE
                 ,A.EXAM_FAIL_RATE
                 ,A.DISCUSSION_FAIL_RATE
                 ,A.PROGRESS_FAIL_RATE
                 ,A.TOTAL_FAIL
+                ,A.CLOSE_YN
 				,DATE_FORMAT(IFNULL(A.UPDATE_DATE, A.CREATE_DATE), '%y.%m.%d %H:%i') LAST_UPDATE_DATE
 				,IFNULL(U2.USER_NAME, U1.USER_NAME) LAST_UPDATE_USER
+				,IFNULL(G.CNT, 0) TUTOR_CNT
 				,'N' NEW_FLAG
 		  FROM COURSE A LEFT OUTER JOIN COURSE_CODE B ON A.COURSE_CODE = B.COURSE_CODE
 		                LEFT OUTER JOIN (
@@ -46,11 +48,34 @@
 							    WHERE C3.DEPTH = 3) C ON B.CODE = C.C3_CODE
 						LEFT OUTER JOIN COURSE_EXAM_TYPE F ON F.SEQ = A.COURSE_EXAM_TYPE_ID
 	                    LEFT OUTER JOIN USER U1 ON A.CREATE_USER = U1.USER_ID
-		  	            LEFT OUTER JOIN USER U2 ON A.UPDATE_USER = U2.USER_ID                        
-		 WHERE 1 = 1
+		  	            LEFT OUTER JOIN USER U2 ON A.UPDATE_USER = U2.USER_ID  
+		  	            LEFT OUTER JOIN (
+		  	            	SELECT 	COURSE_ID, COUNT(*) CNT
+		  	            	FROM	COURSE_TUTOR
+		  	            	WHERE 	USE_YN = 'Y'
+		  	            	GROUP	BY COURSE_ID ) G ON G.COURSE_ID = A.COURSE_ID           
+		WHERE 	1 = 1
 		   <if test="LEVEL1_CODE != null and LEVEL1_CODE != ''"> AND C.C1_CODE = #{LEVEL1_CODE}</if>
 		   <if test="LEVEL2_CODE != null and LEVEL2_CODE != ''"> AND C.C2_CODE = #{LEVEL2_CODE}</if>
 		   <if test="LEVEL3_CODE != null and LEVEL3_CODE != ''"> AND C.C3_CODE = #{LEVEL3_CODE}</if>
+<if test="OPEN_KIND != null and OPEN_KIND == 'OPEN'">
+		AND 	IFNULL(A.OPEN_YN,'N') IN ('Y')
+</if>
+<if test="OPEN_KIND != null and OPEN_KIND == 'NOT_OPEN'">
+		AND 	IFNULL(A.OPEN_YN,'N') IN ('N')
+</if>
+<if test="OPEN_KIND != null and OPEN_KIND == 'CLOSE'">
+		AND 	IFNULL(A.CLOSE_YN,'N') IN ('Y')
+</if>
+<if test="OPEN_KIND != null and OPEN_KIND == 'NOT_CLOSE'">
+		AND 	IFNULL(A.CLOSE_YN,'N') IN ('N')
+</if>
+<if test="YEAR != null and YEAR != ''">
+		AND		A.YEAR = #{YEAR}
+</if>
+<if test="chasu != null and chasu != ''">
+		AND		A.CHASU = #{chasu}
+</if>
 		   <if test="courseName != null and courseName != ''"> AND B.COURSE_NAME LIKE CONCAT('%',#{courseName},'%')</if>
 	 ORDER BY C.CATEGORY_NAME,B.COURSE_NAME,A.YEAR,A.MONTH,A.CHASU  
 	</select>
@@ -58,14 +83,14 @@
 	<insert id="axCourseInsert" parameterType="hashMap">
 		INSERT INTO COURSE(COURSE_CODE, YEAR, MONTH, CHASU, COURSE_COST, TUTOR_ID, COMP_CD, 
 					REPORT_RATE, EXAM_RATE, DISCUSSION_RATE, PROGRESS_RATE, OPEN_YN, C_PERIOD, POPULAR_YN, 
-					COURSE_EXAM_TYPE_ID, TERM_YN, TERM_PEROID_FROM, TERM_PEROID_TO, STUDY_PERIOD_FROM, STUDY_PERIOD_TO, 
+					COURSE_EXAM_TYPE_ID, TERM_YN, TERM_PERIOD_FROM, TERM_PERIOD_TO, STUDY_PERIOD_FROM, STUDY_PERIOD_TO, 
 					REPORT_FAIL_RATE, EXAM_FAIL_RATE, DISCUSSION_FAIL_RATE, PROGRESS_FAIL_RATE, TOTAL_FAIL, CREATE_DATE, CREATE_USER,
-					LEARING_GOAL, LEARING_CONTENT, EVAL_METHOD, LEARING_TARGET, LEARING_COST )
+					LEARING_GOAL, LEARING_CONTENT, EVAL_METHOD, LEARING_TARGET, LEARING_COST, CLOSE_YN )
 		VALUES (#{COURSE_CODE}, DATE_FORMAT(NOW(), '%Y'), DATE_FORMAT(NOW(), '%m'), #{CHASU},#{COURSE_COST}, #{TUTOR_ID}, #{COMP_CD}, 
 					#{REPORT_RATE}, #{EXAM_RATE}, #{DISCUSSION_RATE}, #{PROGRESS_RATE}, #{OPEN_YN}, #{C_PERIOD}, #{POPULAR_YN}, 
-					#{COURSE_EXAM_TYPE_ID}, #{TERM_YN}, #{TERM_PEROID_FROM}, #{TERM_PEROID_TO}, #{STUDY_PERIOD_FROM}, #{STUDY_PERIOD_TO}, 
+					#{COURSE_EXAM_TYPE_ID}, #{TERM_YN}, #{TERM_PERIOD_FROM}, #{TERM_PERIOD_TO}, #{STUDY_PERIOD_FROM}, #{STUDY_PERIOD_TO}, 
 					#{REPORT_FAIL_RATE}, #{EXAM_FAIL_RATE}, #{DISCUSSION_FAIL_RATE}, #{PROGRESS_FAIL_RATE}, #{TOTAL_FAIL},CURRENT_TIMESTAMP, #{SESSION_USER_ID},
-					#{LEARING_GOAL}, #{LEARING_CONTENT}, #{EVAL_METHOD}, #{LEARING_TARGET}, #{LEARING_COST} )
+					#{LEARING_GOAL}, #{LEARING_CONTENT}, #{EVAL_METHOD}, #{LEARING_TARGET}, #{LEARING_COST}, 'N' )
 	</insert>
 	
 	<update id="axCourseUpdate" parameterType="hashMap">
@@ -82,8 +107,8 @@
 				,POPULAR_YN = #{POPULAR_YN}
 				,COURSE_EXAM_TYPE_ID = #{COURSE_EXAM_TYPE_ID}
 				,TERM_YN = #{TERM_YN}
-				,TERM_PEROID_FROM = #{TERM_PEROID_FROM}
-				,TERM_PEROID_TO = #{TERM_PEROID_TO}
+				,TERM_PERIOD_FROM = #{TERM_PERIOD_FROM}
+				,TERM_PERIOD_TO = #{TERM_PERIOD_TO}
 				,STUDY_PERIOD_FROM = #{STUDY_PERIOD_FROM}
 				,STUDY_PERIOD_TO = #{STUDY_PERIOD_TO}
 				,REPORT_FAIL_RATE = #{REPORT_FAIL_RATE}
@@ -91,6 +116,7 @@
 				,DISCUSSION_FAIL_RATE = #{DISCUSSION_FAIL_RATE}
 				,PROGRESS_FAIL_RATE = #{PROGRESS_FAIL_RATE}
 				,TOTAL_FAIL = #{TOTAL_FAIL}
+				,CLOSE_YN = #{CLOSE_YN}
 		       	,UPDATE_DATE = CURRENT_TIMESTAMP
 		       	,UPDATE_USER = #{SESSION_USER_ID}
 		 WHERE COURSE_ID = #{COURSE_ID}   
@@ -130,5 +156,51 @@
 		       	,UPDATE_USER = #{SESSION_USER_ID}
 		WHERE 	COURSE_ID = #{COURSE_ID}   
 	</update>
-        
+
+	<select id="axCourseTutorList" parameterType="hashmap" resultType="hashmap">
+		SELECT A.*,
+		       'N' NEW_FLAG
+		  FROM COURSE_TUTOR A
+		 WHERE A.COURSE_ID = #{COURSE_ID}
+		 ORDER BY A.FROM_CNT
+    </select>	
+
+	<insert id="axCourseTutorInsert" parameterType="hashmap">
+		INSERT INTO COURSE_TUTOR(COURSE_ID, TUTOR_ID, FROM_CNT, TO_CNT, USE_YN)
+		VALUES (#{COURSE_ID}, #{TUTOR_ID}, #{FROM_CNT}, #{TO_CNT}, #{USE_YN})
+	</insert>
+
+	<update id="axCourseTutorUpdate" parameterType="hashmap">
+		UPDATE COURSE_TUTOR
+		   SET FROM_CNT = #{FROM_CNT},
+		       TO_CNT = #{TO_CNT},
+		       USE_YN = #{USE_YN}
+		 WHERE COURSE_ID = #{COURSE_ID}
+		   AND TUTOR_ID = #{TUTOR_ID}
+	</update>
+
+	<delete id="axCourseTutorDelete" parameterType="hashmap">
+		DELETE FROM COURSE_TUTOR
+		 WHERE COURSE_ID = #{COURSE_ID}
+		   AND TUTOR_ID = #{TUTOR_ID}
+	</delete>  
+	
+	<select id="axCourseUserTutorList" parameterType="hashmap" resultType="hashmap">
+		SELECT 	A.*,
+				U1.USER_NAME
+		FROM 	COURSE_EVAL A
+		  			LEFT OUTER JOIN USER U1 ON A.USER_ID = U1.USER_ID
+		WHERE 	A.COURSE_ID = #{COURSE_ID}
+<if test="TUTOR_ID != null and TUTOR_ID != ''">
+		AND		A.TUTOR_ID = #{TUTOR_ID}
+</if>
+		ORDER 	BY U1.USER_NAME
+    </select>	
+
+	<update id="axCourseUserTutorUpdate" parameterType="hashmap">
+		UPDATE COURSE_EVAL
+		   SET TUTOR_ID = #{TUTOR_ID}
+		 WHERE COURSE_ID = #{COURSE_ID}
+		   AND USER_ID = #{USER_ID}
+	</update>
 </mapper>

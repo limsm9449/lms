@@ -32,7 +32,7 @@ $(document.body).ready(function () {
         theme: "danger"
     });
 
-    gfn_callAjax("/common/axDd.do", { DD_KIND : "CompanyTutor" }, fn_callbackAjax, "dd", { async : false });
+    gfn_callAjax("/common/axDd.do", { DD_KIND : "ZipcodeUrl" }, fn_callbackAjax, "dd", { async : false });
     
     $('[data-grid-control]').click(function () {
         switch (this.getAttribute("data-grid-control")) {
@@ -83,6 +83,9 @@ $(document.body).ready(function () {
             		f_popup('/common/axOpenPage', {displayName:'companyImagePopup',option:'width=900,height=650', urlParams:urlParams});
             	}
             		
+                break;
+            case "zipcodeUrl":
+           		window.open(dd.ZipcodeUrl[0].text, "zipcode","width=900,height=650");
                 break;
         }
     });
@@ -196,27 +199,6 @@ function fn_makeGrid() {
 				styleClass: function () {
                     return "grid-cell-edit";
                 }
-	        },{
-	        	key : "TUTOR_ID", 
-	        	label : "튜터", 
-	            width : 130,
-	        	align : "left", 
-	        	editor: {
-                    type : "select",
-	            	disabled : function () {
-                        return ( this.item.COMP_CD == "B2C" ? true : false );
-                    },
-                    config : { 
-                        columnKeys: { optionValue: "value", optionText: "text" },
-                        options: dd.CompanyTutor
-                    } 
-	        	},
-	            formatter : function () {
-	                return gfn_getValueInList(dd.CompanyTutor, "value",  this.item.TUTOR_ID, "text");
-	           	},
-				styleClass: function () {
-                    return ( this.item.COMP_CD == "B2C" ? "" : "grid-cell-edit" );
-                }
 			},{
 	        	key : "LOGIN_IMG", 
 	        	label : "로그인화면 이미지", 
@@ -311,8 +293,6 @@ function fn_callbackAjax(data, id) {
 	} else if ( id == "dd" ){
 		dd = $.extend({}, data);
 
-		dd.AdminAuth = [ {value : "", text : ""} ].concat(dd.AdminAuth);
-		
 		fn_makeGrid();
 		fn_search();
 	}
@@ -321,6 +301,8 @@ function fn_callbackAjax(data, id) {
 function fn_gridEvent(event, obj) {
 	if ( event == "Click" ) {
 		obj.self.select(obj.dindex);
+	} else if ( event == "DBLClick" ) {
+	} else if ( event == "DataChanged" ) {
 	}
 }
 
@@ -349,6 +331,7 @@ function fn_gridEvent(event, obj) {
     <button class="btn btn-default" data-grid-control="save">저장</button>
     <button class="btn btn-default" data-grid-control="export">엑셀</button>
     <button class="btn btn-default" data-grid-control="editImage">이미지 관리</button>
+    <button class="btn btn-default" data-grid-control="zipcodeUrl">주소검색</button>
 </div> 
 
 <div style="height:10px"></div>

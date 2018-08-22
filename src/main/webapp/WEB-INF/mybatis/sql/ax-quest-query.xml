@@ -4,8 +4,6 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="axQuest">
 
-	<!-- 설문지 그룹 관리 -->
-
     <select id="axQuestGroupList" parameterType="hashmap" resultType="hashmap">
 		SELECT A.QG_ID,
 		       A.GROUP_NAME,

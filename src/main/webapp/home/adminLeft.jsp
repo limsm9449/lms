@@ -11,7 +11,7 @@
 <script type="text/javascript">
 
 $(document).ready(function(){
-	f_menuContent('/normalCourse/normalCourseList');
+	gfn_openMenu('axCourseList');
 	$("#firstMenu").addClass("here");
 });
 

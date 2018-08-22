@@ -764,6 +764,17 @@ function gfn_makeAx5Grid(gridId, columns, datas, options) {
         return '<span>{{dataRowCount}} 건</span>';
     };
     
+    ax5.info.months = ["1월","2월","3월","4월","5월","6월","7월","8월","9월","10월","11월"];
+    ax5.info.weekNames = [
+             {label: "일"},
+             {label: "월"},
+             {label: "화"},
+             {label: "수"},
+             {label: "목"},
+             {label: "금"},
+             {label: "토"}
+         ];
+    
 	tOptions = options || {};
 	//gfn_log(tOptions);
 	var gridObj = new ax5.ui.grid({
@@ -1003,3 +1014,21 @@ function gfn_isExistStringInString(str, compStr) {
 		return false;
 	}
 }
+
+var multiselectOptions = { 
+    maxHeight: 200
+}
+
+function gfn_getString(val) {
+	if ( val == undefined ) {
+		return "";
+	} else if ( typeof val == 'number'  ) {
+		return val + "";
+	} else if ( typeof val == 'string'  ) {
+		return val.trim();
+	} else {
+		return val;
+	}
+}
+
+

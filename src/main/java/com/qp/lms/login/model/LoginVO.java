@@ -9,9 +9,10 @@ public class LoginVO extends CommonVO{
 	private String userName;
 	private String password;
 	private String adminYn;
+	private String siteManagerYn;
+	private String contentsManagerYn;
 	private String tutorYn;
 	private String teacherYn;
-	private String compManagerYn;
 	private String retiredYn;
 	private String compCd;
 	private String backdoorUserId;
@@ -64,12 +65,6 @@ public class LoginVO extends CommonVO{
 	public void setTeacherYn(String teacherYn) {
 		this.teacherYn = teacherYn;
 	}
-	public String getCompManagerYn() {
-		return compManagerYn;
-	}
-	public void setCompManagerYn(String compManagerYn) {
-		this.compManagerYn = compManagerYn;
-	}
 	public String getCompCd() {
 		return compCd;
 	}
@@ -87,6 +82,18 @@ public class LoginVO extends CommonVO{
 	}
 	public void setCertificationYn(String certificationYn) {
 		this.certificationYn = certificationYn;
+	}
+	public String getSiteManagerYn() {
+		return siteManagerYn;
+	}
+	public void setSiteManagerYn(String siteManagerYn) {
+		this.siteManagerYn = siteManagerYn;
+	}
+	public String getContentsManagerYn() {
+		return contentsManagerYn;
+	}
+	public void setContentsManagerYn(String contentsManagerYn) {
+		this.contentsManagerYn = contentsManagerYn;
 	}
 	
 	

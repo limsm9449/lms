@@ -5,10 +5,7 @@
 <mapper namespace="login">
 	
     <select id="getLoginUser" resultType="com.qp.lms.login.model.LoginVO">
-    	SELECT USER_ID,USER_NAME,RETIRED_YN,ADMIN_YN,TEACHER_YN,TUTOR_YN,
-               IF((SELECT COUNT(*) FROM COMPANY WHERE TUTOR_ID = A.USER_ID) > 0,'Y','N') COMP_MANAGER_YN,
-               COMP_CD,
-               CERTIFICATION_YN	 	 
+    	SELECT A.*	 
     	  FROM USER A
     	 WHERE USER_ID = #{userId}
     	   AND USER_PASSWORD = PASSWORD(#{password}) 
@@ -21,9 +18,7 @@
     </select>
 
     <select id="getUserInfo" resultType="com.qp.lms.login.model.LoginVO">
-    	SELECT USER_ID,USER_NAME,RETIRED_YN,ADMIN_YN,TEACHER_YN,TUTOR_YN,
-               IF((SELECT COUNT(*) FROM COMPANY WHERE TUTOR_ID = A.USER_ID) > 0,'Y','N') COMP_MANAGER_YN,
-               COMP_CD	 
+    	SELECT A.*	 
     	  FROM USER A
     	 WHERE USER_ID = #{userId}
     </select>

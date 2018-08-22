@@ -29,16 +29,13 @@ $(document.body).ready(function () {
     
 	grid = gfn_makeAx5Grid("first-grid",
 		[ 	{
-	            key : "NEW_FLAG",
-	            width : 0
-	    	},{	
-	            key : "COURSE_CODE",
-	            width : 0
-	        },{
 	        	key : "WEEK", 
 	        	label : "주차", 
 	            width : 100,
-	        	align : "center"
+	        	align : "center",
+				styleClass: function () {
+                    return "grid-cell-edit";
+                }
 	        },{
 	            key : "TITLE",
 	            label : "목차",
@@ -46,7 +43,10 @@ $(document.body).ready(function () {
 	            align : "left",
 	            editor : { 
 	            	type : "text"
-				}
+				},
+				styleClass: function () {
+                    return "grid-cell-edit";
+                }
 	        },{
 	        	key : "DIRECTORY", 
 	        	label : "경로", 
@@ -54,7 +54,10 @@ $(document.body).ready(function () {
 	        	align : "left", 
 	        	editor : { 
 	        		type : "text"
-	        	}
+	        	},
+				styleClass: function () {
+                    return "grid-cell-edit";
+                }
 	        },{
 	        	key : "PAGE_CNT", 
 	        	label : "페이지", 
@@ -62,7 +65,10 @@ $(document.body).ready(function () {
 	        	align : "right", 
 	        	editor : { 
 	        		type : "number"
-	        	}
+	        	},
+				styleClass: function () {
+                    return "grid-cell-edit";
+                }
 	        },{
 	        	key : "PREVIEW_PAGE", 
 	        	label : "미리보기 페이지", 
@@ -70,7 +76,10 @@ $(document.body).ready(function () {
 	        	align : "right", 
 	        	editor : { 
 	        		type : "number"
-	        	}
+	        	},
+				styleClass: function () {
+                    return "grid-cell-edit";
+                }
 	        }	], 
 	  	null,
 	  	{
@@ -160,6 +169,15 @@ $(document.body).ready(function () {
             	
             	window.close();
                 break;
+            case "export":
+                grid.exportExcel("과정 주차 관리.xls");
+                break;
+            case "import":
+            	var urlParams = "page=/ax/common/axExcelUpload";
+        		urlParams += "&SCREEN=CourseResource&COURSE_CODE=" + gfn_getUrlParams("COURSE_CODE");
+        		
+        		f_popup('/common/axOpenPage', {displayName:'excelUploadPopup',option:'width=600,height=500', urlParams:urlParams});
+                break;
         }
     });
     
@@ -190,8 +208,8 @@ function fn_save() {
 	var fieldParams = {
 		TITLE : { mendatory : true, colName : "목차" },
 		DIRECTORY : { mendatory : true, colName : "경로" },
-   		PAGE_CNT : { mendatory : true, colName : "페이지" },
-   		PREVIEW_PAGE : { mendatory : true, colName : "미리보기 페이지" }
+   		PAGE_CNT : { mendatory : true, colName : "페이지", type : "number" },
+   		PREVIEW_PAGE : { mendatory : true, colName : "미리보기 페이지", type : "number" }
    	};
    	if ( gfn_validationCheck(grid, fieldParams) ) {
        	mask.open();
@@ -236,6 +254,27 @@ function fn_callbackAjax(data, id) {
 		}
 		
 		isSave = true;
+	} else if ( id == "excelUploadList" ){
+      	var allList = grid.getList();
+      	var maxSeq = 0;
+      	for ( var i = 0; i < allList.length; i++ ) {
+			if ( parseInt(allList[i].SEQ) > maxSeq ) {
+				maxSeq = parseInt(allList[i].SEQ);
+			}
+      	}
+
+      	for ( var i = 0; i < data.list.length; i++ ) {
+       		grid.addRow( 
+       			{
+       				NEW_FLAG : "Y", 
+       				COURSE_CODE : params.COURSE_CODE, 
+       				WEEK : data.list[i].WEEK, 
+       				TITLE : data.list[i].TITLE, 
+       				DIRECTORY : data.list[i].DIRECTORY, 
+       				PAGE_CNT : data.list[i].PAGE_CNT, 
+       				PREVIEW_PAGE : data.list[i].PREVIEW_PAGE
+       			}, "last", {focus: "END"});
+		}
 	}
 }
 
@@ -261,7 +300,10 @@ function fn_gridEvent(event, obj) {
     <button class="btn btn-default" data-grid-control="save">저장</button>
     <button class="btn btn-default" data-grid-control="up">Up</button>
     <button class="btn btn-default" data-grid-control="down">Down</button>
-    <button class="btn btn-default" data-grid-control="close">닫기</button>
+    <button class="btn btn-default" data-grid-control="close">닫기</button>    
+    <button class="btn btn-default" data-grid-control="export">엑셀</button>
+    <button class="btn btn-default" data-grid-control="import">엑셀 업로드</button>
+    
 </div>
 
 <div style="height:10px"></div>

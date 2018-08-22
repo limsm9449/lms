@@ -33,9 +33,9 @@ $(document.body).ready(function () {
         theme: "danger"
     });
 
-    $('#MCB_COMPANY').multiselect();
+    $('#MCB_COMPANY').multiselect(multiselectOptions);
     
-    gfn_callAjax("/common/axDd.do", { DD_KIND : "CategoryLevel1,Tutor,Company" }, fn_callbackAjax, "dd", { async : false });
+    gfn_callAjax("/common/axDd.do", { DD_KIND : "CategoryLevel1,Tutor,Company,OpenKind,Year" }, fn_callbackAjax, "dd", { async : false });
     
     $('[data-grid-control]').click(function () {
         switch (this.getAttribute("data-grid-control")) {
@@ -89,6 +89,32 @@ $(document.body).ready(function () {
                 break;
             case "export":
                 grid.exportExcel("과정Master관리.xls");
+                break;
+            case "tutor":
+            	var row = grid.getList("selected");
+            	if ( row.length == 0 ) {
+            		mask.open();
+            		dialog.alert( { msg : "과정을 선택하셔야 합니다." }, function () { mask.close();	} );
+            	} else {
+            		var urlParams = "page=/ax/course/axCourseTutorPopup";
+            		urlParams += "&COURSE_ID=" + row[0]["COURSE_ID"];
+            		
+            		f_popup('/common/axOpenPage', {displayName:'courseTutorPopup',option:'width=500,height=350', urlParams:urlParams});
+            	}
+            		
+                break;
+            case "userTutor":
+            	var row = grid.getList("selected");
+            	if ( row.length == 0 ) {
+            		mask.open();
+            		dialog.alert( { msg : "과정을 선택하셔야 합니다." }, function () { mask.close();	} );
+            	} else { 
+            		var urlParams = "page=/ax/course/axCourseUserTutorPopup";
+            		urlParams += "&COURSE_ID=" + row[0]["COURSE_ID"];
+            		
+            		f_popup('/common/axOpenPage', {displayName:'courseTutorPopup',option:'width=400,height=700', urlParams:urlParams});
+            	}
+            		
                 break;
             case "viewContent":
             	var row = grid.getList("selected");
@@ -194,17 +220,19 @@ function fn_makeGrid() {
                     config : {
                         columnKeys: { optionValue: "value", optionText: "text" },
                         options: dd.Tutor
-                    },
-	            	disabled : function () {
-                        return ( this.item.COMP_CD == "B2C" ? false : true );
                     }
 	        	},
 	            formatter : function () {
 	                return gfn_getValueInList(dd.Tutor, "value",  this.item.TUTOR_ID, "text");
 	           	},
 				styleClass: function () {
-                    return ( this.item.COMP_CD == "B2C" ? "grid-cell-edit": "" );
+                    return "grid-cell-edit";
                 }
+	        },{
+	            key : "TUTOR_CNT",
+	            label : "복수 튜터",
+	            width : 80,
+	            align : "right"
 	        },{
 	            key : "COURSE_COST",
 	            label : "과정비용",
@@ -215,18 +243,10 @@ function fn_makeGrid() {
 				},
 				styleClass: function () {
                     return "grid-cell-edit";
-                }
-	        },{
-	            key : "C_PERIOD",
-	            label : "교육일수",
-	            width : 80,
-	            align : "right",
-	            editor : { 
-	            	type : "number"
-				},
-				styleClass: function () {
-                    return "grid-cell-edit";
-                }
+                },
+	            formatter : function () {
+	                return checkThousand(this.item.COURSE_COST);
+	           	}
 	        },{
               	key : undefined, 
               	label: "점수 비율", 
@@ -350,10 +370,19 @@ function fn_makeGrid() {
 			            	type : "number"
 						},
 						styleClass: function () {
-		                    return "grid-cell-edit";
+		                    return "grid-cell-edit"; 
 		                }
 			        }
 		        ]
+	        },{
+	        	key : "OPEN_YN", 
+	        	label : "오픈 여부", 
+	            width : 90,
+	        	align : "center", 
+	        	editor : { type : "checkbox", config : {height: 17, trueValue: "Y", falseValue: "N"} } ,
+				styleClass: function () {
+                    return "grid-cell-edit";
+                } 
 	        },{
               	key : undefined, 
               	label: "기간", 
@@ -368,7 +397,7 @@ function fn_makeGrid() {
                             return "grid-cell-edit";
                         } 
         	        },{
-			            key : "TERM_PEROID_FROM",
+			            key : "TERM_PERIOD_FROM",
 			            label : "가입 시작일",
 			            width : 110,
 			            align : "center",
@@ -379,7 +408,7 @@ function fn_makeGrid() {
 		                    return "grid-cell-edit";
 		                }
 			        },{
-			            key : "TERM_PEROID_TO",
+			            key : "TERM_PERIOD_TO",
 			            label : "가입 종료일",
 			            width : 110,
 			            align : "center",
@@ -411,20 +440,34 @@ function fn_makeGrid() {
 						styleClass: function () {
 		                    return "grid-cell-edit";
 		                }
+			        },{
+			            key : "C_PERIOD",
+			            label : "교육일수",
+			            width : 80,
+			            align : "right",
+			            editor : { 
+			            	type : "number"
+						},
+						styleClass: function () {
+		                    return "grid-cell-edit";
+		                },
+			            formatter : function () {
+			                return this.item.C_PERIOD + " 일";
+			           	}
 			        }
 		        ]
 	        },{
-	        	key : "OPEN_YN", 
-	        	label : "오픈 여부", 
-	            width : 90,
+	        	key : "POPULAR_YN", 
+	        	label : "인기 강의 여부", 
+	            width : 110,
 	        	align : "center", 
 	        	editor : { type : "checkbox", config : {height: 17, trueValue: "Y", falseValue: "N"} } ,
 				styleClass: function () {
                     return "grid-cell-edit";
                 } 
 	        },{
-	        	key : "POPULAR_YN", 
-	        	label : "인기 강의 여부", 
+	        	key : "CLOSE_YN", 
+	        	label : "강의 종료 여부", 
 	            width : 110,
 	        	align : "center", 
 	        	editor : { type : "checkbox", config : {height: 17, trueValue: "Y", falseValue: "N"} } ,
@@ -551,13 +594,21 @@ function fn_params() {
 	params.LEVEL1_CODE = $("#CB_LEVEL1 option:selected").val();	
 	params.LEVEL2_CODE = $("#CB_LEVEL2 option:selected").val();	
 	params.LEVEL3_CODE = $("#CB_LEVEL3 option:selected").val();	
+	params.OPEN_KIND = $("#CB_OPEN_KIND option:selected").val();	
+	params.YEAR = $("#CB_YEAR option:selected").val();	
+	params.chasu = $("#chasu").val();	
 	params.courseName = $("#courseName").val();	
 }
 
 function fn_search() {
 	//mask.open();
-	
 	fn_params();
+	
+	if ( params.chasu != "" && !isNaN(params.chasu) ) {
+		mask.open();
+		dialog.alert( { msg : "차수는 정수를 입력하셔야 합니다." }, function () { mask.close(); } );
+		return false;
+	}
 	
 	gfn_callAjax("/course/axCourseList.do", params, fn_callbackAjax, "search");
 }
@@ -569,14 +620,26 @@ function fn_save() {
 		REPORT_RATE : { mendatory : true, colName : "레포트", type : "number" },
 		EXAM_RATE : { mendatory : true, colName : "시험", type : "number" },
 		DISCUSSION_RATE : { mendatory : true, colName : "토론", type : "number" },
-		PROGRESS_RATE : { mendatory : true, colName : "강의진도", type : "number" }
+		PROGRESS_RATE : { mendatory : true, colName : "강의진도", type : "number" },
+		C_PERIOD : { colName : "교육일수", type : "number" }
    	};
    	if ( gfn_validationCheck(grid, fieldParams) ) {
        	var allList = grid.getList();
        	for ( var i = 0; i < allList.length; i++ ) {
        		if ( parseInt(allList[i].REPORT_RATE) + parseInt(allList[i].EXAM_RATE) + parseInt(allList[i].DISCUSSION_RATE) + parseInt(allList[i].PROGRESS_RATE) != 100 ) {
     			mask.open();
-    			dialog.alert( { msg : "점수 비율을 100이여야 합니다." }, function () { mask.close(); } );
+    			dialog.alert( { msg : (allList[i].__index + 1) + "라인의" + "점수 비율을 100이여야 합니다." }, function () { mask.close(); } );
+    			return false;
+       		}
+       		if ( gfn_getString(allList[i].TERM_YN) == "Y" && (gfn_getString(allList[i].TERM_PERIOD_FROM) == "" || gfn_getString(allList[i].TERM_PERIOD_TO) == "")) {
+    			mask.open();
+    			dialog.alert( { msg : (allList[i].__index + 1) + "라인의" + "가입 시작일/종료일을 입력하셔야 합니다." }, function () { mask.close(); } );
+    			return false; 
+       		}
+       		if ( (gfn_getString(allList[i].STUDY_PERIOD_FROM) == "" && gfn_getString(allList[i].STUDY_PERIOD_TO) == "" && allList[i].C_PERIOD == 0) ||
+       		     (gfn_getString(allList[i].STUDY_PERIOD_FROM) != "" && gfn_getString(allList[i].STUDY_PERIOD_TO) != "" && allList[i].C_PERIOD > 0) ) {
+    			mask.open();
+    			dialog.alert( { msg : (allList[i].__index + 1) + "라인의" + "학습 시작일/종료일과 교육일수 중 하나를 입력하셔야 합니다." }, function () { mask.close(); } );
     			return false;
        		}
        	}
@@ -609,7 +672,10 @@ function fn_callbackAjax(data, id) {
 		
 		gfn_cbRefresh("CB_LEVEL1", data.CategoryLevel1, true);
 		gfn_cbRefresh("INS_CB_LEVEL1", data.CategoryLevel1, true);
-		
+
+		gfn_cbRefresh("CB_OPEN_KIND", data.OpenKind, true);
+		gfn_cbRefresh("CB_YEAR", data.Year, true);
+
 		fn_makeGrid();
 		fn_search();
 		
@@ -645,10 +711,7 @@ function fn_gridEvent(event, obj) {
 	    	gfn_callAjax("/common/axDd.do", { DD_KIND : "ExamType", COURSE_CODE : obj.item.COURSE_CODE }, fn_callbackAjax, "ExamType", { async : false });
 		}
 	} else if ( event == "DataChanged" ) {
-		if ( obj.key == "COMP_CD" && obj.item.COMP_CD != "B2C" ) {
-			grid.setValue(obj.item.__index, "TUTOR_ID", gfn_getValueInList(dd.Company, "value",  obj.item.COMP_CD, "TUTOR_ID"));
-			grid.repaint();
-		} else if ( obj.key == "COURSE_EXAM_TYPE_NAME" ) {
+		if ( obj.key == "COURSE_EXAM_TYPE_NAME" ) {
 			grid.repaint();
 		}
 	}
@@ -691,6 +754,16 @@ function fn_cbChange(id) {
 	<select id="CB_LEVEL3">
 		<option value="">전체</option>
 	</select>
+	오픈구분
+	<select id="CB_OPEN_KIND">
+		<option value="">전체</option>
+	</select>
+	년도
+	<select id="CB_YEAR">
+		<option value="">전체</option>
+	</select>
+	차수
+	<input type="text" class="search_input" id="chasu" name="chasu" value="" style="width:70px"/>
 	과정명
 	<input type="text" class="search_input" id="courseName" name="courseName" value="" />
 </div>
@@ -705,6 +778,8 @@ function fn_cbChange(id) {
     <button class="btn btn-default" data-grid-control="reset">초기화</button>
     <button class="btn btn-default" data-grid-control="save">저장</button>
     <button class="btn btn-default" data-grid-control="export">엑셀</button>
+    <button class="btn btn-default" data-grid-control="tutor">복수튜터</button>
+    <button class="btn btn-default" data-grid-control="userTutor">담당튜터</button>
     <button class="btn btn-default" data-grid-control="viewContent">학습내용 편집</button>
     <button class="btn btn-default" data-grid-control="viewImage">강의 이미지</button>
 </div>
