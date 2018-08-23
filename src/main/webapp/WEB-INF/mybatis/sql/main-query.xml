@@ -5,26 +5,22 @@
 <mapper namespace="main">
 
 	<select id="mainCourseList" parameterType="Main" resultType="Course">
-	SELECT DATA.* FROM (
-		SELECT A.COURSE_ID,
-		       B.COURSE_NAME,
-		       A.COURSE_CODE,
-		       A.COURSE_COST,
-		       IFNULL(B.POINT,0) POINT,
-		       (SELECT COUNT(*) FROM POSTSCRIPT WHERE COURSE_ID = A.COURSE_ID) POSTSCRIPT_CNT
-		  FROM COURSE A LEFT OUTER JOIN COURSE_CODE B ON A.COURSE_CODE = B.COURSE_CODE
-		 WHERE A.COURSE_KIND = 'NORMAL'
-		   AND A.OPEN_YN = 'Y'
-		 ORDER BY B.COURSE_NAME
-	) DATA LIMIT #{limitStart},#{limitUnit}
+		SELECT DATA.* FROM (
+			SELECT 	A.COURSE_ID,
+					B.COURSE_NAME,
+					A.COURSE_CODE
+			FROM 	COURSE A LEFT OUTER JOIN COURSE_CODE B ON A.COURSE_CODE = B.COURSE_CODE
+			WHERE 	A.OPEN_YN = 'Y'
+			AND		( IFNULL(A.TERM_YN,'N') = 'N' OR ( A.TERM_YN = 'Y' AND DATE_FORMAT(CURDATE(),'%Y-%m-%d') BETWEEN A.TERM_PERIOD_FROM AND A.TERM_PERIOD_TO ) )
+			ORDER 	BY B.COURSE_NAME
+		) DATA LIMIT #{limitStart},#{limitUnit}
 	</select>
 	
 	<select id="mainCourseTotal" parameterType="Main" resultType="Course">
 		SELECT COUNT(*) CNT
-		  FROM COURSE A LEFT OUTER JOIN COURSE_CODE B ON A.COURSE_CODE = B.COURSE_CODE
-		 WHERE A.COURSE_KIND = 'NORMAL'
-		   AND A.OPEN_YN = 'Y'
-		 ORDER BY B.COURSE_NAME
+		FROM 	COURSE A LEFT OUTER JOIN COURSE_CODE B ON A.COURSE_CODE = B.COURSE_CODE
+		WHERE 	A.OPEN_YN = 'Y'
+		AND		( IFNULL(A.TERM_YN,'N') = 'N' OR ( A.TERM_YN = 'Y' AND DATE_FORMAT(CURDATE(),'%Y-%m-%d') BETWEEN A.TERM_PERIOD_FROM AND A.TERM_PERIOD_TO ) )
 	</select>
 	
 	<select id="courseData" parameterType="Main" resultType="Course">
@@ -160,8 +156,8 @@
 	</select>	
 
 	<select id="courseEvalIns" parameterType="Main">
-	INSERT INTO COURSE_EVAL(COURSE_ID,USER_ID,REPORT,EXAM,DISCUSSION,PROGRESS,TOTAL,LAST_WEEK,LAST_PAGE,CREATE_DATE,CREATE_USER)
-	VALUES (#{courseId},#{userId},0,0,0,0,0,1,1,CURRENT_TIMESTAMP,#{createUser})
+	INSERT INTO COURSE_EVAL(COURSE_ID,USER_ID,TUTOR_ID,REPORT,EXAM,DISCUSSION,PROGRESS,TOTAL,LAST_WEEK,LAST_PAGE,REPORT_SEQ,CREATE_DATE,CREATE_USER)
+	VALUES (#{courseId},#{userId},#{tutorId},0,0,0,0,0,1,1,#{reportSeq},CURRENT_TIMESTAMP,#{createUser})
 	</select>
 	
 	<select id="courseWeekIns" parameterType="Main">
@@ -205,9 +201,40 @@
 	 </select>
 	        
 	<select id="userPoint" parameterType="Main" resultType="Main">
-	SELECT IFNULL(SUM(IN_POINT - OUT_POINT),0) POINT 
-	  FROM POINT
-	 WHERE USER_ID = #{userId}
+		SELECT IFNULL(SUM(IN_POINT - OUT_POINT),0) POINT 
+		  FROM POINT
+		 WHERE USER_ID = #{userId}
+	</select>
+
+	<select id="courseTutors" parameterType="Main" resultType="Main">
+		SELECT  TUTOR_ID, 1 FROM_CNT, (SELECT MIN(FROM_CNT) FROM COURSE_TUTOR WHERE COURSE_ID = 14 AND USE_YN = 'Y') - 1 TO_CNT
+		FROM 	COURSE
+		WHERE 	COURSE_ID = #{courseId}
+		UNION 
+		SELECT  TUTOR_ID, FROM_CNT, TO_CNT
+		FROM 	COURSE_TUTOR
+		WHERE 	COURSE_ID = #{courseId}
+		AND		USE_YN = 'Y'
+	</select>
+
+	<select id="courseUserCnt" parameterType="Main" resultType="int">
+		SELECT 	COUNT(*) + 1 CNT
+		FROM	COURSE_EVAL
+		WHERE 	COURSE_ID = #{courseId}
+	</select>
+
+	<select id="courseReportExist" parameterType="Main" resultType="String">
+		SELECT 	IF( REPORT_RATE > 0, 'Y', 'N' ) YN
+		FROM	COURSE
+		WHERE 	COURSE_ID = #{courseId}
+	</select>
+
+	<select id="courseRandomReport" parameterType="Main" resultType="int">
+		SELECT 	SEQ
+		FROM	COURSE_REPORT
+		WHERE   COURSE_CODE = (SELECT COURSE_CODE FROM COURSE WHERE COURSE_ID = #{courseId})
+		ORDER 	BY  RAND()
+		LIMIT 	1
 	</select>
 	        
 </mapper>

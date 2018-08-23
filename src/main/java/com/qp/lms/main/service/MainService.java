@@ -186,7 +186,6 @@ public class MainService {
 		set.getCondiVO().setUserId(SessionUtil.getSessionUserId());
 		set.getCondiVO().setCreateUser(SessionUtil.getSessionUserId());
 		
-		
 		//결재 내용 입력.
 		sqlSession.insert("main.approvalIns",set.getCondiVO());
 		
@@ -205,6 +204,23 @@ public class MainService {
 		String[] courseIds = set.getCondiVO().getCourseId().split(",");
 		for ( int i = 0; i < courseIds.length; i++ ) {
 			saveVO.setCourseId(courseIds[i]);
+			
+			//튜터를 구한다.
+			int courseUserCnt = sqlSession.selectOne("main.courseUserCnt", saveVO);
+			List<MainVO> tutorList = sqlSession.selectList("main.courseTutors", saveVO);
+			for ( int m = 0; m < tutorList.size(); m++ ) {
+				if ( tutorList.get(m).getFromCnt() <= courseUserCnt && tutorList.get(m).getToCnt() >= courseUserCnt ) {
+					saveVO.setTutorId(tutorList.get(m).getTutorId());
+					break;
+				}
+			}
+			
+			//레포트를 구한다.
+			String courseReportYn = sqlSession.selectOne("main.courseReportExist", saveVO);
+			if ( "Y".equals(courseReportYn) ) {
+				int courseReportSeq = sqlSession.selectOne("main.courseRandomReport", saveVO);
+				saveVO.setReportSeq(courseReportSeq);
+			}
 			
 			//반려된 케이스가 있으면 삭제를 해준다.
 			sqlSession.delete("main.rejectCourseRegisterDel",saveVO);

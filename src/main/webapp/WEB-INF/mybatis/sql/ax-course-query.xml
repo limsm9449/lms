@@ -29,10 +29,10 @@
                 ,IFNULL(A.TERM_PERIOD_TO, '') TERM_PERIOD_TO
                 ,IFNULL(A.STUDY_PERIOD_FROM, '') STUDY_PERIOD_FROM
                 ,IFNULL(A.STUDY_PERIOD_TO, '') STUDY_PERIOD_TO
-                ,A.REPORT_FAIL_RATE
-                ,A.EXAM_FAIL_RATE
-                ,A.DISCUSSION_FAIL_RATE
-                ,A.PROGRESS_FAIL_RATE
+                ,A.REPORT_FAIL
+                ,A.EXAM_FAIL
+                ,A.DISCUSSION_FAIL
+                ,A.PROGRESS_FAIL
                 ,A.TOTAL_FAIL
                 ,A.CLOSE_YN
 				,DATE_FORMAT(IFNULL(A.UPDATE_DATE, A.CREATE_DATE), '%y.%m.%d %H:%i') LAST_UPDATE_DATE

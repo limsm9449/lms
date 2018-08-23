@@ -70,6 +70,8 @@ public class LoginController {
 	   	 		sess.setTutorYn(set.getData().getTutorYn());
 	   	 		sess.setTeacherYn(set.getData().getTeacherYn());
 	   	 		sess.setUserIp(request.getRemoteAddr());
+
+	   	 		sess.setAuth(auth);
 	
 		    	//첨부자료 다운로드 권한 설정
 		    	if ( "Y".equals(set.getData().getAdminYn()) || "Y".equals(set.getData().getSiteManagerYn()) || "Y".equals(set.getData().getContentsManagerYn()) || "Y".equals(set.getData().getTutorYn()) || "Y".equals(set.getData().getTeacherYn()) )
@@ -116,7 +118,7 @@ public class LoginController {
    	 		sess.setUserIp(request.getRemoteAddr());
 
 	    	//첨부자료 다운로드 권한 설정
-	    	if ( "Y".equals(set.getData().getAdminYn()) || "Y".equals(set.getData().getTutorYn()) || "Y".equals(set.getData().getTeacherYn()) )
+	    	if ( "Y".equals(set.getData().getAdminYn()) || "Y".equals(set.getData().getSiteManagerYn()) || "Y".equals(set.getData().getContentsManagerYn()) || "Y".equals(set.getData().getTutorYn()) || "Y".equals(set.getData().getTeacherYn()) )
 	    		sess.setDownloadAuth("Y");
 	    	else
 	    		sess.setDownloadAuth("N");

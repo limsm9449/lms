@@ -13,6 +13,7 @@ public class SessionVO {
 	private String tutorYn;
 	private String teacherYn;
 	private String userIp;
+	private String auth;
 	
 	private String downloadAuth;				/** 튜터, 어드민, 강사는 첨부 다운로드 권한이 있다. */
 	
@@ -78,6 +79,12 @@ public class SessionVO {
 	}
 	public void setContentsManagerYn(String contentsManagerYn) {
 		this.contentsManagerYn = contentsManagerYn;
+	}
+	public String getAuth() {
+		return auth;
+	}
+	public void setAuth(String auth) {
+		this.auth = auth;
 	}
 	
 		

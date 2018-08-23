@@ -78,7 +78,7 @@ function lfn_btn(pKind, pParam) {
 		  					<thead>
 		  					  <tr class="guide">
 		    						<th></th>
-		    						<th width="115"></th>
+		    						<th width="100"></th>
 		    						<th width="98"></th>
 		    						<th width="86"></th>
 		    						<th width="84"></th>
@@ -101,7 +101,14 @@ function lfn_btn(pKind, pParam) {
 					  </c:if>					
  					  <c:forEach var="row" items="${set.course}" varStatus="idx">
 			              <tr <c:if test="${idx.index + 1 eq fn:length(set.course)}"> class="last_line"</c:if>>
+<c:choose>
+	<c:when test="${row.startYn eq 'Y'}">
 			                <td class="title"><nobr><span><a href="javascript:" onclick="javascript:lfn_btn('view',{courseId:'${row.courseId}'});">${row.courseName}</a></span></nobr></td>
+	</c:when>
+	<c:otherwise>
+			                <td class="title"><nobr><span>${row.courseName}</span></nobr></td>
+	</c:otherwise>
+</c:choose>		            
 			                <td class="center">${row.cFromDate} ~ ${row.cToDate}</td>
 			                <td class="center">${row.remainDay}일</td>
 			                <td class="center">${row.progress} %</td>
@@ -114,7 +121,14 @@ function lfn_btn(pKind, pParam) {
 	</c:otherwise>
 </c:choose>		            
 			            	<td class="right">${row.total}</td>
+<c:choose>
+	<c:when test="${row.startYn eq 'Y'}">
 			                <td class="center last"><a href="#" onclick="javascript:Popup.showUserCourse('${row.courseId}','${row.hPx + 100}','${row.vPx + 100}'); lfn_btn('view',{courseId:'${row.courseId}'});"><img src="/resources/images/sub/btn_start.png" alt="학습시작" /></a></td>
+	</c:when>
+	<c:otherwise>
+			                <td class="center last">대기</td>
+	</c:otherwise>
+</c:choose>		            
 			              </tr>
 		              </c:forEach>
 		            </tbody>

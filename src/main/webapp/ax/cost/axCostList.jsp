@@ -53,9 +53,9 @@ $(document.body).ready(function () {
             		return;
             	}
 	        	for ( var i = 0; i < rows.length; i++ ) {
-					if ( rows[i].STATUS != "B") {
+					if ( rows[i].STATUS != "B" && rows[i].STATUS != "C") {
 	            		mask.open();
-	            		dialog.alert( { msg : (rows[i].__index + 1) + " 라인 : 은행입금이 아닙니다."	}, function () { mask.close();	} );
+	            		dialog.alert( { msg : (rows[i].__index + 1) + " 라인 : 은행입금 또는 거정(사용자 취소)이 아닙니다."	}, function () { mask.close();	} );
 	            		return;
 					}		        			
 	        	}

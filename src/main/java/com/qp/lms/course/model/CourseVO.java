@@ -29,6 +29,7 @@ public class CourseVO extends CommonVO {
 	private String discussionCnt;
 	private String progressCnt;
 	private String companyYn;
+	private String startYn;
 
 	
 	private String categoryName;
@@ -983,6 +984,14 @@ public class CourseVO extends CommonVO {
 
 	public void setPicture(String picture) {
 		this.picture = picture;
+	}
+
+	public String getStartYn() {
+		return startYn;
+	}
+
+	public void setStartYn(String startYn) {
+		this.startYn = startYn;
 	}
 	
 

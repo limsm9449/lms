@@ -24,7 +24,12 @@ public class MainVO extends CommonVO {
 	
 	//2014.6.28 추가
 	private String point;
-	
+
+	private String tutorId;
+	private int fromCnt;
+	private int toCnt;
+	private int reportSeq;
+
 	public String getCourseId() {
 		return courseId;
 	}
@@ -117,6 +122,30 @@ public class MainVO extends CommonVO {
 	}
 	public void setPoint(String point) {
 		this.point = point;
+	}
+	public String getTutorId() {
+		return tutorId;
+	}
+	public void setTutorId(String tutorId) {
+		this.tutorId = tutorId;
+	}
+	public int getFromCnt() {
+		return fromCnt;
+	}
+	public void setFromCnt(int fromCnt) {
+		this.fromCnt = fromCnt;
+	}
+	public int getToCnt() {
+		return toCnt;
+	}
+	public void setToCnt(int toCnt) {
+		this.toCnt = toCnt;
+	}
+	public int getReportSeq() {
+		return reportSeq;
+	}
+	public void setReportSeq(int reportSeq) {
+		this.reportSeq = reportSeq;
 	}
 	
 	

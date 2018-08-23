@@ -118,7 +118,6 @@ function lfn_login(userId) {
 	    					<option value="SITE_MANAGER">사이트 관리자</option>
 	    					<option value="CONTENTS_MANAGER">컨텐츠 관리자</option>
 	    					<option value="TEACHER">Teacher</option>
-	    					<option value="C_TUTOR">Company Manager</option>
 	    					<option value="TUTOR">Tutor</option>
 	            		</select>
 	  					<input type="image" src="/resources/images/admin/login/btn_login.png" alt="로그인" class="btn_login" onclick="login()"/>

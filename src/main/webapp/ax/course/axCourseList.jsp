@@ -165,17 +165,17 @@ function fn_makeGrid() {
 	            width : 150,
 	            align : "left"
 	        },{
-	            key : "COURSE_CODE",
-	            label : "과정코드",
-	            width : 90,
-	            align : "left"
-	        },{
 	            key : "COURSE_NAME",
 	            label : "과정명",
 	            width : 150,
 	            align : "left"
 	        },{
-	            key : "YEAR",
+	            key : "COURSE_CODE",
+	            label : "과정코드",
+	            width : 90,
+	            align : "left"
+	        },{
+	            key : "YEAR", 
 	            label : "년",
 	            width : 50,
 	            align : "center"
@@ -302,7 +302,10 @@ function fn_makeGrid() {
 			            align : "right",
 			            formatter : function () {
 			                return ax5.util.number(this.item.REPORT_RATE) + ax5.util.number(this.item.EXAM_RATE) + ax5.util.number(this.item.DISCUSSION_RATE) + ax5.util.number(this.item.PROGRESS_RATE);
-			           	}
+			           	},
+						styleClass: function () {
+		                    return "";
+		                }
 			        }
 		        ]
 	        },{
@@ -315,10 +318,10 @@ function fn_makeGrid() {
                 } 
 	        },{
               	key : undefined, 
-              	label: "과락 기준", 
+              	label: "과락 기준 (100점 기준)", 
               	columns: [	        
 			        {
-			            key : "REPORT_FAIL_RATE",
+			            key : "REPORT_FAIL",
 			            label : "레포트",
 			            width : 80,
 			            align : "right",
@@ -329,7 +332,7 @@ function fn_makeGrid() {
 		                    return "grid-cell-edit";
 		                }
 			        },{
-			            key : "EXAM_FAIL_RATE",
+			            key : "EXAM_FAIL",
 			            label : "시험",
 			            width : 70,
 			            align : "right",
@@ -340,7 +343,7 @@ function fn_makeGrid() {
 		                    return "grid-cell-edit";
 		                }
 			        },{
-			            key : "DISCUSSION_FAIL_RATE",
+			            key : "DISCUSSION_FAIL",
 			            label : "토론",
 			            width : 70,
 			            align : "right",
@@ -351,7 +354,7 @@ function fn_makeGrid() {
 		                    return "grid-cell-edit";
 		                }
 			        },{
-			            key : "PROGRESS_FAIL_RATE",
+			            key : "PROGRESS_FAIL",
 			            label : "강의진도",
 			            width : 90,
 			            align : "right",
@@ -362,7 +365,7 @@ function fn_makeGrid() {
 		                    return "grid-cell-edit";
 		                }
 			        },{
-			            key : "TOTAL_FAIL_RATE",
+			            key : "TOTAL_FAIL",
 			            label : "총점",
 			            width : 90,
 			            align : "right",
@@ -524,13 +527,13 @@ function fn_hidePopupDiv(popupDivId, mode) {
 				COURSE_COST : 0,
 				REPORT_RATE : 0,
 				EXAM_RATE : 0,
-				DISCUSSION_RATE : 0,
-				PROGRESS_RATE : 100,
-				REPORT_FAIL_RATE : 0,
-				EXAM_FAIL_RATE : 0,
-				DISCUSSION_FAIL_RATE : 0,
-				PROGRESS_FAIL_RATE : 0,
-				TOTAL_FAIL_RATE : 0,
+				DISCUSSION : 0,
+				PROGRESS : 100,
+				REPORT_FAIL : 0,
+				EXAM_FAIL : 0,
+				DISCUSSION_FAIL : 0,
+				PROGRESS_FAIL : 0,
+				TOTAL_FAIL : 0,
 				C_PERIOD : 0
 			}, "last", {focus: "END"});
 	} else if ( popupDivId == "examTypeDiv" ) {
