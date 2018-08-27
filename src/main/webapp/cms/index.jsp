@@ -65,20 +65,8 @@ function login() {
 }
 
 function lfn_page() {
-	if ( $("#auth").val() == "ADMIN" ) {
-		page.goAdminHome();
-	} else if ( $("#auth").val() == "CONTENTS_MANAGER") {
-		page.goContentsHome();
-	} else if ( $("#auth").val() == "SITE_MANAGER") {
-		page.goSiteHome();
-	} else if ( $("#auth").val() == "TEACHER") {
-		page.goTeacherHome();
-	} else if ( $("#auth").val() == "TUTOR") {
-		page.goTutorHome();
-	}
+	page.goAdminHome();
 }
-
-
 
 function lfn_login(userId) {
 	$("#userId").val(userId);

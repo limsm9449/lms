@@ -32,6 +32,8 @@ import com.qp.lms.ax.common.model.CommonVO;
 import com.qp.lms.ax.common.service.AxCommService;
 import com.qp.lms.common.CommUtil;
 import com.qp.lms.common.Constant;
+import com.qp.lms.common.SessionUtil;
+import com.qp.lms.common.SessionVO;
 
 @Controller
 public class AxCommController {
@@ -43,8 +45,11 @@ public class AxCommController {
     
    
     @RequestMapping(value = "/common/axOpenPage", method = RequestMethod.POST)
-    public String axOpenPage(@RequestParam("page") String page, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public String axOpenPage(@RequestParam("page") String page, HttpServletRequest request, HttpServletResponse response, Model model) throws Exception {
 
+    	SessionVO sess = (SessionVO)SessionUtil.getSession();
+    	model.addAttribute("auth",sess.getAuth());
+    	
         return page;
     }
     

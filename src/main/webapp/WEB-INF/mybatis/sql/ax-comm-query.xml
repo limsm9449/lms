@@ -75,6 +75,16 @@
 		 ORDER BY 2 	
 	</select>
 	
+	<select id="UnregisteredCourseCode" resultType="hashmap">
+		SELECT COURSE_CODE value
+		       ,COURSE_NAME text
+		  FROM COURSE_CODE
+		 WHERE USE_YN = 'Y'
+		   AND CODE = #{LEVEL3_CODE}
+		   AND COURSE_CODE NOT IN (SELECT COURSE_CODE FROM COURSE_MASTER)
+		 ORDER BY 2 	
+	</select>
+	
 	<select id="axDdExamCourseCode" resultType="hashmap">
 		SELECT A.COURSE_CODE value
 		       ,A.COURSE_NAME text
@@ -228,5 +238,9 @@
 		   AND P_SEQ = #{P_SEQ}
     </delete>		    
     
-    
+    <select id="axCompCdFromSubDomain" resultType="String">
+    	SELECT COMP_CD
+    	  FROM COMPANY
+    	 WHERE SUB_DOMAIN = #{SUB_DOMAIN}
+    </select>
 </mapper>

@@ -39,7 +39,7 @@ function fn_ddAfter() {
    	} else {
     	fn_search();
     	
-    	$("#CB_CATEGORY").attr("readonly", true);
+    	$("#CB_CATEGORY").attr("disabled", true);
     	$("#TITLE").attr("readonly", true);
     	$("#btn_save").hide();
     	

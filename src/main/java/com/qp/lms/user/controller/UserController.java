@@ -2,6 +2,8 @@ package com.qp.lms.user.controller;
 
 
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,11 +12,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.qp.lms.ax.common.service.AxCommService;
 import com.qp.lms.common.CommUtil;
 import com.qp.lms.common.SessionUtil;
-import com.qp.lms.common.SessionVO;
-import com.qp.lms.main.model.MainSet;
-import com.qp.lms.main.model.MainVO;
 import com.qp.lms.user.model.UserSet;
 import com.qp.lms.user.model.UserVO;
 import com.qp.lms.user.service.UserService;
@@ -33,6 +33,8 @@ public class UserController {
 	    @Autowired
 	    private UserService svr;
 
+	    @Autowired
+	    private AxCommService axCommService;
 	    
 	    /**
 	     * 강좌정보
@@ -374,7 +376,7 @@ public class UserController {
 	     * @throws Exception
 	     */
 	    @RequestMapping(value = "/user/courseList")
-	    public String courseList(@ModelAttribute UserVO vo, Model model) throws Exception {
+	    public String courseList(@ModelAttribute UserVO vo, Model model, HttpServletRequest request) throws Exception {
 	    	try {
 	    		UserSet set = new UserSet();
 	    		set.setCondiVO(vo);
@@ -386,6 +388,10 @@ public class UserController {
 	    			set.getCondiVO().setUserId(SessionUtil.getSessionUserId());
 	    		}
 	    		
+	    		String[] domains = request.getServerName().split("[.]");
+	    		set.getCondiVO().setCompCd(axCommService.axCompCdFromSubDomain(domains[0]));
+   	 			
+   	 			
 				// 메인 페이지에 나올 과정 리스트
 				set = svr.courseList(set);
 				

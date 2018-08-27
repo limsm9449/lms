@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="axCounsel">
+
+	<select id="axCounselList" parameterType="hashmap" resultType="hashmap">
+		SELECT SEQ,
+		       CATEGORY,
+		       TITLE,
+		       IF(LENGTH(IFNULL(ANSWER,''))=0,'N','Y') ANSWER_YN,
+		       DATE_FORMAT(IFNULL(A.UPDATE_DATE,A.CREATE_DATE), '%y.%m.%d %H:%i') CREATE_DATE,
+		       B.USER_NAME
+		  FROM COUNSEL A LEFT OUTER JOIN USER B ON A.USER_ID = B.USER_ID
+		   <if test="SEARCH_STR != null and SEARCH_STR != ''"> WHERE TITLE LIKE CONCAT('%',#{SEARCH_STR},'%')</if> 
+		 ORDER BY SEQ
+	</select>	
+	
+    <select id="axCounselOne" parameterType="hashmap" resultType="hashmap">
+		SELECT SEQ,
+		       CATEGORY,
+		       TITLE,
+		       CONTENTS,
+		       ANSWER
+		  FROM COUNSEL
+		 WHERE SEQ = #{SEQ}
+    </select>	
+
+    <select id="axCounselAnswerUpd" parameterType="hashmap">
+		UPDATE COUNSEL
+		   SET ANSWER = #{ANSWER},
+		       UPDATE_DATE = CURRENT_TIMESTAMP
+		 WHERE SEQ = #{SEQ}
+    </select>	
+
+
+        
+</mapper>

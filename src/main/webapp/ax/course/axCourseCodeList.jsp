@@ -22,7 +22,7 @@ var grid = null;
 
 var params = {};
 
-var dd;
+var dd; 
 
 $(document.body).ready(function () {
 	$( window ).resize( function() {
@@ -31,7 +31,7 @@ $(document.body).ready(function () {
 	
     confirmDialog.setConfig({
         theme: "danger"
-    });
+    }); 
 
     gfn_callAjax("/common/axDd.do", { DD_KIND : "CategoryLevel1,Teacher,QuestGroup,ContentsManager" }, fn_callbackAjax, "dd", { async : false });
     
@@ -41,6 +41,13 @@ $(document.body).ready(function () {
 	            fn_search();
 	            break;
             case "add":
+            	var allList = grid.getList();
+            	if ( gfn_getValueInList(allList, "NEW_FLAG",  "Y", "NEW_FLAG") == "Y" ) {
+            		mask.open();
+            		dialog.alert( { msg : "신규로 추가된 과정코드가 잇습니다. 저장후에 다시 추가를 해주세요." }, function () { mask.close();	} );
+            		return;
+            	}
+            	
 		    	gfn_cbRemove("INS_CB_LEVEL3");
 		    	gfn_cbRemove("INS_CB_LEVEL2");
 		    	$("#INS_CB_LEVEL1").val("");

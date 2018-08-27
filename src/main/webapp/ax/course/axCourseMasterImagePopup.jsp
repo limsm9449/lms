@@ -254,15 +254,15 @@ function isExtention(fileName, compExt) {
            		<img id="sImg3" src="/cImage/blank.jpg" style="width:249px;height:156px;"/>
             </div>
             <div class="file_btn_group">
-		      <a class="grayBtn file_button">sImg1.jpg(374*235) 파일</a> 
+		      <a class="grayBtn file_button">sImg1.jpg(120*75) 파일</a> 
 		      <input type="file" name="sImg1File" id="sImg1File" class="hidden_inputfile" title="" onChange="fn_upload({kind:'S_IMG1'}); return false;">
 		    </div>
             <div class="file_btn_group">
-		      <a class="grayBtn file_button">sImg2.jpg(374*235) 파일</a> 
+		      <a class="grayBtn file_button">sImg2.jpg(120*75) 파일</a> 
 		      <input type="file" name="sImg2File" id="sImg2File" class="hidden_inputfile" title="" onChange="fn_upload({kind:'S_IMG2'}); return false;">
 		    </div>
             <div class="file_btn_group">
-		      <a class="grayBtn file_button">sImg3.jpg(374*235) 파일</a> 
+		      <a class="grayBtn file_button">sImg3.jpg(120*75) 파일</a> 
 		      <input type="file" name="sImg3File" id="sImg3File" class="hidden_inputfile" title="" onChange="fn_upload({kind:'S_IMG3'}); return false;">
 		    </div>
         </div>

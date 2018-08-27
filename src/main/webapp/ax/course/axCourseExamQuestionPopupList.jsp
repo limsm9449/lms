@@ -140,6 +140,17 @@ $(document.body).ready(function () {
                     return "grid-cell-edit";
                 }
 	        },{
+	        	key : "ANSWER_DESC", 
+	        	label : "정답 설명", 
+	            width : 150,
+	        	align : "left", 
+	        	editor : { 
+	        		type : "text"
+	        	},
+				styleClass: function () {
+                    return "grid-cell-edit";
+                }
+	        },{
 	        	key : "WEEK", 
 	        	label : "주차", 
 	            width : 80,
@@ -224,7 +235,23 @@ $(document.body).ready(function () {
         			}
                	}
                	
-            	grid.addRow({NEW_FLAG : "Y", COURSE_CODE : params.COURSE_CODE, SEQ : maxSeq + 1, TYPE : "G", QUESTION : "질문을 입력하세요.", USE_YN : "Y", WEEK : 1, LEVEL : 3}, "last", {focus: "END"});
+            	grid.addRow(
+            			{
+            				NEW_FLAG : "Y", 
+            				COURSE_CODE : params.COURSE_CODE, 
+            				SEQ : maxSeq + 1, 
+            				TYPE : "G", 
+            				QUESTION : "질문을 입력하세요.", 
+            				QA1 : "", 
+            				QA2 : "", 
+            				QA3 : "", 
+            				QA4 : "", 
+            				ANSWER : "", 
+            				ANSWER_DESC : "",
+            				WEEK : 1, 
+            				LEVEL : 3,
+            				USE_YN : "Y" 
+            			}, "last", {focus: "END"});
                 break;
             case "delete":
                 grid.deleteRow("selected");
@@ -249,6 +276,7 @@ $(document.body).ready(function () {
                 		grid.setValue(rowIdx, "QA3", all[rowIdx - 1].QA3);
                 		grid.setValue(rowIdx, "QA4", all[rowIdx - 1].QA4);
                 		grid.setValue(rowIdx, "ANSWER", all[rowIdx - 1].ANSWER);
+                		grid.setValue(rowIdx, "ANSWER_DESC", all[rowIdx - 1].ANSWER_DESC);
                 		grid.setValue(rowIdx, "WEEK", all[rowIdx - 1].WEEK);
                 		grid.setValue(rowIdx, "LEVEL", all[rowIdx - 1].LEVEL);
                 		grid.setValue(rowIdx, "USE_YN", all[rowIdx - 1].USE_YN);
@@ -264,6 +292,7 @@ $(document.body).ready(function () {
                 		grid.setValue(rowIdx - 1, "QA3", row[0].QA3);
                 		grid.setValue(rowIdx - 1, "QA4", row[0].QA4);
                 		grid.setValue(rowIdx - 1, "ANSWER", row[0].ANSWER);
+                		grid.setValue(rowIdx - 1, "ANSWER_DESC", row[0].ANSWER_DESC);
                 		grid.setValue(rowIdx - 1, "WEEK", row[0].WEEK);
                 		grid.setValue(rowIdx - 1, "LEVEL", row[0].LEVEL);
                 		grid.setValue(rowIdx - 1, "USE_YN", row[0].USE_YN);
@@ -294,6 +323,7 @@ $(document.body).ready(function () {
                 		grid.setValue(rowIdx, "QA3", all[rowIdx + 1].QA3);
                 		grid.setValue(rowIdx, "QA4", all[rowIdx + 1].QA4);
                 		grid.setValue(rowIdx, "ANSWER", all[rowIdx + 1].ANSWER);
+                		grid.setValue(rowIdx, "ANSWER_DESC", all[rowIdx + 1].ANSWER_DESC);
                 		grid.setValue(rowIdx, "WEEK", all[rowIdx + 1].WEEK);
                 		grid.setValue(rowIdx, "LEVEL", all[rowIdx + 1].LEVEL);
                 		grid.setValue(rowIdx, "USE_YN", all[rowIdx + 1].USE_YN);
@@ -309,6 +339,7 @@ $(document.body).ready(function () {
                 		grid.setValue(rowIdx + 1, "QA3", row[0].QA3);
                 		grid.setValue(rowIdx + 1, "QA4", row[0].QA4);
                 		grid.setValue(rowIdx + 1, "ANSWER", row[0].ANSWER);
+                		grid.setValue(rowIdx + 1, "ANSWER_DESC", row[0].ANSWER_DESC);
                 		grid.setValue(rowIdx + 1, "WEEK", row[0].WEEK);
                 		grid.setValue(rowIdx + 1, "LEVEL", row[0].LEVEL);
                 		grid.setValue(rowIdx + 1, "USE_YN", row[0].USE_YN);

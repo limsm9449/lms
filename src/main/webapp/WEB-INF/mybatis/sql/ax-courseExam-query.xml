@@ -47,11 +47,14 @@
 		  <if test="courseName != null and courseName != ''"> 
 		  	AND A.COURSE_NAME LIKE CONCAT('%',#{courseName},'%')
 		  </if>
+		  <if test="SESSION_CONTENTS_MANAGER_YN == 'YES'"> 
+	 	    AND A.CONTENTS_MANAGER_ID = #{SESSION_USER_ID}
+		  </if>
 		 ORDER BY B.CATEGORY_NAME,A.COURSE_NAME
 	</select>
 
 	<select id="axCourseExamQuestionList" parameterType="hashmap" resultType="hashmap">
-		SELECT 	A.COURSE_CODE, A.SEQ, A.TYPE, A.QUESTION, A.QA1, A.QA2, A.QA3, A.QA4, A.ANSWER, A.WEEK, A.LEVEL, A.USE_YN, A.ORD,
+		SELECT 	A.COURSE_CODE, A.SEQ, A.TYPE, A.QUESTION, A.QA1, A.QA2, A.QA3, A.QA4, A.ANSWER, A.ANSWER_DESC, A.WEEK, A.LEVEL, A.USE_YN, A.ORD,
 		       	DATE_FORMAT(IFNULL(A.UPDATE_DATE, A.CREATE_DATE), '%y.%m.%d %H:%i') LAST_UPDATE_DATE,
 		       	IFNULL(U2.USER_NAME, U1.USER_NAME) LAST_UPDATE_USER,
 			    'N' NEW_FLAG
@@ -62,8 +65,8 @@
 	</select>
 
 	<insert id="axCourseExamQuestionInsert" parameterType="hashmap">
-		INSERT INTO COURSE_EXAM ( COURSE_CODE, SEQ, TYPE, QUESTION, QA1, QA2, QA3, QA4, ANSWER, WEEK, LEVEL, USE_YN, ORD, CREATE_DATE, CREATE_USER )
-		VALUES ( #{COURSE_CODE}, #{SEQ}, #{TYPE}, #{QUESTION}, #{QA1}, #{QA2}, #{QA3}, #{QA4}, #{ANSWER}, IFNULL(#{WEEK}, 1), IFNULL(#{LEVEL}, 3), #{USE_YN}, #{ORD}, CURRENT_TIMESTAMP, #{SESSION_USER_ID} )
+		INSERT INTO COURSE_EXAM ( COURSE_CODE, SEQ, TYPE, QUESTION, QA1, QA2, QA3, QA4, ANSWER, ANSWER_DESC, WEEK, LEVEL, USE_YN, ORD, CREATE_DATE, CREATE_USER )
+		VALUES ( #{COURSE_CODE}, #{SEQ}, #{TYPE}, #{QUESTION}, #{QA1}, #{QA2}, #{QA3}, #{QA4}, #{ANSWER}, #{ANSWER_DESC}, IFNULL(#{WEEK}, 1), IFNULL(#{LEVEL}, 3), #{USE_YN}, #{ORD}, CURRENT_TIMESTAMP, #{SESSION_USER_ID} )
 	</insert>  
 	
 	<update id="axCourseExamQuestionUpdate" parameterType="hashmap">
@@ -75,6 +78,7 @@
 				,QA3 = #{QA3}
 				,QA4 = #{QA4}
 				,ANSWER = #{ANSWER}
+				,ANSWER_DESC = #{ANSWER_DESC}
 				,WEEK = IFNULL(#{WEEK}, 1)
 				,LEVEL = IFNULL(#{LEVEL}, 3)
 				,USE_YN = #{USE_YN}

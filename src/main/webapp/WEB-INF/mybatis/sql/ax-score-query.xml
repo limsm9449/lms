@@ -20,6 +20,11 @@
 				,IFNULL(C.TOTAL_CNT,0) TOTAL_CNT
 				,IFNULL(C.REPORT_SUBMIT_CNT,0) REPORT_SUBMIT_CNT
 				,IFNULL(D.QUEST_CNT,0) QUEST_CNT
+				,IFNULL(E.CNT, 0) USER_CNT                
+				,IFNULL(F.TOTAL_RATIO,0) TOTAL_RATIO
+				,IFNULL(F.WEEK_RATIO,0) WEEK_RATIO 
+		        ,IFNULL(A.REPORT_RATE,0) REPORT_RATE
+		        ,IFNULL(A.DISCUSSION_RATE,0) DISCUSSION_RATE
 		FROM 	COURSE A 
 		                LEFT OUTER JOIN COURSE_CODE B ON B.COURSE_CODE = A.COURSE_CODE
 						LEFT OUTER JOIN (
@@ -50,14 +55,36 @@
 										GROUP BY COURSE_ID, USER_ID
 									) A
 							WHERE	CNT > 0
-							GROUP 	BY COURSE_ID ) D ON D.COURSE_ID = A.COURSE_ID
+							GROUP 	BY COURSE_ID ) D ON D.COURSE_ID = A.COURSE_ID     
+	                     LEFT OUTER JOIN (
+	                     	SELECT  COURSE_ID,
+	                     			COUNT(*) CNT
+	                     	FROM	COURSE_REGISTER
+	                     	WHERE	STATUS = 'A'
+	                     	GROUP 	BY COURSE_ID ) E ON E.COURSE_ID = A.COURSE_ID   
+						LEFT OUTER JOIN COURSE_EXAM_TYPE F ON F.SEQ = A.COURSE_EXAM_TYPE_ID
 		WHERE 	1 = 1
 		AND		A.OPEN_YN = 'Y'
 <if test="LEVEL1_CODE != null and LEVEL1_CODE != ''"> AND CAT.C1_CODE = #{LEVEL1_CODE}</if>
 <if test="LEVEL2_CODE != null and LEVEL2_CODE != ''"> AND CAT.C2_CODE = #{LEVEL2_CODE}</if>
-<if test="LEVEL3_CODE != null and LEVEL3_CODE != ''"> AND CAT.C3_CODE = #{LEVEL3_CODE}</if>		
-<if test="SEARCH_COURSE != null and SEARCH_COURSE != ''"> 
-		AND 	( UPPER(A.COURSE_CODE) LIKE CONCAT('%',UPPER(#{SEARCH_COURSE}),'%') OR UPPER(B.COURSE_NAME) LIKE CONCAT('%',UPPER(#{SEARCH_COURSE}),'%') )
+<if test="LEVEL3_CODE != null and LEVEL3_CODE != ''"> AND CAT.C3_CODE = #{LEVEL3_CODE}</if>
+<if test="COMPANY != null and COMPANY == 'B2C'">
+		AND 	IFNULL(A.COMP_CD,'B2C') = 'B2C'
+</if>
+<if test="COMPANY != null and COMPANY == 'B2B'">
+		AND 	IFNULL(A.COMP_CD,'B2C') != 'B2C'
+</if>
+<if test="CLOSE != null and CLOSE != ''">
+		AND 	IFNULL(A.CLOSE_YN,'N') = #{CLOSE} 
+</if>
+<if test="YEAR != null and YEAR != ''">
+		AND		A.YEAR = #{YEAR}
+</if>
+<if test="chasu != null and chasu != ''">
+		AND		A.CHASU = #{chasu}
+</if>
+<if test="courseName != null and courseName != ''"> 
+		AND ( UPPER(A.COURSE_CODE) LIKE CONCAT('%',UPPER(#{courseName}),'%') OR UPPER(B.COURSE_NAME) LIKE CONCAT('%',UPPER(#{courseName}),'%') )
 </if>		
 		ORDER 	BY CAT.CATEGORY_NAME,B.COURSE_NAME,A.YEAR,A.MONTH,A.CHASU  
 	</select>
@@ -82,21 +109,19 @@
 		        ,B.COMPLETE_YN
 		        ,IF(C.REPORT_RATE > 0, 'Y', 'N') C_REPORT_YN
 		        ,IF(C.DISCUSSION_RATE > 0, 'Y', 'N') C_DISCUSSION_YN
-		        ,C.REPORT_RATE
-		        ,C.EXAM_RATE
-		        ,C.DISCUSSION_RATE
-		        ,C.PROGRESS_RATE
-                ,F.TOTAL_RATIO
-				,F.WEEK_RATIO
+		        ,IFNULL(C.REPORT_RATE,0) REPORT_RATE
+		        ,IFNULL(C.EXAM_RATE,0) EXAM_RATE
+		        ,IFNULL(C.DISCUSSION_RATE,0) DISCUSSION_RATE
+		        ,IFNULL(C.PROGRESS_RATE,0) PROGRESS_RATE
+                ,IFNULL(F.TOTAL_RATIO,0) TOTAL_RATIO
+				,IFNULL(F.WEEK_RATIO,0) WEEK_RATIO 
 		        ,B.REPORT_SEQ
-		        ,D.TITLE REPORT_NAME
                 ,C.COURSE_CODE
                 ,IFNULL(E.EVAL, 0) EVAL
 		FROM	COURSE_REGISTER A
 					LEFT OUTER JOIN COURSE_EVAL B ON B.COURSE_ID = A.COURSE_ID AND B.USER_ID = A.USER_ID
 		            LEFT OUTER JOIN USER U ON U.USER_ID = A.USER_ID
             		LEFT OUTER JOIN COURSE C ON C.COURSE_ID = A.COURSE_ID
-            		LEFT OUTER JOIN COURSE_REPORT D ON D.SEQ = B.REPORT_SEQ
 					LEFT OUTER JOIN POSTSCRIPT E ON E.COURSE_ID = A.COURSE_ID AND E.USER_ID = A.USER_ID
 					LEFT OUTER JOIN COURSE_EXAM_TYPE F ON F.SEQ = C.COURSE_EXAM_TYPE_ID
 		WHERE 	A.STATUS = 'A'

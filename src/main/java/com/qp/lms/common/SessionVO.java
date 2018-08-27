@@ -19,6 +19,7 @@ public class SessionVO {
 	
 	//2014.8.3
 	private List<CourseVO> favorityCourseList;
+	private String subDomain;
 		
 	public String getUserId() {
 		return userId;
@@ -85,6 +86,12 @@ public class SessionVO {
 	}
 	public void setAuth(String auth) {
 		this.auth = auth;
+	}
+	public String getSubDomain() {
+		return subDomain;
+	}
+	public void setSubDomain(String subDomain) {
+		this.subDomain = subDomain;
 	}
 	
 		

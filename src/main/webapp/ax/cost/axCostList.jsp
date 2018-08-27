@@ -189,17 +189,26 @@ function fn_makeGrid() {
 			            key : "TOTAL_COST",
 			            label : "총금액",
 			            width : 80,
-			            align : "right"
+			            align : "right",
+			            formatter : function () {
+			                return checkThousand(this.item.TOTAL_COST);
+			           	}
 			        },{
 			            key : "PAYMENT_POINT",
 			            label : "포인트 금액",
 			            width : 100,
-			            align : "right"
+			            align : "right",
+			            formatter : function () {
+			                return checkThousand(this.item.PAYMENT_POINT);
+			           	}
 			        },{
 			            key : "PAYMENT_COST",
 			            label : "결재 금액",
 			            width : 80,
-			            align : "right"
+			            align : "right",
+			            formatter : function () {
+			                return checkThousand(this.item.PAYMENT_COST);
+			           	}
 			        },{
 			            key : "PAYMENT_KIND",
 			            label : "결재 방법",
@@ -278,7 +287,10 @@ function fn_makeGrid() {
 			        	},
 						styleClass: function () {
 		                    return (this.item.UPD_FLAG == "Y" ? "grid-cell-edit" : "");
-		                }
+		                },
+			            formatter : function () {
+			                return checkThousand(this.item.REFUND_COST);
+			           	}
               		},{
 			            key : "REFUND_BANK",
 			            label : "환불 은행",

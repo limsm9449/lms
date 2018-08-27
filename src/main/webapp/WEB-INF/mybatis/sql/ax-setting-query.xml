@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="axSetting">
+
+	<select id="axSettingBankList" resultType="hashmap">
+		SELECT 	A.*
+				,'N' NEW_FLAG
+		FROM 	BANK A		 
+		ORDER BY BANK_NAME
+	</select>
+	
+	<insert id="axSettingBankInsert" parameterType="hashmap">
+		INSERT INTO BANK( BANK_NAME, ACC_NO, USER, USE_YN)
+    	VALUES (#{BANK_NAME}, #{ACC_NO}, #{USER}, #{USE_YN})
+	</insert>  
+	
+	<update id="axSettingBankUpdate" parameterType="hashmap">
+		UPDATE 	BANK
+    	   SET 	BANK_NAME = #{BANK_NAME}
+				,ACC_NO = #{ACC_NO}
+				,USER = #{USER}
+				,USE_YN = #{USE_YN}
+    	 WHERE 	SEQ = #{SEQ} 
+	</update>    
+	
+	<delete id="axSettingBankDelete" parameterType="hashmap">
+		DELETE FROM BANK
+		 WHERE SEQ = #{SEQ} 
+	</delete>  
+
+	<select id="axSettingMailList" resultType="hashmap">
+		SELECT 	A.*
+				,'N' NEW_FLAG
+		FROM 	MAIL A		 
+		ORDER BY KIND
+	</select>
+	
+	<insert id="axSettingMailInsert" parameterType="hashmap">
+		INSERT INTO MAIL(KIND, EMAIL)
+    	VALUES (#{KIND}, #{EMAIL})
+	</insert>  
+	
+	<update id="axSettingMailUpdate" parameterType="hashmap">
+		UPDATE 	MAIL
+    	   SET 	KIND = #{KIND}
+				,EMAIL = #{EMAIL}
+    	 WHERE 	SEQ = #{SEQ} 
+	</update>    
+	
+	<delete id="axSettingMailDelete" parameterType="hashmap">
+		DELETE FROM MAIL
+		 WHERE SEQ = #{SEQ} 
+	</delete>
+
+	<select id="axSettingConfigList" resultType="hashmap">
+		SELECT 	A.*
+		FROM 	SETTING A		 
+		ORDER BY SEQ
+	</select>
+	
+	<update id="axSettingConfigUpdate" parameterType="hashmap">
+		UPDATE 	SETTING
+    	   SET 	OPTION_VALUE = #{OPTION_VALUE}
+				,OPTION_DESC = #{OPTION_DESC}
+    	 WHERE 	SEQ = #{SEQ} 
+	</update>   
+	
+	<select id="axSettingCodeList" resultType="hashmap">
+		SELECT 	A.*
+		FROM 	CODE A		 
+		ORDER BY DD_MAIN, ORD
+	</select>
+	
+	<update id="axSettingCodeUpdate" parameterType="hashmap">
+		UPDATE 	CODE
+    	SET 	DD_VALUE = #{DD_VALUE}
+				,ORD = #{ORD}
+    	WHERE 	DD_MAIN = #{DD_MAIN} 
+    	AND		DD_KEY = #{DD_KEY}
+	</update>    
+	
+</mapper>

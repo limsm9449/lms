@@ -59,24 +59,27 @@ public class SessionInterceptor extends HandlerInterceptorAdapter {
 	    		return true;
 	    	} else {
 		    	// request 로그 
-		    	String reqParam = "";
-		    	Enumeration e = request.getParameterNames();
-		        while ( e.hasMoreElements() ) {
-		        	String   name   = (String)e.nextElement();
-	            	reqParam += ("".equals(reqParam) ? "" : "&" ) + name + "=";
-	
-	            	String[] values = request.getParameterValues(name);
-		            for ( int i = 0; i < values.length; i++) {
-		            	reqParam += ( i == 0 ? "" : ",") + values[i];
-		            }
-		        }
-		        if ( (SessionVO)SessionUtil.getSession() == null) {
-		        	commSvr.requestLog("Guest", url, reqParam, request.getRemoteAddr());
-		        } else {
-		        	commSvr.requestLog(SessionUtil.getSessionUserId(), url, reqParam, request.getRemoteAddr());
-		        	
-		        }
-		        
+	    		if ( url.indexOf("/log/axLogList") < 0 ||
+	    				url.indexOf("/home/adminHome") < 0 ||
+	    				url.indexOf("/adminLeft") < 0 ) {
+			    	String reqParam = "";
+			    	Enumeration e = request.getParameterNames();
+			        while ( e.hasMoreElements() ) {
+			        	String   name   = (String)e.nextElement();
+		            	reqParam += ("".equals(reqParam) ? "" : "&" ) + name + "=";
+		
+		            	String[] values = request.getParameterValues(name);
+			            for ( int i = 0; i < values.length; i++) {
+			            	reqParam += ( i == 0 ? "" : ",") + values[i];
+			            }
+			        }
+			        if ( (SessionVO)SessionUtil.getSession() == null) {
+			        	commSvr.requestLog("Guest", url, reqParam, request.getRemoteAddr());
+			        } else {
+			        	commSvr.requestLog(SessionUtil.getSessionUserId(), url, reqParam, request.getRemoteAddr());
+			        }
+	    		}
+			        
 		    	//인기과정
 	   	 		if ( SessionUtil.getFavorityCourseList() == null ) {
 	   	 			SessionUtil.setAttribute("favorityCourseList", commSvr.getFavorityCourseList());

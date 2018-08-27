@@ -149,12 +149,6 @@ $(document.body).ready(function () {
 function fn_makeGrid() {
 	grid = gfn_makeAx5Grid("first-grid",
 		[ 	{
-	            key : "NEW_FLAG",
-	            width : 0
-	        },{
-	            key : "COURSE_EXAM_TYPE_ID",
-	            width : 0
-	        },{
 	            key : "COURSE_ID",
 	            label : "ID",
 	            width : 50,
@@ -188,7 +182,12 @@ function fn_makeGrid() {
 	            key : "CHASU",
 	            label : "차수",
 	            width : 50,
-	            align : "center"
+	            align : "right"
+	        },{
+	            key : "USER_CNT",
+	            label : "수강생",
+	            width : 70,
+	            align : "right"
 	        },{
 	        	key : "COMP_CD", 
 	        	label : "회사", 
@@ -199,16 +198,13 @@ function fn_makeGrid() {
                     config : {
                         columnKeys: { optionValue: "value", optionText: "text" },
                         options: dd.Company
-                    },
-	            	disabled : function () {
-                        return ( this.item.NEW_FLAG != "Y" ? true : false );
                     }
 	        	},
 	            formatter : function () {
 	                return gfn_getValueInList(dd.Company, "value",  this.item.COMP_CD, "text");
 	           	},
 				styleClass: function () {
-                    return ( this.item.NEW_FLAG == "Y" ? "grid-cell-edit": "" );
+                    return "grid-cell-edit";
                 }
 	        },{
 	        	key : "TUTOR_ID", 
@@ -524,17 +520,27 @@ function fn_hidePopupDiv(popupDivId, mode) {
 				COURSE_CODE : $("#INS_CB_COURSE_CODE option:selected").val(), 
 				COURSE_NAME : $("#INS_CB_COURSE_CODE option:selected").text(),
 				COMP_CD : 'B2C',
+				TUTOR_CNT : "",
 				COURSE_COST : 0,
 				REPORT_RATE : 0,
 				EXAM_RATE : 0,
-				DISCUSSION : 0,
-				PROGRESS : 100,
+				DISCUSSION_RATE : 0,
+				PROGRESS_RATE : 100,
+				COURSE_EXAM_TYPE_NAME : "",
 				REPORT_FAIL : 0,
 				EXAM_FAIL : 0,
 				DISCUSSION_FAIL : 0,
 				PROGRESS_FAIL : 0,
 				TOTAL_FAIL : 0,
-				C_PERIOD : 0
+				OPEN_YN : "N",
+				TERM_YN : "N",
+				TERM_PERIOD_FROM : "",
+				TERM_PERIOD_TO : "",
+				STUDY_PERIOD_FROM : "",
+				STUDY_PERIOD_TO : "",
+				C_PERIOD : 30,
+				POPULAR_YN : "",
+				CLOSE_YN : ""
 			}, "last", {focus: "END"});
 	} else if ( popupDivId == "examTypeDiv" ) {
 		if ( mode == "delete" ) {
@@ -574,19 +580,29 @@ function fn_hidePopupDiv(popupDivId, mode) {
 					COURSE_CODE : row[0].COURSE_CODE, 
 					COURSE_NAME : row[0].COURSE_NAME, 
 					COMP_CD : companys[i],
-					TUTOR_ID : gfn_getValueInList(dd.Company, "value",  companys[i], "TUTOR_ID"),
-					COURSE_COST : 0,
-					REPORT_RATE : 0,
-					EXAM_RATE : 0,
-					DISCUSSION_RATE : 0,
-					PROGRESS_RATE : 100,
-					REPORT_FAIL_RATE : 0,
-					EXAM_FAIL_RATE : 0,
-					DISCUSSION_FAIL_RATE : 0,
-					PROGRESS_FAIL_RATE : 0,
-					TOTAL_FAIL_RATE : 0,
-					C_PERIOD : 0
+					TUTOR_ID : row[0].TUTOR_ID,
+					COURSE_COST : row[0].COURSE_COST,
+					REPORT_RATE : row[0].REPORT_RATE,
+					EXAM_RATE : row[0].EXAM_RATE,
+					DISCUSSION_RATE : row[0].DISCUSSION_RATE,
+					PROGRESS_RATE : row[0].PROGRESS_RATE,
+					REPORT_FAIL : row[0].REPORT_FAIL,
+					EXAM_FAIL : row[0].EXAM_FAIL,
+					COURSE_EXAM_TYPE_NAME : row[0].COURSE_EXAM_TYPE_NAME,
+					DISCUSSION_FAIL : row[0].DISCUSSION_FAIL,
+					PROGRESS_FAIL : row[0].PROGRESS_FAIL,
+					TOTAL_FAIL : row[0].TOTAL_FAIL,
+					TERM_YN : row[0].TERM_YN,
+					TERM_PERIOD_FROM : row[0].TERM_PERIOD_FROM,
+					TERM_PERIOD_TO : row[0].TERM_PERIOD_TO,
+					STUDY_PERIOD_FROM : row[0].STUDY_PERIOD_FROM,
+					STUDY_PERIOD_TO : row[0].STUDY_PERIOD_TO,
+					C_PERIOD : row[0].C_PERIOD,
+					POPULAR_YN : "",
+					CLOSE_YN : ""
 				}, "last", {focus: "END"});
+			
+			grid.repaint();
 		}
 	}
 
@@ -597,6 +613,7 @@ function fn_params() {
 	params.LEVEL1_CODE = $("#CB_LEVEL1 option:selected").val();	
 	params.LEVEL2_CODE = $("#CB_LEVEL2 option:selected").val();	
 	params.LEVEL3_CODE = $("#CB_LEVEL3 option:selected").val();	
+	params.COMPANY = $("#CB_COMPANY option:selected").val();	
 	params.OPEN_KIND = $("#CB_OPEN_KIND option:selected").val();	
 	params.YEAR = $("#CB_YEAR option:selected").val();	
 	params.chasu = $("#chasu").val();	
@@ -607,7 +624,7 @@ function fn_search() {
 	//mask.open();
 	fn_params();
 	
-	if ( params.chasu != "" && !isNaN(params.chasu) ) {
+	if ( params.chasu != "" && isNaN(params.chasu) ) {
 		mask.open();
 		dialog.alert( { msg : "차수는 정수를 입력하셔야 합니다." }, function () { mask.close(); } );
 		return false;
@@ -714,7 +731,11 @@ function fn_gridEvent(event, obj) {
 	    	gfn_callAjax("/common/axDd.do", { DD_KIND : "ExamType", COURSE_CODE : obj.item.COURSE_CODE }, fn_callbackAjax, "ExamType", { async : false });
 		}
 	} else if ( event == "DataChanged" ) {
-		if ( obj.key == "COURSE_EXAM_TYPE_NAME" ) {
+		if ( obj.key == "COURSE_EXAM_TYPE_NAME" ||
+				obj.key == "REPORT_RATE" ||
+				obj.key == "EXAM_RATE" ||
+				obj.key == "DISCUSSION_RATE" ||
+				obj.key == "PROGRESS_RATE" ) {
 			grid.repaint();
 		}
 	}
@@ -756,6 +777,12 @@ function fn_cbChange(id) {
 	소분류
 	<select id="CB_LEVEL3">
 		<option value="">전체</option>
+	</select>
+	회사 구분
+	<select id="CB_COMPANY">
+		<option value="">전체</option>
+		<option value="B2C">일반사용자</option>
+		<option value="B2B">회사</option>
 	</select>
 	오픈구분
 	<select id="CB_OPEN_KIND">

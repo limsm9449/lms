@@ -35,6 +35,8 @@ public class AxCommService {
 		    	hm.put(ddKinds[i], sqlSession.selectList("axComm.axDdQuestGroup", paramMap));
 			} else if ( "CourseCode".equals(ddKinds[i]) ) {
 		    	hm.put(ddKinds[i], sqlSession.selectList("axComm.axDdCourseCode", paramMap));
+			} else if ( "UnregisteredCourseCode".equals(ddKinds[i]) ) {
+		    	hm.put(ddKinds[i], sqlSession.selectList("axComm.UnregisteredCourseCode", paramMap));
 			} else if ( "ExamCourseCode".equals(ddKinds[i]) ) {
 		    	hm.put(ddKinds[i], sqlSession.selectList("axComm.axDdExamCourseCode", paramMap));
 			} else if ( "Company".equals(ddKinds[i]) ) {
@@ -66,7 +68,7 @@ public class AxCommService {
 				paramMap.put("DD_MAIN", "FAQ");
 		    	hm.put(ddKinds[i], sqlSession.selectList("axComm.axDdCode", paramMap));
 			} else if ( "ZipcodeUrl".equals(ddKinds[i]) ) {
-				paramMap.put("OPTION_KEY", "SEARCH_ZIPCODE");
+				paramMap.put("OPTION_KEY", "ZIPCODE_URL");
 		    	hm.put(ddKinds[i], sqlSession.selectList("axComm.axDdSetting", paramMap));
 			} else if ( "OpenKind".equals(ddKinds[i]) ) {
 				paramMap.put("DD_MAIN", "OPEN_KIND");
@@ -107,4 +109,13 @@ public class AxCommService {
     	return hm;
     }
 	
+    public String axCompCdFromSubDomain(String subDomain) throws Exception {
+    	HashMap<String, Object> params = new HashMap<String, Object>();
+    	params.put("SUB_DOMAIN", subDomain);
+    	
+    	String compCd = sqlSession.selectOne("axComm.axCompCdFromSubDomain", params);
+    	
+        return ( compCd == null ? "B2C" : compCd );
+    }
+
 }

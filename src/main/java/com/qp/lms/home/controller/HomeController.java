@@ -56,6 +56,26 @@ public class HomeController {
         return "/home/adminHome";
     }
 
+    @RequestMapping(value = "/adminLeft")
+    public String adminLeft(@ModelAttribute HomeVO vo, Model model) throws Exception {
+    	try {
+	    	HomeSet set = new HomeSet();
+	    	
+	    	set = svr.aLeft(set);
+	    	
+	    	model.addAttribute("set", set );
+
+	    	SessionVO sess = (SessionVO)SessionUtil.getSession();
+	    	model.addAttribute("auth",sess.getAuth());
+	    	
+    	} catch ( Exception e ) {
+    		e.printStackTrace();
+    	}
+    	 
+        return "home/adminLeft";
+    }
+
+    /*
     @RequestMapping(value = "/home/userHome")
     public String userHome(@ModelAttribute HomeVO vo, Model model) throws Exception {
     	try {
@@ -84,12 +104,13 @@ public class HomeController {
     public String compManagerHome(@ModelAttribute HomeVO vo, Model model) throws Exception {
         return "/home/compManagerHome";
     }
+    */
 
 
     /*
      * �긽�떒
      */
-    @RequestMapping(value = "/top")
+    /*@RequestMapping(value = "/top")
     public String top(@ModelAttribute HomeVO vo, Model model) throws Exception {
     	String jspName = "";
     	SessionVO sess = (SessionVO)SessionUtil.getSession();
@@ -108,7 +129,7 @@ public class HomeController {
     	}
     	
         return jspName;
-    }
+    }*/
 
     /**
      * 愿�由ъ옄 硫붾돱
@@ -117,20 +138,6 @@ public class HomeController {
      * @return
      * @throws Exception
      */
-    @RequestMapping(value = "/adminLeft")
-    public String adminLeft(@ModelAttribute HomeVO vo, Model model) throws Exception {
-    	try {
-	    	HomeSet set = new HomeSet();
-	    	
-	    	set = svr.aLeft(set);
-	    	
-	    	model.addAttribute("set", set );
-    	} catch ( Exception e ) {
-    		e.printStackTrace();
-    	}
-    	 
-        return "home/adminLeft";
-    }
 
     /**
      * �궗�슜�옄 硫붾돱
@@ -139,7 +146,7 @@ public class HomeController {
      * @return
      * @throws Exception
      */
-    @RequestMapping(value = "/userLeft")
+    /*@RequestMapping(value = "/userLeft")
     public String userLeft(@ModelAttribute HomeVO vo, Model model) throws Exception {
     	HomeSet set = new HomeSet();
     	
@@ -148,7 +155,7 @@ public class HomeController {
     	 model.addAttribute("set", set );
     	 
         return "home/userLeft";
-    }
+    }*/
 
     /**
      * Tutor 硫붾돱
@@ -157,7 +164,7 @@ public class HomeController {
      * @return
      * @throws Exception
      */
-    @RequestMapping(value = "/tutorLeft")
+    /*@RequestMapping(value = "/tutorLeft")
     public String tutorLeft(@ModelAttribute HomeVO vo, Model model) throws Exception {
     	try {
 	    	HomeSet set = new HomeSet();
@@ -170,7 +177,7 @@ public class HomeController {
     	}
 
         return "home/tutorLeft";
-    }
+    }*/
 
     /**
      * 媛뺤궗 硫붾돱
@@ -179,7 +186,7 @@ public class HomeController {
      * @return
      * @throws Exception
      */
-    @RequestMapping(value = "/teacherLeft")
+    /*@RequestMapping(value = "/teacherLeft")
     public String teacherLeft(@ModelAttribute HomeVO vo, Model model) throws Exception {
     	try {
 	    	HomeSet set = new HomeSet();
@@ -192,7 +199,7 @@ public class HomeController {
     	}
 
         return "home/teacherLeft";
-    }
+    }*/
 
     /**
      * �쉶�궗 愿�由ъ옄 硫붾돱
@@ -201,7 +208,7 @@ public class HomeController {
      * @return
      * @throws Exception
      */
-    @RequestMapping(value = "/compManagerLeft")
+    /*@RequestMapping(value = "/compManagerLeft")
     public String compManagerLeft(@ModelAttribute HomeVO vo, Model model) throws Exception {
     	try {
 	    	HomeSet set = new HomeSet();
@@ -214,23 +221,16 @@ public class HomeController {
     	}
  
         return "home/compManagerLeft";
-    }
+    }*/
     
     /*
      * �븯�떒
      */
-    @RequestMapping(value = "/bottom")
+    /*@RequestMapping(value = "/bottom")
     public String bottom(Model model) throws Exception {
         return "home/bottom";
-    }
+    }*/
     
-    /*
-     * �븯�떒
-     */
-    @RequestMapping(value = "/adminBottom")
-    public String adminBottom(Model model) throws Exception {
-        return "home/adminBottom";
-    }
 
     /*
      * �궡�슜

@@ -35,7 +35,7 @@ $(document.body).ready(function () {
 
     $('#MCB_COMPANY').multiselect();
     
-    gfn_callAjax("/common/axDd.do", { DD_KIND : "CategoryLevel1,Tutor,Company" }, fn_callbackAjax, "dd", { async : false });
+    gfn_callAjax("/common/axDd.do", { DD_KIND : "CategoryLevel1,Tutor,Company,Year" }, fn_callbackAjax, "dd", { async : false });
     
     $('[data-grid-control]').click(function () {
         switch (this.getAttribute("data-grid-control")) {
@@ -66,7 +66,12 @@ $(document.body).ready(function () {
             	} else {
             		parent.document.getElementById("left").contentWindow.gfn_openMenu("axUserScoreList", { 
 	            				COURSE_ID : row[0].COURSE_ID,
-	            				COURSE_NAME : row[0].COURSE_NAME 
+	            				COURSE_CODE : row[0].COURSE_CODE,
+	            			    COURSE_NAME : row[0].COURSE_NAME,
+	            			    REPORT_RATE : row[0].REPORT_RATE,
+	            			    DISCUSSION_RATE : row[0].DISCUSSION_RATE,
+	            			    TOTAL_RATIO : row[0].TOTAL_RATIO,
+	            			    WEEK_RATIO : row[0].WEEK_RATIO
 	            			}
 	            		);
             	}
@@ -79,12 +84,6 @@ $(document.body).ready(function () {
 function fn_makeGrid() {
 	grid = gfn_makeAx5Grid("first-grid",
 		[ 	{
-	            key : "NEW_FLAG",
-	            width : 0
-	        },{
-	            key : "COURSE_EXAM_TYPE_ID",
-	            width : 0
-	        },{
 	            key : "CATEGORY_NAME",
 	            label : "카테고리",
 	            width : 150,
@@ -114,6 +113,11 @@ function fn_makeGrid() {
 	            label : "차수",
 	            width : 50,
 	            align : "center"
+	        },{
+	            key : "USER_CNT",
+	            label : "수강생",
+	            width : 70,
+	            align : "right"
 	        },{
 	        	key : "COMP_CD", 
 	        	label : "회사", 
@@ -187,13 +191,21 @@ function fn_params() {
 	params.LEVEL1_CODE = $("#CB_LEVEL1 option:selected").val();	
 	params.LEVEL2_CODE = $("#CB_LEVEL2 option:selected").val();	
 	params.LEVEL3_CODE = $("#CB_LEVEL3 option:selected").val();	
-	params.SEARCH_COURSE = $("#SEARCH_COURSE").val();	
+	params.COMPANY = $("#CB_COMPANY option:selected").val();	
+	params.CLOSE = $("#CB_CLOSE option:selected").val();	
+	params.YEAR = $("#CB_YEAR option:selected").val();	
+	params.chasu = $("#chasu").val();	
+	params.courseName = $("#courseName").val();	
 }
 
 function fn_search() {
-	//mask.open();
-	
 	fn_params();
+	
+	if ( params.chasu != "" && isNaN(params.chasu) ) {
+		mask.open();
+		dialog.alert( { msg : "차수는 정수를 입력하셔야 합니다." }, function () { mask.close(); } );
+		return false;
+	}
 	
 	gfn_callAjax("/score/axScoreList.do", params, fn_callbackAjax, "search");
 }
@@ -208,6 +220,7 @@ function fn_callbackAjax(data, id) {
 		dd = $.extend({}, data);
 		
 		gfn_cbRefresh("CB_LEVEL1", data.CategoryLevel1, true);
+		gfn_cbRefresh("CB_YEAR", data.Year, true);
 		
 		fn_makeGrid();
 		fn_search();
@@ -257,8 +270,26 @@ function fn_cbChange(id) {
 	<select id="CB_LEVEL3">
 		<option value="">전체</option>
 	</select>
+	회사 구분
+	<select id="CB_COMPANY">
+		<option value="">전체</option>
+		<option value="B2C">일반사용자</option>
+		<option value="B2B">회사</option>
+	</select>
+	종료여부
+	<select id="CB_CLOSE">
+		<option value="">전체</option>
+		<option value="Y">종료</option>
+		<option value="N" selected>미종료</option>
+	</select>
+	년도
+	<select id="CB_YEAR">
+		<option value="">전체</option>
+	</select>
+	차수
+	<input type="text" class="search_input" id="chasu" name="chasu" value="" style="width:70px"/>
 	과정명
-	<input type="text" class="search_input" id="SEARCH_COURSE" name="SEARCH_COURSE" value="" />
+	<input type="text" class="search_input" id="courseName" name="courseName" value="" />
 </div>
 
 <div style="height:10px"></div>

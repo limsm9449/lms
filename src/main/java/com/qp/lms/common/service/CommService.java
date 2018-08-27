@@ -282,7 +282,7 @@ public class CommService {
     	vo.setIp(ip);
     	vo.setUserId(userId);
     	
-       	//sqlSession.update("comm.requestLogIns",vo);
+       	sqlSession.update("comm.requestLogIns",vo);
     }
     
     /**

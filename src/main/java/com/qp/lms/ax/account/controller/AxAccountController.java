@@ -78,6 +78,19 @@ public class AxAccountController {
         return hm;
     }
     
+    @RequestMapping(value = "/account/axPasswordChange", method = RequestMethod.POST, consumes = "application/json" )
+    public @ResponseBody HashMap<String,Object> axPasswordChange(@RequestBody HashMap<String, Object> paramMap, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    	HashMap<String, Object> hm = new HashMap<String, Object>();
+
+    	try {
+    		hm = svr.axPasswordChange(paramMap);
+    	} catch ( Exception e ) {
+    		e.printStackTrace();
+    	}
+
+        return hm;
+    }
+    
     @RequestMapping(value = "/account/axReSendCertification", method = RequestMethod.POST, consumes = "application/json" )
     public @ResponseBody HashMap<String,Object> axReSendCertification(@RequestBody HashMap<String, Object> paramMap, HttpServletRequest request, HttpServletResponse response) throws Exception {
     	HashMap<String, Object> hm = new HashMap<String, Object>();
@@ -140,6 +153,47 @@ public class AxAccountController {
     	model.addAttribute("set", hm );
 
         return "/ax/common/axReturnPage";
+    }
+    
+    @RequestMapping(value = "/account/axAccountUserOne", method = RequestMethod.POST, consumes = "application/json" )
+    public @ResponseBody HashMap<String,Object> axAccountUserOne(@RequestBody HashMap<String, Object> paramMap, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    	HashMap<String, Object> hm = new HashMap<String, Object>();
+
+    	try {
+    		hm = svr.axAccountUserOne(paramMap);
+    	} catch ( Exception e ) {
+    		e.printStackTrace();
+    	}
+
+        return hm;
+    }
+    
+    @RequestMapping(value = "/account/axAccountUserSave", method = RequestMethod.POST, consumes = "application/json" )
+    public @ResponseBody HashMap<String,Object> axAccountUserSave(@RequestBody HashMap<String, Object> paramMap, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    	HashMap<String, Object> hm = new HashMap<String, Object>();
+    	
+		try {
+    		hm = svr.axAccountUserSave(paramMap);
+    	} catch ( Exception e ) {
+    		e.printStackTrace();
+    		hm.put("RtnMode", Constant.mode.ERROR.name());
+    	}
+
+        return hm;
+    }
+    
+    @RequestMapping(value = "/account/axAccountUserCareerSave", method = RequestMethod.POST, consumes = "application/json" )
+    public @ResponseBody HashMap<String,Object> axAccountUserCareerSave(@RequestBody HashMap<String, Object> paramMap, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    	HashMap<String, Object> hm = new HashMap<String, Object>();
+    	
+		try {
+    		hm = svr.axAccountUserCareerSave(paramMap);
+    	} catch ( Exception e ) {
+    		e.printStackTrace();
+    		hm.put("RtnMode", Constant.mode.ERROR.name());
+    	}
+
+        return hm;
     }
 	    
 

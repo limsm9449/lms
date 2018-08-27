@@ -33,12 +33,6 @@ $(document.body).ready(function () {
     
 	grid = gfn_makeAx5Grid("first-grid",
 		[ 	{
-	            key : "NEW_FLAG",
-	            width : 0
-	        },{
-	        	key : "QG_ID", 
-	        	width : 0
-	        },{
 	            key : "GROUP_NAME",
 	            label : "설문지 그룹명",
 	            width : 420,

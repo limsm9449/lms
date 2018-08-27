@@ -132,6 +132,24 @@ public class SessionUtil {
 		 return sess.getAdminYn();
 	}
 
+	public static boolean isSiteManager() throws Exception  {
+		 SessionVO sess = (SessionVO)RequestContextHolder.getRequestAttributes().getAttribute("session", RequestAttributes.SCOPE_SESSION);
+		 
+		 if ( "Y".equals(sess.getSiteManagerYn()) )
+			 return true;
+		 else
+			 return false;
+	}
+
+	public static boolean isContentsManager() throws Exception  {
+		 SessionVO sess = (SessionVO)RequestContextHolder.getRequestAttributes().getAttribute("session", RequestAttributes.SCOPE_SESSION);
+		 
+		 if ( "Y".equals(sess.getContentsManagerYn()) )
+			 return true;
+		 else
+			 return false;
+	}
+
 	/**
 	 * 강사 여부
 	 * @return

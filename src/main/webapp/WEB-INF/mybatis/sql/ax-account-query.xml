@@ -6,6 +6,7 @@
 
 	<select id="axAccountList" resultType="hashmap">
 		SELECT 	A.*
+				,IF(LENGTH(A.CAREER) > 0, 'Y','N') CAREER_YN
 				,IFNULL(B.CNT, 0) COURSE_CNT
 				,DATE_FORMAT(IFNULL(A.UPDATE_DATE, A.CREATE_DATE), '%y.%m.%d %H:%i') LAST_UPDATE_DATE
 				,IFNULL(U2.USER_NAME, U1.USER_NAME) LAST_UPDATE_USER
@@ -142,5 +143,36 @@
 		   		,USER_IMG = 'Y'
     	 WHERE 	USER_ID = #{USER_ID} 
 	</update>  
+	
+	<select id="axAccountUserOne" resultType="hashmap">
+		SELECT 	A.*
+		FROM 	USER A
+	 	WHERE 	USER_ID = #{USER_ID}
+	</select>
         
+    <update id="axAccountUserUpdate" parameterType="hashmap">
+		UPDATE USER
+    	   SET USER_NAME = #{USER_NAME},
+    	       SEX = #{SEX},
+    	       EMAIL = #{EMAIL},
+    	       HOME_ZIPCODE = #{HOME_ZIPCODE}, 
+    	       HOME_ADDR = #{HOME_ADDR}, 
+    	       HOME_TEL = #{HOME_TEL}, 
+    	       MOBILE = #{MOBILE}, 
+    	       BIRTH_DAY = #{BIRTH_DAY}, 
+    	       BANK = #{BANK},
+    	       ACC_NUM = #{ACC_NUM},
+    	       UPDATE_DATE = CURRENT_TIMESTAMP,
+    	       UPDATE_USER = #{USER_ID}
+    	 WHERE USER_ID = #{USER_ID} 
+	</update>
+        
+    <update id="axAccountUserCareerUpdate" parameterType="hashmap">
+		UPDATE USER
+    	   SET CAREER = #{CAREER},
+    	       UPDATE_DATE = CURRENT_TIMESTAMP,
+    	       UPDATE_USER = #{USER_ID}
+    	 WHERE USER_ID = #{USER_ID} 
+	</update>    
+	    
 </mapper>

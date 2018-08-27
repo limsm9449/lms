@@ -28,12 +28,11 @@ var ddWeekCost = [
     {value : "N", text : "과정별"}
 ];
 
-
 $(document.body).ready(function () {
 	$( window ).resize( function() {
 		gfn_gridResize("grid-parent", grid);
 	} );
-	
+
     confirmDialog.setConfig({
         theme: "danger"
     });
@@ -46,6 +45,13 @@ $(document.body).ready(function () {
 	            fn_search();
 	            break;
             case "add":
+            	var allList = grid.getList();
+            	if ( gfn_getValueInList(allList, "NEW_FLAG",  "Y", "NEW_FLAG") == "Y" ) {
+            		mask.open();
+            		dialog.alert( { msg : "추가된 데이타가 있습니다. 저장후에 다시 추가를 해주세요." }, function () { mask.close();	} );
+            		return;
+            	}
+            	
 		    	gfn_cbRemove("INS_CB_COURSE_CODE");
 		    	gfn_cbRemove("INS_CB_LEVEL3");
 		    	gfn_cbRemove("INS_CB_LEVEL2");
@@ -118,9 +124,6 @@ $(document.body).ready(function () {
 function fn_makeGrid() {
 	grid = gfn_makeAx5Grid("first-grid",
 		[ 	{
-	            key : "NEW_FLAG",
-	            width : 0
-	        },{
 	            key : "CATEGORY_NAME",
 	            label : "카테고리",
 	            width : 150,
@@ -193,7 +196,10 @@ function fn_makeGrid() {
 				},
 				styleClass: function () {
                     return "grid-cell-edit";
-                }
+                },
+	            formatter : function () {
+	                return checkThousand(this.item.COURSE_COST);
+	           	}
 	        },{
               	key : undefined, 
               	label: "학습내용", 
@@ -465,7 +471,7 @@ function fn_callbackAjax(data, id) {
 	} else if ( id == "INS_CB_LEVEL2" ){
 		gfn_cbRefresh("INS_CB_LEVEL3", data.CategoryLevel3, true);
 	} else if ( id == "INS_CB_COURSE_CODE" ){
-		gfn_cbRefresh("INS_CB_COURSE_CODE", data.CourseCode, true);
+		gfn_cbRefresh("INS_CB_COURSE_CODE", data.UnregisteredCourseCode, true);
 	} else if ( id == "save" ){
 		mask.close();
 
@@ -490,7 +496,7 @@ function fn_cbChange(id) {
 	} else  if ( id == "INS_CB_LEVEL2" ) {
 	    gfn_callAjax("/common/axDd.do", { DD_KIND : "CategoryLevel3", LEVEL2_CODE : $("#INS_CB_LEVEL2 option:selected").val()}, fn_callbackAjax, "INS_CB_LEVEL2", { async : false });
 	} else  if ( id == "INS_CB_LEVEL3" ) {
-	    gfn_callAjax("/common/axDd.do", { DD_KIND : "CourseCode", LEVEL3_CODE : $("#INS_CB_LEVEL3 option:selected").val()}, fn_callbackAjax, "INS_CB_COURSE_CODE", { async : false });
+	    gfn_callAjax("/common/axDd.do", { DD_KIND : "UnregisteredCourseCode", LEVEL3_CODE : $("#INS_CB_LEVEL3 option:selected").val()}, fn_callbackAjax, "INS_CB_COURSE_CODE", { async : false });
 	}
 }
 

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.qp.lms.ax.common.service.AxCommService;
 import com.qp.lms.common.CommUtil;
 import com.qp.lms.common.CommonSet;
 import com.qp.lms.common.Constant;
@@ -29,6 +30,9 @@ public class LoginController {
 
     @Autowired
     private LoginService service;
+
+    @Autowired
+    private AxCommService axCommService;
 
     /*
      * Log In 화면 호출 
@@ -78,7 +82,10 @@ public class LoginController {
 		    		sess.setDownloadAuth("Y");
 		    	else
 		    		sess.setDownloadAuth("N");
-		    	
+
+   	 			String[] domains = request.getServerName().split("[.]");
+ 	 			sess.setSubDomain(axCommService.axCompCdFromSubDomain(domains[0]));
+
 	   	 		SessionUtil.setAttribute("session", sess);
    	 		}
    	 		

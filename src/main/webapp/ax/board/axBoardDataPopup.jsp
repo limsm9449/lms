@@ -170,7 +170,6 @@ function fn_close() {
 			<button class="btn btn-default" onclick="fn_close()">닫기</button>
     	</div>
   	</div>
-
 </form>
 	
 

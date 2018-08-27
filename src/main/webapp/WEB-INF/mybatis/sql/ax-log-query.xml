@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="axLog">
+
+	<select id="axLogList" resultType="hashmap">
+		SELECT 	A.*
+				,DATE_FORMAT(A.CREATE_DATE, '%y.%m.%d %H:%i') CREATE_DATE_STR
+				,U1.USER_NAME
+		FROM 	REQUEST_LOG A
+                    LEFT OUTER JOIN USER U1 ON A.USER_ID = U1.USER_ID
+	 	WHERE 	DATE_FORMAT(A.CREATE_DATE, '%Y-%m-%d') BETWEEN #{FROM_DT} AND #{TO_DT}		
+		<if test="SEARCH_STR != null and SEARCH_STR != ''">
+			<if test="CB_SEARCHKIND == 'USER_ID'">
+			  AND UPPER(A.USER_ID) LIKE CONCAT('%',UPPER(#{SEARCH_STR}),'%') 
+			</if>
+			<if test="CB_SEARCHKIND == 'USER_NAME'">
+			  AND UPPER(A.USER_NAME) LIKE CONCAT('%',UPPER(#{SEARCH_STR}),'%') 
+			</if>
+		</if>			 
+		ORDER BY A.CREATE_DATE DESC
+	</select>
+        
+</mapper>

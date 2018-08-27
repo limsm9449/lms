@@ -34,9 +34,6 @@ $(document.body).ready(function () {
 
 	grid = gfn_makeAx5Grid("first-grid",
 		[ 	{
-	            key : "NEW_FLAG",
-	            width : 0
-	        },{
 	            key : "LEVEL1_CODE",
 	            label : "대분류 코드",
 	            width : 120,

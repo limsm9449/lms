@@ -27,10 +27,10 @@
 <link rel="stylesheet" type="text/css" media="all" href="/resources/css/admin/common.css" />
 
 <%-- datepicker --%>
-<link type="text/css" href="/resources/datepicker/css/jquery-ui-1.10.2.custom.css" rel="stylesheet" />
-<link type="text/css" href="/resources/datepicker/css/style.css" rel="stylesheet" />
-<script type="text/javascript" src="/resources/datepicker/js/jquery-ui-1.10.2.custom.js"></script>
-<script type="text/javascript" src="/resources/datepicker/js/jquery.ui.datepicker-ko.js"></script>
+<script type="text/javascript" src="/resources/jquery-ui-1.12.1.custom/jquery-ui.js"></script> 
+<link type="text/css" href="/resources/jquery-ui-1.12.1.custom/jquery-ui.min.css" rel="stylesheet" />
+
+<script type="text/javascript" src="/resources/jquery-ui-1.12.1.custom/bootpopup.js"></script> 
 
 <%-- CLEditor --%>
 <link rel="stylesheet" type="text/css" href="/resources/CLEditor/jquery.cleditor.css" />
@@ -40,7 +40,6 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
-
 
 <%-- multiselect --%>
 <link rel="stylesheet" type="text/css" href="/resources/multiselect/css/bootstrap-multiselect.css" />
@@ -89,4 +88,24 @@ var timestamp = "<%=timestamp%>";
 .grid-cell-edit2 {
     background: #D0F5F9;
 }
+.date-range {
+    padding: 6px 12px;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1;
+    color: #555;
+    text-align: center;
+    background-color: #eee;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    border-left: 0;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    cursor: pointer;
+    width: auto;
+    white-space: nowrap;
+    vertical-align: middle;
+    display: table-cell;
+}
+
 </style>

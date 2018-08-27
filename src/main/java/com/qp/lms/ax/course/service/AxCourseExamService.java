@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.qp.lms.common.CommUtil;
 import com.qp.lms.common.Constant;
 import com.qp.lms.common.SessionUtil;
 import com.qp.lms.common.service.DdService;
@@ -25,6 +26,8 @@ public class AxCourseExamService {
 	public HashMap<String, Object> axCourseExamList(HashMap<String, Object> paramMap) throws Exception {
 		HashMap<String, Object> hm = new HashMap<String, Object>();
 		
+		CommUtil.setSesstionInfo(paramMap);
+
     	List<HashMap<String, Object>> list = sqlSession.selectList("axCourseExam.axCourseExamList", paramMap);
     	hm.put("list", list);
         

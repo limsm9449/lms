@@ -25,7 +25,8 @@ var params = {};
 var dd = {};
 
 $(document.body).ready(function () {
-	var openParams = parent.document.getElementById("left").contentWindow.pageParam["axUserScoreList"]; 	
+	var openParams = parent.document.getElementById("left").contentWindow.pageParam["axUserScoreList"];
+	console.log(openParams);
 	$("#screenTitle").text(openParams.COURSE_NAME + " 성적 관리");
 	params.COURSE_ID = openParams.COURSE_ID;
 	
@@ -37,7 +38,20 @@ $(document.body).ready(function () {
         theme: "danger"
     });
 
-    fn_makeGrid();
+    if ( parseInt(openParams.REPORT_RATE) == 0 ) {
+		$("#btnReport").hide();
+    }
+    if ( parseInt(openParams.WEEK_RATIO) == 0 ) {
+		$("#btnWeekExam").hide();
+    }
+    if ( parseInt(openParams.TOTAL_RATIO) == 0 ) {
+		$("#btnTotalExam").hide();
+    }
+    if ( parseInt(openParams.DISCUSSION_RATE) == 0 ) {
+		$("#btnDiscussion").hide();
+    }
+    
+    gfn_callAjax("/common/axDd.do", { DD_KIND : "CourseReport", COURSE_CODE : openParams.COURSE_CODE }, fn_callbackAjax, "dd", { async : false });
     
     $('[data-grid-control]').click(function () {
         switch (this.getAttribute("data-grid-control")) {
@@ -300,13 +314,23 @@ function fn_makeGrid() {
 			        }
 		        ]
 	        },{
-	        	key : "REPORT_NAME", 
+	        	key : "REPORT_SEQ", 
 	        	label : "배정 레포트", 
 	            width : 150,
 	        	align : "left", 
+	        	editor: {
+                    type : "select", 
+                    config : {
+                        columnKeys: { optionValue: "value", optionText: "text" },
+                        options: dd.CourseReport
+                    }
+	        	},
+	            formatter : function () {
+	                return gfn_getValueInList(dd.CourseReport, "value",  this.item.REPORT_SEQ, "text");
+	           	},
 				styleClass: function () {
-                    return "grid-cell-edit2";
-                } 
+                    return "grid-cell-edit";
+                }
 	        },{
 	            key : "REPORT_YN",
 	            label : "레포트 제출 여부",
@@ -436,8 +460,13 @@ function fn_callbackAjax(data, id) {
 
 		mask.open();
 		dialog.alert( { msg : "저장 되었습니다." }, function () { mask.close();	fn_search(); } );
-	} else if ( id == "CourseReport" ){
-		gfn_cbRefresh("CB_COURSE_REPORT", data.CourseReport, true);
+	} else if ( id == "dd" ){
+		dd = $.extend({}, data);
+		
+		dd.CourseReport = [{value : "", text : ""}].concat(dd.CourseReport);
+
+		fn_makeGrid();
+		fn_search();
 	}
 }
 
@@ -445,31 +474,8 @@ function fn_gridEvent(event, obj) {
 	if ( event == "Click" ) {
 		obj.self.select(obj.dindex);
 	} else if ( event == "DBLClick" ) {
-		if ( obj.column.key == "REPORT_NAME" ) {
-	    	gfn_showPopupDiv("reportDiv");
-			
-	    	gfn_callAjax("/common/axDd.do", { DD_KIND : "CourseReport", COURSE_CODE : obj.item.COURSE_CODE }, fn_callbackAjax, "CourseReport", { async : false });
-		}
 	} else if ( event == "DataChanged" ) {
 	}
-}
-
-function fn_hidePopupDiv(popupDivId) {
-	if ( popupDivId == "reportDiv" ) {
-		if ( $("#CB_COURSE_REPORT option:selected").val() == "" ) {
-			gfn_hidePopupDiv(popupDivId);
-			
-			mask.open();
-			dialog.alert( { msg : "레포트를 선택하셔야 합니다." }, function () { mask.close(); gfn_showPopupDiv(popupDivId);  } );
-			return;
-		} 
-
-		var row = grid.getList("selected");
-		grid.setValue(row[0].__index, "REPORT_SEQ", $("#CB_COURSE_REPORT option:selected").val());
-		grid.setValue(row[0].__index, "REPORT_NAME", $("#CB_COURSE_REPORT option:selected").text());
-	}
-
-	gfn_hidePopupDiv(popupDivId);
 }
 
 </script>
@@ -495,14 +501,14 @@ function fn_hidePopupDiv(popupDivId) {
     <button class="btn btn-default" data-grid-control="save">저장</button>
     <button class="btn btn-default" data-grid-control="export">엑셀</button>
     <button class="btn btn-default" data-grid-control="viewWeek">주차별 진도</button>
-    <button class="btn btn-default" data-grid-control="viewWeekExam">주별시험</button>
-    <button class="btn btn-default" data-grid-control="viewTotalExam">전체시험</button>
+    <button class="btn btn-default" data-grid-control="viewWeekExam" id="btnWeekExam">주별시험</button>
+    <button class="btn btn-default" data-grid-control="viewTotalExam" id="btnTotalExam">전체시험</button>
     <button class="btn btn-default" data-grid-control="viewNotice">공지사항</button>
     <button class="btn btn-default" data-grid-control="viewFree">자유게시판</button>
     <button class="btn btn-default" data-grid-control="viewData">자료실</button>
-    <button class="btn btn-default" data-grid-control="viewReport">레포트</button>
+    <button class="btn btn-default" data-grid-control="viewReport" id="btnReport">레포트</button>
     <button class="btn btn-default" data-grid-control="viewQna">Q&A</button>
-    <button class="btn btn-default" data-grid-control="viewDiscussion">토론</button>
+    <button class="btn btn-default" data-grid-control="viewDiscussion" id="btnDiscussion">토론</button>
     <button class="btn btn-default" data-grid-control="viewQuest">설문지</button>
     <button class="btn btn-default" data-grid-control="viewPostscript">수강후기</button>
 </div>
@@ -517,16 +523,6 @@ function fn_hidePopupDiv(popupDivId) {
 </form>
 
 <div class="mask"></div>
-
-<div class="popupDiv" id="reportDiv" style="width:200px; height:100px;">
-	배정 레포트
-	<select id="CB_COURSE_REPORT">
-	</select>
-	<div style="height:30px"></div>
-	<input type="button" href="#" value="삭제" onclick="fn_hidePopupDiv('examTypeDiv', 'delete')"/>
-	<input type="button" href="#" value="확인" onclick="fn_hidePopupDiv('reportDiv')"/>
-    <input type="button" href="#" value="닫기" onclick="gfn_hidePopupDiv('reportDiv');"/>
-</div>
 
 
 </body>

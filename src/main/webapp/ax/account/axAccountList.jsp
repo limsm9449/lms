@@ -149,6 +149,22 @@ $(document.body).ready(function () {
             	}
             		
                 break;
+            case "career":
+            	var row = grid.getList("selected");
+            	if ( row.length == 0 ) {
+            		mask.open();
+            		dialog.alert( { msg : "사용자를 선택하셔야 합니다." }, function () { mask.close();	} );
+            	} else if ( row[0]["NEW_FLAG"] == "Y" ) {
+            		mask.open();
+            		dialog.alert( { msg : "신규로 추가한 경우는 저장후에 작업하셔야 합니다." }, function () { mask.close();	} );
+            	} else {
+	           		var urlParams = "page=/ax/account/axAccountUserCareerPopup";
+	           		urlParams += "&USER_ID=" + row[0]["USER_ID"];
+	           		
+	           		f_popup('/common/axOpenPage', {displayName:'accountUserCareerPopup',option:'width=600,height=450', urlParams:urlParams});
+            	}
+            	
+                break; 
         }
     });
 });
@@ -156,9 +172,6 @@ $(document.body).ready(function () {
 function fn_makeGrid() {
 	grid = gfn_makeAx5Grid("first-grid",
 		[ 	{
-	            key : "NEW_FLAG",
-	            width : 0
-	        },{
 	            key : "USER_ID",
 	            label : "사용자 ID",
 	            width : 100,
@@ -330,11 +343,6 @@ function fn_makeGrid() {
 	        	label : "인증 여부", 
 	            width : 90,
 	        	align : "center"
-			},{
-	        	key : "USER_IMG", 
-	        	label : "사용자 이미지", 
-	            width : 110,
-	        	align : "center"
 	        },{
 	            key : "BANK",
 	            label : "환불은행",
@@ -408,6 +416,16 @@ function fn_makeGrid() {
 		                }
 			        }
 				]
+			},{
+	        	key : "USER_IMG", 
+	        	label : "사용자 이미지", 
+	            width : 110,
+	        	align : "center"
+			},{
+	        	key : "CAREER_YN", 
+	        	label : "경력 여부", 
+	            width : 80,
+	        	align : "center"
 			},{
 	        	key : "RETIRED_YN", 
 	        	label : "탈퇴 여부", 
@@ -585,6 +603,7 @@ function fn_gridEvent(event, obj) {
     <button class="btn btn-default" data-grid-control="passwordReset">패스워드 초기화</button>
     <button class="btn btn-default" data-grid-control="reSendCertification">인증메일 재발송</button>
     <button class="btn btn-default" data-grid-control="editImage">이미지 관리</button>
+	<button class="btn btn-default" data-grid-control="career">경력</button>
     <button class="btn btn-default" data-grid-control="zipcodeUrl">주소검색</button>
 </div> 
 

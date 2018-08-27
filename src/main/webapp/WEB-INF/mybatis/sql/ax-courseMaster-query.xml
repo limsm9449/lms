@@ -46,6 +46,9 @@
 		  <if test="courseName != null and courseName != ''"> 
 		  	AND B.COURSE_NAME LIKE CONCAT('%',#{courseName},'%')
 		  </if>
+		  <if test="SESSION_CONTENTS_MANAGER_YN == 'YES'"> 
+	 	    AND B.CONTENTS_MANAGER_ID = #{SESSION_USER_ID}
+		  </if>
 		 ORDER BY C.CATEGORY_NAME,B.COURSE_NAME
 	</select>
 

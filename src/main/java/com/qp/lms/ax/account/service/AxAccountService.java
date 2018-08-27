@@ -86,7 +86,7 @@ public class AxAccountService {
         	String newPassword = "U" + Integer.toString((int)(Math.random() * 100000));
         	
         	paramMap.put("SESSION_USER_ID", SessionUtil.getSessionUserId());
-        	paramMap.put("USER_PASSWORD", paramMap);
+        	paramMap.put("USER_PASSWORD", newPassword);
     		sqlSession.update("axAccount.axChangePassword", paramMap);
 
     		
@@ -96,6 +96,24 @@ public class AxAccountService {
         	mail.setContent("안녕하세요.<br><br>임시 패스워드는 [" + newPassword + "] 입니다. <br>로그인후 패스워드를 변경해 주세요.");
        	
     		mail.SendMail();
+    		hm.put("RtnMode", Constant.mode.OK.name());
+    	} catch ( UnsupportedEncodingException e ) {
+    		e.printStackTrace();
+    		hm.put("RtnMode", Constant.mode.ERROR.name());
+    	} catch ( MessagingException e ) {
+    		hm.put("RtnMode", Constant.mode.ERROR.name());
+    	}
+		
+    	return hm;
+    }
+	
+	@Transactional(propagation=Propagation.REQUIRED, rollbackFor={Throwable.class})
+    public HashMap<String, Object>  axPasswordChange(HashMap<String, Object> paramMap) throws Exception {
+		HashMap<String, Object> hm = new HashMap<String, Object>();
+		
+    	try {
+        	paramMap.put("SESSION_USER_ID", SessionUtil.getSessionUserId());
+    		sqlSession.update("axAccount.axChangePassword", paramMap);
     		hm.put("RtnMode", Constant.mode.OK.name());
     	} catch ( UnsupportedEncodingException e ) {
     		e.printStackTrace();
@@ -184,6 +202,39 @@ public class AxAccountService {
 		
     	return hm;
     }
-    
+	
+	public HashMap<String, Object> axAccountUserOne(HashMap<String, Object> paramMap) throws Exception {
+		HashMap<String, Object> hm = new HashMap<String, Object>();
+		
+		paramMap.put("USER_ID", SessionUtil.getSessionUserId());
+    	HashMap<String, Object> row = sqlSession.selectOne("axAccount.axAccountUserOne", paramMap);
+    	hm.put("row", row);
+        
+    	return hm;
+    }
+	
+	@Transactional(propagation=Propagation.REQUIRED, rollbackFor={Throwable.class})
+    public HashMap<String, Object>  axAccountUserSave(HashMap<String, Object> paramMap) throws Exception {
+		HashMap<String, Object> hm = new HashMap<String, Object>();
+		
+		paramMap.put("USER_ID", SessionUtil.getSessionUserId());
+		sqlSession.update("axAccount.axAccountUserUpdate", paramMap);
+
+		hm.put("RtnMode", Constant.mode.OK.name());
+		
+    	return hm;
+    }
+	
+	@Transactional(propagation=Propagation.REQUIRED, rollbackFor={Throwable.class})
+    public HashMap<String, Object>  axAccountUserCareerSave(HashMap<String, Object> paramMap) throws Exception {
+		HashMap<String, Object> hm = new HashMap<String, Object>();
+		
+		paramMap.put("USER_ID", SessionUtil.getSessionUserId());
+		sqlSession.update("axAccount.axAccountUserCareerUpdate", paramMap);
+
+		hm.put("RtnMode", Constant.mode.OK.name());
+		
+    	return hm;
+    }
     
 }
