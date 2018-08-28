@@ -11,21 +11,43 @@
 <script type="text/javascript">
 
 $(document).ready(function(){
+	$(".mainMenu").each(function(){
+		$(this).removeClass("here");
+	});
+	$(".subMenuUl").each(function(){
+		$(this).css("display", "none");
+	});
+	$(".subMenu").each(function(){
+		$(this).removeClass("here");
+	});
+	
 <c:if test="${auth eq 'ADMIN'}">         		
 	gfn_openMenu('axCourseList');
+
+	$("#firstGroup").addClass("here");
 </c:if>	
 <c:if test="${auth eq 'CONTENTS_MANAGER'}">         		
-	gfn_openMenu('axCourseCodeList');
+	gfn_openMenu('axCourseCodeListCm');
+	
+	$("#cmFirstGroup").addClass("here");
+	$("#cmFirstGroup").next().css("display", "block");
+	
+	$("#cmFirst").addClass("here");
 </c:if>	
 <c:if test="${auth eq 'SITE_MANAGER'}">         		
-	gfn_openMenu('axCourseList');
+	gfn_openMenu('axCourseListSm');
+
+	$("#smFirstGroup").addClass("here");
 </c:if>	
 <c:if test="${auth eq 'TEACHER'}">         		
 </c:if>	
 <c:if test="${auth eq 'TUTOR'}">         		
+	gfn_openMenu('axCourseListTu');
+	
+	$("#tuFirstGroup").addClass("here");
 </c:if>	
 
-$("#firstMenu").addClass("here");
+//$("#firstMenu").addClass("here");
 });
 
 function gfn_menu(pThis) {
@@ -76,17 +98,23 @@ var pageObj = {
 	axCategoryLevel3List : 	{	page : "/ax/category/axCategoryLevel3List"	},
 	axQuestGroupList : 		{	page : "/ax/quest/axQuestGroupList"	},
 	axCourseCodeList : 		{	page : "/ax/course/axCourseCodeList"	},
+	axCourseCodeListCm : 	{	page : "/ax/course/axCourseCodeListCm"	},
 	axCourseMasterList : 	{	page : "/ax/course/axCourseMasterList"	},
 	axCourseReportList : 	{	page : "/ax/course/axCourseReportList"	},
 	axCourseExamList : 		{	page : "/ax/course/axCourseExamList"	},
 	axCourseExamTypeList :	{	page : "/ax/course/axCourseExamTypeList"	},
 	axCourseList :			{	page : "/ax/course/axCourseList"	},
+	axCourseListTu :		{	page : "/ax/course/axCourseListTu"	},
+	axCourseListSm :		{	page : "/ax/course/axCourseListSm"	},
 	axCostList :			{	page : "/ax/cost/axCostList"	},
 	axCostDistributionList :{	page : "/ax/cost/axCostDistributionList"	},
 	axScoreList :			{	page : "/ax/score/axScoreList"	},
+	axScoreListSm :			{	page : "/ax/score/axScoreListSm"	},
 	axUserScoreList :		{	page : "/ax/score/axUserScoreList"	},
+	axUserScoreListSm :		{	page : "/ax/score/axUserScoreListSm"	},
 	axAccountList :			{	page : "/ax/account/axAccountList"	},
 	axCompanyList :			{	page : "/ax/account/axCompanyList"	},
+	axCompanyUserList :		{	page : "/ax/account/axCompanyUserList"	},
 	axPointList :			{	page : "/ax/account/axPointList"	},
 	axBoardNoticeList :		{	page : "/ax/board/axBoardNoticeList"	},
 	axBoardFaqList :		{	page : "/ax/board/axBoardFaqList"	},
@@ -161,7 +189,7 @@ function gfn_openMenu(pageId, params) {
 			              	<li><a href="#" class="subMenu linker" onclick="gfn_openMenu('axCourseExamTypeList'); gfn_subMenu(this);"><span>과정 시험 유형 관리</span></a></li>
 			         	</ul>
 			      	</li>
-	          		<li><a href="#" class="mainMenu linker" onclick="gfn_openMenu('axCourseList'); gfn_menu(this)"><span>강의 관리</span></a>
+	          		<li><a href="#" class="mainMenu linker" onclick="gfn_openMenu('axCourseList'); gfn_menu(this)" id="firstGroup"><span>강의 관리</span></a>
 			      	</li>
 	          		<li><a href="#" class="mainMenu linker" onclick="gfn_openMenu('axScoreList'); gfn_menu(this)"><span>성적 관리</span></a>
 			      	</li>
@@ -201,9 +229,9 @@ function gfn_openMenu(pageId, params) {
 			      	</li>
 </c:if>
 <c:if test="${auth eq 'CONTENTS_MANAGER'}">         		
-	          		<li><a href="#" class="mainMenu linker" onclick="gfn_menu(this)"><span>과정 관리</span></a>
+	          		<li><a href="#" class="mainMenu linker" onclick="gfn_menu(this)" id="cmFirstGroup"><span>과정 관리</span></a>
 			            <ul style="display:none" class="subMenuUl">
-			              	<li><a href="#" class="subMenu linker" onclick="gfn_openMenu('axCourseCodeList'); gfn_subMenu(this);"><span>과정 코드 관리</span></a></li>
+			              	<li><a href="#" class="subMenu linker" onclick="gfn_openMenu('axCourseCodeListCm'); gfn_subMenu(this);" id="cmFirst"><span>과정 코드 관리</span></a></li>
 			              	<li><a href="#" class="subMenu linker" onclick="gfn_openMenu('axCourseMasterList'); gfn_subMenu(this);"><span>과정 Master 관리</span></a></li>
 			              	<li><a href="#" class="subMenu linker" onclick="gfn_openMenu('axCourseReportList'); gfn_subMenu(this);"><span>과정 레포트 관리</span></a></li>
 			              	<li><a href="#" class="subMenu linker" onclick="gfn_openMenu('axCourseExamList'); gfn_subMenu(this);"><span>과정 시험 관리</span></a></li>
@@ -212,14 +240,16 @@ function gfn_openMenu(pageId, params) {
 			      	</li>
 </c:if>
 <c:if test="${auth eq 'SITE_MANAGER'}">         		
+	          		<li><a href="#" class="mainMenu linker" onclick="gfn_openMenu('axCourseListSm'); gfn_menu(this)" id="smFirstGroup"><span>강의 관리</span></a></li>
+	          		<li><a href="#" class="mainMenu linker" onclick="gfn_openMenu('axCompanyUserList'); gfn_menu(this)"><span>직원 관리</span></a></li>
+	          		<li><a href="#" class="mainMenu linker" onclick="gfn_openMenu('axScoreListSm'); gfn_menu(this)"><span>성적 관리</span></a></li> 
+	          		<li><a href="#" class="mainMenu linker" onclick="gfn_openMenu('axScoreListSm'); gfn_menu(this)"><span>수강신청 이력 관리</span></a></li> 
 </c:if>
 <c:if test="${auth eq 'TEACHER'}">         		
 </c:if>
 <c:if test="${auth eq 'TUTOR'}">         		
-	          		<li><a href="#" class="mainMenu linker" onclick="gfn_openMenu('axCourseList'); gfn_menu(this)"><span>강의 관리</span></a>
-			      	</li>
-	          		<li><a href="#" class="mainMenu linker" onclick="gfn_openMenu('axScoreList'); gfn_menu(this)"><span>성적 관리</span></a>
-			      	</li> 
+	          		<li><a href="#" class="mainMenu linker" onclick="gfn_openMenu('axCourseListTu'); gfn_menu(this)" id="tuFirstGroup"><span>강의 관리</span></a></li>
+	          		<li><a href="#" class="mainMenu linker" onclick="gfn_openMenu('axScoreList'); gfn_menu(this)"><span>성적 관리</span></a></li> 
 </c:if>
         		</ul>
       		</div>

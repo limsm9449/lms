@@ -187,5 +187,16 @@ public class SessionUtil {
 	public static List<CourseVO> getFavorityCourseList() throws Exception  {
 		return (List<CourseVO>)RequestContextHolder.getRequestAttributes().getAttribute("favorityCourseList", RequestAttributes.SCOPE_SESSION);
 	}
-
+	
+	public static String getAuth() throws Exception  {
+		 SessionVO sess = (SessionVO)RequestContextHolder.getRequestAttributes().getAttribute("session", RequestAttributes.SCOPE_SESSION);
+		 
+		 return sess.getAuth();
+	}
+	
+	public static String getCompCd() throws Exception  {
+		 SessionVO sess = (SessionVO)RequestContextHolder.getRequestAttributes().getAttribute("session", RequestAttributes.SCOPE_SESSION);
+		 
+		 return sess.getCompCd();
+	}
 }

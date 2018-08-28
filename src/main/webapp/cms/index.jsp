@@ -103,8 +103,8 @@ function lfn_login(userId) {
 	  					<select id="auth" name="auth" class="input_log auth">
 	    		          	<option value="">권한 선택</option>
 	    					<option value="ADMIN" selected="">Admin</option>
-	    					<option value="SITE_MANAGER">사이트 관리자</option>
 	    					<option value="CONTENTS_MANAGER">컨텐츠 관리자</option>
+	    					<option value="SITE_MANAGER">사이트 관리자</option>
 	    					<option value="TEACHER">Teacher</option>
 	    					<option value="TUTOR">Tutor</option>
 	            		</select>

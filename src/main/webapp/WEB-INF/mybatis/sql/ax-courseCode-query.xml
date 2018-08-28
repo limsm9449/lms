@@ -52,7 +52,7 @@
 	  <if test="useYn != null and useYn != ''"> 
 	  	AND A.USE_YN = #{useYn}
 	  </if>
-	  <if test="SESSION_CONTENTS_MANAGER_YN == 'YES'"> 
+	  <if test="SESSION_AUTH == 'CONTENTS_MANAGER'"> 
 	 	AND A.CONTENTS_MANAGER_ID = #{SESSION_USER_ID}
 	  </if>
 	 ORDER BY B.CATEGORY_NAME,A.COURSE_NAME

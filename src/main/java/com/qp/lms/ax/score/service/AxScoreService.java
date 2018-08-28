@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.qp.lms.common.CommUtil;
 import com.qp.lms.common.Constant;
 import com.qp.lms.common.SessionUtil;
 import com.qp.lms.common.service.DdService;
@@ -21,7 +22,9 @@ public class AxScoreService {
 	public HashMap<String, Object> axScoreList(HashMap<String, Object> paramMap) throws Exception {
 		HashMap<String, Object> hm = new HashMap<String, Object>();
 		
-    	List<HashMap<String, Object>> list = sqlSession.selectList("axScore.axScoreList", paramMap);
+		CommUtil.setSesstionInfo(paramMap);
+		
+		List<HashMap<String, Object>> list = sqlSession.selectList("axScore.axScoreList", paramMap);
     	hm.put("list", list);
         
     	return hm;
@@ -29,6 +32,8 @@ public class AxScoreService {
 
 	public HashMap<String, Object> axUserScoreList(HashMap<String, Object> paramMap) throws Exception {
 		HashMap<String, Object> hm = new HashMap<String, Object>();
+
+		CommUtil.setSesstionInfo(paramMap);
 		
     	List<HashMap<String, Object>> list = sqlSession.selectList("axScore.axUserScoreList", paramMap);
     	hm.put("list", list);

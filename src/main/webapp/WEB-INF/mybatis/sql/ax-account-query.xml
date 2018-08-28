@@ -62,6 +62,9 @@
 		<if test="CB_USERKIND != null and CB_USERKIND == 'COMPANY'">
 		   AND ( IFNULL(A.COMP_CD,'') != '' AND IFNULL(A.COMP_CD,'') != 'B2C' )
 		</if>			 
+	    <if test="SESSION_AUTH == 'SITE_MANAGER'"> 
+	 	  AND A.COMP_CD = (SELECT COMP_CD FROM USER WHERE USER_ID = #{SESSION_USER_ID})
+	    </if>		
 		ORDER BY USER_NAME
 	</select>
 	

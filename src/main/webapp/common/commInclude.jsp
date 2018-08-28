@@ -30,8 +30,6 @@
 <script type="text/javascript" src="/resources/jquery-ui-1.12.1.custom/jquery-ui.js"></script> 
 <link type="text/css" href="/resources/jquery-ui-1.12.1.custom/jquery-ui.min.css" rel="stylesheet" />
 
-<script type="text/javascript" src="/resources/jquery-ui-1.12.1.custom/bootpopup.js"></script> 
-
 <%-- CLEditor --%>
 <link rel="stylesheet" type="text/css" href="/resources/CLEditor/jquery.cleditor.css" />
 <script type="text/javascript" src="/resources/CLEditor/jquery.cleditor.min.js"></script>

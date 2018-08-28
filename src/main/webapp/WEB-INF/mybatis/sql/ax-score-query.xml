@@ -86,6 +86,12 @@
 <if test="courseName != null and courseName != ''"> 
 		AND ( UPPER(A.COURSE_CODE) LIKE CONCAT('%',UPPER(#{courseName}),'%') OR UPPER(B.COURSE_NAME) LIKE CONCAT('%',UPPER(#{courseName}),'%') )
 </if>		
+<if test="SESSION_AUTH == 'TUTOR'"> 
+		AND ( A.TUTOR_ID = #{SESSION_USER_ID} OR A.COURSE_ID IN (SELECT COURSE_ID FROM COURSE_TUTOR WHERE TUTOR_ID = #{SESSION_USER_ID} AND USE_YN = 'Y') )
+</if>	
+<if test="SESSION_AUTH == 'SITE_MANAGER'"> 
+ 	  	AND A.COMP_CD = (SELECT COMP_CD FROM USER WHERE USER_ID = #{SESSION_USER_ID})
+</if>		
 		ORDER 	BY CAT.CATEGORY_NAME,B.COURSE_NAME,A.YEAR,A.MONTH,A.CHASU  
 	</select>
         
@@ -129,7 +135,9 @@
 <if test="SEARCH_USER != null and SEARCH_USER != ''">
 		AND 	( UPPER(B.USER_ID) LIKE CONCAT('%',UPPER(#{SEARCH_USER}),'%') OR UPPER(U.USER_NAME) LIKE CONCAT('%',UPPER(#{SEARCH_USER}),'%') )
 </if>
-		GROUP 	BY U.USER_NAME
+<if test="SESSION_AUTH == 'TUTOR'"> 
+		AND B.TUTOR_ID = #{SESSION_USER_ID}
+</if>	
 	</select>        
 	
 	<update id="axUserScoreUpdate" parameterType="hashmap">

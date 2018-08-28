@@ -75,7 +75,6 @@ public class HomeController {
         return "home/adminLeft";
     }
 
-    /*
     @RequestMapping(value = "/home/userHome")
     public String userHome(@ModelAttribute HomeVO vo, Model model) throws Exception {
     	try {
@@ -90,6 +89,7 @@ public class HomeController {
         return "/home/userHome";
     }
 
+    /*
     @RequestMapping(value = "/home/tutorHome")
     public String tutorHome(@ModelAttribute HomeVO vo, Model model) throws Exception {
         return "/home/tutorHome";

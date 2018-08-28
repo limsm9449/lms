@@ -28,6 +28,8 @@ public class AxAccountService {
 	public HashMap<String, Object> axAccountList(HashMap<String, Object> paramMap) throws Exception {
 		HashMap<String, Object> hm = new HashMap<String, Object>();
 		
+		CommUtil.setSesstionInfo(paramMap);
+		
     	List<HashMap<String, Object>> list = sqlSession.selectList("axAccount.axAccountList", paramMap);
     	hm.put("list", list);
         

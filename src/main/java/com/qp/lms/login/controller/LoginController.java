@@ -74,6 +74,7 @@ public class LoginController {
 	   	 		sess.setTutorYn(set.getData().getTutorYn());
 	   	 		sess.setTeacherYn(set.getData().getTeacherYn());
 	   	 		sess.setUserIp(request.getRemoteAddr());
+	   	 		sess.setUserCompCd(set.getData().getCompCd());
 
 	   	 		sess.setAuth(auth);
 	
@@ -84,7 +85,7 @@ public class LoginController {
 		    		sess.setDownloadAuth("N");
 
    	 			String[] domains = request.getServerName().split("[.]");
- 	 			sess.setSubDomain(axCommService.axCompCdFromSubDomain(domains[0]));
+ 	 			sess.setCompCd(axCommService.axCompCdFromSubDomain(domains[0]));
 
 	   	 		SessionUtil.setAttribute("session", sess);
    	 		}

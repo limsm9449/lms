@@ -484,12 +484,14 @@ public class CommUtil {
 	public static void setSesstionInfo(HashMap<String, Object> hm) throws Exception {
 		hm.put("SESSION_USER_ID", SessionUtil.getSessionUserId());
 		
+		hm.put("SESSION_AUTH", SessionUtil.getAuth());
+		hm.put("SESSION_COMP_CD", SessionUtil.getCompCd());
+		
 		hm.put("SESSION_ADMIN_YN", ( SessionUtil.isAdmin() ? "YES" : "NO" ) );
 		hm.put("SESSION_SITE_MANAGER_YN", ( SessionUtil.isSiteManager() ? "YES" : "NO" ) );
 		hm.put("SESSION_CONTENTS_MANAGER_YN", ( SessionUtil.isContentsManager() ? "YES" : "NO" ) );
 		hm.put("SESSION_TUTOR_YN", ( SessionUtil.isTutor() ? "YES" : "NO" ) );
 		hm.put("SESSION_TEACHER_YN", ( SessionUtil.isTeacher() ? "YES" : "NO" ) );
-		
 	}
 
 }

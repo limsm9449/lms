@@ -49,6 +49,7 @@ public class AxCommController {
 
     	SessionVO sess = (SessionVO)SessionUtil.getSession();
     	model.addAttribute("auth",sess.getAuth());
+    	model.addAttribute("compCd",sess.getUserCompCd());
     	
         return page;
     }

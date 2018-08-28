@@ -20,6 +20,8 @@ public class SessionVO {
 	//2014.8.3
 	private List<CourseVO> favorityCourseList;
 	private String subDomain;
+	private String compCd;
+	private String userCompCd;
 		
 	public String getUserId() {
 		return userId;
@@ -92,6 +94,18 @@ public class SessionVO {
 	}
 	public void setSubDomain(String subDomain) {
 		this.subDomain = subDomain;
+	}
+	public String getCompCd() {
+		return compCd;
+	}
+	public void setCompCd(String compCd) {
+		this.compCd = compCd;
+	}
+	public String getUserCompCd() {
+		return userCompCd;
+	}
+	public void setUserCompCd(String userCompCd) {
+		this.userCompCd = userCompCd;
 	}
 	
 		

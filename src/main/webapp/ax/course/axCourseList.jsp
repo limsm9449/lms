@@ -151,8 +151,8 @@ function fn_makeGrid() {
 		[ 	{
 	            key : "COURSE_ID",
 	            label : "ID",
-	            width : 50,
-	            align : "left"
+	            width : 40,
+	            align : "right"
 	        },{
 	            key : "CATEGORY_NAME",
 	            label : "카테고리",
