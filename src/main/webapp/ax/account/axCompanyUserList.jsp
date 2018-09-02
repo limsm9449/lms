@@ -395,18 +395,19 @@ function fn_gridEvent(event, obj) {
 <h2>직원 관리</h2>
 <div style="height:10px"></div>
 
-<div>
-	검색 유형
-	<select id="CB_SEARCHKIND" name="CB_SEARCHKIND">
-       	<option value="USER_ID" >사용자 ID</option>
-       	<option value="USER_NAME" >사용자명</option>
-       	<option value="EMAIL" >이메일</option>
-       	<option value="MOBILE" >핸드폰</option>
-       	<option value="COMPANY" >회사</option>
-	</select>
-	<input type="text" class="search_input" id="SEARCH_STR" name="SEARCH_STR" value="" />
+<div class="form-inline">
+  	<div class="form-group">
+    	<label for="CB_SEARCHKIND">검색 유형</label>
+		<select class="form-control" id="CB_SEARCHKIND" name="CB_SEARCHKIND">
+	       	<option value="USER_ID" >사용자 ID</option>
+	       	<option value="USER_NAME" >사용자명</option>
+	       	<option value="EMAIL" >이메일</option>
+	       	<option value="MOBILE" >핸드폰</option>
+	       	<option value="COMPANY" >회사</option>
+		</select>
+		<input type="text" class="form-control search_input" id="SEARCH_STR" name="SEARCH_STR" value="" />
+  	</div>
 </div>
-
 <div style="height:10px"></div>
 
 <div>

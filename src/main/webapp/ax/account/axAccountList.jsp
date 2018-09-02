@@ -573,31 +573,33 @@ function fn_gridEvent(event, obj) {
 <h2>사용자 관리</h2>
 <div style="height:10px"></div>
 
-<div>
-	검색 유형
-	<select id="CB_SEARCHKIND" name="CB_SEARCHKIND">
-       	<option value="USER_ID" >사용자 ID</option>
-       	<option value="USER_NAME" >사용자명</option>
-       	<option value="EMAIL" >이메일</option>
-       	<option value="MOBILE" >핸드폰</option>
-       	<option value="COMPANY" >회사</option>
-	</select>
-	<input type="text" class="search_input" id="SEARCH_STR" name="SEARCH_STR" value="" />
-	
-	사용자 유형
-	<select id="CB_USERKIND" name="CB_USERKIND">
-		<option value="" selected>전체</option>
-		<option value="ADMIN">Admin</option>
-		<option value="SITE_MANAGER">사이트 관리자</option>
-		<option value="CONTENTS_MANAGER">컨텐츠 관리자</option>
-		<option value="TEACHER">강사</option>
-		<option value="TUTOR">튜터</option>
-		<option value="USER">사용자</option>
-		<option value="B2C">일반사용자</option>
-		<option value="COMPANY">회사사용자</option>
-	</select>
+<div class="form-inline">
+  	<div class="form-group">
+    	<label for="CB_SEARCHKIND">검색 유형</label>
+		<select class="form-control" id="CB_SEARCHKIND" name="CB_SEARCHKIND">
+	       	<option value="USER_ID" >사용자 ID</option>
+	       	<option value="USER_NAME" >사용자명</option>
+	       	<option value="EMAIL" >이메일</option>
+	       	<option value="MOBILE" >핸드폰</option>
+	       	<option value="COMPANY" >회사</option> 
+		</select>
+		<input class="form-control" type="text" class="search_input" id="SEARCH_STR" name="SEARCH_STR" value="" />
+  	</div>
+  	<div class="form-group">
+    	<label for="CB_USERKIND">&nbsp;사용자 유형</label>
+		<select class="form-control" id="CB_USERKIND" name="CB_USERKIND">
+			<option value="" selected>전체</option>
+			<option value="ADMIN">Admin</option>
+			<option value="SITE_MANAGER">사이트 관리자</option>
+			<option value="CONTENTS_MANAGER">컨텐츠 관리자</option>
+			<option value="TEACHER">강사</option>
+			<option value="TUTOR">튜터</option>
+			<option value="USER">사용자</option>
+			<option value="B2C">일반사용자</option>
+			<option value="COMPANY">회사사용자</option>
+		</select>
+  	</div>  
 </div>
-
 <div style="height:10px"></div>
 
 <div>

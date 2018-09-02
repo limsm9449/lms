@@ -316,11 +316,12 @@ function fn_gridEvent(event, obj) {
 <h2>회사 관리</h2>
 <div style="height:10px"></div>
 
-<div>
-	회사 코드 및 회사명
-	<input type="text" class="search_input" id="SEARCH_STR" name="SEARCH_STR" value="" />
+<div class="form-inline">
+  	<div class="form-group">
+    	<label for="CB_SEARCHKIND">회사 코드 및 회사명</label>
+		<input class="form-control" type="text" class="search_input" id="SEARCH_STR" name="SEARCH_STR" value="" />
+  	</div>
 </div>
-
 <div style="height:10px"></div>
 
 <div>

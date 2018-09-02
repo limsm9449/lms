@@ -17,7 +17,7 @@
 <script type="text/javascript">
 var mask = new ax5.ui.mask();
 var confirmDialog = new ax5.ui.dialog();
-var dialog = new ax5.ui.dialog( { title: '<i class="axi axi-ion-alert"></i> Alert' } );
+var dialog = new ax5.ui.dialog( { title: '<i class="axi axi-ion-alert"></i> Alert' } ); 
 var grid = null;
 
 var params = {};
@@ -33,7 +33,7 @@ $(document.body).ready(function () {
         theme: "danger"
     }); 
 
-    gfn_callAjax("/common/axDd.do", { DD_KIND : "Teacher,QuestGroup" }, fn_callbackAjax, "dd", { async : false });
+    gfn_callAjax("/common/axDd.do", { DD_KIND : "CategoryLevel1,Teacher,QuestGroup" }, fn_callbackAjax, "dd", { async : false });
     
     $('[data-grid-control]').click(function () {
         switch (this.getAttribute("data-grid-control")) {
@@ -242,6 +242,8 @@ function fn_callbackAjax(data, id) {
 	} else if ( id == "dd" ){
 		dd = $.extend({}, data);
 		
+		gfn_cbRefresh("CB_LEVEL1", data.CategoryLevel1, true);
+
 		fn_makeGrid();
 		fn_search();
 	} else if ( id == "CB_LEVEL1" ){
@@ -249,7 +251,7 @@ function fn_callbackAjax(data, id) {
 	} else if ( id == "CB_LEVEL2" ){
 		gfn_cbRefresh("CB_LEVEL3", data.CategoryLevel3, true);
 	} else if ( id == "save" ){
-		mask.close();
+		mask.close(); 
 
 		mask.open();
 		dialog.alert( { msg : "저장 되었습니다." }, function () { mask.close();	fn_search(); } );
@@ -280,29 +282,32 @@ function fn_cbChange(id) {
 <h2>과정 코드 관리</h2>
 <div style="height:10px"></div>
 
-<div>
-	대분류
-	<select id="CB_LEVEL1" onchange="fn_cbChange('CB_LEVEL1')">
-		<option value="">전체</option>
-	</select>
-	중분류
-	<select id="CB_LEVEL2" onchange="fn_cbChange('CB_LEVEL2')">
-		<option value="">전체</option>
-	</select>
-	소분류
-	<select id="CB_LEVEL3">
-		<option value="">전체</option>
-	</select>
-	과정명
-	<input type="text" class="search_input" id="courseName" name="courseName" value="" />
-	사용여부
-	<select id="useYn">
-		<option value="">전체</option>
-		<option value="Y">Y</option>
-		<option value="N">N</option>
-	</select>
+<div class="form-inline">
+  	<div class="form-group">
+    	<label for="CB_LEVEL1">카테고리</label>
+		<select class="form-control" id="CB_LEVEL1" onchange="fn_cbChange('CB_LEVEL1')">
+			<option value="">전체</option>
+		</select>
+		<select class="form-control" id="CB_LEVEL2" onchange="fn_cbChange('CB_LEVEL2')">
+			<option value="">전체</option>
+		</select>
+		<select class="form-control" id="CB_LEVEL3">
+			<option value="">전체</option>
+		</select>
+  	</div>
+  	<div class="form-group">
+    	<label for="courseName">&nbsp;과정명</label>
+    	<input type="text" class="form-control" id="courseName" name="courseName">
+  	</div>
+  	<div class="form-group">
+    	<label for="useYn">&nbsp;사용여부</label>
+    	<select class="form-control" id="useYn">
+			<option value="">전체</option>
+			<option value="Y">Y</option>
+			<option value="N">N</option>
+		</select>
+  	</div>
 </div>
-
 <div style="height:10px"></div>
 
 <div>

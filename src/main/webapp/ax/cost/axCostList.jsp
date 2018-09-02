@@ -515,35 +515,50 @@ function fn_hidePopupDiv(popupDivId) {
 <h2>입금 관리</h2>
 <div style="height:10px"></div>
 
-<div>
-	대분류
-	<select id="CB_LEVEL1" onchange="fn_cbChange('CB_LEVEL1')">
-		<option value="">전체</option>
-	</select>
-	중분류
-	<select id="CB_LEVEL2" onchange="fn_cbChange('CB_LEVEL2')">
-		<option value="">전체</option>
-	</select>
-	소분류
-	<select id="CB_LEVEL3">
-		<option value="">전체</option>
-	</select>
-	년도
-	<select id="CB_YEAR">
-		<option value="">전체</option>
-	</select>
-	차수
-	<input type="text" class="search_input" id="chasu" name="chasu" value="" style="width:70px"/>
-	과정명
-	<input type="text" class="search_input" id="courseName" name="courseName" value="" />
-	신청상태
-	<select id="CB_SEARCH_STATUS">
-	</select>
-	일자
-   	<input id="FROM_DT" name="FROM_DT" maxlength="10" size="10" class="datePicker" value="" readonly/> ~ 
-	<input id="TO_DT" name="TO_DT" maxlength="10" size="10" class="datePicker" value="" readonly/>
-	신청자
-	<input type="text" id="USER" name="USER" value=""/>
+<div class="form-inline">
+  	<div class="form-group">
+    	<label for="CB_LEVEL1">카테고리</label>
+		<select class="form-control" id="CB_LEVEL1" onchange="fn_cbChange('CB_LEVEL1')">
+			<option value="">전체</option>
+		</select>
+		<select class="form-control" id="CB_LEVEL2" onchange="fn_cbChange('CB_LEVEL2')">
+			<option value="">전체</option>
+		</select>
+		<select class="form-control" id="CB_LEVEL3">
+			<option value="">전체</option>
+		</select>
+  	</div>
+  	<div class="form-group">
+    	<label for="CB_YEAR">&nbsp;년도</label>
+		<select class="form-control" id="CB_YEAR">
+			<option value="">전체</option>
+		</select>
+  	</div>
+  	<div class="form-group">
+    	<label for="chasu">&nbsp;차수</label>
+    	<input type="text" class="form-control" id="chasu" name="chasu">
+  	</div>
+  	<div class="form-group">
+    	<label for="courseName">&nbsp;과정명</label>
+    	<input type="text" class="form-control" id="courseName" name="courseName">
+  	</div>
+</div>
+<div style="height:10px"></div>
+<div class="form-inline">
+  	<div class="form-group">
+    	<label for="CB_SEARCH_STATUS">&nbsp;신청상태</label>
+		<select id="CB_SEARCH_STATUS">
+		</select>
+  	</div>
+  	<div class="form-group">
+    	<label for="courseName">&nbsp;일자</label>
+	   	<input id="FROM_DT" name="FROM_DT" maxlength="10" size="10" class="form-control datePicker" value="" readonly/> ~ 
+		<input id="TO_DT" name="TO_DT" maxlength="10" size="10" class="form-control datePicker" value="" readonly/>
+  	</div>
+  	<div class="form-group">
+    	<label for="courseName">&nbsp;신청자</label>
+    	<input type="text" class="form-control" id="USER" name="USER">
+  	</div>
 </div>
 
 <div style="height:10px"></div>

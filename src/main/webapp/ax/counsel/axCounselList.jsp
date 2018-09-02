@@ -146,17 +146,20 @@ function fn_gridEvent(event, obj) {
 <h2>상담내역</h2>
 <div style="height:10px"></div>
 
-<div>
-	카테고리
-	<select id="CB_CATEGORY">
-		<option value="">전체</option>
-	</select>
-	통합검색
-	<input type="text" class="search_input" id="SEARCH_STR" name="SEARCH_STR" value="" />
+<div class="form-inline">
+  	<div class="form-group">
+    	<label for="CB_CATEGORY">카테고리</label>
+		<select class="form-control" id="CB_CATEGORY">
+			<option value="">전체</option>
+		</select>
+  	</div>
+  	<div class="form-group">
+    	<label for="CB_SEARCHKIND">통합검색</label>
+		<input class="form-control" type="text" class="search_input" id="SEARCH_STR" name="SEARCH_STR" value="" />
+  	</div>
 </div>
-
 <div style="height:10px"></div>
-
+ 
 <div>
     <button class="btn btn-default" data-grid-control="search">검색</button>
     <button class="btn btn-default" data-grid-control="export">엑셀</button>

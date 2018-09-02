@@ -387,39 +387,51 @@ function fn_cbChange(id) {
 <h2>강의 관리</h2>
 <div style="height:10px"></div>
 
-<div>
-	대분류
-	<select id="CB_LEVEL1" onchange="fn_cbChange('CB_LEVEL1')">
-		<option value="">전체</option>
-	</select>
-	중분류
-	<select id="CB_LEVEL2" onchange="fn_cbChange('CB_LEVEL2')">
-		<option value="">전체</option>
-	</select>
-	소분류
-	<select id="CB_LEVEL3">
-		<option value="">전체</option>
-	</select>
-	회사 구분
-	<select id="CB_COMPANY">
-		<option value="">전체</option>
-		<option value="B2C">일반사용자</option>
-		<option value="B2B">회사</option>
-	</select>
-	오픈구분
-	<select id="CB_OPEN_KIND">
-		<option value="">전체</option>
-	</select>
-	년도
-	<select id="CB_YEAR">
-		<option value="">전체</option>
-	</select>
-	차수
-	<input type="text" class="search_input" id="chasu" name="chasu" value="" style="width:70px"/>
-	과정명
-	<input type="text" class="search_input" id="courseName" name="courseName" value="" />
+<div class="form-inline">
+  	<div class="form-group">
+    	<label for="CB_LEVEL1">카테고리</label>
+		<select class="form-control" id="CB_LEVEL1" onchange="fn_cbChange('CB_LEVEL1')">
+			<option value="">전체</option>
+		</select>
+		<select class="form-control" id="CB_LEVEL2" onchange="fn_cbChange('CB_LEVEL2')">
+			<option value="">전체</option>
+		</select>
+		<select class="form-control" id="CB_LEVEL3">
+			<option value="">전체</option>
+		</select>
+  	</div>
+  	<div class="form-group">
+    	<label for="courseName">&nbsp;과정명</label>
+    	<input type="text" class="form-control" id="courseName" name="courseName">
+  	</div>
 </div>
-
+<div style="height:10px"></div>
+<div class="form-inline">
+  	<div class="form-group">
+    	<label for="CB_COMPANY">&nbsp;회사구분</label>
+		<select class="form-control" id="CB_COMPANY">
+			<option value="">전체</option>
+			<option value="B2C">일반사용자</option>
+			<option value="B2B">회사</option>
+		</select>
+  	</div>
+  	<div class="form-group">
+    	<label for="CB_OPEN_KIND">&nbsp;오픈구분</label>
+		<select class="form-control" id="CB_OPEN_KIND">
+			<option value="">전체</option>
+		</select>
+  	</div>
+  	<div class="form-group">
+    	<label for="CB_YEAR">&nbsp;년도</label>
+		<select class="form-control" id="CB_YEAR">
+			<option value="">전체</option>
+		</select>
+  	</div>
+  	<div class="form-group">
+    	<label for="chasu">&nbsp;차수</label>
+    	<input type="text" class="form-control" id="chasu" name="chasu">
+  	</div>
+</div>
 <div style="height:10px"></div>
 
 <div>

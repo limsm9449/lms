@@ -130,19 +130,22 @@ function fn_gridEvent(event, obj) {
 <h2>로그 관리</h2>
 <div style="height:10px"></div>
 
-<div>
-	일자
-   	<input id="FROM_DT" name="FROM_DT" maxlength="10" size="10" class="datePicker" value="" readonly/> ~ 
-	<input id="TO_DT" name="TO_DT" maxlength="10" size="10" class="datePicker" value="" readonly/>
-	검색
-	<select id="CB_SEARCHKIND">
-		<option value="">전체</option>
-		<option value="USER_ID">사용자 ID</option>
-		<option value="USER_NAME">사용자명</option>
-	</select>
-	<input type="text" id="SEARCH_STR" name="SEARCH_STR" value=""/>
+<div class="form-inline">
+  	<div class="form-group">
+    	<label for="CB_CATEGORY">일자</label>
+	   	<input class="form-control" id="FROM_DT" name="FROM_DT" maxlength="10" size="10" class="datePicker" value="" readonly/> ~ 
+		<input class="form-control" id="TO_DT" name="TO_DT" maxlength="10" size="10" class="datePicker" value="" readonly/>
+  	</div>
+  	<div class="form-group">
+    	<label for="CB_SEARCHKIND">검색</label>
+		<select class="form-control" id="CB_SEARCHKIND">
+			<option value="">전체</option>
+			<option value="USER_ID">사용자 ID</option>
+			<option value="USER_NAME">사용자명</option>
+		</select>
+		<input class="form-control" type="text" id="SEARCH_STR" name="SEARCH_STR" value=""/>
+  	</div>
 </div>
-
 <div style="height:10px"></div>
 
 <div>

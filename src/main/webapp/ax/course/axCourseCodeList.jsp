@@ -434,7 +434,6 @@ function fn_cbChange(id) {
 		</select>
   	</div>
 </form>
-
 <div style="height:10px"></div>
 
 <div>
@@ -446,7 +445,6 @@ function fn_cbChange(id) {
     <button class="btn btn-default" data-grid-control="export">엑셀</button>
     <button class="btn btn-default" data-grid-control="editDetail">주차 편집</button>
 </div>
-
 <div style="height:10px"></div>
 
 

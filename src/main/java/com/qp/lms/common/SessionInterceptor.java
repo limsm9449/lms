@@ -4,9 +4,8 @@ package com.qp.lms.common;
 import java.io.FileInputStream;
 import java.net.URLEncoder;
 import java.util.Enumeration;
-import java.util.Iterator;
-import java.util.Map;
 import java.util.Properties;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -61,18 +60,28 @@ public class SessionInterceptor extends HandlerInterceptorAdapter {
 		    	// request 로그 
 	    		if ( url.indexOf("/log/axLogList") < 0 ||
 	    				url.indexOf("/home/adminHome") < 0 ||
-	    				url.indexOf("/adminLeft") < 0 ) {
+	    				url.indexOf("/adminLeft") < 0 ||
+	    				url.indexOf("/log/axLogList") < 0 ||
+	    				url.indexOf("/common/axDd") < 0 ||
+	    				url.indexOf("/common/axOpenPage") < 0 ) {
 			    	String reqParam = "";
-			    	Enumeration e = request.getParameterNames();
-			        while ( e.hasMoreElements() ) {
-			        	String   name   = (String)e.nextElement();
-		            	reqParam += ("".equals(reqParam) ? "" : "&" ) + name + "=";
-		
-		            	String[] values = request.getParameterValues(name);
-			            for ( int i = 0; i < values.length; i++) {
-			            	reqParam += ( i == 0 ? "" : ",") + values[i];
-			            }
-			        }
+			    	
+			    	if ( request.getMethod().equals("POST") ) {
+			    	    
+			    	    //reqParam = request.getReader().lines().collect(Collectors.joining(System.lineSeparator()));
+			    	} else {
+			    		Enumeration e = request.getParameterNames();
+				        while ( e.hasMoreElements() ) {
+				        	String name = (String)e.nextElement();
+			            	reqParam += ("".equals(reqParam) ? "" : "&" ) + name + "=";
+			
+			            	String[] values = request.getParameterValues(name);
+				            for ( int i = 0; i < values.length; i++) {
+				            	reqParam += ( i == 0 ? "" : ",") + values[i];
+				            }
+				        }
+			    	}
+			    	
 			        if ( (SessionVO)SessionUtil.getSession() == null) {
 			        	commSvr.requestLog("Guest", url, reqParam, request.getRemoteAddr());
 			        } else {
