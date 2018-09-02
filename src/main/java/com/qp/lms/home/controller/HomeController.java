@@ -28,6 +28,12 @@ public class HomeController {
         return "index";
     }
     
+    @RequestMapping(value = "/lms")
+    public String homeLms(Model model) {
+
+        return "indexLms";
+    }
+    
     @RequestMapping(value = "/goIndex")
     public String goIndex(Model model) {
 

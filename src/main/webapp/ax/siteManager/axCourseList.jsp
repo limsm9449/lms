@@ -71,6 +71,39 @@ $(document.body).ready(function () {
             	}
             		
                 break;
+            case "courseRegister":
+            	var row = grid.getList("selected");
+            	if ( row.length == 0 ) {
+            		mask.open();
+            		dialog.alert( { msg : "과정을 선택하셔야 합니다." }, function () { mask.close();	} );
+            	} else if ( row[0]["OPEN_YN"] != "Y" || row[0]["CLOSE_YN"] == "Y" ) {
+            		mask.open();
+            		dialog.alert( { msg : "오픈 중이 아니가, 종료된 강의는 수강신청을 할 수 없습니다." }, function () { mask.close();	} );
+            	} else {
+            		var urlParams = "page=/ax/siteManager/axCourseRegisterPopup";
+            		urlParams += "&COURSE_ID=" + row[0]["COURSE_ID"];
+            		
+            		f_popup('/common/axOpenPage', {displayName:'courseRegisterPopup',option:'width=900,height=700', urlParams:urlParams});
+            	}
+            		
+                break;
+            case "courseNotApprovalRegister":
+            	var row = grid.getList("selected");
+            	if ( row.length == 0 ) {
+            		mask.open();
+            		dialog.alert( { msg : "과정을 선택하셔야 합니다." }, function () { mask.close();	} );
+            	} else if ( row[0]["W_USER_CNT"] == 0 ) {
+            		mask.open();
+            		dialog.alert( { msg : "미결재 수강생이 없습니다." }, function () { mask.close();	} );
+            	} else {
+            		window.open("","courseNotApprovalRegister", "width=900,height=700");
+            		document.frm.action = context + "/pg/axApplication.do?COURSE_ID=" + row[0]["COURSE_ID"] + "&KIND=TYPE2";	
+            		document.frm.target = "courseNotApprovalRegister";
+            		document.frm.method = "POST";	
+            		document.frm.submit();
+            	}
+            		
+                break;
         }
     });
 });
@@ -113,10 +146,31 @@ function fn_makeGrid() {
 	            width : 50,
 	            align : "right"
 	        },{
-	            key : "USER_CNT",
-	            label : "수강생",
-	            width : 70,
-	            align : "right"
+              	key : undefined, 
+              	label: "수강생", 
+              	columns: [
+              		{
+			            key : "USER_CNT",
+			            label : "승인",
+			            width : 70,
+			            align : "right"
+			        },{
+			            key : "B_USER_CNT",
+			            label : "입금확인",
+			            width : 90,
+			            align : "right"
+			        },{
+			            key : "Y_USER_CNT",
+			            label : "미신청",
+			            width : 70,
+			            align : "right"
+			        },{
+			            key : "W_USER_CNT",
+			            label : "미결재",
+			            width : 70,
+			            align : "right"
+			        }
+			  	]
 	        },{
 	            key : "COURSE_COST", 
 	            label : "과정비용",
@@ -399,11 +453,11 @@ function fn_cbChange(id) {
 
 <div>
     <button class="btn btn-default" data-grid-control="search">검색</button>
-    <button class="btn btn-default" data-grid-control="reset">초기화</button>
     <button class="btn btn-default" data-grid-control="export">엑셀</button>
     <button class="btn btn-default" data-grid-control="viewContent">학습내용</button>
     <button class="btn btn-default" data-grid-control="viewImage">강의 이미지</button>
     <button class="btn btn-default" data-grid-control="courseRegister">수강신청</button>
+    <button class="btn btn-default" data-grid-control="courseNotApprovalRegister">미결재 수강신청</button>
 </div>
 
 <div style="height:10px"></div>

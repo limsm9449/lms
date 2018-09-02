@@ -220,18 +220,18 @@ function gfn_cbRefresh(id, options, isAll) {
 
 <body style="padding : 10px">
 
-<form id="frm" name="frm" method="post">
 
 <h2>중분류 관리</h2>
 <div style="height:10px"></div>
 
-<div>
-	대분류
-	<select id="CB_LEVEL1">
-		<option value="">전체</option>
-	</select>
-</div>
-
+<form id="frm" name="frm" method="post" class="form-inline">
+  	<div class="form-group">
+    	<label for="CB_LEVEL1">대분류</label>
+		<select class="form-control" id="CB_LEVEL1" onchange="fn_cbChange('CB_LEVEL1')">
+			<option value="">전체</option>
+		</select>
+  	</div>
+</form>
 <div style="height:10px"></div>
         
 <div>
@@ -249,7 +249,6 @@ function gfn_cbRefresh(id, options, isAll) {
     <div data-ax5grid="first-grid" style="height: 100%;"></div>
 </div>
 
-</form>
 	
 
 <div class="mask"></div>

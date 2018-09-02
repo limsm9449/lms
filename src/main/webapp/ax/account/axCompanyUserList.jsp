@@ -100,21 +100,11 @@ $(document.body).ready(function () {
             case "zipcodeUrl":
            		window.open(dd.ZipcodeUrl[0].text, "zipcode","width=900,height=650");
                 break;
-            case "editImage":
-            	var row = grid.getList("selected");
-            	if ( row.length == 0 ) {
-            		mask.open();
-            		dialog.alert( { msg : "사용자를 선택하셔야 합니다." }, function () { mask.close();	} );
-            	} else if ( row[0]["NEW_FLAG"] == "Y" ) {
-            		mask.open();
-            		dialog.alert( { msg : "신규로 추가한 경우는 저장후에 이미지를 편집하셔야 합니다." }, function () { mask.close();	} );
-            	} else {
-            		var urlParams = "page=/ax/account/axAccountImagePopup";
-            		urlParams += "&USER_ID=" + row[0]["USER_ID"];
-            		
-            		f_popup('/common/axOpenPage', {displayName:'accountImagePopup',option:'width=900,height=650', urlParams:urlParams});
-            	}
-            		
+            case "import":
+            	var urlParams = "page=/ax/common/axExcelUpload";
+        		urlParams += "&SCREEN=CompanyUser";
+        		
+        		f_popup('/common/axOpenPage', {displayName:'excelUploadPopup',option:'width=600,height=500', urlParams:urlParams});
                 break;
         }
     });
@@ -236,24 +226,6 @@ function fn_makeGrid() {
                     return "grid-cell-edit";
                 }
 	        },{
-	            key : "JOB",
-	            label : "직급",
-	            width : 60,
-	            align : "center", 
-	        	editor: {
-                    type : "select", 
-                    config : {
-                        columnKeys: { optionValue: "value", optionText: "text" },
-                        options: dd.Job
-                    } 
-	        	},
-	            formatter : function () {
-	                return gfn_getValueInList(dd.Job, "value",  this.item.JOB, "text");
-	           	},
-				styleClass: function () {
-                    return "grid-cell-edit";
-                }
-	        },{
 	            key : "PWD",
 	            label : "패스워드",
 	            width : 90,
@@ -270,20 +242,6 @@ function fn_makeGrid() {
 				},
 				styleClass: function () {
                     return (this.item.NEW_FLAG === "Y") ? "grid-cell-edit" : "";
-                }
-			},{
-	        	key : "USER_IMG", 
-	        	label : "사용자 이미지", 
-	            width : 110,
-	        	align : "center"
-			},{
-	        	key : "RETIRED_YN", 
-	        	label : "탈퇴 여부", 
-	            width : 90,
-	        	align : "center", 
-	        	editor : { type : "checkbox", config : {height: 17, trueValue: "Y", falseValue: "N"} },
-				styleClass: function () {
-                    return "grid-cell-edit";
                 }
 	        },{
 	            key : "COURSE_CNT",
@@ -339,6 +297,13 @@ function fn_save() {
    	};
     
    	if ( gfn_validationCheck(grid, fieldParams) ) {
+   		var dupIdx = gfn_gridDupCheck(grid, "USER_ID");
+   		if ( dupIdx > -1 ) {
+			mask.open();
+			dialog.alert( { msg : (dupIdx + 1) + "라인의 사용자 ID는 이미 등록된 사용자ID 입니다." }, function () { mask.close(); } );
+			return; 
+   		}
+   		
        	mask.open();
        	confirmDialog.confirm(
        		{
@@ -368,8 +333,13 @@ function fn_callbackAjax(data, id) {
 	} else if ( id == "save" ){
 		mask.close();
 
-		mask.open();
-		dialog.alert( { msg : "저장 되었습니다." }, function () { mask.close();	fn_search(); } );
+		if ( data.RtnMode == "DUPLICATION" ) {
+			mask.open();
+			dialog.alert( { msg : "이미 등록된 사용자ID가 있습니다. (" + data.DupUserids + ")" }, function () { mask.close(); } );
+		} else {
+			mask.open();
+			dialog.alert( { msg : "저장 되었습니다." }, function () { mask.close();	fn_search(); } );
+		}
 	} else if ( id == "passwordReset" ){
 		mask.close();
 
@@ -380,6 +350,32 @@ function fn_callbackAjax(data, id) {
 
 		fn_makeGrid();
 		fn_search();
+	} else if ( id == "excelUploadList" ){
+      	var allList = grid.getList();
+      	var maxSeq = 0;
+      	for ( var i = 0; i < allList.length; i++ ) {
+			if ( parseInt(allList[i].SEQ) > maxSeq ) {
+				maxSeq = parseInt(allList[i].SEQ);
+			}
+      	}
+
+      	for ( var i = 0; i < data.list.length; i++ ) {
+       		grid.addRow( 
+       			{
+       				NEW_FLAG : "Y", 
+       				USER_ID : data.list[i].USER_ID, 
+       				USER_NAME : data.list[i].USER_NAME, 
+       				EMAIL : data.list[i].EMAIL, 
+       				SEX : data.list[i].SEX, 
+       				BIRTH_DAY : data.list[i].BIRTH_DAY, 
+       				HOME_ZIPCODE : data.list[i].HOME_ZIPCODE, 
+       				HOME_ADDR : data.list[i].HOME_ADDR, 
+       				HOME_TEL : data.list[i].HOME_TEL, 
+       				MOBILE : data.list[i].MOBILE, 
+       				PWD : data.list[i].PWD, 
+	            	COMP_CD : "${compCd}"
+       			}, "last", {focus: "END"});
+		}
 	}
 }
 
@@ -421,8 +417,8 @@ function fn_gridEvent(event, obj) {
     <button class="btn btn-default" data-grid-control="save">저장</button>
     <button class="btn btn-default" data-grid-control="export">엑셀</button>
     <button class="btn btn-default" data-grid-control="passwordReset">패스워드 초기화</button>
-    <button class="btn btn-default" data-grid-control="editImage">이미지 관리</button>
     <button class="btn btn-default" data-grid-control="zipcodeUrl">주소검색</button>
+    <button class="btn btn-default" data-grid-control="import">엑셀 업로드</button>
 </div> 
 
 <div style="height:10px"></div>

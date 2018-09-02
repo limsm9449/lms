@@ -98,20 +98,15 @@ var pageObj = {
 	axCategoryLevel3List : 	{	page : "/ax/category/axCategoryLevel3List"	},
 	axQuestGroupList : 		{	page : "/ax/quest/axQuestGroupList"	},
 	axCourseCodeList : 		{	page : "/ax/course/axCourseCodeList"	},
-	axCourseCodeListCm : 	{	page : "/ax/course/axCourseCodeListCm"	},
 	axCourseMasterList : 	{	page : "/ax/course/axCourseMasterList"	},
 	axCourseReportList : 	{	page : "/ax/course/axCourseReportList"	},
 	axCourseExamList : 		{	page : "/ax/course/axCourseExamList"	},
 	axCourseExamTypeList :	{	page : "/ax/course/axCourseExamTypeList"	},
 	axCourseList :			{	page : "/ax/course/axCourseList"	},
-	axCourseListTu :		{	page : "/ax/course/axCourseListTu"	},
-	axCourseListSm :		{	page : "/ax/course/axCourseListSm"	},
 	axCostList :			{	page : "/ax/cost/axCostList"	},
 	axCostDistributionList :{	page : "/ax/cost/axCostDistributionList"	},
 	axScoreList :			{	page : "/ax/score/axScoreList"	},
-	axScoreListSm :			{	page : "/ax/score/axScoreListSm"	},
 	axUserScoreList :		{	page : "/ax/score/axUserScoreList"	},
-	axUserScoreListSm :		{	page : "/ax/score/axUserScoreListSm"	},
 	axAccountList :			{	page : "/ax/account/axAccountList"	},
 	axCompanyList :			{	page : "/ax/account/axCompanyList"	},
 	axCompanyUserList :		{	page : "/ax/account/axCompanyUserList"	},
@@ -128,7 +123,13 @@ var pageObj = {
 	axMailList :			{	page : "/ax/setting/axMailList"	},
 	axBankList :			{	page : "/ax/setting/axBankList"	},
 	axCodeList :			{	page : "/ax/setting/axCodeList"	},
-	axLogList :				{	page : "/ax/log/axLogList"	}
+	axLogList :				{	page : "/ax/log/axLogList"	},
+	axCourseCodeListCm : 	{	page : "/ax/contentsManager/axCourseCodeList"	},
+	axCourseListSm :		{	page : "/ax/siteManager/axCourseList"	},
+	axScoreListSm :			{	page : "/ax/siteManager/axScoreList"	},
+	axUserScoreListSm :		{	page : "/ax/siteManager/axUserScoreList"	},
+	axApprovalListSm :		{	page : "/ax/siteManager/axApprovalList"	},
+	axCourseListTu :		{	page : "/ax/tutor/axCourseList"	}
 }
 
 var pageParam = {}
@@ -243,7 +244,7 @@ function gfn_openMenu(pageId, params) {
 	          		<li><a href="#" class="mainMenu linker" onclick="gfn_openMenu('axCourseListSm'); gfn_menu(this)" id="smFirstGroup"><span>강의 관리</span></a></li>
 	          		<li><a href="#" class="mainMenu linker" onclick="gfn_openMenu('axCompanyUserList'); gfn_menu(this)"><span>직원 관리</span></a></li>
 	          		<li><a href="#" class="mainMenu linker" onclick="gfn_openMenu('axScoreListSm'); gfn_menu(this)"><span>성적 관리</span></a></li> 
-	          		<li><a href="#" class="mainMenu linker" onclick="gfn_openMenu('axScoreListSm'); gfn_menu(this)"><span>수강신청 이력 관리</span></a></li> 
+	          		<li><a href="#" class="mainMenu linker" onclick="gfn_openMenu('axApprovalListSm'); gfn_menu(this)"><span>수강신청 이력 관리</span></a></li> 
 </c:if>
 <c:if test="${auth eq 'TEACHER'}">         		
 </c:if>

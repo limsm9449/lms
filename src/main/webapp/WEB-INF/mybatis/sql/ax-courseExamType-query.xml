@@ -129,6 +129,55 @@
 		 WHERE 	SEQ = #{SEQ}
 	</delete>  
 
+	<delete id="axTempCourseExamDelete" parameterType="hashmap">
+		DELETE 	FROM USER_EXAM
+		WHERE 	COURSE_ID = 0
+		AND		USER_ID = '-'
+		AND		EXAM_KIND = #{EXAM_KIND}
+	</delete>  
 
+	<select id="axTempCourseExamTypeStandard" parameterType="hashmap" resultType="hashmap">
+		SELECT 	WEEK_FROM
+				,WEEK_TO
+		        ,TYPE
+		        ,LEVEL
+		        ,QUESTION_CNT
+		        ,EXAM_KIND
+		        ,#{COURSE_ID} COURSE_ID
+		        ,#{USER_ID} USER_ID
+		FROM 	COURSE_EXAM_TYPE_STANDARD
+		WHERE 	EXAM_TYPE_SEQ = #{SEQ}
+		AND		EXAM_KIND = #{EXAM_KIND}    
+		AND 	USE_YN = 'Y'
+	</select>      
+	
+	<insert id="axTempCourseExamInsert" parameterType="hashmap">
+		INSERT 	INTO USER_EXAM( COURSE_ID, USER_ID, EXAM_KIND, SEQ, ANSWER, ANSWER_YN, CREATE_USER, CREATE_DATE )
+		SELECT  0 COURSE_ID, '-' USER_ID, #{EXAM_KIND}, SEQ, '',  'N', #{SESSION_USER_ID}, CURRENT_TIMESTAMP
+		FROM 	COURSE_EXAM
+		WHERE	COURSE_CODE = #{COURSE_CODE}
+		AND		USE_YN = 'Y'	
+		AND		WEEK BETWEEN ${WEEK_FROM} AND ${WEEK_TO}
+		AND	 	TYPE = #{TYPE}
+		AND		LEVEL = #{LEVEL}
+		ORDER 	BY RAND() 
+		LIMIT 	${QUESTION_CNT}							
+	</insert>   
+
+	<select id="axTempCourseExamList" resultType="hashmap">
+		SELECT 	A.SEQ
+				,C.TYPE
+				,C.QUESTION
+				,C.QA1
+				,C.QA2
+				,C.QA3
+				,C.QA4
+		FROM	USER_EXAM A
+					JOIN COURSE_EXAM C ON C.COURSE_CODE = #{COURSE_CODE} AND C.SEQ = A.SEQ
+		WHERE 	A.COURSE_ID = 0
+		AND		A.USER_ID = '-'
+		AND		A.EXAM_KIND = #{EXAM_KIND}
+		ORDER 	BY RAND()
+	</select> 
         
 </mapper>

@@ -59,8 +59,8 @@ public class LoginController {
    	 		String auth = CommUtil.getString(loginVO.getAuth());
    	 		
    	 		if ( ("ADMIN".equals(auth) && !"Y".equals(CommUtil.getString(set.getData().getAdminYn()))) ||
-   	 				("SITE_MANGER".equals(auth) && !"Y".equals(CommUtil.getString(set.getData().getAdminYn()))) ||
-   	 				("CONTENTS_MANAGER".equals(auth) && !"Y".equals(CommUtil.getString(set.getData().getAdminYn()))) ||
+   	 				("SITE_MANAGER".equals(auth) && !"Y".equals(CommUtil.getString(set.getData().getSiteManagerYn()))) ||
+   	 				("CONTENTS_MANAGER".equals(auth) && !"Y".equals(CommUtil.getString(set.getData().getContentsManagerYn()))) ||
    	 				("TEACHER".equals(auth) && !"Y".equals(CommUtil.getString(set.getData().getTeacherYn()))) ||
    	 				("TUTOR".equals(auth) && !"Y".equals(CommUtil.getString(set.getData().getTutorYn()))) ) {
    	 			set.setIsNotAuth("Y");

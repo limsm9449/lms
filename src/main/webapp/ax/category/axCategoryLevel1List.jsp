@@ -22,7 +22,7 @@ var grid = null;
 
 $(document.body).ready(function () {
 	$( window ).resize( function() {
-		gfn_gridResize("grid-parent", grid, 135); 
+		gfn_gridResize("grid-parent", grid);  
 	} );
 	
     confirmDialog.setConfig({

@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="axPg">
+
+	<select id="axCourseApplicationUserList" parameterType="hashmap" resultType="hashmap">
+		SELECT A.USER_ID,
+		       B.USER_NAME,
+		       A.COURSE_COST
+		  FROM COURSE_REGISTER A LEFT OUTER JOIN USER B ON A.USER_ID = B.USER_ID
+		 WHERE COURSE_ID = #{COURSE_ID}
+		   AND STATUS = 'Y' 
+ 	</select>
+	     
+	<select id="axCourseNotApprovalUserList" parameterType="hashmap" resultType="hashmap">
+		SELECT A.USER_ID,
+		       B.USER_NAME,
+		       A.COURSE_COST
+		  FROM COURSE_REGISTER A LEFT OUTER JOIN USER B ON A.USER_ID = B.USER_ID
+		 WHERE COURSE_ID = #{COURSE_ID}
+		   AND STATUS = 'A'
+		   AND IFNULL(APPROVAL_ID, 0) = 0 
+ 	</select>
+	     
+	<select id="axUserPoint" parameterType="hashmap" resultType="int">
+		SELECT IFNULL(SUM(IN_POINT - OUT_POINT),0) POINT 
+		  FROM POINT
+		 WHERE USER_ID = #{USER_ID}
+	</select>
+	        
+	<insert id="axCourseApprovalInsert" parameterType="hashmap">
+		INSERT INTO APPROVAL(APPROVAL_ID,USER_ID,STATUS,TOTAL_COST,PAYMENT_POINT,PAYMENT_COST,PAYMENT_KIND,PAYMENT_BANK,PAYMENT_DATE,CREATE_DATE,CREATE_USER)
+		VALUES(#{approvalId},#{SESSION_USER_ID},if(#{paymentKind} = 'CARD','A','B'),#{totalCost},#{paymentPoint},#{paymentCost},#{paymentKind},#{paymentBank},CURRENT_TIMESTAMP,CURRENT_TIMESTAMP,#{SESSION_USER_ID})   
+	</insert>	
+
+	<update id="axCourseRegisterUserUpdate" parameterType="hashmap">
+		UPDATE COURSE_REGISTER
+		   SET STATUS = if(#{paymentKind} = 'CARD','A','B'),
+		       APPROVAL_ID = #{approvalId},
+		       CONFIRM_DATE = if(#{paymentKind} = 'CARD',CURRENT_TIMESTAMP,NULL)
+		 WHERE COURSE_ID = #{courseId}
+		   AND USER_ID = #{userId}
+	</update>	
+
+	<insert id="axCourseRegisterInsert" parameterType="Main">
+		INSERT INTO COURSE_REGISTER(COURSE_ID,USER_ID,STATUS,COURSE_COST,APPROVAL_ID,CONFIRM_DATE,CREATE_DATE,CREATE_USER)
+		SELECT A.COURSE_ID, 
+		       #{userId},
+		       if(#{paymentKind} = 'CASH','B','A'),
+		       A.COURSE_COST,
+		       #{approvalId},
+		       if(#{paymentKind} = 'CASH',NULL,CURRENT_TIMESTAMP),
+		       CURRENT_TIMESTAMP,
+		       #{SESSION_USER_ID}
+		  FROM COURSE A LEFT OUTER JOIN COURSE_CODE B ON A.COURSE_CODE = B.COURSE_CODE
+		 WHERE COURSE_ID = #{courseId}	
+	</insert>
+
+	<insert id="axCourseEvalInsert" parameterType="hashmap">
+		INSERT INTO COURSE_EVAL(COURSE_ID,USER_ID,TUTOR_ID,REPORT,EXAM,DISCUSSION,PROGRESS,TOTAL,LAST_WEEK,LAST_PAGE,REPORT_SEQ,CREATE_DATE,CREATE_USER,EXAM_WEEK,EXAM_TOTAL)
+		VALUES (#{courseId},#{userId},#{tutorId},0,0,0,0,0,1,1,#{reportSeq},CURRENT_TIMESTAMP,#{SESSION_USER_ID},0,0)
+	</insert>
+	
+	<insert id="axCourseWeekInsert" parameterType="hashmap">
+		INSERT INTO COURSE_WEEK(COURSE_ID,USER_ID,WEEK,PROGRESS_RATE,STUDY_START,STUDY_END)
+		SELECT #{courseId},#{userId},WEEK,0,NULL,NULL
+		  FROM COURSE_RESOURCE
+		 WHERE COURSE_CODE = ( SELECT COURSE_CODE FROM COURSE WHERE COURSE_ID = #{courseId} ) 
+	</insert>
+	  	
+	<update id="axCourseNotApprovalUserUpdate" parameterType="hashmap">
+		UPDATE COURSE_REGISTER
+		   SET APPROVAL_ID = #{approvalId},
+		       CONFIRM_DATE = CURRENT_TIMESTAMP
+		 WHERE COURSE_ID = #{courseId}
+		   AND USER_ID = #{userId}
+	</update>	
+
+	<select id="axCourseTutors" parameterType="hashmap" resultType="hashmap">
+		SELECT  TUTOR_ID, 1 FROM_CNT, IFNULL((SELECT MIN(FROM_CNT) FROM COURSE_TUTOR WHERE COURSE_ID = #{courseId} AND USE_YN = 'Y') - 1 ,99999) TO_CNT
+		FROM 	COURSE
+		WHERE 	COURSE_ID = #{courseId}
+		UNION 
+		SELECT  TUTOR_ID, FROM_CNT, TO_CNT
+		FROM 	COURSE_TUTOR
+		WHERE 	COURSE_ID = #{courseId}
+		AND		USE_YN = 'Y'
+	</select>
+
+	<select id="axCourseUserCnt" parameterType="hashmap" resultType="int">
+		SELECT 	COUNT(*) + 1 CNT
+		FROM	COURSE_EVAL
+		WHERE 	COURSE_ID = #{courseId}
+	</select>
+
+	<select id="axCourseReportExist" parameterType="hashmap" resultType="String">
+		SELECT 	IF( REPORT_RATE > 0, 'Y', 'N' ) YN
+		FROM	COURSE
+		WHERE 	COURSE_ID = #{courseId}
+	</select>
+
+	<select id="axCourseRandomReport" parameterType="hashmap" resultType="int">
+		SELECT 	IFNULL(MAX(SEQ),0)
+		FROM	COURSE_REPORT
+		WHERE   COURSE_CODE = (SELECT COURSE_CODE FROM COURSE WHERE COURSE_ID = #{courseId})
+		ORDER 	BY  RAND()
+		LIMIT 	1
+	</select>	  	
+
+	<select id="axRejectCourseRegisterDel" parameterType="hashmap">
+		DELETE FROM COURSE_REGISTER
+		 WHERE COURSE_ID = #{courseId}
+		   AND USER_ID = #{userId}
+	</select>
+
+	<select id="axRejectCourseEvalDel" parameterType="hashmap">
+		DELETE FROM COURSE_EVAL
+		 WHERE COURSE_ID = #{courseId}
+		   AND USER_ID = #{userId}
+	 </select>
+
+	<select id="axRejectCourseWeekDel" parameterType="hashmap">
+		DELETE FROM COURSE_WEEK
+		 WHERE COURSE_ID = #{courseId}
+		   AND USER_ID = #{userId}
+	 </select>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<insert id="axCourseWeekPartIns">
+		INSERT INTO COURSE_WEEK(COURSE_ID,USER_ID,WEEK,PROGRESS_RATE,STUDY_START,STUDY_END)
+		SELECT #{courseId},#{userId},WEEK,0,NULL,NULL
+		  FROM COURSE_RESOURCE
+		 WHERE COURSE_CODE = ( SELECT COURSE_CODE FROM COURSE WHERE COURSE_ID = #{courseId} ) 
+		   AND WEEK = #{week}
+	</insert> 	
+
+	<insert id="axCourseRegisterPartIns" parameterType="Main">
+		INSERT INTO COURSE_REGISTER(COURSE_ID,USER_ID,STATUS,COURSE_COST,APPROVAL_ID,CONFIRM_DATE,CREATE_DATE,CREATE_USER)
+		SELECT A.COURSE_ID, 
+		       #{userId},
+		       if(#{paymentKind} = 'CASH','B','A'),
+		       IFNULL(C.COURSE_COST,0),
+		       #{approvalId},
+		       if(#{paymentKind} = 'CASH',NULL,CURRENT_TIMESTAMP),
+		       CURRENT_TIMESTAMP,
+		       #{createUser}
+		  FROM COURSE A LEFT OUTER JOIN COURSE_CODE B ON A.COURSE_CODE = B.COURSE_CODE
+		                LEFT OUTER JOIN (SELECT COURSE_ID, SUM(WEEK_COST) COURSE_COST
+		                                   FROM COURSE_WEEK_COST
+		                                  WHERE COURSE_ID = #{courseId}
+		                                    AND WEEK IN (SELECT WEEK FROM COURSE_WEEK WHERE COURSE_ID = #{courseId} AND USER_ID = #{userId})
+		                                  GROUP BY COURSE_ID) C ON A.COURSE_ID = C.COURSE_ID	  
+		 WHERE A.COURSE_ID = #{courseId}	
+	 </insert>
+
+	
+</mapper>

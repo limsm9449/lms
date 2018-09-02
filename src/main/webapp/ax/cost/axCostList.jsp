@@ -38,7 +38,7 @@ $(document.body).ready(function () {
         theme: "danger"
     });
 
-    gfn_callAjax("/common/axDd.do", { DD_KIND : "ApprovalStatus,PaymentKind,Bank" }, fn_callbackAjax, "dd", { async : false });
+    gfn_callAjax("/common/axDd.do", { DD_KIND : "ApprovalStatus,PaymentKind,Bank,CategoryLevel1,Year"}, fn_callbackAjax, "dd", { async : false });
     
     $('[data-grid-control]').click(function () {
         switch (this.getAttribute("data-grid-control")) {
@@ -145,7 +145,42 @@ $(document.body).ready(function () {
 
 function fn_makeGrid() {
 	grid = gfn_makeAx5Grid("first-grid",
-		[ {
+		[ 	{
+	            key : "COURSE_ID",
+	            label : "ID",
+	            width : 40,
+	            align : "right"
+	        },{
+	            key : "CATEGORY_NAME",
+	            label : "카테고리",
+	            width : 150,
+	            align : "left"
+	        },{
+	            key : "COURSE_NAME",
+	            label : "과정명",
+	            width : 150,
+	            align : "left"
+	        },{
+	            key : "COURSE_CODE",
+	            label : "과정코드",
+	            width : 90,
+	            align : "left"
+	        },{
+	            key : "YEAR", 
+	            label : "년",
+	            width : 50,
+	            align : "center"
+	        },{
+	            key : "MONTH",
+	            label : "월",
+	            width : 50,
+	            align : "center"
+	        },{
+	            key : "CHASU",
+	            label : "차수",
+	            width : 50,
+	            align : "right"
+	        },{
 	            key : "REQUEST_DATE",
 	            label : "신청일자",
 	            width : 100,
@@ -340,11 +375,12 @@ function fn_makeGrid() {
 	  	null,
 	  	{
 	  		showRowSelector : true,
-	  		multipleSelect: true
+	  		multipleSelect: true,
+	  		frozenColumnIndex : 7
 	  	}
 	);
 	
-	$(window).trigger("resize");
+	$(window).trigger("resize"); 
 } 
 
 function fn_params() {
@@ -352,6 +388,12 @@ function fn_params() {
 	params.TO_DT = $("#TO_DT").val();	
 	params.USER = $("#USER").val();
 	params.CB_SEARCH_STATUS = $("#CB_SEARCH_STATUS option:selected").val();
+	params.LEVEL1_CODE = $("#CB_LEVEL1 option:selected").val();	
+	params.LEVEL2_CODE = $("#CB_LEVEL2 option:selected").val();	
+	params.LEVEL3_CODE = $("#CB_LEVEL3 option:selected").val();	
+	params.YEAR = $("#CB_YEAR option:selected").val();	
+	params.chasu = $("#chasu").val();	
+	params.courseName = $("#courseName").val();	
 }
 
 function fn_search() {
@@ -396,9 +438,15 @@ function fn_callbackAjax(data, id) {
 		
 		gfn_cbRefresh("CB_SEARCH_STATUS", data.ApprovalStatus, true);
 		gfn_cbRefresh("UPD_REFUND_KIND", data.PaymentKind, false);
+		gfn_cbRefresh("CB_LEVEL1", data.CategoryLevel1, true);
+		gfn_cbRefresh("CB_YEAR", data.Year, true);
 		
 		fn_makeGrid();
 		fn_search();
+	} else if ( id == "CB_LEVEL1" ){
+		gfn_cbRefresh("CB_LEVEL2", data.CategoryLevel2, true);
+	} else if ( id == "CB_LEVEL2" ){
+		gfn_cbRefresh("CB_LEVEL3", data.CategoryLevel3, true);
 	} else if ( id == "save" ){
 		mask.close();
 
@@ -410,6 +458,14 @@ function fn_callbackAjax(data, id) {
 function fn_gridEvent(event, obj) {
 	if ( event == "Click" ) {
 		//obj.self.select(obj.dindex);
+	}
+}
+
+function fn_cbChange(id) {
+	if ( id == "CB_LEVEL1" ) {
+	    gfn_callAjax("/common/axDd.do", { DD_KIND : "CategoryLevel2", LEVEL1_CODE : $("#CB_LEVEL1 option:selected").val()}, fn_callbackAjax, "CB_LEVEL1", { async : false });
+	} else  if ( id == "CB_LEVEL2" ) {
+	    gfn_callAjax("/common/axDd.do", { DD_KIND : "CategoryLevel3", LEVEL2_CODE : $("#CB_LEVEL2 option:selected").val()}, fn_callbackAjax, "CB_LEVEL2", { async : false });
 	}
 }
 
@@ -460,6 +516,26 @@ function fn_hidePopupDiv(popupDivId) {
 <div style="height:10px"></div>
 
 <div>
+	대분류
+	<select id="CB_LEVEL1" onchange="fn_cbChange('CB_LEVEL1')">
+		<option value="">전체</option>
+	</select>
+	중분류
+	<select id="CB_LEVEL2" onchange="fn_cbChange('CB_LEVEL2')">
+		<option value="">전체</option>
+	</select>
+	소분류
+	<select id="CB_LEVEL3">
+		<option value="">전체</option>
+	</select>
+	년도
+	<select id="CB_YEAR">
+		<option value="">전체</option>
+	</select>
+	차수
+	<input type="text" class="search_input" id="chasu" name="chasu" value="" style="width:70px"/>
+	과정명
+	<input type="text" class="search_input" id="courseName" name="courseName" value="" />
 	신청상태
 	<select id="CB_SEARCH_STATUS">
 	</select>

@@ -93,7 +93,13 @@ public class SessionInterceptor extends HandlerInterceptorAdapter {
 			    	SessionUtil.setAttribute("properties",prop.clone());
 	   	 		}
 	
-		    	if ( url.equals("/") || CommUtil.isMatchUrl(urls, url) || CommUtil.isMatchUrl(exceptUrls, url) || url.indexOf("/guest/") > -1 || url.indexOf("/ns/") > -1  || url.indexOf("/main/") > -1  ) {
+		    	if ( url.equals("/") || 
+		    			url.equals("/lms") || 
+		    			CommUtil.isMatchUrl(urls, url) || 
+		    			CommUtil.isMatchUrl(exceptUrls, url) || 
+		    			url.indexOf("/guest/") > -1 || 
+		    			url.indexOf("/ns/") > -1  || 
+		    			url.indexOf("/main/") > -1  ) {
 		    		return true;
 		    	} else {
 		    		SessionVO sess = (SessionVO)SessionUtil.getSession();

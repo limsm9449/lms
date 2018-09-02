@@ -396,6 +396,8 @@ public class UserController {
 				set = svr.courseList(set);
 				
 		        model.addAttribute("set", set );
+		        
+		        model.addAttribute("compCd", SessionUtil.getCompCd() );
 	    	} catch ( Exception e ) {
 	    		e.printStackTrace();
 	    	}

@@ -36,15 +36,6 @@ $(document.body).ready(function () {
     
 	grid = gfn_makeAx5Grid("first-grid",
 		[ 	{
-	            key : "NEW_FLAG",
-	            width : 0
-	        },{
-	            key : "SEQ",
-	            width : 0
-	    	},{	
-	            key : "EXAM_TYPE_SEQ",
-	            width : 0
-	        },{
 	            key : "EXAM_KIND",
 	            label : "시험 종류",
 	            width : 100,

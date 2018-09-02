@@ -96,5 +96,23 @@ public class AxCourseExamTypeService {
 		
     	return hm;
     }
-	
+
+	@Transactional(propagation=Propagation.REQUIRED, rollbackFor={Throwable.class})
+	public HashMap<String, Object> axCourseExamTypeUserView(HashMap<String, Object> paramMap) throws Exception {
+		HashMap<String, Object> hm = new HashMap<String, Object>();
+		
+		sqlSession.delete("axCourseExamType.axTempCourseExamDelete", paramMap);
+		
+		List<HashMap<String, Object>> standardList = sqlSession.selectList("axCourseExamType.axTempCourseExamTypeStandard", paramMap);
+		for ( int i = 0; i < standardList.size(); i++ ) {
+			standardList.get(i).put("SESSION_USER_ID", SessionUtil.getSessionUserId());
+			standardList.get(i).put("COURSE_CODE", paramMap.get("COURSE_CODE"));
+			sqlSession.insert("axCourseExamType.axTempCourseExamInsert", standardList.get(i));
+		}
+		
+    	List<HashMap<String, Object>> list = sqlSession.selectList("axCourseExamType.axTempCourseExamList", paramMap);
+    	hm.put("list", list);
+        
+    	return hm;
+    }
 }

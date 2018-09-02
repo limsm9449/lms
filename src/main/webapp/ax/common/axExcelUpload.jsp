@@ -32,6 +32,8 @@ $(document.body).ready(function () {
 		$("#columns").val("TYPE,QUESTION,QA1,QA2,QA3,QA4,ANSWER,WEEK,LEVEL,USE_YN");
 	} else if ( screen == "CourseResource" ) {
 		$("#columns").val("WEEK,TITLE,DIRECTORY,PAGE_CNT,PREVIEW_PAGE");
+	} else if ( screen == "CompanyUser" ) {
+		$("#columns").val("USER_ID,USER_NAME,EMAIL,SEX,BIRTH_DAY,HOME_ZIPCODE,HOME_ADDR,HOME_TEL,MOBILE,PWD");
 	}
 });
 
@@ -151,6 +153,44 @@ function lfn_tran(data) {
 				
 				if ( rowMsg != "" ) {
 					msg += (i + 1) + " 라인 : " + rowMsg + "\n";
+				}
+			}
+			if ( isNotValid ) {
+				$("#validArea").text(msg);
+				fn_fileInit();
+				return;
+			}
+		} else if ( screen == "CompanyUser" ) {
+			for ( var i = 0; i < data.list.length; i++ ) {
+				var rowMsg = "";
+				if ( !gfn_isExistStringInString(data.list[i].SEX, "남,여") ) {
+					isNotValid = true;
+					rowMsg += "성별 오류[남/여] -> " + data.list[i].SEX;
+				} 
+				/*
+				if ( !isEmail(data.list[i].BIRTH_DAY) ) {
+					isNotValid = true;
+					rowMsg += " , 생일 포맷 오류 -> " + data.list[i].BIRTH_DAY;
+				} 
+				*/
+				if ( !isEmail(data.list[i].EMAIL) ) {
+					isNotValid = true;
+					rowMsg += " , 이메일 오류 -> " + data.list[i].isEmail;
+				} 
+				if ( data.list[i].PWD == ""  ) {
+					isNotValid = true;
+					rowMsg += " , 패스워드 오류(필수) ->" + data.list[i].PWD;
+				} 
+				
+				if ( rowMsg != "" ) {
+					msg += (i + 1) + " 라인 : " + rowMsg + "\n";
+				}
+				
+				//코드 데이타 변환
+				if ( data.list[i].SEX == "남" ) {
+					data.list[i].SEX = "M";
+				} else if ( data.list[i].SEX == "여" ) {
+					data.list[i].SEX = "F";
 				}
 			}
 			if ( isNotValid ) {

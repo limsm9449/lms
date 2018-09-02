@@ -760,43 +760,56 @@ function fn_cbChange(id) {
 
 <body style="padding : 10px">
 
-<form id="frm" name="frm" method="post">
-
 <h2>강의 관리</h2>
 <div style="height:10px"></div>
 
-<div>
-	대분류
-	<select id="CB_LEVEL1" onchange="fn_cbChange('CB_LEVEL1')">
-		<option value="">전체</option>
-	</select>
-	중분류
-	<select id="CB_LEVEL2" onchange="fn_cbChange('CB_LEVEL2')">
-		<option value="">전체</option>
-	</select>
-	소분류
-	<select id="CB_LEVEL3">
-		<option value="">전체</option>
-	</select>
-	회사 구분
-	<select id="CB_COMPANY">
-		<option value="">전체</option>
-		<option value="B2C">일반사용자</option>
-		<option value="B2B">회사</option>
-	</select>
-	오픈구분
-	<select id="CB_OPEN_KIND">
-		<option value="">전체</option>
-	</select>
-	년도
-	<select id="CB_YEAR">
-		<option value="">전체</option>
-	</select>
-	차수
-	<input type="text" class="search_input" id="chasu" name="chasu" value="" style="width:70px"/>
-	과정명
-	<input type="text" class="search_input" id="courseName" name="courseName" value="" />
-</div>
+<form id="frm" name="frm" method="post">
+	<div class="form-inline">
+	  	<div class="form-group">
+	    	<label for="CB_LEVEL1">카테고리</label>
+			<select class="form-control" id="CB_LEVEL1" onchange="fn_cbChange('CB_LEVEL1')">
+				<option value="">전체</option>
+			</select>
+			<select class="form-control" id="CB_LEVEL2" onchange="fn_cbChange('CB_LEVEL2')">
+				<option value="">전체</option>
+			</select>
+			<select class="form-control" id="CB_LEVEL3">
+				<option value="">전체</option>
+			</select>
+	  	</div>
+	  	<div class="form-group">
+	    	<label for="courseName">&nbsp;과정명</label>
+	    	<input type="text" class="form-control" id="courseName" name="courseName">
+	  	</div>
+	</div>
+	<div style="height:10px"></div>
+	<div class="form-inline">
+	  	<div class="form-group">
+	    	<label for="CB_COMPANY">&nbsp;회사 구분</label>
+			<select class="form-control" id="CB_COMPANY">
+				<option value="">전체</option>
+				<option value="B2C">일반사용자</option>
+				<option value="B2B">회사</option>
+			</select>
+	  	</div>
+	  	<div class="form-group">
+	    	<label for="CB_OPEN_KIND">&nbsp;오픈구분</label>
+			<select class="form-control" id="CB_OPEN_KIND">
+				<option value="">전체</option>
+			</select>
+	  	</div>
+	  	<div class="form-group">
+	    	<label for="CB_YEAR">&nbsp;년도</label>
+			<select class="form-control" id="CB_YEAR">
+				<option value="">전체</option>
+			</select>
+	  	</div>
+	  	<div class="form-group">
+	    	<label for="chasu">&nbsp;차수</label>
+	    	<input type="text" class="form-control" id="chasu" name="chasu">
+	  	</div>
+	</div>
+</form>
 
 <div style="height:10px"></div>
 
@@ -820,8 +833,6 @@ function fn_cbChange(id) {
 <div style="position: relative;height:400px;" id="grid-parent">
     <div data-ax5grid="first-grid" style="height: 100%;"></div>
 </div>
-
-</form>
 
 <div class="mask"></div>
 <div class="popupDiv" id="insDiv" style="width:300px; height:200px;">

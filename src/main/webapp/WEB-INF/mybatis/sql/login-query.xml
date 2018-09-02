@@ -5,10 +5,33 @@
 <mapper namespace="login">
 	
     <select id="getLoginUser" resultType="com.qp.lms.login.model.LoginVO">
-    	SELECT A.*	 
-    	  FROM USER A
-    	 WHERE USER_ID = #{userId}
-    	   AND USER_PASSWORD = PASSWORD(#{password}) 
+    	SELECT 	USER_ID, 
+				USER_NAME, 
+				IFNULL(ADMIN_YN,'N') ADMIN_YN, 
+				IFNULL(SITE_MANAGER_YN,'N') SITE_MANAGER_YN, 
+				IFNULL(CONTENTS_MANAGER_YN,'N') CONTENTS_MANAGER_YN, 
+				IFNULL(TUTOR_YN,'N') TUTOR_YN, 
+				IFNULL(TEACHER_YN,'N') TEACHER_YN, 
+				EMAIL, 
+				BIRTH_DAY, 
+				SEX, 
+				USER_PASSWORD, 
+				HOME_ZIPCODE, 
+				HOME_ADDR, 
+				HOME_TEL, 
+				MOBILE, 
+				JOB, 
+				COMP_CD, 
+				RETIRED_YN, 
+				RETIRED_REASON, 
+				BANK, 
+				ACC_NUM, 
+				IFNULL(CERTIFICATION_YN,'N') CERTIFICATION_YN, 
+				CERTIFICATION_KEY, 
+				CAREER 	 
+    	  FROM 	USER A
+    	 WHERE 	USER_ID = #{userId}
+    	   AND 	USER_PASSWORD = PASSWORD(#{password}) 
     </select>
 
     <select id="isExistUser" resultType="com.qp.lms.login.model.LoginVO">
@@ -18,8 +41,31 @@
     </select>
 
     <select id="getUserInfo" resultType="com.qp.lms.login.model.LoginVO">
-    	SELECT A.*	 
-    	  FROM USER A
-    	 WHERE USER_ID = #{userId}
+    	SELECT 	USER_ID, 
+				USER_NAME, 
+				IFNULL(ADMIN_YN,'N') ADMIN_YN, 
+				IFNULL(SITE_MANAGER_YN,'N') SITE_MANAGER_YN, 
+				IFNULL(CONTENTS_MANAGER_YN,'N') CONTENTS_MANAGER_YN, 
+				IFNULL(TUTOR_YN,'N') TUTOR_YN, 
+				IFNULL(TEACHER_YN,'N') TEACHER_YN, 
+				EMAIL, 
+				BIRTH_DAY, 
+				SEX, 
+				USER_PASSWORD, 
+				HOME_ZIPCODE, 
+				HOME_ADDR, 
+				HOME_TEL, 
+				MOBILE, 
+				JOB, 
+				COMP_CD, 
+				RETIRED_YN, 
+				RETIRED_REASON, 
+				BANK, 
+				ACC_NUM, 
+				IFNULL(CERTIFICATION_YN,'N') CERTIFICATION_YN, 
+				CERTIFICATION_KEY, 
+				CAREER 
+    	  FROM 	USER A
+    	 WHERE 	USER_ID = #{userId}
     </select>
 </mapper>

@@ -5,7 +5,14 @@
 <mapper namespace="axCost">
 
 	<select id="axCostList" resultType="hashmap">
-		SELECT 	A.APPROVAL_ID,
+		SELECT 	CAT.CATEGORY_NAME
+				,B.COURSE_ID
+				,C.COURSE_CODE
+				,D.COURSE_NAME
+				,C.YEAR
+				,C.MONTH
+				,IFNULL(C.CHASU, 0) CHASU
+				,A.APPROVAL_ID,
 				A.USER_ID,
 				U3.USER_NAME,
 				A.STATUS,
@@ -29,20 +36,39 @@
 				'N' UPD_FLAG
 		FROM 	APPROVAL A 
 					LEFT OUTER JOIN (
-						SELECT 	APPROVAL_ID, COUNT(*) CNT 
+						SELECT 	COURSE_ID, APPROVAL_ID, COUNT(*) CNT 
 		                FROM 	COURSE_REGISTER 
-		                GROUP	BY APPROVAL_ID ) B ON B.APPROVAL_ID = A.APPROVAL_ID
+		                GROUP	BY COURSE_ID, APPROVAL_ID ) B ON B.APPROVAL_ID = A.APPROVAL_ID
+					JOIN COURSE C ON C.COURSE_ID = B.COURSE_ID
+					JOIN COURSE_CODE D ON D.COURSE_CODE = C.COURSE_CODE
+			                LEFT OUTER JOIN (
+								   SELECT C3.CODE C3_CODE, C2.CODE C2_CODE, C1.CODE C1_CODE,
+										  CONCAT(C1.CODE_NAME,' > ',C2.CODE_NAME,' > ',C3.CODE_NAME) CATEGORY_NAME
+									 FROM CATEGORY C3 LEFT OUTER JOIN CATEGORY C2 ON C3.PARENT_CODE = C2.CODE
+										      LEFT OUTER JOIN CATEGORY C1 ON C2.PARENT_CODE = C1.CODE
+								    WHERE C3.DEPTH = 3) CAT ON D.CODE = CAT.C3_CODE
 					LEFT OUTER JOIN USER U1 ON A.CREATE_USER = U1.USER_ID
 					LEFT OUTER JOIN USER U2 ON A.UPDATE_USER = U2.USER_ID                 
 		            LEFT OUTER JOIN USER U3 ON U3.USER_ID = A.USER_ID
-		WHERE 	1 = 1
-		AND		DATE_FORMAT(A.CREATE_DATE, '%Y-%m-%d') BETWEEN #{FROM_DT} AND #{TO_DT}		
-		<if test="USER != null and USER != ''">
+		WHERE 	DATE_FORMAT(A.CREATE_DATE, '%Y-%m-%d') BETWEEN #{FROM_DT} AND #{TO_DT}		
+		   <if test="LEVEL1_CODE != null and LEVEL1_CODE != ''"> AND CAT.C1_CODE = #{LEVEL1_CODE}</if>
+		   <if test="LEVEL2_CODE != null and LEVEL2_CODE != ''"> AND CAT.C2_CODE = #{LEVEL2_CODE}</if>
+		   <if test="LEVEL3_CODE != null and LEVEL3_CODE != ''"> AND CAT.C3_CODE = #{LEVEL3_CODE}</if>
+<if test="YEAR != null and YEAR != ''">
+		AND		C.YEAR = #{YEAR}
+</if>
+<if test="chasu != null and chasu != ''">
+		AND		C.CHASU = #{chasu}
+</if>
+<if test="courseName != null and courseName != ''"> 
+		AND ( UPPER(D.COURSE_CODE) LIKE CONCAT('%',UPPER(#{courseName}),'%') OR UPPER(D.COURSE_NAME) LIKE CONCAT('%',UPPER(#{courseName}),'%') )
+</if>		      
+<if test="USER != null and USER != ''">
 		  AND ( UPPER(A.USER_ID) LIKE CONCAT('%',UPPER(#{USER}),'%') OR UPPER(U3.USER_NAME) LIKE CONCAT('%',UPPER(#{USER}),'%') )
-		</if>			 
-		<if test="CB_SEARCH_STATUS != null and CB_SEARCH_STATUS != ''">
+</if>			 
+<if test="CB_SEARCH_STATUS != null and CB_SEARCH_STATUS != ''">
 			AND	A.STATUS = #{CB_SEARCH_STATUS}
-		</if>
+</if>
 		ORDER 	BY A.CREATE_DATE DESC
 	</select>
 	

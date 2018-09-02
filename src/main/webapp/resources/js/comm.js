@@ -104,7 +104,7 @@ var page = {
 	 * HomePage로 이동
 	 */
 	goHome : function() {
-		top.location = "/";
+		top.location = "/lms";
 	},
 	
 	goUserHome : function() {
@@ -983,8 +983,8 @@ function gfn_gridResize(gridParentId, gridObj, minusHeight) {
 		$("#" + gridParentId).height($(window).height() - minusHeight);
 		gridObj.setHeight($(window).height() - minusHeight);
 	} else {
-		$("#" + gridParentId).height($(window).height() - 190);
-		gridObj.setHeight($(window).height() - 190);
+		$("#" + gridParentId).height($(window).height() - $("#" + gridParentId).position().top - 20);
+		gridObj.setHeight($(window).height() - $("#" + gridParentId).position().top - 20);
 	}
 }
 
@@ -994,9 +994,6 @@ function gfn_initDatepicker(objId) {
 		changeYear: true,
 		showMonthAfterYear: true,
 		autoSize: false,
-		buttonImage: "/resources/datepicker/images/calendar.gif",
-		buttonImageOnly: true,
-		showOn: "button",
 		beforeShow: function(input) {
 		   	var i_offset= $(input).offset();
 		   	setTimeout(function(){
@@ -1067,3 +1064,23 @@ function gfn_getFormToJson(id) {
 	return jsonObject;
 }
 
+function gfn_gridDupCheck(_grid, _pks) {
+	var pks = _pks.split(",");
+	
+	var hm = {};
+	
+	var allList = _grid.getList();
+   	for ( var i = 0; i < allList.length; i++ ) {
+   		var pkData = "";
+   		for ( var m = 0; m < pks.length; m++ ) {
+   			pkData += allList[i][pks[m]];
+   		}
+   		if ( hm[pkData] == undefined ) {
+   			hm[pkData] = pkData;
+   		} else {
+   			return i;
+   		}
+  	}
+   	
+   	return -1;
+}

@@ -180,7 +180,6 @@ public class MainService {
     }
 	
 	/////////////////////////////////////////////////////////////////////////////////////////
-	
 	@Transactional(propagation=Propagation.REQUIRED, rollbackFor={Throwable.class})
 	public MainSet approval(MainSet set) throws Exception {
 		set.getCondiVO().setUserId(SessionUtil.getSessionUserId());
@@ -261,7 +260,6 @@ public class MainService {
 		
     	return set;
     }
-	
 	
 	public MainSet mailQuestion(MainSet set) throws Exception {
 		List<CodeVO> ddMailList = sqlSession.selectList("comm.getDdMail",null);

@@ -404,33 +404,36 @@ function fn_cbChange(id) {
 
 <body style="padding : 10px">
 
-<form id="frm" name="frm" method="post">
 
 <h2>과정 코드 관리</h2>
 <div style="height:10px"></div>
 
-<div>
-	대분류
-	<select id="CB_LEVEL1" onchange="fn_cbChange('CB_LEVEL1')">
-		<option value="">전체</option>
-	</select>
-	중분류
-	<select id="CB_LEVEL2" onchange="fn_cbChange('CB_LEVEL2')">
-		<option value="">전체</option>
-	</select>
-	소분류
-	<select id="CB_LEVEL3">
-		<option value="">전체</option>
-	</select>
-	과정명
-	<input type="text" class="search_input" id="courseName" name="courseName" value="" />
-	사용여부
-	<select id="useYn">
-		<option value="">전체</option>
-		<option value="Y">Y</option>
-		<option value="N">N</option>
-	</select>
-</div>
+<form id="frm" name="frm" method="post" class="form-inline">
+  	<div class="form-group">
+    	<label for="CB_LEVEL1">카테고리</label>
+		<select class="form-control" id="CB_LEVEL1" onchange="fn_cbChange('CB_LEVEL1')">
+			<option value="">전체</option>
+		</select>
+		<select class="form-control" id="CB_LEVEL2" onchange="fn_cbChange('CB_LEVEL2')">
+			<option value="">전체</option>
+		</select>
+		<select class="form-control" id="CB_LEVEL3">
+			<option value="">전체</option>
+		</select>
+  	</div>
+  	<div class="form-group">
+    	<label for="courseName">&nbsp;과정명</label>
+    	<input type="text" class="form-control" id="courseName" name="courseName">
+  	</div>
+  	<div class="form-group">
+    	<label for="useYn">&nbsp;사용여부</label>
+    	<select class="form-control" id="useYn">
+			<option value="">전체</option>
+			<option value="Y">Y</option>
+			<option value="N">N</option>
+		</select>
+  	</div>
+</form>
 
 <div style="height:10px"></div>
 
@@ -451,7 +454,6 @@ function fn_cbChange(id) {
     <div data-ax5grid="first-grid" style="height: 100%;"></div>
 </div>
 
-</form>
 
 <div class="mask"></div>
 <div class="popupDiv" id="categoryDiv" style="width:300px; height:200px;">

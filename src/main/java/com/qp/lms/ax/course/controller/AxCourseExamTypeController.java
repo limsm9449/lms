@@ -9,9 +9,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.qp.lms.ax.course.service.AxCourseExamTypeService;
@@ -80,5 +82,18 @@ public class AxCourseExamTypeController {
         return hm;
     }
 
-    
+    @RequestMapping(value = "/course/axCourseExamTypeUserView")
+    public String axCourseExamTypeUserView(@RequestParam HashMap<String,Object> paramMap, HttpServletRequest request, HttpServletResponse response, Model model) throws Exception {
+    	HashMap<String, Object> hm = new HashMap<String, Object>();
+    	
+    	try {
+    		hm = svr.axCourseExamTypeUserView(paramMap);
+    		
+    		model.addAttribute("list", hm.get("list"));
+    	} catch ( Exception e ) {
+    		e.printStackTrace();
+    	}
+    	
+        return "/ax/course/axCourseExamTypeUserView";
+    }
 }

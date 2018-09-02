@@ -490,6 +490,13 @@ function fn_save() {
    	};
     
    	if ( gfn_validationCheck(grid, fieldParams) ) {
+   		var dupIdx = gfn_gridDupCheck(grid, "USER_ID");
+   		if ( dupIdx > -1 ) {
+			mask.open();
+			dialog.alert( { msg : (dupIdx + 1) + "라인의 사용자 ID는 이미 등록된 사용자ID 입니다." }, function () { mask.close(); } );
+			return; 
+   		}
+   		
    		var allList = grid.getList();
        	for ( var i = 0; i < allList.length; i++ ) {
        		if ( allList[i].SITE_MANAGER_YN == "Y" && allList[i].COMP_CD == "") {

@@ -90,6 +90,36 @@ $(document.body).ready(function () {
             	}
             		
                 break;
+            case "preview1":
+            	var row = grid.getList("selected");
+            	if ( row.length == 0 ) {
+            		mask.open();
+            		dialog.alert( { msg : "과정을 선택하셔야 합니다." }, function () { mask.close();	} );
+            	} else if ( row[0]["NEW_FLAG"] == "N" ) {
+					var urlParams = "SEQ=" + row[0]["SEQ"] + "&COURSE_CODE=" + row[0]["COURSE_CODE"] + "&EXAM_KIND=WEEK";
+            		
+            		f_popup('/course/axCourseExamTypeUserView', {displayName:'examPopup',option:'width=1100,height=820', urlParams:urlParams});
+            	} else {
+            		mask.open();
+            		dialog.alert( { msg : "신규로 추가한 경우는 저장후에 유형 기준을 편집하셔야 합니다." }, function () { mask.close();	} );
+            	}
+            		 
+                break;
+            case "preview2":
+            	var row = grid.getList("selected");
+            	if ( row.length == 0 ) {
+            		mask.open(); 
+            		dialog.alert( { msg : "과정을 선택하셔야 합니다." }, function () { mask.close();	} );
+            	} else if ( row[0]["NEW_FLAG"] == "N" ) {
+					var urlParams = "SEQ=" + row[0]["SEQ"] + "&COURSE_CODE=" + row[0]["COURSE_CODE"] + "&EXAM_KIND=TOTAL";
+            		
+            		f_popup('/course/axCourseExamTypeUserView', {displayName:'examPopup',option:'width=1100,height=820', urlParams:urlParams});
+            	} else {
+            		mask.open();
+            		dialog.alert( { msg : "신규로 추가한 경우는 저장후에 유형 기준을 편집하셔야 합니다." }, function () { mask.close();	} );
+            	}
+            		
+                break;
         }
     });
 });
@@ -97,12 +127,6 @@ $(document.body).ready(function () {
 function fn_makeGrid() {
 	grid = gfn_makeAx5Grid("first-grid",
 		[ 	{
-	            key : "NEW_FLAG",
-	            width : 0
-	        },{
-	            key : "SEQ",
-	            width : 0
-	        },{
 	            key : "CATEGORY_NAME",
 	            label : "카테고리",
 	            width : 150,
@@ -379,27 +403,27 @@ function fn_cbChange(id) {
 
 <body style="padding : 10px">
 
-<form id="frm" name="frm" method="post">
-
 <h2>과정 시험 유형 관리</h2>
 <div style="height:10px"></div>
 
-<div>
-	대분류
-	<select id="CB_LEVEL1" onchange="fn_cbChange('CB_LEVEL1')">
-		<option value="">전체</option>
-	</select>
-	중분류
-	<select id="CB_LEVEL2" onchange="fn_cbChange('CB_LEVEL2')">
-		<option value="">전체</option>
-	</select>
-	소분류
-	<select id="CB_LEVEL3">
-		<option value="">전체</option>
-	</select>
-	과정명
-	<input type="text" class="search_input" id="courseName" name="courseName" value="" />
-</div>
+<form id="frm" name="frm" method="post" class="form-inline">
+  	<div class="form-group">
+    	<label for="CB_LEVEL1">카테고리</label>
+		<select class="form-control" id="CB_LEVEL1" onchange="fn_cbChange('CB_LEVEL1')">
+			<option value="">전체</option>
+		</select>
+		<select class="form-control" id="CB_LEVEL2" onchange="fn_cbChange('CB_LEVEL2')">
+			<option value="">전체</option>
+		</select>
+		<select class="form-control" id="CB_LEVEL3">
+			<option value="">전체</option>
+		</select>
+  	</div>
+  	<div class="form-group">
+    	<label for="courseName">&nbsp;과정명</label>
+    	<input type="text" class="form-control" id="courseName" name="courseName">
+  	</div>
+</form>
 
 <div style="height:10px"></div>
 
@@ -411,7 +435,8 @@ function fn_cbChange(id) {
     <button class="btn btn-default" data-grid-control="save">저장</button>
     <button class="btn btn-default" data-grid-control="export">엑셀</button>
     <button class="btn btn-default" data-grid-control="editDetail">유형 기준 편집</button>
-    <button class="btn btn-default" data-grid-control="preview">미리보기(나중에)</button>
+    <button class="btn btn-default" data-grid-control="preview1">주별시험 미리보기</button>
+    <button class="btn btn-default" data-grid-control="preview2">전체시험 미리보기</button>
 </div>
 
 <div style="height:10px"></div>
@@ -420,8 +445,6 @@ function fn_cbChange(id) {
 <div style="position: relative;height:400px;" id="grid-parent">
     <div data-ax5grid="first-grid" style="height: 100%;"></div>
 </div>
-
-</form>
 
 <div class="mask"></div>
 <div class="popupDiv" id="insDiv" style="width:300px; height:200px;">

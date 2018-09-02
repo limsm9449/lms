@@ -113,6 +113,21 @@ $(document.body).ready(function () {
             	}
             		
                 break;
+            case "preview":
+            	var row = grid.getList("selected");
+            	if ( row.length == 0 ) {
+            		mask.open();
+            		dialog.alert( { msg : "설문지를 선택하셔야 합니다." }, function () { mask.close();	} );
+            	} else if ( row[0]["NEW_FLAG"] == "N" ) {
+            		var urlParams = "QG_ID=" + row[0]["QG_ID"];
+            		
+            		f_popup('/quest/axQuestUserView', {displayName:'questPopup',option:'width=1100,height=820', urlParams:urlParams});
+            	} else {
+            		mask.open();
+            		dialog.alert( { msg : "신규로 추가한 경우는 저장후에 설문지를 편집하셔야 합니다." }, function () { mask.close();	} );
+            	}
+            		
+                break;
         }
     });
     
@@ -205,7 +220,7 @@ function fn_gridEvent(event, obj) {
     <button class="btn btn-default" data-grid-control="save">저장</button>
     <button class="btn btn-default" data-grid-control="export">엑셀</button>
     <button class="btn btn-default" data-grid-control="editDetail">설문지 편집</button>
-    <button class="btn btn-default" data-grid-control="preview">미리보기(나중에)</button>
+    <button class="btn btn-default" data-grid-control="preview">미리보기</button>
 </div>
 
 <div style="height:10px"></div>

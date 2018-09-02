@@ -39,6 +39,9 @@
 				,IFNULL(U2.USER_NAME, U1.USER_NAME) LAST_UPDATE_USER
 				,IFNULL(G.CNT, 0) TUTOR_CNT
 				,IFNULL(F.CNT, 0) USER_CNT
+				,IFNULL(F.B_CNT, 0) B_USER_CNT
+				,IFNULL(F.Y_CNT, 0) Y_USER_CNT
+				,IFNULL(F.W_CNT, 0) W_USER_CNT
 				,'N' NEW_FLAG
 		  FROM COURSE A LEFT OUTER JOIN COURSE_CODE B ON A.COURSE_CODE = B.COURSE_CODE
 		                LEFT OUTER JOIN (
@@ -57,9 +60,11 @@
 		  	            	GROUP	BY COURSE_ID ) G ON G.COURSE_ID = A.COURSE_ID       
 	                     LEFT OUTER JOIN (
 	                     	SELECT  COURSE_ID,
-	                     			COUNT(*) CNT
+	                     			SUM(CASE WHEN STATUS = 'A' THEN 1 ELSE 0 END) CNT,
+	                     			SUM(CASE WHEN STATUS = 'B' THEN 1 ELSE 0 END) B_CNT,
+	                     			SUM(CASE WHEN STATUS = 'Y' THEN 1 ELSE 0 END) Y_CNT,
+	                     			SUM(CASE WHEN STATUS = 'A' AND IFNULL(APPROVAL_ID, 0) = 0 THEN 1 ELSE 0 END) W_CNT
 	                     	FROM	COURSE_REGISTER
-	                     	WHERE	STATUS = 'A'
 	                     	GROUP 	BY COURSE_ID ) F ON F.COURSE_ID = A.COURSE_ID        
 		WHERE 	1 = 1
 		   <if test="LEVEL1_CODE != null and LEVEL1_CODE != ''"> AND C.C1_CODE = #{LEVEL1_CODE}</if>
@@ -226,4 +231,5 @@
 		 WHERE COURSE_ID = #{COURSE_ID}
 		   AND USER_ID = #{USER_ID}
 	</update>
+
 </mapper>

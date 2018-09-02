@@ -5,6 +5,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -14,8 +15,6 @@ import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
-
-import net.sf.json.JSONObject;
 
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
@@ -29,6 +28,8 @@ import org.apache.poi.ss.usermodel.Row;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
+
+import net.sf.json.JSONObject;
 
 public class CommUtil {
 
@@ -494,4 +495,18 @@ public class CommUtil {
 		hm.put("SESSION_TEACHER_YN", ( SessionUtil.isTeacher() ? "YES" : "NO" ) );
 	}
 
+	public static int getIntValue(Object obj) throws Exception {
+		int rtn = 0;
+		
+		if ( obj.getClass() == Integer.class ) {
+			rtn = ((Integer)obj).intValue();
+		} else if ( obj.getClass() == BigDecimal.class ) {
+			rtn = ((BigDecimal)obj).intValue();
+		} else if ( obj.getClass() == Float.class ) {
+			rtn = ((Float)obj).intValue();
+		} else if ( obj.getClass() == Long.class ) {
+			rtn = ((Long)obj).intValue();
+		}
+		return rtn;
+	}
 }

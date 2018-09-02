@@ -303,7 +303,6 @@ function fn_gridEvent(event, obj) {
     <button class="btn btn-default" data-grid-control="close">닫기</button>    
     <button class="btn btn-default" data-grid-control="export">엑셀</button>
     <button class="btn btn-default" data-grid-control="import">엑셀 업로드</button>
-    
 </div>
 
 <div style="height:10px"></div>

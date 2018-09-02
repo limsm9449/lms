@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="axSiteManager">
+
+	<select id="axCourseNoRegisterList" parameterType="hashmap" resultType="hashmap">
+		SELECT USER_ID,
+	           USER_NAME
+		  FROM USER
+		 WHERE COMP_CD = (SELECT COMP_CD FROM USER WHERE USER_ID = #{SESSION_USER_ID})
+		   AND USER_ID NOT IN (SELECT USER_ID FROM COURSE_REGISTER WHERE COURSE_ID = #{COURSE_ID}) 
+ 	</select>
+	        
+	<select id="axCourseRegisterList" parameterType="hashmap" resultType="hashmap">
+		SELECT A.COURSE_ID,
+			   A.USER_ID,
+		       B.USER_NAME,
+		       'N' NEW_FLAG
+		  FROM COURSE_REGISTER A LEFT OUTER JOIN USER B ON A.USER_ID = B.USER_ID
+		 WHERE COURSE_ID = #{COURSE_ID}
+		   AND STATUS = 'Y'
+		 ORDER BY B.USER_NAME 
+ 	</select>	
+ 	        
+	<insert id="axCourseRegisterInsert" parameterType="hashmap">
+		INSERT INTO COURSE_REGISTER(COURSE_ID,USER_ID,STATUS,COURSE_COST,CREATE_DATE,CREATE_USER)
+		SELECT A.COURSE_ID, 
+		       #{USER_ID},
+		       'Y',
+		       A.COURSE_COST,
+		       CURRENT_TIMESTAMP,
+		       #{SESSION_USER_ID}
+		  FROM COURSE A LEFT OUTER JOIN COURSE_CODE B ON A.COURSE_CODE = B.COURSE_CODE
+		 WHERE COURSE_ID = #{COURSE_ID}	
+	</insert>
+
+	<delete id="axCourseRegisterDelete" parameterType="hashmap">
+		DELETE FROM COURSE_REGISTER
+		 WHERE COURSE_ID = #{COURSE_ID}
+		   AND USER_ID = #{USER_ID}
+	</delete>
+	
+	<select id="axApprovalList" parameterType="hashmap" resultType="hashmap">
+		SELECT 	D.CATEGORY_NAME
+				,A.COURSE_ID
+				,B.COURSE_CODE
+				,C.COURSE_NAME
+				,B.YEAR
+				,B.MONTH
+				,IFNULL(B.CHASU, 0) CHASU
+		        ,A.APPROVAL_ID
+		        ,A.CNT
+		        ,A.CREATE_DATE
+		        ,E.STATUS
+		        ,DD4.DD_VALUE STATUS_NAME
+		        ,E.TOTAL_COST
+		        ,E.PAYMENT_POINT
+		        ,E.PAYMENT_COST
+		        ,E.PAYMENT_KIND
+		        ,DD1.DD_VALUE PAYMENT_KIND_NAME
+		        ,E.PAYMENT_BANK
+		        ,CONCAT(DD2.BANK_NAME,' ',DD2.ACC_NO,' ',DD2.USER) PAYMENT_BANK_NAME
+		        ,E.REFUND_KIND
+		        ,DD3.DD_VALUE REFUND_KIND_NAME
+		        ,E.REFUND_COST
+		        ,E.REFUND_BANK
+		        ,E.REFUND_ACC_NUM
+		        ,DATE_FORMAT(E.REFUND_DATE, '%y.%m.%d %H:%i') REFUND_DATE
+		FROM	(	SELECT 	COURSE_ID,
+							APPROVAL_ID,
+		                    COUNT(*) CNT,
+		                    DATE_FORMAT(CREATE_DATE, '%y.%m.%d %H:%i') CREATE_DATE
+					FROM	COURSE_REGISTER
+		            WHERE	APPROVAL_ID IN (SELECT APPROVAL_ID FROM APPROVAL WHERE USER_ID = #{USER_ID})
+		            GROUP 	BY COURSE_ID, APPROVAL_ID) A 
+						JOIN COURSE B ON B.COURSE_ID = A.COURSE_ID
+						JOIN COURSE_CODE C ON C.COURSE_CODE = B.COURSE_CODE
+				                LEFT OUTER JOIN (
+									   SELECT C3.CODE C3_CODE, C2.CODE C2_CODE, C1.CODE C1_CODE,
+											  CONCAT(C1.CODE_NAME,' > ',C2.CODE_NAME,' > ',C3.CODE_NAME) CATEGORY_NAME
+										 FROM CATEGORY C3 LEFT OUTER JOIN CATEGORY C2 ON C3.PARENT_CODE = C2.CODE
+											      LEFT OUTER JOIN CATEGORY C1 ON C2.PARENT_CODE = C1.CODE
+									    WHERE C3.DEPTH = 3) D ON C.CODE = D.C3_CODE
+						JOIN APPROVAL E ON E.APPROVAL_ID = A.APPROVAL_ID
+		                LEFT OUTER JOIN ( SELECT * FROM CODE WHERE DD_MAIN = 'PAYMENT_KIND' ) DD1 ON DD1.DD_KEY = E.PAYMENT_KIND
+		                LEFT OUTER JOIN ( SELECT * FROM BANK ) DD2 ON DD2.SEQ = E.PAYMENT_BANK
+		                LEFT OUTER JOIN ( SELECT * FROM CODE WHERE DD_MAIN = 'PAYMENT_KIND' ) DD3 ON DD3.DD_KEY = E.REFUND_KIND
+		                LEFT OUTER JOIN ( SELECT * FROM CODE WHERE DD_MAIN = 'APPROVAL_STATUS' ) DD4 ON DD4.DD_KEY = E.STATUS
+		                
+		WHERE	B.COMP_CD = (SELECT COMP_CD FROM USER WHERE USER_ID = #{USER_ID})
+		   <if test="LEVEL1_CODE != null and LEVEL1_CODE != ''"> AND D.C1_CODE = #{LEVEL1_CODE}</if>
+		   <if test="LEVEL2_CODE != null and LEVEL2_CODE != ''"> AND D.C2_CODE = #{LEVEL2_CODE}</if>
+		   <if test="LEVEL3_CODE != null and LEVEL3_CODE != ''"> AND D.C3_CODE = #{LEVEL3_CODE}</if>
+<if test="YEAR != null and YEAR != ''">
+		AND		B.YEAR = #{YEAR}
+</if>
+<if test="chasu != null and chasu != ''">
+		AND		B.CHASU = #{chasu}
+</if>
+<if test="courseName != null and courseName != ''"> 
+		AND ( UPPER(C.COURSE_CODE) LIKE CONCAT('%',UPPER(#{courseName}),'%') OR UPPER(C.COURSE_NAME) LIKE CONCAT('%',UPPER(#{courseName}),'%') )
+</if>		      
+		ORDER 	BY D.CATEGORY_NAME, C.COURSE_NAME, A.CREATE_DATE DESC
+ 	</select>
+ 		
+	<select id="axApprovalUserList" parameterType="hashmap" resultType="hashmap">
+		SELECT 	A.USER_ID, B.USER_NAME
+		FROM	COURSE_REGISTER A 
+					LEFT OUTER JOIN USER B ON B.USER_ID = A.USER_ID
+		WHERE	APPROVAL_ID = #{APPROVAL_ID}
+		ORDER	BY USER_NAME
+ 	</select>	
+ 		
+</mapper>

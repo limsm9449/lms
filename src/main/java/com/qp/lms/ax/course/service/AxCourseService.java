@@ -156,5 +156,4 @@ public class AxCourseService {
 		
     	return hm;
     }
-	
 }

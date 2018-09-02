@@ -43,16 +43,21 @@ public class AxAccountService {
 		List<HashMap<String, Object>> updList = (List<HashMap<String, Object>>)paramMap.get("modified");
 
 		//dup 체크
+		String dupUserids = "";
 		for ( int i = 0; i < updList.size(); i++ ) {
 			HashMap<String, Object> row = (HashMap<String, Object>)updList.get(i);
 
 			if ( "Y".equals((String)row.get("NEW_FLAG")) ) {
 				int cnt = sqlSession.selectOne("axAccount.axAccountPk", row);
 				if ( cnt > 0 ) {
-					hm.put("RtnMode", Constant.mode.DUPLICATION.name());
-					return hm;
+					dupUserids += ( "".equals(dupUserids) ? "" : ", " ) + row.get("USER_ID");
 				}
 			}
+		}
+		if ( !"".equals(dupUserids) ) {
+			hm.put("RtnMode", Constant.mode.DUPLICATION.name());
+			hm.put("DupUserids", dupUserids);
+			return hm;
 		}
 
 		for ( int i = 0; i < updList.size(); i++ ) {
