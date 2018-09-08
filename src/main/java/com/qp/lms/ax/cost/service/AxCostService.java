@@ -170,6 +170,22 @@ public class AxCostService {
     	return hm;
     }
     
-    
+	public HashMap<String, Object> axIncomeList(HashMap<String, Object> paramMap) throws Exception {
+		HashMap<String, Object> hm = new HashMap<String, Object>();
+		
+		paramMap.put("AUTH", SessionUtil.getAuth());
+		paramMap.put("USER_ID", SessionUtil.getSessionUserId());
+		
+    	List<HashMap<String, Object>> list = null;
+    	
+    	if ( "ADMIN".equals(SessionUtil.getAuth()) ) {
+    		list = sqlSession.selectList("axCost.axIncomeAdminList", paramMap);
+    	} else {
+    		list = sqlSession.selectList("axCost.axIncomeList", paramMap);
+    	}
+    	hm.put("list", list);
+        
+    	return hm;
+    }    
     
 }

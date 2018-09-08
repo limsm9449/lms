@@ -40,6 +40,9 @@ $(document).ready(function(){
 	$("#smFirstGroup").addClass("here");
 </c:if>	
 <c:if test="${auth eq 'TEACHER'}">         		
+	gfn_openMenu('axCourseListTe');
+	
+	$("#tuFirstGroup").addClass("here");
 </c:if>	
 <c:if test="${auth eq 'TUTOR'}">         		
 	gfn_openMenu('axCourseListTu');
@@ -105,6 +108,7 @@ var pageObj = {
 	axCourseList :			{	page : "/ax/course/axCourseList"	},
 	axCostList :			{	page : "/ax/cost/axCostList"	},
 	axCostCalcList :		{	page : "/ax/cost/axCostCalcList"	},
+	axIncomeList :			{	page : "/ax/cost/axIncomeList"	},
 	axScoreList :			{	page : "/ax/score/axScoreList"	},
 	axUserScoreList :		{	page : "/ax/score/axUserScoreList"	},
 	axAccountList :			{	page : "/ax/account/axAccountList"	},
@@ -125,11 +129,15 @@ var pageObj = {
 	axCodeList :			{	page : "/ax/setting/axCodeList"	},
 	axLogList :				{	page : "/ax/log/axLogList"	},
 	axCourseCodeListCm : 	{	page : "/ax/contentsManager/axCourseCodeList"	},
+	axIncomeListCm :		{	page : "/ax/contentsManager/axIncomeList"	},
 	axCourseListSm :		{	page : "/ax/siteManager/axCourseList"	},
 	axScoreListSm :			{	page : "/ax/siteManager/axScoreList"	},
 	axUserScoreListSm :		{	page : "/ax/siteManager/axUserScoreList"	},
 	axApprovalListSm :		{	page : "/ax/siteManager/axApprovalList"	},
-	axCourseListTu :		{	page : "/ax/tutor/axCourseList"	}
+	axCourseListTu :		{	page : "/ax/tutor/axCourseList"	},
+	axIncomeListTu :		{	page : "/ax/tutor/axIncomeList"	},
+	axCourseListTe :		{	page : "/ax/teacher/axCourseList"	},
+	axIncomeListTe :		{	page : "/ax/teacher/axIncomeList"	}
 }
 
 var pageParam = {}
@@ -190,14 +198,11 @@ function gfn_openMenu(pageId, params) {
 			              	<li><a href="#" class="subMenu linker" onclick="gfn_openMenu('axCourseExamTypeList'); gfn_subMenu(this);"><span>과정 시험 유형 관리</span></a></li>
 			         	</ul>
 			      	</li>
-	          		<li><a href="#" class="mainMenu linker" onclick="gfn_openMenu('axCourseList'); gfn_menu(this)" id="firstGroup"><span>강의 관리</span></a>
-			      	</li>
-	          		<li><a href="#" class="mainMenu linker" onclick="gfn_openMenu('axScoreList'); gfn_menu(this)"><span>성적 관리</span></a>
-			      	</li>
-	          		<li><a href="#" class="mainMenu linker" onclick="gfn_openMenu('axCostList'); gfn_menu(this)"><span>입금 관리</span></a>
-			      	</li>
-	          		<li><a href="#" class="mainMenu linker" onclick="gfn_openMenu('axCostCalcList'); gfn_menu(this)"><span>정산 관리</span></a>
-			      	</li>
+	          		<li><a href="#" class="mainMenu linker" onclick="gfn_openMenu('axCourseList'); gfn_menu(this)" id="firstGroup"><span>강의 관리</span></a></li>
+	          		<li><a href="#" class="mainMenu linker" onclick="gfn_openMenu('axScoreList'); gfn_menu(this)"><span>성적 관리</span></a></li>
+	          		<li><a href="#" class="mainMenu linker" onclick="gfn_openMenu('axCostList'); gfn_menu(this)"><span>입금 관리</span></a></li>
+	          		<li><a href="#" class="mainMenu linker" onclick="gfn_openMenu('axCostCalcList'); gfn_menu(this)"><span>정산 관리</span></a></li>
+	          		<li><a href="#" class="mainMenu linker" onclick="gfn_openMenu('axIncomeList'); gfn_menu(this)"><span>수입 관리</span></a></li>
 	          		<li><a href="#" class="mainMenu linker" onclick="gfn_menu(this)"><span>계정 관리</span></a>
 			            <ul style="display:none" class="subMenuUl">
 			              	<li><a href="#" class="subMenu linker" onclick="gfn_openMenu('axAccountList'); gfn_subMenu(this);"><span>사용자 관리</span></a></li>
@@ -241,6 +246,7 @@ function gfn_openMenu(pageId, params) {
 			              	<li><a href="#" class="subMenu linker" onclick="gfn_openMenu('axCourseExamTypeList'); gfn_subMenu(this);"><span>과정 시험 유형 관리</span></a></li>
 			         	</ul>
 			      	</li>
+	          		<li><a href="#" class="mainMenu linker" onclick="gfn_openMenu('axIncomeListCm'); gfn_menu(this)"><span>수입 관리</span></a></li>
 </c:if>
 <c:if test="${auth eq 'SITE_MANAGER'}">         		
 	          		<li><a href="#" class="mainMenu linker" onclick="gfn_openMenu('axCourseListSm'); gfn_menu(this)" id="smFirstGroup"><span>강의 관리</span></a></li>
@@ -249,10 +255,13 @@ function gfn_openMenu(pageId, params) {
 	          		<li><a href="#" class="mainMenu linker" onclick="gfn_openMenu('axApprovalListSm'); gfn_menu(this)"><span>수강신청 이력 관리</span></a></li> 
 </c:if>
 <c:if test="${auth eq 'TEACHER'}">         		
+	          		<li><a href="#" class="mainMenu linker" onclick="gfn_openMenu('axCourseListTe'); gfn_menu(this)" id="tuFirstGroup"><span>강의 관리</span></a></li>
+	          		<li><a href="#" class="mainMenu linker" onclick="gfn_openMenu('axIncomeListTe'); gfn_menu(this)"><span>수입 관리</span></a></li>
 </c:if>
 <c:if test="${auth eq 'TUTOR'}">         		
 	          		<li><a href="#" class="mainMenu linker" onclick="gfn_openMenu('axCourseListTu'); gfn_menu(this)" id="tuFirstGroup"><span>강의 관리</span></a></li>
 	          		<li><a href="#" class="mainMenu linker" onclick="gfn_openMenu('axScoreList'); gfn_menu(this)"><span>성적 관리</span></a></li> 
+	          		<li><a href="#" class="mainMenu linker" onclick="gfn_openMenu('axIncomeListTu'); gfn_menu(this)"><span>수입 관리</span></a></li>
 </c:if>
         		</ul>
       		</div>

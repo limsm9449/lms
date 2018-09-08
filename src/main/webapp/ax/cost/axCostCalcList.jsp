@@ -99,7 +99,7 @@ $(document.body).ready(function () {
             	fn_save();
                 break;
             case "export":
-                grid.exportExcel("입금관리.xls");
+                grid.exportExcel("정산관리.xls");
                 break;
         }
     });
@@ -154,11 +154,11 @@ function fn_makeGrid() {
 			            editor : { 
 			            	type : "number",
 			            	disabled : function () {
-		                        return ( this.item.CP_YN != "Y" ? true : false );
+		                        return ( !fn_edit(this.item) || this.item.CP_YN != "Y" ? true : false ); 
 		                    }
 						},
 						styleClass: function () {
-		                    return (this.item.CP_YN == "Y" ? "grid-cell-edit" : "");
+		                    return ( fn_edit(this.item) && this.item.CP_YN == "Y" ? "grid-cell-edit" : "");
 		                }
 			        },{
 			            key : "TEACHER_COST_RATE",
@@ -168,11 +168,11 @@ function fn_makeGrid() {
 			            editor : { 
 			            	type : "number",
 			            	disabled : function () {
-		                        return ( this.item.TEACHER_YN != "Y" ? true : false );
+		                        return ( !fn_edit(this.item) || this.item.TEACHER_YN != "Y" ? true : false );
 		                    }
 						},
 						styleClass: function () {
-		                    return (this.item.TEACHER_YN == "Y" ? "grid-cell-edit" : "");
+		                    return (fn_edit(this.item) && this.item.TEACHER_YN == "Y" ? "grid-cell-edit" : "");
 		                }
 			        },{
 			            key : "REPORT_COST",
@@ -180,10 +180,13 @@ function fn_makeGrid() {
 			            width : 100,
 			            align : "right",
 			            editor : { 
-			            	type : "number"
+			            	type : "number",
+			            	disabled : function () {
+		                        return ( !fn_edit(this.item) ? true : false ); 
+		                    }
 						},
 						styleClass: function () {
-		                    return "grid-cell-edit";
+		                    return (fn_edit(this.item) ? "grid-cell-edit" : "");
 		                },
 			            formatter : function () {
 			                return checkThousand(this.item.REPORT_COST);
@@ -194,10 +197,13 @@ function fn_makeGrid() {
 			            width : 80,
 			            align : "right",
 			            editor : { 
-			            	type : "number"
+			            	type : "number",
+			            	disabled : function () {
+		                        return ( !fn_edit(this.item) ? true : false ); 
+		                    }
 						},
 						styleClass: function () {
-		                    return "grid-cell-edit";
+		                    return (fn_edit(this.item) ? "grid-cell-edit" : "");
 		                },
 			            formatter : function () {
 			                return checkThousand(this.item.EVAL_COST);
@@ -208,10 +214,13 @@ function fn_makeGrid() {
 			            width : 120,
 			            align : "right",
 			            editor : { 
-			            	type : "number"
+			            	type : "number",
+			            	disabled : function () {
+		                        return ( !fn_edit(this.item) ? true : false ); 
+		                    }
 						},
 						styleClass: function () {
-		                    return "grid-cell-edit";
+		                    return (fn_edit(this.item) ? "grid-cell-edit" : "");
 		                },
 			            formatter : function () {
 			                return checkThousand(this.item.DATA_COST);
@@ -222,10 +231,13 @@ function fn_makeGrid() {
 			            width :100,
 			            align : "right",
 			            editor : { 
-			            	type : "number"
+			            	type : "number",
+			            	disabled : function () {
+		                        return ( !fn_edit(this.item) ? true : false ); 
+		                    }
 						},
 						styleClass: function () {
-		                    return "grid-cell-edit";
+		                    return (fn_edit(this.item) ? "grid-cell-edit" : "");
 		                },
 			            formatter : function () {
 			                return checkThousand(this.item.ANSWER_COST);
@@ -324,6 +336,14 @@ function fn_makeGrid() {
 	
 	$(window).trigger("resize"); 
 } 
+
+function fn_edit(item) {
+	if ( parseInt(item.TUTOR_PAYMENT_CNT) > 0 || item.TEACHER_PAYMENT_YN == "Y" || item.CP_PAYMENT_YN == "Y" ) {
+		return false;
+	}
+	
+	return true;
+}
 
 function fn_params() {
 	params.LEVEL1_CODE = $("#CB_LEVEL1 option:selected").val();	

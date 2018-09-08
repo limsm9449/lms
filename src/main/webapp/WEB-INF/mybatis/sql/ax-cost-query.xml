@@ -148,9 +148,9 @@
 		            LEFT OUTER JOIN (
 						SELECT	COURSE_ID
 								,SUM(CASE WHEN KIND = 'TUTOR' THEN 1 ELSE 0 END) TUTOR_ALL_CNT
-								,SUM(CASE WHEN KIND = 'TUTOR' AND IFNULL(PAYMENT_DATE,'') = '' THEN 1 ELSE 0 END) TUTOR_CNT
-								,SUM(CASE WHEN KIND = 'TEACHER' AND IFNULL(PAYMENT_DATE,'') = '' THEN 1 ELSE 0 END) TEACHER_CNT
-								,SUM(CASE WHEN KIND = 'CP' AND IFNULL(PAYMENT_DATE,'') = '' THEN 1 ELSE 0 END) CP_CNT
+								,SUM(CASE WHEN KIND = 'TUTOR' AND IFNULL(PAYMENT_DATE,'') != '' THEN 1 ELSE 0 END) TUTOR_CNT
+								,SUM(CASE WHEN KIND = 'TEACHER' AND IFNULL(PAYMENT_DATE,'') != '' THEN 1 ELSE 0 END) TEACHER_CNT
+								,SUM(CASE WHEN KIND = 'CP' AND IFNULL(PAYMENT_DATE,'') != '' THEN 1 ELSE 0 END) CP_CNT
 		                FROM	COST_CALC
 		                WHERE	COURSE_ID IN ( SELECT COURSE_ID FROM COURSE WHERE OPEN_YN = 'Y' AND CLOSE_YN = 'Y' )
 		                AND		IFNULL(COST, 0) > 0
@@ -460,5 +460,113 @@
     	WHERE 	COURSE_ID = #{COURSE_ID}
     	AND		KIND = #{KIND}
     	AND		USER_ID = #{USER_ID}
-	</update>   
+	</update>
+	
+	<select id="axIncomeAdminList" resultType="hashmap">
+		SELECT	CAT.CATEGORY_NAME
+				,A.COURSE_ID
+				,A.COURSE_CODE
+				,B.COURSE_NAME
+				,A.YEAR
+				,A.MONTH
+				,A.CHASU CHASU
+				,E.CNT USER_CNT
+		        ,IFNULL(C.TOTAL_COST, 0) TOTAL_COST
+		        ,IFNULL(C.COMPANY_COST, 0) COMPANY_COST
+		        ,IFNULL(C.TUTOR_COST, 0) TUTOR_COST
+		        ,IFNULL(C.TEACHER_COST, 0) TEACHER_COST
+		        ,IFNULL(C.CP_COST, 0) CP_COST
+		FROM	COURSE A 
+					JOIN COURSE_CODE B ON B.COURSE_CODE = A.COURSE_CODE
+					JOIN (
+						   SELECT C3.CODE C3_CODE, C2.CODE C2_CODE, C1.CODE C1_CODE,
+								  CONCAT(C1.CODE_NAME,' > ',C2.CODE_NAME,' > ',C3.CODE_NAME) CATEGORY_NAME
+							 FROM CATEGORY C3 LEFT OUTER JOIN CATEGORY C2 ON C3.PARENT_CODE = C2.CODE
+									  LEFT OUTER JOIN CATEGORY C1 ON C2.PARENT_CODE = C1.CODE
+							WHERE C3.DEPTH = 3) CAT ON B.CODE = CAT.C3_CODE
+					LEFT OUTER JOIN COST C ON C.COURSE_ID = A.COURSE_ID
+		            JOIN COURSE_MASTER D ON D.COURSE_CODE = B.COURSE_CODE
+		          	LEFT OUTER JOIN (
+                     	SELECT  COURSE_ID,
+                     			COUNT(*) CNT,
+                     			SUM(COURSE_COST) COST
+                     	FROM	COURSE_REGISTER
+                     	WHERE	STATUS = 'A'
+                     	GROUP 	BY COURSE_ID ) E ON E.COURSE_ID = A.COURSE_ID
+		WHERE	OPEN_YN = 'Y'
+		AND		CLOSE_YN = 'Y'
+		AND     DATE_FORMAT(A.UPDATE_DATE, '%Y-%m-%d') BETWEEN #{FROM_DT} AND #{TO_DT}	
+		   <if test="LEVEL1_CODE != null and LEVEL1_CODE != ''"> AND CAT.C1_CODE = #{LEVEL1_CODE}</if>
+		   <if test="LEVEL2_CODE != null and LEVEL2_CODE != ''"> AND CAT.C2_CODE = #{LEVEL2_CODE}</if>
+		   <if test="LEVEL3_CODE != null and LEVEL3_CODE != ''"> AND CAT.C3_CODE = #{LEVEL3_CODE}</if>
+<if test="YEAR != null and YEAR != ''">
+		AND		A.YEAR = #{YEAR}
+</if>
+<if test="chasu != null and chasu != ''">
+		AND		A.CHASU = #{chasu}
+</if>
+<if test="courseName != null and courseName != ''"> 
+		AND ( UPPER(B.COURSE_CODE) LIKE CONCAT('%',UPPER(#{courseName}),'%') OR UPPER(B.COURSE_NAME) LIKE CONCAT('%',UPPER(#{courseName}),'%') )
+</if>		      
+		ORDER 	BY CAT.CATEGORY_NAME, B.COURSE_NAME, A.YEAR, A.MONTH, A.CHASU	
+	</select>
+	
+	<select id="axIncomeList" resultType="hashmap">
+		SELECT	CAT.CATEGORY_NAME
+				,A.COURSE_ID
+				,A.COURSE_CODE
+				,B.COURSE_NAME
+				,A.YEAR
+				,A.MONTH
+				,A.CHASU CHASU
+				,E.CNT USER_CNT
+				,U1.USER_NAME
+				,F.COST
+		        ,F.BANK
+		        ,F.ACC_NUM
+		        ,F.PAYMENT_DATE
+		FROM	COURSE A 
+					JOIN COURSE_CODE B ON B.COURSE_CODE = A.COURSE_CODE
+					JOIN (
+						   SELECT C3.CODE C3_CODE, C2.CODE C2_CODE, C1.CODE C1_CODE,
+								  CONCAT(C1.CODE_NAME,' > ',C2.CODE_NAME,' > ',C3.CODE_NAME) CATEGORY_NAME
+							 FROM CATEGORY C3 LEFT OUTER JOIN CATEGORY C2 ON C3.PARENT_CODE = C2.CODE
+									  LEFT OUTER JOIN CATEGORY C1 ON C2.PARENT_CODE = C1.CODE
+							WHERE C3.DEPTH = 3) CAT ON B.CODE = CAT.C3_CODE
+					LEFT OUTER JOIN COST C ON C.COURSE_ID = A.COURSE_ID
+		            JOIN COURSE_MASTER D ON D.COURSE_CODE = B.COURSE_CODE
+		          	LEFT OUTER JOIN (
+                     	SELECT  COURSE_ID,
+                     			COUNT(*) CNT,
+                     			SUM(COURSE_COST) COST
+                     	FROM	COURSE_REGISTER
+                     	WHERE	STATUS = 'A'
+                     	GROUP 	BY COURSE_ID ) E ON E.COURSE_ID = A.COURSE_ID
+                   	LEFT OUTER JOIN (
+                   		SELECT  *
+                   		FROM	COST_CALC
+                   		<if test="AUTH == 'CONTENTS_MANAGER'"> WHERE KIND = 'CP'</if>
+                   		<if test="AUTH == 'TEACHER'"> WHERE KIND = 'TEACHER'</if>
+                   		<if test="AUTH == 'TUTOR'"> WHERE KIND = 'TUTOR' AND USER_ID = #{USER_ID}</if>
+                   		) F ON F.COURSE_ID = A.COURSE_ID
+					LEFT OUTER JOIN USER U1 ON F.USER_ID = U1.USER_ID
+		WHERE	OPEN_YN = 'Y'
+		AND		CLOSE_YN = 'Y'
+		AND		IFNULL(F.PAYMENT_DATE,'') != ''
+		AND     F.PAYMENT_DATE BETWEEN #{FROM_DT} AND #{TO_DT}	
+		   <if test="LEVEL1_CODE != null and LEVEL1_CODE != ''"> AND CAT.C1_CODE = #{LEVEL1_CODE}</if>
+		   <if test="LEVEL2_CODE != null and LEVEL2_CODE != ''"> AND CAT.C2_CODE = #{LEVEL2_CODE}</if>
+		   <if test="LEVEL3_CODE != null and LEVEL3_CODE != ''"> AND CAT.C3_CODE = #{LEVEL3_CODE}</if>
+<if test="YEAR != null and YEAR != ''">
+		AND		A.YEAR = #{YEAR}
+</if>
+<if test="chasu != null and chasu != ''">
+		AND		A.CHASU = #{chasu}
+</if>
+<if test="courseName != null and courseName != ''"> 
+		AND ( UPPER(B.COURSE_CODE) LIKE CONCAT('%',UPPER(#{courseName}),'%') OR UPPER(B.COURSE_NAME) LIKE CONCAT('%',UPPER(#{courseName}),'%') )
+</if>		      
+		ORDER 	BY CAT.CATEGORY_NAME, B.COURSE_NAME, A.YEAR, A.MONTH, A.CHASU	
+	</select>
+	   
 </mapper>
