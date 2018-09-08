@@ -66,6 +66,33 @@ public class AxCourseMasterController {
         return hm;
     }
 
+    @RequestMapping(value = "/course/axCourseMasterWeekCostList", method = RequestMethod.POST, consumes = "application/json" )
+    public @ResponseBody HashMap<String,Object> axCourseMasterWeekCostList(@RequestBody HashMap<String, Object> paramMap, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    	HashMap<String, Object> hm = new HashMap<String, Object>();
+
+    	try {
+    		hm = svr.axCourseMasterWeekCostList(paramMap);
+    	} catch ( Exception e ) {
+    		e.printStackTrace();
+    	}
+
+        return hm;
+    }
+    
+    @RequestMapping(value = "/course/axCourseMasterWeekCostSave", method = RequestMethod.POST, consumes = "application/json" )
+    public @ResponseBody HashMap<String,Object> axCourseMasterWeekCostSave(@RequestBody HashMap<String, Object> paramMap, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    	HashMap<String, Object> hm = new HashMap<String, Object>();
+    	
+		try {
+    		hm = svr.axCourseMasterWeekCostSave(paramMap);
+    	} catch ( Exception e ) {
+    		e.printStackTrace();
+    		hm.put("RtnMode", Constant.mode.ERROR.name());
+    	}
+
+        return hm;
+    }
+
     @RequestMapping(value = "/course/axCourseMasterContentsList", method = RequestMethod.POST, consumes = "application/json" )
     public @ResponseBody HashMap<String,Object> axCourseMasterContentsList(@RequestBody HashMap<String, Object> paramMap, HttpServletRequest request, HttpServletResponse response) throws Exception {
     	HashMap<String, Object> hm = new HashMap<String, Object>();

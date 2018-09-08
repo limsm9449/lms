@@ -100,5 +100,365 @@
 	  	       	UPDATE_DATE = CURRENT_TIMESTAMP,
 		       	UPDATE_USER = #{SESSION_USER_ID}
 	     WHERE 	APPROVAL_ID = #{APPROVAL_ID}
-	</update>        
+	</update>    
+	
+	<select id="axCostCalcList" resultType="hashmap">
+		SELECT	CAT.CATEGORY_NAME
+				,A.COURSE_ID
+				,A.COURSE_CODE
+				,B.COURSE_NAME
+				,A.YEAR
+				,A.MONTH
+				,A.CHASU CHASU
+		        ,IF(C.COURSE_ID IS NULL,'N','Y') EXIST_COST
+		        ,IFNULL(C.CP_COST_RATE, D.CP_COST_RATE) CP_COST_RATE
+		        ,IFNULL(C.TEACHER_COST_RATE, D.TEACHER_COST_RATE) TEACHER_COST_RATE
+		        ,IFNULL(C.REPORT_COST, D.REPORT_COST) REPORT_COST 
+		        ,IFNULL(C.EVAL_COST, D.EVAL_COST) EVAL_COST 
+		        ,IFNULL(C.DATA_COST, D.DATA_COST) DATA_COST 
+		        ,IFNULL(C.ANSWER_COST, D.ANSWER_COST) ANSWER_COST 
+		        ,IFNULL(C.TOTAL_COST, G.COST) TOTAL_COST
+		        ,IFNULL(C.TUTOR_COST, 0) TUTOR_COST
+		        ,IFNULL(C.COMPANY_COST, 0) COMPANY_COST
+		        ,IFNULL(C.TEACHER_COST, 0) TEACHER_COST
+		        ,IFNULL(C.CP_COST, 0) CP_COST
+		        ,IFNULL(E.TUTOR_ALL_CNT, 0) TUTOR_CNT
+		        ,IFNULL(E.TUTOR_CNT, 0) TUTOR_PAYMENT_CNT
+		        ,CASE WHEN C.TEACHER_COST_RATE = 0 THEN '-' 
+					  WHEN C.TEACHER_COST_RATE > 0 AND IFNULL(E.TEACHER_CNT, 0) = 1 THEN 'Y' 
+		              ELSE 'N' END  TEACHER_PAYMENT_YN
+		        ,CASE WHEN C.CP_COST_RATE = 0 THEN '-' 
+					  WHEN C.CP_COST_RATE > 0 AND IFNULL(E.CP_CNT, 0) = 1 THEN 'Y' 
+		              ELSE 'N' END  CP_PAYMENT_YN
+				,DATE_FORMAT(IFNULL(A.UPDATE_DATE, A.CREATE_DATE), '%y.%m.%d %H:%i') LAST_UPDATE_DATE
+				,IFNULL(U2.USER_NAME, U1.USER_NAME) LAST_UPDATE_USER
+				,CASE WHEN B.CONTENTS_MANAGER_ID IS NULL OR B.CONTENTS_MANAGER_ID = '' THEN 'N' ELSE 'Y'END CP_YN
+				,CASE WHEN B.TEACHER_ID IS NULL OR B.TEACHER_ID = '' THEN 'N' ELSE 'Y'END TEACHER_YN
+				,G.CNT USER_CNT
+		FROM	COURSE A 
+					JOIN COURSE_CODE B ON B.COURSE_CODE = A.COURSE_CODE
+					JOIN (
+						   SELECT C3.CODE C3_CODE, C2.CODE C2_CODE, C1.CODE C1_CODE,
+								  CONCAT(C1.CODE_NAME,' > ',C2.CODE_NAME,' > ',C3.CODE_NAME) CATEGORY_NAME
+							 FROM CATEGORY C3 LEFT OUTER JOIN CATEGORY C2 ON C3.PARENT_CODE = C2.CODE
+									  LEFT OUTER JOIN CATEGORY C1 ON C2.PARENT_CODE = C1.CODE
+							WHERE C3.DEPTH = 3) CAT ON B.CODE = CAT.C3_CODE
+					LEFT OUTER JOIN COST C ON C.COURSE_ID = A.COURSE_ID
+		            JOIN COURSE_MASTER D ON D.COURSE_CODE = B.COURSE_CODE
+		            LEFT OUTER JOIN (
+						SELECT	COURSE_ID
+								,SUM(CASE WHEN KIND = 'TUTOR' THEN 1 ELSE 0 END) TUTOR_ALL_CNT
+								,SUM(CASE WHEN KIND = 'TUTOR' AND IFNULL(PAYMENT_DATE,'') = '' THEN 1 ELSE 0 END) TUTOR_CNT
+								,SUM(CASE WHEN KIND = 'TEACHER' AND IFNULL(PAYMENT_DATE,'') = '' THEN 1 ELSE 0 END) TEACHER_CNT
+								,SUM(CASE WHEN KIND = 'CP' AND IFNULL(PAYMENT_DATE,'') = '' THEN 1 ELSE 0 END) CP_CNT
+		                FROM	COST_CALC
+		                WHERE	COURSE_ID IN ( SELECT COURSE_ID FROM COURSE WHERE OPEN_YN = 'Y' AND CLOSE_YN = 'Y' )
+		                AND		IFNULL(COST, 0) > 0
+		                GROUP	BY COURSE_ID ) E ON E.COURSE_ID = A.COURSE_ID
+		          	LEFT OUTER JOIN (
+                     	SELECT  COURSE_ID,
+                     			COUNT(*) CNT,
+                     			SUM(COURSE_COST) COST
+                     	FROM	COURSE_REGISTER
+                     	WHERE	STATUS = 'A'
+                     	GROUP 	BY COURSE_ID ) G ON G.COURSE_ID = A.COURSE_ID        
+					LEFT OUTER JOIN USER U1 ON A.CREATE_USER = U1.USER_ID
+					LEFT OUTER JOIN USER U2 ON A.UPDATE_USER = U2.USER_ID                 
+		WHERE	OPEN_YN = 'Y'
+		AND		CLOSE_YN = 'Y'
+		   <if test="LEVEL1_CODE != null and LEVEL1_CODE != ''"> AND CAT.C1_CODE = #{LEVEL1_CODE}</if>
+		   <if test="LEVEL2_CODE != null and LEVEL2_CODE != ''"> AND CAT.C2_CODE = #{LEVEL2_CODE}</if>
+		   <if test="LEVEL3_CODE != null and LEVEL3_CODE != ''"> AND CAT.C3_CODE = #{LEVEL3_CODE}</if>
+<if test="YEAR != null and YEAR != ''">
+		AND		A.YEAR = #{YEAR}
+</if>
+<if test="chasu != null and chasu != ''">
+		AND		S.CHASU = #{chasu}
+</if>
+<if test="courseName != null and courseName != ''"> 
+		AND ( UPPER(S.COURSE_CODE) LIKE CONCAT('%',UPPER(#{courseName}),'%') OR UPPER(B.COURSE_NAME) LIKE CONCAT('%',UPPER(#{courseName}),'%') )
+</if>		      
+		ORDER 	BY CAT.CATEGORY_NAME, B.COURSE_NAME, A.YEAR, A.MONTH, A.CHASU	
+	</select>
+	
+	<insert id="axCostMasterInsert" parameterType="hashmap">
+		INSERT INTO COST (COURSE_ID, CP_COST_RATE, TEACHER_COST_RATE, REPORT_COST, EVAL_COST, DATA_COST, ANSWER_COST, TOTAL_COST, CREATE_DATE, CREATE_USER)
+    	VALUES (#{COURSE_ID}, #{CP_COST_RATE}, #{TEACHER_COST_RATE}, #{REPORT_COST}, #{EVAL_COST}, #{DATA_COST}, #{ANSWER_COST}, #{TOTAL_COST}, CURRENT_TIMESTAMP, #{SESSION_USER_ID}) 
+	</insert>  
+
+	<update id="axCostMasterUpdate" parameterType="hashmap">
+		UPDATE 	COST
+    	   SET 	CP_COST_RATE = #{CP_COST_RATE}
+				,TEACHER_COST_RATE = #{TEACHER_COST_RATE}
+				,REPORT_COST = #{REPORT_COST}
+				,EVAL_COST = #{EVAL_COST}
+				,DATA_COST = #{DATA_COST}
+				,ANSWER_COST = #{ANSWER_COST}
+    	       	,UPDATE_DATE = CURRENT_TIMESTAMP
+    	       	,UPDATE_USER = #{SESSION_USER_ID}
+    	 WHERE 	COURSE_ID = #{COURSE_ID} 
+	</update>  
+	
+	<select id="axCostMasterExist" parameterType="hashmap" resultType="hashmap">
+		SELECT	A.COURSE_ID
+		        ,IFNULL(C.CP_COST_RATE, D.CP_COST_RATE) CP_COST_RATE
+		        ,IFNULL(C.TEACHER_COST_RATE, D.TEACHER_COST_RATE) TEACHER_COST_RATE
+		        ,IFNULL(C.REPORT_COST, D.REPORT_COST) REPORT_COST 
+		        ,IFNULL(C.EVAL_COST, D.EVAL_COST) EVAL_COST 
+		        ,IFNULL(C.DATA_COST, D.DATA_COST) DATA_COST 
+		        ,IFNULL(C.ANSWER_COST, D.ANSWER_COST) ANSWER_COST 
+		        ,IFNULL(C.TOTAL_COST, G.COST) TOTAL_COST
+                ,IF(C.COURSE_ID IS NULL, 'N', 'Y') EXIST_DATA
+		FROM	COURSE A 
+					JOIN COURSE_CODE B ON B.COURSE_CODE = A.COURSE_CODE
+					LEFT OUTER JOIN COST C ON C.COURSE_ID = A.COURSE_ID
+                    JOIN COURSE_MASTER D ON D.COURSE_CODE = B.COURSE_CODE
+                    LEFT OUTER JOIN (
+                     	SELECT  COURSE_ID,
+                     			COUNT(*) CNT,
+                     			SUM(COURSE_COST) COST
+                     	FROM	COURSE_REGISTER
+                     	WHERE	STATUS = 'A'
+                     	GROUP 	BY COURSE_ID ) G ON G.COURSE_ID = A.COURSE_ID   
+		WHERE	A.COURSE_ID = #{COURSE_ID};
+	</select>
+
+	<update id="axCostMasterCalcUpdate" parameterType="hashmap">
+		UPDATE 	COST
+    	   SET 	TUTOR_COST = ( SELECT SUM(COST) FROM COST_CALC WHERE COURSE_ID = #{COURSE_ID} AND KIND = 'TUTOR' )
+				,TEACHER_COST = ( SELECT SUM(COST) FROM COST_CALC WHERE COURSE_ID = #{COURSE_ID} AND KIND = 'TEACHER' )
+				,CP_COST = ( SELECT SUM(COST) FROM COST_CALC WHERE COURSE_ID = #{COURSE_ID} AND KIND = 'CP' )
+				,COMPANY_COST = TOTAL_COST - ( SELECT SUM(COST) FROM COST_CALC WHERE COURSE_ID = #{COURSE_ID} )
+    	       	,UPDATE_DATE = CURRENT_TIMESTAMP
+    	       	,UPDATE_USER = #{SESSION_USER_ID}
+    	 WHERE 	COURSE_ID = #{COURSE_ID} 
+	</update>  
+	
+	<select id="axCostCalcUserList" resultType="hashmap">
+		SELECT 	A.*
+				,IF(B.COURSE_ID IS NULL, 'N', 'Y') EXIST_USER
+		FROM	(
+					SELECT 	A.COURSE_ID
+							,1 ORD
+							,'TUTOR' KIND
+							,A.TUTOR_ID USER_ID
+					        ,U1.BANK
+					        ,U1.ACC_NUM
+					FROM 	COURSE A
+								JOIN USER U1 ON A.TUTOR_ID = U1.USER_ID
+					WHERE 	COURSE_ID = #{COURSE_ID}
+			        UNION
+					SELECT 	A.COURSE_ID
+							,1 ORD
+							,'TUTOR' KIND
+							,A.TUTOR_ID USER_ID
+					        ,U1.BANK
+					        ,U1.ACC_NUM
+					FROM 	COURSE_TUTOR A
+								JOIN USER U1 ON A.TUTOR_ID = U1.USER_ID
+					WHERE 	COURSE_ID = #{COURSE_ID}
+					UNION
+					SELECT 	A.COURSE_ID
+							,2 ORD
+							,'TEACHER' KIND
+							,B.TEACHER_ID USER_ID
+					        ,U1.BANK
+					        ,U1.ACC_NUM
+					FROM 	COURSE A
+								JOIN COURSE_CODE B ON B.COURSE_CODE = A.COURSE_CODE
+								JOIN USER U1 ON B.TEACHER_ID = U1.USER_ID
+					WHERE 	COURSE_ID = #{COURSE_ID}
+					UNION
+					SELECT 	A.COURSE_ID
+							,3 ORD
+							,'CP' KIND
+							,B.CONTENTS_MANAGER_ID USER_ID
+					        ,U1.BANK
+					        ,U1.ACC_NUM
+					FROM 	COURSE A
+								JOIN COURSE_CODE B ON B.COURSE_CODE = A.COURSE_CODE
+								JOIN USER U1 ON B.CONTENTS_MANAGER_ID = U1.USER_ID
+					WHERE 	COURSE_ID = #{COURSE_ID}
+				) A LEFT OUTER JOIN COST_CALC B ON B.COURSE_ID = A.COURSE_ID AND B.KIND = A.KIND AND B.USER_ID = A.USER_ID
+		ORDER	BY ORD
+	</select>
+	
+	<insert id="axCostCalcInsert" parameterType="hashmap">
+		INSERT INTO COST_CALC ( COURSE_ID, KIND, USER_ID, BANK, ACC_NUM )
+    	VALUES ( #{COURSE_ID}, #{KIND}, #{USER_ID}, #{BANK}, #{ACC_NUM} ) 
+	</insert>
+	
+	<update id="axCostCalcTutorUpdate" parameterType="hashmap">
+		UPDATE	COST_CALC 
+		SET		COST = (	SELECT 	A.REPORT_COST * B.REPORT_CNT +
+									A.EVAL_COST * B.EXAM_CNT +
+									A.DATA_COST * C.DATA_CNT +
+							        A.ANSWER_COST * (D.QNA_REPLY_CNT + E.FREE_REPLY_CNT) TUTOR_COST
+							FROM	COST A
+										JOIN (	
+											SELECT 	SUM(CASE WHEN COMPLETE_YN = 'Y' AND REPORT_YN = 'Y' AND REPORT > 0 THEN 1 ELSE 0 END) REPORT_CNT
+													,SUM(CASE WHEN COMPLETE_YN = 'Y' AND EXAM_YN = 'Y' AND EXAM > 0 THEN 1 ELSE 0 END) EXAM_CNT
+											FROM 	COURSE_EVAL
+											WHERE 	COURSE_ID = #{COURSE_ID}
+											AND		TUTOR_ID = #{USER_ID} ) B ON 1 = 1
+										LEFT OUTER JOIN (
+											SELECT 	COUNT(*) DATA_CNT
+											FROM 	BOARD_DATA A
+											WHERE	A.COURSE_ID = #{COURSE_ID}
+											AND		A.USER_ID = #{USER_ID}
+											AND 	ACCEPT_YN = 'Y' ) C ON 1 = 1
+										LEFT OUTER JOIN (
+											SELECT 	COUNT(*) QNA_REPLY_CNT
+											FROM 	REPLY A
+											WHERE 	A.KIND = 'QNA'
+											AND		A.P_SEQ IN ( SELECT SEQ FROM BOARD_QNA WHERE COURSE_ID = #{COURSE_ID} )
+											AND		A.USER_ID = #{USER_ID}
+											AND 	A.ACCEPT_YN = 'Y' ) D ON 1 = 1
+										LEFT OUTER JOIN (
+											SELECT 	COUNT(*) FREE_REPLY_CNT
+											FROM 	REPLY A
+											WHERE 	A.KIND = 'FREE'
+											AND		A.P_SEQ IN ( SELECT SEQ FROM BOARD_FREE WHERE COURSE_ID = #{COURSE_ID} )
+											AND		A.USER_ID = #{USER_ID}
+											AND 	A.ACCEPT_YN = 'Y' ) E ON 1 = 1
+							WHERE	A.COURSE_ID = #{COURSE_ID} )
+		WHERE	COURSE_ID = #{COURSE_ID}
+		AND		KIND = #{KIND}
+		AND		USER_ID = #{USER_ID}
+	</update>
+	
+	<update id="axCostCalcCpUpdate" parameterType="hashmap">
+		UPDATE	COST_CALC 
+		SET		COST = (	SELECT 	(A.TOTAL_COST - B.TUTOR_COST) * (CP_COST_RATE / 100)
+							FROM	COST A
+										JOIN (	
+											SELECT 	SUM(COST) TUTOR_COST
+											FROM 	COST_CALC
+											WHERE 	COURSE_ID = #{COURSE_ID}
+											AND		KIND = 'TUTOR' ) B ON 1 = 1
+							WHERE	A.COURSE_ID = #{COURSE_ID} )
+		WHERE	COURSE_ID = #{COURSE_ID}
+		AND		KIND = #{KIND}
+		AND		USER_ID = #{USER_ID}
+	</update>
+	
+	<update id="axCostCalcTeacherUpdate" parameterType="hashmap">
+		UPDATE	COST_CALC 
+		SET		COST = (	SELECT 	(A.TOTAL_COST - B.TUTOR_COST) * (TEACHER_COST_RATE / 100)
+							FROM	COST A
+										JOIN (	
+											SELECT 	SUM(COST) TUTOR_COST
+											FROM 	COST_CALC
+											WHERE 	COURSE_ID = #{COURSE_ID}
+											AND		KIND = 'TUTOR' ) B ON 1 = 1
+							WHERE	A.COURSE_ID = #{COURSE_ID} )
+		WHERE	COURSE_ID = #{COURSE_ID}
+		AND		KIND = #{KIND}
+		AND		USER_ID = #{USER_ID}
+	</update>
+	
+	<select id="axCostCalcTutorBoardList" resultType="hashmap">
+		SELECT 	*
+		FROM	(
+					SELECT 	A.SEQ
+							,'DATA' KIND 
+							,'자료실' KIND_NAME 
+							,A.TITLE
+					        ,'' USER_NAME
+					        ,U1.USER_ID TUTOR_ID
+					        ,U1.USER_NAME TUTOR_NAME
+					        ,A.ACCEPT_YN
+					        ,0 P_SEQ
+					FROM 	BOARD_DATA A
+								LEFT OUTER JOIN USER U1 ON A.USER_ID = U1.USER_ID
+					WHERE	A.COURSE_ID = #{COURSE_ID}
+					AND		A.USER_ID IN ( 	SELECT TUTOR_ID FROM COURSE WHERE COURSE_ID = #{COURSE_ID}
+											UNION 
+											SELECT TUTOR_ID FROM COURSE_TUTOR WHERE COURSE_ID = #{COURSE_ID} )
+					UNION
+					SELECT 	A.SEQ 		
+							,'QNA_REPLY' KIND 
+							,'QNA 답변' KIND_NAME 
+							,B.TITLE
+					        ,U2.USER_NAME
+					        ,U1.USER_ID TUTOR_ID
+					        ,U1.USER_NAME TUTOR_NAME        
+					        ,A.ACCEPT_YN
+					        ,A.P_SEQ
+					FROM 	REPLY A
+								JOIN BOARD_QNA B ON B.SEQ = A.P_SEQ
+					            JOIN USER U1 ON U1.USER_ID = A.USER_ID
+					            JOIN USER U2 ON U2.USER_ID = B.USER_ID
+					WHERE 	A.KIND = 'QNA'
+					AND		A.P_SEQ IN ( SELECT SEQ FROM BOARD_QNA WHERE COURSE_ID = #{COURSE_ID} )
+					AND		A.USER_ID IN ( 	SELECT TUTOR_ID FROM COURSE WHERE COURSE_ID = #{COURSE_ID}
+											UNION 
+											SELECT TUTOR_ID FROM COURSE_TUTOR WHERE COURSE_ID = #{COURSE_ID} ) 
+					UNION 
+					SELECT 	A.SEQ 		
+							,'FREE_REPLY' KIND 
+							,'자유게시판 답변' KIND_NAME 
+							,B.TITLE
+					        ,U2.USER_NAME
+					        ,U1.USER_ID TUTOR_ID
+					        ,U1.USER_NAME TUTOR_NAME        
+					        ,A.ACCEPT_YN
+					        ,A.P_SEQ
+					FROM 	REPLY A
+								JOIN BOARD_FREE B ON B.SEQ = A.P_SEQ
+					            JOIN USER U1 ON U1.USER_ID = A.USER_ID
+					            JOIN USER U2 ON U2.USER_ID = B.USER_ID
+					WHERE 	A.KIND = 'FREE'
+					AND		A.P_SEQ IN ( SELECT SEQ FROM BOARD_FREE WHERE COURSE_ID = #{COURSE_ID} )
+					AND		A.USER_ID IN ( 	SELECT TUTOR_ID FROM COURSE WHERE COURSE_ID = #{COURSE_ID}
+											UNION 
+											SELECT TUTOR_ID FROM COURSE_TUTOR WHERE COURSE_ID = #{COURSE_ID} ) 
+				) A
+<if test="TUTOR_ID != null and TUTOR_ID != ''">
+		WHERE	A.TUTOR_ID = #{TUTOR_ID}
+</if>
+		ORDER 	BY KIND, TITLE
+	</select>
+
+	<update id="axCostCalcBoardDataUpdate" parameterType="hashmap">
+		UPDATE BOARD_DATA
+    	   SET ACCEPT_YN = #{ACCEPT_YN}
+    	 WHERE SEQ = #{SEQ} 
+	</update>  
+
+	<update id="axCostCalcReplyUpdate" parameterType="hashmap">
+		UPDATE REPLY
+    	   SET ACCEPT_YN = #{ACCEPT_YN}
+    	 WHERE SEQ = #{SEQ} 
+	</update>  
+		  
+		  
+	<select id="axCostCalcPaymentList" parameterType="hashmap" resultType="hashmap">
+		SELECT	A.COURSE_ID
+				,A.KIND
+				,CASE WHEN A.KIND = 'CP' THEN 'CP' 
+						WHEN A.KIND = 'TUTOR' THEN '튜터'
+						WHEN A.KIND = 'TEACHER' THEN '강사'
+						ELSE '-' END KIND_NAME
+				,A.USER_ID
+				,A.COST
+				,A.BANK
+				,A.ACC_NUM
+				,IFNULL(A.PAYMENT_DATE, '') PAYMENT_DATE
+				,U1.USER_NAME
+		FROM	COST_CALC A
+					LEFT OUTER JOIN USER U1 ON A.USER_ID = U1.USER_ID 
+		WHERE 	A.COURSE_ID = #{COURSE_ID}
+        AND		IFNULL(A.COST, 0) > 0
+	</select>
+
+	<update id="axCostCalcPaymentUpdate" parameterType="hashmap">
+		UPDATE 	COST_CALC
+    	SET 	PAYMENT_DATE = #{PAYMENT_DATE}
+    			,BANK = #{BANK}
+    			,ACC_NUM = #{ACC_NUM}
+    	WHERE 	COURSE_ID = #{COURSE_ID}
+    	AND		KIND = #{KIND}
+    	AND		USER_ID = #{USER_ID}
+	</update>   
 </mapper>

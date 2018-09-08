@@ -112,6 +112,7 @@
 		        ,DATE_FORMAT(B.E_TO_DATE, '%y.%m.%d %H:%i') E_TO_DATE
 		        ,B.REPORT_YN
 		        ,B.QUEST_YN
+		        ,B.EXAM_YN
 		        ,B.COMPLETE_YN
 		        ,IF(C.REPORT_RATE > 0, 'Y', 'N') C_REPORT_YN
 		        ,IF(C.DISCUSSION_RATE > 0, 'Y', 'N') C_DISCUSSION_YN

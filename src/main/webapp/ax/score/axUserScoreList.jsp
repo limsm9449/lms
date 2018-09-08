@@ -376,6 +376,18 @@ function fn_makeGrid() {
 			        }
 		        ]
 	        },{
+	            key : "EXAM_YN",
+	            label : "시험 완료 여부",
+	            width : 130,
+	            align : "center", 
+	        	editor : { 
+	        		type : "checkbox", 
+	        		config : {height: 17, trueValue: "Y", falseValue: "N"},
+	            	disabled : function () {
+                        return true;
+                    } 
+	        	}
+	        },{
 	            key : "QUEST_YN",
 	            label : "설문지 작성 여부",
 	            width : 130,

@@ -75,7 +75,14 @@ $(document.body).ready(function () {
     	
     	$("#TITLE").attr("readonly", true);
     	$("#btn_save").hide();
-   		
+
+    	$("#btn_replyInsert").hide();
+    	$("#btn_replyDelete").hide();
+    	$("#btn_replyUpdate").hide();
+    	
+    	$("#QNA_CONTENTS").width(725);
+    	$("#QNA_CONTENTS").attr("readonly", true); 
+    	
    		//조회수 증가
    		var saveParams = {
  				MODE : "VIEW",

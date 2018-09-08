@@ -117,6 +117,22 @@ $(document.body).ready(function () {
             	}
             		
                 break;
+            case "editWeekCost":
+            	var row = grid.getList("selected");
+            	if ( row.length == 0 ) {
+            		mask.open();
+            		dialog.alert( { msg : "과정을 선택하셔야 합니다." }, function () { mask.close();	} );
+            	} else if ( row[0]["WEEK_COST_YN"] == "N" ) {
+            		mask.open();
+            		dialog.alert( { msg : "차시별 과정비용 과정이 아닙니다." }, function () { mask.close();	} );
+            	} else {
+            		var urlParams = "page=/ax/course/axCourseMasterWeekCostPopup";
+            		urlParams += "&COURSE_CODE=" + row[0]["COURSE_CODE"] + "&COURSE_COST=" + row[0]["COURSE_COST"];
+            		
+            		f_popup('/common/axOpenPage', {displayName:'courseMasterWeekCostPopup',option:'width=800,height=820', urlParams:urlParams});
+            	}
+            		
+                break;
         }
     });
 });
@@ -151,7 +167,7 @@ function fn_makeGrid() {
                     },
 	            	disabled : function () {
                         return ( this.item.NEW_FLAG != "Y" ? true : false );
-                    },
+                    }
 	        	},
 	            formatter : function () {
 	            	return gfn_getValueInList(ddWeekCost, "value",  this.item.WEEK_COST_YN, "text");
@@ -338,6 +354,96 @@ function fn_makeGrid() {
 			            label : "썸네일3",
 			            width : 70,
 			            align : "center"
+			        }
+		        ]
+	        },{
+              	key : undefined, 
+              	label: "정산 비용", 
+              	columns: [	        
+			        {
+			        	key : "CP_COST_RATE",
+			            label : "CP 비용 비율(%)",
+			            width : 130,
+			            align : "right",
+			            editor : { 
+			            	type : "number",
+			            	disabled : function () {
+		                        return ( this.item.CP_YN != "Y" ? true : false );
+		                    }
+						},
+						styleClass: function () {
+		                    return (this.item.CP_YN == "Y" ? "grid-cell-edit" : "");
+		                }
+			        },{
+			            key : "TEACHER_COST_RATE",
+			            label : "강사 비용 비율(%)",
+			            width : 130,
+			            align : "right",
+			            editor : { 
+			            	type : "number",
+			            	disabled : function () {
+		                        return ( this.item.TEACHER_YN != "Y" ? true : false );
+		                    }
+						},
+						styleClass: function () {
+		                    return (this.item.TEACHER_YN == "Y" ? "grid-cell-edit" : "");
+		                }
+			        },{
+			            key : "REPORT_COST",
+			            label : "레포트 비용",
+			            width : 100,
+			            align : "right",
+			            editor : { 
+			            	type : "number"
+						},
+						styleClass: function () {
+		                    return "grid-cell-edit";
+		                },
+			            formatter : function () {
+			                return checkThousand(this.item.REPORT_COST);
+			           	}
+			        },{
+			            key : "EVAL_COST",
+			            label : "평가비용",
+			            width : 80,
+			            align : "right",
+			            editor : { 
+			            	type : "number"
+						},
+						styleClass: function () {
+		                    return "grid-cell-edit";
+		                },
+			            formatter : function () {
+			                return checkThousand(this.item.EVAL_COST);
+			           	}
+			        },{
+			            key : "DATA_COST",
+			            label : "자료실 건당 비용",
+			            width : 120,
+			            align : "right",
+			            editor : { 
+			            	type : "number"
+						},
+						styleClass: function () {
+		                    return "grid-cell-edit";
+		                },
+			            formatter : function () {
+			                return checkThousand(this.item.DATA_COST);
+			           	}
+			        },{
+			            key : "ANSWER_COST",
+			            label : "답변 건당 비용",
+			            width :100,
+			            align : "right",
+			            editor : { 
+			            	type : "number"
+						},
+						styleClass: function () {
+		                    return "grid-cell-edit";
+		                },
+			            formatter : function () {
+			                return checkThousand(this.item.ANSWER_COST);
+			           	}
 			        }
 		        ]
 	        },{
@@ -537,6 +643,7 @@ function fn_cbChange(id) {
     <button class="btn btn-default" data-grid-control="export">엑셀</button>
     <button class="btn btn-default" data-grid-control="editContent">학습내용 편집</button>
     <button class="btn btn-default" data-grid-control="editImage">이미지 편집</button>
+    <button class="btn btn-default" data-grid-control="editWeekCost">차시별 비용</button>
 </div>
 
 <div style="height:10px"></div>

@@ -54,7 +54,99 @@ public class AxCostController {
         return hm;
     }  
 	    
+    @RequestMapping(value = "/cost/axCostCalcList", method = RequestMethod.POST, consumes = "application/json" )
+    public @ResponseBody HashMap<String,Object> axCostCalcList(@RequestBody HashMap<String, Object> paramMap, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    	HashMap<String, Object> hm = new HashMap<String, Object>();
+
+    	try {
+    		hm = svr.axCostCalcList(paramMap);
+    	} catch ( Exception e ) {
+    		e.printStackTrace();
+    	}
+
+        return hm;
+    }
+    
+    @RequestMapping(value = "/cost/axCostCalcSave", method = RequestMethod.POST, consumes = "application/json" )
+    public @ResponseBody HashMap<String,Object> axCostCalcSave(@RequestBody HashMap<String, Object> paramMap, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    	HashMap<String, Object> hm = new HashMap<String, Object>();
+    	
+		try {
+    		hm = svr.axCostCalcSave(paramMap);
+    	} catch ( Exception e ) {
+    		e.printStackTrace();
+    		hm.put("RtnMode", Constant.mode.ERROR.name());
+    	}
+
+        return hm;
+    }  
+    
+    @RequestMapping(value = "/cost/axCostCalcUserSave", method = RequestMethod.POST, consumes = "application/json" )
+    public @ResponseBody HashMap<String,Object> axCostCalcUserSave(@RequestBody HashMap<String, Object> paramMap, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    	HashMap<String, Object> hm = new HashMap<String, Object>();
+    	
+		try {
+    		hm = svr.axCostCalcUserSave(paramMap);
+    	} catch ( Exception e ) {
+    		e.printStackTrace();
+    		hm.put("RtnMode", Constant.mode.ERROR.name());
+    	}
+
+        return hm;
+    }  
+    
+	@RequestMapping(value = "/cost/axCostCalcTutorBoardList", method = RequestMethod.POST, consumes = "application/json" )
+	public @ResponseBody HashMap<String,Object> axCostCalcTutorBoardList(@RequestBody HashMap<String, Object> paramMap, HttpServletRequest request, HttpServletResponse response) throws Exception {
+		HashMap<String, Object> hm = new HashMap<String, Object>();
+	
+		try {
+			hm = svr.axCostCalcTutorBoardList(paramMap);
+		} catch ( Exception e ) {
+			e.printStackTrace();
+		}
+	
+	    return hm;
+	}
+	
+	@RequestMapping(value = "/cost/axCostCalcTutorBoardSave", method = RequestMethod.POST, consumes = "application/json" )
+	public @ResponseBody HashMap<String,Object> axCostCalcTutorBoardSave(@RequestBody HashMap<String, Object> paramMap, HttpServletRequest request, HttpServletResponse response) throws Exception {
+		HashMap<String, Object> hm = new HashMap<String, Object>();
+		
+		try {
+			hm = svr.axCostCalcTutorBoardSave(paramMap);
+		} catch ( Exception e ) {
+			e.printStackTrace();
+			hm.put("RtnMode", Constant.mode.ERROR.name());
+		}
+	
+	    return hm;
+	}    
 	    
-	    
+    @RequestMapping(value = "/cost/axCostCalcPaymentList", method = RequestMethod.POST, consumes = "application/json" )
+    public @ResponseBody HashMap<String,Object> axCostCalcPaymentList(@RequestBody HashMap<String, Object> paramMap, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    	HashMap<String, Object> hm = new HashMap<String, Object>();
+
+    	try {
+    		hm = svr.axCostCalcPaymentList(paramMap);
+    	} catch ( Exception e ) {
+    		e.printStackTrace();
+    	}
+
+        return hm;
+    }
+    
+    @RequestMapping(value = "/cost/axCostCalcPaymentSave", method = RequestMethod.POST, consumes = "application/json" )
+    public @ResponseBody HashMap<String,Object> axCostCalcPaymentSave(@RequestBody HashMap<String, Object> paramMap, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    	HashMap<String, Object> hm = new HashMap<String, Object>();
+    	
+		try {
+    		hm = svr.axCostCalcPaymentSave(paramMap);
+    	} catch ( Exception e ) {
+    		e.printStackTrace();
+    		hm.put("RtnMode", Constant.mode.ERROR.name());
+    	}
+
+        return hm;
+    }  
 
 }

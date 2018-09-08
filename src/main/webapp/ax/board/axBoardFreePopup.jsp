@@ -75,7 +75,14 @@ $(document.body).ready(function () {
     	
     	$("#TITLE").attr("readonly", true);
     	$("#btn_save").hide();
-   		
+
+    	$("#btn_replyInsert").hide();
+    	$("#btn_replyDelete").hide();
+    	$("#btn_replyUpdate").hide();
+    	
+    	$("#REPLY_CONTENTS").width(725);  
+    	$("#REPLY_CONTENTS").attr("readonly", true);
+    	
    		//조회수 증가
    		var saveParams = {
  				MODE : "VIEW",
@@ -276,7 +283,7 @@ function fn_gridEvent(event, obj) {
     	<div class="col-sm-2">
     	</div>
     	<div class="col-sm-7">
-    		<textarea id="REPLY_CONTENTS" style="width:490px;height:50px;"></textarea>
+    		<textarea id="REPLY_CONTENTS" style="width:490px;height:100px;"></textarea>
     	</div>
     	<div class="col-sm-3">
 			<button class="btn btn-default" onclick="fn_replySave('INSERT')" id="btn_replyInsert">추가</button>

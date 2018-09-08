@@ -84,10 +84,15 @@ $(document.body).ready(function () {
 function fn_makeGrid() {
 	grid = gfn_makeAx5Grid("first-grid",
 		[ 	{
+	            key : "COURSE_ID",
+	            label : "ID",
+	            width : 40,
+	            align : "right"
+	        },{
 	            key : "CATEGORY_NAME",
 	            label : "카테고리",
 	            width : 150,
-	            align : "left"
+	            align : "left" 
 	        },{
 	            key : "COURSE_CODE",
 	            label : "과정코드",

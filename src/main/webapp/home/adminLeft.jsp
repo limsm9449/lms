@@ -104,7 +104,7 @@ var pageObj = {
 	axCourseExamTypeList :	{	page : "/ax/course/axCourseExamTypeList"	},
 	axCourseList :			{	page : "/ax/course/axCourseList"	},
 	axCostList :			{	page : "/ax/cost/axCostList"	},
-	axCostDistributionList :{	page : "/ax/cost/axCostDistributionList"	},
+	axCostCalcList :		{	page : "/ax/cost/axCostCalcList"	},
 	axScoreList :			{	page : "/ax/score/axScoreList"	},
 	axUserScoreList :		{	page : "/ax/score/axUserScoreList"	},
 	axAccountList :			{	page : "/ax/account/axAccountList"	},
@@ -196,7 +196,7 @@ function gfn_openMenu(pageId, params) {
 			      	</li>
 	          		<li><a href="#" class="mainMenu linker" onclick="gfn_openMenu('axCostList'); gfn_menu(this)"><span>입금 관리</span></a>
 			      	</li>
-	          		<li><a href="#" class="mainMenu linker" onclick="gfn_openMenu('axCostDistributionList'); gfn_menu(this)"><span>정산 관리</span></a>
+	          		<li><a href="#" class="mainMenu linker" onclick="gfn_openMenu('axCostCalcList'); gfn_menu(this)"><span>정산 관리</span></a>
 			      	</li>
 	          		<li><a href="#" class="mainMenu linker" onclick="gfn_menu(this)"><span>계정 관리</span></a>
 			            <ul style="display:none" class="subMenuUl">
