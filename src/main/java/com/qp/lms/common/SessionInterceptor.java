@@ -87,7 +87,7 @@ public class SessionInterceptor extends HandlerInterceptorAdapter {
 				            	reqParam += ( i == 0 ? "" : ",") + values[i];
 				            }
 				        }
-			    	}
+			    	} 
 			    	
 			        if ( (SessionVO)SessionUtil.getSession() == null) {
 			        	commSvr.requestLog("Guest", url, reqParam, request.getRemoteAddr());
