@@ -3,9 +3,11 @@ package com.qp.lms.common;
 
 import java.io.FileInputStream;
 import java.net.URLEncoder;
+import java.util.Arrays;
 import java.util.Enumeration;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Properties;
-import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -57,17 +59,22 @@ public class SessionInterceptor extends HandlerInterceptorAdapter {
 	    	if ( url.indexOf("/resources/") > -1 ) {
 	    		return true;
 	    	} else {
+	    		/*
 		    	// request 로그 
-	    		if ( url.indexOf("/log/axLogList") < 0 ||
-	    				url.indexOf("/home/adminHome") < 0 ||
-	    				url.indexOf("/adminLeft") < 0 ||
-	    				url.indexOf("/log/axLogList") < 0 ||
-	    				url.indexOf("/common/axDd") < 0 ||
+	    		if ( url.indexOf("/log/axLogList") < 0 &&
+	    				url.indexOf("/home/adminHome") < 0 &&
+	    				url.indexOf("/adminLeft") < 0 &&
+	    				url.indexOf("/common/axDd") < 0 &&
 	    				url.indexOf("/common/axOpenPage") < 0 ) {
 			    	String reqParam = "";
 			    	
 			    	if ( request.getMethod().equals("POST") ) {
-			    	    
+			    		Map<String, String[]> map = request.getParameterMap();
+			    		for (Entry<String, String[]> entry : map.entrySet()) {
+			    		    String name = entry.getKey();
+			    		    String[] values = entry.getValue();
+			    		    reqParam += name + "=" + Arrays.toString(values) + "&";
+			    		}
 			    	    //reqParam = request.getReader().lines().collect(Collectors.joining(System.lineSeparator()));
 			    	} else {
 			    		Enumeration e = request.getParameterNames();
@@ -88,6 +95,7 @@ public class SessionInterceptor extends HandlerInterceptorAdapter {
 			        	commSvr.requestLog(SessionUtil.getSessionUserId(), url, reqParam, request.getRemoteAddr());
 			        }
 	    		}
+	    		*/
 			        
 		    	//인기과정
 	   	 		if ( SessionUtil.getFavorityCourseList() == null ) {

@@ -269,18 +269,6 @@ function fn_makeGrid() {
 			        }
 		        ]
 	        },{
-	        	key : "POPULAR_YN", 
-	        	label : "인기 강의 여부", 
-	            width : 110,
-	        	align : "center", 
-	        	editor : { 
-	        		type : "checkbox", 
-	        		config : {height: 17, trueValue: "Y", falseValue: "N"},
-	            	disabled : function () {
-                        return true;
-                    } 
-	        	} 
-	        },{
 	        	key : "CLOSE_YN", 
 	        	label : "강의 종료 여부", 
 	            width : 110,
@@ -436,8 +424,7 @@ function fn_cbChange(id) {
 
 <div>
     <button class="btn btn-default" data-grid-control="search">검색</button>
-    <button class="btn btn-default" data-grid-control="reset">초기화</button>
-    <button class="btn btn-default" data-grid-control="export">엑셀</button>
+    <button class="btn btn-default" data-grid-control="export">엑셀</button>  
     <button class="btn btn-default" data-grid-control="viewContent">학습내용</button>
     <button class="btn btn-default" data-grid-control="viewImage">강의 이미지</button>
 </div>

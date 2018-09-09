@@ -114,8 +114,7 @@ var pageObj = {
 	axAccountList :			{	page : "/ax/account/axAccountList"	},
 	axCompanyList :			{	page : "/ax/account/axCompanyList"	},
 	axCompanyUserList :		{	page : "/ax/account/axCompanyUserList"	},
-	axPointList :			{	page : "/ax/account/axPointList"	},
-	axBoardNoticeList :		{	page : "/ax/board/axBoardNoticeList"	},
+	axPointList :			{	page : "/ax/account/axPointList"	},	axBoardNoticeList :		{	page : "/ax/board/axBoardNoticeList"	},
 	axBoardFaqList :		{	page : "/ax/board/axBoardFaqList"	},
 	axBoardReportList :		{	page : "/ax/board/axBoardReportList"	},
 	axBoardDataList :		{	page : "/ax/board/axBoardDataList"	},
@@ -129,6 +128,7 @@ var pageObj = {
 	axCodeList :			{	page : "/ax/setting/axCodeList"	},
 	axLogList :				{	page : "/ax/log/axLogList"	},
 	axCourseCodeListCm : 	{	page : "/ax/contentsManager/axCourseCodeList"	},
+	axCourseListCm :		{	page : "/ax/contentsManager/axCourseList"	},
 	axIncomeListCm :		{	page : "/ax/contentsManager/axIncomeList"	},
 	axCourseListSm :		{	page : "/ax/siteManager/axCourseList"	},
 	axScoreListSm :			{	page : "/ax/siteManager/axScoreList"	},
@@ -233,8 +233,6 @@ function gfn_openMenu(pageId, params) {
 			              	<li><a href="#" class="subMenu linker" onclick="gfn_openMenu('axCodeList'); gfn_subMenu(this);"><span>코드</span></a></li>
 			         	</ul>
 			      	</li>
-	              	<li><a href="#" class="subMenu linker" onclick="f_menuContent('/courseMaster/courseMasterList'); gfn_subMenu(this);"><span>과정 Master</span></a></li>
-			      	
 </c:if>
 <c:if test="${auth eq 'CONTENTS_MANAGER'}">         		
 	          		<li><a href="#" class="mainMenu linker" onclick="gfn_menu(this)" id="cmFirstGroup"><span>과정 관리</span></a>
@@ -246,6 +244,7 @@ function gfn_openMenu(pageId, params) {
 			              	<li><a href="#" class="subMenu linker" onclick="gfn_openMenu('axCourseExamTypeList'); gfn_subMenu(this);"><span>과정 시험 유형 관리</span></a></li>
 			         	</ul>
 			      	</li>
+	          		<li><a href="#" class="mainMenu linker" onclick="gfn_openMenu('axCourseListCm'); gfn_menu(this)"><span>강의 관리</span></a></li>
 	          		<li><a href="#" class="mainMenu linker" onclick="gfn_openMenu('axIncomeListCm'); gfn_menu(this)"><span>수입 관리</span></a></li>
 </c:if>
 <c:if test="${auth eq 'SITE_MANAGER'}">         		
