@@ -70,5 +70,4 @@
 		<param-name>log4jConfigLocation</param-name>
 		<param-value>/WEB-INF/log4j.xml</param-value>
 	</context-param>
-
 </web-app>

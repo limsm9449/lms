@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.qp.lms.ax.course.service.AxCourseService;
 import com.qp.lms.common.Constant;
+import com.qp.lms.common.SessionUtil;
+import com.qp.lms.common.service.CommService;
 
 @Controller
 public class AxCourseController {
@@ -24,11 +26,16 @@ public class AxCourseController {
 
     @Autowired
     private AxCourseService svr;
-
+    
+    @Autowired
+    private CommService commSvr;
+    
     @RequestMapping(value = "/course/axCourseList", method = RequestMethod.POST, consumes = "application/json" )
     public @ResponseBody HashMap<String,Object> axCourseList(@RequestBody HashMap<String, Object> paramMap, HttpServletRequest request, HttpServletResponse response) throws Exception {
     	HashMap<String, Object> hm = new HashMap<String, Object>();
 
+    	commSvr.requestLog(SessionUtil.getSessionUserId(), request.getRequestURI(), paramMap.toString(), request.getRemoteAddr());
+    	
     	try {
     		hm = svr.axCourseList(paramMap);
     	} catch ( Exception e ) {
@@ -41,7 +48,9 @@ public class AxCourseController {
     @RequestMapping(value = "/course/axCourseSave", method = RequestMethod.POST, consumes = "application/json" )
     public @ResponseBody HashMap<String,Object> axCourseSave(@RequestBody HashMap<String, Object> paramMap, HttpServletRequest request, HttpServletResponse response) throws Exception {
     	HashMap<String, Object> hm = new HashMap<String, Object>();
-    	
+
+    	commSvr.requestLog(SessionUtil.getSessionUserId(), request.getRequestURI(), paramMap.toString(), request.getRemoteAddr());
+
 		try {
     		hm = svr.axCourseSave(paramMap);
     	} catch ( Exception e ) {
@@ -55,6 +64,8 @@ public class AxCourseController {
     @RequestMapping(value = "/course/axCourseContentsList", method = RequestMethod.POST, consumes = "application/json" )
     public @ResponseBody HashMap<String,Object> axCourseContentsList(@RequestBody HashMap<String, Object> paramMap, HttpServletRequest request, HttpServletResponse response) throws Exception {
     	HashMap<String, Object> hm = new HashMap<String, Object>();
+
+    	commSvr.requestLog(SessionUtil.getSessionUserId(), request.getRequestURI(), paramMap.toString(), request.getRemoteAddr());
 
     	try {
     		hm = svr.axCourseContentsList(paramMap);
@@ -96,7 +107,9 @@ public class AxCourseController {
     public @ResponseBody HashMap<String,Object> axCourseTutorSave(@RequestBody HashMap<String, Object> paramMap, HttpServletRequest request, HttpServletResponse response) throws Exception {
     	HashMap<String, Object> hm = new HashMap<String, Object>();
     	
-		try {
+    	commSvr.requestLog(SessionUtil.getSessionUserId(), request.getRequestURI(), paramMap.toString(), request.getRemoteAddr());
+
+    	try {
     		hm = svr.axCourseTutorSave(paramMap);
     	} catch ( Exception e ) {
     		e.printStackTrace();
@@ -109,6 +122,8 @@ public class AxCourseController {
     @RequestMapping(value = "/course/axCourseUserTutorList", method = RequestMethod.POST, consumes = "application/json" )
     public @ResponseBody HashMap<String,Object> axCourseUserTutorList(@RequestBody HashMap<String, Object> paramMap, HttpServletRequest request, HttpServletResponse response) throws Exception {
     	HashMap<String, Object> hm = new HashMap<String, Object>();
+
+    	commSvr.requestLog(SessionUtil.getSessionUserId(), request.getRequestURI(), paramMap.toString(), request.getRemoteAddr());
 
     	try {
     		hm = svr.axCourseUserTutorList(paramMap);
@@ -123,6 +138,8 @@ public class AxCourseController {
     public @ResponseBody HashMap<String,Object> axCourseUserTutorSave(@RequestBody HashMap<String, Object> paramMap, HttpServletRequest request, HttpServletResponse response) throws Exception {
     	HashMap<String, Object> hm = new HashMap<String, Object>();
     	
+    	commSvr.requestLog(SessionUtil.getSessionUserId(), request.getRequestURI(), paramMap.toString(), request.getRemoteAddr());
+
 		try {
     		hm = svr.axCourseUserTutorSave(paramMap);
     	} catch ( Exception e ) {

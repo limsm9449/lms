@@ -59,13 +59,14 @@ public class SessionInterceptor extends HandlerInterceptorAdapter {
 	    	if ( url.indexOf("/resources/") > -1 ) {
 	    		return true;
 	    	} else {
-	    		/*
 		    	// request 로그 
-	    		if ( url.indexOf("/log/axLogList") < 0 &&
+	    		if ( url.indexOf("/axA") < 0 && url.indexOf("/axB") < 0 && url.indexOf("/axC") < 0 && url.indexOf("/axD") < 0 && url.indexOf("/axE") < 0 &&
+	    				url.indexOf("/axF") < 0 && url.indexOf("/axG") < 0 && url.indexOf("/axH") < 0 && url.indexOf("/axI") < 0 && url.indexOf("/axJ") < 0 &&
+	    				url.indexOf("/axK") < 0 && url.indexOf("/axL") < 0 && url.indexOf("/axM") < 0 && url.indexOf("/axN") < 0 && url.indexOf("/axO") < 0 &&
+	    				url.indexOf("/axP") < 0 && url.indexOf("/axQ") < 0 && url.indexOf("/axR") < 0 && url.indexOf("/axS") < 0 && url.indexOf("/axT") < 0 &&
+	    				url.indexOf("/axU") < 0 && url.indexOf("/axV") < 0 && url.indexOf("/axW") < 0 && url.indexOf("/axX") < 0 && url.indexOf("/axY") < 0 && url.indexOf("/axZ") < 0 &&
 	    				url.indexOf("/home/adminHome") < 0 &&
-	    				url.indexOf("/adminLeft") < 0 &&
-	    				url.indexOf("/common/axDd") < 0 &&
-	    				url.indexOf("/common/axOpenPage") < 0 ) {
+	    				url.indexOf("/adminLeft") < 0 ) {
 			    	String reqParam = "";
 			    	
 			    	if ( request.getMethod().equals("POST") ) {
@@ -75,7 +76,6 @@ public class SessionInterceptor extends HandlerInterceptorAdapter {
 			    		    String[] values = entry.getValue();
 			    		    reqParam += name + "=" + Arrays.toString(values) + "&";
 			    		}
-			    	    //reqParam = request.getReader().lines().collect(Collectors.joining(System.lineSeparator()));
 			    	} else {
 			    		Enumeration e = request.getParameterNames();
 				        while ( e.hasMoreElements() ) {
@@ -88,15 +88,13 @@ public class SessionInterceptor extends HandlerInterceptorAdapter {
 				            }
 				        }
 			    	} 
-			    	
-			        if ( (SessionVO)SessionUtil.getSession() == null) {
+				    if ( (SessionVO)SessionUtil.getSession() == null) {
 			        	commSvr.requestLog("Guest", url, reqParam, request.getRemoteAddr());
 			        } else {
 			        	commSvr.requestLog(SessionUtil.getSessionUserId(), url, reqParam, request.getRemoteAddr());
 			        }
 	    		}
-	    		*/
-			        
+	    		
 		    	//인기과정
 	   	 		if ( SessionUtil.getFavorityCourseList() == null ) {
 	   	 			SessionUtil.setAttribute("favorityCourseList", commSvr.getFavorityCourseList());
