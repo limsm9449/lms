@@ -73,7 +73,7 @@ function lfn_btn(pKind, pParam) {
     	<!-- contents -->
 		<div id="contents" class="site">
 			<!-- location -->
-			<div id="location"><a href="/" class="home">HOME</a><span>&gt;</span>나의강의실<span>&gt;</span>수강대기/취소과정</div>
+			<div id="location"><a href="/" class="home">HOME</a><span>&gt;</span>나의강의실<span>&gt;</span>수강대기과정</div>
 			<!-- title -->
 			<h3 class="tit_big">수강대기과정</h3>
 		      <div class="artcle">

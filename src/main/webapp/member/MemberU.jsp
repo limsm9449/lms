@@ -175,31 +175,13 @@ function lfn_validate() {
 						<tr>
 							<th >전화번호</th>
 							<td class="no_line">
-								<select id="homeTel1" name="homeTel1">
-					              	<option value="">전체</option>
-									<c:forEach var="row" items="${set.ddTel}">
-						              	<option value="${row.ddKey}"<c:if test="${set.data.homeTel1 == row.ddKey}">selected</c:if>>${row.ddValue}</option>
-									</c:forEach>
-								</select>
-								-
-								<input type="text" id="homeTel2" name="homeTel2" style="width:60px" maxlength="4" title="전화번호 중간 번호" value="${set.data.homeTel2}">
-								-
-								<input type="text" id="homeTel3" name="homeTel3" style="width:60px" maxlength="4" title="전화번호 마지막 번호" value="${set.data.homeTel3}">
+								<input type="text" id="homeTel" name="homeTel" style="width:120px" maxlength="13" value="${set.data.homeTel}">
 							</td>
 						</tr>
 						<tr>
 							<th>휴대전화번호 *</th>
 							<td class="no_line">
-								<select id="mobile1" name="mobile1">
-					              	<option value="">전체</option>
-									<c:forEach var="row" items="${set.ddMobile}">
-						              	<option value="${row.ddKey}"<c:if test="${set.data.mobile1 == row.ddKey}">selected</c:if>>${row.ddValue}</option>
-									</c:forEach>
-								</select>
-								-
-								<input type="text" id="mobile2" name="mobile2" style="width:60px" maxlength="4" title="휴대전화 중간 번호" value="${set.data.mobile2}">
-								-
-								<input type="text" id="mobile3" name="mobile3" style="width:60px" maxlength="4" title="휴대전화 마지막 번호" value="${set.data.mobile3}">
+								<input type="text" id="mobile" name="mobile" style="width:120px" maxlength="13" value="${set.data.mobile}">
 							</td>
 						</tr>
 						<tr>

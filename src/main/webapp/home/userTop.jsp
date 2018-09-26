@@ -66,7 +66,7 @@
         		</div>
           </li>
           
-          <li><a href="javascript:" onclick="page.goPage('/user/courseList');" id="top2">수강신청</a>
+          <li><a href="javascript:" onclick="page.goPage('/main/courseList');" id="top2">수강신청</a>
             <div id="menu_wrap">
         			<ul class="main_gnb" style="margin-left: 280px;">
         				<li><span>교육과정</span>

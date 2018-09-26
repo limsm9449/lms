@@ -1,16 +1,24 @@
-<%--
-	강좌 샘플 팝업
---%>
 <%@ page contentType="text/html;charset=utf-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
-<html>
+<!DOCTYPE html>
+<html lang='ko'>
+
 <head>
-	<title>강의 Sample 미리보기</title>
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+    <title>Popup Sample</title>
+
+    <!--[if IE]>
+        <link rel='stylesheet' href='./css/main_ie.css'>
+    <![endif]-->
+
+	<%@ include file="../common/commMainPopupInclude.jsp" %>
+	
 </head>
 
-<%@ include file="../common/commAdminInclude.jsp" %>
 
 <script type="text/javascript" src="/resources/js/qpApi.js"></script>
 
@@ -39,22 +47,32 @@ $(document).ready(function() {
 
 </script>
 
-<body onunload="Popup.hideAllPopup()">
-
-<form name="frm" method="post">
-</form>
-
-<div id="study_popup_wrap">
-  	<div class="study_header">
-    	<h3 class="title">${set.data.courseName}</h3>
-  	</div>
-  	<div class="study_content" style="width: ${set.data.hPx}px; height: ${set.data.vPx}px;">
-		<iframe name="eduContent" id="eduContent" src="about:blank;">학습 컨텐츠 영역</iframe>
-	</div>
-</div>
-
-
+<body>
+    <div class='wrap'>
+        <div class='lecture_head clear_fix'>
+            <p class='lecture_title'>
+                ${set.data.courseName}
+            </p>
+        </div>
+	  	<div class="study_content" style="width: ${set.data.hPx}px; height: ${set.data.vPx}px;">
+			<iframe name="eduContent" id="eduContent" src="about:blank;" style="width: ${set.data.hPx}px; height: ${set.data.vPx}px;">학습 컨텐츠 영역</iframe>
+		</div> 
+        <div class='btn_area'>
+            <button onclick='new_window("popup_exam")'>시험 응시</button>
+            <button onclick='new_window("popup_exam_result")'>시험 결과</button>
+            <button onclick='new_window("popup_survey")'>설문</button>
+            <button onclick='new_window("popup_report_submit")'>과정리포트 제출</button>
+            <button onclick='new_window("popup_report_result")'>과정리포트 채점결과</button>
+            <button onclick='new_window("popup_report_manage")' class='last_right'>과정리포트 첨삭관리</button>
+        </div>
+    </div>
+	<form name="frm" method="post">
+	</form>
 </body>
 
 
 </html>
+
+
+
+

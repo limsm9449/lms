@@ -9,7 +9,7 @@
 
 <%@ include file="../common/commAdminInclude.jsp" %>
 
-<script type="text/javascript" src="/resources/js/qpApi.js"></script>
+<script type="text/javascript" src="/resources/js/qpApi.js?timestamp=<%=timestamp%>""></script>
 
 <script type="text/javascript">
 var gCondition = {
@@ -31,7 +31,7 @@ $(document).ready(function() {
 	<%-- 초기값 세팅 --%>
 	<c:choose>
 		<c:when test="${set.condiVO.week ne ''}">
-			QP_API.init(${set.condiVO.courseId}, ${set.condiVO.week}, ${set.data.lastPage}, ${set.data.totalWeek}, true, false); 
+			QP_API.init(${set.condiVO.courseId}, ${set.condiVO.week}, ${set.condiVO.page}, ${set.data.totalWeek}, true, false); 
 		</c:when>
 		<c:otherwise>
 			QP_API.init(${set.condiVO.courseId}, ${set.data.lastWeek}, ${set.data.lastPage}, ${set.data.totalWeek}, true, false);

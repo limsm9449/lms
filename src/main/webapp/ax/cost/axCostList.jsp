@@ -55,13 +55,15 @@ $(document.body).ready(function () {
 	        	for ( var i = 0; i < rows.length; i++ ) {
 					if ( rows[i].STATUS != "B" && rows[i].STATUS != "C") {
 	            		mask.open();
-	            		dialog.alert( { msg : (rows[i].__index + 1) + " 라인 : 은행입금 또는 거정(사용자 취소)이 아닙니다."	}, function () { mask.close();	} );
+	            		dialog.alert( { msg : (rows[i].__index + 1) + " 라인 : 은행입금 또는 거걸(사용자 취소)이 아닙니다."	}, function () { mask.close();	} );
 	            		return;
 					}		        			
 	        	}
 	        	for ( var i = 0; i < rows.length; i++ ) {
 					grid.setValue(rows[i].__index, "STATUS", "A");
 	        	}
+	        	
+	        	grid.repaint();
 	        	
 	            break;
 	        case "approvalToBank":
@@ -87,6 +89,8 @@ $(document.body).ready(function () {
 					grid.setValue(rows[i].__index, "STATUS", "B");
 	        	}
 	        	
+	        	grid.repaint();
+	        	
 	            break;
 	        case "reject":
 	        	var rows = grid.getList("selected");
@@ -105,6 +109,8 @@ $(document.body).ready(function () {
 	        	for ( var i = 0; i < rows.length; i++ ) {
 					grid.setValue(rows[i].__index, "STATUS", "C");
 	        	}
+	        	
+	        	grid.repaint();
 	        	
 	            break;
 	        case "refund":

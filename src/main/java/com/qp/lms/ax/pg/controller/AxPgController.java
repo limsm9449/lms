@@ -30,7 +30,7 @@ public class AxPgController {
     @Autowired
     private CommService commSvr;
 
-    @RequestMapping(value = "/pg/axApplication", method = RequestMethod.POST )
+    @RequestMapping(value = "/paymentGateway/axApplication", method = RequestMethod.POST )
     public String axApplication(@RequestParam HashMap<String,Object> paramMap, HttpServletRequest request, HttpServletResponse response, Model model) throws Exception {
     	try {
     		svr.axApplication(paramMap, model);
@@ -54,7 +54,7 @@ public class AxPgController {
     	return "/pg/axApplication";
     }
 
-    @RequestMapping(value = "/pg/axApproval", method = RequestMethod.POST )
+    @RequestMapping(value = "/paymentGateway/axApproval", method = RequestMethod.POST )
     public String axApproval(@RequestParam HashMap<String,Object> paramMap, HttpServletRequest request, HttpServletResponse response, Model model) throws Exception {
     	HashMap<String, Object> hm = new HashMap<String, Object>();
 
@@ -69,7 +69,7 @@ public class AxPgController {
     	return "/common/json";
     }
 
-    @RequestMapping(value = "/pg/ppAxHub", method = RequestMethod.POST)
+    @RequestMapping(value = "/paymentGateway/ppAxHub", method = RequestMethod.POST)
     public String ppAxHub(@RequestParam HashMap<String,Object> paramMap, HttpServletRequest request, HttpServletResponse response, Model model) throws Exception {
 
     	String serverMode = commSvr.getSetting("SERVER_MODE");
@@ -100,7 +100,7 @@ public class AxPgController {
     	}
     }
 
-    @RequestMapping(value = "/pg/result", method = RequestMethod.POST)
+    @RequestMapping(value = "/paymentGateway/result", method = RequestMethod.POST)
     public String result(@RequestParam HashMap<String,Object> paramMap, HttpServletRequest request, HttpServletResponse response, Model model) throws Exception {
    		return "/pg/pp_result";
     }

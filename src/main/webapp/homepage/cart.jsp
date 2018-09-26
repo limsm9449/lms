@@ -17,18 +17,20 @@
 </head>
 
 <script type="text/javascript">
-$(document).ready(function() {
-	f_makePageNavigator("paging",${set.condiVO.pageNum},${set.totalCount},${set.pageUnit});
-});
 
 function lfn_btn(pKind, pParam) {
 	if ( pKind == "cartApplication" ) {
-		if ( $("#chk").length == 0 ) {
+		if ( $('input:checkbox[name="chk"]:checked').length == 0 ) {
 			alert("신청할 과정이 없습니다.");
 			return false;
 		}
 		if ( confirm("해당 과정으로 결재하시겠습니까?") == true ) {
-			gfn_goPage("/main/cartApplication"); 
+			var cb = $('input:checkbox[name="chk"]:checked');
+			var courseIds = "";
+			for ( var i = 0; i < cb.length; i++ ) {
+				courseIds += (courseIds == "" ? "" : ",") + cb[i].value;
+			}
+			gfn_goPage("/paymentGateway/cartPay", "courseId=" + courseIds); 
 		}
 	} else if ( pKind == "cartDel" ) {
 		if ( confirm("장바구니에서 삭제 하시겠습니까?") == true ) {
@@ -51,8 +53,6 @@ function lfn_btn(pKind, pParam) {
 <body>
 
 <form name="frm" id="frm" method="post">
-
-<input id="courseId" name="courseId" type="hidden" value="">
 
 <!-- skipnav -->
 <div id="skipnav"><a href="#side" class="skip">좌측메뉴 바로가기</a></div>

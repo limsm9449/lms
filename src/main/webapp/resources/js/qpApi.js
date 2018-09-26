@@ -57,7 +57,7 @@ var QP_API = {
 		if ( pages[currentWeek - 1] == 0 || currentPage == pages[currentWeek - 1] ) {
 			//마지막 페이지이면...
 			if ( currentWeek == totalWeek ) {
-				alert("마지막 페이지입니다.");
+				alert("해당 차시의 마지막 페이지입니다.");
 			}
 
 			//이전 페이지 완료 처리
@@ -66,9 +66,9 @@ var QP_API = {
 			//다음 차시를 구한다.
 			//currentWeek = currentWeek + 1;
 			var isNext = false;
-			for ( i = currentWeek; i < totalWeek; i++ ) {
+			for ( i = currentWeek + 1; i < totalWeek; i++ ) {
 				if ( weeks[i] != 0 && pages[i] != 0) {
-					currentWeek = i + 1;
+					currentWeek = i;
 					isNext = true;
 					break;
 				}
@@ -76,8 +76,11 @@ var QP_API = {
 			
 			console.log("currentWeek : " + currentWeek);
 			
-			if ( isNext == false && isSample == true) {
-				alert("마지막 페이지 입니다.");
+			if ( isNext == false && isSample == false) {
+				alert("과정의 진도가 끝났습니다. 레포트, 시험, 설문지 작성을 해주세요.");
+				//설문지, 레포트 보여주기
+			} else if ( isNext == false && isSample == true) {
+				alert("과정의 진도가 끝났습니다.");
 			} else {
 				//다음 차수 오픈
 				QP_API.openWeek(currentWeek);
@@ -171,9 +174,9 @@ var QP_API = {
 	openLastPage : function() {
 		document.frm.action = contents + directorys[currentWeek - 1] + QP_API.currPageHtml();
 		document.frm.target = "eduContent";
-		document.frm.method = "GET";	
+		//document.frm.method = "GET";	
 		document.frm.submit();
-
+ 
 		//현재 페이지 시작 처리
 		QP_API.updPage();
 	},
@@ -184,7 +187,7 @@ var QP_API = {
 	updPrevPage : function() {
 		if ( isSaveOk == true ) {
 			$.ajax({
-				//async : false,
+				async : false,
 				type : "POST",
 				url : context + "/education/updPrevPage.do",
 				dataType : "json",
@@ -203,7 +206,7 @@ var QP_API = {
 	updPage : function() {
 		if ( isSaveOk == true ) {
 			$.ajax({
-				//async : false,
+				async : false,
 				type : "POST",
 				url : context + "/education/updPage.do",
 				dataType : "json",
@@ -211,6 +214,7 @@ var QP_API = {
 					    week : currentWeek,
 					    page : currentPage},
 				success : function(json){
+					console.log("updPage success");
 				}
 			});
 		}

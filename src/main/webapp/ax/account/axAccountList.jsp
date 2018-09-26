@@ -44,7 +44,8 @@ $(document.body).ready(function () {
             		{
             			NEW_FLAG : "Y", 
             			USER_ID : "******", 
-            			USER_NAME : "사용자명을 입력하세요.", 
+            			USER_NAME : "사용자명을 입력하세요.",
+            			COMP_CD : "B2C",
 		            	ADMIN_YN : "N",
 		            	SITE_MANAGER_YN : "N",
 		            	CONTENTS_MANAGER_YN : "N",

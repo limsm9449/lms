@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="pg">
+	
+	<!-- 결재할 과정 리스트 -->
+	<select id="applicationCourseList" resultType="Course">
+	SELECT D.CATEGORY_NAME
+	       ,A.COURSE_ID
+	       ,B.COURSE_NAME
+	       ,A.COURSE_COST
+	       ,A.COURSE_CODE
+	       ,DATE_FORMAT(CURDATE(),'%y.%m.%d') C_FROM_DATE
+	       ,DATE_FORMAT(DATE_ADD(CURDATE(),INTERVAL A.C_PERIOD DAY),'%y.%m.%d') C_TO_DATE
+	       ,A.C_PERIOD C_PERIOD
+	  FROM COURSE A LEFT OUTER JOIN COURSE_CODE B ON A.COURSE_CODE = B.COURSE_CODE
+		                LEFT OUTER JOIN (
+							   SELECT C3.CODE C3_CODE,
+								  C2.CODE C2_CODE,
+								  C1.CODE C1_CODE,
+								  CONCAT(C1.CODE_NAME,' > ',C2.CODE_NAME,' > ',C3.CODE_NAME) CATEGORY_NAME
+								 FROM CATEGORY C3 LEFT OUTER JOIN CATEGORY C2 ON C3.PARENT_CODE = C2.CODE
+									      LEFT OUTER JOIN CATEGORY C1 ON C2.PARENT_CODE = C1.CODE
+							    WHERE C3.DEPTH = 3) D ON B.CODE = D.C3_CODE
+	 WHERE A.COURSE_ID IN 
+	 	<foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+         	#{item}
+ 		</foreach>
+	</select>
+
+	<!-- 결재할 과정의 주차 리스트 -->
+	<select id="applicationCourseWeekList" resultType="Course">
+	SELECT C.WEEK,
+	       C.TITLE,
+	       B.WEEK_COST
+	  FROM COURSE A LEFT OUTER JOIN COURSE_WEEK_COST B ON A.COURSE_ID = B.COURSE_ID
+	                LEFT OUTER JOIN COURSE_RESOURCE C ON C.COURSE_CODE = A.COURSE_CODE AND C.WEEK = B.WEEK 
+	 WHERE A.COURSE_ID = #{courseId}
+	   AND B.WEEK IN 
+	 	<foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+         	#{item}
+ 		</foreach>
+	</select>
+	
+	<select id="courseResourceData" parameterType="Pg" resultType="CourseResource">
+	SELECT WEEK,
+	       TITLE,
+	       WEEK_COST
+	  FROM COURSE_RESOURCE 
+	 WHERE COURSE_CODE = (SELECT COURSE_CODE FROM COURSE WHERE COURSE_ID = #{courseId}) 
+	</select>
+
+	<select id="rejectCourseRegisterDel" parameterType="Pg">
+	DELETE FROM COURSE_REGISTER
+	 WHERE COURSE_ID = #{courseId}
+	   AND USER_ID = #{userId}
+	 </select>
+
+	<select id="rejectCourseEvalDel" parameterType="Pg">
+	DELETE FROM COURSE_EVAL
+	 WHERE COURSE_ID = #{courseId}
+	   AND USER_ID = #{userId}
+	 </select>
+
+	<select id="rejectCourseWeekDel" parameterType="Pg">
+	DELETE FROM COURSE_WEEK
+	 WHERE COURSE_ID = #{courseId}
+	   AND USER_ID = #{userId}
+	 </select>
+	
+	<select id="courseRegisterIns" parameterType="Pg">
+	INSERT INTO COURSE_REGISTER(COURSE_ID,USER_ID,STATUS,COURSE_COST,APPROVAL_ID,CONFIRM_DATE,CREATE_DATE,CREATE_USER)
+	SELECT A.COURSE_ID, 
+	       #{userId},
+	       if(#{paymentKind} = 'CASH','B','A'),
+	       A.COURSE_COST,
+	       #{approvalId},
+	       if(#{paymentKind} = 'CASH',NULL,CURRENT_TIMESTAMP),
+	       CURRENT_TIMESTAMP,
+	       #{createUser}
+	  FROM COURSE A LEFT OUTER JOIN COURSE_CODE B ON A.COURSE_CODE = B.COURSE_CODE
+	 WHERE COURSE_ID = #{courseId}	
+	 </select>
+
+	<select id="approvalIns" parameterType="Pg">
+	INSERT INTO APPROVAL(APPROVAL_ID,USER_ID,STATUS,TOTAL_COST,PAYMENT_POINT,PAYMENT_COST,PAYMENT_KIND,PAYMENT_BANK,PAYMENT_DATE,CREATE_DATE,CREATE_USER, PAY_APPROVAL_ID)
+	VALUES(#{approvalId},#{userId},if(#{paymentKind} = 'CASH','B','A'),#{totalCost},#{paymentPoint},#{paymentCost},#{paymentKind},#{paymentBank},CURRENT_TIMESTAMP,CURRENT_TIMESTAMP,#{createUser}, #{payApprovalId})   
+	</select>	
+
+	<select id="courseEvalIns" parameterType="Pg">
+	INSERT INTO COURSE_EVAL(COURSE_ID,USER_ID,TUTOR_ID,REPORT,EXAM,DISCUSSION,PROGRESS,TOTAL,LAST_WEEK,LAST_PAGE,REPORT_SEQ,CREATE_DATE,CREATE_USER,EXAM_WEEK,EXAM_TOTAL)
+	VALUES (#{courseId},#{userId},#{tutorId},0,0,0,0,0,1,1,#{reportSeq},CURRENT_TIMESTAMP,#{createUser},0,0)
+	</select>
+	
+	<select id="courseWeekIns" parameterType="Pg">
+	INSERT INTO COURSE_WEEK(COURSE_ID,USER_ID,WEEK,PROGRESS_RATE,STUDY_START,STUDY_END)
+	SELECT #{courseId},#{userId},WEEK,0,NULL,NULL
+	  FROM COURSE_RESOURCE
+	 WHERE COURSE_CODE = ( SELECT COURSE_CODE FROM COURSE WHERE COURSE_ID = #{courseId} ) 
+	</select>    
+
+	<select id="courseWeekPartIns">
+	INSERT INTO COURSE_WEEK(COURSE_ID,USER_ID,WEEK,PROGRESS_RATE,STUDY_START,STUDY_END)
+	SELECT #{courseId},#{userId},WEEK,0,NULL,NULL
+	  FROM COURSE_RESOURCE
+	 WHERE COURSE_CODE = ( SELECT COURSE_CODE FROM COURSE WHERE COURSE_ID = #{courseId} ) 
+	   AND WEEK IN 
+	 	<foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+         	#{item}
+ 		</foreach>
+	</select> 	
+
+	<select id="courseRegisterPartIns" parameterType="Pg">
+	INSERT INTO COURSE_REGISTER(COURSE_ID,USER_ID,STATUS,COURSE_COST,APPROVAL_ID,CONFIRM_DATE,CREATE_DATE,CREATE_USER)
+	SELECT A.COURSE_ID, 
+	       #{userId},
+	       if(#{paymentKind} = 'CASH','B','A'),
+	       IFNULL(C.COURSE_COST,0),
+	       #{approvalId},
+	       if(#{paymentKind} = 'CASH',NULL,CURRENT_TIMESTAMP),
+	       CURRENT_TIMESTAMP,
+	       #{createUser}
+	  FROM COURSE A LEFT OUTER JOIN COURSE_CODE B ON A.COURSE_CODE = B.COURSE_CODE
+	                LEFT OUTER JOIN (SELECT COURSE_ID, SUM(WEEK_COST) COURSE_COST
+	                                   FROM COURSE_WEEK_COST
+	                                  WHERE COURSE_ID = #{courseId}
+	                                    AND WEEK IN (SELECT WEEK FROM COURSE_WEEK WHERE COURSE_ID = #{courseId} AND USER_ID = #{userId})
+	                                  GROUP BY COURSE_ID) C ON A.COURSE_ID = C.COURSE_ID	  
+	 WHERE A.COURSE_ID = #{courseId}	
+	 </select>
+	        
+	<select id="userPoint" parameterType="Pg" resultType="Pg">
+		SELECT IFNULL(SUM(IN_POINT - OUT_POINT),0) POINT 
+		  FROM POINT
+		 WHERE USER_ID = #{userId}
+	</select>
+
+	<select id="courseTutors" parameterType="Pg" resultType="Pg">
+		SELECT  TUTOR_ID, 1 FROM_CNT, IFNULL((SELECT MIN(FROM_CNT) FROM COURSE_TUTOR WHERE COURSE_ID = #{courseId} AND USE_YN = 'Y') - 1, 99999) TO_CNT
+		FROM 	COURSE
+		WHERE 	COURSE_ID = #{courseId}
+		UNION 
+		SELECT  TUTOR_ID, FROM_CNT, TO_CNT
+		FROM 	COURSE_TUTOR
+		WHERE 	COURSE_ID = #{courseId}
+		AND		USE_YN = 'Y'
+	</select>
+
+	<select id="courseUserCnt" parameterType="Pg" resultType="int">
+		SELECT 	COUNT(*) + 1 CNT
+		FROM	COURSE_EVAL
+		WHERE 	COURSE_ID = #{courseId}
+	</select>
+
+	<select id="courseReportExist" parameterType="Pg" resultType="String">
+		SELECT 	IF( REPORT_RATE > 0, 'Y', 'N' ) YN
+		FROM	COURSE
+		WHERE 	COURSE_ID = #{courseId}
+	</select>
+
+	<select id="courseRandomReport" parameterType="Pg" resultType="int">
+		SELECT 	IFNULL(MAX(SEQ),0)
+		FROM	COURSE_REPORT
+		WHERE   COURSE_CODE = (SELECT COURSE_CODE FROM COURSE WHERE COURSE_ID = #{courseId})
+		ORDER 	BY  RAND()
+		LIMIT 	1
+	</select>
+
+	<select id="courseList" parameterType="Pg" resultType="Course">
+		SELECT 	A.COURSE_ID,
+		       	B.COURSE_NAME,
+		       	A.COURSE_CODE,
+		       	A.COURSE_COST,
+		       	C.CATEGORY_NAME,
+		       	B.H_Px,
+		       	B.V_Px,
+			   	(SELECT COUNT(*) FROM COURSE_REGISTER WHERE COURSE_ID = A.COURSE_ID AND USER_ID = #{userId}) CNT 
+		FROM 	COURSE A LEFT OUTER JOIN COURSE_CODE B ON A.COURSE_CODE = B.COURSE_CODE
+						  LEFT OUTER JOIN (
+								   SELECT C3.CODE C3_CODE,
+									  C2.CODE C2_CODE,
+									  C1.CODE C1_CODE,
+									  CONCAT(C1.CODE_NAME,' > ',C2.CODE_NAME,' > ',C3.CODE_NAME) CATEGORY_NAME
+									 FROM CATEGORY C3 LEFT OUTER JOIN CATEGORY C2 ON C3.PARENT_CODE = C2.CODE
+										      LEFT OUTER JOIN CATEGORY C1 ON C2.PARENT_CODE = C1.CODE
+								    WHERE C3.DEPTH = 3) C ON B.CODE = C.C3_CODE
+		WHERE 	A.OPEN_YN = 'Y'
+		AND		A.CLOSE_YN = 'N'
+		AND		( IFNULL(A.TERM_YN,'N') = 'N' OR ( A.TERM_YN = 'Y' AND DATE_FORMAT(CURDATE(),'%Y-%m-%d') BETWEEN A.TERM_PERIOD_FROM AND A.TERM_PERIOD_TO ) )
+		<if test="c1Code != null and c1Code != ''"> AND C.C1_CODE = #{c1Code}</if>
+		<if test="c2Code != null and c2Code != ''"> AND C.C2_CODE = #{c2Code}</if>
+		<if test="c3Code != null and c3Code != ''"> AND C.C3_CODE = #{c3Code}</if>
+		<if test="courseName != null and courseName != ''"> AND B.COURSE_NAME LIKE CONCAT('%',#{courseName},'%')</if>
+		ORDER BY B.COURSE_NAME
+	</select>	        
+</mapper>

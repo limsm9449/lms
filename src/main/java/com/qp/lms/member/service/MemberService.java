@@ -79,36 +79,6 @@ public class MemberService {
     	MemberVO vo = (MemberVO)sqlSession.selectOne("member.userData",set.getCondiVO());
     	if ( vo != null ) {
     		vo.setHomeAddr2(vo.getHomeAddr());
-    		if ( vo.getHomeZip() != null && !"".equals(vo.getHomeZip()) ) {
-	    		String[] homeZip = vo.getHomeZip().replaceAll("-"," - ").split("-");
-	    		vo.setHomeZip1(homeZip[0].trim());
-	    		vo.setHomeZip2(homeZip[1].trim());
-    		} else {
-	    		vo.setHomeZip1("");
-	    		vo.setHomeZip2("");
-    		}
-    		
-    		if ( vo.getHomeTel() != null && !"".equals(vo.getHomeTel()) ) {
-    			String[] homeTel = vo.getHomeTel().replaceAll("-"," - ").split("-");
-	    		vo.setHomeTel1(homeTel[0].trim());
-	    		vo.setHomeTel2(homeTel[1].trim());
-	    		vo.setHomeTel3(homeTel[2].trim());
-    		} else {
-	    		vo.setHomeTel1("");
-	    		vo.setHomeTel2("");
-	    		vo.setHomeTel3("");
-    		}
-    		
-    		if ( vo.getMobile() != null && !"".equals(vo.getMobile()) ) { 
-	    		String[] mobile = vo.getMobile().replaceAll("-"," - ").split("-");
-	    		vo.setMobile1(mobile[0].trim());
-	    		vo.setMobile2(mobile[1].trim());
-	    		vo.setMobile3(mobile[2].trim());
-    		} else {
-	    		vo.setMobile1("");
-	    		vo.setMobile2("");
-	    		vo.setMobile3("");
-    		}
     	}
     	
     	set.setData(vo);
@@ -411,13 +381,6 @@ public class MemberService {
     @Transactional(propagation=Propagation.REQUIRED, rollbackFor={Throwable.class})
     public MemberSet userMemberUpd(MemberSet set) throws Exception {
     	MemberVO vo = set.getCondiVO();
-    	vo.setHomeTel(vo.getHomeTel1() + "-" + vo.getHomeTel2() + "-" + vo.getHomeTel3());
-    	vo.setMobile(vo.getMobile1() + "-" + vo.getMobile2() + "-" + vo.getMobile3());
-
-    	if ( "--".equals(vo.getMobile()) )
-    		vo.setMobile("");
-    	if ( "--".equals(vo.getHomeTel()) )
-    		vo.setHomeTel("");
     	
    		sqlSession.update("member.userUpdateForUser",set.getCondiVO());
     	

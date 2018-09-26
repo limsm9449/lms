@@ -30,7 +30,7 @@ function lfn_goUserMenu(pKind) {
 	<h2>수강<span class="blue">신청</span></h2>
 	<ul class="snb">
 		<li class="l_head">교육과정</li>
-		<li><a href="javascript:" onclick="page.goPage('/user/courseList');"<% if ( menuId.equals("courseAll") ) { %>class="here"<% } %> >전체 교육과정</a></li>
+		<li><a href="javascript:" onclick="page.goPage('/main/courseList');"<% if ( menuId.equals("courseAll") ) { %>class="here"<% } %> >전체 교육과정</a></li>
 <c:forEach var="row" items="${favorityCourseList}" varStatus="idx">
        	<li><a href="javascript:" onclick="page.goPage('/main/mainCourseData','courseId=${row.courseId}');"<c:if test="${row.courseId eq courseId}">class="here"</c:if> >${row.courseName}</a></li>
 </c:forEach>    

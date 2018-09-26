@@ -29,7 +29,7 @@ $(document.body).ready(function () {
 	if ( screen == "Quest" ) {
 		$("#columns").val("TYPE,QUESTION,QA1,QA2,QA3,QA4,USE_YN");
 	} else if ( screen == "Exam" ) {
-		$("#columns").val("TYPE,QUESTION,QA1,QA2,QA3,QA4,ANSWER,WEEK,LEVEL,USE_YN");
+		$("#columns").val("TYPE,QUESTION,QA1,QA2,QA3,QA4,ANSWER,ANSWER_DESC,WEEK,LEVEL,USE_YN");
 	} else if ( screen == "CourseResource" ) {
 		$("#columns").val("WEEK,TITLE,DIRECTORY,PAGE_CNT,PREVIEW_PAGE");
 	} else if ( screen == "CompanyUser" ) {

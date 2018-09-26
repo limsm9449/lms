@@ -46,6 +46,7 @@ $(document.body).ready(function () {
                         columnKeys: { optionValue: "CD", optionText: "NM" },
                         options: [
                             {CD: "G", NM: "객관식"},
+                            {CD: "M", NM: "복수형"},
                             {CD: "J", NM: "주관식"}
                         ]
                     } 
@@ -460,6 +461,7 @@ function fn_callbackAjax(data, id) {
       				QA3 : data.list[i].QA3, 
       				QA4 : data.list[i].QA4, 
       				ANSWER : data.list[i].ANSWER, 
+      				ANSWER_DESC : data.list[i].ANSWER_DESC, 
       				WEEK : data.list[i].WEEK, 
       				LEVEL : data.list[i].LEVEL, 
       				USE_YN : data.list[i].USE_YN

@@ -37,7 +37,7 @@ public class LoginService {
     		if ( "N".equals(loginVO.getCertificationYn()) ) {
     			set.setIsNotCertification("Y"); 
     		} else {
-	    		if ( CommUtil.isEqual(set.getCondiVO().getCompCd(), "") == false && CommUtil.isEqual(set.getCondiVO().getCompCd(), loginVO.getCompCd()) == false ) {
+	    		if ( CommUtil.isEqual(set.getCondiVO().getCompCd(), "B2C") == false && CommUtil.isEqual(set.getCondiVO().getCompCd(), loginVO.getCompCd()) == false ) {
 	    			set.setIsNotExistUserId("Y");
 	    		} else {
 	    			set.setData(loginVO);

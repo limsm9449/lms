@@ -301,7 +301,7 @@ function fn_makeGrid() {
 			            width : 90,
 			            align : "right",
 			            formatter : function () {
-			                return this.item.REPORT_RATE + this.item.EXAM_RATE + this.item.DISCUSSION_RATE + this.item.PROGRESS_RATE;
+			                return ax5.util.number(this.item.REPORT_RATE) + ax5.util.number(this.item.EXAM_RATE) + ax5.util.number(this.item.DISCUSSION_RATE) + ax5.util.number(this.item.PROGRESS_RATE);
 			           	}
 			        }
 		        ]
@@ -589,6 +589,13 @@ function fn_callbackAjax(data, id) {
 function fn_gridEvent(event, obj) {
 	if ( event == "Click" ) {
 		obj.self.select(obj.dindex);
+	} else if ( event == "DataChanged" ) {
+		if ( obj.key == "REPORT_RATE" ||
+				obj.key == "EXAM_RATE" ||
+				obj.key == "DISCUSSION_RATE" ||
+				obj.key == "PROGRESS_RATE" ) {
+			grid.repaint();
+		}
 	}
 }
 

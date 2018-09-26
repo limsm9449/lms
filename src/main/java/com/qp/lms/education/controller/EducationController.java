@@ -111,7 +111,7 @@ public class EducationController {
     		e.printStackTrace();
     	}
 
-        return "common/json";
+        return "/common/json";
     }
 
     /*
@@ -130,7 +130,7 @@ public class EducationController {
     		e.printStackTrace();
     	}
 
-        return "common/json";
+        return "/common/json";
     }
 
     /**

@@ -385,6 +385,7 @@ public class UserService {
         return set ;
     }
 
+    /*
 	public UserSet courseList(UserSet set) throws Exception {
     	// 카테고리 대분류 
     	set.setDdCategory1Depth(ddService.getDdCategory1Depth());
@@ -409,6 +410,7 @@ public class UserService {
     	
     	return set;
     }
+    */
 
 
 }

@@ -15,6 +15,7 @@ import com.qp.lms.common.CodeVO;
 import com.qp.lms.common.CommUtil;
 import com.qp.lms.common.Constant;
 import com.qp.lms.common.SessionUtil;
+import com.qp.lms.common.service.DdService;
 import com.qp.lms.course.model.CourseResourceVO;
 import com.qp.lms.course.model.CourseVO;
 import com.qp.lms.guest.model.BankVO;
@@ -27,6 +28,9 @@ public class MainService {
 	@Autowired
 	private SqlSession sqlSession;
 
+	@Autowired
+	private DdService ddService;
+
 	public MainSet mainCourseList(MainSet set) throws Exception {
     	//쿼리에서 가져올 갯수 지정
     	set.getCondiVO().setLimitUnit(Constant.unitForMain);
@@ -37,7 +41,11 @@ public class MainService {
     	//페이징 처리 변수 세팅
     	set.setTotalCount(((CourseVO)sqlSession.selectOne("main.mainCourseTotal",set.getCondiVO())).getCnt());
     	set.setPageUnit(Constant.unitForMain);
-    	
+
+    	//카테고리 리스트
+    	List<CourseVO> categoryList = sqlSession.selectList("main.categoryList",set.getCondiVO());
+    	set.setCategoryList(categoryList);
+
     	return set;
     }
 	
@@ -108,7 +116,7 @@ public class MainService {
     	return set;
     }
 	
-	public MainSet application(MainSet set) throws Exception {
+	/*public MainSet application(MainSet set) throws Exception {
 		Map map = new HashMap();
 		
 		List al = new ArrayList();
@@ -177,10 +185,10 @@ public class MainService {
     	set.setRtnMode(Constant.mode.OK.name());
     	
     	return set;
-    }
+    }*/
 	
 	/////////////////////////////////////////////////////////////////////////////////////////
-	@Transactional(propagation=Propagation.REQUIRED, rollbackFor={Throwable.class})
+	/*@Transactional(propagation=Propagation.REQUIRED, rollbackFor={Throwable.class})
 	public MainSet approval(MainSet set) throws Exception {
 		set.getCondiVO().setUserId(SessionUtil.getSessionUserId());
 		set.getCondiVO().setCreateUser(SessionUtil.getSessionUserId());
@@ -259,7 +267,7 @@ public class MainService {
 		set.setRtnMode(Constant.mode.OK.name());
 		
     	return set;
-    }
+    }*/
 	
 	public MainSet mailQuestion(MainSet set) throws Exception {
 		List<CodeVO> ddMailList = sqlSession.selectList("comm.getDdMail",null);
@@ -268,4 +276,23 @@ public class MainService {
     	return set;
     }
 
+
+	
+	public MainSet courseList(MainSet set) throws Exception {
+    	// 카테고리 대분류 
+    	set.setDdCategory1Depth(ddService.getDdCategory1Depth());
+    	
+    	// 카테고리 중분류 
+    	if ( set.getCondiVO().getC1Code() != null )
+    		set.setDdCategory2Depth(ddService.getDdCategory2Depth(set.getCondiVO().getC1Code()));
+    	
+    	// 카테고리 소분류 
+    	if ( set.getCondiVO().getC2Code() != null )
+    	set.setDdCategory3Depth(ddService.getDdCategory3Depth(set.getCondiVO().getC2Code()));
+		
+		List<CourseVO> courseList = sqlSession.selectList("main.courseList", set.getCondiVO());
+		set.setCourseList(courseList);
+    	
+    	return set;
+    }
 }

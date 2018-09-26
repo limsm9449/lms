@@ -375,6 +375,7 @@ public class UserController {
 	     * @return
 	     * @throws Exception
 	     */
+	    /*
 	    @RequestMapping(value = "/user/courseList")
 	    public String courseList(@ModelAttribute UserVO vo, Model model, HttpServletRequest request) throws Exception {
 	    	try {
@@ -404,6 +405,7 @@ public class UserController {
 
 	        return "/user/CourseList";
 	    }
+	    */
 
 	    @RequestMapping(value = "/goPage")
 	    public String goPage(@ModelAttribute UserVO vo,Model model) throws Exception {

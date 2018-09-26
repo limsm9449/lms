@@ -30,6 +30,37 @@ public class MainVO extends CommonVO {
 	private int toCnt;
 	private int reportSeq;
 
+	private String c1Code;			/** 대분류 코드 */
+	private String c2Code;			/** 중분류 코드 */
+	private String c3Code;			/** 소분류 코드 */
+	private String courseName;
+	
+	private String compCd;
+	
+	public String getC1Code() {
+		return c1Code;
+	}
+	public void setC1Code(String c1Code) {
+		this.c1Code = c1Code;
+	}
+	public String getC2Code() {
+		return c2Code;
+	}
+	public void setC2Code(String c2Code) {
+		this.c2Code = c2Code;
+	}
+	public String getC3Code() {
+		return c3Code;
+	}
+	public void setC3Code(String c3Code) {
+		this.c3Code = c3Code;
+	}
+	public String getCourseName() {
+		return courseName;
+	}
+	public void setCourseName(String courseName) {
+		this.courseName = courseName;
+	}
 	public String getCourseId() {
 		return courseId;
 	}
@@ -146,6 +177,12 @@ public class MainVO extends CommonVO {
 	}
 	public void setReportSeq(int reportSeq) {
 		this.reportSeq = reportSeq;
+	}
+	public String getCompCd() {
+		return compCd;
+	}
+	public void setCompCd(String compCd) {
+		this.compCd = compCd;
 	}
 	
 	

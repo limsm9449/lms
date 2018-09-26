@@ -47,6 +47,14 @@ public class NormalUserService {
         return set ;
     }
 
+    public UserSet cancelCourseList(UserSet set) throws Exception {
+    	set.getCondiVO().setUserId(SessionUtil.getSessionUserId());
+    	List<CourseVO> list = sqlSession.selectList("normalUser.cancelCourseList",set.getCondiVO());
+    	set.setCourse(list);
+    	
+        return set ;
+    }
+
     public UserSet myCourseList(UserSet set) throws Exception {
     	set.getCondiVO().setUserId(SessionUtil.getSessionUserId());
     	List<CourseVO> list = sqlSession.selectList("normalUser.myCourseList",set.getCondiVO());

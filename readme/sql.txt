@@ -1,0 +1,6 @@
+* 결재 삭제
+delete from approval where approval_id in (select approval_id from course_register where user_id = 'limsm9449');
+delete from course_eval where user_id = 'limsm9449';
+delete from course_week where user_id = 'limsm9449';
+delete from course_week_page where user_id = 'limsm9449';
+delete from course_register where user_id = 'limsm9449';

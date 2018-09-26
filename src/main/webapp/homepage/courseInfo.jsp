@@ -65,9 +65,9 @@ function lfn_btn(pKind, pParam) {
 						alert("선택된 차시가 없습니다.");
 						return;
 					}
-					gfn_goPage("/main/application","courseId=" + $("#courseId").val() + "&cartWeeks=" + gfn_cbCheckedValues("weeks",","));
+					gfn_goPage("/paymentGateway/pay","courseId=" + $("#courseId").val() + "&cartWeeks=" + gfn_cbCheckedValues("weeks",","));
 				} else {
-					gfn_goPage("/main/application","courseId=" + $("#courseId").val() + "&cartWeeks=");
+					gfn_goPage("/paymentGateway/pay","courseId=" + $("#courseId").val() + "&cartWeeks=");
 				}
 			</c:otherwise>
 		</c:choose>

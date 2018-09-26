@@ -58,9 +58,6 @@ function lfn_goBack() {
 }
 
 function lfn_validate() {
-	if ( formValid.check("mobile1",{isNecess:true,maxLeng:3}) == false ) return false;
-	if ( formValid.check("mobile2",{isNecess:true,maxLeng:4}) == false ) return false;
-	if ( formValid.check("mobile3",{isNecess:true,maxLeng:4}) == false ) return false;
 	if ( formValid.check("email",{isNecess:true,maxLeng:50,isEmail:true}) == false ) return false;
 	
 	return true;
@@ -137,27 +134,13 @@ function lfn_validate() {
 		              <tr>
 		                <th><label for="mobile1" class="must">휴대전화번호</label></th>
 		                <td>
-		                  <select name="mobile1" id="mobile1">
-				            <option value="">선택</option>
-				            <c:forEach var="row" items="${set.ddMobile}">
-						       <option value="${row.ddKey}" <c:if test="${set.data.mobile1 eq row.ddKey}">selected</c:if>>${row.ddValue}</option>
-							</c:forEach>
-						  </select>
-						  <input type="text" name="mobile2" id="mobile2" maxlength="4" title="휴대전화 중간번호" value="${set.data.mobile2}" />
-						  <input type="text" name="mobile3" id="mobile3" maxlength="4" title="휴대전화 마지막번호" value="${set.data.mobile3}" />
+		                  <input type="text" id="mobile" name="mobile" style="width:120px" maxlength="13" value="${set.data.mobile}">
 		                </td>
 		              </tr>
 		              <tr>
 		                <th><label for="homeTel1">전화번호</label></th>
 		                <td>
-		                  <select name="homeTel1" id="homeTel1">
-				            <option value="">선택</option>
-				            <c:forEach var="row" items="${set.ddTel}">
-						       <option value="${row.ddKey}" <c:if test="${set.data.homeTel1 eq row.ddKey}">selected</c:if>>${row.ddValue}</option>
-							</c:forEach>
-						  </select>
-						  <input type="text" name="homeTel2" id="homeTel2" maxlength="4" title="전화번호 중간 번호" value="${set.data.homeTel2}" />
-						  <input type="text" name="homeTel3" id="homeTel3" maxlength="4" title="전화번호 마지막 번호" value="${set.data.homeTel3}" />
+		                  <input type="text" id="homeTel" name="homeTel" style="width:120px" maxlength="13" value="${set.data.homeTel}">
 		                </td>
 		              </tr>
 		              <tr>

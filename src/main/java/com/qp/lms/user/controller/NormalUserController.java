@@ -79,6 +79,29 @@ public class NormalUserController {
 	    }
 
 	    /**
+	     *  취소과목
+	     * @param vo
+	     * @param model
+	     * @return
+	     * @throws Exception
+	     */
+	    @RequestMapping(value = "/normalUser/cancelCourseList")
+	    public String cancelCourseList(@ModelAttribute UserVO vo,Model model) throws Exception {
+	    	try {
+		    	UserSet set = new UserSet();
+		    	set.setCondiVO(vo);
+		    	
+		    	set = svr.cancelCourseList(set);
+		    	
+		        model.addAttribute("set", set );
+	    	} catch ( Exception e ) {
+	    		e.printStackTrace();
+	    	}
+
+	        return "/user/NormalCancelCourseList";
+	    }
+
+	    /**
 	     * 수강내역
 	     * @param vo
 	     * @param model

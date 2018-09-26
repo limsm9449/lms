@@ -1,62 +1,13 @@
-<!DOCTYPE html>
-<html language="kor">
+<%@ page contentType="text/html;charset=utf-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+
+<html>
 <head>
-	<meta charset="UTF-8">
-	<title>Qlearning</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<style>
-        img{
-            vertical-align: top;
-        }
-        @media all and (max-width: 595px){
-          .img{
-            width:100%;
-            margin:0; 
-            padding:0;
-         }  
-        }
-        
-margin:0; padding:0
-        
-    </style>
+	<title>큐러닝에 오신 것을 환영합니다.</title>
 </head>
-<body>
+<frameset rows="*">
+	<frame name="content" src="/main/content.do">
+</frameset> 
 
-<!--강사 메인-->
-<center>
-<image class="img" src="/resources/images/main.jpg" border="0" width="850"></image>
-</center>
-
-<!--강사 신청-->
-<center>
-<image class="img" src="/resources/images/making_01.png" border="0"></image>
-</center>
-<center>
-<a href="https://goo.gl/forms/eogCYxel6cTxi8te2" target="_blank"><image class="img" src="/resources/images/making_02.png" border="0"></image></a>
-</center>
-
-<!--일반용 웹툰-->
-<center>
-<image class="img" src="/resources/images/webtoon_01.png" border="0"></image>
-</center>
-<center>
-<a href="https://goo.gl/forms/eogCYxel6cTxi8te2" target="_blank"><image class="img" src="/resources/images/webtoon_02.png" border="0" ></image></a>
-</center>
-
-<!--강사용 웹툰-->
-<center>
-<image class="img" src="/resources/images/webtoon_03.png" border="0"></image>
-</center>
-<center>
-<a href="https://goo.gl/forms/eogCYxel6cTxi8te2" target="_blank"><image class="img" src="/resources/images/webtoon_02.png" border="0" ></image></a>
-</center>
-
-<!--회사 CoypRights-->
-<!--
-<center>
-<a href="http://www.qpeople.co.kr" target="_blank"><image class="img" src="making_03.png" border="0"></image></a>
-</center>
--->
-
-</body>
 </html>

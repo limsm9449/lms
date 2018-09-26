@@ -76,7 +76,7 @@ $(document.body).ready(function () {
             		mask.open();
             		dialog.alert( { msg : "신청할 사용자가 없습니다." }, function () { mask.close();	} );
             	} else {
-            		document.frm.action = context + "/pg/axApplication.do?COURSE_ID=" + params.COURSE_ID + "&KIND=TYPE1";	
+            		document.frm.action = context + "/paymentGateway/axApplication.do?COURSE_ID=" + params.COURSE_ID + "&KIND=TYPE1";	
             		document.frm.target = "";
             		document.frm.method = "POST";	
             		document.frm.submit();

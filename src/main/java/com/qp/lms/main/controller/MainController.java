@@ -25,6 +25,8 @@ import com.qp.lms.company.controller.CompanyController;
 import com.qp.lms.main.model.MainSet;
 import com.qp.lms.main.model.MainVO;
 import com.qp.lms.main.service.MainService;
+import com.qp.lms.user.model.UserSet;
+import com.qp.lms.user.model.UserVO;
 
 /**
  * Main
@@ -303,7 +305,7 @@ public class MainController {
     			}
     			set.getCondiVO().setCourseId(courseId);
     			
-				set = svr.application(set);
+				set = svr.cart(set);
 		    	
 		        model.addAttribute("set", set );
 
@@ -322,7 +324,7 @@ public class MainController {
      * @return
      * @throws Exception
      */
-    @RequestMapping(value = "/main/cartApplication")
+    /*@RequestMapping(value = "/main/cartApplication")
     public String cartApplication(HttpServletRequest request, @ModelAttribute MainVO vo, Model model) throws Exception {
     	try {
     		MainSet set = new MainSet();
@@ -359,7 +361,7 @@ public class MainController {
     	}
 
     	return "/homepage/application";
-    }
+    }*/
 
     /**
      * 결재 요청...
@@ -368,7 +370,7 @@ public class MainController {
      * @return
      * @throws Exception
      */
-    @RequestMapping(value = "/main/ppAxHub")
+    /*@RequestMapping(value = "/main/ppAxHub")
     public String ppAxHub(HttpServletRequest request, @ModelAttribute MainVO vo, Model model) throws Exception {
 		MainSet set = new MainSet();
     	try {
@@ -397,7 +399,7 @@ public class MainController {
     	} else {
     		return "/homepage/pp_ax_hub_win";
     	}
-    }
+    }*/
 
     /**
      * 카드등 결재 완료후 처리
@@ -406,7 +408,7 @@ public class MainController {
      * @return
      * @throws Exception
      */
-    @RequestMapping(value = "/main/result")
+    /*@RequestMapping(value = "/main/result")
     public String result(MainVO vo) throws Exception {
     	try {
     		MainSet set = new MainSet();
@@ -420,7 +422,7 @@ public class MainController {
     	}
     	
     	return "/homepage/result";
-    }
+    }*/
 
     /**
      * 수강신청
@@ -429,7 +431,7 @@ public class MainController {
      * @return
      * @throws Exception
      */
-    @RequestMapping(value = "/main/application")
+    /*@RequestMapping(value = "/main/application")
     public String application(@ModelAttribute MainVO vo, HttpServletRequest request, Model model) throws Exception {
     	try {
     		MainSet set = new MainSet();
@@ -467,7 +469,7 @@ public class MainController {
     	}
 
     	return "/homepage/application";
-    }
+    }*/
 
     /**
      * 결재팝업
@@ -476,7 +478,7 @@ public class MainController {
      * @return
      * @throws Exception
      */
-    @RequestMapping(value = "/main/approvalP")
+    /*@RequestMapping(value = "/main/approvalP")
     public String approvalP(@ModelAttribute MainVO vo, Model model) throws Exception {
     	try {
     		MainSet set = new MainSet();
@@ -488,7 +490,7 @@ public class MainController {
     	}
 
     	return "/homepage/approvalP";
-    }
+    }*/
 
     /**
      * 결재
@@ -497,7 +499,7 @@ public class MainController {
      * @return
      * @throws Exception
      */
-    @RequestMapping(value = "/main/approval")
+    /*@RequestMapping(value = "/main/approval")
     public String approval(@ModelAttribute MainVO vo, Model model) throws Exception {
     	try {
     		MainSet set = new MainSet();
@@ -515,7 +517,7 @@ public class MainController {
     	}
 
         return "/common/json";
-    }
+    }*/
 
     /**
      * 1:1 메일문의
@@ -529,7 +531,7 @@ public class MainController {
     	try {
     		MainSet set = new MainSet();
     		set.setCondiVO(vo);
-    		
+
 			// 메인 페이지에 나올 과정 리스트
 			set = svr.mailQuestion(set);
 			
@@ -539,5 +541,30 @@ public class MainController {
     	}
 
         return "/homepage/mailQuestion";
+    }
+    
+    @RequestMapping(value = "/main/courseList")
+    public String courseList(@ModelAttribute MainVO vo, Model model, HttpServletRequest request) throws Exception {
+    	try {
+    		MainSet set = new MainSet();
+    		set.setCondiVO(vo);
+    		
+    		if ( SessionUtil.getSession() == null)
+    			set.getCondiVO().setIsLogin("N");
+    		else {
+    			set.getCondiVO().setIsLogin("Y");
+    			set.getCondiVO().setUserId(SessionUtil.getSessionUserId());
+    			set.getCondiVO().setCompCd(SessionUtil.getCompCd());
+    		}
+
+			// 메인 페이지에 나올 과정 리스트
+			set = svr.courseList(set);
+			
+	        model.addAttribute("set", set );
+    	} catch ( Exception e ) {
+    		e.printStackTrace();
+    	}
+
+        return "/homepage/CourseList";
     }
 }

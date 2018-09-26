@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang='ko'>
+
+<head>
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+    <title>과정리포트 첨삭관리</title>
+
+    <!--[if IE]>
+        <link rel='stylesheet' href='./css/main_ie.css'>
+    <![endif]-->
+
+    <link href='https://fonts.googleapis.com/css?family=Nanum+Gothic' rel='stylesheet'>
+
+    <link rel='stylesheet' href='../../css/common/reset.css'>
+    <link rel='stylesheet' href='../../css/common/common.css'>
+    <link rel='stylesheet' href='../../css/popup/popup_common.css'>
+</head>
+
+<body>
+    <!-- 과정리포트 첨삭관리 POPUP -->
+    <div id='popup_report_submit' class='popup'>
+        <div class='popup_fix'>
+            <p class='popup_title'>
+                과정리포트 첨삭관리
+            </p>
+        </div>
+        <ul class='report_manage_box clear_fix'>
+            <li class='clear_fix half'>
+                <p>과정명</p>
+                <input type='text'>
+            </li>
+            <li class='clear_fix half'>
+                <p>아이디</p>
+                <input type='text'>
+            </li>
+            <li class='clear_fix clear_after'>
+                <p>등록일자</p>
+                <select name='' class='year' id='report_start_year'></select>년
+                <select name='' class='year' id='report_start_month'></select>월
+                <select name='' class='year' id='report_start_day'></select>일~
+                <select name='' class='year' id='report_end_year'></select>년
+                <select name='' class='year' id='report_end_month'></select>월
+                <select name='' class='year' id='report_end_day'></select>일
+            </li>
+            <li class='clear_fix half'>
+                <p>제목</p>
+                <input type='text'>
+            </li>
+            <li class='clear_fix half'>
+                <p>유형</p>
+                <select name='' class='report_select' id='report_start_year'>
+                    <option value='전체'>전체</option>
+                    <option value='A'>A</option>
+                    <option value='B'>B</option>
+                    <option value='C'>C</option>
+                    <option value='D'>D</option>
+                    <option value='E'>E</option>
+                </select>
+            </li>
+            <li class='clear_fix half'>
+                <p>첨삭여부</p>
+                <select name='' class='report_select' id='report_start_year'>
+                    <option value='All'>All</option>
+                    <option value='Yes'>Yes</option>
+                    <option value='No'>No</option>
+                </select>
+            </li>
+        </ul>
+        <div class='btn_search_box'>
+            <button>검색</button>
+        </div>
+        <!-- <div class='report_manage_list'>
+            <p>
+                <span>총122건</span>
+                <span>[1/12페이지]</span>
+            </p>
+            <div class='report_table'>
+                <div class='report_table_row'>
+                    <div class='report_table_cell'>
+                        번호
+                    </div>
+                    <div class='report_table_cell'>
+                        과정명
+                    </div>
+                    <div class='report_table_cell'>
+                        유형
+                    </div>
+                    <div class='report_table_cell'>
+                        아이디
+                    </div>
+                    <div class='report_table_cell'>
+                        이름
+                    </div>
+                    <div class='report_table_cell'>
+                        첨삭여부
+                    </div>
+                    <div class='report_table_cell'>
+                        제출일자
+                    </div>
+                </div>
+                <div class='report_table_row'>
+                    <div class='report_table_cell'>
+                        1
+                    </div>
+                    <div class='report_table_cell'>
+                        과정
+                    </div>
+                    <div class='report_table_cell'>
+                        A
+                    </div>
+                    <div class='report_table_cell'>
+                        아이디
+                    </div>
+                    <div class='report_table_cell'>
+                        이름
+                    </div>
+                    <div class='report_table_cell'>
+                        YES
+                    </div>
+                    <div class='report_table_cell'>
+                        2020-02-02
+                    </div>
+                </div>
+                <div class='report_table_row'>
+                    <div class='report_table_cell'>
+                        2
+                    </div>
+                    <div class='report_table_cell'>
+                        과정
+                    </div>
+                    <div class='report_table_cell'>
+                        E
+                    </div>
+                    <div class='report_table_cell'>
+                        아이디
+                    </div>
+                    <div class='report_table_cell'>
+                        이름
+                    </div>
+                    <div class='report_table_cell'>
+                        ALL
+                    </div>
+                    <div class='report_table_cell'>
+                        2019-01-03
+                    </div>
+                </div>
+                <div class='report_table_row'>
+                    <div class='report_table_cell'></div>
+                    <div class='report_table_cell'></div>
+                    <div class='report_table_cell'></div>
+                    <div class='report_table_cell'></div>
+                    <div class='report_table_cell'></div>
+                    <div class='report_table_cell'></div>
+                    <div class='report_table_cell'></div>
+                </div>
+                <div class='report_table_row'>
+                    <div class='report_table_cell'></div>
+                    <div class='report_table_cell'></div>
+                    <div class='report_table_cell'></div>
+                    <div class='report_table_cell'></div>
+                    <div class='report_table_cell'></div>
+                    <div class='report_table_cell'></div>
+                    <div class='report_table_cell'></div>
+                </div>
+                <div class='report_table_row'>
+                    <div class='report_table_cell'></div>
+                    <div class='report_table_cell'></div>
+                    <div class='report_table_cell'></div>
+                    <div class='report_table_cell'></div>
+                    <div class='report_table_cell'></div>
+                    <div class='report_table_cell'></div>
+                    <div class='report_table_cell'></div>
+                </div>
+            </div>
+        </div> -->
+    </div>
+    <!-- 과정리포트 첨삭관리 POPUP END-->
+</body>
+
+</html>

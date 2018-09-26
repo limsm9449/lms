@@ -1,22 +1,21 @@
 package com.qp.lms.education.service;
 
-import java.sql.Connection;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
-import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.qp.lms.common.CommUtil;
+import com.qp.lms.common.Constant;
+import com.qp.lms.common.SessionUtil;
 import com.qp.lms.course.model.CourseResourceVO;
 import com.qp.lms.course.model.CourseVO;
 import com.qp.lms.education.model.EducationSet;
 import com.qp.lms.evaluation.model.EvaluationSet;
 import com.qp.lms.evaluation.model.EvaluationVO;
-import com.qp.lms.common.Constant;
-import com.qp.lms.common.SessionUtil;
 
 @Service
 public class EducationService {
@@ -30,6 +29,16 @@ public class EducationService {
     	List<CourseResourceVO> list = sqlSession.selectList("education.courseResourceList",set.getCondiVO());
     	set.setResourceList(list);
 
+    	if ( "".equals(CommUtil.getString(set.getCondiVO().getWeek())) ) {
+    		set.getCondiVO().setWeek(set.getData().getLastWeek());
+    		set.getCondiVO().setPage(set.getData().getLastPage());
+    	} else if ( Integer.parseInt(set.getCondiVO().getWeek()) > Integer.parseInt(set.getData().getLastWeek()) ) {
+    		set.getCondiVO().setWeek(set.getData().getLastWeek());
+    		set.getCondiVO().setPage("1");
+    	} else if ( Integer.parseInt(set.getCondiVO().getWeek()) < Integer.parseInt(set.getData().getLastWeek()) ) {
+    		set.getCondiVO().setPage("1");
+    	}
+    	
         return set ;
     }
     

@@ -83,10 +83,13 @@ public class CourseVO extends CommonVO {
 	private String userId;
 	
 	private String code;
+	private String codeName;
 	private String parentCode;
 
 	private String isReport;
 	private String isExam;
+	private String isExamTotal;
+	private String isExamWeek;
 	private String isDiscussion;
 	private String isProgress;
 	
@@ -143,7 +146,7 @@ public class CourseVO extends CommonVO {
     private String approvalId;
     private String career;
     private String picture;
-
+    
 	public String getCourseCode() {
 		return courseCode;
 	}
@@ -992,6 +995,30 @@ public class CourseVO extends CommonVO {
 
 	public void setStartYn(String startYn) {
 		this.startYn = startYn;
+	}
+
+	public String getCodeName() {
+		return codeName;
+	}
+
+	public void setCodeName(String codeName) {
+		this.codeName = codeName;
+	}
+
+	public String getIsExamTotal() {
+		return isExamTotal;
+	}
+
+	public void setIsExamTotal(String isExamTotal) {
+		this.isExamTotal = isExamTotal;
+	}
+
+	public String getIsExamWeek() {
+		return isExamWeek;
+	}
+
+	public void setIsExamWeek(String isExamWeek) {
+		this.isExamWeek = isExamWeek;
 	}
 	
 

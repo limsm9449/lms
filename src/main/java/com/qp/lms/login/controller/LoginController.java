@@ -50,6 +50,9 @@ public class LoginController {
     	LoginSet set = new LoginSet();
     	set.setCondiVO(loginVO);
     	
+    	String[] domains = request.getServerName().split("[.]");
+    	set.getCondiVO().setCompCd(axCommService.axCompCdFromSubDomain(domains[0]));
+			
     	set = service.loginCheck(set);
     	
    	 	model.addAttribute("set", set );
@@ -74,7 +77,12 @@ public class LoginController {
 	   	 		sess.setTutorYn(set.getData().getTutorYn());
 	   	 		sess.setTeacherYn(set.getData().getTeacherYn());
 	   	 		sess.setUserIp(request.getRemoteAddr());
-	   	 		sess.setUserCompCd(set.getData().getCompCd());
+	   	 		
+	   	 		if ( "".equals(CommUtil.getString(set.getData().getCompCd())) ) {
+	   	 			sess.setUserCompCd("B2C");
+	   	 		} else {
+	   	 			sess.setUserCompCd(set.getData().getCompCd());
+	   	 		}
 
 	   	 		sess.setAuth(auth);
 	
@@ -84,8 +92,7 @@ public class LoginController {
 		    	else
 		    		sess.setDownloadAuth("N");
 
-   	 			String[] domains = request.getServerName().split("[.]");
- 	 			sess.setCompCd(axCommService.axCompCdFromSubDomain(domains[0]));
+ 	 			sess.setCompCd(set.getCondiVO().getCompCd());
 
 	   	 		SessionUtil.setAttribute("session", sess);
    	 		}

@@ -97,7 +97,7 @@ $(document.body).ready(function () {
             		dialog.alert( { msg : "미결재 수강생이 없습니다." }, function () { mask.close();	} );
             	} else {
             		window.open("","courseNotApprovalRegister", "width=900,height=700");
-            		document.frm.action = context + "/pg/axApplication.do?COURSE_ID=" + row[0]["COURSE_ID"] + "&KIND=TYPE2";	
+            		document.frm.action = context + "/paymentGateway/axApplication.do?COURSE_ID=" + row[0]["COURSE_ID"] + "&KIND=TYPE2";	
             		document.frm.target = "courseNotApprovalRegister";
             		document.frm.method = "POST";	
             		document.frm.submit();
