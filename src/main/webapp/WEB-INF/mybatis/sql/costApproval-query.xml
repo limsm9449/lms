@@ -136,7 +136,6 @@
 	<select id="costRefundUpd" parameterType="CostApproval">
 	UPDATE APPROVAL
 	   SET STATUS = 'R',
-	       REFUND_KIND = 'BANK',
 	       REFUND_COST = #{refundCost},
 	       REFUND_BANK = #{refundBank},
 	       REFUND_ACC_NUM = #{refundAccNum},

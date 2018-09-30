@@ -50,6 +50,15 @@ public class AxCostService {
     	return hm;
     }
 	
+	public HashMap<String, Object> axCardCostList(HashMap<String, Object> paramMap) throws Exception {
+		HashMap<String, Object> hm = new HashMap<String, Object>();
+		
+    	List<HashMap<String, Object>> list = sqlSession.selectList("axCost.axCardCostList", paramMap);
+    	hm.put("list", list);
+        
+    	return hm;
+    }
+	
 	public HashMap<String, Object> axCostCalcList(HashMap<String, Object> paramMap) throws Exception {
 		HashMap<String, Object> hm = new HashMap<String, Object>();
 		

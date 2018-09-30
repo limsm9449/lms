@@ -53,7 +53,20 @@ public class AxCostController {
 
         return hm;
     }  
-	    
+
+    @RequestMapping(value = "/cost/axCardCostList", method = RequestMethod.POST, consumes = "application/json" )
+    public @ResponseBody HashMap<String,Object> axCardCostList(@RequestBody HashMap<String, Object> paramMap, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    	HashMap<String, Object> hm = new HashMap<String, Object>();
+
+    	try {
+    		hm = svr.axCardCostList(paramMap);
+    	} catch ( Exception e ) {
+    		e.printStackTrace();
+    	}
+
+        return hm;
+    }
+    
     @RequestMapping(value = "/cost/axCostCalcList", method = RequestMethod.POST, consumes = "application/json" )
     public @ResponseBody HashMap<String,Object> axCostCalcList(@RequestBody HashMap<String, Object> paramMap, HttpServletRequest request, HttpServletResponse response) throws Exception {
     	HashMap<String, Object> hm = new HashMap<String, Object>();

@@ -70,8 +70,6 @@
 	<beans:bean name="memberExcelView" class="com.qp.lms.excel.MemberExcelView"/>
 	<beans:bean name="uploadInvalidExcel" class="com.qp.lms.excel.UploadInvalidExcelView"/>
 	
-	
-	
 	<context:component-scan base-package="com.qp.lms" />
 	
 	<!-- Message .properties sources

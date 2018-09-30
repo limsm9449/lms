@@ -57,6 +57,9 @@ public class AxCommService {
 			} else if ( "ApprovalStatus".equals(ddKinds[i]) ) {
 				paramMap.put("DD_MAIN", "APPROVAL_STATUS");
 		    	hm.put(ddKinds[i], sqlSession.selectList("axComm.axDdCode", paramMap));
+			} else if ( "ApprovalCardStatus".equals(ddKinds[i]) ) {
+				paramMap.put("DD_MAIN", "APPROVAL_CARD_STATUS");
+		    	hm.put(ddKinds[i], sqlSession.selectList("axComm.axDdCode", paramMap));
 			} else if ( "PaymentKind".equals(ddKinds[i]) ) {
 				paramMap.put("DD_MAIN", "PAYMENT_KIND");
 		    	hm.put(ddKinds[i], sqlSession.selectList("axComm.axDdCode", paramMap));

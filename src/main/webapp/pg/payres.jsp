@@ -1,6 +1,10 @@
 <%@ page contentType="text/html; charset=EUC-KR" %>
 <%@ page import="lgdacom.XPayClient.XPayClient"%>
+<%@ page import="org.springframework.context.ApplicationContext"%>
+<%@ page import="org.springframework.web.servlet.support.RequestContextUtils"%>
 <%@ page import="com.qp.lms.pg.service.PgService"%>
+<%@ page import="com.qp.lms.pg.model.PgSet"%>
+<%@ page import="com.qp.lms.pg.model.PgVO"%>
 
 <%
 request.setCharacterEncoding("euc-kr");
@@ -114,15 +118,30 @@ request.setCharacterEncoding("euc-kr");
          	            	
          	//최종결제요청 결과를 DB처리합니다. (결제성공 또는 실패 모두 DB처리 가능)
 			//상점내 DB에 어떠한 이유로 처리를 하지 못한경우 false로 변경해 주세요.
-         	boolean isDBOK = true;
+         	boolean isDBOK = false;
          	
          	out.println("XpayService payOk Start <br>");
-         	PgService svr = new PgService();
-         	isDBOK = svr.payOk(xpay.Response("LGD_OID",0), xpay.Response("LGD_TID",0));
+         	PgSet set = new PgSet();
+    		set.setCondiVO(new PgVO());
+    		set.getCondiVO().setCourseId(request.getParameter("courseId"));
+    		set.getCondiVO().setTotalCost(request.getParameter("totalCost"));
+    		set.getCondiVO().setPaymentPoint(request.getParameter("remainPoint"));
+    		set.getCondiVO().setPaymentCost(xpay.Response("LGD_AMOUNT",0));
+    		set.getCondiVO().setPaymentKind(request.getParameter("paymentKind"));
+    		set.getCondiVO().setPaymentBank("");
+    		set.getCondiVO().setApprovalId(xpay.Response("LGD_OID",0));
+    		set.getCondiVO().setPayApprovalId(xpay.Response("LGD_TID",0));
+    		
+         	ApplicationContext ac = RequestContextUtils.getWebApplicationContext(request);
+         	PgService pgService = (PgService) ac.getBean("pgService");
+         	PgSet rtnSet = pgService.approval(set);
+         	
+         	if ( "OK".equals(rtnSet.getRtnMode()) ) {
+         		isDBOK = true;
+         	}
          	out.println("XpayService payOk End <br>");
         	
          	if( !isDBOK ) {
-				 
          		xpay.Rollback("상점 DB처리 실패로 인하여 Rollback 처리 [TID:" +xpay.Response("LGD_TID",0)+",MID:" + xpay.Response("LGD_MID",0)+",OID:"+xpay.Response("LGD_OID",0)+"]");
          		
 				out.println( "TX Rollback Response_code = " + xpay.Response("LGD_RESPCODE",0) + "<br>");

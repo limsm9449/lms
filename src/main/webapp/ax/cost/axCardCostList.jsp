@@ -38,91 +38,18 @@ $(document.body).ready(function () {
         theme: "danger"
     });
 
-    gfn_callAjax("/common/axDd.do", { DD_KIND : "ApprovalStatus,PaymentKind,Bank,CategoryLevel1,Year"}, fn_callbackAjax, "dd", { async : false });
+    gfn_callAjax("/common/axDd.do", { DD_KIND : "ApprovalCardStatus,PaymentKind,CategoryLevel1,Year"}, fn_callbackAjax, "dd", { async : false });
     
     $('[data-grid-control]').click(function () {
         switch (this.getAttribute("data-grid-control")) {
 	        case "search":
 	            fn_search();
 	            break;
-	        case "bankConfirm":
-	        	var rows = grid.getList("selected");
-	        	if ( rows.length == 0 ) {
-            		mask.open();
-            		dialog.alert( { msg : "입금 정보를 선택하셔야 합니다." }, function () { mask.close();	} );
-            		return;
-            	}
-	        	for ( var i = 0; i < rows.length; i++ ) {
-					if ( rows[i].STATUS != "B" && rows[i].STATUS != "C") {
-	            		mask.open();
-	            		dialog.alert( { msg : (rows[i].__index + 1) + " 라인 : 은행입금 또는 거걸(사용자 취소)이 아닙니다."	}, function () { mask.close();	} );
-	            		return;
-					}		        			
-	        	}
-	        	for ( var i = 0; i < rows.length; i++ ) {
-					grid.setValue(rows[i].__index, "STATUS", "A");
-	        	}
-	        	
-	        	grid.repaint();
-	        	
-	            break;
-	        case "approvalToBank":
-	        	var rows = grid.getList("selected");
-	        	if ( rows.length == 0 ) {
-            		mask.open();
-            		dialog.alert( { msg : "입금 정보를 선택하셔야 합니다." }, function () { mask.close();	} );
-            		return;
-            	}
-	        	for ( var i = 0; i < rows.length; i++ ) {
-					if ( rows[i].STATUS != "A" ) {
-	            		mask.open();
-	            		dialog.alert( { msg : (rows[i].__index + 1) + " 라인 : 승인 상태가 아닙니다."	}, function () { mask.close();	} );
-	            		return;
-					}		        			
-					if ( rows[i].PAYMENT_KIND != "CASH" ) {
-	            		mask.open();
-	            		dialog.alert( { msg : (rows[i].__index + 1) + " 라인 : 은행입금 승인만 취소를 할 수 있습니다."	}, function () { mask.close();	} );
-	            		return;
-					}
-	        	}
-	        	for ( var i = 0; i < rows.length; i++ ) {
-					grid.setValue(rows[i].__index, "STATUS", "B");
-	        	}
-	        	
-	        	grid.repaint();
-	        	
-	            break;
-	        case "reject":
-	        	var rows = grid.getList("selected");
-	        	if ( rows.length == 0 ) {
-            		mask.open();
-            		dialog.alert( { msg : "은행 입금 정보를 선택하셔야 합니다." }, function () { mask.close();	} );
-            		return;
-            	}
-	        	for ( var i = 0; i < rows.length; i++ ) {
-					if ( rows[i].STATUS != "B") {
-	            		mask.open();
-	            		dialog.alert( { msg : (rows[i].__index + 1) + " 라인 : 은행입금만 거절 할 수 있습니다."	}, function () { mask.close();	} );
-	            		return;
-					}		        			
-	        	}
-	        	for ( var i = 0; i < rows.length; i++ ) {
-					grid.setValue(rows[i].__index, "STATUS", "C");
-	        	}
-	        	
-	        	grid.repaint();
-	        	
-	            break;
 	        case "refund":
 	        	var rows = grid.getList("selected");
 	        	if ( rows.length == 0 ) {
             		mask.open();
-            		dialog.alert( { msg : "입금 정보를 선택하셔야 합니다." }, function () { mask.close();	} );
-            		return;
-            	}
-	        	if ( rows.length > 1 ) {
-            		mask.open();
-            		dialog.alert( { msg : "환불은 입금 정보를 한개만 선택하셔야 합니다." }, function () { mask.close();	} );
+            		dialog.alert( { msg : "카드 입금 정보를 선택하셔야 합니다." }, function () { mask.close();	} );
             		return;
             	}
 				if ( rows[0].STATUS != "A") {
@@ -130,19 +57,17 @@ $(document.body).ready(function () {
             		dialog.alert( { msg : (rows[0].__index + 1) + " 라인 : 승인된 정보만 환불할 수 있습니다."	}, function () { mask.close();	} );
             		return;
 				}		        			
-		    	$("#UPD_REFUND_COST").val(rows[0].PAYMENT_COST);
-		    	$("#UPD_REFUND_BANK").val(gfn_getValueInList(list, "APPROVAL_ID",  rows[0].APPROVAL_ID, "BANK"));
-		    	$("#UPD_REFUND_ACC_NUM").val(gfn_getValueInList(list, "APPROVAL_ID",  rows[0].APPROVAL_ID, "ACC_NUM"));
 		    	
-		    	gfn_showPopupDiv("insDiv");
+				$("#approvalId").val(rows[0].APPROVAL_ID);
+				$("#payApprovalId").val(rows[0].PAY_APPROVAL_ID);
+				
+				window.open("",	"xpay", "width=500,height=300,scrollbars=no,resizable=no,status=no,toolbar=no,menubar=no");
+				document.frm.target = "xpay";
+				document.frm.submit();
 
-	        	
 	            break;
-            case "save" :
-            	fn_save();
-                break;
             case "export":
-                grid.exportExcel("은행입금관리.xls");
+                grid.exportExcel("카드입금관리.xls");
                 break;
         }
     });
@@ -212,15 +137,12 @@ function fn_makeGrid() {
                     },
                     config : { 
                         columnKeys: { optionValue: "value", optionText: "text" },
-                        options: dd.ApprovalStatus
+                        options: dd.ApprovalCardStatus
                     } 
 	        	}, 
 	            formatter : function () {
-	                return gfn_getValueInList(dd.ApprovalStatus, "value",  this.item.STATUS, "text");
-	           	},
-				styleClass: function () {
-                    return (this.item.STATUS == "A" || this.item.STATUS == "B" ? "grid-cell-edit" : "");
-                }
+	                return gfn_getValueInList(dd.ApprovalCardStatus, "value",  this.item.STATUS, "text");
+	           	}
 	        },{
               	key : undefined, 
               	label: "결재", 
@@ -268,24 +190,6 @@ function fn_makeGrid() {
 			                return gfn_getValueInList(dd.PaymentKind, "value",  this.item.PAYMENT_KIND, "text");
 			           	}
 			        },{
-			            key : "PAYMENT_BANK",
-			            label : "결재 은행",
-			            width : 200,
-			            align : "left", 
-			        	editor: {
-		                    type : "select",
-			            	disabled : function () {
-		                        return true;
-		                    },
-		                    config : { 
-		                        columnKeys: { optionValue: "value", optionText: "text" },
-		                        options: dd.Bank
-		                    } 
-			        	},
-			            formatter : function () {
-			                return gfn_getValueInList(dd.Bank, "value",  this.item.PAYMENT_BANK, "text");
-			           	}
-			        },{
 			            key : "PAYMENT_DATE",
 			            label : "결재 일자",
 			            width : 120,
@@ -293,61 +197,10 @@ function fn_makeGrid() {
 			        }
 			  	]
 	        },{
-              	key : undefined, 
-              	label: "환불", 
-              	columns: [	 
-              		{
-			            key : "REFUND_COST",
-			            label : "환불 비용",
-			            width : 80,
-			            align : "right", 
-			        	editor: {
-		                    type : "number",
-			            	disabled : function () {
-		                        return (this.item.UPD_FLAG == "Y" ? false : true);
-		                    } 
-			        	},
-						styleClass: function () {
-		                    return (this.item.UPD_FLAG == "Y" ? "grid-cell-edit" : "");
-		                },
-			            formatter : function () {
-			                return checkThousand(this.item.REFUND_COST);
-			           	}
-              		},{
-			            key : "REFUND_BANK",
-			            label : "환불 은행",
-			            width : 80,
-			            align : "center", 
-			        	editor: {
-		                    type : "text",
-			            	disabled : function () {
-		                        return (this.item.UPD_FLAG == "Y" ? false : true);
-		                    } 
-			        	},
-						styleClass: function () {
-		                    return (this.item.UPD_FLAG == "Y" ? "grid-cell-edit" : "");
-		                }
-              		},{
-			            key : "REFUND_ACC_NUM",
-			            label : "환불 계좌번호",
-			            width : 130, 
-			            align : "left", 
-			        	editor: {
-		                    type : "text",
-			            	disabled : function () {
-		                        return (this.item.UPD_FLAG == "Y" ? false : true);
-		                    } 
-			        	},
-						styleClass: function () {
-		                    return (this.item.UPD_FLAG == "Y" ? "grid-cell-edit" : "");
-		                }
-              		},{
-			            key : "REFUND_DATE",
-			            label : "환불 일자",
-			            width : 120,
-			            align : "center"
-              		}
-              	]
+	        	key : "REFUND_DATE",
+	            label : "환불 일자",
+	            width : 120,
+	            align : "center"
 	        },{
 	            key : "LAST_UPDATE_USER",
 	            label : "수정자",
@@ -361,8 +214,8 @@ function fn_makeGrid() {
 	        }	], 
 	  	null,
 	  	{
-	  		showRowSelector : true,
-	  		multipleSelect: true,
+	  		showRowSelector : false,
+	  		multipleSelect: false,
 	  		frozenColumnIndex : 7
 	  	}
 	);
@@ -388,28 +241,7 @@ function fn_search() {
 	
 	fn_params();
 	
-	gfn_callAjax("/cost/axCostList.do", params, fn_callbackAjax, "search");
-}
-
-function fn_save() {
-	var fieldParams = {
-   	};
-   	if ( gfn_validationCheck(grid, fieldParams) ) {
-       	mask.open();
-       	confirmDialog.confirm(
-       		{
-               	title: "Confirm",
-               	msg: '저장하시겠습니까?'
-           	}, 
-           	function(){
-             	if ( this.key == "ok" ) {
-             		gfn_callAjax("/cost/axCostSave.do", gfn_getSaveData(grid), fn_callbackAjax, "save");
-               	} else {
-               		mask.close();
-               	}
-           	}
-       	);
-   	}
+	gfn_callAjax("/cost/axCardCostList.do", params, fn_callbackAjax, "search");
 }
 
 function fn_callbackAjax(data, id) {
@@ -423,7 +255,7 @@ function fn_callbackAjax(data, id) {
 		dd = $.extend({}, data);
 
 		
-		gfn_cbRefresh("CB_SEARCH_STATUS", data.ApprovalStatus, true);
+		gfn_cbRefresh("CB_SEARCH_STATUS", data.ApprovalCardStatus, true);
 		gfn_cbRefresh("CB_LEVEL1", data.CategoryLevel1, true);
 		gfn_cbRefresh("CB_YEAR", data.Year, true);
 		
@@ -433,17 +265,12 @@ function fn_callbackAjax(data, id) {
 		gfn_cbRefresh("CB_LEVEL2", data.CategoryLevel2, true);
 	} else if ( id == "CB_LEVEL2" ){
 		gfn_cbRefresh("CB_LEVEL3", data.CategoryLevel3, true);
-	} else if ( id == "save" ){
-		mask.close();
-
-		mask.open();
-		dialog.alert( { msg : "저장 되었습니다." }, function () { mask.close();	fn_search(); } );
 	}
 }
 
 function fn_gridEvent(event, obj) {
 	if ( event == "Click" ) {
-		//obj.self.select(obj.dindex);
+		obj.self.select(obj.dindex);
 	}
 }
 
@@ -455,49 +282,16 @@ function fn_cbChange(id) {
 	}
 }
 
-function fn_hidePopupDiv(popupDivId) {
-	if ( popupDivId == "insDiv" ) {
-		var rows = grid.getList("selected");
-
-		if ( $("#UPD_REFUND_COST").val() == "" || isNaN($("#UPD_REFUND_COST").val()) ) {
-			alert("환불비용을 입력하세요.");
-			return;
-		} 
-
-		if ( parseInt($("#UPD_REFUND_COST").val()) > parseInt(rows[0].PAYMENT_COST) ) {
-			alert("환불비용이 결재금액보다 급니다.");
-			return;
-		} 
-	
-		if ( $("#UPD_REFUND_BANK").val() == "" ) {
-			alert("환불은행을 입력하세요.");
-			return;
-		} 
-		
-		if ( $("#UPD_REFUND_ACC_NUM").val() == "" ) {
-			alert("환불계좌번호를 입력하세요.");
-			return;
-		} 
-		
-		grid.setValue(rows[0].__index, "STATUS", "R");
-		grid.setValue(rows[0].__index, "REFUND_COST", $("#UPD_REFUND_COST").val());
-		grid.setValue(rows[0].__index, "REFUND_BANK", $("#UPD_REFUND_BANK").val());
-		grid.setValue(rows[0].__index, "REFUND_ACC_NUM", $("#UPD_REFUND_ACC_NUM").val());
-		grid.setValue(rows[0].__index, "UPD_FLAG", "Y");
-		grid.repaint();
-	}
-
-	gfn_hidePopupDiv(popupDivId);
-}
-
 
 </script>
 
 <body style="padding : 10px">
 
-<form id="frm" name="frm" method="post">
-
-<h2>은행 입금 관리</h2>
+<form id="frm" name="frm" method="post" action="/paymentGateway/cancelInfo.do" >
+	<input type="hidden" name="approvalId" id="approvalId" value=""/>
+	<input type="hidden" name="payApprovalId" id="payApprovalId" value=""/>
+	
+<h2>카드  입금 관리</h2>
 <div style="height:10px"></div>
 
 <div class="form-inline">
@@ -550,11 +344,7 @@ function fn_hidePopupDiv(popupDivId) {
 
 <div>
     <button class="btn btn-default" data-grid-control="search">검색</button>
-    <button class="btn btn-default" data-grid-control="bankConfirm">은행 입금 확인</button>
-    <button class="btn btn-default" data-grid-control="approvalToBank">은행 입금 확인 취소</button>
-    <button class="btn btn-default" data-grid-control="reject">거절</button>
     <button class="btn btn-default" data-grid-control="refund">환불</button>
-    <button class="btn btn-default" data-grid-control="save">저장</button>
     <button class="btn btn-default" data-grid-control="export">엑셀</button>
 </div> 
 
@@ -568,21 +358,6 @@ function fn_hidePopupDiv(popupDivId) {
 </form>
 
 <div class="mask"></div>
-<div class="popupDiv" id="insDiv" style="width:300px; height:200px;">
-	환불비용
-	<input type="text" id="UPD_REFUND_COST"/>
-	<br></br>
-	환불은행
-	<input type="text" id="UPD_REFUND_BANK"/>
-	<br></br>
-	환불계좌번호
-	<input type="text" id="UPD_REFUND_ACC_NUM"/>
-	<br></br>
-	
-	<div style="height:30px"></div>
-	<input type="button" href="#" value="확인" onclick="fn_hidePopupDiv('insDiv')"/>
-    <input type="button" href="#" value="닫기" onclick="gfn_hidePopupDiv('insDiv');"/>
-</div>
 
 </body>
 </html>

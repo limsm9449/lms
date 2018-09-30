@@ -18,53 +18,6 @@
 
 
 <script type="text/javascript">
-function lfn_btn(pKind, pParam) {
-	if ( pKind == "approval") {
-		if ( lfn_validate() == false )
-			return false;
-		
-		btnUnbind("approvalBtn");
-		if ( $("#LGD_CUSTOM_USABLEPAY").val() == "SC0030" ) {
-			var today = new Date();
-			$("#approvalId").val(today.getTime());
-
-			$.ajax({
-				type :"POST",
-				url : context +"/main/approval.do",
-				dataType :"json",
-				data : $("#frm").serialize(),
-				success : function(json){
-					if ( json.rtnMode == "OK") {
-						alert("입금 확인후에 수강신청이 완료됩니다.\n승인후에 나의 강의실에서 과정을 들으시면 됩니다.");
-						self.close();
-						page.goHome();
-					}
-				},
-				error : function(e) {
-					alert("<spring:message code="lms.msg.systemError" text="-" />");
-				}
-			})
-		} else {
-			gfn_popup("/main/approvalP","courseId=" + $("#courseId").val() + 
-										"&totalCost=" + $("#totalCost").val() + 
-										"&paymentPoint=" + $("#paymentPoint").val() + 
-										"&paymentCost=" + $("#paymentCost").val() +
-										"&LGD_CUSTOM_USABLEPAY=" + $("#LGD_CUSTOM_USABLEPAY").val() +
-										"&paymentBank=" + $("#paymentBank").val()
-										,400,300);
-		}
-	}
-}
-
-function lfn_validate() {
-	if ( $("#LGD_CUSTOM_USABLEPAY").val() == "SC0030" && $("#paymentBank").val() == "" ) {
-		alert("계좌번호를 선택하셔야 합니다.");
-		$("#paymentBank").focus();
-		return false;
-	}
-	
-	return true;
-}
 
 function lfn_kindChg() {
 	if ( $("#LGD_CUSTOM_USABLEPAY").val() == "SC0030" ) {
@@ -76,14 +29,12 @@ function lfn_kindChg() {
 	}
 }
 
-
 function lfn_pointChg() {
 	if ( formValid.check("paymentPoint",{isNecess:true,isNum:true}) == false )
 		return false;
 
 	if ( parseInt($("#paymentPoint").val()) > parseInt($("#remainPoint").val()) ) {
-		alert("사용가능 포인트를 넘었습니다.");
-		$("#paymentPoint").focus();
+		alert("사용가능 포인트를 넘었습니다. 포인트를 다시 입력해주세요.");
 		return false;
 	}
 	
@@ -115,12 +66,6 @@ function lfn_pay() {
 	$("#paymentCost").val(parseInt($("#totalCost").val()) - parseInt($("#paymentPoint").val()));
 	$("#LGD_AMOUNT").val(parseInt($("#totalCost").val()) - parseInt($("#paymentPoint").val()));
 	
-	//은행/카드 구분
-	if ( $("#LGD_CUSTOM_USABLEPAY").val() == "SC0030" )
-		$("#paymentKind").val("CASH");
-	else
-		$("#paymentKind").val("CARD");
-	
 	if ( $("#LGD_CUSTOM_USABLEPAY").val() == "SC0030" ) {
 		var today = new Date();
 		$("#approvalId").val(today.getTime());
@@ -144,7 +89,6 @@ function lfn_pay() {
 		window.open("",	"xpay", "width=660,height=680,scrollbars=no,resizable=no,status=no,toolbar=no,menubar=no");
 		document.frm.target = "xpay";
 		document.frm.submit();
-
 	}
 }
 
@@ -319,7 +263,7 @@ $(document.body).ready(function () {
                             <select id="LGD_CUSTOM_USABLEPAY" name="LGD_CUSTOM_USABLEPAY" onchange="lfn_kindChg()" style="width:100px">
                                 <option value="SC0010">신용카드</option>				
 								<option value="SC0030">계좌이체</option>				
-								<option value="SC0040">무통장입금</option>				
+								<!-- option value="SC0040">무통장입금</option-->				
 								<option value="SC0060">휴대폰</option>				
 								<option value="SC0070">유선전화결제</option>				
 								<option value="SC0090">OK캐쉬백</option>				

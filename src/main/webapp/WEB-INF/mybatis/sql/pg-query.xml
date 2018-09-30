@@ -193,5 +193,40 @@
 		<if test="c3Code != null and c3Code != ''"> AND C.C3_CODE = #{c3Code}</if>
 		<if test="courseName != null and courseName != ''"> AND B.COURSE_NAME LIKE CONCAT('%',#{courseName},'%')</if>
 		ORDER BY B.COURSE_NAME
-	</select>	        
+	</select>
+	
+	<update id="approvalUpdateForCardRefund" parameterType="pg">
+		UPDATE APPROVAL
+    	   SET STATUS = 'R',
+    	       REFUND_DATE = CURRENT_TIMESTAMP, 
+    	       UPDATE_DATE = CURRENT_TIMESTAMP,
+    	       UPDATE_USER = #{userId}
+    	 WHERE APPROVAL_ID = #{approvalId} 
+	</update>  	  
+
+	<update id="registerUpdateForCardRefund" parameterType="pg">
+		UPDATE 	COURSE_REGISTER
+	       SET 	STATUS = 'R',
+	  	       	UPDATE_DATE = CURRENT_TIMESTAMP,
+		       	UPDATE_USER = #{userId}
+	     WHERE 	APPROVAL_ID = #{approvalId}
+	</update>
+	          
+	<update id="approvalUpdateCancelForCardRefund" parameterType="pg">
+		UPDATE APPROVAL
+    	   SET STATUS = 'A',
+    	       REFUND_DATE = null, 
+    	       UPDATE_DATE = CURRENT_TIMESTAMP,
+    	       UPDATE_USER = #{userId}
+    	 WHERE APPROVAL_ID = #{approvalId} 
+	</update>  	  
+
+	<update id="registerUpdateCancelForCardRefund" parameterType="pg">
+		UPDATE 	COURSE_REGISTER
+	       SET 	STATUS = 'A',
+	  	       	UPDATE_DATE = CURRENT_TIMESTAMP,
+		       	UPDATE_USER = #{userId}
+	     WHERE 	APPROVAL_ID = #{approvalId}
+	</update>          
+	          
 </mapper>

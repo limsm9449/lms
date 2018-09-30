@@ -2,11 +2,9 @@ package com.qp.lms.pg.controller;
 
 
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Iterator;
-
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,12 +14,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
+import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import com.qp.lms.common.CommUtil;
 import com.qp.lms.common.SessionUtil;
 import com.qp.lms.common.service.CommService;
-import com.qp.lms.main.model.MainSet;
-import com.qp.lms.main.model.MainVO;
 import com.qp.lms.pg.model.PgSet;
 import com.qp.lms.pg.model.PgVO;
 import com.qp.lms.pg.service.PgService;
@@ -110,19 +110,10 @@ public class PgController {
     @RequestMapping(value = "/paymentGateway/cashApproval")
     public String cashApproval(HttpServletRequest request, @ModelAttribute PgVO vo, Model model) throws Exception {
     	try {
-    		if ( "SC0030".equals((String)request.getParameter("LGD_CUSTOM_USABLEPAY")) ) {
-    			vo.setPaymentKind("CASH");
-    		} else {
-    			vo.setPaymentKind(request.getParameter("LGD_CUSTOM_USABLEPAY"));
-    		}
     		PgSet set = new PgSet();
     		set.setCondiVO(vo);
 
-    		set = svr.cashApproval(set);
-    		
-    		//cart 삭제
-    		SessionUtil.setAttribute("cart", null);
-    		SessionUtil.setAttribute("tempCart", null);
+    		set = svr.approval(set);
     		
 	    	model.addAttribute("json", CommUtil.getJsonObject(set.getRtnMode(),""));
     	} catch ( Exception e ) {
@@ -130,6 +121,21 @@ public class PgController {
     	}
 
         return "/common/json";
+    }
+
+    @RequestMapping(value = "/paymentGateway/cancelInfo", method = RequestMethod.POST)
+    public String cancelInfo(HttpServletRequest request, Model model) throws Exception {
+    	request.setAttribute("g_CST_MID", commSvr.getSetting("g_CST_MID"));
+    	request.setAttribute("g_CST_PLATFORM", commSvr.getSetting("g_CST_PLATFORM"));
+    	
+        return "/pg/CancelInfo";
+    }
+
+    @RequestMapping(value = "/paymentGateway/cancel", method = RequestMethod.POST)
+    public String cancel(HttpServletRequest request, Model model) throws Exception {
+    	request.setAttribute("g_configPath", commSvr.getSetting("g_configPath"));
+
+    	return "/pg/Cancel";
     }
 
 }
