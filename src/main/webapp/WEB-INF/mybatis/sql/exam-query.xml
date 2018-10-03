@@ -4,30 +4,100 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="exam">
 
-	<!-- 사용자 시험  -->
-	<select id="userExamNewList" parameterType="Exam" resultType="Exam">
-	SELECT SEQ,
-	       TYPE,
-	       QUESTION, 
-	       QA1,
-	       QA2,
-	       QA3,
-	       QA4
-	  FROM COURSE_EXAM
-	 WHERE COURSE_CODE = (SELECT COURSE_CODE FROM COURSE WHERE COURSE_ID = #{courseId})
+	<select id="userExamCount" parameterType="Exam" resultType="int">
+		SELECT 	COUNT(*) CNT
+		FROM 	USER_EXAM
+		WHERE 	COURSE_ID = #{courseId}
+		AND		USER_ID = #{userId}
+		AND 	EXAM_KIND = #{examKind}
 	</select>
 	
-	<select id="userExamIns" parameterType="Exam">
-	INSERT INTO USER_EXAM(COURSE_ID,USER_ID,SEQ,ANSWER,CREATE_DATE)
-	VALUES (#{courseId},#{userId},#{seq},#{answer},CURRENT_TIMESTAMP)
+	<select id="courseExamTypeStandard" parameterType="Exam" resultType="Exam">
+		SELECT 	WEEK_FROM
+				,WEEK_TO
+		        ,TYPE
+		        ,LEVEL
+		        ,QUESTION_CNT
+		        ,EXAM_KIND
+		        ,#{courseId} COURSE_ID
+		        ,#{userId} USER_ID
+		FROM 	COURSE_EXAM_TYPE_STANDARD
+		WHERE 	EXAM_TYPE_SEQ = (SELECT COURSE_EXAM_TYPE_ID FROM COURSE WHERE COURSE_ID = #{courseId})
+		AND		EXAM_KIND = #{examKind}    
+	</select>      
+	
+	<insert id="courseExamInsert" parameterType="Exam">
+		INSERT 	INTO USER_EXAM( COURSE_ID, USER_ID, EXAM_KIND, SEQ, ANSWER, ANSWER_YN, CREATE_USER, CREATE_DATE )
+		SELECT  #{courseId} COURSE_ID, #{userId} USER_ID, #{examKind}, SEQ, '',  'N', #{userId}, CURRENT_TIMESTAMP
+		FROM 	COURSE_EXAM
+		WHERE	COURSE_CODE = (SELECT COURSE_CODE FROM COURSE WHERE COURSE_ID = #{courseId})
+		AND		USE_YN = 'Y'	
+		AND		WEEK BETWEEN ${weekFrom} AND ${weekTo}
+		AND	 	TYPE = #{type}
+		AND		LEVEL = #{level}
+		ORDER 	BY RAND() 
+		LIMIT 	${questionCnt}							
+	</insert>   
+	
+	<select id="userExamList" parameterType="Exam" resultType="Exam">
+		SELECT 	A.SEQ,
+	       		B.TYPE,
+	       		B.QUESTION, 
+	       		B.QA1,
+	       		B.QA2,
+	       		B.QA3,
+	       		B.QA4
+	  	FROM 	USER_EXAM A 
+					JOIN COURSE_EXAM B ON B.SEQ = A.SEQ AND B.COURSE_CODE = (SELECT COURSE_CODE FROM COURSE WHERE COURSE_ID = #{courseId})
+		WHERE 	A.COURSE_ID = #{courseId}
+		AND		A.USER_ID = #{userId}
+		AND 	A.EXAM_KIND = #{examKind}
 	</select>
+	
+	<update id="userExamUpd" parameterType="Exam">
+		UPDATE 	USER_EXAM
+		SET 	ANSWER = #{answer},
+				ANSWER_YN = CASE WHEN #{answer} = (SELECT ANSWER FROM COURSE_EXAM WHERE SEQ = #{seq} AND COURSE_CODE = (SELECT COURSE_CODE FROM COURSE WHERE COURSE_ID = #{courseId})) THEN 'Y' ELSE 'N' END,
+		       	CREATE_USER = #{userId},
+		       	CREATE_DATE = CURRENT_TIMESTAMP
+		WHERE 	COURSE_ID = #{courseId}
+		AND		USER_ID = #{userId}
+		AND 	EXAM_KIND = #{examKind}
+		AND 	SEQ = #{seq}
+	</update>
 		
-	<select id="userExamInsertFlagUpd" parameterType="Exam">
-	UPDATE COURSE_EVAL
-	   SET EXAM_YN = 'Y',
-	       E_TO_DATE = CURRENT_TIMESTAMP
-	 WHERE COURSE_ID = #{courseId}
-	   AND USER_ID = #{userId}
+	<update id="userExamInsertFlagUpd" parameterType="Exam">
+		UPDATE 	COURSE_EVAL
+		SET 	EXAM_YN = 'Y',
+		       	E_TO_DATE = CURRENT_TIMESTAMP
+		WHERE 	COURSE_ID = #{courseId}
+		AND 	USER_ID = #{userId}
+	</update>
+	
+	<select id="userExamResultList" parameterType="Exam" resultType="Exam">
+		SELECT 	A.SEQ,
+	       		B.TYPE,
+	       		B.QUESTION, 
+	       		B.QA1,
+	       		B.QA2,
+	       		B.QA3,
+	       		B.QA4,
+	       		A.ANSWER,
+	       		A.ANSWER_YN,
+	       		B.ANSWER EXAM_ANSWER,
+	       		B.ANSWER_DESC
+	  	FROM 	USER_EXAM A 
+					JOIN COURSE_EXAM B ON B.SEQ = A.SEQ AND B.COURSE_CODE = (SELECT COURSE_CODE FROM COURSE WHERE COURSE_ID = #{courseId})
+		WHERE 	A.COURSE_ID = #{courseId}
+		AND		A.USER_ID = #{userId}
+		AND 	A.EXAM_KIND = #{examKind}
+	</select>
+	
+	<select id="userExamScore" parameterType="Exam" resultType="Exam">
+		SELECT 	EXAM_TOTAL
+	  	FROM 	COURSE_EVAL
+		WHERE 	COURSE_ID = #{courseId}
+		AND		USER_ID = #{userId}
 	</select>
 	
 	
@@ -145,7 +215,7 @@
     
     <select id="userExamValuation" parameterType="Exam">
     UPDATE COURSE_EVAL M
-	   SET EXAM = ( SELECT SUM(IF(A.ANSWER = C.ANSWER,C.GRADE,0)) AA 
+	   SET EXAM_TOTAL = ( SELECT SUM(CASE WHEN A.ANSWER = C.ANSWER THEN 1 ELSE 0 END) * ( 100 / COUNT(*) )
 					  FROM USER_EXAM A JOIN COURSE B ON B.COURSE_ID = A.COURSE_ID
 							   JOIN COURSE_EXAM C ON C.COURSE_CODE = B.COURSE_CODE AND C.SEQ = A.SEQ
 					 WHERE A.COURSE_ID = M.COURSE_ID                 

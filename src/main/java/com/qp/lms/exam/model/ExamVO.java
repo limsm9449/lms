@@ -44,6 +44,16 @@ public class ExamVO extends CommonVO {
 	private String courseName;
 	private String searchStr;
 	private String searchKind;
+	private String examKind;
+	
+	private String weekFrom;
+	private String weekTo;
+	private String level;
+	private String questionCnt;
+	private String answerDesc;
+	private String answerYn;
+	private String examTotal;
+	private String examAnswer;
 
 	public String getSeq() {
 		return seq;
@@ -260,6 +270,60 @@ public class ExamVO extends CommonVO {
 	}
 	public void setUserAnswer(String userAnswer) {
 		this.userAnswer = userAnswer;
+	}
+	public String getExamKind() {
+		return examKind;
+	}
+	public void setExamKind(String examKind) {
+		this.examKind = examKind;
+	}
+	public String getWeekFrom() {
+		return weekFrom;
+	}
+	public void setWeekFrom(String weekFrom) {
+		this.weekFrom = weekFrom;
+	}
+	public String getWeekTo() {
+		return weekTo;
+	}
+	public void setWeekTo(String weekTo) {
+		this.weekTo = weekTo;
+	}
+	public String getLevel() {
+		return level;
+	}
+	public void setLevel(String level) {
+		this.level = level;
+	}
+	public String getQuestionCnt() {
+		return questionCnt;
+	}
+	public void setQuestionCnt(String questionCnt) {
+		this.questionCnt = questionCnt;
+	}
+	public String getAnswerDesc() {
+		return answerDesc;
+	}
+	public void setAnswerDesc(String answerDesc) {
+		this.answerDesc = answerDesc;
+	}
+	public String getExamTotal() {
+		return examTotal;
+	}
+	public void setExamTotal(String examTotal) {
+		this.examTotal = examTotal;
+	}
+	public String getAnswerYn() {
+		return answerYn;
+	}
+	public void setAnswerYn(String answerYn) {
+		this.answerYn = answerYn;
+	}
+	public String getExamAnswer() {
+		return examAnswer;
+	}
+	public void setExamAnswer(String examAnswer) {
+		this.examAnswer = examAnswer;
 	}
 	
 	

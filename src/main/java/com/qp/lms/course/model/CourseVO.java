@@ -147,6 +147,14 @@ public class CourseVO extends CommonVO {
     private String career;
     private String picture;
     
+    private String grade;
+    private String grade1;
+    private String grade2;
+    private String grade3;
+    private String grade4;
+    private String grade5;
+    private String gradeCnt;
+    
 	public String getCourseCode() {
 		return courseCode;
 	}
@@ -1020,6 +1028,63 @@ public class CourseVO extends CommonVO {
 	public void setIsExamWeek(String isExamWeek) {
 		this.isExamWeek = isExamWeek;
 	}
-	
+
+	public String getGrade() {
+		return grade;
+	}
+
+	public void setGrade(String grade) {
+		this.grade = grade;
+	}
+
+	public String getGradeCnt() {
+		return gradeCnt;
+	}
+
+	public void setGradeCnt(String gradeCnt) {
+		this.gradeCnt = gradeCnt;
+	}
+
+	public String getGrade1() {
+		return grade1;
+	}
+
+	public void setGrade1(String grade1) {
+		this.grade1 = grade1;
+	}
+
+	public String getGrade2() {
+		return grade2;
+	}
+
+	public void setGrade2(String grade2) {
+		this.grade2 = grade2;
+	}
+
+	public String getGrade3() {
+		return grade3;
+	}
+
+	public void setGrade3(String grade3) {
+		this.grade3 = grade3;
+	}
+
+	public String getGrade4() {
+		return grade4;
+	}
+
+	public void setGrade4(String grade4) {
+		this.grade4 = grade4;
+	}
+
+	public String getGrade5() {
+		return grade5;
+	}
+
+	public void setGrade5(String grade5) {
+		this.grade5 = grade5;
+	}
+
+
 
 }

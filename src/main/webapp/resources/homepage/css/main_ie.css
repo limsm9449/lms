@@ -1,1 +1,14 @@
 @charset "utf-8";
+
+.wrap .head_mobile{
+    height:unset;
+}
+.wrap .head_mobile.on{
+    height:100%;
+}
+.wrap .head_mobile .mobile_dropwdown_wrap{
+    height:unset;
+}
+.wrap .head_mobile.on .mobile_dropwdown_wrap{
+    height:100%;
+}

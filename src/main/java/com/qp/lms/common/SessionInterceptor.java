@@ -48,7 +48,6 @@ public class SessionInterceptor extends HandlerInterceptorAdapter {
 	    	String[] exceptUrls = {
 					"/user/noticeList.do", "/user/noticeV.do", "/user/nextNotice.do", "/user/prevNotice.do",
 		    		"/user/faqList.do", "/user/faqV.do",
-		    		"/user/courseList.do",
 		    		"/common/ddCategory2Depth.do","/common/ddCategory3Depth.do",
 		    		"/goIndex.do"
 		    	};
@@ -100,6 +99,11 @@ public class SessionInterceptor extends HandlerInterceptorAdapter {
 	   	 			SessionUtil.setAttribute("favorityCourseList", commSvr.getFavorityCourseList());
 	   	 		}
 	   	 		
+	   	 		//과정 카테고리
+		   	 	if ( SessionUtil.getCourseCategoryList() == null ) {
+	   	 			SessionUtil.setAttribute("courseCategoryList", commSvr.getCourseCategoryList());
+	   	 		}
+		   	 	
 	   	 		// 시스템에서 사용할 설정값을 가져와 Session에 넣어둔다.
 	   	 		if ( SessionUtil.getAttribute("properties") == null ) {
 			    	FileInputStream fis = new FileInputStream(request.getRealPath("//WEB-INF//lms.properties"));
@@ -131,6 +135,8 @@ public class SessionInterceptor extends HandlerInterceptorAdapter {
 			        	System.out.println("No Session ================================== url => " + "/goIndex.jsp?preUrl=" + URLEncoder.encode(url + "?" + CommUtil.getParameters(request),"UTF-8") + "&loginAuth=" + SessionUtil.getAttribute("loginAuth"));
 			        	response.sendRedirect("/goIndex.do?preUrl=" + URLEncoder.encode(url + "?" + CommUtil.getParameters(request),"UTF-8") + "&loginAuth=" + SessionUtil.getAttribute("loginAuth"));
 			        	return false;
+			        } else {
+		   	 			SessionUtil.setAttribute("sess", sess);
 			        }
 		    	}
 	    	}

@@ -113,8 +113,6 @@ public class PgService {
 			set.getCondiVO().setPaymentKind("CASH");
 		}
 		
-		System.out.println(set.getCondiVO().getApprovalId());
-		
 		//결재 내용 입력.
 		sqlSession.insert("pg.approvalIns",set.getCondiVO());
 		

@@ -132,7 +132,7 @@ function lfn_btn(pKind, pParam) {
 	} else if ( pKind == "refresh" ) {
 		f_submitSelf("/main/mainCourseData",$("#frm").serialize());
 	} else if ( pKind == "list" ) {
-		f_submitSelf("/user/courseList",$("#frm").serialize());
+		f_submitSelf("/main/courseList",$("#frm").serialize());
 	}
 
 }

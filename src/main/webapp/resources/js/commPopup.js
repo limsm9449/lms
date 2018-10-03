@@ -156,7 +156,11 @@ var Popup = {
 	 * @returns
 	 */
 	showExam : function(pCourseId) {
-		Popup.showPopup(context + "/exam/userExamN.do?courseId=" + pCourseId,900,800);
+		Popup.showPopup(context + "/exam/userExam.do?courseId=" + pCourseId,900,800,"examPopup");
+	},
+
+	showExamResult : function(pCourseId) {
+		Popup.showPopup(context + "/exam/userExamResult.do?courseId=" + pCourseId,900,800,"examPopup");
 	},
 
 	/**

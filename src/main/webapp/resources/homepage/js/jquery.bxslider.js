@@ -5,7 +5,7 @@
  * Licensed under MIT (http://opensource.org/licenses/MIT)
  */
 
-;(function($) {
+(function($) {
 
     var defaults = {
   

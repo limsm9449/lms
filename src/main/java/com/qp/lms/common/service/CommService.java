@@ -305,4 +305,7 @@ public class CommService {
     	return  sqlSession.selectList("comm.getFavoriteCourse"); 
     } 
 
+    public List<CourseVO> getCourseCategoryList() throws Exception {
+    	return  sqlSession.selectList("main.categoryList"); 
+    } 
 }

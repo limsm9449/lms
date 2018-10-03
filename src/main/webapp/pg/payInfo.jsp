@@ -65,11 +65,13 @@ function lfn_pay() {
 	
 	$("#paymentCost").val(parseInt($("#totalCost").val()) - parseInt($("#paymentPoint").val()));
 	$("#LGD_AMOUNT").val(parseInt($("#totalCost").val()) - parseInt($("#paymentPoint").val()));
+
+	$("#paymentKind").val($("#LGD_CUSTOM_USABLEPAY").val());
 	
 	if ( $("#LGD_CUSTOM_USABLEPAY").val() == "SC0030" ) {
 		var today = new Date();
 		$("#approvalId").val(today.getTime());
-
+		
 		$.ajax({
 			type :"POST",
 			url : context +"/paymentGateway/cashApproval.do",
@@ -90,6 +92,10 @@ function lfn_pay() {
 		document.frm.target = "xpay";
 		document.frm.submit();
 	}
+}
+
+function lfn_attendCourse() {
+	page.goPage("/normalUser/attendCourseList");
 }
 
 function LPad(digit, size, attatch) {
@@ -270,6 +276,7 @@ $(document.body).ready(function () {
 								<option value="SC0111">문화상품권</option>				
 								<option value="SC0112">게임문화상품권</option>	
                             </select>
+                            <input type="hidden" name="paymentKind" id="paymentKind"/>
 						</td>
 		              </tr>
                       <tr id="bankTr" style="display:none">

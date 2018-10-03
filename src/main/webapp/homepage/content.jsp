@@ -3,212 +3,254 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
 <!DOCTYPE html>
-<html lang='ko'>
+<html lang='ko' data-useragent="Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; Trident/6.0)">
 
 <head>
     <meta charset='utf-8'>
-    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <meta name='viewport' content='width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1'>
     <meta http-equiv='X-UA-Compatible' content='ie=edge'>
     <title>Q learning - Main</title>
 
 	<%@ include file="../common/commMainInclude.jsp" %>
+
+    <script src='/resources/homepage/js/jquery_3.3.1.js'></script>
+    <!--[if IE8]>
+        <script src="http://code.jquery.com/jquery-1.12.3.js></script>
+    <![endif]-->
+    <script src='/resources/homepage/js/jquery.bxslider.js'></script>
+
+    <!--[if IE]>
+        <link rel='stylesheet' href='/resources/homepage/css/main_ie.css'>
+    <![endif]-->
+
+    <link href='https://fonts.googleapis.com/css?family=Nanum+Gothic' rel='stylesheet'>
+
+    <link rel='stylesheet' href='/resources/homepage/css/reset.css'>
+    <link rel='stylesheet' href='/resources/homepage/css/main.css'>
 </head>
 
 <body>
     <div class="wrap">
-        <!-- HEAD -->
-        <div id='width_text'></div>
-        <header>
-            <div class="head_wrap pc clear_fix" onmouseover='sub_hide()'>
-                <div class='head_con logo_box'>
-                    <img src='/resources/homepage/img/logo.png' alt=' '>
-                </div>
-                <div class='head_con search_box'>
-                    <input type="text">
-                    <button>
-                        <img src='/resources/homepage/img/search_ic.png' alt=' '>
-                    </button>
-                </div>
-                <div class='head_con util_box'>
-<c:if test="${empty set.sessVO}">
-       				<a href="/guest/join.do">회원가입</a>
-       				<a href="/login.do">로그인</a>
-</c:if>      		
-<c:if test="${!empty set.sessVO}">      		
-                    <a href="javascript:" onclick="gfn_ajax.logout()">로그아웃</a>
-                    <a href="javascript:" onclick="page.goPage('/member/userMemberU');" class='pc'>회원정보수정</a>
-                    <p class='pc'>${set.sessVO.userName}님 반갑습니다.</p>
-</c:if>                     
-                </div>
-            </div>
-            <div class="head_wrap mobile clear_fix">
-                <div class='mobile_btn'>
-                    <button>
-                        <span></span><span></span><span></span>
-                    </button>
-                </div>
-                <div class='head_con logo_box'>
-                    <img src='/resources/homepage/img/logo.png' alt=' '>
-                </div>
-                <div class='head_con util_box'>
-                    <a href='#' class='last_right'>로그아웃</a>
-                </div>
-                <div class='head_con search_box'>
-                    <input type="text">
-                    <button>
-                        <img src='/resources/homepage/img/search_ic.png' alt=' '>
-                    </button>
-                </div>
-            </div>
-            <div class='menu_wrap'>
-                <div class='menu_layout pc' onmouseover='sub_show()'>
-                    <div class='mobile_btn'>
-                        <button>
-                            <span></span><span></span><span></span>
-                        </button>
-                    </div>
-                    <ul class='menu'>
-                        <li>
-                            <a href=''>전체과정</a>
-                        </li>
-                        <li>
-                            <a href=''>나의강의실</a>
-                        </li>
-                        <li>
-                            <a href=''>교육안내</a>
-                        </li>
-                        <li>
-                            <a href=''>고객지원</a>
-                        </li>
-                    </ul>
-                    <div class='menu_tutor'>
-                        <span>
-                            <img src='/resources/homepage/img/channel_ic.png' alt=''>
-                        </span>
-                        <p>강사채널</p>
-                    </div>
-                </div>
-                <div class='menu_dropdown_wrapper'>
-                    <div class='menu_dropdown_wrap'>
-                        <div class='menu_dropdown clear_fix'>
-                            <ul class='menu_sub'>
-<c:forEach var="row" items="${set.categoryList}" varStatus="idx">
-                                <li><a href="javascript:" onclick="page.goPage('/main/courseList', 'c1Code=${row.code}');">${row.codeName}</a></li>
-</c:forEach>
-                            </ul>
-                            <span class='menu_sub_line'></span>
-                            <ul class='menu_sub classroom'>
-                                <li><a href="javascript:" onclick="page.goPage('/normalUser/attendCourseList');">수강과정</a></li>
-                                <li><a href="javascript:" onclick="page.goPage('/normalUser/waitingCourseList');">수강대기과정</a></li>
-                                <li><a href="javascript:" onclick="page.goPage('/normalUser/cancelCourseList');">수강취소과정</a></li>
-                                <li><a href="javascript:" onclick="page.goPage('/normalUser/myCourseList');">수강완료과정</a></li>
-                                <li><a href="javascript:" onclick="page.goPage('/main/cart');">장바구니</a></li>
-                                <li><a href="javascript:" onclick="page.goPage('/member/userMemberU');">회원정보수정</a></li>
-                                <li><a href="javascript:" onclick="page.goPage('/member/memberChangePassword');">비밀번호변경</a></li>
-                                <li><a href="javascript:" onclick="page.goPage('/counsel/userCounselList');">상담내역</a></li>
-                                <li><a href="javascript:" onclick="page.goPage('/member/memberRetired');">회원탈퇴</a></li>
-                            </ul>
-                            <span class='menu_sub_line'></span>
-                            <ul class='menu_sub'>
-                                <li><a href="javascript:" onclick="page.goNsJsp('how');">수강신청방법</a></li>
-                                <li><a href=''>학습방법</a></li>
-                                <li><a href=''>학습관리</a></li>
-                                <li><a href=''>수강후기</a></li>
-                                <li><a href=''>학습지원프로그램</a></li>
-                            </ul>
-                            <span class='menu_sub_line'></span>
-                            <ul class='menu_sub'>
-                            	<li><a href="javascript:" onclick="page.goPage('/user/noticeList');">공지사항</a></li>
-								<li><a href="javascript:" onclick="page.goPage('/user/faqList');">FAQ</a></li>
-								<li><a href="javascript:" onclick="page.goPage('/main/mailQuestion');">1:1 메일문의</a></li>
-								<li><a href="javascript:" onclick="page.goPage('/guest/bankInfo');">입금계좌안내</a></li>
-                                <li><a href=''>원격지원</a></li>
-                                <li><a href=''>찾아오시는길</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </header>
-        <!-- HEAD END -->
+       	
+       	<!-- HEAD -->
+       	<%@ include file="./mainTop.jsp" %>
+       	<!-- HEAD END -->
 
         <!-- CONTENTS -->
         <div class='contents_wrap' onmouseover='sub_hide()'>
-            <div class='slider_wrap'>
-                <div class='slide_box slide_1'>
+            <!-- QUICK MENU -->
+            <%@ include file="./mainQuickMenu.jsp" %>
+
+            <!-- VISUAL -->
+            <ul class='slider_wrap tabs' id='tab1'>
+                <li class='slide_box slide_1'>
                     <div class='visual_box'>
-                        <img src='/resources/homepage/img/main_visual.jpg' alt=''>
-                    </div>
-                    <div class='slide clear_fix'>
-                        <div class='slider_text_box'>
-                            <img src='/resources/homepage/img/visual_text.png' class='pc' alt=' '>
-                            <img src='/resources/homepage/img/visual_text_mobile.png' class='mobile' alt=' '>
+                        <div class='slide clear_fix'>
+                            <div class='slider_text_box'>
+                                <img src='/resources/homepage/img/visual_text.png' class='pc' alt=' '>
+                            </div>
+                            <button>상세보기1</button>
                         </div>
-                        <button>상세보기1</button>
                     </div>
-                </div>
-                <div class='slide_box slide_2'>
+                </li>
+                <li class='slide_box slide_2'>
                     <div class='visual_box'>
-                        <img src='/resources/homepage/img/main_visual.jpg' alt=''>
-                    </div>
-                    <div class='slide clear_fix'>
-                        <div class='slider_text_box'>
-                            <img src='/resources/homepage/img/visual_text.png' class='pc' alt=' '>
-                            <img src='/resources/homepage/img/visual_text_mobile.png' class='mobile' alt=' '>
+                        <div class='slide clear_fix'>
+                            <div class='slider_text_box left'>
+                                <img src='/resources/homepage/img/visual2_text.png' class='pc' alt=' '>
+                            </div>
+                            <button class='right_bottom'>상세보기2</button>
                         </div>
-                        <button>상세보기2</button>
                     </div>
-                </div>
-                <div class='slide_box slide_3'>
+                </li>
+                <li class='slide_box slide_3'>
                     <div class='visual_box'>
-                        <img src='/resources/homepage/img/main_visual.jpg' alt=''>
-                    </div>
-                    <div class='slide clear_fix'>
-                        <div class='slider_text_box'>
-                            <img src='/resources/homepage/img/visual_text.png' class='pc' alt=' '>
-                            <img src='/resources/homepage/img/visual_text_mobile.png' class='mobile' alt=' '>
+                        <div class='slide clear_fix'>
+                            <div class='slider_text_box'>
+                            </div>
+                            <button class='right_bottom_nonText'>상세보기3</button>
                         </div>
-                        <button>상세보기3</button>
                     </div>
-                </div>
-            </div>
+                </li>
+            </ul>
+            <ul class='slider_wrap tabs' id='tab2'>
+                <li class='slide_box slide_1'>
+                    <div class='visual_box'>
+                        <div class='slide clear_fix'>
+                            <div class='slider_text_box'>
+                                <img src='/resources/homepage/img/visual_text.png' class='pc' alt=' '>
+                            </div>
+                            <button>이벤트1</button>
+                        </div>
+                    </div>
+                </li>
+                <li class='slide_box slide_2'>
+                    <div class='visual_box'>
+                        <div class='slide clear_fix'>
+                            <div class='slider_text_box left'>
+                                <img src='/resources/homepage/img/visual2_text.png' class='pc' alt=' '>
+                            </div>
+                            <button class='right_bottom'>상세보기2</button>
+                        </div>
+                    </div>
+                </li>
+                <li class='slide_box slide_3'>
+                    <div class='visual_box'>
+                        <div class='slide clear_fix'>
+                            <div class='slider_text_box'>
+                            </div>
+                            <button class='right_bottom_nonText'>이벤트3</button>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+            <ul class='slider_wrap tabs' id='tab3'>
+                <li class='slide_box slide_1'>
+                    <div class='visual_box'>
+                        <div class='slide clear_fix'>
+                            <div class='slider_text_box'>
+                                <img src='/resources/homepage/img/visual_text.png' class='pc' alt=' '>
+                            </div>
+                            <button>공지사항1</button>
+                        </div>
+                    </div>
+                </li>
+                <li class='slide_box slide_2'>
+                    <div class='visual_box'>
+                        <div class='slide clear_fix'>
+                            <div class='slider_text_box left'>
+                                <img src='/resources/homepage/img/visual2_text.png' class='pc' alt=' '>
+                            </div>
+                            <button class='right_bottom'>상세보기2</button>
+                        </div>
+                    </div>
+                </li>
+                <li class='slide_box slide_3'>
+                    <div class='visual_box'>
+                        <div class='slide clear_fix'>
+                            <div class='slider_text_box'>
+                            </div>
+                            <button class='right_bottom_nonText'>공지사항3</button>
+                        </div>
+                    </div>
+                </li>
+            </ul>
             <div class='slider_tab_wrap'>
                 <div class='slider_tab'>
-                    <button onclick='' class='active'>베스트 과정</button>
-                    <button onclick=''>9월 신규 이벤트</button>
-                    <button onclick=''>주요 공지사항</button>
+                    <button onclick='change_tab(0, this)' class='on'>베스트 과정</button>
+                    <button onclick='change_tab(1, this)' id='btn_center'>9월 신규 이벤트</button>
+                    <button onclick='change_tab(2, this)'>주요 공지사항</button>
                 </div>
             </div>
+            <!-- VISUAL END -->
+
+            <!-- NEW PROCESS -->
             <div class='process_wrap'>
                 <p>신규 과정</p>
-                <div class='process_box process1'>
-                    <div class='process clear_fix'>
-                        <p class='process_title'>
-                            김정구 교수의
-                            <span>
-                                새로운 <strong>미래기회 창조 및 선점전략</strong>
-                            </span>
-                        </p>
-                        <p class='process_text'>
-                            패러다임이 급변하는 사회, 최고의 위기라고도 할 수 있는 향후 10년. 위기와 역경을 기회로 만들어 당신을 도약시킬 수 있는 미래창조 비결을 제시합니다.
-                        </p>
-                        <a href=''>바로가기</a>
+                <div class='slider_wrap process1_slide_wrap'>
+                    <div class='slide_box slide_1'>
+                        <div class='process_box process1'>
+                            <div class='process clear_fix'>
+                                <p class='process_title'>
+                                    김정구 교수의
+                                    <span>
+                                        새로운 <strong>미래기회 창조 및 선점전략</strong>
+                                    </span>
+                                </p>
+                                <p class='process_text'>
+                                    패러다임이 급변하는 사회, 최고의 위기라고도 할 수 있는 향후 10년. 위기와 역경을 기회로 만들어 당신을 도약시킬 수 있는 미래창조 비결을
+                                    제시합니다.
+                                </p>
+                                <a href=''>바로가기1</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class='slide_box slide_2'>
+                        <div class='process_box process1'>
+                            <div class='process clear_fix'>
+                                <p class='process_title'>
+                                    김정구 교수의
+                                    <span>
+                                        새로운 <strong>미래기회 창조 및 선점전략</strong>
+                                    </span>
+                                </p>
+                                <p class='process_text'>
+                                    패러다임이 급변하는 사회, 최고의 위기라고도 할 수 있는 향후 10년. 위기와 역경을 기회로 만들어 당신을 도약시킬 수 있는 미래창조 비결을
+                                    제시합니다.
+                                </p>
+                                <a href=''>바로가기2</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class='slide_box slide_3'>
+                        <div class='process_box process1'>
+                            <div class='process clear_fix'>
+                                <p class='process_title'>
+                                    김정구 교수의
+                                    <span>
+                                        새로운 <strong>미래기회 창조 및 선점전략</strong>
+                                    </span>
+                                </p>
+                                <p class='process_text'>
+                                    패러다임이 급변하는 사회, 최고의 위기라고도 할 수 있는 향후 10년. 위기와 역경을 기회로 만들어 당신을 도약시킬 수 있는 미래창조 비결을
+                                    제시합니다.
+                                </p>
+                                <a href=''>바로가기3</a>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class='process_box process2'>
-                    <div class='process'>
-                        <p class='process_title'>
-                            <span>
-                                남다른 <strong>교구활용의 정석</strong>
-                            </span>
-                        </p>
-                        <p class='process_text'>
-                            활기찬 교실! 재미있는 수업!<br>다양한 교구를 통한 남다른 교실 만들기!
-                        </p>
-                        <a href=''>바로가기</a>
+                <div class='slider_wrap process2_slide_wrap'>
+                    <div class='slide_box slide_1'>
+                        <div class='process_box process2'>
+                            <div class='process'>
+                                <p class='process_title'>
+                                    <span>
+                                        남다른 <strong>교구활용의 정석</strong>
+                                    </span>
+                                </p>
+                                <p class='process_text'>
+                                    활기찬 교실! 재미있는 수업!<br>다양한 교구를 통한 남다른 교실 만들기!
+                                </p>
+                                <a href=''>바로가기1</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class='slide_box slide_2'>
+                        <div class='process_box process2'>
+                            <div class='process'>
+                                <p class='process_title'>
+                                    <span>
+                                        남다른 <strong>교구활용의 정석</strong>
+                                    </span>
+                                </p>
+                                <p class='process_text'>
+                                    활기찬 교실! 재미있는 수업!<br>다양한 교구를 통한 남다른 교실 만들기!
+                                </p>
+                                <a href=''>바로가기2</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class='slide_box slide_3'>
+                        <div class='process_box process2'>
+                            <div class='process'>
+                                <p class='process_title'>
+                                    <span>
+                                        남다른 <strong>교구활용의 정석</strong>
+                                    </span>
+                                </p>
+                                <p class='process_text'>
+                                    활기찬 교실! 재미있는 수업!<br>다양한 교구를 통한 남다른 교실 만들기!
+                                </p>
+                                <a href=''>바로가기3</a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
+            <!-- NEW PROCESS END -->
+
+            <!-- PROCESS RECOMMEND -->
             <div class='recommend_wrap'>
                 <p>
                     추천 과정
@@ -254,8 +296,95 @@
                     </li>
                 </ul>
             </div>
+            <!-- PROCESS RECOMMEND END -->
+
+            <!-- CUSTOMER SERVICE -->
+            <div class="cs clear_fix">
+                <div class="notice clear_fix">
+                    <p class='cs_title'>공지사항</p>
+                    <span class='cs_more'>+</span>
+                    <ul>
+                        <li class='notice_list'>
+                            <a href='#'>
+                                <p>[오픈] Grammar Zone Grammar Zone Grammar Zone</p>
+                                <span>2017.04.12</span>
+                            </a>
+                        </li>
+                        <li class='notice_list'>
+                            <a href='#'>
+                                <p>[OPEN] 진로특강 강점편 오픈!!</p>
+                                <span>2017.04.12</span>
+                            </a>
+                        </li>
+                        <li class='notice_list'>
+                            <a href='#'>
+                                <p>[OPEN] 진로특강 강점편 오픈!!</p>
+                                <span>2017.04.12</span>
+                            </a>
+                        </li>
+                        <li class='notice_list'>
+                            <a href='#'>
+                                <p>[OPEN] 진로특강 강점편 오픈!!</p>
+                                <span>2017.04.12</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="faq clear_fix">
+                    <p class='cs_title'>FAQ</p>
+                    <span class='cs_more'>+</span>
+                    <ul>
+                        <li class='faq_list'>
+                            <a href='#'>
+                                <p>무통장입금(가상계좌) 결제 방법을 알려주세요</p>
+                            </a>
+                        </li>
+                        <li class='faq_list'>
+                            <a href='#'>
+                                <p>배송 확인(조회)은 어떻게 하나요?</p>
+                            </a>
+                        </li>
+                        <li class='faq_list'>
+                            <a href='#'>
+                                <p>회원정보를 수정하고 싶어요</p>
+                            </a>
+                        </li>
+                        <li class='faq_list'>
+                            <a href='#'>
+                                <p>학습종료 후에도 학습내용을 볼 수 있습니까?</p>
+                            </a>
+                        </li>
+                        <li class='faq_list'>
+                            <a href='#'>
+                                <p>[학습장애] 학습 중 넥스트 버튼이 안보입니다.</p>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="guide clear_fix">
+                    <p class='cs_title blue'>처음오셨나요?</p>
+                    <p class='guide_text'>이용가이드를 확인해 주세요.</p>
+                    <a href='#'>바로가기</a>
+                </div>
+                <div class="center clear_fix">
+                    <p class='cs_title'>고객센터</p>
+                    <strong>02-888-7805</strong>
+                    <div class='center_time_box'>
+                        <p>
+                            평일 09:00 ~ 12:00<br>
+                            03:00 ~ 18:00
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <!-- CUSTOMER SERVICE END -->
         </div>
         <!-- CONTENTS END -->
+
+		<!-- FOOTER -->
+       	<%@ include file="./mainBottom.jsp" %>
+        <!-- FOOTER END -->
+        
     </div>
     <script src='/resources/homepage/js/main.js'></script>
 </body>

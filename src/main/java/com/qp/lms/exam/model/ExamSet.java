@@ -21,6 +21,8 @@ public class ExamSet extends CommonSet {
 	private List<CodeVO> ddCategory2Depth;		// 카테고리 중분류
 	private List<CodeVO> ddCategory3Depth;		// 카테고리 소분류
 
+	private ExamVO eval;			
+
 	public ExamVO getCondiVO() {
 		return condiVO;
 	}
@@ -68,6 +70,12 @@ public class ExamSet extends CommonSet {
 	}
 	public void setUserDetailList(List<ExamVO> userDetailList) {
 		this.userDetailList = userDetailList;
+	}
+	public ExamVO getEval() {
+		return eval;
+	}
+	public void setEval(ExamVO eval) {
+		this.eval = eval;
 	}
 
 	

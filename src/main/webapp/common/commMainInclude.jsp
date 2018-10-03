@@ -14,26 +14,9 @@
 <script type="text/javascript" src="/resources/js/jquery-3.3.1.min.js"></script>
 <script type="text/javascript" src="/resources/js/comm.js?timestamp=<%=timestamp%>"></script>
 <script type="text/javascript" src="/resources/js/utils.js?timestamp=<%=timestamp%>"></script>
+<script type="text/javascript" src="/resources/js/commPopup.js?timestamp=<%=timestamp%>"></script>
+<script type="text/javascript" src="/resources/js/paging.js?timestamp=<%=timestamp%>"></script>
 <script type="text/javascript" src="/resources/js/category.js"></script>
-
-<!--[if IE]>
-    <link rel='stylesheet' href='/resources/homepage/css/main_ie.css'>
-<![endif]-->
-
-<link href='https://fonts.googleapis.com/css?family=Nanum+Gothic' rel='stylesheet'>
-
-<link rel='stylesheet' href='/resources/homepage/css/common/reset.css'>
-<link rel='stylesheet' href='/resources/homepage/css/common/common.css'>
-<link rel='stylesheet' href='/resources/homepage/css/main.css'>
-<link rel='stylesheet' href='/resources/homepage/css/common/jquery.bxslider.css'>
-
-<!--[if IE8]>
-    <script src="http://code.jquery.com/jquery-1.7.1.min.js" integrity="sha256-iBcUE/x23aI6syuqF7EeT/+JFBxjPs5zeFJEXxumwb0=" crossorigin="anonymous"></script>
-<![endif]-->
-<script src='/resources/homepage/js/main.js?timestamp=<%=timestamp%>'></script>
-<script src='/resources/homepage/js/jquery_3.3.1.js'></script>
-<script src='/resources/homepage/js/jquery.bxslider.js'></script>
-
 
 <%-- datepicker --%>
 <script type="text/javascript" src="/resources/jquery-ui-1.12.1.custom/jquery-ui.js"></script> 

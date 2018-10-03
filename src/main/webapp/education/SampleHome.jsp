@@ -11,16 +11,21 @@
     <meta http-equiv='X-UA-Compatible' content='ie=edge'>
     <title>Popup Sample</title>
 
+	<%@ include file="../common/commMainInclude.jsp" %>
+	
     <!--[if IE]>
-        <link rel='stylesheet' href='./css/main_ie.css'>
+        <link rel='stylesheet' href='/resources/homepagePopup/css/main_ie.css'>
     <![endif]-->
 
-	<%@ include file="../common/commMainPopupInclude.jsp" %>
-	
+    <link href='https://fonts.googleapis.com/css?family=Nanum+Gothic' rel='stylesheet'>
+
+    <link rel='stylesheet' href='/resources/homepagePopup/css/common/reset.css'>
+    <link rel='stylesheet' href='/resources/homepagePopup/css/common/common.css'>
+    <link rel='stylesheet' href='/resources/homepagePopup/css/main.css'>
+
 </head>
 
-
-<script type="text/javascript" src="/resources/js/qpApi.js"></script>
+<script type="text/javascript" src="/resources/js/qpApi.js?timestamp=<%=timestamp%>"></script>
 
 <script type="text/javascript">
 var gCondition = {
@@ -54,17 +59,7 @@ $(document).ready(function() {
                 ${set.data.courseName}
             </p>
         </div>
-	  	<div class="study_content" style="width: ${set.data.hPx}px; height: ${set.data.vPx}px;">
-			<iframe name="eduContent" id="eduContent" src="about:blank;" style="width: ${set.data.hPx}px; height: ${set.data.vPx}px;">학습 컨텐츠 영역</iframe>
-		</div> 
-        <div class='btn_area'>
-            <button onclick='new_window("popup_exam")'>시험 응시</button>
-            <button onclick='new_window("popup_exam_result")'>시험 결과</button>
-            <button onclick='new_window("popup_survey")'>설문</button>
-            <button onclick='new_window("popup_report_submit")'>과정리포트 제출</button>
-            <button onclick='new_window("popup_report_result")'>과정리포트 채점결과</button>
-            <button onclick='new_window("popup_report_manage")' class='last_right'>과정리포트 첨삭관리</button>
-        </div>
+		<iframe name="eduContent" id="eduContent" src="about:blank;" style="width: ${set.data.hPx}px; height: ${set.data.vPx}px;">학습 컨텐츠 영역</iframe>
     </div>
 	<form name="frm" method="post">
 	</form>

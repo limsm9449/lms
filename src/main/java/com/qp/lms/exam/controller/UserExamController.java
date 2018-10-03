@@ -38,30 +38,22 @@ public class UserExamController {
      * @return
      * @throws Exception
      */
-    @RequestMapping(value = "/exam/userExamN")
-    public String userExamN(@ModelAttribute ExamVO vo, Model model) throws Exception {
+    @RequestMapping(value = "/exam/userExam")
+    public String userExam(@ModelAttribute ExamVO vo, Model model) throws Exception {
     	try {
     		ExamSet set = new ExamSet();
     		set.setCondiVO(vo);
     		
-	    	set = svr.userExamN(set);
+	    	set = svr.userExam(set);
 	    	
 	        model.addAttribute("set", set );
     	} catch ( Exception e ) {
     		e.printStackTrace();
     	}
 
-        return "/exam/UserExamN";
+        return "/exam/UserExam";
     }
 
-    ///////////////////////////////////////////////// Transaction ////////////////////////////////////////////////////
-    /**
-     * 사용자 시험 저장
-     * @param vo
-     * @param model
-     * @return
-     * @throws Exception
-     */
     @RequestMapping(value = "/exam/userExamIns", method = RequestMethod.POST)
     public String questIns(@ModelAttribute ExamVO vo, Model model) throws Exception {
     	try {
@@ -77,6 +69,22 @@ public class UserExamController {
 
         return "/common/json";
     }
-    
+
+    @RequestMapping(value = "/exam/userExamResult")
+    public String userExamResult(@ModelAttribute ExamVO vo, Model model) throws Exception {
+    	try {
+    		ExamSet set = new ExamSet();
+    		set.setCondiVO(vo);
+    		
+	    	set = svr.userExamResult(set);
+	    	
+	        model.addAttribute("set", set );
+    	} catch ( Exception e ) {
+    		e.printStackTrace();
+    	}
+
+        return "/exam/UserExamResult";
+    }
+
     
 }

@@ -1,5 +1,6 @@
 package com.qp.lms.exam.service;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
@@ -19,14 +20,37 @@ public class UserExamService {
 	@Autowired
 	private SqlSession sqlSession;
 
-	
-    public ExamSet userExamN(ExamSet set) throws Exception {
-    	List<ExamVO> list =  sqlSession.selectList("exam.userExamNewList", set.getCondiVO());
+    public ExamSet userExam(ExamSet set) throws Exception {
+		set.getCondiVO().setUserId(SessionUtil.getSessionUserId());
+		set.getCondiVO().setExamKind("TOTAL");
+		
+		int cnt = sqlSession.selectOne("exam.userExamCount", set.getCondiVO());
+    	if ( cnt == 0 ) {
+        	List<ExamVO> standardList = sqlSession.selectList("exam.courseExamTypeStandard", set.getCondiVO());
+    		for ( int i = 0; i < standardList.size(); i++ ) {
+    			standardList.get(i).setUserId(SessionUtil.getSessionUserId());
+    			sqlSession.insert("exam.courseExamInsert", standardList.get(i));
+    		}
+    	}
+		
+    	List<ExamVO> list =  sqlSession.selectList("exam.userExamList", set.getCondiVO());
     	set.setList(list);
         
     	return set;
     }
     
+    public ExamSet userExamResult(ExamSet set) throws Exception {
+		set.getCondiVO().setUserId(SessionUtil.getSessionUserId());
+		set.getCondiVO().setExamKind("TOTAL");
+		
+    	List<ExamVO> list =  sqlSession.selectList("exam.userExamResultList", set.getCondiVO());
+    	set.setList(list);
+    	
+    	ExamVO eval = sqlSession.selectOne("exam.userExamScore", set.getCondiVO());
+    	set.setEval(eval);
+        
+    	return set;
+    }
     
     ///////////////////////////////////////////////// Transaction ////////////////////////////////////////////////////
     @Transactional(propagation=Propagation.REQUIRED, rollbackFor={Throwable.class})
@@ -34,12 +58,14 @@ public class UserExamService {
     	ExamVO saveVO = new ExamVO();
 		saveVO.setCourseId(set.getCondiVO().getCourseId());
 		saveVO.setUserId(SessionUtil.getSessionUserId());
+		saveVO.setExamKind("TOTAL");
+		
 		//saveVO.setQgId(set.getCondiVO().getQgId());
 		for ( int i = 0; i < set.getCondiVO().getSeqs().length; i++ ) {
 			saveVO.setSeq(set.getCondiVO().getSeqs()[i]);
 			saveVO.setAnswer(set.getCondiVO().getAnswers()[i]);
 			
-			sqlSession.insert("exam.userExamIns",saveVO);
+			sqlSession.update("exam.userExamUpd",saveVO);
 		}
 
 		//완료 처리

@@ -2,14 +2,30 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
-<html>
+<!DOCTYPE html>
+<html lang='ko'>
+
 <head>
-	<title>강의</title>
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+    <title>Popup Sample</title>
+
+	<%@ include file="../common/commMainInclude.jsp" %>
+	
+    <!--[if IE]>
+        <link rel='stylesheet' href='/resources/homepagePopup/css/main_ie.css'>
+    <![endif]-->
+
+    <link href='https://fonts.googleapis.com/css?family=Nanum+Gothic' rel='stylesheet'>
+
+    <link rel='stylesheet' href='/resources/homepagePopup/css/common/reset.css'>
+    <link rel='stylesheet' href='/resources/homepagePopup/css/common/common.css'>
+    <link rel='stylesheet' href='/resources/homepagePopup/css/main.css'>
+
 </head>
 
-<%@ include file="../common/commAdminInclude.jsp" %>
-
-<script type="text/javascript" src="/resources/js/qpApi.js?timestamp=<%=timestamp%>""></script>
+<script type="text/javascript" src="/resources/js/qpApi.js?timestamp=<%=timestamp%>"></script>
 
 <script type="text/javascript">
 var gCondition = {
@@ -31,7 +47,7 @@ $(document).ready(function() {
 	<%-- 초기값 세팅 --%>
 	<c:choose>
 		<c:when test="${set.condiVO.week ne ''}">
-			QP_API.init(${set.condiVO.courseId}, ${set.condiVO.week}, ${set.condiVO.page}, ${set.data.totalWeek}, true, false); 
+			QP_API.init(${set.condiVO.courseId}, ${set.condiVO.week}, 1, ${set.data.totalWeek}, true, false); 
 		</c:when>
 		<c:otherwise>
 			QP_API.init(${set.condiVO.courseId}, ${set.data.lastWeek}, ${set.data.lastPage}, ${set.data.totalWeek}, true, false);
@@ -44,37 +60,43 @@ $(document).ready(function() {
 </script>
 
 
-
 <body onunload="Popup.hideAllPopup()">
+    <div class='wrap'>
+        <div class='lecture_head clear_fix'>
+            <p class='lecture_title'>
+                ${set.data.courseName}
+            </p>
+        </div>
+		<iframe name="eduContent" id="eduContent" src="about:blank;" style="width: ${set.data.hPx}px; height: ${set.data.vPx}px;">학습 컨텐츠 영역</iframe>
+        <div class='btn_area'>
+            <button onclick="javascript:Popup.showUserBoard('NOTICE','${set.condiVO.courseId}'); return false;">공지사항</button>
+            <button onclick="javascript:Popup.showUserBoard('FREE','${set.condiVO.courseId}'); return false;">자유게시판</button>
+            <button onclick="javascript:Popup.showUserBoard('DATA','${set.condiVO.courseId}'); return false;">자료실</button>
+            <button onclick="javascript:Popup.showUserBoard('QNA','${set.condiVO.courseId}'); return false;">Q&A</button>
 
-<form name="frm" method="post">
-</form>
-
-<div id="study_popup_wrap">
-  	<div class="study_header">
-    	<h3 class="title">${set.data.courseName}</h3>
-  	</div>
-  	<div class="study_content" style="width: ${set.data.hPx}px; height: ${set.data.vPx}px;">
-		<iframe name="eduContent" id="eduContent" src="about:blank;">학습 컨텐츠 영역</iframe>
-	</div>
-	<div class="study_tools">
-	   	<ul class="lms">
-	   		<li><span onClick="javascript:Popup.showUserBoard('NOTICE','${set.condiVO.courseId}'); return false;" class="lmsbtn">공지사항</span></li>
-	   		<li><span onClick="javascript:Popup.showUserBoard('FREE','${set.condiVO.courseId}'); return false;" class="lmsbtn">자유게시판</span></li>
-	   		<li><span onClick="javascript:Popup.showUserBoard('DATA','${set.condiVO.courseId}'); return false;" class="lmsbtn">자료실</span></li>
-	   		<li><span onClick="javascript:Popup.showUserBoard('QNA','${set.condiVO.courseId}'); return false;" class="lmsbtn">Q&A</span></li>
 <c:if test="${set.data.isReport eq 'Y'}">
-	   		<li><span onClick="javascript:Popup.showUserBoard('REPORT','${set.condiVO.courseId}'); return false;" class="lmsbtn">Report</span></li>
+			<button onclick="javascript:Popup.showUserBoard('REPORT','${set.condiVO.courseId}'); return false;">Report</button>
 </c:if>	   		
 <c:if test="${set.data.isDiscussion eq 'Y'}">
-	   		<li><span onClick="javascript:Popup.showUserBoard('DISCUSSION','${set.condiVO.courseId}'); return false;" class="lmsbtn">Discussion</span></li>
+			<button onclick="javascript:Popup.showUserBoard('DISCUSSION','${set.condiVO.courseId}'); return false;">Discussion</button>
 </c:if>	   		
-	   		<li class="noline"><span onClick="javascript:Popup.showUserProgress('${set.condiVO.courseId}'); return false;" class="lmsbtn">진도</span></li>
-	   	</ul>
-	</div>
-</div>
+			<button onclick="javascript:Popup.showUserProgress('QNA','${set.condiVO.courseId}'); return false;">진도</button>
 
-
+<c:if test="${set.data.examYn eq 'Y'}">
+            <button>시험 응시 완료</button>
+</c:if>	   		
+<c:if test="${set.data.examYn eq 'N'}">
+            <button onclick="javascript:Popup.showExam('${set.condiVO.courseId}'); return false;">시험 응시</button>
+</c:if>	   		
+            <button onclick="javascript:Popup.showExamResult('${set.condiVO.courseId}'); return false;">시험 결과</button>
+            <button onclick="new_window('')">설문</button>
+            <button onclick="new_window('')">과정리포트 제출</button>
+            <button onclick="new_window('')">과정리포트 채점결과</button>
+            <button onclick="new_window('')" class='last_right'>과정리포트 첨삭관리</button>
+        </div>
+    </div>
+	<form name="frm" method="post">
+	</form>
 </body>
 
 

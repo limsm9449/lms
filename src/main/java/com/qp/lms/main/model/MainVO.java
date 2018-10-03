@@ -36,6 +36,7 @@ public class MainVO extends CommonVO {
 	private String courseName;
 	
 	private String compCd;
+	private String[] category;
 	
 	public String getC1Code() {
 		return c1Code;
@@ -183,6 +184,12 @@ public class MainVO extends CommonVO {
 	}
 	public void setCompCd(String compCd) {
 		this.compCd = compCd;
+	}
+	public String[] getCategory() {
+		return category;
+	}
+	public void setCategory(String[] category) {
+		this.category = category;
 	}
 	
 	
