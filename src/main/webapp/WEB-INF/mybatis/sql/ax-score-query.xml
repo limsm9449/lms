@@ -160,6 +160,20 @@
     	 WHERE 	COURSE_ID = #{COURSE_ID}
     	 AND    USER_ID = #{USER_ID}
     </update>
+    
+    <!-- 이수여부를 수정한다. -->
+    <update id="axUserScoreUpdateComplete" parameterType="hashmap">
+    <![CDATA[
+		UPDATE COURSE_EVAL A
+		   SET COMPLETE_YN = CASE WHEN REPORT < (SELECT REPORT_FAIL FROM COURSE WHERE COURSE_ID = A.COURSE_ID) OR 
+		   								EXAM < (SELECT EXAM_FAIL FROM COURSE WHERE COURSE_ID = A.COURSE_ID) OR 
+		   								DISCUSSION < (SELECT DISCUSSION_FAIL FROM COURSE WHERE COURSE_ID = A.COURSE_ID) OR 
+		   								PROGRESS < (SELECT PROGRESS_FAIL FROM COURSE WHERE COURSE_ID = A.COURSE_ID) OR 
+		   								TOTAL < (SELECT TOTAL_FAIL FROM COURSE WHERE COURSE_ID = A.COURSE_ID) THEN 'N' ELSE 'Y' END 
+		 WHERE COURSE_ID = #{COURSE_ID}
+		   AND USER_ID = #{USER_ID}
+	]]>
+    </update>
 
 	<select id="axUserScoreWeekList" resultType="hashmap">
 		SELECT 	A.COURSE_ID

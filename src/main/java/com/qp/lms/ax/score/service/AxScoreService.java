@@ -50,6 +50,7 @@ public class AxScoreService {
 		for ( int i = 0; i < updList.size(); i++ ) {
 			sqlSession.update("axScore.axUserScoreUpdate", updList.get(i));
 			sqlSession.update("axScore.axUserScoreUpdateTotal", updList.get(i));
+			sqlSession.update("axScore.axUserScoreUpdateComplete", updList.get(i));
 		}
 
 		hm.put("RtnMode", Constant.mode.OK.name());
@@ -120,6 +121,8 @@ public class AxScoreService {
 		sqlSession.update("axScore.axUserScoreUpdateExamTotal", paramMap);
 		//전체합계(비율)
 		sqlSession.update("axScore.axUserScoreUpdateTotal", paramMap);
+		//이수여부
+		sqlSession.update("axScore.axUserScoreUpdateComplete", paramMap);
 
 		hm.put("RtnMode", Constant.mode.OK.name());
         

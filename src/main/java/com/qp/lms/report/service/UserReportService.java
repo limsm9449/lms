@@ -69,6 +69,8 @@ public class UserReportService {
 		condiVO.setCourseId(set.getCondiVO().getCourseId());
 		condiVO.setUserId(set.getCondiVO().getUserId());
 		sqlSession.update("education.updEvalKeyForTotal",condiVO);
+		//이수여부
+		sqlSession.update("education.updEvalKeyForComplete",condiVO);
 
 		set.setRtnMode(Constant.mode.INSERT_OK.name());
 		
