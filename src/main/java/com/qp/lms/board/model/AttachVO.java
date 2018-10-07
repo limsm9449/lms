@@ -9,6 +9,7 @@ public class AttachVO extends CommonVO{
 	private String pSeq;
 	private String userId;
 	private String kind;
+	private String isMy;
 	private String fileName;
 	private long fileSize;
 	private String filePath;
@@ -75,6 +76,12 @@ public class AttachVO extends CommonVO{
 	}
 	public void setpSeq(String pSeq) {
 		this.pSeq = pSeq;
+	}
+	public String getIsMy() {
+		return isMy;
+	}
+	public void setIsMy(String isMy) {
+		this.isMy = isMy;
 	}
 	
 

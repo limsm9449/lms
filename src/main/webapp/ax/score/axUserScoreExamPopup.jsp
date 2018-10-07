@@ -59,7 +59,7 @@ $(document.body).ready(function () {
 	        },{
 	            key : "QUESTION",
 	            label : "질문",
-	            width : 300,
+	            width : 270,
 	            align : "left"
 	        },{
               	key : undefined, 
@@ -88,6 +88,11 @@ $(document.body).ready(function () {
 			        }
 			   	]
 	        },{
+	            key : "EXAM_ANSWER",
+	            label : "정답",
+	            width : 50,
+	            align : "left"
+	        },{
 	            key : "ANSWER",
 	            label : "수강생 답",
 	            width : 80,
@@ -95,7 +100,7 @@ $(document.body).ready(function () {
 	        },{
 	        	key : "ANSWER_YN", 
 	        	label : "정답 여부", 
-	            width : 90,
+	            width : 80,
 	        	align : "center", 
 	        	editor : { type : "checkbox", config : {height: 17, trueValue: "Y", falseValue: "N"} },
 				styleClass: function () {

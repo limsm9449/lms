@@ -68,11 +68,41 @@
 		
 	<update id="userExamInsertFlagUpd" parameterType="Exam">
 		UPDATE 	COURSE_EVAL
-		SET 	EXAM_YN = 'Y',
-		       	E_TO_DATE = CURRENT_TIMESTAMP
+		SET 	EXAM_YN = 'Y'
+				,EXAM_WEEK = (SELECT 100 * ( SUM(IF(ANSWER_YN = 'Y',1,0)) / COUNT(*) ) FROM USER_EXAM WHERE COURSE_ID = #{courseId} AND USER_ID = #{userId} AND EXAM_KIND = 'WEEK')
+    			,EXAM_TOTAL = (SELECT 100 * ( SUM(IF(ANSWER_YN = 'Y',1,0)) / COUNT(*) ) FROM USER_EXAM WHERE COURSE_ID = #{courseId} AND USER_ID = #{userId} AND EXAM_KIND = 'TOTAL')
+		       	,E_TO_DATE = CURRENT_TIMESTAMP
 		WHERE 	COURSE_ID = #{courseId}
 		AND 	USER_ID = #{userId}
 	</update>
+
+	<update id="userExamTotalUpdate" parameterType="Exam">
+    	UPDATE 	COURSE_EVAL
+    	SET 	EXAM = IF((SELECT TOTAL_RATIO FROM COURSE_EXAM_TYPE WHERE SEQ = (SELECT COURSE_EXAM_TYPE_ID FROM COURSE WHERE COURSE_ID = #{courseId})) = 100,
+    						EXAM_TOTAL,
+    						IF((SELECT TOTAL_RATIO FROM COURSE_EXAM_TYPE WHERE SEQ = (SELECT COURSE_EXAM_TYPE_ID FROM COURSE WHERE COURSE_ID = #{courseId})) = 0,
+    							EXAM_WEEK,
+    							EXAM_WEEK * (SELECT WEEK_RATIO FROM COURSE_EXAM_TYPE WHERE SEQ = (SELECT COURSE_EXAM_TYPE_ID FROM COURSE WHERE COURSE_ID = #{courseId}))  / 100 +
+    							 EXAM_TOTAL * (SELECT TOTAL_RATIO FROM COURSE_EXAM_TYPE WHERE SEQ = (SELECT COURSE_EXAM_TYPE_ID FROM COURSE WHERE COURSE_ID = #{courseId}))  / 100
+    						)  
+    					)
+    	 WHERE 	COURSE_ID = #{courseId}
+    	 AND    USER_ID = #{userId}
+    </update>
+    
+	<update id="userExamStartTimeUpd" parameterType="Exam">
+		UPDATE 	COURSE_EVAL
+		SET 	E_FROM_DATE = CASE WHEN E_FROM_DATE IS NULL THEN CURRENT_TIMESTAMP ELSE E_FROM_DATE END
+		WHERE 	COURSE_ID = #{courseId}
+		AND 	USER_ID = #{userId}
+	</update>
+	
+	<select id="userExamStartTime" parameterType="Exam" resultType="String">
+		SELECT  DATE_FORMAT(E_FROM_DATE, '%Y%m%d%H%i%s') 
+		FROM	COURSE_EVAL
+		WHERE 	COURSE_ID = #{courseId}
+		AND 	USER_ID = #{userId}
+	</select>
 	
 	<select id="userExamResultList" parameterType="Exam" resultType="Exam">
 		SELECT 	A.SEQ,
@@ -211,19 +241,4 @@
 	   AND A.USER_ID = #{userId}
     </select>	
     
-    
-    
-    <select id="userExamValuation" parameterType="Exam">
-    UPDATE COURSE_EVAL M
-	   SET EXAM_TOTAL = ( SELECT SUM(CASE WHEN A.ANSWER = C.ANSWER THEN 1 ELSE 0 END) * ( 100 / COUNT(*) )
-					  FROM USER_EXAM A JOIN COURSE B ON B.COURSE_ID = A.COURSE_ID
-							   JOIN COURSE_EXAM C ON C.COURSE_CODE = B.COURSE_CODE AND C.SEQ = A.SEQ
-					 WHERE A.COURSE_ID = M.COURSE_ID                 
-					   AND A.USER_ID = M.USER_ID)
-	 WHERE COURSE_ID = #{courseId}
-	   AND USER_ID = #{userId}
-    </select>	
-    
-    
-            
 </mapper>

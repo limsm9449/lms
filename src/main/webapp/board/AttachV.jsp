@@ -82,6 +82,9 @@ function lfn_btn(pKind, pParam) {
 					    <ul>
 <c:forEach var="row" items="${set.list}" varStatus="idx">
 						<c:choose>
+							<c:when test="${(set.condiVO.kind eq 'C_REPORT' || set.condiVO.kind eq 'U_REPORT' || set.condiVO.kind eq 'T_REPORT') && set.condiVO.isMy eq 'Y'}">
+								<li><a href="#" onclick="javascript:lfn_btn('download',{seq:'${row.seq}'}); return false;">${row.orgFileName}</a><span><fmt:formatNumber value="${row.fileSize/1000}" pattern="#,##0"/> KB</span></li>
+							</c:when>
 							<c:when test="${row.kind eq 'B_DATA'}">
 								<li><a href="#" onclick="javascript:lfn_btn('download',{seq:'${row.seq}'}); return false;">${row.orgFileName}</a><span><fmt:formatNumber value="${row.fileSize/1000}" pattern="#,##0"/> KB</span></li>
 							</c:when>

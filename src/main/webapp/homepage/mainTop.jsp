@@ -1,6 +1,10 @@
 <%@ page contentType="text/html;charset=utf-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ page import="com.qp.lms.common.SessionVO"%>
+<% 
+	SessionVO sess = (SessionVO)request.getAttribute("sess"); 
+%>
 
         <div id='width_text'></div>
         <!-- PC HEADER -->
@@ -18,14 +22,14 @@
                     </button>
                 </div>
                 <div class='head_con util_box'>
-<c:if test="${empty set.sessVO}">
+<c:if test="${empty session}">
        				<a href="/guest/join.do">회원가입</a>
        				<a href="/login.do">로그인</a>
 </c:if>      		
-<c:if test="${!empty set.sessVO}">      		
+<c:if test="${!empty session}">      		
                     <a href="javascript:" onclick="gfn_ajax.logout()">로그아웃</a>
                     <a href="javascript:" onclick="page.goPage('/member/userMemberU');" class='pc'>회원정보수정</a>
-                    <p class='pc'>${set.sessVO.userName}님 반갑습니다.</p>
+                    <p class='pc'>${session.userName}님 반갑습니다</p>
 </c:if>  
                 </div>
             </div>
@@ -62,7 +66,7 @@
                             <a href="javascript:" onclick="page.goPage('/main/courseList', '');">전체과정</a>
                         </li>
                         <li>
-                            <a href='/resources/homepage/html/classroom/classroom.html'>나의강의실</a>
+                            <a href="javascript:" onclick="page.goPage('/main/myClassroom', '');">나의강의실</a>
                         </li>
                         <li>
                             <a href='/resources/homepage/html/tutorial/tutorial.html'>교육안내</a>
@@ -140,7 +144,7 @@
                     </a>
                 </div>
                 <div class='head_con util_box'>
-                    <a href='#' class='last_right' onclick='login()'>로그인</a>
+                    <a href='/login.do' class='last_right' onclick='login()'>로그인</a>
                 </div>
                 <div class='head_con search_box'>
                     <input type="text">
@@ -158,7 +162,7 @@
                         <span>
                             <img src='/resources/homepage/img/ic_login.png' alt=' '>
                         </span>
-                        <a href='#'>로그인</a>
+                        <a href='/login.do'>로그인</a>
                     </div>
                     <div class='mobile_menu process_all'>
                         <button onclick='sub_menu_open(this)'>

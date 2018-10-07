@@ -156,7 +156,8 @@ header{
 }
 .menu li a{
     display: block;
-    font-size: 20px;
+    font-family:"NanumSquare";
+    font-size: 20px;;
     text-align: center;
     letter-spacing:-1px;
     padding: 20px 0;
@@ -305,10 +306,18 @@ header{
 .mobile_menu ul li a{
     font-size:14px;
 }
+.mobile_menu ul .first_depth{
+    padding:15px 20px;
+    background:#eee;
+}
+.mobile_menu ul .first_depth a{
+    font-size:16px;
+    letter-spacing:-1px;
+}
 
 
 /* CONTENTS */
-.contents_wrap{
+.contents_wrap_box{
     width:1122px;
     padding-top:155px;
     margin:0 auto;
@@ -375,8 +384,6 @@ header{
 }
 
 /* PROCESS */
-.process_top_area{}
-.process_top_area > div{}
 .process_history_box{
     font-size: 13px;
     float: right;
@@ -398,16 +405,17 @@ header{
 }
 .process_top_area h1{
     clear: both;
+    font-family:"NanumSquare";
     font-size: 44px;
     letter-spacing: -2px;
     padding-bottom: 16px;
+    border-bottom: solid 1px #003366;
 }
 .process h1 span{
     color: #0180d3;
 }
 .process_list_wrap{
     padding: 20px 0;
-    border-top: solid 1px #003366;
 }
 .process_list_wrap li{
     display: block;
@@ -419,6 +427,7 @@ header{
     margin-right:0;
 }
 .process_category{
+    font-family:"NanumSquare";
     font-size: 24px;
     text-align: center;
     letter-spacing:-2px;
@@ -438,7 +447,6 @@ header{
     padding: 4px 20px 12px;
     border: solid 1px #ddd;
 }
-.process_info_box{}
 .process_info_box div::after{
     display:block;
     content:'';
@@ -458,12 +466,12 @@ header{
     background: #99cc33;
 }
 .process_title{
+    font-family:"NanumSquare";
     font-size: 18px;
     line-height: 120%;
     letter-spacing: -1px;
     padding: 10px 0;
 }
-.process_btn_area{}
 .process_btn_area button{
     float: left;
     display: block;
@@ -493,15 +501,10 @@ header{
     float: left;
     display: block;
 }
-.process_score_image span img{}
 .process_score_text{
     float: left;
     display: block;
 }
-.process_score_text span{}
-#process_score_num{}
-#process_review_num{}
-.process_payment_box{}
 .process_payment_box p{
     float: left;
     font-size: 14px;
@@ -546,8 +549,6 @@ header{
     height: 100%;
     padding: 10px 1.6%;
 }
-.process_search_text{}
-.process_search_text p{}
 .process_search_text span{
     display: block;
     float: left;
@@ -559,12 +560,9 @@ header{
     width: 96%;
     padding: 2px 2%;
 }
-.process_search_category{}
 .process_search_category.con .process_category_text{
     line-height:500%;
 }
-.process_search_category p{}
-.process_category_box{}
 .process_category_box > div,
 .process_support{
     overflow: hidden;
@@ -592,14 +590,9 @@ header{
 .process_category_all{
     width:100%;
 }
-.process_category_etc{}
-
-.process_support_fund{}
 .process_support_fund p{
     float:left;
 }
-.process_support_fund div{}
-.process_support_fund div input{}
 .process_search_btn{
     float:right;
     width:24%;
@@ -629,7 +622,6 @@ header{
 .process_filter > div{
     float:right;
 }
-.process_filter > div ul{}
 .process_filter_item{
     float: left;
     font-size: 14px;
@@ -651,17 +643,14 @@ header{
     border: solid 1px #ccc;
     cursor:pointer;
 }
-.process_filter_item.range{}
 .process_filter_item.range p{
     width:46px;
     text-indent:0;
     cursor:default;
 }
-.process_filter_item.list{}
 .process_filter_item.list p{
     background:url('../img/process/ic_list.png') 94% 50% no-repeat;
 }
-.process_filter_item.image{}
 .process_filter_item.image p{
     background:url('../img/process/ic_image.png') 94% 50% no-repeat;
 }
@@ -674,6 +663,7 @@ header{
     border-bottom: solid 1px #ccc;
 }
 .process_search_result > div p{
+    font-family:"NanumSquare";
     font-size:14px;
     font-weight:900;
     text-align:center;
@@ -712,7 +702,6 @@ header{
 .process_result_review.con{
     text-align:center;
 }
-.process_result_list{}
 .process_result_list li{
     padding:24px 0;
     border-bottom: solid 1px #ccc;
@@ -729,7 +718,6 @@ header{
 .process_result_text{
     float:left;
 }
-.process_result_text_top{}
 .process_result_text_top p{
     float: left;
     font-size: 12px;
@@ -744,11 +732,10 @@ header{
     background: #99cc33;
 }
 .process_result_text > p{
+    font-family: "NanumSquare";
     font-size: 18px;
     padding: 10px 0 34px;
-    font-family: "NanumSquareB";
 }
-.process_result_text_bottom{}
 .process_result_text_bottom p{
     float: left;
     font-size: 14px;
@@ -772,7 +759,6 @@ header{
     float: left;
     margin-right: 2px;
 }
-.process_result_review.con div span img{}
 .process_result_review.con p{
     font-size: 14px;
     line-height: 120%;
@@ -796,41 +782,52 @@ header{
 }
 
 
+.process_pager_box{
+    text-align:center;
+    padding: 20px 0 40px;
+}
 .process_pager{
-    width: 400px;
+    display:inline-block;
     margin: 0 auto;
 }
 .process_pager > *{
     float:left;
 }
-.process_pager_prev{
-    width: 20%;
+.process_pager_prev,
+.process_pager_next{
+    width:80px;
+    margin:0 2px;
 }
 .process_pager_prev div,
 .process_pager_next div{
     float: left;
-    border: solid 1px #ccc;
     width: 45%;
+    font-family: sans-serif;
     font-size: 30px;
     text-align: center;
     vertical-align: middle;
     padding-bottom: 10px;
+    margin-right:1px;
+    border: solid 1px #ccc;
+    cursor:pointer;
 }
-.process_pager_next{
-    width: 20%;
-}
-.process_pager_next div{}
 .process_pager ul{
-    width: 56%;
-    margin: 0 2%;
+    display:inline;
+    margin-right:2px;
 }
 .process_pager ul li{
-    font-size: 18px;
+    float: left;
     width: 35px;
+    font-size: 18px;
     text-align: center;
     padding: 11px 0;
     border: solid 1px #ccc;
-    float: left;
+    cursor:pointer;
+}
+.process_pager ul .on{
+    color:#fff;
+    background:#1976d2;
+    border:solid 1px #1976d2;
 }
 
 
@@ -895,10 +892,14 @@ header{
     }
 }
 @media all and (max-width:1122px){
+    body{
+        background:#fff;
+    }
+
     /* HEAD */
     .head_wrap,
     .menu_layout,
-    .contents_wrap,
+    .contents_wrap_box,
     .cs,
     .menu_dropdown_wrap{
         width:100%;
@@ -1032,7 +1033,7 @@ header{
 
 
     /* CONTENTS */
-    .contents_wrap {
+    .contents_wrap_box {
         width:92%;
         padding-top:95px;
         margin:0 auto;
@@ -1041,11 +1042,7 @@ header{
         display:none;
     }
 
-    /* PROCESS */
-    .contents_wrap{
-        width:92%;
-        margin:0 auto;
-    }
+    /* Top */
     .process_top_area h1 {
         font-size: 30px;
     }
@@ -1223,6 +1220,22 @@ header{
         width:50%;
         text-align:center;
         padding:0 0 0 6px;
+    }
+
+    .process_pager_prev,
+    .process_pager_next{
+        width:50px;
+    }
+    .process_pager_prev div,
+    .process_pager_next div{
+        width:44%;
+    }
+    .process_pager ul {
+        margin-right: 0;
+    }
+    .process_pager ul li {
+        width: 30px;
+        /* margin-right: 2px; */
     }
 
 

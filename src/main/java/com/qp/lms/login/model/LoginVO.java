@@ -16,6 +16,9 @@ public class LoginVO extends CommonVO{
 	private String retiredYn;
 	private String compCd;
 	private String backdoorUserId;
+	private String email;
+	private String mobile;
+	private String compName;
 	
 	//2104.6.20 추가
 	private String certificationYn;
@@ -94,6 +97,24 @@ public class LoginVO extends CommonVO{
 	}
 	public void setContentsManagerYn(String contentsManagerYn) {
 		this.contentsManagerYn = contentsManagerYn;
+	}
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	public String getMobile() {
+		return mobile;
+	}
+	public void setMobile(String mobile) {
+		this.mobile = mobile;
+	}
+	public String getCompName() {
+		return compName;
+	}
+	public void setCompName(String compName) {
+		this.compName = compName;
 	}
 	
 	

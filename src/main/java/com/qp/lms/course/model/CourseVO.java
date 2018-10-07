@@ -85,6 +85,31 @@ public class CourseVO extends CommonVO {
 	private String code;
 	private String codeName;
 	private String parentCode;
+	private String completeYn;
+
+	public String getAttendCourseCnt() {
+		return attendCourseCnt;
+	}
+
+	public void setAttendCourseCnt(String attendCourseCnt) {
+		this.attendCourseCnt = attendCourseCnt;
+	}
+
+	public String getCompleteCourseCnt() {
+		return completeCourseCnt;
+	}
+
+	public void setCompleteCourseCnt(String completeCourseCnt) {
+		this.completeCourseCnt = completeCourseCnt;
+	}
+
+	public String getCourseRemainDay() {
+		return courseRemainDay;
+	}
+
+	public void setCourseRemainDay(String courseRemainDay) {
+		this.courseRemainDay = courseRemainDay;
+	}
 
 	private String isReport;
 	private String isExam;
@@ -154,7 +179,13 @@ public class CourseVO extends CommonVO {
     private String grade4;
     private String grade5;
     private String gradeCnt;
-    
+
+    private String reportYn;
+    private String attendCourseCnt;
+    private String waitingCourseCnt;
+    private String completeCourseCnt;
+    private String courseRemainDay;
+
 	public String getCourseCode() {
 		return courseCode;
 	}
@@ -1083,6 +1114,30 @@ public class CourseVO extends CommonVO {
 
 	public void setGrade5(String grade5) {
 		this.grade5 = grade5;
+	}
+
+	public String getReportYn() {
+		return reportYn;
+	}
+
+	public void setReportYn(String reportYn) {
+		this.reportYn = reportYn;
+	}
+
+	public String getWaitingCourseCnt() {
+		return waitingCourseCnt;
+	}
+
+	public void setWaitingCourseCnt(String waitingCourseCnt) {
+		this.waitingCourseCnt = waitingCourseCnt;
+	}
+
+	public String getCompleteYn() {
+		return completeYn;
+	}
+
+	public void setCompleteYn(String completeYn) {
+		this.completeYn = completeYn;
 	}
 
 

@@ -55,7 +55,7 @@ public class UserExamController {
     }
 
     @RequestMapping(value = "/exam/userExamIns", method = RequestMethod.POST)
-    public String questIns(@ModelAttribute ExamVO vo, Model model) throws Exception {
+    public String userExamIns(@ModelAttribute ExamVO vo, Model model) throws Exception {
     	try {
     		ExamSet set = new ExamSet();
 	    	set.setCondiVO(vo);
@@ -85,6 +85,5 @@ public class UserExamController {
 
         return "/exam/UserExamResult";
     }
-
     
 }

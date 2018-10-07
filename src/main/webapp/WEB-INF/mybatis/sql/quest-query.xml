@@ -4,6 +4,65 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="quest">
 
+	<select id="questName" parameterType="Quest" resultType="String">
+		SELECT GROUP_NAME
+		  FROM QUEST_GROUP
+		 WHERE QG_ID = (SELECT QG_ID FROM COURSE_CODE WHERE COURSE_CODE = (SELECT COURSE_CODE FROM COURSE WHERE COURSE_ID = #{courseId}) ) 
+	</select>
+	
+	<select id="userQuestList" parameterType="Quest" resultType="Quest">
+		SELECT QG_ID, 
+		       SEQ,
+		       TYPE,
+		       QUESTION, 
+		       QA1,
+		       QA2,
+		       QA3,
+		       QA4
+		  FROM QUEST
+		 WHERE QG_ID = (SELECT QG_ID FROM COURSE_CODE WHERE COURSE_CODE = (SELECT COURSE_CODE FROM COURSE WHERE COURSE_ID = #{courseId}) ) 
+	</select>
+	
+	<select id="UserQuestInsert1" parameterType="Quest">
+		INSERT INTO USER_QUEST(COURSE_ID,USER_ID,QG_ID,SEQ,ANSWER,CREATE_DATE,CREATE_USER)
+		VALUES (#{courseId},#{userId},#{qgId},#{seq},#{answer},CURRENT_TIMESTAMP,#{userId})
+	</select>
+
+	<select id="UserQuestInsert2" parameterType="Quest">
+		INSERT INTO USER_QUEST(COURSE_ID,USER_ID,QG_ID,SEQ,ANSWER1,ANSWER2,ANSWER3,ANSWER4,CREATE_DATE,CREATE_USER)
+		VALUES (#{courseId},#{userId},#{qgId},#{seq},#{answer1},#{answer2},#{answer3},#{answer4},CURRENT_TIMESTAMP,#{userId})
+	</select>
+		
+	<select id="UserQuestInsertFlagUpd" parameterType="Quest">
+		UPDATE COURSE_EVAL
+		   SET QUEST_YN = 'Y'
+		 WHERE COURSE_ID = #{courseId}
+		   AND USER_ID = #{userId}
+	</select>
+	
+	<select id="userQuestResultList" parameterType="Quest" resultType="Quest">
+		SELECT 	B.QG_ID, 
+		       	B.SEQ,
+		       	B.TYPE,
+		       	B.QUESTION, 
+		       	B.QA1,
+		       	B.QA2,
+		       	B.QA3,
+		       	B.QA4,
+		       	A.ANSWER,
+		       	A.ANSWER1,
+		       	A.ANSWER2,
+		       	A.ANSWER3,
+		       	A.ANSWER4
+		FROM 	USER_QUEST A
+		  			JOIN QUEST B ON B.QG_ID = A.QG_ID AND B.SEQ = A.SEQ
+		WHERE 	COURSE_ID = #{courseId}
+		AND 	USER_ID = #{userId} 
+	</select>
+
+
+
+
 	<!-- 설문지 그룹 관리 -->
 
     <select id="axQuestGroupList" parameterType="Quest" resultType="hashmap">
@@ -209,33 +268,6 @@
 
 
 
-
-	<!-- 사용자 Quest  -->
-	<select id="userQuestNewList" parameterType="Quest" resultType="Quest">
-	SELECT QG_ID, 
-	       SEQ,
-	       TYPE,
-	       QUESTION, 
-	       QA1,
-	       QA2,
-	       QA3,
-	       QA4
-	  FROM QUEST
-	 WHERE QG_ID = (SELECT QG_ID FROM COURSE_CODE WHERE COURSE_CODE = (SELECT COURSE_CODE FROM COURSE WHERE COURSE_ID = #{courseId}) ) 
-	</select>
-	
-	<select id="UserQuestIns" parameterType="Quest">
-	INSERT INTO USER_QUEST(COURSE_ID,USER_ID,QG_ID,SEQ,ANSWER,CREATE_DATE,CREATE_USER)
-	VALUES (#{courseId},#{userId},#{qgId},#{seq},#{answer},CURRENT_TIMESTAMP,#{userId})
-	</select>
-		
-	<select id="UserQuestInsertFlagUpd" parameterType="Quest">
-	UPDATE COURSE_REGISTER
-	   SET QUEST_YN = 'Y'
-	 WHERE COURSE_ID = #{courseId}
-	   AND USER_ID = #{userId}
-	</select>
-	
 
 
 	<!-- 강좌별 설문지 통계 -->

@@ -22,7 +22,8 @@ public class ExamSet extends CommonSet {
 	private List<CodeVO> ddCategory3Depth;		// 카테고리 소분류
 
 	private ExamVO eval;			
-
+	private String startTime;	
+	
 	public ExamVO getCondiVO() {
 		return condiVO;
 	}
@@ -76,6 +77,12 @@ public class ExamSet extends CommonSet {
 	}
 	public void setEval(ExamVO eval) {
 		this.eval = eval;
+	}
+	public String getStartTime() {
+		return startTime;
+	}
+	public void setStartTime(String startTime) {
+		this.startTime = startTime;
 	}
 
 	

@@ -243,5 +243,23 @@ public class AttachController {
 	        
     }
     
+    @RequestMapping(value = "/board/attachReportV")
+    public String attachReportV( @ModelAttribute AttachVO vo, Model model) throws Exception {
+    	try {
+	    	AttachSet set = new AttachSet();
+	    	set.setCondiVO(vo);
+	    	
+	    	set = svr.attachV(set);
+	    	
+	    	//다운로드 권한
+	    	set.setDownloadAuth(SessionUtil.getDownloadAuth());
+	    	
+	    	model.addAttribute("set", set );
+    	} catch ( Exception e ) {
+    		e.printStackTrace();
+    	}
+
+    	return "/board/AttachV";
+    }
 
 }

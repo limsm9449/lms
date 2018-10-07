@@ -149,7 +149,6 @@ header{
     float: left;
     overflow: hidden;
 }
-.mobile_btn{}
 .mobile_btn button{
     padding: 20px;
     background: #fff;
@@ -221,7 +220,6 @@ header{
 .menu_sub.classroom{
     margin: 20px 12px 20px -13px;
 }
-.menu_sub li{}
 .menu_sub li a{
     display: block;
     font-size: 14px;
@@ -258,7 +256,6 @@ header{
 .mobile_bg_box > div{
     border-top:solid 1px #ddd;
 }
-.mobile_menu{}
 .close_btn_area{
     position: absolute;
     right: -10%;
@@ -292,10 +289,6 @@ header{
     line-height:38px;
     padding-left:14px;
 }
-.mobile_menu.process_all{}
-.mobile_menu.classroom{}
-.mobile_menu.tutorial{}
-.mobile_menu.service{}
 .mobile_menu.introduce{
     padding:0 20px;
     border-bottom: solid 2px #ddd;
@@ -328,6 +321,14 @@ header{
 }
 .mobile_menu ul li a{
     font-size:14px;
+}
+.mobile_menu ul .first_depth{
+    padding:15px 20px;
+    background:#eee;
+}
+.mobile_menu ul .first_depth a{
+    font-size:16px;
+    letter-spacing:-1px;
 }
 
 
@@ -366,7 +367,6 @@ header{
     border-left: solid 1px #ddd;
     border-right: solid 1px #ddd;
 }
-.quick_menu_list{}
 .quick_menu_list a{
     display:block;
     font-size:12px;
@@ -375,7 +375,6 @@ header{
     letter-spacing:-1px;
     padding:10px;
 }
-.quick_menu_list a span{}
 .quick_menu_list a img{
     display:block;
     width:70%;
@@ -399,7 +398,6 @@ header{
     position:relative;
     padding-top:150px;
 }
-.slider_wrap{}
 .visual_box{
     width:1122px;
     margin:0 auto;
@@ -442,7 +440,6 @@ header{
 .slider_text_box.left{
     float:left;
 }
-.slider_text_box img{}
 .slider_text_box img.mobile{
     display:none;
 }
@@ -596,7 +593,6 @@ header{
     border-left:solid 2px #ff3366;
     border-right:solid 2px #ff3366;
 }
-.process_wrap > p{}
 .process_box{
     width:1122px;
     padding:50px 0 40px;
@@ -654,7 +650,6 @@ header{
 .recommend_wrap{
     background:#ffd846;
 }
-.recommend_wrap > p{}
 .recommend_wrap > p span{
     display: block;
     font-size: 15px;
@@ -797,7 +792,6 @@ header{
     clear:both;
     width:100%;
 }
-.notice{}
 .cs_title{
     float:left;
     font-size:22px;
@@ -818,8 +812,6 @@ header{
 .cs_more:hover{
     color:#111;
 }
-.cs ul{}
-.notice_list{}
 .notice_list:active a p,
 .faq_list:active a p,
 .notice_list:hover a p,
@@ -849,7 +841,6 @@ header{
     width: 30%;
     float: right;
 }
-.faq_list{}
 .faq_list a{
     display:block;
     font-size:14px;

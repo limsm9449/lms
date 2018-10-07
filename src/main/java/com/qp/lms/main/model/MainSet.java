@@ -2,9 +2,11 @@ package com.qp.lms.main.model;
 
 import java.util.List;
 
+import com.qp.lms.board.model.BoardVO;
 import com.qp.lms.common.CodeVO;
 import com.qp.lms.common.CommonSet;
 import com.qp.lms.common.SessionVO;
+import com.qp.lms.counsel.model.CounselVO;
 import com.qp.lms.course.model.CourseResourceVO;
 import com.qp.lms.course.model.CourseVO;
 import com.qp.lms.guest.model.BankVO;
@@ -36,6 +38,12 @@ public class MainSet extends CommonSet {
 	private List<CodeVO> ddCategory1Depth;		// 카테고리 대분류
 	private List<CodeVO> ddCategory2Depth;		// 카테고리 중분류
 	private List<CodeVO> ddCategory3Depth;		// 카테고리 소분류
+
+	private List<BoardVO> noticeList;
+	private List<CounselVO> counselList;
+	private List<CourseVO> attendCourseList;
+	private List<CourseVO> completeCourseList;
+	private CourseVO courseSummary;
 	
 	public void setCondiVO(MainVO condiVO) {
 		this.condiVO = condiVO;
@@ -114,6 +122,36 @@ public class MainSet extends CommonSet {
 	}
 	public void setDdCategory3Depth(List<CodeVO> ddCategory3Depth) {
 		this.ddCategory3Depth = ddCategory3Depth;
+	}
+	public List<BoardVO> getNoticeList() {
+		return noticeList;
+	}
+	public void setNoticeList(List<BoardVO> noticeList) {
+		this.noticeList = noticeList;
+	}
+	public List<CounselVO> getCounselList() {
+		return counselList;
+	}
+	public void setCounselList(List<CounselVO> counselList) {
+		this.counselList = counselList;
+	}
+	public List<CourseVO> getAttendCourseList() {
+		return attendCourseList;
+	}
+	public void setAttendCourseList(List<CourseVO> attendCourseList) {
+		this.attendCourseList = attendCourseList;
+	}
+	public List<CourseVO> getCompleteCourseList() {
+		return completeCourseList;
+	}
+	public void setCompleteCourseList(List<CourseVO> completeCourseList) {
+		this.completeCourseList = completeCourseList;
+	}
+	public CourseVO getCourseSummary() {
+		return courseSummary;
+	}
+	public void setCourseSummary(CourseVO courseSummary) {
+		this.courseSummary = courseSummary;
 	}
 	
 	

@@ -64,25 +64,25 @@
                         <p>${row.question}</p>
                         <ul class='answer_box explanation'>
                             <li class='clear_fix'>
-                                <input type='radio' name='answers_${idx.index + 1}' value='1' <c:if test="${row.answer eq '1'}">checked='checked'</c:if>>
+                                <input type='radio' name='answers_${idx.index + 1}' value='1' <c:if test="${row.answer eq '1'}">checked='checked'</c:if> disabled="disabled">
                                 <p>
                                     ${row.qa1}
                                 </p>
                             </li>
                             <li class='clear_fix'>
-                                <input type='radio' name='answers_${idx.index + 1}' value='2' <c:if test="${row.answer eq '2'}">checked='checked'</c:if>>
+                                <input type='radio' name='answers_${idx.index + 1}' value='2' <c:if test="${row.answer eq '2'}">checked='checked'</c:if> disabled="disabled">
                                 <p>
                                     ${row.qa2}
                                 </p>
                             </li>
                             <li class='clear_fix'>
-                                <input type='radio' name='answers_${idx.index + 1}' value='3' <c:if test="${row.answer eq '3'}">checked='checked'</c:if>>
+                                <input type='radio' name='answers_${idx.index + 1}' value='3' <c:if test="${row.answer eq '3'}">checked='checked'</c:if> disabled="disabled">
                                 <p>
                                    ${row.qa3}
                                 </p>
                             </li>
                             <li class='clear_fix last_bottom'>
-                                <input type='radio' name='answers_${idx.index + 1}' value='4' <c:if test="${row.answer eq '4'}">checked='checked'</c:if>>
+                                <input type='radio' name='answers_${idx.index + 1}' value='4' <c:if test="${row.answer eq '4'}">checked='checked'</c:if> disabled="disabled">
                                 <p>
                                     ${row.qa4}
                                 </p>
@@ -117,7 +117,7 @@
                     </div>
                     <div class='question_answer explanation'>
                         <p>${row.question}</p>
-                        <input type='text' value="<c:out value="${row.answer}" escapeXml="" />">
+                        <input type='text' value="<c:out value="${row.answer}" escapeXml="" />" disabled="disabled">
                     </div>
                 </div>
                 <div class='answer_paper'>

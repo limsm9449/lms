@@ -4,3 +4,15 @@ delete from course_eval where user_id = 'limsm9449';
 delete from course_week where user_id = 'limsm9449';
 delete from course_week_page where user_id = 'limsm9449';
 delete from course_register where user_id = 'limsm9449';
+
+update course_eval 
+set E_FROM_DATE = null, E_TO_DATE = null,EXAM_YN = 'N'
+where user_id = 'limsm9449';
+
+
+select * from course_register where user_id = 'limsm9449';
+select * from course_eval where user_id = 'limsm9449';
+select * from course_week where user_id = 'limsm9449';
+select * from course_week_page where user_id = 'limsm9449';
+SELECT * FROM COURSE WHERE COURSE_ID = 12;
+select * from approval order by create_date desc;

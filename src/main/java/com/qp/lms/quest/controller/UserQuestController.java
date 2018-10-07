@@ -16,11 +16,6 @@ import com.qp.lms.quest.model.QuestSet;
 import com.qp.lms.quest.model.QuestVO;
 import com.qp.lms.quest.service.UserQuestService;
 
-/**
- * 사용자 설문지
- * @author limsm
- *
- */
 @Controller
 public class UserQuestController {
 
@@ -29,38 +24,22 @@ public class UserQuestController {
     @Autowired
     private UserQuestService svr;
 
-
-
-    /**
-     *  설문지 입력 화면
-     * @param model
-     * @return
-     * @throws Exception
-     */
-    @RequestMapping(value = "/quest/userQuestN")
-    public String userQuestN(@ModelAttribute QuestVO vo, Model model) throws Exception {
+    @RequestMapping(value = "/quest/userQuest")
+    public String userQuest(@ModelAttribute QuestVO vo, Model model) throws Exception {
     	try {
     		QuestSet set = new QuestSet();
     		set.setCondiVO(vo);
     		
-	    	set = svr.userQuestN(set);
+	    	set = svr.userQuest(set);
 	    	
 	        model.addAttribute("set", set );
     	} catch ( Exception e ) {
     		e.printStackTrace();
     	}
 
-        return "/quest/UserQuestN";
+        return "/quest/UserQuest";
     }
 
-    ///////////////////////////////////////////////// Transaction ////////////////////////////////////////////////////
-    /**
-     * 사용자 설문지 저장
-     * @param vo
-     * @param model
-     * @return
-     * @throws Exception
-     */
     @RequestMapping(value = "/quest/userQuestIns", method = RequestMethod.POST)
     public String userQuestIns(@ModelAttribute QuestVO vo, Model model) throws Exception {
     	try {
@@ -75,6 +54,22 @@ public class UserQuestController {
     	}
 
         return "/common/json";
+    }
+    
+    @RequestMapping(value = "/quest/userQuestResult")
+    public String userQuestResult(@ModelAttribute QuestVO vo, Model model) throws Exception {
+    	try {
+    		QuestSet set = new QuestSet();
+    		set.setCondiVO(vo);
+    		
+	    	set = svr.userQuestResult(set);
+	    	
+	        model.addAttribute("set", set );
+    	} catch ( Exception e ) {
+    		e.printStackTrace();
+    	}
+
+        return "/quest/UserQuestResult";
     }
     
     

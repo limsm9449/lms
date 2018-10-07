@@ -53,8 +53,6 @@ public class SessionInterceptor extends HandlerInterceptorAdapter {
 		    	};
 	    	
 	    	String url = request.getRequestURI();
-	    	System.out.println(" =============> " + url);
-
 	    	if ( url.indexOf("/resources/") > -1 ) {
 	    		return true;
 	    	} else {
@@ -117,26 +115,15 @@ public class SessionInterceptor extends HandlerInterceptorAdapter {
 		    			CommUtil.isMatchUrl(urls, url) || 
 		    			CommUtil.isMatchUrl(exceptUrls, url) || 
 		    			url.indexOf("/guest/") > -1 || 
-		    			url.indexOf("/ns/") > -1  || 
-		    			url.indexOf("/main/") > -1  ) {
+		    			url.indexOf("/ns/") > -1 || 
+		    			url.indexOf("/main/") > -1 ) {
 		    		return true;
 		    	} else {
 		    		SessionVO sess = (SessionVO)SessionUtil.getSession();
 			        if ( sess == null ) {
-			        	
-			        	/*
-			        	//개발시 임시로 만들어줌
-			        	sess =  new SessionVO();
-			        	sess.setAdminYn("Y");
-			        	sess.setUserId("admin");
-			        	sess.setUserName("관리자");
-			        	SessionUtil.setAttribute("session",sess);
-			        	*/
 			        	System.out.println("No Session ================================== url => " + "/goIndex.jsp?preUrl=" + URLEncoder.encode(url + "?" + CommUtil.getParameters(request),"UTF-8") + "&loginAuth=" + SessionUtil.getAttribute("loginAuth"));
 			        	response.sendRedirect("/goIndex.do?preUrl=" + URLEncoder.encode(url + "?" + CommUtil.getParameters(request),"UTF-8") + "&loginAuth=" + SessionUtil.getAttribute("loginAuth"));
 			        	return false;
-			        } else {
-		   	 			SessionUtil.setAttribute("sess", sess);
 			        }
 		    	}
 	    	}

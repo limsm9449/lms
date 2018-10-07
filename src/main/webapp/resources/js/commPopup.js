@@ -156,11 +156,11 @@ var Popup = {
 	 * @returns
 	 */
 	showExam : function(pCourseId) {
-		Popup.showPopup(context + "/exam/userExam.do?courseId=" + pCourseId,900,800,"examPopup");
+		Popup.showPopup(context + "/exam/userExam.do?courseId=" + pCourseId,900,800,"educationSubPopup");
 	},
 
 	showExamResult : function(pCourseId) {
-		Popup.showPopup(context + "/exam/userExamResult.do?courseId=" + pCourseId,900,800,"examPopup");
+		Popup.showPopup(context + "/exam/userExamResult.do?courseId=" + pCourseId,900,800,"educationSubPopup");
 	},
 
 	/**
@@ -238,16 +238,36 @@ var Popup = {
 	 * @param pCourseId
 	 * @param pQgId
 	 */
-	showQuest : function(pCourseId, pQgId) {
-		Popup.showPopup(context + "/quest/userQuestN.do?courseId=" + pCourseId + "&qgId=" + pQgId,900,800);
+	showQuest : function(pCourseId) {
+		Popup.showPopup(context + "/quest/userQuest.do?courseId=" + pCourseId,900,800,"educationSubPopup");
+	},
+
+	showQuestResult : function(pCourseId) {
+		Popup.showPopup(context + "/quest/userQuestResult.do?courseId=" + pCourseId,900,800,"educationSubPopup");
+	},
+
+	showReport : function(pCourseId) {
+		Popup.showPopup(context + "/report/userReport.do?courseId=" + pCourseId,900,800,"educationSubPopup");
+	},
+
+	showReportResult : function(pCourseId) {
+		Popup.showPopup(context + "/report/userReportResult.do?courseId=" + pCourseId,900,800,"educationSubPopup");
+	},
+
+	showReportScore : function(pCourseId, userId) {
+		Popup.showPopup(context + "/report/userReportScore.do?courseId=" + pCourseId + "&userId=" + userId,900,800,"educationSubPopup");
 	},
 
 	/**
 	 * 수강후기 작성
 	 * @param pCourseId
 	 */
-	showPostscriptN : function(pCourseId) {
-		Popup.showPopup(context + "/postscript/postscriptN.do?courseId=" + pCourseId,900,300);
+	showPostscript : function(pCourseId) {
+		Popup.showPopup(context + "/postscript/postscript.do?courseId=" + pCourseId,900,300,"educationSubPopup");
+	},
+
+	showPostscriptResult : function(pCourseId) {
+		Popup.showPopup(context + "/postscript/postscriptResult.do?courseId=" + pCourseId,900,300,"educationSubPopup");
 	},
 
 	/**

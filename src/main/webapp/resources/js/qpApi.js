@@ -77,8 +77,22 @@ var QP_API = {
 			console.log("currentWeek : " + currentWeek);
 			
 			if ( isNext == false && isSample == false) {
-				alert("과정의 진도가 끝났습니다. 레포트, 시험, 설문지 작성을 해주세요.");
-				//설문지, 레포트 보여주기
+				$.ajax({
+					type :"POST",
+					url : context +"/education/progressComplete.do",
+					dataType :"json",
+					data : "courseId=" + currentCourseId,
+					success : function(json){
+						if ( json.isOther == "Y") {
+							alert("과정의 진도가 끝났습니다. 레포트, 시험, 설문지 작성을 해주세요.");
+						} else {
+							alert("과정의 진도가 끝났습니다.");
+						}
+					},
+					error : function(e) {
+						alert("오류 발생");
+					}
+				})
 			} else if ( isNext == false && isSample == true) {
 				alert("과정의 진도가 끝났습니다.");
 			} else {

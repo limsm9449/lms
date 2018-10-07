@@ -7,6 +7,11 @@
     <meta http-equiv='X-UA-Compatible' content='ie=edge'>
     <title>Q learning - 전체과정</title>
 
+    <script src='../../js/jquery_3.3.1.js'></script>
+    <!--[if IE8]>
+        <script src="http://code.jquery.com/jquery-1.12.3.js></script>
+    <![endif]-->
+
     <link href='https://fonts.googleapis.com/css?family=Nanum+Gothic' rel='stylesheet'>
     <link rel='stylesheet' href='../../css/reset.css'>
     <link rel='stylesheet' href='../../css/process.css'>
@@ -167,10 +172,11 @@
                         <a href='#'>로그인</a>
                     </div>
                     <div class='mobile_menu process_all'>
-                        <button onclick='sub_menu_open(this)'>
+                        <button onclick='sub_menu_open(this, "others")'>
                             전체과정
                         </button>
                         <ul>
+                            <li class='first_depth'><a href='#'>전체과정</a></li>
                             <li><a href=''>경영직무</a></li>
                             <li><a href=''>업종직무</a></li>
                             <li><a href=''>비즈니스</a></li>
@@ -180,10 +186,11 @@
                         </ul>
                     </div>
                     <div class='mobile_menu classroom'>
-                        <button onclick='sub_menu_open(this)'>
+                        <button onclick='sub_menu_open(this, "others")'>
                             나의강의실
                         </button>
                         <ul>
+                            <li class='first_depth'><a href='../classroom/classroom.html'>나의강의실</a></li>
                             <li><a href=''>수강과정</a></li>
                             <li><a href=''>수강대기과정</a></li>
                             <li><a href=''>수강취소과정</a></li>
@@ -196,10 +203,11 @@
                         </ul>
                     </div>
                     <div class='mobile_menu tutorial'>
-                        <button onclick='sub_menu_open(this)'>
+                        <button onclick='sub_menu_open(this, "others")'>
                             교육안내
                         </button>
                         <ul>
+                            <li class='first_depth'><a href='../tutorial/tutorial.html'>교육안내</a></li>
                             <li><a href=''>수강신청방법</a></li>
                             <li><a href=''>학습방법</a></li>
                             <li><a href=''>학습관리</a></li>
@@ -208,10 +216,11 @@
                         </ul>
                     </div>
                     <div class='mobile_menu service'>
-                        <button onclick='sub_menu_open(this)'>
+                        <button onclick='sub_menu_open(this, "others")'>
                             고객지원
                         </button>
                         <ul>
+                            <li class='first_depth'><a href='../service/service.html'>고객지원</a></li>
                             <li><a href=''>공지사항</a></li>
                             <li><a href=''>FAQ</a></li>
                             <li><a href=''>1:1 메일문의</a></li>
@@ -231,461 +240,467 @@
 
         <!-- CONTENTS -->
         <div class='contents_wrap process' onmouseover='sub_hide()'>
-            <!-- QUICK MENU -->
-            <div class='quick_menu_wrap'>
-                <p class='quick_title'>
-                    Quick Menu
-                    <span></span>
-                </p>
-                <ul>
-                    <li class='quick_menu_list'>
-                        <a href='#'>
-                            <span></span>
-                            <img src='../../img/quick_menu1.png' alt=' '>
-                            장바구니
-                        </a>
+            <div class='contents_wrap_box'>
+                <!-- QUICK MENU -->
+                <div class='quick_menu_wrap'>
+                    <p class='quick_title'>
+                        Quick Menu
+                        <span></span>
+                    </p>
+                    <ul>
+                        <li class='quick_menu_list'>
+                            <a href='#'>
+                                <span></span>
+                                <img src='../../img/quick_menu1.png' alt=' '>
+                                장바구니
+                            </a>
+                        </li>
+                        <li class='quick_menu_list'>
+                            <a href='#'>
+                                <span></span>
+                                <img src='../../img/quick_menu2.png' alt=' '>
+                                학습가이드
+                            </a>
+                        </li>
+                        <li class='quick_menu_list'>
+                            <a href='#'>
+                                <span></span>
+                                <img src='../../img/quick_menu3.png' alt=' '>
+                                FAQ
+                            </a>
+                        </li>
+                        <li class='quick_menu_list'>
+                            <a href='#'>
+                                <span></span>
+                                <img src='../../img/quick_menu4.png' alt=' '>
+                                학습지원프로그램
+                            </a>
+                        </li>
+                    </ul>
+                    <p class='quick_top'>
+                        <span>
+                            <img src='../../img/quick_top.png' alt=' '>
+                        </span>
+                        TOP
+                    </p>
+                </div>
+
+                <!-- Top -->
+                <div class='process_top_area'>
+                    <div class='clear_fix'>
+                        <div class='process_history_box clear_fix'>
+                            <span>
+                                <img src='../../img/process/ic_home.jpg' alt=' '>
+                            </span>
+                            <p>HOME</p>
+                            <span>
+                                <img src='../../img/process/arr_right.jpg' alt=' '>
+                            </span>
+                            <p>수강신청</p>
+                            <span>
+                                <img src='../../img/process/arr_right.jpg' alt=' '>
+                            </span>
+                            <p>교육과정</p>
+                        </div>
+                    </div>
+                    <h1>
+                        전체<span>과정</span>
+                    </h1>
+                </div>
+                <!-- Top END -->
+
+                <!-- Process -->
+                <ul class='process_list_wrap clear_fix'>
+                    <li>
+                        <p class='process_category'>리더십 일반</p>
+                        <a href=''><img src='../../img/process/process_1.jpg' alt=' '></a>
+                        <div class='process_text_box'>
+                            <div class='process_info_box'>
+                                <div>
+                                    <p>일반</p>
+                                    <p>모바일</p>
+                                </div>
+                                <p class='process_title'>
+                                    [스마트러닝] 김정구 교수의 미래창조경영 위기와 역경을 기회로
+                                </p>
+                            </div>
+                            <div class='process_btn_area clear_fix'>
+                                <button>맛보기</button>
+                                <button>장바구니</button>
+                                <button class='admission'>수강신청</button>
+                            </div>
+                            <div class='process_score_box clear_fix'>
+                                <div class='process_score_image clear_fix'>
+                                    <span><img src='../../img/process/star_active.png' alt=' '></span>
+                                    <span><img src='../../img/process/star_active.png' alt=' '></span>
+                                    <span><img src='../../img/process/star_active.png' alt=' '></span>
+                                    <span><img src='../../img/process/star_active.png' alt=' '></span>
+                                    <span><img src='../../img/process/star_inactive.png' alt=' '></span>
+                                </div>
+                                <p class='process_score_text'>
+                                    평점 : <span id='process_score_num'>4.5</span> / 후기 : <span id='process_review_num'>2</span>건
+                                </p>
+                            </div>
+                            <div class='process_payment_box clear_fix'>
+                                <p>교육비</p>
+                                <p class='process_payment'>50,000원</p>
+                            </div>
+                        </div>
                     </li>
-                    <li class='quick_menu_list'>
-                        <a href='#'>
-                            <span></span>
-                            <img src='../../img/quick_menu2.png' alt=' '>
-                            학습가이드
-                        </a>
+                    <li>
+                        <p class='process_category'>재테크</p>
+                        <a href=''><img src='../../img/process/process_2.jpg' alt=' '></a>
+                        <div class='process_text_box'>
+                            <div class='process_info_box'>
+                                <div>
+                                    <p>일반</p>
+                                    <p>모바일</p>
+                                </div>
+                                <p class='process_title'>
+                                    [스마트러닝] 김정구 교수의 미래창조경영 위기와 역경을 기회로
+                                </p>
+                            </div>
+                            <div class='process_btn_area clear_fix'>
+                                <button>맛보기</button>
+                                <button>장바구니</button>
+                                <button class='admission'>수강신청</button>
+                            </div>
+                            <div class='process_score_box clear_fix'>
+                                <div class='process_score_image clear_fix'>
+                                    <span><img src='../../img/process/star_active.png' alt=' '></span>
+                                    <span><img src='../../img/process/star_active.png' alt=' '></span>
+                                    <span><img src='../../img/process/star_active.png' alt=' '></span>
+                                    <span><img src='../../img/process/star_active.png' alt=' '></span>
+                                    <span><img src='../../img/process/star_inactive.png' alt=' '></span>
+                                </div>
+                                <p class='process_score_text'>
+                                    평점 : <span id='process_score_num'>4.5</span> / 후기 : <span id='process_review_num'>2</span>건
+                                </p>
+                            </div>
+                            <div class='process_payment_box clear_fix'>
+                                <p>교육비</p>
+                                <p class='process_payment'>50,000원</p>
+                            </div>
+                        </div>
                     </li>
-                    <li class='quick_menu_list'>
-                        <a href='#'>
-                            <span></span>
-                            <img src='../../img/quick_menu3.png' alt=' '>
-                            FAQ
-                        </a>
-                    </li>
-                    <li class='quick_menu_list'>
-                        <a href='#'>
-                            <span></span>
-                            <img src='../../img/quick_menu4.png' alt=' '>
-                            학습지원프로그램
-                        </a>
+                    <li class='last_right'>
+                        <p class='process_category'>자기개발</p>
+                        <a href=''><img src='../../img/process/process_3.jpg' alt=' '></a>
+                        <div class='process_text_box'>
+                            <div class='process_info_box'>
+                                <div>
+                                    <p>일반</p>
+                                    <p>모바일</p>
+                                </div>
+                                <p class='process_title'>
+                                    [스마트러닝] 김정구 교수의 미래창조경영 위기와 역경을 기회로
+                                </p>
+                            </div>
+                            <div class='process_btn_area clear_fix'>
+                                <button>맛보기</button>
+                                <button>장바구니</button>
+                                <button class='admission'>수강신청</button>
+                            </div>
+                            <div class='process_score_box clear_fix'>
+                                <div class='process_score_image clear_fix'>
+                                    <span><img src='../../img/process/star_active.png' alt=' '></span>
+                                    <span><img src='../../img/process/star_active.png' alt=' '></span>
+                                    <span><img src='../../img/process/star_active.png' alt=' '></span>
+                                    <span><img src='../../img/process/star_active.png' alt=' '></span>
+                                    <span><img src='../../img/process/star_inactive.png' alt=' '></span>
+                                </div>
+                                <p class='process_score_text clear_fix'>
+                                    평점 : <span id='process_score_num'>4.5</span> / 후기 : <span id='process_review_num'>2</span>건
+                                </p>
+                            </div>
+                            <div class='process_payment_box clear_fix'>
+                                <p>교육비</p>
+                                <p class='process_payment'>50,000원</p>
+                            </div>
+                        </div>
                     </li>
                 </ul>
-                <p class='quick_top'>
-                    <span>
-                        <img src='../../img/quick_top.png' alt=' '>
-                    </span>
-                    TOP
-                </p>
-            </div>
+                <!-- Process END -->
 
-            <!-- Process -->
-            <div class='process_top_area'>
-                <div class='clear_fix'>
-                    <div class='process_history_box clear_fix'>
-                        <span>
-                            <img src='../../img/process/ic_home.jpg' alt=' '>
-                        </span>
-                        <p>HOME</p>
-                        <span>
-                            <img src='../../img/process/arr_right.jpg' alt=' '>
-                        </span>
-                        <p>수강신청</p>
-                        <span>
-                            <img src='../../img/process/arr_right.jpg' alt=' '>
-                        </span>
-                        <p>교육과정</p>
+                <!-- Search Area -->
+                <div class='process_search clear_fix'>
+                    <div class='process_search_text con'>
+                        <p>과정명</p>
+                        <span><input type='text' name='' id=''></span>
                     </div>
-                </div>
-                <h1>
-                    전체<span>과정</span>
-                </h1>
-            </div>
-            <ul class='process_list_wrap clear_fix'>
-                <li>
-                    <p class='process_category'>리더십 일반</p>
-                    <a href=''><img src='../../img/process/process_1.jpg' alt=' '></a>
-                    <div class='process_text_box'>
-                        <div class='process_info_box'>
+                    <div class='process_search_category con'>
+                        <p class='process_category_text'>카테고리</p>
+                        <div class='process_category_box'>
                             <div>
-                                <p>일반</p>
-                                <p>모바일</p>
+                                <div class='process_category_all clear_fix'>
+                                    <input type='checkbox' name='' id=''>
+                                    <p>전체</p>
+                                </div>
+                                <div class='process_category_etc clear_fix'>
+                                    <input type='checkbox' id='category_management' name='process_category_1'>
+                                    <p>경영직무</p>
+                                    <input type='checkbox' id='category_field' name='process_category_2'>
+                                    <p>업종직무</p>
+                                    <input type='checkbox' id='category_business' name='process_category_3'>
+                                    <p>비즈니스</p>
+                                    <input type='checkbox' id='category_infoTech' name='process_category_4'>
+                                    <p>정보기술</p>
+                                    <input type='checkbox' id='category_language' name='process_category_5'>
+                                    <p>외국어</p>
+                                    <input type='checkbox' id='category_refinement' name='process_category_6'>
+                                    <p>교양</p>
+                                </div>
                             </div>
-                            <p class='process_title'>
-                                [스마트러닝] 김정구 교수의 미래창조경영 위기와 역경을 기회로
-                            </p>
-                        </div>
-                        <div class='process_btn_area clear_fix'>
-                            <button>맛보기</button>
-                            <button>장바구니</button>
-                            <button class='admission'>수강신청</button>
-                        </div>
-                        <div class='process_score_box clear_fix'>
-                            <div class='process_score_image clear_fix'>
-                                <span><img src='../../img/process/star_active.png' alt=' '></span>
-                                <span><img src='../../img/process/star_active.png' alt=' '></span>
-                                <span><img src='../../img/process/star_active.png' alt=' '></span>
-                                <span><img src='../../img/process/star_active.png' alt=' '></span>
-                                <span><img src='../../img/process/star_inactive.png' alt=' '></span>
-                            </div>
-                            <p class='process_score_text'>
-                                평점 : <span id='process_score_num'>4.5</span> / 후기 : <span id='process_review_num'>2</span>건
-                            </p>
-                        </div>
-                        <div class='process_payment_box clear_fix'>
-                            <p>교육비</p>
-                            <p class='process_payment'>50,000원</p>
                         </div>
                     </div>
-                </li>
-                <li>
-                    <p class='process_category'>재테크</p>
-                    <a href=''><img src='../../img/process/process_2.jpg' alt=' '></a>
-                    <div class='process_text_box'>
-                        <div class='process_info_box'>
-                            <div>
-                                <p>일반</p>
-                                <p>모바일</p>
-                            </div>
-                            <p class='process_title'>
-                                [스마트러닝] 김정구 교수의 미래창조경영 위기와 역경을 기회로
-                            </p>
-                        </div>
-                        <div class='process_btn_area clear_fix'>
-                            <button>맛보기</button>
-                            <button>장바구니</button>
-                            <button class='admission'>수강신청</button>
-                        </div>
-                        <div class='process_score_box clear_fix'>
-                            <div class='process_score_image clear_fix'>
-                                <span><img src='../../img/process/star_active.png' alt=' '></span>
-                                <span><img src='../../img/process/star_active.png' alt=' '></span>
-                                <span><img src='../../img/process/star_active.png' alt=' '></span>
-                                <span><img src='../../img/process/star_active.png' alt=' '></span>
-                                <span><img src='../../img/process/star_inactive.png' alt=' '></span>
-                            </div>
-                            <p class='process_score_text'>
-                                평점 : <span id='process_score_num'>4.5</span> / 후기 : <span id='process_review_num'>2</span>건
-                            </p>
-                        </div>
-                        <div class='process_payment_box clear_fix'>
-                            <p>교육비</p>
-                            <p class='process_payment'>50,000원</p>
-                        </div>
-                    </div>
-                </li>
-                <li class='last_right'>
-                    <p class='process_category'>자기개발</p>
-                    <a href=''><img src='../../img/process/process_3.jpg' alt=' '></a>
-                    <div class='process_text_box'>
-                        <div class='process_info_box'>
-                            <div>
-                                <p>일반</p>
-                                <p>모바일</p>
-                            </div>
-                            <p class='process_title'>
-                                [스마트러닝] 김정구 교수의 미래창조경영 위기와 역경을 기회로
-                            </p>
-                        </div>
-                        <div class='process_btn_area clear_fix'>
-                            <button>맛보기</button>
-                            <button>장바구니</button>
-                            <button class='admission'>수강신청</button>
-                        </div>
-                        <div class='process_score_box clear_fix'>
-                            <div class='process_score_image clear_fix'>
-                                <span><img src='../../img/process/star_active.png' alt=' '></span>
-                                <span><img src='../../img/process/star_active.png' alt=' '></span>
-                                <span><img src='../../img/process/star_active.png' alt=' '></span>
-                                <span><img src='../../img/process/star_active.png' alt=' '></span>
-                                <span><img src='../../img/process/star_inactive.png' alt=' '></span>
-                            </div>
-                            <p class='process_score_text clear_fix'>
-                                평점 : <span id='process_score_num'>4.5</span> / 후기 : <span id='process_review_num'>2</span>건
-                            </p>
-                        </div>
-                        <div class='process_payment_box clear_fix'>
-                            <p>교육비</p>
-                            <p class='process_payment'>50,000원</p>
-                        </div>
-                    </div>
-                </li>
-            </ul>
-            <!-- Process END -->
-
-            <!-- Search Area -->
-            <div class='process_search clear_fix'>
-                <div class='process_search_text con'>
-                    <p>과정명</p>
-                    <span><input type='text' name='' id=''></span>
-                </div>
-                <div class='process_search_category con'>
-                    <p class='process_category_text'>카테고리</p>
-                    <div class='process_category_box'>
+                    <div class='process_support_fund con'>
+                        <p>교육비지원과정</p>
                         <div>
-                            <div class='process_category_all clear_fix'>
-                                <input type='checkbox' name='' id=''>
-                                <p>전체</p>
-                            </div>
-                            <div class='process_category_etc clear_fix'>
-                                <input type='checkbox' id='category_management' name='process_category_1'>
-                                <p>경영직무</p>
-                                <input type='checkbox' id='category_field' name='process_category_2'>
-                                <p>업종직무</p>
-                                <input type='checkbox' id='category_business' name='process_category_3'>
-                                <p>비즈니스</p>
-                                <input type='checkbox' id='category_infoTech' name='process_category_4'>
-                                <p>정보기술</p>
-                                <input type='checkbox' id='category_language' name='process_category_5'>
-                                <p>외국어</p>
-                                <input type='checkbox' id='category_refinement' name='process_category_6'>
-                                <p>교양</p>
+                            <div class='process_support clear_fix'>
+                                <input type='checkbox' id='process_supportType_employee' name='process_supportType_1'>
+                                <p>근로자카드</p>
+                                <input type='checkbox' id='process_supportType_employer' name='process_supportType_2'>
+                                <p>사업주지원</p>
+                                <input type='checkbox' id='process_supportType_normal' name='process_supportType_3'>
+                                <p>일반과정</p>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class='process_support_fund con'>
-                    <p>교육비지원과정</p>
-                    <div>
-                        <div class='process_support clear_fix'>
-                            <input type='checkbox' id='process_supportType_employee' name='process_supportType_1'>
-                            <p>근로자카드</p>
-                            <input type='checkbox' id='process_supportType_employer' name='process_supportType_2'>
-                            <p>사업주지원</p>
-                            <input type='checkbox' id='process_supportType_normal' name='process_supportType_3'>
-                            <p>일반과정</p>
-                        </div>
+                    <div class='process_search_btn'>
+                        <button>검색</button>
                     </div>
                 </div>
-                <div class='process_search_btn'>
-                    <button>검색</button>
-                </div>
-            </div>
-            <!-- Search Area END -->
+                <!-- Search Area END -->
 
-            <!-- Filter Area -->
-            <div class='process_filter clear_fix'>
-                <p>총 <span>5</span>개의 과정이 검색되었습니다.</p>
-                <div>
-                    <ul class='clear_fix'>
-                        <li class='process_filter_item select1'>
-                            <select name='' id=''>
-                                <option value=''>인기강의순</option>
-                                <option value=''>추천강의순</option>
-                            </select>
+                <!-- Filter Area -->
+                <div class='process_filter clear_fix'>
+                    <p>총 <span>5</span>개의 과정이 검색되었습니다.</p>
+                    <div>
+                        <ul class='clear_fix'>
+                            <li class='process_filter_item select1'>
+                                <select name='' id=''>
+                                    <option value=''>인기강의순</option>
+                                    <option value=''>추천강의순</option>
+                                </select>
+                            </li>
+                            <li class='process_filter_item select2'>
+                                <select name='' id=''>
+                                    <option value=''>10개씩</option>
+                                    <option value=''>15개씩</option>
+                                    <option value=''>30개씩</option>
+                                </select>
+                            </li>
+                            <li class='process_filter_item range'>
+                                <p class='non_image'>정렬</p>
+                            </li>
+                            <li class='process_filter_item list'>
+                                <p>리스트</p>
+                            </li>
+                            <li class='process_filter_item image'>
+                                <p>이미지</p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- Filter Area END -->
+
+                <!-- Search Result Area -->
+                <div class='process_search_result'>
+                    <div class='clear_fix'>
+                        <div class='process_result_checkbox'>
+                            <input type='checkbox' name='' id=''>
+                        </div>
+                        <p class='process_result_con'>과정정보</p>
+                        <p class='process_result_review'>만족도/후기</p>
+                        <p class='process_result_btn'>수강신청</p>
+                    </div>
+                    <ul class='process_result_list'>
+                        <li class='clear_fix'>
+                            <div class='process_result_checkbox con'>
+                                <input type='checkbox' name='' id=''>
+                            </div>
+                            <div class='process_result_con con clear_fix'>
+                                <div class='process_result_img'>
+                                    <img src='../../img/process/process_3.jpg' alt=' '>
+                                </div>
+                                <div class='process_result_text'>
+                                    <div class='process_result_text_top clear_fix'>
+                                        <p>일반</p>
+                                        <p class='process_result_mobile'>모바일</p>
+                                    </div>
+                                    <p>[스마트러닝] 윤코치의 보고서 작성법</p>
+                                    <div class='process_result_text_bottom clear_fix'>
+                                        <p>교육비</p>
+                                        <p class='process_result_payment'>50,000원</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class='process_result_review con'>
+                                <div class='clear_fix'>
+                                    <span><img src='../../img/process/star_active.png' alt=''></span>
+                                    <span><img src='../../img/process/star_active.png' alt=''></span>
+                                    <span><img src='../../img/process/star_active.png' alt=''></span>
+                                    <span><img src='../../img/process/star_inactive.png' alt=''></span>
+                                    <span><img src='../../img/process/star_inactive.png' alt=''></span>
+                                </div>
+                                <p>
+                                    평점 : <span>4.5</span>
+                                    <span></span>
+                                    후기 : <span>2</span>건
+                                </p>
+                            </div>
+                            <div class='process_result_btn con'>
+                                <button>맛보기</button>
+                                <button>장바구니</button>
+                                <button class='process_result_admission'>수강신청</button>
+                            </div>
                         </li>
-                        <li class='process_filter_item select2'>
-                            <select name='' id=''>
-                                <option value=''>10개씩</option>
-                                <option value=''>15개씩</option>
-                                <option value=''>30개씩</option>
-                            </select>
+                        <li class='clear_fix'>
+                            <div class='process_result_checkbox con'>
+                                <input type='checkbox' name='' id=''>
+                            </div>
+                            <div class='process_result_con con clear_fix'>
+                                <div class='process_result_img'>
+                                    <img src='../../img/process/process_1.jpg' alt=' '>
+                                </div>
+                                <div class='process_result_text'>
+                                    <div class='process_result_text_top clear_fix'>
+                                        <p>일반</p>
+                                        <p class='process_result_mobile'>모바일</p>
+                                    </div>
+                                    <p>[스마트러닝] 김정구 교수의 미래창조경영 위기와 역경을 기회로</p>
+                                    <div class='process_result_text_bottom clear_fix'>
+                                        <p>교육비</p>
+                                        <p class='process_result_payment'>50,000원</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class='process_result_review con'>
+                                <div class='clear_fix'>
+                                    <span><img src='../../img/process/star_active.png' alt=''></span>
+                                    <span><img src='../../img/process/star_active.png' alt=''></span>
+                                    <span><img src='../../img/process/star_active.png' alt=''></span>
+                                    <span><img src='../../img/process/star_inactive.png' alt=''></span>
+                                    <span><img src='../../img/process/star_inactive.png' alt=''></span>
+                                </div>
+                                <p>
+                                    평점 : <span>4.5</span>
+                                    <span></span>
+                                    후기 : <span>2</span>건
+                                </p>
+                            </div>
+                            <div class='process_result_btn con'>
+                                <button>맛보기</button>
+                                <button>장바구니</button>
+                                <button class='process_result_admission'>수강신청</button>
+                            </div>
                         </li>
-                        <li class='process_filter_item range'>
-                            <p class='non_image'>정렬</p>
+                        <li class='clear_fix'>
+                            <div class='process_result_checkbox con'>
+                                <input type='checkbox' name='' id=''>
+                            </div>
+                            <div class='process_result_con con clear_fix'>
+                                <div class='process_result_img'>
+                                    <img src='../../img/process/process_2.jpg' alt=' '>
+                                </div>
+                                <div class='process_result_text'>
+                                    <div class='process_result_text_top clear_fix'>
+                                        <p>일반</p>
+                                        <p class='process_result_mobile'>모바일</p>
+                                    </div>
+                                    <p>[스마트러닝] 토끼와 거북의의 재테크 비법</p>
+                                    <div class='process_result_text_bottom clear_fix'>
+                                        <p>교육비</p>
+                                        <p class='process_result_payment'>50,000원</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class='process_result_review con'>
+                                <div class='clear_fix'>
+                                    <span><img src='../../img/process/star_active.png' alt=''></span>
+                                    <span><img src='../../img/process/star_active.png' alt=''></span>
+                                    <span><img src='../../img/process/star_active.png' alt=''></span>
+                                    <span><img src='../../img/process/star_inactive.png' alt=''></span>
+                                    <span><img src='../../img/process/star_inactive.png' alt=''></span>
+                                </div>
+                                <p>
+                                    평점 : <span>4.5</span>
+                                    <span></span>
+                                    후기 : <span>2</span>건
+                                </p>
+                            </div>
+                            <div class='process_result_btn con'>
+                                <button>맛보기</button>
+                                <button>장바구니</button>
+                                <button class='process_result_admission'>수강신청</button>
+                            </div>
                         </li>
-                        <li class='process_filter_item list'>
-                            <p>리스트</p>
-                        </li>
-                        <li class='process_filter_item image'>
-                            <p>이미지</p>
+                        <li class='clear_fix'>
+                            <div class='process_result_checkbox con'>
+                                <input type='checkbox' name='' id=''>
+                            </div>
+                            <div class='process_result_con con clear_fix'>
+                                <div class='process_result_img'>
+                                    <img src='../../img/process/process_1.jpg' alt=' '>
+                                </div>
+                                <div class='process_result_text'>
+                                    <div class='process_result_text_top clear_fix'>
+                                        <p>일반</p>
+                                        <p class='process_result_mobile'>모바일</p>
+                                    </div>
+                                    <p>[스마트러닝] 남다른 교구활용의 정석</p>
+                                    <div class='process_result_text_bottom clear_fix'>
+                                        <p>교육비</p>
+                                        <p class='process_result_payment'>50,000원</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class='process_result_review con'>
+                                <div class='clear_fix'>
+                                    <span><img src='../../img/process/star_active.png' alt=''></span>
+                                    <span><img src='../../img/process/star_active.png' alt=''></span>
+                                    <span><img src='../../img/process/star_active.png' alt=''></span>
+                                    <span><img src='../../img/process/star_inactive.png' alt=''></span>
+                                    <span><img src='../../img/process/star_inactive.png' alt=''></span>
+                                </div>
+                                <p>
+                                    평점 : <span>4.5</span>
+                                    <span></span>
+                                    후기 : <span>2</span>건
+                                </p>
+                            </div>
+                            <div class='process_result_btn con'>
+                                <button>맛보기</button>
+                                <button>장바구니</button>
+                                <button class='process_result_admission'>수강신청</button>
+                            </div>
                         </li>
                     </ul>
                 </div>
-            </div>
-            <!-- Filter Area END -->
+                <!-- Search Result Area END -->
 
-            <!-- Search Result Area -->
-            <div class='process_search_result'>
-                <div class='clear_fix'>
-                    <div class='process_result_checkbox'>
-                        <input type='checkbox' name='' id=''>
+                <!-- Pager Area -->
+                <div class='process_pager_box'>
+                    <div class='process_pager clear_fix'>
+                        <div class='process_pager_prev clear_fix'>
+                            <div>&laquo;</div>
+                            <div>&lsaquo;</div>
+                        </div>
+                        <ul class='clear_fix'>
+                            <li class='on'>1</li>
+                            <li>2</li>
+                            <li>3</li>
+                            <li>4</li>
+                            <li>5</li>
+                        </ul>
+                        <div class='process_pager_next clear_fix'>
+                            <div>&rsaquo;</div>
+                            <div>&raquo;</div>
+                        </div>
                     </div>
-                    <p class='process_result_con'>과정정보</p>
-                    <p class='process_result_review'>만족도/후기</p>
-                    <p class='process_result_btn'>수강신청</p>
                 </div>
-                <ul class='process_result_list'>
-                    <li class='clear_fix'>
-                        <div class='process_result_checkbox con'>
-                            <input type='checkbox' name='' id=''>
-                        </div>
-                        <div class='process_result_con con clear_fix'>
-                            <div class='process_result_img'>
-                                <img src='../../img/process/process_3.jpg' alt=' '>
-                            </div>
-                            <div class='process_result_text'>
-                                <div class='process_result_text_top clear_fix'>
-                                    <p>일반</p>
-                                    <p class='process_result_mobile'>모바일</p>
-                                </div>
-                                <p>[스마트러닝] 윤코치의 보고서 작성법</p>
-                                <div class='process_result_text_bottom clear_fix'>
-                                    <p>교육비</p>
-                                    <p class='process_result_payment'>50,000원</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class='process_result_review con'>
-                            <div class='clear_fix'>
-                                <span><img src='../../img/process/star_active.png' alt=''></span>
-                                <span><img src='../../img/process/star_active.png' alt=''></span>
-                                <span><img src='../../img/process/star_active.png' alt=''></span>
-                                <span><img src='../../img/process/star_inactive.png' alt=''></span>
-                                <span><img src='../../img/process/star_inactive.png' alt=''></span>
-                            </div>
-                            <p>
-                                평점 : <span>4.5</span>
-                                <span></span>
-                                후기 : <span>2</span>건
-                            </p>
-                        </div>
-                        <div class='process_result_btn con'>
-                            <button>맛보기</button>
-                            <button>장바구니</button>
-                            <button class='process_result_admission'>수강신청</button>
-                        </div>
-                    </li>
-                    <li class='clear_fix'>
-                        <div class='process_result_checkbox con'>
-                            <input type='checkbox' name='' id=''>
-                        </div>
-                        <div class='process_result_con con clear_fix'>
-                            <div class='process_result_img'>
-                                <img src='../../img/process/process_1.jpg' alt=' '>
-                            </div>
-                            <div class='process_result_text'>
-                                <div class='process_result_text_top clear_fix'>
-                                    <p>일반</p>
-                                    <p class='process_result_mobile'>모바일</p>
-                                </div>
-                                <p>[스마트러닝] 김정구 교수의 미래창조경영 위기와 역경을 기회로</p>
-                                <div class='process_result_text_bottom clear_fix'>
-                                    <p>교육비</p>
-                                    <p class='process_result_payment'>50,000원</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class='process_result_review con'>
-                            <div class='clear_fix'>
-                                <span><img src='../../img/process/star_active.png' alt=''></span>
-                                <span><img src='../../img/process/star_active.png' alt=''></span>
-                                <span><img src='../../img/process/star_active.png' alt=''></span>
-                                <span><img src='../../img/process/star_inactive.png' alt=''></span>
-                                <span><img src='../../img/process/star_inactive.png' alt=''></span>
-                            </div>
-                            <p>
-                                평점 : <span>4.5</span>
-                                <span></span>
-                                후기 : <span>2</span>건
-                            </p>
-                        </div>
-                        <div class='process_result_btn con'>
-                            <button>맛보기</button>
-                            <button>장바구니</button>
-                            <button class='process_result_admission'>수강신청</button>
-                        </div>
-                    </li>
-                    <li class='clear_fix'>
-                        <div class='process_result_checkbox con'>
-                            <input type='checkbox' name='' id=''>
-                        </div>
-                        <div class='process_result_con con clear_fix'>
-                            <div class='process_result_img'>
-                                <img src='../../img/process/process_2.jpg' alt=' '>
-                            </div>
-                            <div class='process_result_text'>
-                                <div class='process_result_text_top clear_fix'>
-                                    <p>일반</p>
-                                    <p class='process_result_mobile'>모바일</p>
-                                </div>
-                                <p>[스마트러닝] 토끼와 거북의의 재테크 비법</p>
-                                <div class='process_result_text_bottom clear_fix'>
-                                    <p>교육비</p>
-                                    <p class='process_result_payment'>50,000원</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class='process_result_review con'>
-                            <div class='clear_fix'>
-                                <span><img src='../../img/process/star_active.png' alt=''></span>
-                                <span><img src='../../img/process/star_active.png' alt=''></span>
-                                <span><img src='../../img/process/star_active.png' alt=''></span>
-                                <span><img src='../../img/process/star_inactive.png' alt=''></span>
-                                <span><img src='../../img/process/star_inactive.png' alt=''></span>
-                            </div>
-                            <p>
-                                평점 : <span>4.5</span>
-                                <span></span>
-                                후기 : <span>2</span>건
-                            </p>
-                        </div>
-                        <div class='process_result_btn con'>
-                            <button>맛보기</button>
-                            <button>장바구니</button>
-                            <button class='process_result_admission'>수강신청</button>
-                        </div>
-                    </li>
-                    <li class='clear_fix'>
-                        <div class='process_result_checkbox con'>
-                            <input type='checkbox' name='' id=''>
-                        </div>
-                        <div class='process_result_con con clear_fix'>
-                            <div class='process_result_img'>
-                                <img src='../../img/process/process_1.jpg' alt=' '>
-                            </div>
-                            <div class='process_result_text'>
-                                <div class='process_result_text_top clear_fix'>
-                                    <p>일반</p>
-                                    <p class='process_result_mobile'>모바일</p>
-                                </div>
-                                <p>[스마트러닝] 남다른 교구활용의 정석</p>
-                                <div class='process_result_text_bottom clear_fix'>
-                                    <p>교육비</p>
-                                    <p class='process_result_payment'>50,000원</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class='process_result_review con'>
-                            <div class='clear_fix'>
-                                <span><img src='../../img/process/star_active.png' alt=''></span>
-                                <span><img src='../../img/process/star_active.png' alt=''></span>
-                                <span><img src='../../img/process/star_active.png' alt=''></span>
-                                <span><img src='../../img/process/star_inactive.png' alt=''></span>
-                                <span><img src='../../img/process/star_inactive.png' alt=''></span>
-                            </div>
-                            <p>
-                                평점 : <span>4.5</span>
-                                <span></span>
-                                후기 : <span>2</span>건
-                            </p>
-                        </div>
-                        <div class='process_result_btn con'>
-                            <button>맛보기</button>
-                            <button>장바구니</button>
-                            <button class='process_result_admission'>수강신청</button>
-                        </div>
-                    </li>
-                </ul>
+                <!-- Pager Area END -->
             </div>
-            <!-- Search Result Area END -->
-
-            <!-- Pager Area -->
-            <div class='process_pager clear_fix'>
-                <div class='process_pager_prev clear_fix'>
-                    <div>&laquo;</div>
-                    <div>&lsaquo;</div>
-                </div>
-                <ul class='clear_fix'>
-                    <li>1</li>
-                    <li>2</li>
-                    <li>3</li>
-                    <li>4</li>
-                    <li>5</li>
-                    <li>6</li>
-                </ul>
-                <div class='process_pager_next clear_fix'>
-                    <div>&rsaquo;</div>
-                    <div>&raquo;</div>
-                </div>
-            </div>
-            <!-- Pager Area END -->
         </div>
         <!-- CONTENTS END -->
 

@@ -7,7 +7,7 @@
                 </p>
                 <ul>
                     <li class='quick_menu_list'>
-                        <a href='#'>
+                        <a href="javascript:" onclick="page.goPage('/main/cart');">
                             <span></span>
                             <img src='/resources/homepage/img/quick_menu1.png' alt=' '>
                             장바구니
@@ -21,7 +21,7 @@
                         </a>
                     </li>
                     <li class='quick_menu_list'>
-                        <a href='#'>
+                        <a href="javascript:" onclick="page.goPage('/user/faqList');">
                             <span></span>
                             <img src='/resources/homepage/img/quick_menu3.png' alt=' '>
                             FAQ

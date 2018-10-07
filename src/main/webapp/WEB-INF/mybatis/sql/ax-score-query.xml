@@ -111,6 +111,7 @@
 		        ,DATE_FORMAT(B.E_FROM_DATE, '%y.%m.%d %H:%i') E_FROM_DATE
 		        ,DATE_FORMAT(B.E_TO_DATE, '%y.%m.%d %H:%i') E_TO_DATE
 		        ,B.REPORT_YN
+		        ,B.REPORT_TUTOR_YN
 		        ,B.QUEST_YN
 		        ,B.EXAM_YN
 		        ,B.COMPLETE_YN
@@ -220,11 +221,10 @@
 				,C.QA2
 				,C.QA3
 				,C.QA4
-                ,IF(C.TYPE = 'J', A.ANSWER,
-					IF(A.ANSWER = 1,CONCAT(A.ANSWER,'.',C.QA1),
-						IF(A.ANSWER = 2,CONCAT(A.ANSWER,'.',C.QA2),
-							IF(A.ANSWER = 3,CONCAT(A.ANSWER,'.',C.QA3),
-								IF(A.ANSWER = 4,CONCAT(A.ANSWER,'.',C.QA4),''))))) ANSWER
+                ,CASE 	WHEN C.TYPE = 'J' THEN A.ANSWER
+						ELSE CONCAT(A.ANSWER,'번') END ANSWER
+                ,CASE 	WHEN C.TYPE = 'J' THEN C.ANSWER
+						ELSE CONCAT(C.ANSWER,'번') END EXAM_ANSWER
 		        ,A.ANSWER_YN
                 ,DATE_FORMAT(A.CREATE_DATE, '%y.%m.%d %H:%i') CREATE_DATE
 		FROM	USER_EXAM A
@@ -322,11 +322,13 @@
 				,B.QA2
 				,B.QA3
 				,B.QA4
-                ,IF(B.TYPE = 'J', A.ANSWER,
-					IF(A.ANSWER = 1,CONCAT(A.ANSWER,'.',B.QA1),
-						IF(A.ANSWER = 2,CONCAT(A.ANSWER,'.',B.QA2),
-							IF(A.ANSWER = 3,CONCAT(A.ANSWER,'.',B.QA3),
-								IF(A.ANSWER = 4,CONCAT(A.ANSWER,'.',B.QA4),''))))) ANSWER
+                ,CASE 	WHEN B.TYPE = 'J' THEN A.ANSWER
+						WHEN B.TYPE = 'G' THEN CONCAT(A.ANSWER,'번')
+                		ELSE CONCAT(CASE WHEN A.ANSWER1 = 'Y' THEN '1번 ' ELSE '' END,
+                					CASE WHEN A.ANSWER2 = 'Y' THEN '2번 ' ELSE '' END,  
+                					CASE WHEN A.ANSWER3 = 'Y' THEN '3번 ' ELSE '' END,  
+                					CASE WHEN A.ANSWER4 = 'Y' THEN '4번 ' ELSE '' END) END ANSWER 
+		        ,DATE_FORMAT(A.CREATE_DATE, '%y.%m.%d %H:%i') CREATE_DATE
 		        ,DATE_FORMAT(A.CREATE_DATE, '%y.%m.%d %H:%i') CREATE_DATE
 		FROM	USER_QUEST A
 					JOIN QUEST B ON B.QG_ID = A.QG_ID AND B.SEQ = A.SEQ

@@ -16,11 +16,16 @@ public class QuestVO extends CommonVO {
 	private String qa4;
 	private String courseId;
 	private String answer;
+	private String answer1;
+	private String answer2;
+	private String answer3;
+	private String answer4;
 	private String userName;
 	private String email;
 	private String mobile;
 	private String questYn;
 
+	private String[] qgIds;
 	private String[] seqs;
 	private String[] types;
 	private String[] questions;
@@ -29,6 +34,10 @@ public class QuestVO extends CommonVO {
 	private String[] qa3s;
 	private String[] qa4s;
 	private String[] answers;
+	private String[] answers1;
+	private String[] answers2;
+	private String[] answers3;
+	private String[] answers4;
 
 	private String c1Code;			/** 대분류 코드 */
 	private String c2Code;			/** 중분류 코드 */
@@ -259,6 +268,60 @@ public class QuestVO extends CommonVO {
 	}
 	public void setQuestYn(String questYn) {
 		this.questYn = questYn;
+	}
+	public String getAnswer1() {
+		return answer1;
+	}
+	public void setAnswer1(String answer1) {
+		this.answer1 = answer1;
+	}
+	public String getAnswer2() {
+		return answer2;
+	}
+	public void setAnswer2(String answer2) {
+		this.answer2 = answer2;
+	}
+	public String getAnswer3() {
+		return answer3;
+	}
+	public void setAnswer3(String answer3) {
+		this.answer3 = answer3;
+	}
+	public String getAnswer4() {
+		return answer4;
+	}
+	public void setAnswer4(String answer4) {
+		this.answer4 = answer4;
+	}
+	public String[] getAnswers1() {
+		return answers1;
+	}
+	public void setAnswers1(String[] answers1) {
+		this.answers1 = answers1;
+	}
+	public String[] getAnswers2() {
+		return answers2;
+	}
+	public void setAnswers2(String[] answers2) {
+		this.answers2 = answers2;
+	}
+	public String[] getAnswers3() {
+		return answers3;
+	}
+	public void setAnswers3(String[] answers3) {
+		this.answers3 = answers3;
+	}
+	public String[] getAnswers4() {
+		return answers4;
+	}
+	public void setAnswers4(String[] answers4) {
+		this.answers4 = answers4;
+	}
+	public String[] getQgIds() {
+		return qgIds;
+	}
+	public void setQgIds(String[] qgIds) {
+		this.qgIds = qgIds;
 	}
 	
 	

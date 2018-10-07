@@ -160,11 +160,13 @@ $(document.body).ready(function () {
             		userId = row[0]["USER_ID"];
             	}
 
+            	Popup.showReportScore(params.COURSE_ID, userId);
+            	/*
             	var urlParams = "page=/ax/score/axScoreReportPopup";
            		urlParams += "&COURSE_ID=" + params.COURSE_ID + "&USER_ID=" + userId;
            		
            		f_popup('/common/axOpenPage', {displayName:'scoreReportPopup',option:'width=1000,height=700', urlParams:urlParams});
-            		
+            	*/
                 break;
             case "viewQna":
             	var row = grid.getList("selected");
@@ -314,36 +316,6 @@ function fn_makeGrid() {
 			        }
 		        ]
 	        },{
-	        	key : "REPORT_SEQ", 
-	        	label : "배정 레포트", 
-	            width : 150,
-	        	align : "left", 
-	        	editor: {
-                    type : "select", 
-                    config : {
-                        columnKeys: { optionValue: "value", optionText: "text" },
-                        options: dd.CourseReport
-                    }
-	        	},
-	            formatter : function () {
-	                return gfn_getValueInList(dd.CourseReport, "value",  this.item.REPORT_SEQ, "text");
-	           	},
-				styleClass: function () {
-                    return "grid-cell-edit";
-                }
-	        },{
-	            key : "REPORT_YN",
-	            label : "레포트 제출 여부",
-	            width : 130,
-	            align : "center", 
-	        	editor : { 
-	        		type : "checkbox", 
-	        		config : {height: 17, trueValue: "Y", falseValue: "N"},
-	            	disabled : function () {
-                        return true;
-                    } 
-	        	}
-	        },{
               	key : undefined, 
               	label: "주차 학습", 
               	columns: [	        
@@ -376,6 +348,48 @@ function fn_makeGrid() {
 			        }
 		        ]
 	        },{
+	        	key : "REPORT_SEQ", 
+	        	label : "배정 레포트", 
+	            width : 150,
+	        	align : "left", 
+	        	editor: {
+                    type : "select", 
+                    config : {
+                        columnKeys: { optionValue: "value", optionText: "text" },
+                        options: dd.CourseReport
+                    }
+	        	},
+	            formatter : function () {
+	                return gfn_getValueInList(dd.CourseReport, "value",  this.item.REPORT_SEQ, "text");
+	           	},
+				styleClass: function () {
+                    return "grid-cell-edit";
+                }
+	        },{
+	            key : "REPORT_YN",
+	            label : "레포트 제출 여부",
+	            width : 130,
+	            align : "center", 
+	        	editor : { 
+	        		type : "checkbox", 
+	        		config : {height: 17, trueValue: "Y", falseValue: "N"},
+	            	disabled : function () {
+                        return true;
+                    } 
+	        	}
+	        },{
+	            key : "REPORT_TUTOR_YN",
+	            label : "레포트 첨삭 여부",
+	            width : 130,
+	            align : "center", 
+	        	editor : { 
+	        		type : "checkbox", 
+	        		config : {height: 17, trueValue: "Y", falseValue: "N"},
+	            	disabled : function () {
+                        return true;
+                    } 
+	        	}
+	        },{
 	            key : "EXAM_YN",
 	            label : "시험 완료 여부",
 	            width : 130,
@@ -406,16 +420,16 @@ function fn_makeGrid() {
 	            align : "right"
 	        },{
 	            key : "COMPLETE_YN",
-	            label : "완료 여부",
+	            label : "이수 여부",
 	            width : 100,
 	            align : "center", 
 	        	editor : { 
 	        		type : "checkbox", 
-	        		config : {height: 17, trueValue: "Y", falseValue: "N"}
-	        	},
-				styleClass: function () {
-                    return "grid-cell-edit";
-                }	        
+	        		config : {height: 17, trueValue: "Y", falseValue: "N"},
+	            	disabled : function () {
+                        return true;
+                    } 
+	        	}        
 	        }	], 
 	  	null,
 	  	{

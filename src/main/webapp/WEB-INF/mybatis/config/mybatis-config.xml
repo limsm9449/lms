@@ -69,6 +69,7 @@
 		<typeAlias alias="Setting" type="com.qp.lms.setting.model.SettingVO"/>
 		<typeAlias alias="System" type="com.qp.lms.system.model.SystemVO"/>
 		<typeAlias alias="Pg" type="com.qp.lms.pg.model.PgVO"/>
+		<typeAlias alias="Report" type="com.qp.lms.report.model.ReportVO"/>
 		
 	</typeAliases>
 	

@@ -20,6 +20,8 @@ public class QuestSet extends CommonSet {
 	private List<CodeVO> ddCategory1Depth;		// 카테고리 대분류
 	private List<CodeVO> ddCategory2Depth;		// 카테고리 중분류
 	private List<CodeVO> ddCategory3Depth;		// 카테고리 소분류
+	
+	private String questName;
 
 	public QuestVO getCondiVO() {
 		return condiVO;
@@ -80,6 +82,12 @@ public class QuestSet extends CommonSet {
 	}
 	public void setUserDetailList(List<QuestVO> userDetailList) {
 		this.userDetailList = userDetailList;
+	}
+	public String getQuestName() {
+		return questName;
+	}
+	public void setQuestName(String questName) {
+		this.questName = questName;
 	}
 
 	

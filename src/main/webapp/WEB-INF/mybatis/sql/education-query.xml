@@ -24,7 +24,9 @@
 		       H_PX,
 	       	   V_PX,
                E.PROGRESS_COMPLETE_YN,
-               C.EXAM_YN
+               C.EXAM_YN,
+               C.QUEST_YN,
+               C.REPORT_YN
 		  FROM COURSE A 
 		  			LEFT OUTER JOIN COURSE_CODE B ON A.COURSE_CODE = B.COURSE_CODE 
 		            LEFT OUTER JOIN COURSE_EVAL C ON A.COURSE_ID = C.COURSE_ID
@@ -175,6 +177,22 @@
     	       ,UPDATE_USER = #{userId}
 		 WHERE COURSE_ID = #{courseId}
 		   AND USER_ID = #{userId}
+    </select>	
+
+ 	<!-- 이수여부를 수정한다. -->
+    <select id="updEvalKeyForComplete" parameterType="Evaluation">
+    <![CDATA[
+		UPDATE COURSE_EVAL A
+		   SET COMPLETE_YN = CASE WHEN REPORT < (SELECT REPORT_FAIL FROM COURSE WHERE COURSE_ID = A.COURSE_ID) OR 
+		   								EXAM < (SELECT EXAM_FAIL FROM COURSE WHERE COURSE_ID = A.COURSE_ID) OR 
+		   								DISCUSSION < (SELECT DISCUSSION_FAIL FROM COURSE WHERE COURSE_ID = A.COURSE_ID) OR 
+		   								PROGRESS < (SELECT PROGRESS_FAIL FROM COURSE WHERE COURSE_ID = A.COURSE_ID) OR 
+		   								TOTAL < (SELECT TOTAL_FAIL FROM COURSE WHERE COURSE_ID = A.COURSE_ID) THEN 'N' ELSE 'Y' END 
+		       ,UPDATE_DATE = CURRENT_TIMESTAMP
+    	       ,UPDATE_USER = #{userId}
+		 WHERE COURSE_ID = #{courseId}
+		   AND USER_ID = #{userId}
+	]]>
     </select>	
 
  	<!-- 마직막 강의 내용을 저장한다. -->

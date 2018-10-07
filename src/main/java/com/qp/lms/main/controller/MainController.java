@@ -567,4 +567,25 @@ public class MainController {
 
         return "/homepage/CourseList";
     }
+    
+    @RequestMapping(value = "/main/myClassroom")
+    public String myClassroom(@ModelAttribute MainVO vo, Model model) throws Exception {
+    	try {
+    		MainSet set = new MainSet();
+    		set.setCondiVO(vo);
+
+    		if ( (SessionVO)SessionUtil.getSession() == null ) {
+    			return "/login/beforeLogin";
+    		} else {
+				set = svr.myClassroom(set);
+		    	
+		        model.addAttribute("set", set );
+    		}
+    	} catch ( Exception e ) {
+    		e.printStackTrace();
+    	}
+
+    	return "/homepage/myClassroom";
+    }
+
 }

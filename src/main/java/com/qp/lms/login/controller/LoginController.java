@@ -77,6 +77,9 @@ public class LoginController {
 	   	 		sess.setTutorYn(set.getData().getTutorYn());
 	   	 		sess.setTeacherYn(set.getData().getTeacherYn());
 	   	 		sess.setUserIp(request.getRemoteAddr());
+	   	 		sess.setMobile(set.getData().getMobile());
+	   	 		sess.setEmail(set.getData().getEmail());
+	   	 		sess.setCompName(set.getData().getCompName());
 	   	 		
 	   	 		if ( "".equals(CommUtil.getString(set.getData().getCompCd())) ) {
 	   	 			sess.setUserCompCd("B2C");

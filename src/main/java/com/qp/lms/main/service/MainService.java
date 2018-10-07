@@ -8,20 +8,17 @@ import java.util.Map;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 
+import com.qp.lms.board.model.BoardVO;
 import com.qp.lms.common.CodeVO;
 import com.qp.lms.common.CommUtil;
 import com.qp.lms.common.Constant;
 import com.qp.lms.common.SessionUtil;
 import com.qp.lms.common.service.DdService;
+import com.qp.lms.counsel.model.CounselVO;
 import com.qp.lms.course.model.CourseResourceVO;
 import com.qp.lms.course.model.CourseVO;
-import com.qp.lms.guest.model.BankVO;
 import com.qp.lms.main.model.MainSet;
-import com.qp.lms.main.model.MainVO;
-import com.qp.lms.member.model.MemberVO;
 
 @Service("mainService")
 public class MainService {
@@ -128,4 +125,33 @@ public class MainService {
 
     	return set;
     }
+	
+	public MainSet myClassroom(MainSet set) throws Exception {
+		set.getCondiVO().setUserId(SessionUtil.getSessionUserId());
+		
+		//summary 
+		CourseVO courseSummary = sqlSession.selectOne("main.courseSummary", set.getCondiVO());
+		set.setCourseSummary(courseSummary);
+		
+		//공지사항
+    	List<BoardVO> noticeList = sqlSession.selectList("main.noticeList", set.getCondiVO());
+		set.setNoticeList(noticeList);
+		
+		//상담내역
+    	List<CounselVO> counselList = sqlSession.selectList("main.counselList", set.getCondiVO());
+		set.setCounselList(counselList);
+		
+		//학습중인 과정
+    	List<CourseVO> attendCourseList = sqlSession.selectList("main.attendCourseList", set.getCondiVO());
+		set.setAttendCourseList(attendCourseList);
+		
+		//수강이력/수료증
+    	List<CourseVO> completeCourseList = sqlSession.selectList("main.completeCourseList", set.getCondiVO());
+		set.setCompleteCourseList(completeCourseList);
+		
+		//관심과정 ??
+
+    	return set;
+    }
+
 }

@@ -7,23 +7,28 @@
     <meta http-equiv='X-UA-Compatible' content='ie=edge'>
     <title>Q learning - 나의강의실</title>
 
+    <script src='../../js/jquery_3.3.1.js'></script>
+    <!--[if IE8]>
+        <script src="http://code.jquery.com/jquery-1.12.3.js></script>
+    <![endif]-->
+
     <link href='https://fonts.googleapis.com/css?family=Nanum+Gothic' rel='stylesheet'>
-    <link rel='stylesheet' href='../../css/reset.css'>
-    <link rel='stylesheet' href='../../css/classroom.css'>
+    <link rel='stylesheet' href='../../css/initialization.css'>
+    <link rel='stylesheet' href='../../css/classroom/classroom.css'>
 </head>
 
 <body>
-    <div class="wrap">
+    <div class='wrap'>
         <!-- PC HEADER -->
         <header class='head_pc'>
-            <div class="head_wrap pc clear_fix" onmouseover='sub_hide()'>
+            <div class='head_wrap pc clear_fix' onmouseover='sub_hide()'>
                 <div class='head_con logo_box'>
                     <a href='../../index.html'>
                         <img src='../../img/logo.png' alt=' '>
                     </a>
                 </div>
                 <div class='head_con search_box'>
-                    <input type="text">
+                    <input type='text'>
                     <button>
                         <img src='../../img/search_ic.png' alt=' '>
                     </button>
@@ -34,22 +39,20 @@
                     <p class='pc'>OOO님 반갑습니다.</p>
                 </div>
             </div>
-            <div class="head_wrap mobile clear_fix">
+            <div class='head_wrap mobile clear_fix'>
                 <div class='mobile_btn'>
                     <button>
                         <span></span><span></span><span></span>
                     </button>
                 </div>
                 <div class='head_con logo_box'>
-                    <a href='../../index.html'>
-                        <img src='../../img/logo.png' alt=' '>
-                    </a>
+                    <img src='../../img/logo.png' alt=' '>
                 </div>
                 <div class='head_con util_box'>
                     <a href='#' class='last_right'>로그아웃</a>
                 </div>
                 <div class='head_con search_box'>
-                    <input type="text">
+                    <input type='text'>
                     <button>
                         <img src='../../img/search_ic.png' alt=' '>
                     </button>
@@ -64,16 +67,16 @@
                     </div>
                     <ul class='menu'>
                         <li>
-                            <a href='../process/process.html'>전체과정</a>
+                            <a href='../course/process.html'>전체과정</a>
                         </li>
                         <li>
                             <a href='#'>나의강의실</a>
                         </li>
                         <li>
-                            <a href='../tutorial/tutorial.html'>교육안내</a>
+                            <a href='../guidance/tutorial.html'>교육안내</a>
                         </li>
                         <li>
-                            <a href='../service/service.html'>고객지원</a>
+                            <a href='../support/service.html'>고객지원</a>
                         </li>
                     </ul>
                     <div class='menu_tutor'>
@@ -132,7 +135,7 @@
 
         <!-- MOBILE HEADER -->
         <header class='head_mobile'>
-            <div class="head_wrap pc clear_fix">
+            <div class='head_wrap pc clear_fix'>
                 <div class='menu_wrap'>
                     <div class='menu_layout pc' onclick='sub_show_hide()'>
                         <div class='mobile_btn'>
@@ -143,13 +146,15 @@
                     </div>
                 </div>
                 <div class='head_con logo_box'>
-                    <img src='../../img/logo.png' alt=' '>
+                    <a href='../../index.html'>
+                        <img src='../../img/logo.png' alt=' '>
+                    </a>
                 </div>
                 <div class='head_con util_box'>
                     <a href='#' class='last_right' onclick='login()'>로그인</a>
                 </div>
                 <div class='head_con search_box'>
-                    <input type="text">
+                    <input type='text'>
                     <button>
                         <img src='../../img/search_ic.png' alt=' '>
                     </button>
@@ -167,10 +172,11 @@
                         <a href='#'>로그인</a>
                     </div>
                     <div class='mobile_menu process_all'>
-                        <button onclick='sub_menu_open(this)'>
+                        <button onclick='sub_menu_open(this, "others")'>
                             전체과정
                         </button>
                         <ul>
+                            <li class='first_depth'><a href='../../html/course/process.html'>전체과정</a></li>
                             <li><a href=''>경영직무</a></li>
                             <li><a href=''>업종직무</a></li>
                             <li><a href=''>비즈니스</a></li>
@@ -180,10 +186,11 @@
                         </ul>
                     </div>
                     <div class='mobile_menu classroom'>
-                        <button onclick='sub_menu_open(this)'>
+                        <button onclick='sub_menu_open(this, "others")'>
                             나의강의실
                         </button>
                         <ul>
+                            <li class='first_depth'><a href='#'>나의강의실</a></li>
                             <li><a href=''>수강과정</a></li>
                             <li><a href=''>수강대기과정</a></li>
                             <li><a href=''>수강취소과정</a></li>
@@ -196,10 +203,11 @@
                         </ul>
                     </div>
                     <div class='mobile_menu tutorial'>
-                        <button onclick='sub_menu_open(this)'>
+                        <button onclick='sub_menu_open(this, "others")'>
                             교육안내
                         </button>
                         <ul>
+                            <li class='first_depth'><a href='../guidance/tutorial.html'>교육안내</a></li>
                             <li><a href=''>수강신청방법</a></li>
                             <li><a href=''>학습방법</a></li>
                             <li><a href=''>학습관리</a></li>
@@ -208,10 +216,11 @@
                         </ul>
                     </div>
                     <div class='mobile_menu service'>
-                        <button onclick='sub_menu_open(this)'>
+                        <button onclick='sub_menu_open(this, "others")'>
                             고객지원
                         </button>
                         <ul>
+                            <li class='first_depth'><a href='../support/service.html'>고객지원</a></li>
                             <li><a href=''>공지사항</a></li>
                             <li><a href=''>FAQ</a></li>
                             <li><a href=''>1:1 메일문의</a></li>
@@ -230,52 +239,367 @@
         <!-- HEAD END -->
 
         <!-- CONTENTS -->
-        <div class='contents_wrap' onmouseover='sub_hide()'>
-            <!-- QUICK MENU -->
-            <div class='quick_menu_wrap'>
-                <p class='quick_title'>
-                    Quick Menu
-                    <span></span>
-                </p>
-                <ul>
-                    <li class='quick_menu_list'>
-                        <a href='#'>
-                            <span></span>
-                            <img src='../../img/quick_menu1.png' alt=' '>
-                            장바구니
-                        </a>
+        <div class='contents_wrap process' onmouseover='sub_hide()'>
+            <div class='contents_wrap_box'>
+                <!-- QUICK MENU -->
+                <div class='quick_menu_wrap'>
+                    <p class='quick_title'>
+                        Quick Menu
+                        <span></span>
+                    </p>
+                    <ul>
+                        <li class='quick_menu_list'>
+                            <a href='#'>
+                                <span></span>
+                                <img src='../../img/quick_menu1.png' alt=' '>
+                                장바구니
+                            </a>
+                        </li>
+                        <li class='quick_menu_list'>
+                            <a href='#'>
+                                <span></span>
+                                <img src='../../img/quick_menu2.png' alt=' '>
+                                학습가이드
+                            </a>
+                        </li>
+                        <li class='quick_menu_list'>
+                            <a href='#'>
+                                <span></span>
+                                <img src='../../img/quick_menu3.png' alt=' '>
+                                FAQ
+                            </a>
+                        </li>
+                        <li class='quick_menu_list'>
+                            <a href='#'>
+                                <span></span>
+                                <img src='../../img/quick_menu4.png' alt=' '>
+                                학습지원프로그램
+                            </a>
+                        </li>
+                    </ul>
+                    <p class='quick_top'>
+                        <span>
+                            <img src='../../img/quick_top.png' alt=' '>
+                        </span>
+                        TOP
+                    </p>
+                </div>
+
+                <!-- Top -->
+                <div class='process_top_area'>
+                    <div class='clear_fix'>
+                        <div class='process_history_box clear_fix'>
+                            <span>
+                                <img src='../../img/course/ic_home.jpg' alt=' '>
+                            </span>
+                            <p>HOME</p>
+                            <span>
+                                <img src='../../img/course/arr_right.jpg' alt=' '>
+                            </span>
+                            <p>수강신청</p>
+                            <span>
+                                <img src='../../img/course/arr_right.jpg' alt=' '>
+                            </span>
+                            <p>교육과정</p>
+                        </div>
+                    </div>
+                    <h1>
+                        나의<span>강의실</span>
+                    </h1>
+                </div>
+                <!-- Top END -->
+
+                <!-- User Info -->
+                <div class='user_info'>
+                    <p class='user_info_name'>
+                        <span>최삼열님</span>의 나의강의실입니다.
+                    </p>
+                    <div class='clear_fix'>
+                        <div class='user_info_text'>
+                            <p class='user_info_text_title'>학습중</p>
+                            <p><strong>1</strong>과정</p>
+                        </div>
+                        <div class='user_info_text'>
+                            <p class='user_info_text_title'>대기</p>
+                            <p><strong>0</strong>과정</p>
+                        </div>
+                        <div class='user_info_text'>
+                            <p class='user_info_text_title'>수료</p>
+                            <p><strong>0</strong>과정</p>
+                        </div>
+                        <div class='user_info_text'>
+                            <p class='user_info_text_title'>학습종료</p>
+                            <p><strong class='last_right'>D - 21</strong></p>
+                        </div>
+                        <div class='user_info_my clear_fix'>
+                            <div class='user_info_image_box'>
+                                <p>나의정보</p>
+                                <span>
+                                    <img src='../../img/classroom/ic_info.png' alt=''>
+                                </span>
+                            </div>
+                            <ul class='user_info_info_box'>
+                                <li>
+                                    소속 : <span>큐피플(주)</span>
+                                </li>
+                                <li>
+                                    휴대폰 : <span>010-1234-****</span>
+                                </li>
+                                <li>
+                                    이메일 : <span>customer@unitel.co.kr</span>
+                                </li>
+                            </ul>
+                            <div class='user_info_btn_box clear_fix'>
+                                <button>회원정보 수정</button>
+                                <button class='last_right'>비밀번호 변경</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- User Info END -->
+
+                <!-- User CS -->
+                <div class='user_cs clear_fix'>
+                    <div class='user_cs_notice_box'>
+                        <div class='user_cs_title clear_fix'>
+                            <p>공지사항</p>
+                            <p class='user_cs_more'>MORE +</p>
+                        </div>
+                        <ul>
+                            <li class='user_cs_list'>
+                                <a href='' class='clear_fix'>
+                                    <p>[공지] 개인정보처리방침 변경 안내</p>
+                                    <p class='user_cs_list_date'>2018.08.01</p>
+                                </a>
+                            </li>
+                            <li class='user_cs_list'>
+                                <a href='' class='clear_fix'>
+                                    <p>[공지] 시스템 점검으로 인한 서비스 중단 시스템 점검으로 인한 서비스 중단</p>
+                                    <p class='user_cs_list_date'>2018.04.19</p>
+                                </a>
+                            </li>
+                            <li class='user_cs_list'>
+                                <a href='' class='clear_fix'>
+                                    <p>[공지] 개인정보처리방침 변경 안내</p>
+                                    <p class='user_cs_list_date'>2018.03.06</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class='user_cs_counsel'>
+                        <div class='user_cs_title clear_fix'>
+                            <p>
+                                상담내역
+                                <span>(1)</span>
+                            </p>
+                            <p class='user_cs_more'>MORE +</p>
+                        </div>
+                        <ul>
+                            <li class='user_cs_list'>
+                                <a href='' class='clear_fix'>
+                                    <p>[큐피플] 1월 수강신청 이벤트 당첨 안내</p>
+                                    <p class='user_cs_list_date'>2018.07.26</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- User CS END -->
+
+                <!-- User Lecture -->
+                <div class='user_lecture'>
+                    <div class="user_lecture_tab_box clear_fix">
+                        <button class='on clear_fix' onclick='lecture_view(this, "present")'>
+                            <p class='user_lecture_btn_title first'>
+                                학습중인 과정
+                                <span>(0)</span>
+                            </p>
+                            <a href=''>MORE +</a>
+                        </button>
+                        <button class='clear_fix' onclick='lecture_view(this, "past")'>
+                            <p class='user_lecture_btn_title'>
+                                수강이력/수료증
+                                <span>(3)</span>
+                            </p>
+                            <a href=''>MORE +</a>
+                        </button>
+                    </div>
+                    <div class='user_lecture_list_title list present clear_fix'>
+                        <p class='user_lecture_list_subject'>과정명</p>
+                        <p>진도율</p>
+                        <p>학습상태</p>
+                        <p class='user_lecture_list_date'>학습기간</p>
+                        <p>학습마감</p>
+                        <p class='user_lecture_list_start last_right'>학습시작</p>
+                    </div>
+                    <div class='user_lecture_list_title list past clear_fix'>
+                        <p class='user_lecture_list_subject'>과정명</p>
+                        <p class='user_lecture_list_date'>학습기간</p>
+                        <p>점수</p>
+                        <p>수료여부</p>
+                        <p class='last_right'>수료증</p>
+                    </div>
+
+                    <!-- 학습중인 과정 List -->
+                    <ul class='user_lecture_list present clear_fix'>
+                        <li class='list clear_fix'>
+                            <p class='user_lecture_list_subject'>
+                                바로 배워, 바로 활용하는 포토샵 CC (10)
+                            </p>
+                            <p>0%</p>
+                            <p>학습중</p>
+                            <p class='user_lecture_list_date'>2018.09.04~2018.09.21</p>
+                            <p>D-21</p>
+                            <button class='user_lecture_list_start'>학습시작</button>
+                        </li>
+                    </ul>
+
+                    <!-- 수강이력/수료증 List -->
+                    <ul class='user_lecture_list past clear_fix'>
+                        <li class='list clear_fix'>
+                            <p class='user_lecture_list_subject'>
+                                HTML5&amp;JavaScript (1)
+                            </p>
+                            <p class='user_lecture_list_date'>2018.07.25~2018.08.29</p>
+                            <p>0</p>
+                            <p>수료</p>
+                            <p class='last'>발급</p>
+                        </li>
+                        <li class='list clear_fix'>
+                            <p class='user_lecture_list_subject'>
+                                HTML5&amp;JavaScript (2)
+                            </p>
+                            <p class='user_lecture_list_date'>2018.07.25~2018.08.29</p>
+                            <p>0</p>
+                            <p>미수료</p>
+                            <p class='last'>-</p>
+                        </li>
+                        <li class='list clear_fix'>
+                            <p class='user_lecture_list_subject'>
+                                쉽게 찾아 바로 즐기는 Windows 10
+                            </p>
+                            <p class='user_lecture_list_date'>2018.07.25~2018.08.29</p>
+                            <p>0</p>
+                            <p>수료</p>
+                            <p class='last'>발급</p>
+                        </li>
+                    </ul>
+                </div>
+                <!-- User Lecture END -->
+
+                <!-- User Interest -->
+                <div class='user_lecture_interest clear_fix'>
+                    <p>관심과정</p>
+                    <a href=''>더보기 +</a>
+                </div>
+                <ul class='process_list_wrap clear_fix'>
+                    <li>
+                        <a href=''><img src='../../img/course/process_1.jpg' alt=' '></a>
+                        <div class='process_text_box'>
+                            <div class='process_info_box'>
+                                <div>
+                                    <p>일반</p>
+                                    <p>모바일</p>
+                                </div>
+                                <p class='process_title'>
+                                    [스마트러닝] 김정구 교수의 미래창조경영 위기와 역경을 기회로
+                                </p>
+                            </div>
+                            <div class='process_btn_area clear_fix'>
+                                <button>맛보기</button>
+                                <button>장바구니</button>
+                                <button class='admission'>수강신청</button>
+                            </div>
+                            <div class='process_score_box clear_fix'>
+                                <div class='process_score_image clear_fix'>
+                                    <span><img src='../../img/course/star_active.png' alt=' '></span>
+                                    <span><img src='../../img/course/star_active.png' alt=' '></span>
+                                    <span><img src='../../img/course/star_active.png' alt=' '></span>
+                                    <span><img src='../../img/course/star_active.png' alt=' '></span>
+                                    <span><img src='../../img/course/star_inactive.png' alt=' '></span>
+                                </div>
+                                <p class='process_score_text'>
+                                    평점 : <span id='process_score_num'>4.5</span> / 후기 : <span id='process_review_num'>2</span>건
+                                </p>
+                            </div>
+                            <div class='process_payment_box clear_fix'>
+                                <p>교육비</p>
+                                <p class='process_payment'>50,000원</p>
+                            </div>
+                        </div>
                     </li>
-                    <li class='quick_menu_list'>
-                        <a href='#'>
-                            <span></span>
-                            <img src='../../img/quick_menu2.png' alt=' '>
-                            학습가이드
-                        </a>
+                    <li>
+                        <a href=''><img src='../../img/course/process_2.jpg' alt=' '></a>
+                        <div class='process_text_box'>
+                            <div class='process_info_box'>
+                                <div>
+                                    <p>일반</p>
+                                    <p>모바일</p>
+                                </div>
+                                <p class='process_title'>
+                                    [스마트러닝] 김정구 교수의 미래창조경영 위기와 역경을 기회로
+                                </p>
+                            </div>
+                            <div class='process_btn_area clear_fix'>
+                                <button>맛보기</button>
+                                <button>장바구니</button>
+                                <button class='admission'>수강신청</button>
+                            </div>
+                            <div class='process_score_box clear_fix'>
+                                <div class='process_score_image clear_fix'>
+                                    <span><img src='../../img/course/star_active.png' alt=' '></span>
+                                    <span><img src='../../img/course/star_active.png' alt=' '></span>
+                                    <span><img src='../../img/course/star_active.png' alt=' '></span>
+                                    <span><img src='../../img/course/star_active.png' alt=' '></span>
+                                    <span><img src='../../img/course/star_inactive.png' alt=' '></span>
+                                </div>
+                                <p class='process_score_text'>
+                                    평점 : <span id='process_score_num'>4.5</span> / 후기 : <span id='process_review_num'>2</span>건
+                                </p>
+                            </div>
+                            <div class='process_payment_box clear_fix'>
+                                <p>교육비</p>
+                                <p class='process_payment'>50,000원</p>
+                            </div>
+                        </div>
                     </li>
-                    <li class='quick_menu_list'>
-                        <a href='#'>
-                            <span></span>
-                            <img src='../../img/quick_menu3.png' alt=' '>
-                            FAQ
-                        </a>
-                    </li>
-                    <li class='quick_menu_list'>
-                        <a href='#'>
-                            <span></span>
-                            <img src='../../img/quick_menu4.png' alt=' '>
-                            학습지원프로그램
-                        </a>
+                    <li class='last_right'>
+                        <a href=''><img src='../../img/course/process_3.jpg' alt=' '></a>
+                        <div class='process_text_box'>
+                            <div class='process_info_box'>
+                                <div>
+                                    <p>일반</p>
+                                    <p>모바일</p>
+                                </div>
+                                <p class='process_title'>
+                                    [스마트러닝] 김정구 교수의 미래창조경영 위기와 역경을 기회로
+                                </p>
+                            </div>
+                            <div class='process_btn_area clear_fix'>
+                                <button>맛보기</button>
+                                <button>장바구니</button>
+                                <button class='admission'>수강신청</button>
+                            </div>
+                            <div class='process_score_box clear_fix'>
+                                <div class='process_score_image clear_fix'>
+                                    <span><img src='../../img/course/star_active.png' alt=' '></span>
+                                    <span><img src='../../img/course/star_active.png' alt=' '></span>
+                                    <span><img src='../../img/course/star_active.png' alt=' '></span>
+                                    <span><img src='../../img/course/star_active.png' alt=' '></span>
+                                    <span><img src='../../img/course/star_inactive.png' alt=' '></span>
+                                </div>
+                                <p class='process_score_text clear_fix'>
+                                    평점 : <span id='process_score_num'>4.5</span> / 후기 : <span id='process_review_num'>2</span>건
+                                </p>
+                            </div>
+                            <div class='process_payment_box clear_fix'>
+                                <p>교육비</p>
+                                <p class='process_payment'>50,000원</p>
+                            </div>
+                        </div>
                     </li>
                 </ul>
-                <p class='quick_top'>
-                    <span>
-                        <img src='../../img/quick_top.png' alt=' '>
-                    </span>
-                    TOP
-                </p>
-            </div>
-            <div>
-                con
+                <!-- User Interest END -->
             </div>
         </div>
         <!-- CONTENTS END -->

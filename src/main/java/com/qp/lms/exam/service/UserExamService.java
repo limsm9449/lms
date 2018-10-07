@@ -36,6 +36,11 @@ public class UserExamService {
     	List<ExamVO> list =  sqlSession.selectList("exam.userExamList", set.getCondiVO());
     	set.setList(list);
         
+    	sqlSession.update("exam.userExamStartTimeUpd", set.getCondiVO());
+    	
+    	String startTime = sqlSession.selectOne("exam.userExamStartTime", set.getCondiVO());
+    	set.setStartTime(startTime);
+    	
     	return set;
     }
     
@@ -71,14 +76,14 @@ public class UserExamService {
 		//완료 처리
 		sqlSession.update("exam.userExamInsertFlagUpd",saveVO);
 
-		//평가 점수
-		sqlSession.update("exam.userExamValuation",saveVO);
+		//시험 전체 점수를 계산한다.
+		sqlSession.update("exam.userExamTotalUpdate",saveVO);
 
 		//총점
 		EvaluationVO condiVO = new EvaluationVO();
 		condiVO.setCourseId(set.getCondiVO().getCourseId());
 		condiVO.setUserId(SessionUtil.getSessionUserId());
-		sqlSession.insert("education.updEvalKeyForTotal",condiVO);
+		sqlSession.update("education.updEvalKeyForTotal",condiVO);
 		
 		set.setRtnMode(Constant.mode.INSERT_OK.name());
 		

@@ -110,5 +110,15 @@ public class EducationService {
         return set ;
     }
 
+    @Transactional(propagation=Propagation.REQUIRED, rollbackFor={Throwable.class})
+    public EducationSet progressComplete(EducationSet set) throws Exception {
+    	set.getCondiVO().setUserId(SessionUtil.getSessionUserId());
+    	
+    	sqlSession.insert("education.updEvalKeyForComplete",set.getCondiVO());
+
+    	set.setData((CourseVO) sqlSession.selectOne("education.courseData",set.getCondiVO()));
+
+        return set ;
+    }
 
 }

@@ -2,7 +2,7 @@ package com.qp.lms.education.controller;
 
 
 
-import net.sf.json.JSONObject;
+import java.util.HashMap;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,11 +14,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.qp.lms.common.CommUtil;
+import com.qp.lms.course.model.CourseVO;
 import com.qp.lms.education.model.EducationSet;
 import com.qp.lms.education.model.EducationVO;
 import com.qp.lms.education.service.EducationService;
 import com.qp.lms.evaluation.model.EvaluationSet;
 import com.qp.lms.evaluation.model.EvaluationVO;
+
+import net.sf.json.JSONObject;
 
 /**
  * 교육관리를 위한 Controller
@@ -179,6 +182,32 @@ public class EducationController {
         return "/education/ContentsHome";
     }
   
+    @RequestMapping(value = "/education/progressComplete")
+    public String progressComplete(@ModelAttribute EducationVO vo, Model model) throws Exception {
+    	try {
+    		EducationSet set = new EducationSet();
+	    	set.setCondiVO(vo);
+	    	
+	    	set = svr.progressComplete(set);
+
+	    	HashMap hm = new HashMap();
+
+	    	CourseVO course = set.getData();
+	    	if ( "Y".equals(course.getIsExam()) ||
+	    			"Y".equals(course.getIsReport()) ||
+	    			"Y".equals(course.getIsDiscussion()) ) {
+		    	hm.put("isOther","Y");
+	    	} else {
+		    	hm.put("isOther","N");
+	    	}
+	    	
+	    	model.addAttribute("json", JSONObject.fromObject(hm));
+    	} catch ( Exception e ) {
+    		e.printStackTrace();
+    	}
+
+        return "/common/json";
+    }
 
     
 }

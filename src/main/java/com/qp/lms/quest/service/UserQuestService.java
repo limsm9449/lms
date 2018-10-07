@@ -20,15 +20,16 @@ public class UserQuestService {
 	private SqlSession sqlSession;
 
 	
-    public QuestSet userQuestN(QuestSet set) throws Exception {
-    	List<QuestVO> list =  sqlSession.selectList("quest.userQuestNewList", set.getCondiVO());
+    public QuestSet userQuest(QuestSet set) throws Exception {
+    	String questName = sqlSession.selectOne("quest.questName", set.getCondiVO());
+    	set.setQuestName(questName);
+    	
+    	List<QuestVO> list =  sqlSession.selectList("quest.userQuestList", set.getCondiVO());
     	set.setList(list);
         
     	return set;
     }
     
-    
-    ///////////////////////////////////////////////// Transaction ////////////////////////////////////////////////////
     @Transactional(propagation=Propagation.REQUIRED, rollbackFor={Throwable.class})
     public QuestSet userQuestIns(QuestSet set) throws Exception {
     	QuestVO saveVO = new QuestVO();
@@ -37,9 +38,21 @@ public class UserQuestService {
 		saveVO.setQgId(set.getCondiVO().getQgId());
 		for ( int i = 0; i < set.getCondiVO().getSeqs().length; i++ ) {
 			saveVO.setSeq(set.getCondiVO().getSeqs()[i]);
-			saveVO.setAnswer(set.getCondiVO().getAnswers()[i]);
+			saveVO.setQgId(set.getCondiVO().getQgIds()[i]);
 			
-			sqlSession.insert("quest.UserQuestIns",saveVO);
+			if ( "M".equals(set.getCondiVO().getTypes()[i]) ) {
+				String[] m = set.getCondiVO().getAnswers()[i].split(",");
+				saveVO.setAnswer1(m[0]);
+				saveVO.setAnswer2(m[1]);
+				saveVO.setAnswer3(m[2]);
+				saveVO.setAnswer4(m[3]);
+				
+				sqlSession.insert("quest.UserQuestInsert2",saveVO);
+			} else {
+				saveVO.setAnswer(set.getCondiVO().getAnswers()[i]);
+				
+				sqlSession.insert("quest.UserQuestInsert1",saveVO);
+			}
 		}
 
 		sqlSession.update("quest.UserQuestInsertFlagUpd",saveVO);
@@ -49,5 +62,15 @@ public class UserQuestService {
     	return set;
     }
 
-	
+    public QuestSet userQuestResult(QuestSet set) throws Exception {
+    	set.getCondiVO().setUserId(SessionUtil.getSessionUserId());
+    	
+    	String questName = sqlSession.selectOne("quest.questName", set.getCondiVO());
+    	set.setQuestName(questName);
+    	
+    	List<QuestVO> list = sqlSession.selectList("quest.userQuestResultList", set.getCondiVO());
+    	set.setList(list);
+        
+    	return set;
+    }
 }

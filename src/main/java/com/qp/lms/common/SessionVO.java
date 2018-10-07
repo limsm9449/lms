@@ -14,7 +14,9 @@ public class SessionVO {
 	private String teacherYn;
 	private String userIp;
 	private String auth;
-	
+	private String email;
+	private String mobile;
+	private String compName;
 	private String downloadAuth;				/** 튜터, 어드민, 강사는 첨부 다운로드 권한이 있다. */
 	
 	//2014.8.3
@@ -106,6 +108,24 @@ public class SessionVO {
 	}
 	public void setUserCompCd(String userCompCd) {
 		this.userCompCd = userCompCd;
+	}
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	public String getMobile() {
+		return mobile;
+	}
+	public void setMobile(String mobile) {
+		this.mobile = mobile;
+	}
+	public String getCompName() {
+		return compName;
+	}
+	public void setCompName(String compName) {
+		this.compName = compName;
 	}
 	
 		

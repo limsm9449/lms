@@ -25,9 +25,47 @@
 </head>
 
 <script type="text/javascript">
-var gCondition = {
+$(document).ready(function() {
+	CountDownTimer("${set.startTime}");
+});
+
+var timer;
+var end;
+function CountDownTimer(dt) {
+	end = new Date(	parseInt(dt.substring(0,4)), 
+			parseInt(dt.substring(4,6)) - 1, 
+			parseInt(dt.substring(6,8)), 
+			parseInt(dt.substring(8,10)) + 1, 
+			parseInt(dt.substring(10,12)), 
+			parseInt(dt.substring(12,14)) );
+	
+	timer = setInterval(showRemaining, 1000);
 }
 
+function showRemaining() {
+	var _second = 1000;
+	var _minute = _second * 60;
+	var _hour = _minute * 60;
+	var _day = _hour * 24;
+	var timer;
+	
+	var now = new Date();
+	var distance = end - now;
+	if (distance < 0) {
+		clearInterval(timer);
+		document.getElementById("time").innerHTML = '시험종료';
+		
+		return;
+	} else{
+		var days = Math.floor(distance / _day);
+		var hours = Math.floor((distance % _day) / _hour);
+		var minutes = Math.floor((distance % _hour) / _minute);
+		var seconds = Math.floor((distance % _minute) / _second);
+		
+		document.getElementById("time").innerHTML = minutes + '분 ' + seconds + '초'; 
+	}
+}	
+	
 function lfn_btn(pKind, pParam) {
 	if ( pKind =="save" ) {
 		if ( lfn_validate() == false )
@@ -42,7 +80,7 @@ function lfn_btn(pKind, pParam) {
 				success : function(json){
 					if ( json.rtnMode == "INSERT_OK") {
 						alert("정상적으로 저장이 되었습니다.");
-						opener.lfn_btn("refresh");
+						opener.location.reload();
 						window.close();
 					}
 				},
@@ -67,12 +105,12 @@ function lfn_validate() {
 
 			answers[i].value = $("input[name=answers_" + (i + 1) + "]:checked").val();
 		} else {
-			if ( $("#answers_" + (i + 1)).val() == "" ) {
+			if ( $("#jAnswers_" + (i + 1)).val() == "" ) {
 				alert((i + 1) + " 문항의 답을 입력하세요.");
 				return false;
 			}
 
-			answers[i].value = $("#answers_" + (i + 1)).val();
+			answers[i].value = $("#jAnswers_" + (i + 1)).val();
 		}
 	}
 		
@@ -108,7 +146,7 @@ function lfn_validate() {
                     </li>
                     <li>
                         남은시간 :
-                        <span id="time">1:29:49</span>
+                        <span id="time">0분 0초</span>
                     </li>
                 </ul>
             </div>
@@ -127,6 +165,8 @@ function lfn_validate() {
                         <span>${idx.index + 1}</span>
                     </div>
                     <div class='question_answer'>
+                    	<input type='hidden' name='jAnswers_${idx.index + 1}' id='jAnswers_${idx.index + 1}'>
+                    	
                         <p>${row.question}</p>
                         <ul class='answers_box'>
                             <li class='clear_fix'>
@@ -166,8 +206,10 @@ function lfn_validate() {
                         <span>${idx.index + 1}</span>
                     </div>
                     <div class='question_answer'>
+                       	<input type='radio' name='answers_${idx.index + 1}' id='answers_${idx.index + 1}' style="display:none;">
+
                         <p>${row.question}</p>
-                        <input type='text' name='answers_${idx.index + 1}' id='answers_${idx.index + 1}'>
+                        <input type='text' name='jAnswers_${idx.index + 1}' id='jAnswers_${idx.index + 1}'>
                     </div>
                 </div>
             </li>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="report">
+
+	<select id="userReport" parameterType="Report" resultType="Report">
+		SELECT 	A.REPORT_USER_CONTENTS
+				,IFNULL(C.ATTACH_SEQ, 0) ATTACH_SEQ
+				,B.SEQ
+				,B.TITLE
+				,B.CONTENTS
+		FROM 	COURSE_EVAL A
+					LEFT OUTER JOIN COURSE_REPORT B ON B.SEQ = A.REPORT_SEQ
+					LEFT OUTER JOIN COURSE_ATTACH C ON C.COURSE_ID = A.COURSE_ID AND C.USER_ID = A.USER_ID
+		WHERE	A.COURSE_ID = #{courseId}
+		AND 	A.USER_ID = #{userId}
+	</select>      
+	
+	<insert id="courseAttachInsert" parameterType="Report">
+		INSERT 	INTO COURSE_ATTACH (COURSE_ID, USER_ID)
+		VALUES ( #{courseId}, #{userId} )
+	</insert>
+
+	<update id="UserReportInsertFlagUpd" parameterType="Report">
+		UPDATE 	COURSE_EVAL
+		SET 	REPORT_YN = 'Y',
+		       	REPORT_USER_CONTENTS = #{reportUserContents}
+		WHERE 	COURSE_ID = #{courseId}
+		AND 	USER_ID = #{userId}
+	</update>
+    
+    <select id="userReportResult" parameterType="Report" resultType="Report">
+		SELECT 	A.REPORT_USER_CONTENTS
+				,A.REPORT_TUTOR_CONTENTS
+				,C.ATTACH_SEQ
+				,B.SEQ
+				,B.TITLE
+				,B.CONTENTS
+				,A.REPORT
+		FROM 	COURSE_EVAL A
+					LEFT OUTER JOIN COURSE_REPORT B ON B.SEQ = A.REPORT_SEQ
+					LEFT OUTER JOIN COURSE_ATTACH C ON C.COURSE_ID = A.COURSE_ID AND C.USER_ID = A.USER_ID
+		WHERE	A.COURSE_ID = #{courseId}
+		AND 	A.USER_ID = #{userId}
+	</select>  
+
+	<update id="UserReportScoreUpd" parameterType="Report">
+		UPDATE 	COURSE_EVAL
+		SET 	REPORT_TUTOR_YN = 'Y',
+		       	REPORT_TUTOR_CONTENTS = #{reportTutorContents},
+		       	REPORT = #{report}
+		WHERE 	COURSE_ID = #{courseId}
+		AND 	USER_ID = #{userId}
+	</update>
+    
+            
+</mapper>
