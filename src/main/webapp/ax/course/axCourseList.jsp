@@ -374,15 +374,6 @@ function fn_makeGrid() {
 			        }
 		        ]
 	        },{
-	        	key : "OPEN_YN", 
-	        	label : "오픈 여부", 
-	            width : 90,
-	        	align : "center", 
-	        	editor : { type : "checkbox", config : {height: 17, trueValue: "Y", falseValue: "N"} } ,
-				styleClass: function () {
-                    return "grid-cell-edit";
-                } 
-	        },{
               	key : undefined, 
               	label: "기간", 
               	columns: [	        
@@ -456,8 +447,44 @@ function fn_makeGrid() {
 			        }
 		        ]
 	        },{
+	        	key : "MOBILE_YN", 
+	        	label : "모바일 학습 여부", 
+	            width : 120,
+	        	align : "center", 
+	        	editor : { type : "checkbox", config : {height: 17, trueValue: "Y", falseValue: "N"} } ,
+				styleClass: function () {
+                    return "grid-cell-edit";
+                } 
+	        },{
+	        	key : "OPEN_YN", 
+	        	label : "오픈 여부", 
+	            width : 90,
+	        	align : "center", 
+	        	editor : { type : "checkbox", config : {height: 17, trueValue: "Y", falseValue: "N"} } ,
+				styleClass: function () {
+                    return "grid-cell-edit";
+                } 
+	        },{
 	        	key : "POPULAR_YN", 
 	        	label : "인기 강의 여부", 
+	            width : 110,
+	        	align : "center", 
+	        	editor : { type : "checkbox", config : {height: 17, trueValue: "Y", falseValue: "N"} } ,
+				styleClass: function () {
+                    return "grid-cell-edit";
+                } 
+	        },{
+	        	key : "RECOMMEND_COURSE_YN", 
+	        	label : "추천과정 여부", 
+	            width : 110,
+	        	align : "center", 
+	        	editor : { type : "checkbox", config : {height: 17, trueValue: "Y", falseValue: "N"} } ,
+				styleClass: function () {
+                    return "grid-cell-edit";
+                } 
+	        },{
+	        	key : "NEW_COURSE_YN", 
+	        	label : "신규과정 여부", 
 	            width : 110,
 	        	align : "center", 
 	        	editor : { type : "checkbox", config : {height: 17, trueValue: "Y", falseValue: "N"} } ,
@@ -539,8 +566,11 @@ function fn_hidePopupDiv(popupDivId, mode) {
 				STUDY_PERIOD_FROM : "",
 				STUDY_PERIOD_TO : "",
 				C_PERIOD : 30,
-				POPULAR_YN : "",
-				CLOSE_YN : ""
+				POPULAR_YN : "N",
+				CLOSE_YN : "N",
+				MOBILE_YN : "N",
+				RECOMMEND_COURSE_YN : "N",
+				NEW_COURSE_YN : "N"
 			}, "last", {focus: "END"});
 	} else if ( popupDivId == "examTypeDiv" ) {
 		if ( mode == "delete" ) {
@@ -598,8 +628,11 @@ function fn_hidePopupDiv(popupDivId, mode) {
 					STUDY_PERIOD_FROM : row[0].STUDY_PERIOD_FROM,
 					STUDY_PERIOD_TO : row[0].STUDY_PERIOD_TO,
 					C_PERIOD : row[0].C_PERIOD,
-					POPULAR_YN : "",
-					CLOSE_YN : ""
+					POPULAR_YN : "N",
+					CLOSE_YN : "N",
+					MOBILE_YN : "N",
+					RECOMMEND_COURSE_YN : "N",
+					NEW_COURSE_YN : "N"
 				}, "last", {focus: "END"});
 			
 			grid.repaint();

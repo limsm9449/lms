@@ -32,9 +32,24 @@ public class UserService {
     	set.getCondiVO().setUserId(SessionUtil.getSessionUserId());
     	set.setCourseInfo((CourseVO) sqlSession.selectOne("user.courseData",set.getCondiVO()));
     	
-    	List<EvaluationVO> list = sqlSession.selectList("evaluation.courseWeekList",set.getCondiVO());
-    	set.setWeek(list);
+    	List<EvaluationVO> courseWeekList = sqlSession.selectList("evaluation.courseWeekList",set.getCondiVO());
+    	set.setWeek(courseWeekList);
+
+    	List<CourseVO> courseExamList = sqlSession.selectList("user.courseExamList",set.getCondiVO());
+    	set.setExam(courseExamList);
+
     	
+    	BoardVO board = new BoardVO();
+    	board.setCourseId(set.getCondiVO().getCourseId());
+    	board.setUserId(set.getCondiVO().getUserId());
+    	board.setLimit("4");
+    	
+    	List<BoardVO> boardNotice4List = sqlSession.selectList("boardNotice.boardNoticeLimitList", board);
+    	set.setBoardNoticeList(boardNotice4List);
+
+    	List<BoardVO> boardQna4List = sqlSession.selectList("boardQna.boardQnaLimitList", board);
+    	set.setBoardQnaList(boardQna4List);
+
         return set ;
     }
 

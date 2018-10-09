@@ -135,5 +135,20 @@
 		 WHERE SEQ = #{pSeq}
     </select>	
 
+    <select id="boardQnaLimitList" parameterType="Board" resultType="Board">
+		SELECT A.SEQ,
+		       A.TITLE,
+		       A.USER_ID,
+		       B.USER_NAME,
+		       A.VIEW_CNT,
+		       A.REPLY_CNT,
+		       DATE_FORMAT(IFNULL(A.UPDATE_DATE,A.CREATE_DATE), '%y.%m.%d %H:%i') CREATE_DATE
+		  FROM BOARD_QNA A LEFT OUTER JOIN USER B ON A.USER_ID = B.USER_ID
+		 WHERE A.COURSE_ID = #{courseId}
+		   <if test="userId != null and userId != ''"> AND A.USER_ID = #{userId}</if> 
+		 ORDER BY A.SEQ
+		 LIMIT ${limit}
+    </select>	
+
         
 </mapper>

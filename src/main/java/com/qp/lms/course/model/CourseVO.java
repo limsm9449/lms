@@ -86,6 +86,32 @@ public class CourseVO extends CommonVO {
 	private String codeName;
 	private String parentCode;
 	private String completeYn;
+	private String isStudy;
+	private String mobileYn;
+	private String recommendCourseYn;
+	private String newCourseYn;
+	
+	private String submitDate;
+	private String scoreDate;
+	private String periodProgress;
+
+	private String reportFail;
+	private String examFail;
+	private String discussionFail;
+	private String progressFail;
+	private String totalFail;
+	private String totalCnt;
+	private String answerCnt;
+	private String postscriptYn;
+		
+		
+	public String getPeriodProgress() {
+		return periodProgress;
+	}
+
+	public void setPeriodProgress(String periodProgress) {
+		this.periodProgress = periodProgress;
+	}
 
 	public String getAttendCourseCnt() {
 		return attendCourseCnt;
@@ -1138,6 +1164,118 @@ public class CourseVO extends CommonVO {
 
 	public void setCompleteYn(String completeYn) {
 		this.completeYn = completeYn;
+	}
+
+	public String getIsStudy() {
+		return isStudy;
+	}
+
+	public void setIsStudy(String isStudy) {
+		this.isStudy = isStudy;
+	}
+
+	public String getMobileYn() {
+		return mobileYn;
+	}
+
+	public void setMobileYn(String mobileYn) {
+		this.mobileYn = mobileYn;
+	}
+
+	public String getRecommendCourseYn() {
+		return recommendCourseYn;
+	}
+
+	public void setRecommendCourseYn(String recommendCourseYn) {
+		this.recommendCourseYn = recommendCourseYn;
+	}
+
+	public String getNewCourseYn() {
+		return newCourseYn;
+	}
+
+	public void setNewCourseYn(String newCourseYn) {
+		this.newCourseYn = newCourseYn;
+	}
+
+	public String getSubmitDate() {
+		return submitDate;
+	}
+
+	public void setSubmitDate(String submitDate) {
+		this.submitDate = submitDate;
+	}
+
+	public String getScoreDate() {
+		return scoreDate;
+	}
+
+	public void setScoreDate(String scoreDate) {
+		this.scoreDate = scoreDate;
+	}
+
+	public String getReportFail() {
+		return reportFail;
+	}
+
+	public void setReportFail(String reportFail) {
+		this.reportFail = reportFail;
+	}
+
+	public String getExamFail() {
+		return examFail;
+	}
+
+	public void setExamFail(String examFail) {
+		this.examFail = examFail;
+	}
+
+	public String getDiscussionFail() {
+		return discussionFail;
+	}
+
+	public void setDiscussionFail(String discussionFail) {
+		this.discussionFail = discussionFail;
+	}
+
+	public String getProgressFail() {
+		return progressFail;
+	}
+
+	public void setProgressFail(String progressFail) {
+		this.progressFail = progressFail;
+	}
+
+	public String getTotalFail() {
+		return totalFail;
+	}
+
+	public void setTotalFail(String totalFail) {
+		this.totalFail = totalFail;
+	}
+
+	public String getTotalCnt() {
+		return totalCnt;
+	}
+
+	public void setTotalCnt(String totalCnt) {
+		this.totalCnt = totalCnt;
+	}
+
+	public String getAnswerCnt() {
+		return answerCnt;
+	}
+
+	public void setAnswerCnt(String answerCnt) {
+		this.answerCnt = answerCnt;
+	}
+
+	public String getPostscriptYn() {
+		return postscriptYn;
+	}
+
+	public void setPostscriptYn(String postscriptYn) {
+		this.postscriptYn = postscriptYn;
 	}
 
 

@@ -53,6 +53,7 @@ public class EvaluationVO extends CommonVO {
 	//2014.6.20 추가
 	private String searchStr;
 	private String searchKind;
+	private String weekTime;
 	
 	public static long getSerialVersionUID() {
 		return serialVersionUID;
@@ -305,6 +306,12 @@ public class EvaluationVO extends CommonVO {
 	}
 	public void setSearchKind(String searchKind) {
 		this.searchKind = searchKind;
+	}
+	public String getWeekTime() {
+		return weekTime;
+	}
+	public void setWeekTime(String weekTime) {
+		this.weekTime = weekTime;
 	}
 	
 

@@ -84,5 +84,18 @@
 		   AND SEQ < #{seq}
 	]]>		 
     </select>
+
+	<select id="boardNoticeLimitList" parameterType="Board" resultType="Board">
+		SELECT SEQ,
+		       COURSE_ID,
+		       TITLE,
+		       VIEW_CNT,
+		       DATE_FORMAT(IFNULL(UPDATE_DATE,CREATE_DATE), '%y.%m.%d %H:%i') CREATE_DATE,
+		       IF(DATE_FORMAT(CREATE_DATE, '%y.%m.%d') = DATE_FORMAT(SYSDATE(), '%y.%m.%d'),'Y','N') IS_NEW
+		  FROM BOARD_NOTICE
+		 WHERE COURSE_ID = #{courseId}
+		 ORDER BY SEQ DESC
+		 LIMIT ${limit}
+	</select>	
         
 </mapper>

@@ -21,6 +21,7 @@ public class UserSet extends CommonSet {
 	private EvaluationVO courseRate;				
 	private EvaluationVO evaluation;				
 	private List<EvaluationVO> week;
+	private List<CourseVO> exam;
 	
 	//2014.7.20
 	private UserVO data;			
@@ -189,6 +190,12 @@ public class UserSet extends CommonSet {
 	}
 	public void setDdCategory3Depth(List<CodeVO> ddCategory3Depth) {
 		this.ddCategory3Depth = ddCategory3Depth;
+	}
+	public List<CourseVO> getExam() {
+		return exam;
+	}
+	public void setExam(List<CourseVO> exam) {
+		this.exam = exam;
 	}
 
 

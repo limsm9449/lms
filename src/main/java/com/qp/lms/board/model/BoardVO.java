@@ -31,6 +31,8 @@ public class BoardVO extends CommonVO{
 	private String nextSeq;
 	private String prevSeq;
 	
+	private String limit;
+	
 	public String getTitle() {
 		return title;
 	}
@@ -135,6 +137,12 @@ public class BoardVO extends CommonVO{
 	}
 	public void setPrevSeq(String prevSeq) {
 		this.prevSeq = prevSeq;
+	}
+	public String getLimit() {
+		return limit;
+	}
+	public void setLimit(String limit) {
+		this.limit = limit;
 	}
 	
 	

@@ -36,7 +36,7 @@ function lfn_btn(pKind, pParam) {
 				success : function(json){
 					if ( json.rtnMode == "INSERT_OK") {
 						alert("<spring:message code="lms.msg.insertOk" text="-" />");
-						opener.lfn_btn("refresh");
+						opener.location.reload();
 						window.close();
 					}
 				},

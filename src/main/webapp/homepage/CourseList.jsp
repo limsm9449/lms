@@ -17,8 +17,9 @@
     	<%@ include file="../common/commMainInclude.jsp" %>
 
     <link href='https://fonts.googleapis.com/css?family=Nanum+Gothic' rel='stylesheet'>
-    <link rel='stylesheet' href='/resources/homepage/css/reset.css'>
-    <link rel='stylesheet' href='/resources/homepage/css/process.css'>
+    <link rel='stylesheet' href='/resources/homepage/css/initialization.css'>
+    <link rel='stylesheet' href='/resources/homepage/css/course/process.css'>
+        
 </head>
 
 <script type="text/javascript">

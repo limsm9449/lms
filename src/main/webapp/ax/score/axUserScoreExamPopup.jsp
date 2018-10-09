@@ -28,95 +28,193 @@ $(document.body).ready(function () {
         theme: "danger"
     });
     
-	grid = gfn_makeAx5Grid("first-grid",
-		[ 	{
-	        	key : "TYPE", 
-	        	label : "타입", 
-	            width : 60,
-	        	align : "center", 
-	        	editor: {
-	                type : "select", 
-	                config : {
-	                    columnKeys: { optionValue: "CD", optionText: "NM" },
-	                    options: [
-	                        {CD: "G", NM: "객관식"},
-	                        {CD: "M", NM: "복수형"},
-	                        {CD: "J", NM: "주관식"}
-	                    ]
-	                },
-	            	disabled : function () {
-                        return true;
-                    }
-	        	},
-	            formatter : function () {
-	            	if ( this.item.TYPE == "G" )
-	            		return "객관식";
-	            	else if ( this.item.TYPE == "M" )
-	            		return "복수형";
-	            	else 
-	                	return "주관식";
-	           	}
-	        },{
-	            key : "QUESTION",
-	            label : "질문",
-	            width : 270,
-	            align : "left"
-	        },{
-              	key : undefined, 
-              	label: "질문 답", 
-              	columns: [	
-              		{
-			            key : "QA1",
-			            label : "1번",
-			            width : 80,
-			            align : "left"
-			        },{
-			            key : "QA2",
-			            label : "2번",
-			            width : 80,
-			            align : "left"
-			        },{
-			            key : "QA3",
-			            label : "3번",
-			            width : 80,
-			            align : "left"
-			        },{
-			            key : "QA4",
-			            label : "4번",
-			            width : 80,
-			            align : "left"
-			        }
-			   	]
-	        },{
-	            key : "EXAM_ANSWER",
-	            label : "정답",
-	            width : 50,
-	            align : "left"
-	        },{
-	            key : "ANSWER",
-	            label : "수강생 답",
-	            width : 80,
-	            align : "left"
-	        },{
-	        	key : "ANSWER_YN", 
-	        	label : "정답 여부", 
-	            width : 80,
-	        	align : "center", 
-	        	editor : { type : "checkbox", config : {height: 17, trueValue: "Y", falseValue: "N"} },
-				styleClass: function () {
-                    return "grid-cell-edit";
-                }  	            
-	        },{
-	        	key : "CREATE_DATE",
-	            label : "생성일자",
-	            width : 100,
-	            align : "center"
-	        }	], 
-	  	null,
-	  	{
-	  		showRowSelector : false
-	  	}
-	);
+    if ( gfn_getUrlParams("EXAM_KIND") == "TOTAL" ) {
+    	grid = gfn_makeAx5Grid("first-grid",
+   			[ 	{
+   		        	key : "TYPE", 
+   		        	label : "타입", 
+   		            width : 60,
+   		        	align : "center", 
+   		        	editor: {
+   		                type : "select", 
+   		                config : {
+   		                    columnKeys: { optionValue: "CD", optionText: "NM" },
+   		                    options: [
+   		                        {CD: "G", NM: "객관식"},
+   		                        {CD: "M", NM: "복수형"},
+   		                        {CD: "J", NM: "주관식"}
+   		                    ]
+   		                },
+   		            	disabled : function () {
+   	                        return true;
+   	                    }
+   		        	},
+   		            formatter : function () {
+   		            	if ( this.item.TYPE == "G" )
+   		            		return "객관식";
+   		            	else if ( this.item.TYPE == "M" )
+   		            		return "복수형";
+   		            	else 
+   		                	return "주관식";
+   		           	}
+   		        },{
+   		            key : "QUESTION",
+   		            label : "질문",
+   		            width : 270,
+   		            align : "left"
+   		        },{
+   	              	key : undefined, 
+   	              	label: "질문 답", 
+   	              	columns: [	
+   	              		{
+   				            key : "QA1",
+   				            label : "1번",
+   				            width : 80,
+   				            align : "left"
+   				        },{
+   				            key : "QA2",
+   				            label : "2번",
+   				            width : 80,
+   				            align : "left"
+   				        },{
+   				            key : "QA3",
+   				            label : "3번",
+   				            width : 80,
+   				            align : "left"
+   				        },{
+   				            key : "QA4",
+   				            label : "4번",
+   				            width : 80,
+   				            align : "left"
+   				        }
+   				   	]
+   		        },{
+   		            key : "EXAM_ANSWER",
+   		            label : "정답",
+   		            width : 50,
+   		            align : "left"
+   		        },{
+   		            key : "ANSWER",
+   		            label : "수강생 답",
+   		            width : 80,
+   		            align : "left"
+   		        },{
+   		        	key : "ANSWER_YN", 
+   		        	label : "정답 여부", 
+   		            width : 80,
+   		        	align : "center", 
+   		        	editor : { type : "checkbox", config : {height: 17, trueValue: "Y", falseValue: "N"} },
+   					styleClass: function () {
+   	                    return "grid-cell-edit";
+   	                }  	            
+   		        },{
+   		        	key : "CREATE_DATE",
+   		            label : "생성일자",
+   		            width : 100,
+   		            align : "center"
+   		        }	], 
+   		  	null,
+   		  	{
+   		  		showRowSelector : false
+   		  	}
+   		);
+    } else {
+    	grid = gfn_makeAx5Grid("first-grid",
+   			[ 	{
+   		            key : "WEEK",
+   		            label : "주차",
+   		            width : 50,
+   		            align : "right"
+   		        },{
+   		        	key : "TYPE", 
+   		        	label : "타입", 
+   		            width : 60,
+   		        	align : "center", 
+   		        	editor: {
+   		                type : "select", 
+   		                config : {
+   		                    columnKeys: { optionValue: "CD", optionText: "NM" },
+   		                    options: [
+   		                        {CD: "G", NM: "객관식"},
+   		                        {CD: "M", NM: "복수형"},
+   		                        {CD: "J", NM: "주관식"}
+   		                    ]
+   		                },
+   		            	disabled : function () {
+   	                        return true;
+   	                    }
+   		        	},
+   		            formatter : function () {
+   		            	if ( this.item.TYPE == "G" )
+   		            		return "객관식";
+   		            	else if ( this.item.TYPE == "M" )
+   		            		return "복수형";
+   		            	else 
+   		                	return "주관식";
+   		           	}
+   		        },{
+   		            key : "QUESTION",
+   		            label : "질문",
+   		            width : 270,
+   		            align : "left"
+   		        },{
+   	              	key : undefined, 
+   	              	label: "질문 답", 
+   	              	columns: [	
+   	              		{
+   				            key : "QA1",
+   				            label : "1번",
+   				            width : 60,
+   				            align : "left"
+   				        },{
+   				            key : "QA2",
+   				            label : "2번",
+   				            width : 60,
+   				            align : "left"
+   				        },{
+   				            key : "QA3",
+   				            label : "3번",
+   				            width : 60,
+   				            align : "left"
+   				        },{
+   				            key : "QA4",
+   				            label : "4번",
+   				            width : 60,
+   				            align : "left"
+   				        }
+   				   	]
+   		        },{
+   		            key : "EXAM_ANSWER",
+   		            label : "정답",
+   		            width : 50,
+   		            align : "left"
+   		        },{
+   		            key : "ANSWER",
+   		            label : "수강생 답",
+   		            width : 80,
+   		            align : "left"
+   		        },{
+   		        	key : "ANSWER_YN", 
+   		        	label : "정답 여부", 
+   		            width : 80,
+   		        	align : "center", 
+   		        	editor : { type : "checkbox", config : {height: 17, trueValue: "Y", falseValue: "N"} },
+   					styleClass: function () {
+   	                    return "grid-cell-edit";
+   	                }  	            
+   		        },{
+   		        	key : "CREATE_DATE",
+   		            label : "생성일자",
+   		            width : 100,
+   		            align : "center"
+   		        }	], 
+   		  	null,
+   		  	{
+   		  		showRowSelector : false
+   		  	}
+   		);
+    }
+    
 	
     $('[data-grid-control]').click(function () {
         switch (this.getAttribute("data-grid-control")) {

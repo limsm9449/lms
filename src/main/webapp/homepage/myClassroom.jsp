@@ -26,15 +26,6 @@
 $(document).ready(function(){
 });
 
-
-function lfn_btn(pKind, pParam) {
-	if ( pKind == "view" ) {
-		$("#courseId").val(pParam.courseId);
-		
-		gfn_goPage("/user/studyroom",$("#frm").serialize());
-	}
-}
-
 </script>
 
 <body>
@@ -210,7 +201,7 @@ function lfn_btn(pKind, pParam) {
                             <p>${row.progress}%</p>
                             <p class='user_lecture_list_date'>${row.cFromDate} ~ ${row.cToDate}</p>
                             <p>D-${row.remainDay}</p>
-                            <button class='user_lecture_list_start' onclick="javascript:Popup.showUserCourse('${row.courseId}','${row.hPx + 100}','${row.vPx + 100}'); lfn_btn('view',{courseId:'${row.courseId}'});">학습시작</button>
+                            <button class='user_lecture_list_start' onclick="javascript:Popup.showStudyroom('${row.courseId}');">학습시작</button>
                         </li>
 </c:forEach>                        
                     </ul>

@@ -70,6 +70,17 @@ $(document.body).ready(function () {
                     return "grid-cell-edit";
                 }
 	        },{
+	        	key : "WEEK_TIME", 
+	        	label : "학습시간(분)", 
+	            width : 100,
+	        	align : "right", 
+	        	editor : { 
+	        		type : "number"
+	        	},
+				styleClass: function () {
+                    return "grid-cell-edit";
+                }
+	        },{
 	        	key : "PREVIEW_PAGE", 
 	        	label : "미리보기 페이지", 
 	            width : 120,
@@ -93,7 +104,7 @@ $(document.body).ready(function () {
 	            fn_search();
 	            break;
             case "add":              	
-            	grid.addRow({NEW_FLAG : "Y", COURSE_CODE : params.COURSE_CODE, TITLE : "목차를 입력하세요.", DIRECTORY : "**", PAGE_CNT : 0, PREVIEW_PAGE : 0}, "last", {focus: "END"});
+            	grid.addRow({NEW_FLAG : "Y", COURSE_CODE : params.COURSE_CODE, TITLE : "목차를 입력하세요.", DIRECTORY : "**", PAGE_CNT : 0, PREVIEW_PAGE : 0, WEEK_TIME : 30}, "last", {focus: "END"});
 
             	fn_changeWeek();
 
@@ -118,12 +129,14 @@ $(document.body).ready(function () {
                 		grid.setValue(rowIdx, "DIRECTORY", all[rowIdx - 1].DIRECTORY);
                 		grid.setValue(rowIdx, "PAGE_CNT", all[rowIdx - 1].PAGE_CNT);
                 		grid.setValue(rowIdx, "PREVIEW_PAGE", all[rowIdx - 1].PREVIEW_PAGE);
+                		grid.setValue(rowIdx, "WEEK_TIME", all[rowIdx - 1].WEEK_TIME);
                 		grid.setValue(rowIdx, "NEW_FLAG", all[rowIdx - 1].NEW_FLAG);
 
                 		grid.setValue(rowIdx - 1, "TITLE", row[0].TITLE);
                 		grid.setValue(rowIdx - 1, "DIRECTORY", row[0].DIRECTORY);
                 		grid.setValue(rowIdx - 1, "PAGE_CNT", row[0].PAGE_CNT);
                 		grid.setValue(rowIdx - 1, "PREVIEW_PAGE", row[0].PREVIEW_PAGE);
+                		grid.setValue(rowIdx - 1, "WEEK_TIME", row[0].WEEK_TIME);
                 		grid.setValue(rowIdx - 1, "NEW_FLAG", row[0].NEW_FLAG);
                 		
                 		grid.select(rowIdx - 1);
@@ -147,12 +160,14 @@ $(document.body).ready(function () {
                 		grid.setValue(rowIdx, "DIRECTORY", all[rowIdx + 1].DIRECTORY);
                 		grid.setValue(rowIdx, "PAGE_CNT", all[rowIdx + 1].PAGE_CNT);
                 		grid.setValue(rowIdx, "PREVIEW_PAGE", all[rowIdx + 1].PREVIEW_PAGE);
+                		grid.setValue(rowIdx, "WEEK_TIME", all[rowIdx + 1].WEEK_TIME);
                 		grid.setValue(rowIdx, "NEW_FLAG", all[rowIdx + 1].NEW_FLAG);
 
                 		grid.setValue(rowIdx + 1, "TITLE", row[0].TITLE);
                 		grid.setValue(rowIdx + 1, "DIRECTORY", row[0].DIRECTORY);
                 		grid.setValue(rowIdx + 1, "PAGE_CNT", row[0].PAGE_CNT);
                 		grid.setValue(rowIdx + 1, "PREVIEW_PAGE", row[0].PREVIEW_PAGE);
+                		grid.setValue(rowIdx + 1, "WEEK_TIME", row[0].WEEK_TIME);
                 		grid.setValue(rowIdx + 1, "NEW_FLAG", row[0].NEW_FLAG);
                 		
                 		grid.select(rowIdx + 1);
@@ -209,7 +224,8 @@ function fn_save() {
 		TITLE : { mendatory : true, colName : "목차" },
 		DIRECTORY : { mendatory : true, colName : "경로" },
    		PAGE_CNT : { mendatory : true, colName : "페이지", type : "number" },
-   		PREVIEW_PAGE : { mendatory : true, colName : "미리보기 페이지", type : "number" }
+   		PREVIEW_PAGE : { mendatory : true, colName : "미리보기 페이지", type : "number" },
+   		WEEK_TIME : { mendatory : true, colName : "학습시간", type : "WEEK_TIME" }
    	};
    	if ( gfn_validationCheck(grid, fieldParams) ) {
        	mask.open();
@@ -271,7 +287,8 @@ function fn_callbackAjax(data, id) {
        				WEEK : data.list[i].WEEK, 
        				TITLE : data.list[i].TITLE, 
        				DIRECTORY : data.list[i].DIRECTORY, 
-       				PAGE_CNT : data.list[i].PAGE_CNT, 
+       				PAGE_CNT : data.list[i].PAGE_CNT,
+       				WEEK_TIME : data.list[i].WEEK_TIME,
        				PREVIEW_PAGE : data.list[i].PREVIEW_PAGE
        			}, "last", {focus: "END"});
 		}

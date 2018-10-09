@@ -35,6 +35,11 @@ $(document).ready(function() {
 			};
 		$.datepicker.setDefaults($.datepicker.regional['ko']);
 	}
+	
+	//10분에 페이지 reload...
+	window.setTimeout(function() {
+			location.reload();	
+		}, 1000 * 60 * 10);
 });
 
 /** 

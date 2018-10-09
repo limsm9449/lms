@@ -1,143 +1,270 @@
 <%@ page contentType="text/html;charset=utf-8"%>
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
-<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="ko" xml:lang="ko">
+<!DOCTYPE html>
+<html lang='ko'>
+
 <head>
-<title>
-</title>
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1'>
+    <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+    <title>나의강의실 - 학습</title>
+    
+    <%@ include file="../common/commMainInclude.jsp" %>
 
-<%@ include file="../common/commUserInclude.jsp" %>
+    <link href='https://fonts.googleapis.com/css?family=Nanum+Gothic' rel='stylesheet'>
 
-
+    <link rel='stylesheet' href='/resources/homepage/css/initialization.css'>
+    <link rel='stylesheet' href='/resources/homepage/css/classroom/study.css'>
+    
+    <script src='/resources/homepage/js/study.js'></script>
 </head>
 
 <script type="text/javascript">
 
-function lfn_btn(pKind, pParam) {
-	if ( pKind == "list" ) {
-		gfn_goPage("/normalUser/attendCourseList",""); 
-	} else if ( pKind == "dataList" ) {
-		gfn_goPage("/user/studyroomDataList",$("#frm").serialize()); 
-	} else if ( pKind == "qnaList" ) {
-		gfn_goPage("/user/studyroomQnaList",$("#frm").serialize()); 
-	}
-}
+$(document).ready(function(){
+});
 
 </script>
 
 <body>
+    <div class='wrap clear_fix'>
+        <div class='study_left_area'>
+            <div class='study_title_box'>
+                <p>[스마트러닝]</p>
+                <a href=''>강사소개</a>
+                <h1>
+                    ${set.courseInfo.courseName}
+                </h1>
 
-<form name="frm" id="frm" method="post">
-
-<input id="courseId" name="courseId" type="hidden" value="${set.condiVO.courseId}">
-
-<!-- skipnav -->
-<div id="skipnav"><a href="#side" class="skip">좌측메뉴 바로가기</a></div>
-<div id="skipnav"><a href="#contents" class="skip">컨텐츠 바로가기</a></div>
-<!-- skipnav -->
-
-<!-- wrap -->
-<div id="wrap" class="site">
-  <%@ include file="../home/userTop.jsp" %>
-  <hr />
-  <!-- container -->
-  <div id="container" class="site">
-   	 	<!-- side -->
-   	 	<%
-   	 		String menuId = "attendCourseList";
-   	 	%>
-		<%@ include file="../home/userLeft.jsp" %>
-		<!-- end side -->
-		
-    	<!-- contents -->
-		<div id="contents" class="site">
-			<!-- location -->
-			<div id="location"><a href="/" class="home">HOME</a><span>&gt;</span>나의강의실<span>&gt;</span>수강과정<span>&gt;</span>학습하기</div>
-			<!-- title -->
-			<h3 class="tit_big">수강과정</h3>
-				<div class="artcle">
-		        <div class="course_box">
-		          <div class="thumbnail"><img src="/cImage/contents/${set.courseInfo.courseCode}/cImg.jpg" alt="course photo" /></div>
-		          <div class="course_info">
-		            <a href="javascript:" onclick="lfn_btn('list');" class="list"><img src="/resources/images/sub/btn_course_list.png" alt="강좌목록" /></a>
-		            <p class="big_3">${set.courseInfo.courseName}</p>
-		            <dl>
-		              <dt>교 수 명</dt><dd>${set.courseInfo.teacherName}</dd>
-		              <dt>강 좌 수</dt><dd>${set.courseInfo.weekCnt}강</dd>
-		              <dt>학습기간</dt><dd>${set.courseInfo.cFromDate} ~ ${set.courseInfo.cToDate}</dd>
-		              <dt>남은학습일</dt><dd>${set.courseInfo.remainDay}일</dd>
-		            </dl>
-		          </div>
-		        </div>
-		        <div class="study_list_box">
-		          <ul class="tabs">
-		            <li class="active" rel="tab1"><span>강의듣기</span></li>
-		            <li rel="tab2"><a href="javascript:" onclick="lfn_btn('dataList');"><span>자료실</span></a></li>
-		            <li rel="tab3"><a href="javascript:" onclick="lfn_btn('qnaList');"><span>질문 답변</span></a></li>
-		          </ul>
-		          <div class="tab_contents">
-		            <!-- tab_1 -->
-		            <div id="tab1" class="tab_content" style="display:block;">
-		              <p class="big_2"><span class="blue">강의 상세 리스트</span></p>
-		              <p>학습을 원하시는 차시의 start 버튼을 누르시면 학습을 하실 수 있습니다.</p>
-		              <p>진도율을 누르시면 진도에 대한 상세정보를 보실 수 있습니다.</p>
-		              <table class="high_list">
-		                <caption>수강중인 강좌 목록</caption>
-		      					<thead>
-		      					  <tr class="guide">
-		        						<th width="42"></th>
-		        						<th></th>
-		        						<th width="97"></th>
-		        						<th width="86"></th>
-		        						<th width="64"></th>
-		        						<th width="86"></th>
-		        					</tr>
-		        					<tr class="t_list">
-		        						<th>No</th>
-		        						<th>강의제목</th>
-		        						<th>최초<br />학습일</th>
-		        						<th>최종<br />학습일</th>
-		        						<th>진도율</th>
-		        						<th>학습시작</th>
-		        					</tr>
-		      					</thead>
-		      					<tbody>
-						<c:forEach var="row" items="${set.week}" varStatus="idx">
-			              <tr <c:if test="${idx.index + 1 eq fn:length(set.week)}"> class="last_line"</c:if>>
-			                <td class="center">${row.week}</td>
-			                <td class="title">${row.title}</td>
-			                <td class="center">${row.studyStart}</td>
-			                <td class="center">${row.studyEnd}</td>
-			                <td class="center">${row.progressRate} %</td>
-			                <td class="center last"><a href="#" onclick="javascript:Popup.showUserCourseWeek('${set.courseInfo.courseId}','${row.week}','${set.courseInfo.hPx + 100}','${set.courseInfo.vPx + 100}')"><img src="/resources/images/sub/btn_start.png" alt="학습시작" /></a></td>
-			              </tr>
-		              	</c:forEach>		      					
-		                </tbody>
-		              </table>
-		            </div>
-		            <!-- end tab_1 -->
-		          </div>
-		        </div>
-		      </div>
-		</div>
-		<!-- end content -->
-
-		
-		
-	</div>
-  <!-- end container -->
-  <!-- footer_wrap -->
-	<%@ include file="../home/bottom.jsp" %>
-  <!-- end footer_wrap -->
-</div>
-
-</form>
-
-
+            </div>
+            <div class='study_day_box clear_fix'>
+                <p class='study_day_dday'>D</p>
+                <span>-</span>
+                <p class='study_day_dday'>${set.courseInfo.remainDay}</p>
+                <p class='study_day_date'>
+                    학습기간
+                    <span></span>
+                    ${set.courseInfo.cFromDate} ~ ${set.courseInfo.cToDate} (${set.courseInfo.cPeriod}일간)
+                </p>
+            </div>
+            <div class='study_current_box clear_fix'>
+                <p>나의 학습현황</p>
+                <div class='study_table_box'>
+                    <table>
+                        <tr class='study_current_table_line'>
+                            <th class="study_current_table_title">항목</th>
+                            <th class="study_current_table_title d">반영기준</th>
+                            <th class="study_current_table_title">나의현황</th>
+                            <th class="study_current_table_title">과락기준</th>
+                        </tr>
+<c:if test="${set.courseInfo.progressRate ne '0'}">                            
+                        <tr class='study_current_table_line'>
+                            <td>진도율</td>
+                            <td class='d'><span>${set.courseInfo.progressRate}%</span>반영</td>
+                            <td><span>${set.courseInfo.progressRate}%</span></td>
+                            <td>${set.courseInfo.progressFail}점</td>
+                        </tr>
+</c:if>                        
+<c:if test="${set.courseInfo.examRate ne '0'}">                            
+                        <tr class='study_current_table_line'>
+                            <td>최종평가</td> 
+                            <td class='d'><span>${set.courseInfo.examRate}%</span>반영</td>
+                            <td>${set.courseInfo.exam}점</td>
+                            <td>${set.courseInfo.examFail}점</td>
+                        </tr>
+</c:if>                        
+<c:if test="${set.courseInfo.discussionRate ne '0'}">                            
+                        <tr class='study_current_table_line'>
+                            <td>토론</td> 
+                            <td class='d'><span>${set.courseInfo.discussionRate}%</span>반영</td>
+                            <td>${set.courseInfo.discussion}점</td>
+                            <td>${set.courseInfo.discussionFail}점</td>
+                        </tr>
+</c:if>                        
+<c:if test="${set.courseInfo.reportRate ne '0'}">                            
+                        <tr class='study_current_table_line'>
+                            <td>레포트</td> 
+                            <td class='d'><span>${set.courseInfo.reportRate}%</span>반영</td>
+                            <td>${set.courseInfo.report}점</td>
+                            <td>${set.courseInfo.reportFail}점</td>
+                        </tr>
+</c:if>                        
+                        <tr class='study_current_table_line back'>
+                            <td>총점</td>
+                            <td class='d'></td>
+                            <td><span>${set.courseInfo.total}점</span></td> 
+                            <td>${set.courseInfo.totalFail}점</td>
+                        </tr>
+                    </table>
+                    <p>* 수료기준은 각 항목의 환산점수 총점이 ${set.courseInfo.totalFail}점 이상입니다.</p>
+                </div>
+                <div class='study_graph clear_fix'>
+                    <div class='average'>
+                        <div>
+                            <p id='percentage_average'>${set.courseInfo.periodProgress}%</p>
+                            <span></span>
+                        </div>
+                        <p>권장</p>
+                    </div>
+                    <div class='my'>
+                        <div class='left_margin'>
+                            <p id='percentage_my'>${set.courseInfo.progress}%</p>
+                            <span></span>
+                        </div>
+                        <p>MY</p>
+                    </div>
+                </div>
+            </div>
+            <div class='study_start_btn'>
+                <button onclick="javascript:Popup.showUserCourse('${set.courseInfo.courseId}','${set.courseInfo.hPx + 100}','${set.courseInfo.vPx + 100}');">학습시작</button>
+            </div>
+            <div class='study_support_box'>
+                <div class='study_tab_area clear_fix'>
+                    <button>과정 공지사항</button>
+                    <button class='on'>질문 답변</button>
+                    <a href=''>MORE +</a>
+                </div>
+                <ul class='study_support_list_box'>
+                    <li>
+                        <a href='' class='clear_fix'>
+                            <p class='study_support_text'>[큐러닝] 개인정보처리방침 변경 안내</p>
+                            <p class='study_support_date'>2017.03.05</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href='' class='clear_fix'>
+                            <p class='study_support_text'>[큐러닝] 개인정보처리방침 변경 안내</p>
+                            <p class='study_support_date'>2017.03.05</p>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class='study_btn_area pc clear_fix'>
+                <button>학습/수료<span></span>기준</button>
+                <button>학습<span></span>가이드</button>
+                <button>동영상<span></span>설정</button>
+                <button>환경<span></span>설정</button>
+                <button class='last_right'>학습<span></span>질문답변</button>
+            </div>
+            <div class='study_remote_support_btn'>
+                <button>원격지원 서비스</button>
+            </div>
+        </div>
+        <div class='study_right_area'>
+            <div class='study_my_progress'>
+                나의 학습 정보<a href=''></a>
+            </div>
+            <p>
+                <span>아직 진도율 <strong>${set.courseInfo.progress}%</strong>입니다.</span> 오늘은 꼭 1개 단원 이상 학습 바랍니다. 화이팅!
+            </p>
+            <div class='study_list clear_fix'>
+                <p class='study_list_table_title'>학습목차</p>
+                <div class='study_list_table_wrap'>
+                    <table>
+                        <tr class='study_list_table_line'>
+                            <th class='line_1'>강의 제목</th>
+                            <th class='line_2'>학습시간</th>
+                            <th class='line_3'>학습완료일자</th>
+                            <th class='line_4'>관심</th>
+                            <th class='line_5 last_right'>학습</th>
+                        </tr>
+<c:forEach var="row" items="${set.week}" varStatus="idx"> 
+                        <tr class='study_list_table_line'>
+                            <td class='text_left'>
+                                <span>${idx.index + 1}</span>
+                                <p>${row.title}</p>
+                            </td>
+                            <td>${row.weekTime}분</td>
+                            <td>${row.studyEnd}</td> 
+                            <td>
+                                <img src='/resources/homepage/img/course/star_active.png' alt=' '>
+                            </td>
+                            <td class='last_right'>
+                                <button onclick="javascript:Popup.showUserCourseWeek('${set.courseInfo.courseId}','${row.week}','${set.courseInfo.hPx + 100}','${set.courseInfo.vPx + 100}')">시작</button>
+                            </td>
+                        </tr>
+</c:forEach>                        
+                    </table>
+                </div>
+            </div>
+            <div class='sutdy_estimation'>
+                <p class='study_list_table_title'>평가항목</p>
+                <div class='study_estimation_table_wrap'>
+                    <table>
+                        <tr class='study_estimation_table_line'>
+                            <th class='line_1 mobile'>NO</th>
+                            <th class='line_2 mobile'>항목</th>
+                            <th class='line_3'>제출일</th>
+                            <th class='line_4 mobile'>점수</th>
+                            <th class='line_5 last_right'>채점일</th>
+                        </tr>
+<c:forEach var="row" items="${set.exam}" varStatus="idx"> 
+                        <tr class='study_estimation_table_line'>
+                            <td class='line_1 mobile'>${idx.index + 1}</td>
+	<c:if test="${row.week eq '0'}">                            
+                            <td class='line_2 mobile'>최종 학습평가</td>
+	</c:if>                            
+	<c:if test="${row.week ne '0'}">                            
+                            <td class='line_2 mobile'>${row.week} 주 진행 학습평가</td>
+	</c:if>                            
+                            <td>${row.submitDate}</td>
+                            <td class='line_4 esti_btn mobile'>
+	<c:choose>
+		<c:when test="${row.answerCnt eq '0'}">
+                                <button onclick="javascript:Popup.showExam('${set.courseInfo.courseId}', '${row.week}'); return false;">응시하기</button>
+		</c:when>
+		<c:otherwise>
+                                <button>완료</button>
+		</c:otherwise>
+	</c:choose>                            
+                            </td>
+                            <td class='last_right'>
+                                ${row.scoreDate}
+                            </td>
+                        </tr>
+</c:forEach>                 
+                    </table>
+                </div> 
+            </div>
+            <div class='study_btn_area mobile clear_fix'>
+                <button>학습/수료<span></span>기준</button>
+                <button>학습<span></span>가이드</button>
+                <button>동영상<span></span>설정</button>
+                <button>환경<span></span>설정</button>
+                <button class='last_right'>학습<span></span>질문답변</button>
+            </div>
+        </div>
+        <div class='study_bottom_area clear_fix'>
+            <div class='study_bottom_box'>
+                <a href=''>학습노트</a>
+                <span>I</span>
+                <a href='#' onclick="javascript:Popup.showUserBoard('DATA','${set.courseInfo.courseId}'); return false;">자료실</a>
+                <span>I</span>
+                <a href=''>용어사전</a>
+                <span>I</span>
+                <a href=''>나의노하우</a>
+                <span>I</span>
+                <a href=''>토론톡 나도 한마디</a>
+                <span>I</span>
+<c:choose>
+	<c:when test="${set.courseInfo.postscriptYn eq 'Y'}">
+             	<a href='#' onclick="javascript:Popup.showPostscriptV('${set.courseInfo.courseId}'); return false;">학습후기</a>
+	</c:when>
+	<c:otherwise>
+             	<a href='#' onclick="javascript:Popup.showPostscript('${set.courseInfo.courseId}'); return false;">학습후기</a>
+	</c:otherwise>
+</c:choose>                 
+                
+                <span>I</span>
+                <a href=''>강사님께 질문하기</a>
+            </div>
+        </div>
+    </div>
 </body>
-</html>
 
+</html>

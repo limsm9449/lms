@@ -26,6 +26,8 @@ public class ExamVO extends CommonVO {
 	private String email;
 	private String mobile;
 
+	private String[] examKinds;
+	private String[] weeks;
 	private String[] seqs;
 	private String[] types;
 	private String[] questions;
@@ -54,6 +56,7 @@ public class ExamVO extends CommonVO {
 	private String answerYn;
 	private String examTotal;
 	private String examAnswer;
+	private String week;
 
 	public String getSeq() {
 		return seq;
@@ -324,6 +327,24 @@ public class ExamVO extends CommonVO {
 	}
 	public void setExamAnswer(String examAnswer) {
 		this.examAnswer = examAnswer;
+	}
+	public String getWeek() {
+		return week;
+	}
+	public void setWeek(String week) {
+		this.week = week;
+	}
+	public String[] getExamKinds() {
+		return examKinds;
+	}
+	public void setExamKinds(String[] examKinds) {
+		this.examKinds = examKinds;
+	}
+	public String[] getWeeks() {
+		return weeks;
+	}
+	public void setWeeks(String[] weeks) {
+		this.weeks = weeks;
 	}
 	
 	

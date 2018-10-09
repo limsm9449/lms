@@ -132,19 +132,33 @@ function lfn_validate() {
             </div> -->
             <p class='popup_title'>
                 시험보기
+<c:choose>
+	<c:when test="${set.condiVO.week eq '0'}">
                 <span>과정을 수료하기 위한 최종 과정평가입니다.</span>
+	</c:when>
+	<c:otherwise>
+                <span>주차별 진행 학습평가입니다.</span>
+	</c:otherwise>
+</c:choose>                  
             </p>
             <div class='popup_info_box'>
                 <div class='popup_info'>
-                    <span>최종평가</span>
+<c:choose>
+	<c:when test="${set.condiVO.week eq '0'}">
+                    <span>최종 학습평가</span>
+	</c:when>
+	<c:otherwise>
+                    <span>${set.condiVO.week}주 진행 학습평가</span>
+	</c:otherwise>
+</c:choose>                  
                     문제를 정확히 읽고 정답을 선택해주세요.
                 </div>
                 <ul class='popup_info_list'>
                     <li>
                         응시자 :
-                        <span>${sess.userName}</span>
+                        <span>${session.userName}</span>
                     </li>
-                    <li>
+                    <li <c:if test="${set.condiVO.week ne '0'}">style="display:none;"</c:if>>
                         남은시간 :
                         <span id="time">0분 0초</span>
                     </li>
@@ -154,6 +168,8 @@ function lfn_validate() {
         <ul class='popup_question'>
 <c:forEach var="row" items="${set.list}" varStatus="idx">   
 	<input type='hidden' name='types' id='types' value='${row.type}'>     
+	<input type='hidden' name='examKinds' id='examKinds' value='${row.examKind}'>     
+	<input type='hidden' name='weeks' id='weeks' value='${row.week}'>     
 	<input type='hidden' name='seqs' id='seqs' value='${row.seq}'>     
 	<input type='hidden' name='answers' id='answers' value=''>
 	

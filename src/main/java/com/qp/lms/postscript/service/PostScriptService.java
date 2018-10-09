@@ -76,7 +76,9 @@ public class PostScriptService {
     	set.getCondiVO().setUserId(SessionUtil.getSessionUserId());
     	
 		sqlSession.insert("postscript.postscriptIns",set.getCondiVO());
-			
+
+		sqlSession.update("postscript.postscriptFlagUpd",set.getCondiVO());
+
 		set.setRtnMode(Constant.mode.INSERT_OK.name());
 		
     	return set;

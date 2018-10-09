@@ -22,7 +22,12 @@ public class UserExamService {
 
     public ExamSet userExam(ExamSet set) throws Exception {
 		set.getCondiVO().setUserId(SessionUtil.getSessionUserId());
-		set.getCondiVO().setExamKind("TOTAL");
+		
+		if ( "0".equals(set.getCondiVO().getWeek()) ) {
+			set.getCondiVO().setExamKind("TOTAL");
+		} else {
+			set.getCondiVO().setExamKind("WEEK");
+		}
 		
 		int cnt = sqlSession.selectOne("exam.userExamCount", set.getCondiVO());
     	if ( cnt == 0 ) {
@@ -67,6 +72,8 @@ public class UserExamService {
 		
 		//saveVO.setQgId(set.getCondiVO().getQgId());
 		for ( int i = 0; i < set.getCondiVO().getSeqs().length; i++ ) {
+			saveVO.setExamKind(set.getCondiVO().getExamKinds()[i]);
+			saveVO.setWeek(set.getCondiVO().getWeeks()[i]);
 			saveVO.setSeq(set.getCondiVO().getSeqs()[i]);
 			saveVO.setAnswer(set.getCondiVO().getAnswers()[i]);
 			

@@ -56,8 +56,8 @@ var Popup = {
 	 */
 	showPopup : function(pUrl,pWidth,pHeight,pName,pOpt) {
 		var url = pUrl;
-		var left = window.screen.width / 2 - pWidth / 2;
-		var top = window.screen.height / 2 - pHeight / 2;
+		var left = window.screen.availWidth / 2 - pWidth / 2;
+		var top = window.screen.availHeight / 2 - pHeight / 2;
 		var opts = 'top=' + top + 
 				     ',left=' + left +
 				     ',width=' + pWidth + 
@@ -155,8 +155,8 @@ var Popup = {
 	 * 시험 팝업을 보여준다.
 	 * @returns
 	 */
-	showExam : function(pCourseId) {
-		Popup.showPopup(context + "/exam/userExam.do?courseId=" + pCourseId,900,800,"educationSubPopup");
+	showExam : function(pCourseId, pWeek) {
+		Popup.showPopup(context + "/exam/userExam.do?courseId=" + pCourseId + "&week=" + pWeek,900,800,"educationSubPopup");
 	},
 
 	showExamResult : function(pCourseId) {
@@ -263,11 +263,7 @@ var Popup = {
 	 * @param pCourseId
 	 */
 	showPostscript : function(pCourseId) {
-		Popup.showPopup(context + "/postscript/postscript.do?courseId=" + pCourseId,900,300,"educationSubPopup");
-	},
-
-	showPostscriptResult : function(pCourseId) {
-		Popup.showPopup(context + "/postscript/postscriptResult.do?courseId=" + pCourseId,900,300,"educationSubPopup");
+		Popup.showPopup(context + "/postscript/postscriptN.do?courseId=" + pCourseId,900,270,"educationSubPopup");
 	},
 
 	/**
@@ -294,6 +290,10 @@ var Popup = {
 		else
 			Popup.showPopup(context + "/common/userSearchList.do?screen=" + kind,700,520,"userSearch");
 			
+	},
+
+	showStudyroom : function(pCourseId) {
+		Popup.showPopup(context + "/user/studyroom.do?courseId=" + pCourseId, 1185, 810, "studyroom");
 	}
 
 

@@ -2,21 +2,21 @@
 
 @font-face {
     font-family: 'NanumSquare';
-    font-style: normal;
-    font-weight: 500;
+    /* font-style: normal; */
+    /* font-weight: 500; */
     src: local('NanumSquareR'),
-        url('../font/NanumSquareR.woff') format('woff'),
-        url('../font/NanumSquareR.ttf') format('truetype'),
-        url('../font/NanumSquareR.eot') format('embedded-opentype');
+        url('../../font/NanumSquareR.woff') format('woff'),
+        url('../../font/NanumSquareR.ttf') format('truetype'),
+        url('../../font/NanumSquareR.eot') format('embedded-opentype');
 }
 @font-face {
     font-family: 'NanumSquareB';
-    font-style: normal;
-    font-weight: 900;
+    /* font-style: normal; */
+    /* font-weight: 900; */
     src: local('NanumSquareEB'),
-        url('../font/NanumSquareEB.woff') format('woff'),
-        url('../font/NanumSquareEB.ttf') format('truetype'),
-        url('../font/NanumSquareEB.eot') format('embedded-opentype');
+        url('../../font/NanumSquareEB.woff') format('woff'),
+        url('../../font/NanumSquareEB.ttf') format('truetype'),
+        url('../../font/NanumSquareEB.eot') format('embedded-opentype');
 }
 
 /* IF IE 10 */
@@ -282,7 +282,7 @@ header{
     font-size: 18px;
     font-weight: 900;
     padding: 16px 0 16px 30px;
-    background: url(../img/channel_ic.png) 0% 45% no-repeat;
+    background: url('../../img/channel_ic.png') 0% 45% no-repeat;
 }
 .mobile_menu button{
     display: block;
@@ -291,7 +291,7 @@ header{
     font-weight: 900;
     text-align: left;
     padding:16px 20px;
-    background:url('../img/menu_arr_down.png') #fff 90% 50% no-repeat;
+    background:url('../../img/menu_arr_down.png') #fff 90% 50% no-repeat;
     border-bottom:solid 1px #ddd;
 }
 .mobile_menu button:focus{
@@ -412,6 +412,7 @@ header{
     border-bottom: solid 1px #003366;
 }
 .process h1 span{
+    font-family:"NanumSquare";
     color: #0180d3;
 }
 .process_list_wrap{
@@ -649,10 +650,10 @@ header{
     cursor:default;
 }
 .process_filter_item.list p{
-    background:url('../img/course/ic_list.png') 94% 50% no-repeat;
+    background:url('../../img/course/ic_list.png') 94% 50% no-repeat;
 }
 .process_filter_item.image p{
-    background:url('../img/course/ic_image.png') 94% 50% no-repeat;
+    background:url('../../img/course/ic_image.png') 94% 50% no-repeat;
 }
 
 .process_search_result > div{
@@ -663,9 +664,7 @@ header{
     border-bottom: solid 1px #ccc;
 }
 .process_search_result > div p{
-    font-family:"NanumSquare";
     font-size:14px;
-    font-weight:900;
     text-align:center;
 }
 .process_search_result > div .process_result_con{
@@ -935,13 +934,13 @@ header{
         background-size:contain;
     }
     .recommend1{
-        background:url('../img/recommend1.jpg') #996633 100% 0 no-repeat;
+        background:url('../../img/recommend1.jpg') #996633 100% 0 no-repeat;
     }
     .recommend2{
-        background:url('../img/recommend2.jpg') #ffcc00 100% 0 no-repeat
+        background:url('../../img/recommend2.jpg') #ffcc00 100% 0 no-repeat
     }
     .recommend3{
-        background:url('../img/recommend3.jpg') #03a9da 100% 0 no-repeat;
+        background:url('../../img/recommend3.jpg') #03a9da 100% 0 no-repeat;
     }
 }
 @media all and (max-width:420px){

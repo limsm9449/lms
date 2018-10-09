@@ -40,7 +40,7 @@
                 <ul class='popup_info_list score'>
                     <li>
                         응시자:
-                        <span>${sess.userName}</span>
+                        <span>${session.userName}</span>
                     </li>
                 </ul>
             </div>

@@ -10,6 +10,7 @@
 		WHERE 	COURSE_ID = #{courseId}
 		AND		USER_ID = #{userId}
 		AND 	EXAM_KIND = #{examKind}
+		AND 	WEEK = #{week}
 	</select>
 	
 	<select id="courseExamTypeStandard" parameterType="Exam" resultType="Exam">
@@ -21,26 +22,33 @@
 		        ,EXAM_KIND
 		        ,#{courseId} COURSE_ID
 		        ,#{userId} USER_ID
+		        ,#{week} WEEK
 		FROM 	COURSE_EXAM_TYPE_STANDARD
 		WHERE 	EXAM_TYPE_SEQ = (SELECT COURSE_EXAM_TYPE_ID FROM COURSE WHERE COURSE_ID = #{courseId})
 		AND		EXAM_KIND = #{examKind}    
+<if test="week != '0'.toString()">
+		AND		WEEK_TO = #{week}
+</if>
 	</select>      
 	
 	<insert id="courseExamInsert" parameterType="Exam">
-		INSERT 	INTO USER_EXAM( COURSE_ID, USER_ID, EXAM_KIND, SEQ, ANSWER, ANSWER_YN, CREATE_USER, CREATE_DATE )
-		SELECT  #{courseId} COURSE_ID, #{userId} USER_ID, #{examKind}, SEQ, '',  'N', #{userId}, CURRENT_TIMESTAMP
+		INSERT 	INTO USER_EXAM( COURSE_ID, USER_ID, EXAM_KIND, WEEK, SEQ, ANSWER, ANSWER_YN, CREATE_USER, CREATE_DATE )
+		SELECT  #{courseId} COURSE_ID, #{userId} USER_ID, #{examKind}, #{week}, SEQ, '',  'N', #{userId}, CURRENT_TIMESTAMP
 		FROM 	COURSE_EXAM
 		WHERE	COURSE_CODE = (SELECT COURSE_CODE FROM COURSE WHERE COURSE_ID = #{courseId})
 		AND		USE_YN = 'Y'	
 		AND		WEEK BETWEEN ${weekFrom} AND ${weekTo}
 		AND	 	TYPE = #{type}
 		AND		LEVEL = #{level}
+		AND 	SEQ NOT IN ( SELECT SEQ FROM USER_EXAM WHERE COURSE_ID = #{courseId} AND USER_ID = #{userId} AND EXAM_KIND = #{examKind} AND WEEK = #{week})
 		ORDER 	BY RAND() 
 		LIMIT 	${questionCnt}							
 	</insert>   
 	
 	<select id="userExamList" parameterType="Exam" resultType="Exam">
-		SELECT 	A.SEQ,
+		SELECT 	A.EXAM_KIND,
+	       		A.WEEK,
+	       		A.SEQ,
 	       		B.TYPE,
 	       		B.QUESTION, 
 	       		B.QA1,
@@ -52,17 +60,19 @@
 		WHERE 	A.COURSE_ID = #{courseId}
 		AND		A.USER_ID = #{userId}
 		AND 	A.EXAM_KIND = #{examKind}
+		AND		A.WEEK = #{week}
 	</select>
 	
 	<update id="userExamUpd" parameterType="Exam">
 		UPDATE 	USER_EXAM
 		SET 	ANSWER = #{answer},
 				ANSWER_YN = CASE WHEN #{answer} = (SELECT ANSWER FROM COURSE_EXAM WHERE SEQ = #{seq} AND COURSE_CODE = (SELECT COURSE_CODE FROM COURSE WHERE COURSE_ID = #{courseId})) THEN 'Y' ELSE 'N' END,
-		       	CREATE_USER = #{userId},
-		       	CREATE_DATE = CURRENT_TIMESTAMP
+		       	UPDATE_USER = #{userId},
+		       	UPDATE_DATE = CURRENT_TIMESTAMP
 		WHERE 	COURSE_ID = #{courseId}
 		AND		USER_ID = #{userId}
 		AND 	EXAM_KIND = #{examKind}
+		AND 	WEEK = #{week}
 		AND 	SEQ = #{seq}
 	</update>
 		

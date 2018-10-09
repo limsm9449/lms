@@ -110,7 +110,7 @@ function lfn_validate() {
                 <ul class='popup_info_list'>
                     <li>
                         설문자:
-                        <span>${sess.userName}</span>
+                        <span>${session.userName}</span>
                     </li>
                 </ul>
             </div>

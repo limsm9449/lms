@@ -31,7 +31,7 @@ $(document.body).ready(function () {
 	} else if ( screen == "Exam" ) {
 		$("#columns").val("TYPE,QUESTION,QA1,QA2,QA3,QA4,ANSWER,ANSWER_DESC,WEEK,LEVEL,USE_YN");
 	} else if ( screen == "CourseResource" ) {
-		$("#columns").val("WEEK,TITLE,DIRECTORY,PAGE_CNT,PREVIEW_PAGE");
+		$("#columns").val("WEEK,TITLE,DIRECTORY,PAGE_CNT,PREVIEW_PAGE,WEEK_TIME");
 	} else if ( screen == "CompanyUser" ) {
 		$("#columns").val("USER_ID,USER_NAME,EMAIL,SEX,BIRTH_DAY,HOME_ZIPCODE,HOME_ADDR,HOME_TEL,MOBILE,PWD");
 	}
@@ -150,7 +150,11 @@ function lfn_tran(data) {
 					isNotValid = true;
 					rowMsg += "미리보기 페이지 오류[정수타입] -> " + data.list[i].PREVIEW_PAGE;
 				}
-				
+				if ( data.list[i].WEEK_TIME == "" || isNaN(data.list[i].WEEK_TIME) ) {
+					isNotValid = true;
+					rowMsg += "학습시간 오류[정수타입] -> " + data.list[i].WEEK_TIME;
+				}
+								
 				if ( rowMsg != "" ) {
 					msg += (i + 1) + " 라인 : " + rowMsg + "\n";
 				}

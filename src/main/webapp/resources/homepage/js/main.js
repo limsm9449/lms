@@ -246,3 +246,8 @@ function lecture_view(target, type) {
         }
     }
 }
+
+// 학습시작 btn
+function open_study(){
+    window.open('./study.html', '_blank');
+}

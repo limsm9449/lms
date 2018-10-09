@@ -116,4 +116,12 @@
 	INSERT INTO POSTSCRIPT(COURSE_ID,USER_ID,CONTENTS,EVAL,CREATE_DATE)
 	VALUES (#{courseId},#{userId},#{contents},#{eval},CURRENT_TIMESTAMP)
 	</select>
+	
+	<update id="postscriptFlagUpd" parameterType="PostScript">
+		UPDATE 	COURSE_EVAL
+		SET		POSTSCRIPT_YN = 'Y'
+		WHERE	COURSE_ID = #{courseId}
+	 	AND 	USER_ID = #{userId}
+	</update>
+	
 </mapper>

@@ -2,8 +2,6 @@ package com.qp.lms.user.controller;
 
 
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,11 +17,6 @@ import com.qp.lms.user.model.UserSet;
 import com.qp.lms.user.model.UserVO;
 import com.qp.lms.user.service.UserService;
 
-/**
- * 내 강좌 수강 관련 기능
- * @author limsm
- *
- */
 
 @Controller
 public class UserController {
