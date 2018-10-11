@@ -403,7 +403,7 @@ header{
     float: left;
     padding: 0 10px;
 }
-.process_top_area h1{
+.top_area h1{
     clear: both;
     font-family:"NanumSquare";
     font-size: 44px;
@@ -411,7 +411,7 @@ header{
     padding-bottom: 16px;
     border-bottom: solid 1px #003366;
 }
-.process h1 span{
+.top_area h1 span{
     font-family:"NanumSquare";
     color: #0180d3;
 }
@@ -1042,8 +1042,9 @@ header{
     }
 
     /* Top */
-    .process_top_area h1 {
+    .top_area h1 {
         font-size: 30px;
+        padding-bottom:10px;
     }
     .process_history_box {
         float: left;

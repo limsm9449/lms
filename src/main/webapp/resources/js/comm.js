@@ -1,3 +1,5 @@
+var resourceUrl = "/resources/homepage";
+
 /* 게시판 내용의 사이즈 */
 var board_contents_length = 50000;
 /* 과정 목표,내용등 */

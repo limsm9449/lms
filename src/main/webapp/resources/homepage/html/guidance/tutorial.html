@@ -5,7 +5,12 @@
     <meta charset='utf-8'>
     <meta name='viewport' content='width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1'>
     <meta http-equiv='X-UA-Compatible' content='ie=edge'>
-    <title>Q learning - 교육안내</title>
+    <title>Q learning - 교육 안내</title>
+
+    <script src='../../js/jquery_3.3.1.js'></script>
+    <!--[if IE8]>
+        <script src='http://code.jquery.com/jquery-1.12.3.js'></script>
+    <![endif]-->
 
     <link href='https://fonts.googleapis.com/css?family=Nanum+Gothic' rel='stylesheet'>
     <link rel='stylesheet' href='../../css/initialization.css'>
@@ -13,17 +18,18 @@
 </head>
 
 <body>
-    <div class="wrap">
+<frameset rows='*'>
+    <div class='wrap'>
         <!-- PC HEADER -->
         <header class='head_pc'>
-            <div class="head_wrap pc clear_fix" onmouseover='sub_hide()'>
+            <div class='head_wrap pc clear_fix' onmouseover='sub_hide()'>
                 <div class='head_con logo_box'>
                     <a href='../../index.html'>
                         <img src='../../img/logo.png' alt=' '>
                     </a>
                 </div>
                 <div class='head_con search_box'>
-                    <input type="text">
+                    <input type='text'>
                     <button>
                         <img src='../../img/search_ic.png' alt=' '>
                     </button>
@@ -34,22 +40,20 @@
                     <p class='pc'>OOO님 반갑습니다.</p>
                 </div>
             </div>
-            <div class="head_wrap mobile clear_fix">
+            <div class='head_wrap mobile clear_fix'>
                 <div class='mobile_btn'>
                     <button>
                         <span></span><span></span><span></span>
                     </button>
                 </div>
                 <div class='head_con logo_box'>
-                    <a href='../../index.html'>
-                        <img src='../../img/logo.png' alt=' '>
-                    </a>
+                    <img src='../../img/logo.png' alt=' '>
                 </div>
                 <div class='head_con util_box'>
                     <a href='#' class='last_right'>로그아웃</a>
                 </div>
                 <div class='head_con search_box'>
-                    <input type="text">
+                    <input type='text'>
                     <button>
                         <img src='../../img/search_ic.png' alt=' '>
                     </button>
@@ -132,7 +136,7 @@
 
         <!-- MOBILE HEADER -->
         <header class='head_mobile'>
-            <div class="head_wrap pc clear_fix">
+            <div class='head_wrap pc clear_fix'>
                 <div class='menu_wrap'>
                     <div class='menu_layout pc' onclick='sub_show_hide()'>
                         <div class='mobile_btn'>
@@ -151,7 +155,7 @@
                     <a href='#' class='last_right' onclick='login()'>로그인</a>
                 </div>
                 <div class='head_con search_box'>
-                    <input type="text">
+                    <input type='text'>
                     <button>
                         <img src='../../img/search_ic.png' alt=' '>
                     </button>
@@ -169,10 +173,11 @@
                         <a href='#'>로그인</a>
                     </div>
                     <div class='mobile_menu process_all'>
-                        <button onclick='sub_menu_open(this)'>
+                        <button onclick='sub_menu_open(this, "others")'>
                             전체과정
                         </button>
                         <ul>
+                            <li class='first_depth'><a href='../../html/course/process.html'>전체과정</a></li>
                             <li><a href=''>경영직무</a></li>
                             <li><a href=''>업종직무</a></li>
                             <li><a href=''>비즈니스</a></li>
@@ -182,10 +187,11 @@
                         </ul>
                     </div>
                     <div class='mobile_menu classroom'>
-                        <button onclick='sub_menu_open(this)'>
+                        <button onclick='sub_menu_open(this, "others")'>
                             나의강의실
                         </button>
                         <ul>
+                            <li class='first_depth'><a href='../classroom/classroom.html'>나의강의실</a></li>
                             <li><a href=''>수강과정</a></li>
                             <li><a href=''>수강대기과정</a></li>
                             <li><a href=''>수강취소과정</a></li>
@@ -198,10 +204,11 @@
                         </ul>
                     </div>
                     <div class='mobile_menu tutorial'>
-                        <button onclick='sub_menu_open(this)'>
+                        <button onclick='sub_menu_open(this, "others")'>
                             교육안내
                         </button>
                         <ul>
+                            <li class='first_depth'><a href='#'>교육안내</a></li>
                             <li><a href=''>수강신청방법</a></li>
                             <li><a href=''>학습방법</a></li>
                             <li><a href=''>학습관리</a></li>
@@ -210,10 +217,11 @@
                         </ul>
                     </div>
                     <div class='mobile_menu service'>
-                        <button onclick='sub_menu_open(this)'>
+                        <button onclick='sub_menu_open(this, "others")'>
                             고객지원
                         </button>
                         <ul>
+                            <li class='first_depth'><a href='../support/service.html'>고객지원</a></li>
                             <li><a href=''>공지사항</a></li>
                             <li><a href=''>FAQ</a></li>
                             <li><a href=''>1:1 메일문의</a></li>
@@ -232,52 +240,182 @@
         <!-- HEAD END -->
 
         <!-- CONTENTS -->
-        <div class='contents_wrap' onmouseover='sub_hide()'>
-            <!-- QUICK MENU -->
-            <div class='quick_menu_wrap'>
-                <p class='quick_title'>
-                    Quick Menu
-                    <span></span>
-                </p>
-                <ul>
-                    <li class='quick_menu_list'>
-                        <a href='#'>
-                            <span></span>
-                            <img src='../../img/quick_menu1.png' alt=' '>
-                            장바구니
-                        </a>
-                    </li>
-                    <li class='quick_menu_list'>
-                        <a href='#'>
-                            <span></span>
-                            <img src='../../img/quick_menu2.png' alt=' '>
-                            학습가이드
-                        </a>
-                    </li>
-                    <li class='quick_menu_list'>
-                        <a href='#'>
-                            <span></span>
-                            <img src='../../img/quick_menu3.png' alt=' '>
-                            FAQ
-                        </a>
-                    </li>
-                    <li class='quick_menu_list'>
-                        <a href='#'>
-                            <span></span>
-                            <img src='../../img/quick_menu4.png' alt=' '>
-                            학습지원프로그램
-                        </a>
-                    </li>
-                </ul>
-                <p class='quick_top'>
-                    <span>
-                        <img src='../../img/quick_top.png' alt=' '>
-                    </span>
-                    TOP
-                </p>
-            </div>
-            <div>
-                con
+        <div class='contents_wrap tutorial' onmouseover='sub_hide()'>
+            <div class='contents_wrap_box'>
+                <!-- QUICK MENU -->
+                <div class='quick_menu_wrap'>
+                    <p class='quick_title'>
+                        Quick Menu
+                        <span></span>
+                    </p>
+                    <ul>
+                        <li class='quick_menu_list'>
+                            <a href='#'>
+                                <span></span>
+                                <img src='../../img/quick_menu1.png' alt=' '>
+                                장바구니
+                            </a>
+                        </li>
+                        <li class='quick_menu_list'>
+                            <a href='#'>
+                                <span></span>
+                                <img src='../../img/quick_menu2.png' alt=' '>
+                                학습가이드
+                            </a>
+                        </li>
+                        <li class='quick_menu_list'>
+                            <a href='#'>
+                                <span></span>
+                                <img src='../../img/quick_menu3.png' alt=' '>
+                                FAQ
+                            </a>
+                        </li>
+                        <li class='quick_menu_list'>
+                            <a href='#'>
+                                <span></span>
+                                <img src='../../img/quick_menu4.png' alt=' '>
+                                학습지원프로그램
+                            </a>
+                        </li>
+                    </ul>
+                    <p class='quick_top'>
+                        <span>
+                            <img src='../../img/quick_top.png' alt=' '>
+                        </span>
+                        TOP
+                    </p>
+                </div>
+
+                <!-- Top -->
+                <div class='top_area'>
+                    <div class='clear_fix'>
+                        <div class='process_history_box clear_fix'>
+                            <span>
+                                <img src='../../img/course/ic_home.jpg' alt=' '>
+                            </span>
+                            <p>HOME</p>
+                            <span>
+                                <img src='../../img/course/arr_right.jpg' alt=' '>
+                            </span>
+                            <p>수강신청</p>
+                            <span>
+                                <img src='../../img/course/arr_right.jpg' alt=' '>
+                            </span>
+                            <p>교육과정</p>
+                        </div>
+                    </div>
+                    <h1>
+                        교육<span>안내</span>
+                    </h1>
+                </div>
+                <!-- Top END -->
+                <div class='tutorial_btn_wrap'>
+                    <div class='tutorial_btn_box clear_fix'>
+                        <p>처음 오셨나요? 이용가이드를 확인해주세요.</p>
+                        <button class='tutorial_btn'>
+                            <div><img src='../../img/guidance/ic_1.png' alt=' '></div>
+                            <p class='tutorial_btn_title'>처음이신가요?</p>
+                            <p>
+                                큐러닝 이용이 처음이신가요?<span></span>초심자도 쉽게 이해할 수 있는<span></span>이용 가이드 입니다.
+                            </p>
+                        </button>
+                        <button class='tutorial_btn'>
+                            <div><img src='../../img/guidance/ic_2.png' alt=' '></div>
+                            <p class='tutorial_btn_title'>수강신청</p>
+                            <p>
+                                수강신청에 대해 쉽게 이해할<span></span>수 있는 신청 가이드입니다.
+                            </p>
+                        </button>
+                        <button class='tutorial_btn'>
+                            <div><img src='../../img/guidance/ic_3.png' alt=' '></div>
+                            <p class='tutorial_btn_title'>학습안내</p>
+                            <p>
+                                효과적인 학습을 위한 방법을<span></span>안내해 드립니다.
+                            </p>
+                        </button>
+                        <button class='tutorial_btn last_right'>
+                            <div><img src='../../img/guidance/ic_4.png' alt=' '></div>
+                            <p class='tutorial_btn_title'>수료안내</p>
+                            <p>
+                                학습 수료를 통해 수료증을<span></span>발급받을 수 있습니다.
+                            </p>
+                        </button>
+                    </div>
+                </div>
+                <div class='tutorial_download'>
+                    <div>
+                        <p class='tutorial_download_title'>
+                            학습에<span></span>도움이 되는<span></span>프로그램
+                        </p>
+                        <p>
+                            강의에 필요한 프로그램을<span></span>다운 받을 수 있습니다.
+                        </p>
+                    </div>
+                    <ul class='tutorial_download_list clear_fix'>
+                        <li>
+                            <div class='tutorial_download_image'><img src='' alt=''></div>
+                            <div class='tutorial_download_text clear_fix'>
+                                <p class='tutorial_download_name'>Flash player</p>
+                                <p>
+                                    플래시가 브라우저에서 실행되기 위한<span></span>ActiveX Plug-in 입니다.
+                                </p>
+                                <a href=''>다운로드</a>
+                            </div>
+                        </li>
+                        <li>
+                            <div class='tutorial_download_image'><img src='' alt=''></div>
+                            <div class='tutorial_download_text clear_fix'>
+                                <p class='tutorial_download_name'>윈도우즈 미디어 플레이어(v11-xp)</p>
+                                <p>
+                                    샘플 강의 재생 시<span></span>(OS가 정품일 경우 설치가능)
+                                </p>
+                                <a href=''>다운로드</a>
+                            </div>
+                        </li>
+                        <li>
+                            <div class='tutorial_download_image'><img src='' alt=''></div>
+                            <div class='tutorial_download_text clear_fix'>
+                                <p class='tutorial_download_name'>익스플로러 7.0</p>
+                                <p>
+                                    익스플로러 오류 날 때<span></span>재설치합니다.
+                                </p>
+                                <a href=''>다운로드</a>
+                            </div>
+                        </li>
+                        <li>
+                            <div class='tutorial_download_image'><img src='' alt=''></div>
+                            <div class='tutorial_download_text clear_fix'>
+                                <p class='tutorial_download_name'>익스플로러 8.0</p>
+                                <p>
+                                    익스플로러 오류 날 때<span></span>재설치합니다.
+                                </p>
+                                <a href=''>다운로드</a>
+                            </div>
+                        </li>
+                        <li>
+                            <div class='tutorial_download_image'><img src='' alt=''></div>
+                            <div class='tutorial_download_text clear_fix'>
+                                <p class='tutorial_download_name'>크롬 브라우저</p>
+                                <p>
+                                    플레이어 원활한 이용에<span></span>필요합니다.
+                                </p>
+                                <a href=''>다운로드</a>
+                            </div>
+                        </li>
+                        <li>
+                            <div class='tutorial_download_image'><img src='' alt=''></div>
+                            <div class='tutorial_download_text clear_fix'>
+                                <p class='tutorial_download_name'>Acrobat Reader</p>
+                                <p>
+                                    강의 노트(PDF 문서)를 볼 때<span></span>필요합니다.
+                                </p>
+                                <a href=''>다운로드</a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                
             </div>
         </div>
         <!-- CONTENTS END -->
@@ -316,7 +454,7 @@
         </div>
         <!-- FOOTER END -->
     </div>
-    <script src='../../js/main.js'></script>
+</frameset>
+<script src='../../js/main.js'></script>
 </body>
-
 </html>

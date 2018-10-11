@@ -21,7 +21,7 @@
     <link rel='stylesheet' href='/resources/homepage/css/initialization.css'>
     <link rel='stylesheet' href='/resources/homepage/css/classroom/study.css'>
     
-    <script src='/resources/homepage/js/study.js'></script>
+    <script src='/resources/homepage/js/study.js?timestamp=<%=timestamp%>'></script>
 </head>
 
 <script type="text/javascript">
@@ -32,6 +32,7 @@ $(document).ready(function(){
 </script>
 
 <body>
+<frameset rows='*'>    
     <div class='wrap clear_fix'>
         <div class='study_left_area'>
             <div class='study_title_box'>
@@ -125,23 +126,29 @@ $(document).ready(function(){
             </div>
             <div class='study_support_box'>
                 <div class='study_tab_area clear_fix'>
-                    <button>과정 공지사항</button>
-                    <button class='on'>질문 답변</button>
+                    <button onclick='study_btn_click(this)' class='on' id='notice'>과정 공지사항</button>
+                    <button onclick='study_btn_click(this)' id='qna'>질문 답변</button>
                     <a href=''>MORE +</a>
                 </div>
-                <ul class='study_support_list_box'>
+                <ul class='study_support_list_box notice'>
+<c:forEach var="row" items="${set.boardNoticeList}" varStatus="idx"> 
                     <li>
                         <a href='' class='clear_fix'>
-                            <p class='study_support_text'>[큐러닝] 개인정보처리방침 변경 안내</p>
-                            <p class='study_support_date'>2017.03.05</p>
+                            <p class='study_support_text'>${row.title}</p>
+                            <p class='study_support_date'>${row.createDate}</p>
                         </a>
                     </li>
+</c:forEach>                    
+                </ul>
+                <ul class='study_support_list_box qna'>
+<c:forEach var="row" items="${set.boardQnaList}" varStatus="idx"> 
                     <li>
                         <a href='' class='clear_fix'>
-                            <p class='study_support_text'>[큐러닝] 개인정보처리방침 변경 안내</p>
-                            <p class='study_support_date'>2017.03.05</p>
+                            <p class='study_support_text'>${row.title}</p>
+                            <p class='study_support_date'>${row.createDate}</p>
                         </a>
                     </li>
+</c:forEach>                    
                 </ul>
             </div>
             <div class='study_btn_area pc clear_fix'>
@@ -265,6 +272,7 @@ $(document).ready(function(){
             </div>
         </div>
     </div>
+</frameset>
 </body>
 
 </html>

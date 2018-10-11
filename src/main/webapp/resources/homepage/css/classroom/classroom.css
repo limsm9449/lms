@@ -404,7 +404,7 @@ header{
     float: left;
     padding: 0 10px;
 }
-.process_top_area h1{
+.top_area h1{
     clear: both;
     font-family:"NanumSquare";
     font-size: 44px;
@@ -412,7 +412,7 @@ header{
     padding-bottom: 16px;
     border-bottom: solid 1px #003366;
 }
-.process h1 span{
+.top_area h1 span{
     font-family:"NanumSquare";
     color: #0180d3;
 }
@@ -967,7 +967,7 @@ header{
         padding-left:7.5%;
     }
 }
-
+/* 
 @media all and (max-width:960px){
     #width_text{
         color:#333;
@@ -989,6 +989,7 @@ header{
         background:url('../../img/recommend3.jpg') #03a9da 100% 0 no-repeat;
     }
 }
+*/
 @media all and (max-width:420px){
     #width_text{
         color:#fff;
@@ -1088,8 +1089,9 @@ header{
     }
 
     /* Top */
-    .process_top_area h1 {
+    .top_area h1 {
         font-size: 30px;
+        padding-bottom:10px;
     }
     .process_history_box {
         float: left;
@@ -1115,6 +1117,10 @@ header{
     }
     .user_info_text p .last_right{
         margin-right:0;
+    }
+    .user_info_name{
+        text-align:center;
+        padding:15px 0;
     }
     .user_info_my {
         width:90%;
@@ -1153,6 +1159,9 @@ header{
     .user_cs_counsel{
         width:100%;
         padding:0;
+    }
+    .user_cs_title{
+        padding:20px 0 10px;
     }
 
 

@@ -83,7 +83,7 @@ body{
 
 /* D-Day */
 .study_day_box{
-    padding:14px 5%;
+    padding:14px 0 14px 5%;
     background:#015084;
 }
 .study_day_dday,
@@ -265,6 +265,9 @@ body{
     font-size: 14px;
     padding-top: 6px;
 }
+.study_support_list_box.qna{
+    display:none;
+}
 .study_tab_area a:hover,
 .study_support_list_box li a:hover p{
     color:#aaa;
@@ -328,6 +331,7 @@ body{
     background:transparent;
 }
 .study_btn_area button:hover{
+    border:solid 1px #777;
     background:#f8fbfb;
 }
 .study_btn_area .last_right{
@@ -513,7 +517,7 @@ body{
 }
 .study_bottom_box{
     /* display:inline-block; */
-    /* margin:0 auto; */
+    margin:0 auto;
 }
 .study_bottom_box a{
     font-size:12px;
@@ -525,7 +529,9 @@ body{
 }
 .study_bottom_box span{
     display:inline-block;
-    color:#fff;
+    width:1px;
+    height:10px;
+    background:#fff;
     margin:4px 20px 0;
 }
 
@@ -549,16 +555,27 @@ body{
         padding-bottom:15px;
         background:#eef4f4;
     }
+    .study_day_dday{
+        padding:4px;
+    }
+    .study_tab_area button{
+        font-size:13px;
+    }
+    .study_tab_area a{
+        font-size:12px;
+    }
     .study_right_area{
         float:none;
         width:96%;
     }
     .study_right_area > p{
-        width: 90%;
-        margin: 0 auto;
+        width:95%;
+        margin:10px auto 0;
         background: none;
         line-height: 150%;
         padding: 5px 0;
+        border-top:solid 2px #aaa;
+        border-bottom:solid 2px #aaa;
     }
     .study_right_area > p span{
         display:block;
@@ -578,7 +595,7 @@ body{
         width:75%;
     }
     .study_list_table_title{
-        margin-left:5%;
+        margin-left:2%;
         border-bottom:0;
     }
     .study_list_table_line > *{
@@ -588,7 +605,7 @@ body{
     table .study_list_table_line td:first-child{
         display:block;
         width:100%;
-        max-width:376px;
+        max-width:390px;
         border-right:0;
     }
     table .study_estimation_table_line *{
@@ -599,6 +616,9 @@ body{
         display:block;
         line-height:175%;
     }
+    table .study_estimation_table_line .mobile.line_4{
+        border-right:0;
+    }
     table .study_list_table_line td:first-child{
         padding:10px 0 25px;
     }
@@ -608,15 +628,14 @@ body{
     .study_estimation_table_line .line_2{
         width:55%;
     }
-    .study_estimation_table_line .line_3{}
     .study_estimation_table_line .line_4{
         width:32%;
     }
-    .study_estimation_table_line .line_5{}
 
     .study_my_progress{
         font-size:20px;
         padding:10px 0 10px 60px;
+        margin-left:10px;
     }
 
     .study_btn_area.pc{
@@ -628,22 +647,45 @@ body{
     .study_remote_support_btn{
         display:none;
     }
+    .study_bottom_box{
+        width:95%;
+        margin:0 auto 10px;
+    }
+    .study_bottom_box a{
+        line-height:250%;
+        padding:8px;
+    }
+    .study_bottom_box span{
+        display:none;
+    }
+    .study_bottom_box .mobile{
+        display:block;
+        width:0;
+        height:0;
+        margin:0;
+    }
 }
 @media all and (max-width:400px){
     table .study_list_table_line th:first-child,
     table .study_list_table_line td:first-child{
-        max-width:360px;
+        max-width:375px;
     }
 }
 @media all and (max-width:380px){
     table .study_list_table_line th:first-child,
     table .study_list_table_line td:first-child{
-        max-width:340px;
+        max-width:355px;
     }
 }
 @media all and (max-width:360px){
     table .study_list_table_line th:first-child,
     table .study_list_table_line td:first-child{
-        max-width:330px;
+        max-width:335px;
+    }
+}
+@media all and (max-width:320px){
+    table .study_list_table_line th:first-child,
+    table .study_list_table_line td:first-child{
+        max-width:320px;
     }
 }

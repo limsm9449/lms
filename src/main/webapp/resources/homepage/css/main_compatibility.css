@@ -12,3 +12,12 @@
 .wrap .head_mobile.on .mobile_dropwdown_wrap{
     height:100%;
 }
+
+body{
+    background:yellow;
+}
+@media all and (max-width:420px){
+    .study_estimation_table_line .esti_btn button{
+        padding:0;
+    }
+}

@@ -9,6 +9,10 @@
 
     <link href='https://fonts.googleapis.com/css?family=Nanum+Gothic' rel='stylesheet'>
 
+    <!--[if IE]>
+        <link rel='stylesheet' type='text/css' href='../../css/main_compatibility.css' />
+    <![endif]-->
+
     <link rel='stylesheet' href='../../css/initialization.css'>
     <link rel='stylesheet' href='../../css/classroom/study.css'>
 
@@ -16,6 +20,7 @@
 </head>
 
 <body>
+<frameset rows='*'>
     <div class='wrap clear_fix'>
         <div class='study_left_area'>
             <div class='study_title_box'>
@@ -91,11 +96,11 @@
             </div>
             <div class='study_support_box'>
                 <div class='study_tab_area clear_fix'>
-                    <button>과정 공지사항</button>
-                    <button class='on'>질문 답변</button>
+                    <button onclick='study_btn_click(this)' class='on' id='notice'>과정 공지사항</button>
+                    <button onclick='study_btn_click(this)' id='qna'>질문 답변</button>
                     <a href=''>MORE +</a>
                 </div>
-                <ul class='study_support_list_box'>
+                <ul class='study_support_list_box notice'>
                     <li>
                         <a href='' class='clear_fix'>
                             <p class='study_support_text'>[큐러닝] 개인정보처리방침 변경 안내</p>
@@ -105,6 +110,38 @@
                     <li>
                         <a href='' class='clear_fix'>
                             <p class='study_support_text'>[큐러닝] 개인정보처리방침 변경 안내</p>
+                            <p class='study_support_date'>2017.03.05</p>
+                        </a>
+                    </li>
+                </ul>
+                <ul class='study_support_list_box qna'>
+                    <li>
+                        <a href='' class='clear_fix'>
+                            <p class='study_support_text'>질문1</p>
+                            <p class='study_support_date'>2017.03.05</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href='' class='clear_fix'>
+                            <p class='study_support_text'>질문2 질문2 질문2 질문2 질문2 질문2 질문2 질문2</p>
+                            <p class='study_support_date'>2017.03.05</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href='' class='clear_fix'>
+                            <p class='study_support_text'>질문3</p>
+                            <p class='study_support_date'>2017.03.05</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href='' class='clear_fix'>
+                            <p class='study_support_text'>질문4</p>
+                            <p class='study_support_date'>2017.03.05</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href='' class='clear_fix'>
+                            <p class='study_support_text'>질문5</p>
                             <p class='study_support_date'>2017.03.05</p>
                         </a>
                     </li>
@@ -326,7 +363,7 @@
                             <td class='line_2 mobile'>최종 학습평가</td>
                             <td>2018.09.21</td>
                             <td class='line_4 esti_btn mobile'>
-                                <button>응시하기</button>
+                                <button onclick='new_window("popup_exam")'>시험응시</button>
                             </td>
                             <td class='last_right'>
                                 2018.09.21
@@ -337,7 +374,7 @@
                             <td class='line_2 mobile'>진행 학습평가</td>
                             <td>2018.09.21</td>
                             <td class='line_4 esti_btn mobile'>
-                                <button>응시하기</button>
+                                <button onclick='new_window("popup_exam_result")'>시험결과</button>
                             </td>
                             <td class='last_right'>
                                 2018.09.21
@@ -348,7 +385,7 @@
                             <td class='line_2 mobile'>진행 학습평가</td>
                             <td>2018.09.21</td>
                             <td class='line_4 esti_btn mobile'>
-                                <button>응시하기</button>
+                                <button onclick='new_window("popup_survey")'>설문</button>
                             </td>
                             <td class='last_right'>
                                 2018.09.21
@@ -359,7 +396,7 @@
                             <td class='line_2 mobile'>진행 학습평가</td>
                             <td>2018.09.21</td>
                             <td class='line_4 esti_btn mobile'>
-                                <button>응시하기</button>
+                                <button onclick='new_window("popup_report_submit")'>과제제출</button>
                             </td>
                             <td class='last_right'>
                                 2018.09.21
@@ -370,7 +407,18 @@
                             <td class='line_2 mobile'>진행 학습평가</td>
                             <td>2018.09.21</td>
                             <td class='line_4 esti_btn mobile'>
-                                <button>응시하기</button>
+                                <button onclick='new_window("popup_report_manage")'>첨삭관리</button>
+                            </td>
+                            <td class='last_right'>
+                                2018.09.21
+                            </td>
+                        </tr>
+                        <tr class='study_estimation_table_line'>
+                            <td class='line_1 mobile'>5</td>
+                            <td class='line_2 mobile'>진행 학습평가</td>
+                            <td>2018.09.21</td>
+                            <td class='line_4 esti_btn mobile'>
+                                <button onclick='new_window("popup_report_result")'>채점결과</button>
                             </td>
                             <td class='last_right'>
                                 2018.09.21
@@ -390,21 +438,21 @@
         <div class='study_bottom_area clear_fix'>
             <div class='study_bottom_box'>
                 <a href=''>학습노트</a>
-                <span>I</span>
+                <span></span>
                 <a href=''>자료실</a>
-                <span>I</span>
+                <span></span>
                 <a href=''>용어사전</a>
-                <span>I</span>
+                <span></span>
                 <a href=''>나의노하우</a>
-                <span>I</span>
+                <span class='mobile'></span>
                 <a href=''>토론톡 나도 한마디</a>
-                <span>I</span>
+                <span></span>
                 <a href=''>학습후기</a>
-                <span>I</span>
+                <span></span>
                 <a href=''>강사님께 질문하기</a>
             </div>
         </div>
     </div>
+</frameset>
 </body>
-
 </html>

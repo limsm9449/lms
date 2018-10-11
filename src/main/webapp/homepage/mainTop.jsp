@@ -6,7 +6,6 @@
 	SessionVO sess = (SessionVO)request.getAttribute("sess"); 
 %>
 
-        <div id='width_text'></div>
         <!-- PC HEADER -->
         <header class='head_pc'>
             <div class="head_wrap pc clear_fix" onmouseover='sub_hide()'>
@@ -125,7 +124,6 @@
             </div>
         </header>
         <!-- PC HEADER END -->
-
         <!-- MOBILE HEADER -->
         <header class='head_mobile'>
             <div class="head_wrap pc clear_fix">
@@ -144,7 +142,9 @@
                     </a>
                 </div>
                 <div class='head_con util_box'>
+<c:if test="${empty session}">
                     <a href='/login.do' class='last_right' onclick='login()'>로그인</a>
+</c:if>      		
                 </div>
                 <div class='head_con search_box'>
                     <input type="text">
@@ -162,57 +162,80 @@
                         <span>
                             <img src='/resources/homepage/img/ic_login.png' alt=' '>
                         </span>
+<c:if test="${empty session}">
                         <a href='/login.do'>로그인</a>
+</c:if>      		
+<c:if test="${!empty session}">
+                        <a href='#'>${session.userName}님 반갑습니다</p>
+</c:if>  
                     </div>
                     <div class='mobile_menu process_all'>
-                        <button onclick='sub_menu_open(this)'>
+                        <button onclick='sub_menu_open(this, "main")'>
                             전체과정
                         </button>
                         <ul>
-<c:forEach var="row" items="${set.categoryList}" varStatus="idx">
-                         	<li><a href="javascript:" onclick="page.goPage('/main/courseList', 'c1Code=${row.code}');">${row.codeName}</a></li>
+                            <li class='first_depth'><a href='./html/course/process.html'>전체과정-1</a></li> 
+                            <li><a href=''>경영직무</a></li>
+                            <li><a href=''>업종직무</a></li>
+                            <li><a href=''>비즈니스</a></li>
+                            <li><a href=''>정보기술</a></li>
+                            <li><a href=''>외국어</a></li>
+                            <li><a href=''>교양</a></li>
+                        </ul>
+                    </div>                    
+                    <div class='mobile_menu process_all'>
+                        <button onclick='sub_menu_open(this, "main")'>
+                            전체과정
+                        </button>
+                        <ul>
+                            <li class='first_depth'><a href="javascript:" onclick="page.goPage('/main/courseList', '');">전체과정</a></li>
+<c:forEach var="row" items="${courseCategoryList}" varStatus="idx">
+                         	<li><a href="javascript:" onclick="page.goPage('/main/courseList', 'category=${row.code}');">${row.codeName}</a></li>
 </c:forEach>
                         </ul>
                     </div>
                     <div class='mobile_menu classroom'>
-                        <button onclick='sub_menu_open(this)'>
+                        <button onclick='sub_menu_open(this, "main")'>
                             나의강의실
                         </button>
                         <ul>
-                                <li><a href="javascript:" onclick="page.goPage('/normalUser/attendCourseList');">수강과정</a></li>
-                                <li><a href="javascript:" onclick="page.goPage('/normalUser/waitingCourseList');">수강대기과정</a></li>
-                                <li><a href="javascript:" onclick="page.goPage('/normalUser/cancelCourseList');">수강취소과정</a></li>
-                                <li><a href="javascript:" onclick="page.goPage('/normalUser/myCourseList');">수강완료과정</a></li>
-                                <li><a href="javascript:" onclick="page.goPage('/main/cart');">장바구니</a></li>
-                                <li><a href="javascript:" onclick="page.goPage('/member/userMemberU');">회원정보수정</a></li>
-                                <li><a href="javascript:" onclick="page.goPage('/member/memberChangePassword');">비밀번호변경</a></li>
-                                <li><a href="javascript:" onclick="page.goPage('/counsel/userCounselList');">상담내역</a></li>
-                                <li><a href="javascript:" onclick="page.goPage('/member/memberRetired');">회원탈퇴</a></li>
+                            <li class='first_depth'><a href="javascript:" onclick="page.goPage('/main/myClassroom', '');">나의강의실</a></li>
+                            <li><a href="javascript:" onclick="page.goPage('/normalUser/attendCourseList');">수강과정</a></li>
+                            <li><a href="javascript:" onclick="page.goPage('/normalUser/waitingCourseList');">수강대기과정</a></li>
+                            <li><a href="javascript:" onclick="page.goPage('/normalUser/cancelCourseList');">수강취소과정</a></li>
+                            <li><a href="javascript:" onclick="page.goPage('/normalUser/myCourseList');">수강완료과정</a></li>
+                            <li><a href="javascript:" onclick="page.goPage('/main/cart');">장바구니</a></li>
+                            <li><a href="javascript:" onclick="page.goPage('/member/userMemberU');">회원정보수정</a></li>
+                            <li><a href="javascript:" onclick="page.goPage('/member/memberChangePassword');">비밀번호변경</a></li>
+                            <li><a href="javascript:" onclick="page.goPage('/counsel/userCounselList');">상담내역</a></li>
+                            <li><a href="javascript:" onclick="page.goPage('/member/memberRetired');">회원탈퇴</a></li>
                         </ul>
                     </div>
                     <div class='mobile_menu tutorial'>
-                        <button onclick='sub_menu_open(this)'>
+                        <button onclick='sub_menu_open(this, "main")'>
                             교육안내
                         </button>
                         <ul>
-                                <li><a href="javascript:" onclick="page.goNsJsp('how');">수강신청방법</a></li>
-                                <li><a href=''>학습방법</a></li>
-                                <li><a href=''>학습관리</a></li>
-                                <li><a href=''>수강후기</a></li>
-                                <li><a href=''>학습지원프로그램</a></li>
+                            <li class='first_depth'><a href='./html/guidance/tutorial.html'>교육안내</a></li>
+                            <li><a href="javascript:" onclick="page.goNsJsp('how');">수강신청방법</a></li>
+                            <li><a href=''>학습방법</a></li>
+                            <li><a href=''>학습관리</a></li>
+                            <li><a href=''>수강후기</a></li>
+                            <li><a href=''>학습지원프로그램</a></li>
                         </ul>
                     </div>
                     <div class='mobile_menu service'>
-                        <button onclick='sub_menu_open(this)'>
+                        <button onclick='sub_menu_open(this, "main")'>
                             고객지원
                         </button>
                         <ul>
-                            	<li><a href="javascript:" onclick="page.goPage('/user/noticeList');">공지사항</a></li>
-								<li><a href="javascript:" onclick="page.goPage('/user/faqList');">FAQ</a></li>
-								<li><a href="javascript:" onclick="page.goPage('/main/mailQuestion');">1:1 메일문의</a></li>
-								<li><a href="javascript:" onclick="page.goPage('/guest/bankInfo');">입금계좌안내</a></li>
-                                <li><a href=''>원격지원</a></li>
-                                <li><a href=''>찾아오시는길</a></li>
+                            <li class='first_depth'><a href='./html/support/service.html'>고객지원</a></li>
+                            <li><a href="javascript:" onclick="page.goPage('/user/noticeList');">공지사항</a></li>
+							<li><a href="javascript:" onclick="page.goPage('/user/faqList');">FAQ</a></li>
+							<li><a href="javascript:" onclick="page.goPage('/main/mailQuestion');">1:1 메일문의</a></li>
+							<li><a href="javascript:" onclick="page.goPage('/guest/bankInfo');">입금계좌안내</a></li>
+                            <li><a href=''>원격지원</a></li>
+                            <li><a href=''>찾아오시는길</a></li>
                         </ul>
                     </div>
                     <div class='mobile_menu introduce'>

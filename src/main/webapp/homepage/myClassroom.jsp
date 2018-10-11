@@ -32,6 +32,7 @@ $(document).ready(function(){
 <form name="frm" id="frm" method="post">
 	<input id="courseId" name="courseId" type="hidden" value="">
 </form>
+<frameset rows='*'>    
     <div class='wrap'>
         
 		<!-- HEAD -->
@@ -351,7 +352,8 @@ $(document).ready(function(){
         <!-- FOOTER END -->
         
     </div>
-    <script src='/resources/homepage/js/main.js'></script>
+</frameset>    
+    <script src='/resources/homepage/js/main.js?timestamp=<%=timestamp%>'></script>
 </body>
 
 </html>

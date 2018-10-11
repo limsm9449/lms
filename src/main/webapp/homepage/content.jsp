@@ -387,7 +387,7 @@
         <!-- FOOTER END -->
         
     </div>
-    <script src='/resources/homepage/js/main.js'></script>
+    <script src='/resources/homepage/js/main.js?timestamp=<%=timestamp%>'></script>
 </body>
 
 </html>

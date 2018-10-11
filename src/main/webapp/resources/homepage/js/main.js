@@ -23,56 +23,8 @@ function sub_show_hide() {
     }
 }
 
-// bxSlider
-// $(window).load(function(){
-//     var size = size_check();
-//     var tab1 = document.getElementById('tab1');
-//     var tab2 = document.getElementById('tab2');
-//     var tab3 = document.getElementById('tab3');
-
-//     $('.slider_wrap').bxSlider({
-//         mode: 'fade',
-//         controls: false,
-//         pager: true,
-//         autoHover: true,
-//         auto: true,
-//         ease: 'cubic-sezier(0.42, 0, 0.58, 1)',
-//         autocontrolsCombine: true,
-//         autoControls:true,
-//         touchEnabled:false,
-//         shrinkItems: true,
-//         pause:5000,
-//         speed:800 
-//     });
-
-//     tab2.parentNode.parentNode.style.display = 'none';
-//     tab3.parentNode.parentNode.style.display = 'none';
-// });
-
-// $(window).load(function() {
-
-//     var slider = $('.slider_wrap').bxSlider({
-//         mode: 'vertical',
-//         hideControlOnEnd: true,
-//         infiniteLoop: false,
-//         pager:false,
-//         minSlides:1
-//     });
-
-//     $(window).resize(function(e){
-//         e.preventDefault();
-//         slider.reloadSlider({
-//             mode: 'vertical',
-//             hideControlOnEnd: true,
-//             infiniteLoop: false,
-//             pager:false,
-//             minSlides:1,
-//         });
-//     });
-// });
-
 $(document).ready(function () {
-    var size = size_check();
+    // var size = size_check();
     var tab1 = document.getElementById('tab1');
     var tab2 = document.getElementById('tab2');
     var tab3 = document.getElementById('tab3');
@@ -165,12 +117,12 @@ function sub_menu_open(btn, page) {
 
     switch (page) {
         case 'main':
-            url_up = 'url("./img/menu_arr_up.png") #fff 90% 50% no-repeat';
-            url_down = 'url("./img/menu_arr_down.png") #fff 90% 50% no-repeat';
+            url_up = 'url("/resources/homepage/img/menu_arr_up.png") #fff 90% 50% no-repeat';
+            url_down = 'url("/resources/homepage/img/menu_arr_down.png") #fff 90% 50% no-repeat';
             break;
         case 'others':
-            url_up = 'url("../../img/menu_arr_up.png") #fff 90% 50% no-repeat';
-            url_down = 'url("../../img/menu_arr_down.png") #fff 90% 50% no-repeat';
+            url_up = 'url("/resources/homepage/img/menu_arr_up.png") #fff 90% 50% no-repeat';
+            url_down = 'url("/resources/homepage/img/menu_arr_down.png") #fff 90% 50% no-repeat';
             break;
     }
 
@@ -211,11 +163,13 @@ function login() {
 function lecture_view(target, type) {
     var clicked_btn = $('.user_lecture_tab_box button');
     for (var j = 0; j < clicked_btn.length; j++) {
-        let temp = clicked_btn[j];
-        if (temp === target) {
-            clicked_btn[j].classList.add('on');
-        } else {
-            clicked_btn[j].classList.remove('on');
+        var temp = clicked_btn[j];
+        if(temp.classList){
+            if (temp === target) {
+                temp.classList.add('on');
+            } else {
+                clicked_btn[j].classList.remove('on');
+            }
         }
     }
     var lecture_list = $('.user_lecture_list');
