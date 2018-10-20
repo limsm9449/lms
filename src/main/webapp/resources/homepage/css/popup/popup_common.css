@@ -1,19 +1,32 @@
 @charset "utf-8";
 
+@font-face {
+    font-family: 'NanumSquare';
+    /* font-style: normal; */
+    /* font-weight: 500; */
+    src: local('NanumSquareR'),
+        url('../../font/NanumSquareR.woff') format('woff'),
+        url('../../font/NanumSquareR.ttf') format('truetype'),
+        url('../../font/NanumSquareR.eot') format('embedded-opentype');
+}
+@font-face {
+    font-family: 'NanumSquareB';
+    /* font-style: normal; */
+    /* font-weight: 900; */
+    src: local('NanumSquareEB'),
+        url('../../font/NanumSquareEB.woff') format('woff'),
+        url('../../font/NanumSquareEB.ttf') format('truetype'),
+        url('../../font/NanumSquareEB.eot') format('embedded-opentype');
+}
+
 html body{
     background:#fff;
 }
 
 /* 팝업 공통 */
 .popup{
-    position:fixed;
-    width: 800px;
-    height:760px;
-    top: 5%;
-    left: 50%;
-    margin-left: -400px;
-    margin-top: -36px;
-    /* border:solid 1px #bbb; */
+    width:776px;
+    margin:0 auto;
 }
 .popup_head{
     background: #ddd;
@@ -32,7 +45,7 @@ html body{
     cursor:pointer;
 }
 .popup_fix{
-    width:800px;
+    /* width:800px; */
     background:#fff;
     border-bottom:solid 1px #ddd;
 }
@@ -61,9 +74,9 @@ html body{
 }
 .popup_question{
     padding:0 20px 20px;
-    height:490px;
+    /* height:490px; */
     background:#fff;
-    overflow-y:scroll;
+    /* overflow-y:scroll; */
 }
 .question_list_box{
     overflow:hidden;
@@ -73,7 +86,6 @@ html body{
 .question_list_box > div{
     position:relative;
     overflow: hidden;
-    padding-top:10px;
 }
 .question_num{
     width: auto;
@@ -94,7 +106,7 @@ html body{
 .question_answer > p{
     padding-left: 4px;
     margin:2px 0 15px;
-    font-weight: 900;
+    font-weight:600;
 }
 .question_answer input[type='text']{
     padding: 4px 6px;
@@ -136,6 +148,7 @@ html body{
 .popup_info{
     width: 50%;
     float: left;
+    line-height:130%;
 }
 .popup_info span{
     display: block;
@@ -151,16 +164,19 @@ html body{
     margin-bottom: 10px;
     font-weight: 900;
 }
+.popup_info_list .last_bottom{
+    margin-bottom:0;
+}
 .popup_info_list li span{
     font-weight: normal;
 }
 .btn_submit{
-    position:absolute;
+    /* position:absolute;
     bottom:20px;
-    left:0;
+    left:0; */
     width:100%;
     text-align:center;
-    padding:10px 0;
+    padding:10px 0 20px;
 }
 .btn_submit button{
     padding: 10px 20px;
@@ -255,9 +271,9 @@ html body{
 
 /* 설문 */
 
-.popup_question.survey{
+/* .popup_question.survey{
     height:514px;
-}
+} */
 .question_answer.survey textarea{
     display: block;
     width: 650px;
@@ -271,9 +287,9 @@ html body{
 /* 과정리포트 제출/결과 */
 
 .report_box{
-    height:564px;
+    /* height:564px; */
     padding: 20px;
-    overflow-y:scroll;
+    /* overflow-y:scroll; */
 }
 .report_box li{
     border: solid 1px #ddd;
@@ -291,7 +307,7 @@ html body{
 .report_box li input[type='text']{
     float: left;
     display: block;
-    width: 640px;
+    width: 552px;
     padding: 10px 10px 9px;
     font-size: 16px;
     text-align: center;
@@ -301,7 +317,7 @@ html body{
     border-bottom:none;
 }
 .report_box .half{
-    width:370px;
+    width:366px;
     float:left;
 }
 .report_box .half input[type='text']{
@@ -366,7 +382,7 @@ html body{
 
 /* 과정리포트 첨삭 */
 .report_box.manage li p{
-    width:100px;
+    width:92px;
     min-height:16px;
 }
 .report_box li .result_area{
@@ -375,7 +391,7 @@ html body{
 }
 .report_box.manage li input[type='text'],
 .report_box.manage .view textarea{
-    width:620px;
+    width:617px;
 }
 .report_box.manage .half input[type='text']{
     width:248px;
@@ -507,4 +523,119 @@ html body{
     text-align:center;
     padding:4px;
     border-bottom:solid 1px #ccc;
+}
+
+
+
+/* --- Media Query --- */
+@media all and (max-width:420px){
+    .popup{
+        width:100%;
+    }
+    .popup_info,
+    .popup_info_list,
+    .popup_score{
+        width:100%;
+        float:none;
+    }
+    .answer_paper{
+        width:inherit;
+    }
+    .popup_info{
+        text-align:center;
+    }
+    .popup_info_box,
+    .popup_score_box{
+        padding:10px;
+    }
+    .popup_info_list{
+        margin-top:10px;
+    }
+    .popup_info_list li{
+        width: 50%;
+        display: block;
+        float: left;
+    }
+    .question_answer{
+        width:100%;
+    }
+    .question_answer input[type='text']{
+        display:block;
+        width:93%;
+        margin:0 auto;
+    }
+    .question_answer.explanation input[type='text'] {
+        width: 92%;
+    }
+    .report_box.manage input[type='file']{
+        padding-left: 5%;
+        width: 95%;
+    }
+    .answer_box li p,
+    .answer_box.explanation li p{
+        width:90%;
+    }
+    .question_answer.explanation{
+        width:80%;
+    }
+    #popup_survey .question_answer{
+        width:85%;
+    }
+    .report_box.manage li p{
+        width:25%;
+    }
+    .report_box.manage li input[type='text'],
+    .report_box.manage .view textarea,
+    .report_box.manage .half input[type='text'],
+    .report_box.manage .view .btn_area{
+        width:65%;
+    }
+    .question_answer.survey textarea {
+        width: 92%;
+    }
+    .question_answer > p{
+        line-height:130%;
+    }
+    .answer_box li input[type='radio']{
+        margin-top:2px;
+    }
+    .question_list_box > div{
+        padding-top:0;
+    }
+    .answer_paper div p {
+        width: 50px;
+        padding: 10px 2%;
+    }
+    #answer_num, #answer_sheet {
+        width: 75%;
+    }
+    .report_box .half {
+        width: 99.5%;
+        display: block;
+    }
+    .btn_area button {
+        width: 100%;
+        padding: 10px 0;
+        margin-top: 6px;
+    }
+    .report_box .left{
+        margin-left:0;
+    }
+
+}
+
+@media all and (max-width:360px){
+    .question_answer.explanation,
+    #popup_survey .question_answer{
+        width:100%;
+    }
+    #answer_num, #answer_sheet {
+        width: 72%;
+    }
+    .report_box li .mobile{
+        padding:18px 0;
+    }
+    .question_answer input[type='text'] {
+        width: 93%;
+    }
 }

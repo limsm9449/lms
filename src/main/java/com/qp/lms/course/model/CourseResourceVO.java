@@ -9,6 +9,7 @@ public class CourseResourceVO extends CommonVO {
 	private String courseName;
 	private String title;
 	private String week;
+	private String weekTime;
 	private String directory;
 	private String rootDirectory;
 	private String pageCnt;
@@ -176,6 +177,12 @@ public class CourseResourceVO extends CommonVO {
 	}
 	public void setPreviewPages(String[] previewPages) {
 		this.previewPages = previewPages;
+	}
+	public String getWeekTime() {
+		return weekTime;
+	}
+	public void setWeekTime(String weekTime) {
+		this.weekTime = weekTime;
 	}
 	
 

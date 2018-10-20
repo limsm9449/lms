@@ -7,6 +7,11 @@ public class PostScriptVO extends CommonVO {
 	private String courseId;
 	private String contents;
 	private String eval;
+	private String eval1;
+	private String eval2;
+	private String eval3;
+	private String eval4;
+	private String eval5;
 	private String categoryName;
 	private String courseCode;
 	private String courseName;
@@ -26,7 +31,7 @@ public class PostScriptVO extends CommonVO {
 	private String c3Code;			/** 소분류 코드 */
 	private String searchStr;
 	private String searchKind;
-	
+    
 	public String getCourseId() {
 		return courseId;
 	}
@@ -146,6 +151,36 @@ public class PostScriptVO extends CommonVO {
 	}
 	public void setMobile(String mobile) {
 		this.mobile = mobile;
+	}
+	public String getEval1() {
+		return eval1;
+	}
+	public void setEval1(String eval1) {
+		this.eval1 = eval1;
+	}
+	public String getEval2() {
+		return eval2;
+	}
+	public void setEval2(String eval2) {
+		this.eval2 = eval2;
+	}
+	public String getEval3() {
+		return eval3;
+	}
+	public void setEval3(String eval3) {
+		this.eval3 = eval3;
+	}
+	public String getEval4() {
+		return eval4;
+	}
+	public void setEval4(String eval4) {
+		this.eval4 = eval4;
+	}
+	public String getEval5() {
+		return eval5;
+	}
+	public void setEval5(String eval5) {
+		this.eval5 = eval5;
 	}
 
 	

@@ -14,7 +14,7 @@
     <meta http-equiv='X-UA-Compatible' content='ie=edge'>
     <title>Q learning - 전체과정</title>
     
-    	<%@ include file="../common/commMainInclude.jsp" %>
+    <%@ include file="../common/commMainInclude.jsp" %>
 
     <link href='https://fonts.googleapis.com/css?family=Nanum+Gothic' rel='stylesheet'>
     <link rel='stylesheet' href='/resources/homepage/css/initialization.css'>
@@ -123,14 +123,14 @@ function lfn_btn(pKind, pParam) {
     <div class='wrap'>
 
 		<!-- HEAD -->
-       	<%@ include file="./mainTop.jsp" %>
+       	<%@ include file="../common/mainTop.jsp" %>
        	<!-- HEAD END -->
 
         <!-- CONTENTS -->
         <div class='contents_wrap process' onmouseover='sub_hide()'>
         	<div class='contents_wrap_box'>
 	            <!-- QUICK MENU -->
-	            <%@ include file="./mainQuickMenu.jsp" %>
+	            <%@ include file="../common/mainQuickMenu.jsp" %>
 	
 	            <!-- Process -->
 	            <div class='process_top_area'>
@@ -267,6 +267,7 @@ function lfn_btn(pKind, pParam) {
 	            <!-- Process END -->
 
 <form name="frm" id="frm" method="post">
+	<input type='hidden' id='courseId' name='courseId'>
 
 	            <!-- Search Area -->
 	            <div class='process_search clear_fix'>
@@ -393,7 +394,7 @@ function lfn_btn(pKind, pParam) {
 	                        <div class='process_result_btn con'>
 	                            <button onclick="javascript:Popup.showSampleCourse('${row.courseId}','${row.hPx + 100}','${row.vPx + 100}'); return false;">맛보기</button>
 	                            <button onclick="javascript:lfn_btn('cart',{courseId:'${row.courseId}',cnt:'${row.cnt}'}); return false;">장바구니</button>
-	                            <button onclick="javascript:lfn_btn('application',{courseId:'${row.courseId}',cnt:'${row.cnt}'}); return false;" class='process_result_admission'>수강신청</button>
+	                            <button onclick="javascript:lfn_btn('view',{courseId:'${row.courseId}'}); return false;" class='process_result_admission'>수강신청</button>
 	                        </div>
 	                    </li>
 </c:forEach>
@@ -401,37 +402,33 @@ function lfn_btn(pKind, pParam) {
 	            </div>
 	            <!-- Search Result Area END -->
 	
-	
 	            <!-- Pager Area -->
-	            <div class='process_pager clear_fix'>
-	                <div class='process_pager_prev clear_fix' id="pagingLayerPrev">
-	                    <div>&laquo;</div>
-	                    <div>&lsaquo;</div>
-	                </div>
-	                <ul class='clear_fix' id="pagingLayer">
-	                    <li>1</li>
-	                    <li>2</li>
-	                    <li>3</li>
-	                    <li>4</li>
-	                    <li>5</li>
-	                    <li>6</li>
-	                    <li>7</li>
-	                    <li>8</li>
-	                    <li>9</li>
-	                    <li>10</li>
-	                </ul>
-	                <div class='process_pager_next clear_fix' id="pagingLayerNext">
-	                    <div>&rsaquo;</div>
-	                    <div>&raquo;</div>
-	                </div>
-	            </div>
+	            <div class='pager_box'>
+                    <div class='pager clear_fix'>
+                        <div class='pager_prev clear_fix' id="pagingLayerPrev">
+                            <div>&laquo;</div>
+                            <div>&lsaquo;</div>
+                        </div>
+                        <ul class='clear_fix' id="pagingLayer">
+                            <li class='on'>1</li>
+                            <li>2</li>
+                            <li>3</li>
+                            <li>4</li>
+                            <li>5</li>
+                        </ul>
+                        <div class='pager_next clear_fix' id="pagingLayerNext">
+                            <div>&rsaquo;</div>
+                            <div>&raquo;</div>
+                        </div>
+                    </div>
+                </div>
 	            <!-- Pager Area END -->
 	        </div>
         </div>
         <!-- CONTENTS END -->
 
 		<!-- FOOTER -->
-       	<%@ include file="./mainBottom.jsp" %>
+       	<%@ include file="../common/mainBottom.jsp" %>
         <!-- FOOTER END -->
         
     </div>

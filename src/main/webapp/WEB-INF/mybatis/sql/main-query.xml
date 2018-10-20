@@ -32,7 +32,6 @@
 	</select>
 	
 	<select id="courseData" parameterType="Main" resultType="Course">
-	<![CDATA[
 		SELECT D.CATEGORY_NAME
 		       ,A.COURSE_ID
 		       ,A.COURSE_CODE
@@ -59,7 +58,32 @@
 		       ,C.WEEK_COST_YN
 		       ,(SELECT DD_VALUE FROM CODE WHERE DD_MAIN = 'WEEK_COST_YN' AND DD_KEY = C.WEEK_COST_YN) WEEK_COST_YN_NAME
 		       ,E.CAREER
-		       ,E.PICTURE
+		       ,C.MOBILE_YN
+		       ,(SELECT COUNT(*) FROM COURSE_RESOURCE WHERE COURSE_CODE = A.COURSE_CODE) WEEK_CNT 
+		       	,A.TERM_YN
+                ,IFNULL(A.TERM_PERIOD_FROM, '') TERM_PERIOD_FROM
+                ,IFNULL(A.TERM_PERIOD_TO, '') TERM_PERIOD_TO
+                ,IFNULL(A.STUDY_PERIOD_FROM, '') STUDY_PERIOD_FROM
+                ,IFNULL(A.STUDY_PERIOD_TO, '') STUDY_PERIOD_TO
+                ,IFNULL(ROUND(F.GRADE, 1), 0) GRADE
+                ,CASE WHEN IFNULL(F.GRADE, 0) > 0 AND IFNULL(F.GRADE, 0) <![CDATA[<=]]> 0.5 THEN 'star_active5'
+					 WHEN IFNULL(F.GRADE, 0) > 0.5 THEN 'star_active'
+                     ELSE 'star_inactive' END GRADE1
+                ,CASE WHEN IFNULL(F.GRADE, 0) > 1 AND IFNULL(F.GRADE, 0) <![CDATA[<=]]> 1.5 THEN 'star_active5'
+					 WHEN IFNULL(F.GRADE, 0) > 1.5 THEN 'star_active'
+                     ELSE 'star_inactive' END GRADE2
+                ,CASE WHEN IFNULL(F.GRADE, 0) > 2 AND IFNULL(F.GRADE, 0) <![CDATA[<=]]> 2.5 THEN 'star_active5'
+					 WHEN IFNULL(F.GRADE, 0) > 2.5 THEN 'star_active'
+                     ELSE 'star_inactive' END GRADE3
+                ,CASE WHEN IFNULL(F.GRADE, 0) > 3 AND IFNULL(F.GRADE, 0) <![CDATA[<=]]> 3.5 THEN 'star_active5'
+					 WHEN IFNULL(F.GRADE, 0) > 3.5 THEN 'star_active'
+                     ELSE 'star_inactive' END GRADE4
+                ,CASE WHEN IFNULL(F.GRADE, 0) > 4 AND IFNULL(F.GRADE, 0) <![CDATA[<=]]> 4.5 THEN 'star_active5'
+					 WHEN IFNULL(F.GRADE, 0) > 4.5 THEN 'star_active'
+                     ELSE 'star_inactive' END GRADE5
+                ,IFNULL(F.GRADE_CNT, 0) GRADE_CNT
+                ,A.COURSE_COST
+                ,A.TOTAL_FAIL
 		  FROM COURSE A 
 			          LEFT OUTER JOIN COURSE_CODE B ON A.COURSE_CODE = B.COURSE_CODE
 		              LEFT OUTER JOIN COURSE_MASTER C ON A.COURSE_CODE = C.COURSE_CODE
@@ -72,8 +96,14 @@
 										      LEFT OUTER JOIN CATEGORY C1 ON C2.PARENT_CODE = C1.CODE
 								    WHERE C3.DEPTH = 3) D ON B.CODE = D.C3_CODE
 					  LEFT OUTER JOIN USER E ON B.TEACHER_ID = E.USER_ID	
+					LEFT OUTER JOIN (
+						SELECT	COURSE_ID
+								,AVG(EVAL) GRADE
+								,COUNT(*) GRADE_CNT
+                       	FROM 	POSTSCRIPT
+                       	WHERE	COURSE_ID = #{courseId}
+                        GROUP 	BY COURSE_ID ) F ON F.COURSE_ID = A.COURSE_ID
 		 WHERE A.COURSE_ID = #{courseId}
-	]]> 
 	</select>
 	
 	<!-- 결재할 과정 리스트 -->
@@ -105,11 +135,10 @@
 	<select id="applicationCourseWeekList" resultType="Course">
 	SELECT C.WEEK,
 	       C.TITLE,
-	       B.WEEK_COST
-	  FROM COURSE A LEFT OUTER JOIN COURSE_WEEK_COST B ON A.COURSE_ID = B.COURSE_ID
-	                LEFT OUTER JOIN COURSE_RESOURCE C ON C.COURSE_CODE = A.COURSE_CODE AND C.WEEK = B.WEEK 
+	       C.WEEK_COST
+	  FROM COURSE A LEFT OUTER JOIN COURSE_RESOURCE C ON C.COURSE_CODE = A.COURSE_CODE
 	 WHERE A.COURSE_ID = #{courseId}
-	   AND B.WEEK IN 
+	   AND C.WEEK IN 
 	 	<foreach item="item" index="index" collection="list" open="(" separator="," close=")">
          	#{item}
  		</foreach>
@@ -118,7 +147,8 @@
 	<select id="courseResourceData" parameterType="Main" resultType="CourseResource">
 	SELECT WEEK,
 	       TITLE,
-	       WEEK_COST
+	       WEEK_COST,
+	       WEEK_TIME
 	  FROM COURSE_RESOURCE 
 	 WHERE COURSE_CODE = (SELECT COURSE_CODE FROM COURSE WHERE COURSE_ID = #{courseId}) 
 	</select>
@@ -248,7 +278,7 @@
 		       	B.H_Px,
 		       	B.V_Px,
 			   	(SELECT COUNT(*) FROM COURSE_REGISTER WHERE COURSE_ID = A.COURSE_ID AND USER_ID = #{userId}) CNT,
-                IFNULL(ROUND(D.GRADE / 20, 1), 0) GRADE,
+                IFNULL(ROUND(D.GRADE, 1), 0) GRADE,
                 CASE WHEN IFNULL(GRADE, 0) > 0 AND IFNULL(GRADE, 0) <![CDATA[<=]]> 0.5 THEN 'star_active5'
 					 WHEN IFNULL(GRADE, 0) > 0.5 AND IFNULL(GRADE, 0) <![CDATA[<=]]> 1 THEN 'star_active'
                      ELSE 'star_inactive' END GRADE1,

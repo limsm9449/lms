@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang='ko'>
+
+<head>
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1'>
+    <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+    <title>Q learning - 전체과정</title>
+
+    <link href='https://fonts.googleapis.com/css?family=Nanum+Gothic' rel='stylesheet'>
+    <link rel='stylesheet' href='../../css/initialization.css'>
+    <link rel='stylesheet' href='../../css/course/register_course.css'>
+</head>
+
+<body>
+    <frameset rows='*'>
+        <div class='wrap'>
+            <!-- PC HEADER -->
+            <header class='head_pc'>
+                <div class='head_wrap pc clear_fix' onmouseover='sub_hide()'>
+                    <div class='head_con logo_box'>
+                        <a href='../../index.html'>
+                            <img src='../../img/logo.png' alt=' '>
+                        </a>
+                    </div>
+                    <div class='head_con search_box'>
+                        <input type='text'>
+                        <button>
+                            <img src='../../img/search_ic.png' alt=' '>
+                        </button>
+                    </div>
+                    <div class='head_con util_box'>
+                        <!-- 로그인 상태 -->
+                        <!-- <a href='#' class='last_right'>로그아웃</a>
+                        <a href='#' class='pc'>회원정보수정</a>
+                        <p class='pc'>OOO님 반갑습니다.</p> -->
+    
+                        <!-- 로그오프 상태 -->
+                        <a href='../../html/etc/signup_step1.html' class='last_right'>회원가입</a>
+                        <a href='../../html/etc/signin.html'>로그인</a>
+                    </div>
+                </div>
+                <div class='head_wrap mobile clear_fix'>
+                    <div class='mobile_btn'>
+                        <button>
+                            <span></span><span></span><span></span>
+                        </button>
+                    </div>
+                    <div class='head_con logo_box'>
+                        <img src='../../img/logo.png' alt=' '>
+                    </div>
+                    <div class='head_con util_box'>
+                        <a href='#' class='last_right'>로그아웃</a>
+                    </div>
+                    <div class='head_con search_box'>
+                        <input type='text'>
+                        <button>
+                            <img src='../../img/search_ic.png' alt=' '>
+                        </button>
+                    </div>
+                </div>
+                <div class='menu_wrap'>
+                    <div class='menu_layout pc' onmouseover='sub_show()'>
+                        <div class='mobile_btn'>
+                            <button>
+                                <span></span><span></span><span></span>
+                            </button>
+                        </div>
+                        <ul class='menu'>
+                            <li>
+                                <a href='../course/process.html'>전체과정</a>
+                            </li>
+                            <li>
+                                <a href='../classroom/classroom.html'>나의강의실</a>
+                            </li>
+                            <li>
+                                <a href='../guidance/tutorial.html'>교육안내</a>
+                            </li>
+                            <li>
+                                <a href='../support/support.html'>고객지원</a>
+                            </li>
+                        </ul>
+                        <div class='menu_tutor'>
+                            <span>
+                                <img src='../../img/channel_ic.png' alt=''>
+                            </span>
+                            <p>강사소개</p>
+                        </div>
+                    </div>
+                    <div class='menu_dropdown_wrapper' id='menu_dropdown_pc'>
+                        <div class='menu_dropdown_wrap'>
+                            <div class='menu_dropdown clear_fix'>
+                                <ul class='menu_sub'>
+                                    <li><a href=''>경영직무</a></li>
+                                    <li><a href=''>업종직무</a></li>
+                                    <li><a href=''>비즈니스</a></li>
+                                    <li><a href=''>정보기술</a></li>
+                                    <li><a href=''>외국어</a></li>
+                                    <li><a href=''>교양</a></li>
+                                </ul>
+                                <span class='menu_sub_line'></span>
+                                <ul class='menu_sub classroom'>
+                                    <li><a href=''>수강과정</a></li>
+                                    <li><a href=''>수강대기과정</a></li>
+                                    <li><a href=''>수강취소과정</a></li>
+                                    <li><a href=''>장바구니</a></li>
+                                    <li><a href=''>수강완료과정</a></li>
+                                    <li><a href=''>회원정보수정</a></li>
+                                    <li><a href=''>비밀번호변경</a></li>
+                                    <li><a href=''>상담내역</a></li>
+                                    <li><a href=''>회원탈퇴</a></li>
+                                </ul>
+                                <span class='menu_sub_line'></span>
+                                <ul class='menu_sub'>
+                                    <li><a href=''>수강신청방법</a></li>
+                                    <li><a href=''>학습방법</a></li>
+                                    <li><a href=''>학습관리</a></li>
+                                    <li><a href=''>수강후기</a></li>
+                                    <li><a href=''>학습지원프로그램</a></li>
+                                </ul>
+                                <span class='menu_sub_line'></span>
+                                <ul class='menu_sub'>
+                                    <li><a href='../support/notice.html'>공지사항</a></li>
+                                    <li><a href='../support/faq.html'>FAQ</a></li>
+                                    <li><a href='../support/mail.html'>1:1 메일문의</a></li>
+                                    <li><a href=''>원격지원</a></li>
+                                    <li><a href='../support/account.html'>입금계좌안내</a></li>
+                                    <li><a href=''>찾아오시는길</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+            <!-- PC HEADER END -->
+
+            <!-- MOBILE HEADER -->
+            <header class='head_mobile'>
+                <div class='head_wrap pc clear_fix'>
+                    <div class='menu_wrap'>
+                        <div class='menu_layout pc' onclick='sub_show_hide()'>
+                            <div class='mobile_btn'>
+                                <button onclick='mobile_menu()'>
+                                    <span></span><span></span><span></span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class='head_con logo_box'>
+                        <a href='../../index.html'>
+                            <img src='../../img/logo.png' alt=' '>
+                        </a>
+                    </div>
+                    <div class='head_con util_box'>
+                        <a href='../etc/signin.html' class='last_right' onclick='login()'>로그인</a>
+                    </div>
+                    <div class='head_con search_box'>
+                        <input type='text'>
+                        <button>
+                            <img src='../../img/search_ic.png' alt=' '>
+                        </button>
+                    </div>
+                </div>
+                <div class='mobile_dropwdown_wrap'>
+                    <div class='mobile_bg_box'>
+                        <div class='close_btn_area' onclick='mobile_menu_close()'>
+                            <img src='../../img/ic_menu_close.png' alt=' '>
+                        </div>
+                        <div class='mobile_menu login clear_fix'>
+                            <span>
+                                <img src='../../img/ic_login.png' alt=' '>
+                            </span>
+                            <a href='#'>로그인</a>
+                        </div>
+                        <div class='mobile_menu process_all'>
+                            <button onclick='sub_menu_open(this, "others")'>
+                                전체과정
+                            </button>
+                            <ul>
+                                <li class='first_depth'><a href='../course/process.html'>전체과정</a></li>
+                                <li><a href=''>경영직무</a></li>
+                                <li><a href=''>업종직무</a></li>
+                                <li><a href=''>비즈니스</a></li>
+                                <li><a href=''>정보기술</a></li>
+                                <li><a href=''>외국어</a></li>
+                                <li><a href=''>교양</a></li>
+                            </ul>
+                        </div>
+                        <div class='mobile_menu classroom'>
+                            <button onclick='sub_menu_open(this, "others")'>
+                                나의강의실
+                            </button>
+                            <ul>
+                                <li class='first_depth'><a href='../classroom/classroom.html'>나의강의실</a></li>
+                                <li><a href=''>수강과정</a></li>
+                                <li><a href=''>수강대기과정</a></li>
+                                <li><a href=''>수강취소과정</a></li>
+                                <li><a href=''>장바구니</a></li>
+                                <li><a href=''>수강완료과정</a></li>
+                                <li><a href=''>회원정보수정</a></li>
+                                <li><a href=''>비밀번호변경</a></li>
+                                <li><a href=''>상담내역</a></li>
+                                <li><a href=''>회원탈퇴</a></li>
+                            </ul>
+                        </div>
+                        <div class='mobile_menu tutorial'>
+                            <button onclick='sub_menu_open(this, "others")'>
+                                교육안내
+                            </button>
+                            <ul>
+                                <li class='first_depth'><a href='../guidance/tutorial.html'>교육안내</a></li>
+                                <li><a href=''>수강신청방법</a></li>
+                                <li><a href=''>학습방법</a></li>
+                                <li><a href=''>학습관리</a></li>
+                                <li><a href=''>수강후기</a></li>
+                                <li><a href=''>학습지원프로그램</a></li>
+                            </ul>
+                        </div>
+                        <div class='mobile_menu service'>
+                            <button onclick='sub_menu_open(this, "others")'>
+                                고객지원
+                            </button>
+                            <ul>
+                                <li class='first_depth'><a href='../support/support.html'>고객지원</a></li>
+                                <li><a href='../support/notice.html'>공지사항</a></li>
+                                <li><a href='../support/faq.html'>FAQ</a></li>
+                                <li><a href='../support/mail.html'>1:1 메일문의</a></li>
+                                <li><a href=''>원격지원</a></li>
+                                <li><a href='../support/account.html'>입금계좌안내</a></li>
+                                <li><a href=''>찾아오시는길</a></li>
+                            </ul>
+                        </div>
+                        <div class='mobile_menu introduce'>
+                            <a href='#'>강사소개</a>
+                        </div>
+                    </div>
+                </div>
+            </header>
+            <!-- MOBILE HEADER END -->
+            <!-- HEAD END -->
+
+            <!-- CONTENTS -->
+            <div class='contents_wrap process' onmouseover='sub_hide()'>
+                <div class='contents_wrap_box'>
+                    <!-- QUICK MENU -->
+                    <div class='quick_menu_wrap'>
+                        <p class='quick_title'>
+                            Quick Menu
+                            <span></span>
+                        </p>
+                        <ul>
+                            <li class='quick_menu_list'>
+                                <a href='#'>
+                                    <span></span>
+                                    <img src='../../img/quick_menu1.png' alt=' '>
+                                    장바구니
+                                </a>
+                            </li>
+                            <li class='quick_menu_list'>
+                                <a href='#'>
+                                    <span></span>
+                                    <img src='../../img/quick_menu2.png' alt=' '>
+                                    학습가이드
+                                </a>
+                            </li>
+                            <li class='quick_menu_list'>
+                                <a href='#'>
+                                    <span></span>
+                                    <img src='../../img/quick_menu3.png' alt=' '>
+                                    FAQ
+                                </a>
+                            </li>
+                            <li class='quick_menu_list'>
+                                <a href='#'>
+                                    <span></span>
+                                    <img src='../../img/quick_menu4.png' alt=' '>
+                                    학습지원프로그램
+                                </a>
+                            </li>
+                        </ul>
+                        <p class='quick_top'>
+                            <span>
+                                <img src='../../img/quick_top.png' alt=' '>
+                            </span>
+                            TOP
+                        </p>
+                    </div>
+
+                    <!-- Top -->
+                    <div class='top_area'>
+                        <div class='clear_fix'>
+                            <div class='process_history_box clear_fix'>
+                                <span>
+                                    <img src='../../img/course/ic_home.jpg' alt=' '>
+                                </span>
+                                <p>HOME</p>
+                                <span>
+                                    <img src='../../img/course/arr_right.jpg' alt=' '>
+                                </span>
+                                <p>수강신청</p>
+                                <span>
+                                    <img src='../../img/course/arr_right.jpg' alt=' '>
+                                </span>
+                                <p>교육과정</p>
+                            </div>
+                        </div>
+                        <h1>
+                            전체<span>과정</span>
+                        </h1>
+                    </div>
+                    <!-- Top END -->
+
+                    <div class='register_course_title'>
+                        <div class='clear_fix'>
+                            <h2>토끼와 거북이의 재테크 비법</h2>
+                            <p>일반</p>
+                            <p class='bg_other'>모바일</p>
+                        </div>
+                    </div>
+                    <div class='register_course_contents clear_fix'>
+                        <div class='register_course_image'>
+                            <div id='register_big_img'><img src='../../img/course/register_1.jpg' alt=' '></div>
+                            <ul class='register_image_list clear_fix'>
+                                <li onclick='thumbnail(event, 1)' class='register_image_list_item active'>
+                                    <img src='../../img/course/register_1.jpg' alt=' '>
+                                </li>
+                                <li onclick='thumbnail(event, 2)' class='register_image_list_item'>
+                                    <img src='../../img/course/register_2.jpg' alt=' '>
+                                </li>
+                                <li onclick='thumbnail(event, 3)' class='register_image_list_item last_right'>
+                                    <img src='../../img/course/register_3.jpg' alt=' '>
+                                </li>
+                            </ul>
+                            <div class='register_course_review clear_fix'>
+                                <span><img src='../../img/course/star_active.png' alt=' '></span>
+                                <span><img src='../../img/course/star_active.png' alt=' '></span>
+                                <span><img src='../../img/course/star_active.png' alt=' '></span>
+                                <span><img src='../../img/course/star_active.png' alt=' '></span>
+                                <span><img src='../../img/course/star_inactive.png' alt=' '></span>
+                                <p>
+                                    평점 : <span>4.5</span> / 후기 : <span>2</span>건
+                                </p>
+                            </div>
+                        </div>
+                        <div class='register_course_info'>
+                            <div class='register_course_info_text clear_fix'>
+                                <p class='register_course_info_title'>교수명</p>
+                                <p>임준범</p>
+                            </div>
+                            <div class='register_course_info_text clear_fix'>
+                                <p class='register_course_info_title'>강좌수</p>
+                                <p>16강</p>
+                            </div>
+                            <div class='register_course_info_text clear_fix'>
+                                <p class='register_course_info_title'>수강신청기간</p>
+                                <p>2018.08.01~2018.08.31</p>
+                            </div>
+                            <div class='register_course_info_text clear_fix'>
+                                <p class='register_course_info_title'>학습기간</p>
+                                <p>2018.08.01~2018.08.31</p>
+                            </div>
+                            <div class='register_course_info_text clear_fix'>
+                                <p class='register_course_info_title'>신청방식</p>
+                                <div>
+                                    <select onchange='register_select_handler()' name='' id='register_course_select'>
+                                        <option value=''>상품을 선택하세요</option>
+                                        <option value='all'>전체과정</option>
+                                        <option value='part'>차시신청</option>
+                                    </select>
+                                    <p>
+                                        * 신청방식에 따라 부분 차시 신청을 선택하시면 차시별 <span></span>신청이 가능합니다.
+                                    </p>
+                                </div>
+                            </div>
+                            <p class='register_payment'>
+                                총 상품금액 :
+                                <span>
+                                    <strong>50,000</strong>원
+                                </span>
+                            </p>
+                            <div class='register_btn_area clear_fix'>
+                                <button>맛보기</button>
+                                <button>장바구니</button>
+                                <button class='last_right'>수강신청</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class='register_tab_contents_wrap'>
+                        <div class='register_tab_box clear_fix'>
+                            <button onclick='register_tab(this, "introduce")' class='register_btn active'>과정소개</button>
+                            <button onclick='register_tab(this, "compose")' class='register_btn'>과정구성</button>
+                            <button onclick='register_tab(this, "estimate")' class='register_btn last_right'>평가항목</button>
+                        </div>
+                        <div class='register_tab_content_box' id='introduce'>
+                            <ul>
+                                <li class='register_introduce_list clear_fix'>
+                                    <p class='register_introduce_list_title'>강의개요</p>
+                                    <p>'토끼와 거북이의 재테크 비법’은 재테크의 종합적인 이론 지식, 자금 유형별 자산 운영, 세금 설계, 부동산 설계, 노후자금 마련 및 운영
+                                        전략을 종합적으로 학습하는 제테크 종합과정입니다.</p>
+                                </li>
+                                <li class='register_introduce_list clear_fix'>
+                                    <p class='register_introduce_list_title'>학습목표</p>
+                                    <!-- <ol class='register_introduce_goal_list'>
+                                        <li> -->
+                                            <p>
+                                                1. 기본적인 재테크 전략 수립 가능<br>2. 안정적인 자산 운영 전략 수립 가능<br>3. 세금, 증여, 경매 등 다양한 금융 포트폴리오 설계<br>4. 노후자금 준비를 위한 전략 수립
+                                            </p>
+                                        <!-- </li>
+                                    </ol> -->
+                                </li>
+                                <li class='register_introduce_list clear_fix'>
+                                    <p class='register_introduce_list_title'>교육대상</p>
+                                    <!-- <ul class='register_introduce_target_list'>
+                                        <li> -->
+                                            <p>
+                                                1. 기본적인 재테크 전략 수립 가능<br>2.<div></div><table><tr><td>aaaaaaaaa</td></tr></table> 안정적인 자산 운영 전략 수립 가능<br>3. 세금, 증여, 경매 등 다양한 금융 포트폴리오 설계<br>4. 노후자금 준비를 위한 전략 수립* 재테크의 기본을 쌓고자 하는 직장인 및 일반인<br>* 자산의 자산 계획과 목표를 수립하고 효과적으로 투자, 운용,유지하고자 하는 직장인 및 일반인<br>* 자신과 자녀를 위한 건강하고 올바른 경제습관을 익히고 이를 교육하고자 하는 직장인 및 일반인
+                                            </p>
+                                        <!-- </li>
+                                    </ul> -->
+                                </li>
+                                <li class='register_introduce_list clear_fix'>
+                                    <p class='register_introduce_list_title'>교수소개</p>
+                                    <span><img src='../../img/course/register_tutor.jpg' alt=' '></span>
+                                    <div>
+                                        <div class='register_tutor_explain clear_fix'>
+                                            <p class='register_tutor_title'>교수명</p>
+                                            <p>임준범</p>
+                                        </div>
+                                        <div class='register_tutor_explain clear_fix'>
+                                            <p class='register_tutor_title'>경력</p>
+                                            <p>
+                                                Eco Money Solution 대표<br>자산관리사 / 위험관리 전문가<br>한국보험교육개발원 부원장<br>중소기업지원센터
+                                                재무분야 전문위원<br>대한 상공회의소 전문위원<br>한국 영업인 협회 1호 멘토<br>LG전자, LG화학, 대림산업 등 기업,
+                                                관공서, 단체 등 약 400여 곳 출강<br>저서 : 머니위닝게임
+                                            </p>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                            <div class='register_review_box'>
+                                <p class='register_content_title'>과정후기</p>
+                                <table class='register_review_table'>
+                                    <tr>
+                                        <th class='register_review_col1'>번호</th>
+                                        <th>제목</th>
+                                        <th class='register_review_col3 mobile_last'>평점</th>
+                                        <th class='mobile_none'>작성자</th>
+                                        <th class='register_review_col5 last_right mobile_none'>등록일</th>
+                                    </tr>
+                                    <tr>
+                                        <td>1</td>
+                                        <td class='register_review_lecture'>
+                                            <a href=''>5억 4천 벌게 해드릴까요? [학습후기]</a>
+                                        </td>
+                                        <td class='mobile_last'>
+                                            <span><img src='../../img/course/register_star_active.png' alt=' '></span>
+                                            <span><img src='../../img/course/register_star_active.png' alt=''></span>
+                                            <span><img src='../../img/course/register_star_active.png' alt=''></span>
+                                            <span><img src='../../img/course/register_star_active.png' alt=''></span>
+                                            <span><img src='../../img/course/register_star_inactive.png' alt=''></span>
+                                        </td>
+                                        <td class='mobile_none'>boy*****</td>
+                                        <td class='last_right mobile_none'>2018.10.28</td>
+                                    </tr>
+                                    <tr>
+                                        <td>2</td>
+                                        <td class='register_review_lecture'>
+                                            <a href=''>자산설계도 맞춤 시대 : Financial Map [학습후기] 자산설계도 맞춤 시대 : Financial Map [학습후기] 자산설계도 맞춤 시대 : Financial Map [학습후기]</a>
+                                        </td>
+                                        <td class='mobile_last'>
+                                            <span><img src='../../img/course/register_star_active.png' alt=' '></span>
+                                            <span><img src='../../img/course/register_star_active.png' alt=''></span>
+                                            <span><img src='../../img/course/register_star_active.png' alt=''></span>
+                                            <span><img src='../../img/course/register_star_active.png' alt=''></span>
+                                            <span><img src='../../img/course/register_star_inactive.png' alt=''></span>
+                                        </td>
+                                        <td class='mobile_none'>oy*******</td>
+                                        <td class='last_right mobile_none'>2018.10.28</td>
+                                    </tr>
+                                    <tr>
+                                        <td>3</td>
+                                        <td class='register_review_lecture'>
+                                            <a href=''>5억 4천 벌게 해드릴까요? [학습후기]</a>
+                                        </td>
+                                        <td class='mobile_last'>
+                                            <span><img src='../../img/course/register_star_active.png' alt=' '></span>
+                                            <span><img src='../../img/course/register_star_active.png' alt=''></span>
+                                            <span><img src='../../img/course/register_star_active.png' alt=''></span>
+                                            <span><img src='../../img/course/register_star_active.png' alt=''></span>
+                                            <span><img src='../../img/course/register_star_inactive.png' alt=''></span>
+                                        </td>
+                                        <td class='mobile_none'>11y***</td>
+                                        <td class='last_right mobile_none'>2018.10.28</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                        <div class='register_tab_content_box' id='compose'>
+                            <p>
+                                여러분이 수강을 원하는 강의를 선택하여 수강신청을 할 수 있습니다. <span></span>
+                                <strong>전체 강의 신청시 할인된 금액으로 수강신청이 가능</strong>합니다.
+                            </p>
+                            <table class='register_compose_table'>
+                                <tr>
+                                    <th class='register_compose_col1 right_border part_only'><input type='checkbox' name='' id=''></th>
+                                    <th>차시 제목</th>
+                                    <th class='register_compose_col3 mobile_none'>학습시간</th>
+                                    <th class='register_compose_col4 mobile_none'>학습기간</th>
+                                    <th class='last_right part_only'>교육비</th>
+                                </tr>
+                                <tr>
+                                    <td class='right_border part_only'><input type='checkbox' name='' id=''></td>
+                                    <td class='register_compose_lecture'>
+                                        <p>
+                                            1<span></span>
+                                            5억 4천 벌게 해드릴까요? : 진짜 돈이 되는 최고의 재테크 전략 5억 4천 벌게 해드릴까요? : 진짜 돈이 되는 최고의 재테크 전략
+                                            5억 4천 벌게 해드릴까요? : 진짜 돈이 되는 최고의 재테크 전략
+                                        </p>
+                                    </td>
+                                    <td class='mobile_none'>30분</td>
+                                    <td class='mobile_none'>30일</td>
+                                    <td class='last_right part_only'>1,000 <span><img src='../../img/course/ic_won.png' alt=' '></span></td>
+                                </tr>
+                                <tr>
+                                    <td class='right_border part_only'><input type='checkbox' name='' id=''></td>
+                                    <td class='register_compose_lecture'>
+                                        <p>
+                                            2<span></span>
+                                            자산설계도 맞춤 시대 : Financial Map
+                                        </p>
+                                    </td>
+                                    <td class='mobile_none'>30분</td>
+                                    <td class='mobile_none'>30일</td>
+                                    <td class='last_right part_only'>1,000 <span><img src='../../img/course/ic_won.png' alt=' '></span></td>
+                                </tr>
+                                <tr>
+                                    <td class='right_border part_only'><input type='checkbox' name='' id=''></td>
+                                    <td class='register_compose_lecture'>
+                                        <p>
+                                            3<span></span>
+                                            젊어 6년 고생 vs 늙어 30년 고생 : 알수록 놀라는 복리의 비밀
+                                        </p>
+                                    </td>
+                                    <td class='mobile_none'>30분</td>
+                                    <td class='mobile_none'>30일</td>
+                                    <td class='last_right part_only'>1,000 <span><img src='../../img/course/ic_won.png' alt=' '></span></td>
+                                </tr>
+                                <tr>
+                                    <td class='right_border part_only'><input type='checkbox' name='' id=''></td>
+                                    <td class='register_compose_lecture'>
+                                        <p>
+                                            4<span></span>
+                                            부동산 대출로 인생을 허비하지 마세요 : 부동산 담보 대출 요령
+                                        </p>
+                                    </td>
+                                    <td class='mobile_none'>30분</td>
+                                    <td class='mobile_none'>30일</td>
+                                    <td class='last_right part_only'>1,000 <span><img src='../../img/course/ic_won.png' alt=' '></span></td>
+                                </tr>
+                                <tr>
+                                    <td class='right_border part_only'><input type='checkbox' name='' id=''></td>
+                                    <td class='register_compose_lecture'>
+                                        <p>
+                                            5<span></span>
+                                            강철의 재테크 플래닝 : 통장 관리 비법
+                                        </p>
+                                    </td>
+                                    <td class='mobile_none'>30분</td>
+                                    <td class='mobile_none'>30일</td>
+                                    <td class='last_right part_only'>1,000 <span><img src='../../img/course/ic_won.png' alt=' '></span></td>
+                                </tr>
+                                <tr>
+                                    <td class='right_border part_only'><input type='checkbox' name='' id=''></td>
+                                    <td class='register_compose_lecture'>
+                                        <p>
+                                            6<span></span>
+                                            강철의 재테크 플래닝 : 통장 관리 비법
+                                        </p>
+                                    </td>
+                                    <td class='mobile_none'>30분</td>
+                                    <td class='mobile_none'>30일</td>
+                                    <td class='last_right part_only'>1,000 <span><img src='../../img/course/ic_won.png' alt=' '></span></td>
+                                </tr>
+                                <tr>
+                                    <td class='right_border part_only'><input type='checkbox' name='' id=''></td>
+                                    <td class='register_compose_lecture'>
+                                        <p>
+                                            7<span></span>
+                                            강철의 재테크 플래닝 : 통장 관리 비법
+                                        </p>
+                                    </td>
+                                    <td class='mobile_none'>30분</td>
+                                    <td class='mobile_none'>30일</td>
+                                    <td class='last_right part_only'>1,000 <span><img src='../../img/course/ic_won.png' alt=' '></span></td>
+                                </tr>
+                                <tr>
+                                    <td class='right_border part_only'><input type='checkbox' name='' id=''></td>
+                                    <td class='register_compose_lecture'>
+                                        <p>
+                                            8<span></span>
+                                            강철의 재테크 플래닝 : 통장 관리 비법
+                                        </p>
+                                    </td>
+                                    <td class='mobile_none'>30분</td>
+                                    <td class='mobile_none'>30일</td>
+                                    <td class='last_right part_only'>1,000 <span><img src='../../img/course/ic_won.png' alt=' '></span></td>
+                                </tr>
+                                <tr>
+                                    <td class='right_border part_only'><input type='checkbox' name='' id=''></td>
+                                    <td class='register_compose_lecture'>
+                                        <p>
+                                            9<span></span>
+                                            강철의 재테크 플래닝 : 통장 관리 비법 강철의 재테크 플래닝 : 통장 관리 비법 강철의 재테크 플래닝 : 통장 관리 비법
+                                        </p>
+                                    </td>
+                                    <td class='mobile_none'>30분</td>
+                                    <td class='mobile_none'>30일</td>
+                                    <td class='last_right part_only'>1,000 <span><img src='../../img/course/ic_won.png' alt=' '></span></td>
+                                </tr>
+                                <tr>
+                                    <td class='right_border part_only'><input type='checkbox' name='' id=''></td>
+                                    <td class='register_compose_lecture'>
+                                        <p>
+                                            10<span></span>
+                                            강철의 재테크 플래닝 : 통장 관리 비법
+                                        </p>
+                                    </td>
+                                    <td class='mobile_none'>30분</td>
+                                    <td class='mobile_none'>30일</td>
+                                    <td class='last_right part_only'>1,000 <span><img src='../../img/course/ic_won.png' alt=' '></span></td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class='register_tab_content_box' id='estimate'>
+                            <p class='register_content_title'>평가항목 및 수료기준</p>
+                            <table class='register_estimate_table'>
+                                <tr>
+                                    <th>진도율</th>
+                                    <th>최종평가</th>
+                                    <th>진도율</th>
+                                </tr>
+                                <tr>
+                                    <td>50% 반영</td>
+                                    <td>50% 반영</td>
+                                    <td>총점 60점 이상</td>
+                                </tr>
+                            </table>
+                            <table class='register_estimate_table'>
+                                <tr>
+                                    <th>최종평가</th>
+                                    <th>총점</th>
+                                </tr>
+                                <tr>
+                                    <td>50% 반영</td>
+                                    <td>총점 60점 이상</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <!-- CONTENTS END -->
+
+            <!-- FOOTER -->
+            <div class='footer_wrap'>
+                <ul class='foot_link_box clear_fix'>
+                    <li>
+                        <a href='#'>회사소개</a>
+                    </li>
+                    <li>
+                        <a href='#'>서비스이용약관</a>
+                    </li>
+                    <li>
+                        <a href='#'>개인정보취급방침</a>
+                    </li>
+                    <li class='foot_link_pc'>
+                        <a href='#'>기업교육 문의</a>
+                    </li>
+                    <li class='foot_link_pc'>
+                        <a href='#'>교강사 모집</a>
+                    </li>
+                    <li class='foot_link_pc last_right'>
+                        <a href='#'>사이트맵</a>
+                    </li>
+                </ul>
+                <div class='foot_box'>
+                    <p>
+                        (주)큐피플 서울시 금천구 가산동 371-50번지 에이스하이엔드3차 410/411호 | 대표이사 : 이준호<br>개인정보관리책임자 : 최삼열 | 통신판매업:
+                        2015-서울금천-0658 | 사업자등록번호: 119-81-78776 |
+                        <span>
+                            Copyright 2017 Qpeople Academy. ALL Rights Reserved
+                        </span>
+                    </p>
+                </div>
+            </div>
+            <!-- FOOTER END -->
+        </div>
+    </frameset>
+    <script src='../../js/sub.js'></script>
+    <!-- <script src='../../js/dev_sub.js'></script> -->
+</body>
+
+</html>

@@ -8,9 +8,6 @@
     <title>Q learning - 나의강의실</title>
 
     <script src='../../js/jquery_3.3.1.js'></script>
-    <!--[if IE8]>
-        <script src="http://code.jquery.com/jquery-1.12.3.js></script>
-    <![endif]-->
 
     <link href='https://fonts.googleapis.com/css?family=Nanum+Gothic' rel='stylesheet'>
     <link rel='stylesheet' href='../../css/initialization.css'>
@@ -35,9 +32,14 @@
                     </button>
                 </div>
                 <div class='head_con util_box'>
-                    <a href='#' class='last_right'>로그아웃</a>
+                    <!-- 로그인 상태 -->
+                    <!-- <a href='#' class='last_right'>로그아웃</a>
                     <a href='#' class='pc'>회원정보수정</a>
-                    <p class='pc'>OOO님 반갑습니다.</p>
+                    <p class='pc'>OOO님 반갑습니다.</p> -->
+
+                    <!-- 로그오프 상태 -->
+                    <a href='../../html/etc/signup_step1.html' class='last_right'>회원가입</a>
+                    <a href='../../html/etc/signin.html'>로그인</a>
                 </div>
             </div>
             <div class='head_wrap mobile clear_fix'>
@@ -71,13 +73,13 @@
                             <a href='../course/process.html'>전체과정</a>
                         </li>
                         <li>
-                            <a href='#'>나의강의실</a>
+                            <a href='../classroom/classroom.html'>나의강의실</a>
                         </li>
                         <li>
                             <a href='../guidance/tutorial.html'>교육안내</a>
                         </li>
                         <li>
-                            <a href='../support/service.html'>고객지원</a>
+                            <a href='../support/support.html'>고객지원</a>
                         </li>
                     </ul>
                     <div class='menu_tutor'>
@@ -120,11 +122,11 @@
                             </ul>
                             <span class='menu_sub_line'></span>
                             <ul class='menu_sub'>
-                                <li><a href=''>공지사항</a></li>
-                                <li><a href=''>FAQ</a></li>
-                                <li><a href=''>1:1 메일문의</a></li>
+                                <li><a href='../support/notice.html'>공지사항</a></li>
+                                <li><a href='../support/faq.html'>FAQ</a></li>
+                                <li><a href='../support/mail.html'>1:1 메일문의</a></li>
                                 <li><a href=''>원격지원</a></li>
-                                <li><a href=''>입금계좌안내</a></li>
+                                <li><a href='../support/account.html'>입금계좌안내</a></li>
                                 <li><a href=''>찾아오시는길</a></li>
                             </ul>
                         </div>
@@ -152,7 +154,7 @@
                     </a>
                 </div>
                 <div class='head_con util_box'>
-                    <a href='#' class='last_right' onclick='login()'>로그인</a>
+                    <a href='../etc/signin.html' class='last_right' onclick='login()'>로그인</a>
                 </div>
                 <div class='head_con search_box'>
                     <input type='text'>
@@ -177,7 +179,7 @@
                             전체과정
                         </button>
                         <ul>
-                            <li class='first_depth'><a href='../../html/course/process.html'>전체과정</a></li>
+                            <li class='first_depth'><a href='../course/process.html'>전체과정</a></li>
                             <li><a href=''>경영직무</a></li>
                             <li><a href=''>업종직무</a></li>
                             <li><a href=''>비즈니스</a></li>
@@ -191,7 +193,7 @@
                             나의강의실
                         </button>
                         <ul>
-                            <li class='first_depth'><a href='#'>나의강의실</a></li>
+                            <li class='first_depth'><a href='../classroom/classroom.html'>나의강의실</a></li>
                             <li><a href=''>수강과정</a></li>
                             <li><a href=''>수강대기과정</a></li>
                             <li><a href=''>수강취소과정</a></li>
@@ -221,12 +223,12 @@
                             고객지원
                         </button>
                         <ul>
-                            <li class='first_depth'><a href='../support/service.html'>고객지원</a></li>
-                            <li><a href=''>공지사항</a></li>
-                            <li><a href=''>FAQ</a></li>
-                            <li><a href=''>1:1 메일문의</a></li>
+                            <li class='first_depth'><a href='../support/support.html'>고객지원</a></li>
+                            <li><a href='../support/notice.html'>공지사항</a></li>
+                            <li><a href='../support/faq.html'>FAQ</a></li>
+                            <li><a href='../support/mail.html'>1:1 메일문의</a></li>
                             <li><a href=''>원격지원</a></li>
-                            <li><a href=''>입금계좌안내</a></li>
+                            <li><a href='../support/account.html'>입금계좌안내</a></li>
                             <li><a href=''>찾아오시는길</a></li>
                         </ul>
                     </div>
@@ -509,7 +511,7 @@
                             <div class='process_btn_area clear_fix'>
                                 <button>맛보기</button>
                                 <button>장바구니</button>
-                                <button class='admission'>수강신청</button>
+                                <button onclick='register_class(" ")' class='admission'>수강신청</button>
                             </div>
                             <div class='process_score_box clear_fix'>
                                 <div class='process_score_image clear_fix'>
@@ -544,7 +546,7 @@
                             <div class='process_btn_area clear_fix'>
                                 <button>맛보기</button>
                                 <button>장바구니</button>
-                                <button class='admission'>수강신청</button>
+                                <button onclick='register_class(" ")' class='admission'>수강신청</button>
                             </div>
                             <div class='process_score_box clear_fix'>
                                 <div class='process_score_image clear_fix'>
@@ -579,7 +581,7 @@
                             <div class='process_btn_area clear_fix'>
                                 <button>맛보기</button>
                                 <button>장바구니</button>
-                                <button class='admission'>수강신청</button>
+                                <button onclick='register_class(" ")' class='admission'>수강신청</button>
                             </div>
                             <div class='process_score_box clear_fix'>
                                 <div class='process_score_image clear_fix'>
@@ -640,6 +642,7 @@
         <!-- FOOTER END -->
     </div>
 </frameset>
-<script src='../../js/main.js'></script>
+<script src='../../js/sub.js'></script>
+<!-- <script src='../../js/dev_sub.js'></script> -->
 </body>
 </html>

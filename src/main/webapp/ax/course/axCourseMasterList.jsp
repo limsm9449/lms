@@ -164,16 +164,13 @@ function fn_makeGrid() {
                     config : {
                         columnKeys: { optionValue: "value", optionText: "text" },
                         options: ddWeekCost
-                    },
-	            	disabled : function () {
-                        return ( this.item.NEW_FLAG != "Y" ? true : false );
                     }
 	        	},
 	            formatter : function () {
 	            	return gfn_getValueInList(ddWeekCost, "value",  this.item.WEEK_COST_YN, "text");
 	           	},
 				styleClass: function () {
-                    return ( this.item.NEW_FLAG == "Y" ? "grid-cell-edit" : "" );
+                    return "grid-cell-edit";
                 }
 	        },{
 	        	key : "TUTOR_ID", 

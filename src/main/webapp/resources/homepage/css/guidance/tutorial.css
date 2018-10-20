@@ -322,83 +322,6 @@ header{
     padding-top:155px;
     margin:0 auto;
 }
-.tutorial .contents_wrap_box .top_area{
-    width:1122px;
-    margin:0 auto;
-}
-
-.tutorial_btn_wrap{
-    padding: 50px 0;
-    background: #dde1e6;
-}
-.tutorial_btn_box{
-    width: 1122px;
-    margin: 0 auto;
-}
-.tutorial_btn_box > p{
-    font-family: "NanumSquareB";
-    font-size: 30px;
-    text-align: center;
-    padding-bottom: 50px;
-}
-.tutorial_btn{
-    display: block;
-    float: left;
-    width: 24.2%;
-    padding: 30px 0;
-    margin-right: 1%;
-    background: #fff;
-    border:solid 3px #fff;
-    border-radius: 20px;
-}
-.tutorial_btn:hover{
-    border: solid 3px #35a6d9;
-}
-.tutorial_btn.last_right{
-    margin-right:0;
-}
-.tutorial_btn div{
-    text-align:center;
-}
-.tutorial_btn div img{
-    display:block;
-    margin: 0 auto 10px;
-}
-.tutorial_btn p{
-    height: 65px;
-    font-size: 14px;
-    color: #666;
-    line-height: 150%;
-}
-.tutorial_btn p span{
-    display: block;
-}
-.tutorial_btn .tutorial_btn_title{
-    height: auto;
-    font-family: "NanumSquare";
-    font-size: 30px;
-    font-weight: 900;
-    color: #0180d3;
-    padding-bottom: 10px;
-}
-
-.tutorial_download{}
-.tutorial_download > div,
-.tutorial_download_list{}
-.tutorial_download > div p{}
-.tutorial_download > div .tutorial_download_title{}
-.tutorial_download_list li{}
-.tutorial_download_list li:after{
-    display:block;
-    content:'';
-    clear:both;
-}
-.tutorial_download_image{}
-.tutorial_download_image img{}
-.tutorial_download_text{}
-.tutorial_download_text p{}
-.tutorial_download_text a{}
-.tutorial_download_text .tutorial_download_name{}
 
 /* QUICK MENU */
 .quick_menu_wrap{
@@ -492,8 +415,155 @@ header{
     color: #0180d3;
 }
 
+.tutorial .contents_wrap_box .top_area{
+    width:1122px;
+    margin:0 auto;
+}
 
+.tutorial_btn_wrap{
+    padding: 50px 0;
+    background: #dde1e6;
+}
+.tutorial_btn_box{
+    width: 1122px;
+    margin: 0 auto;
+}
+.tutorial_btn_box > p{
+    font-family: "NanumSquareB";
+    font-size: 30px;
+    text-align: center;
+    padding-bottom: 50px;
+}
+.tutorial_btn{
+    display: block;
+    float: left;
+    width: 24.2%;
+    padding: 30px 0;
+    margin-right: 1%;
+    background: #fff;
+    border:solid 3px #fff;
+    border-radius: 20px;
+}
+.tutorial_btn:hover{
+    border: solid 3px #35a6d9;
+}
+.tutorial_btn.last_right{
+    margin-right:0;
+}
+.tutorial_btn div{
+    text-align:center;
+}
+.tutorial_btn div img{
+    display:block;
+    margin: 0 auto 10px;
+}
+.tutorial_btn p{
+    height: 65px;
+    font-size: 14px;
+    color: #666;
+    line-height: 150%;
+}
+.tutorial_btn p span{
+    display: block;
+}
+.tutorial_btn .tutorial_btn_title{
+    height: auto;
+    font-family: "NanumSquare";
+    font-size: 30px;
+    font-weight: 900;
+    color: #0180d3;
+    padding-bottom: 10px;
+}
 
+.tutorial_download{
+    width: 1122px;
+    padding: 50px 0;
+    margin: 0 auto;
+}
+.tutorial_download > div{
+    float: left;
+    display: inline-block;
+}
+.tutorial_download_list{
+    float: right;
+    width: 80%;
+}
+.tutorial_download > div,
+.tutorial_download_list{}
+.tutorial_download > div p{
+    font-size: 15px;
+    color: #888;
+    line-height: 150%;
+}
+.tutorial_download > div .tutorial_download_title{
+    font-family: "NanumSquareB";
+    font-size: 24px;
+    color: #333;
+    line-height: 120%;
+    padding-bottom: 10px;
+}
+.tutorial_download > div p span{
+    display: block;
+}
+.tutorial_download_list li{
+    float: left;
+    width: 48%;
+    padding-bottom: 50px;
+    margin-right:4%;
+}
+.tutorial_download_list li.even{
+    margin-right:0;
+}
+.tutorial_download_list li:after{
+    display:block;
+    content:'';
+    clear:both;
+}
+.tutorial_download_image{
+    float: left;
+    width: 18%;
+    margin-right: 2%;
+}
+.tutorial_download_image img{
+    display: block;
+    width: 100%;
+}
+.tutorial_download_text{
+    float: left;
+    width: 80%;
+}
+.tutorial_download_text p{
+    float: left;
+    width: 68%;
+    font-size: 14px;
+    line-height: 120%;
+    letter-spacing: -1px;
+}
+.tutorial_download_text p span{
+    display:block;
+}
+.tutorial_download_text a{
+    display: block;
+    float: right;
+    width: 30%;
+    font-family:"NanumSquare";
+    font-size: 16px;
+    font-weight: 600;
+    text-align: center;
+    padding: 6px 0;
+    border: solid 2px #ddd;
+}
+.tutorial_download_text a:hover{
+    color:#fff;
+    background:#777;
+}
+.tutorial_download_text .tutorial_download_name{
+    width: 100%;
+    font-family: "NanumSquare";
+    font-size: 18px;
+    font-weight: 900;
+    padding: 6px 0;
+}
 
 
 /* FOOTER */
@@ -555,9 +625,6 @@ header{
     }
 }
 @media all and (max-width:1122px){
-    body{
-        background:#fff;
-    }
 
     /* HEAD */
     .head_wrap,
@@ -691,6 +758,89 @@ header{
         float: left;
     }
 
+
+    .tutorial .contents_wrap_box .top_area,
+    .tutorial_download{
+        width:100%;
+    }
+    .tutorial_download{
+        padding:30px 0;
+    }
+    .tutorial_download > div p span {
+        display:none;
+    }
+    .tutorial_download > div .tutorial_download_title{
+        padding-bottom:4px;
+    }
+    .tutorial_btn_box{
+        width:96%;
+        padding:0 2%;
+    }
+    .tutorial_btn_wrap{
+        padding:20px 0;
+    }
+    .tutorial_btn_box button{
+        width:49.5%;
+        margin-bottom: 4px;
+    }
+    .tutorial_btn{
+        padding:20px 0;
+    }
+    .tutorial_btn_box > p{
+        width:80%;
+        font-size:24px;
+        line-height:120%;
+        padding-bottom: 20px;
+        margin:0 auto;
+    }
+    .tutorial_btn p span{
+        display:none;
+    }
+    .tutorial_btn.mobile_right {
+        margin-right: 0;
+    }
+    .tutorial_btn .tutorial_btn_title {
+        font-size: 20px;
+    }
+    .tutorial_download_image{
+        margin-right:4%;
+    }
+    .tutorial_download_text {
+        width: 78%;
+    }
+    .tutorial_download > div{
+        display:block;
+        float:none;
+    }
+    .tutorial_download_list{
+        float:none;
+        width:100%;
+        padding-top:20px;
+    }
+    .tutorial_download_text p{
+        width:100%;
+    }
+    .tutorial_download_text a{
+        float:none;
+        width:98%;
+        clear:both;
+    }
+    .tutorial_download_text .tutorial_download_name{
+        height:38px;
+        font-size:16px;
+        padding:6px 0 2px;
+    }
+    .tutorial_download_text .tutorial_download_name.double_line{
+        padding:0 0 8px;
+    }
+    .tutorial_download_text p{
+        height:48px;
+        padding-bottom:8px;
+    }
+    .tutorial_download_text p span {
+        display:none;
+    }
+
     /* FOOTER */
     .foot_link_box{
         width:100%;
@@ -702,5 +852,27 @@ header{
         display:none;
     }
 }
-@media all and (max-width:360px){
+@media all and (max-width:380px){
+    .tutorial_btn p{
+        display:none;
+    }
+    .tutorial_btn .tutorial_btn_title{
+        display:block;
+    }
+    .tutorial_download_list li{
+        width:100%;
+        padding-bottom:20px;
+    }
+    .tutorial_download_text .tutorial_download_name.double_line{
+        padding:6px 0 2px;
+    }
+    .tutorial_download_text .tutorial_download_name,
+    .tutorial_download_text p{
+        height:inherit;
+    }
+}
+@media all and (max-width:320px){
+    .tutorial_btn .tutorial_btn_title{
+        font-size:18px;
+    }
 }

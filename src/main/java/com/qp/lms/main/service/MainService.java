@@ -9,6 +9,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.qp.lms.board.model.BoardFaqVO;
 import com.qp.lms.board.model.BoardVO;
 import com.qp.lms.common.CodeVO;
 import com.qp.lms.common.CommUtil;
@@ -19,6 +20,7 @@ import com.qp.lms.counsel.model.CounselVO;
 import com.qp.lms.course.model.CourseResourceVO;
 import com.qp.lms.course.model.CourseVO;
 import com.qp.lms.main.model.MainSet;
+import com.qp.lms.postscript.model.PostScriptVO;
 
 @Service("mainService")
 public class MainService {
@@ -47,7 +49,10 @@ public class MainService {
     	
     	List<CourseResourceVO> courseResourceList = sqlSession.selectList("main.courseResourceData",set.getCondiVO());
     	set.setCourseResourceList(courseResourceList);
-    	
+
+    	List<PostScriptVO> coursePostscriptList = sqlSession.selectList("postscript.coursePostscriptList",set.getCondiVO());
+    	set.setPostScriptList(coursePostscriptList);
+
     	return set;
     }
 
@@ -151,6 +156,25 @@ public class MainService {
 		
 		//관심과정 ??
 
+    	return set;
+    }
+
+	
+	public MainSet service(MainSet set) throws Exception {
+		set.getCondiVO().setUserId(SessionUtil.getSessionUserId());
+
+		List<CodeVO> ddList = sqlSession.selectList("comm.getDdCodeKeyDdMain","FAQ");
+    	set.setDdCategory(ddList);
+    	
+		//Faq 카테고리별 5개
+    	List<BoardFaqVO> boardFaqlist = sqlSession.selectList("boardFaq.boardFaqCategory5List", null);
+    	set.setBoardFaqList(boardFaqlist);
+
+		//공지사항
+    	List<BoardVO> noticeList = sqlSession.selectList("main.noticeList", set.getCondiVO());
+		set.setNoticeList(noticeList);
+    	
+    	//이벤트
     	return set;
     }
 

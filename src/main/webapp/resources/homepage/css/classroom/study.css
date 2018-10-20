@@ -434,6 +434,7 @@ body{
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    cursor:pointer;
 }
 .study_list_table_line:hover
 /* ,.study_estimation_table_line:hover */
@@ -610,6 +611,7 @@ body{
     }
     table .study_estimation_table_line *{
         display:none;
+        height:26px;
     }
     table .study_estimation_table_line .mobile{
         float:left;

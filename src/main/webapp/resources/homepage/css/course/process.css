@@ -781,24 +781,24 @@ header{
 }
 
 
-.process_pager_box{
+.pager_box{
     text-align:center;
     padding: 20px 0 40px;
 }
-.process_pager{
+.pager{
     display:inline-block;
     margin: 0 auto;
 }
-.process_pager > *{
+.pager > *{
     float:left;
 }
-.process_pager_prev,
-.process_pager_next{
+.pager_prev,
+.pager_next{
     width:80px;
     margin:0 2px;
 }
-.process_pager_prev div,
-.process_pager_next div{
+.pager_prev div,
+.pager_next div{
     float: left;
     width: 45%;
     font-family: sans-serif;
@@ -810,11 +810,11 @@ header{
     border: solid 1px #ccc;
     cursor:pointer;
 }
-.process_pager ul{
+.pager ul{
     display:inline;
     margin-right:2px;
 }
-.process_pager ul li{
+.pager ul li{
     float: left;
     width: 35px;
     font-size: 18px;
@@ -823,7 +823,7 @@ header{
     border: solid 1px #ccc;
     cursor:pointer;
 }
-.process_pager ul .on{
+.pager ul .on{
     color:#fff;
     background:#1976d2;
     border:solid 1px #1976d2;
@@ -891,9 +891,6 @@ header{
     }
 }
 @media all and (max-width:1122px){
-    body{
-        background:#fff;
-    }
 
     /* HEAD */
     .head_wrap,
@@ -1222,20 +1219,16 @@ header{
         padding:0 0 0 6px;
     }
 
-    .process_pager_prev,
-    .process_pager_next{
+    .pager_prev,
+    .pager_next{
         width:50px;
     }
-    .process_pager_prev div,
-    .process_pager_next div{
+    .pager_prev div,
+    .pager_next div{
         width:44%;
     }
-    .process_pager ul {
+    .pager ul {
         margin-right: 0;
-    }
-    .process_pager ul li {
-        width: 30px;
-        /* margin-right: 2px; */
     }
 
 

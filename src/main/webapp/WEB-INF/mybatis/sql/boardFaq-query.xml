@@ -4,33 +4,36 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="boardFaq">
 
-    <select id="boardFaqList" parameterType="BoardFaq" resultType="BoardFaq">
-		SELECT PAGE.* FROM ( SELECT DATA.* FROM ( 
-			SELECT SEQ,
-			       CATEGORY,
-			       TITLE,
-			       VIEW_CNT,
-			       DATE_FORMAT(IFNULL(A.UPDATE_DATE,A.CREATE_DATE), '%y.%m.%d %H:%i') CREATE_DATE,
-			       B.DD_VALUE CATEGORY_NAME,
-		           IF(DATE_FORMAT(A.CREATE_DATE, '%y.%m.%d') = DATE_FORMAT(SYSDATE(), '%y.%m.%d'),'Y','N') IS_NEW,
-			       @ROWNUM := @ROWNUM + 1 ROWNUM
-			  FROM BOARD_FAQ A LEFT OUTER JOIN CODE B ON A.CATEGORY = B.DD_KEY AND B.DD_MAIN = 'FAQ',
-			       (SELECT @ROWNUM := 0) NUM
-			 WHERE 1 = 1
-			   <if test="category != null and category != ''"> AND CATEGORY LIKE CONCAT('%',#{category},'%')</if> 
-			   <if test="findString != null and findString != ''"> AND TITLE LIKE CONCAT('%',#{findString},'%')</if> 
-			 ORDER BY SEQ
-		) DATA ORDER BY SEQ DESC ) PAGE LIMIT #{limitStart},#{limitUnit}  
-    </select>	
-
-    <select id="boardFaqTotal" parameterType="BoardFaq" resultType="BoardFaq">
-		SELECT COUNT(*) CNT
-		  FROM BOARD_FAQ
+	<sql id="boardFaqQuery">
+		SELECT SEQ,
+		       CATEGORY,
+		       TITLE,
+		       VIEW_CNT,
+		       DATE_FORMAT(IFNULL(A.UPDATE_DATE,A.CREATE_DATE), '%y.%m.%d %H:%i') CREATE_DATE,
+		       B.DD_VALUE CATEGORY_NAME,
+	           IF(DATE_FORMAT(A.CREATE_DATE, '%y.%m.%d') = DATE_FORMAT(SYSDATE(), '%y.%m.%d'),'Y','N') IS_NEW,
+		       @ROWNUM := @ROWNUM + 1 ROWNUM
+		  FROM BOARD_FAQ A LEFT OUTER JOIN CODE B ON A.CATEGORY = B.DD_KEY AND B.DD_MAIN = 'FAQ',
+		       (SELECT @ROWNUM := 0) NUM
 		 WHERE 1 = 1
-			   <if test="category != null and category != ''"> AND CATEGORY LIKE CONCAT('%',#{category},'%')</if>
+		   <if test="category != null and category != ''"> AND CATEGORY LIKE CONCAT('%',#{category},'%')</if> 
 		   <if test="findString != null and findString != ''"> AND TITLE LIKE CONCAT('%',#{findString},'%')</if> 
-    </select>
-
+		 ORDER BY SEQ
+	</sql>
+	<select id="boardFaqList" parameterType="BoardFaq" resultType="BoardFaq">
+		SELECT 	DATA.* 
+		FROM 	(
+					<include refid="boardFaqQuery" />
+				) DATA 
+		LIMIT #{limitStart},#{limitUnit}
+	</select>	        
+	<select id="boardFaqTotal" parameterType="BoardFaq" resultType="BoardFaq">
+		SELECT 	COUNT(*) CNT
+		FROM	(
+			<include refid="boardFaqQuery" />
+				) DATA
+	</select>
+	
     <select id="boardFaqData" parameterType="BoardFaq" resultType="BoardFaq">
 		SELECT SEQ,
 		       CATEGORY,
@@ -87,6 +90,85 @@
 			 WHERE 1 = 1
 			 ORDER BY VIEW_CNT DESC
 		) DATA ) PAGE LIMIT 1,6  
+    </select>	
+
+    <select id="boardFaqCategory5List" parameterType="BoardFaq" resultType="BoardFaq">
+		SELECT DATA.* FROM ( 
+			SELECT SEQ,
+			       CATEGORY,
+			       TITLE,
+			       VIEW_CNT,
+			       DATE_FORMAT(IFNULL(A.UPDATE_DATE,A.CREATE_DATE), '%y.%m.%d %H:%i') CREATE_DATE,
+			       B.DD_VALUE CATEGORY_NAME,
+		           IF(DATE_FORMAT(A.CREATE_DATE, '%y.%m.%d') = DATE_FORMAT(SYSDATE(), '%y.%m.%d'),'Y','N') IS_NEW,
+			       @ROWNUM := @ROWNUM + 1 ROWNUM
+			  FROM BOARD_FAQ A LEFT OUTER JOIN CODE B ON A.CATEGORY = B.DD_KEY AND B.DD_MAIN = 'FAQ',
+			       (SELECT @ROWNUM := 0) NUM
+			 WHERE CATEGORY = '01'
+			 ORDER BY VIEW_CNT DESC
+		) DATA 
+        WHERE ROWNUM IN (1,2,3,4,5)
+		UNION   
+		SELECT DATA.* FROM ( 
+			SELECT SEQ,
+			       CATEGORY,
+			       TITLE,
+			       VIEW_CNT,
+			       DATE_FORMAT(IFNULL(A.UPDATE_DATE,A.CREATE_DATE), '%y.%m.%d %H:%i') CREATE_DATE,
+			       B.DD_VALUE CATEGORY_NAME,
+		           IF(DATE_FORMAT(A.CREATE_DATE, '%y.%m.%d') = DATE_FORMAT(SYSDATE(), '%y.%m.%d'),'Y','N') IS_NEW,
+			       @ROWNUM := @ROWNUM + 1 ROWNUM
+			  FROM BOARD_FAQ A LEFT OUTER JOIN CODE B ON A.CATEGORY = B.DD_KEY AND B.DD_MAIN = 'FAQ',
+			       (SELECT @ROWNUM := 0) NUM
+			 WHERE CATEGORY = '02'
+			 ORDER BY VIEW_CNT DESC
+		) DATA 
+        WHERE ROWNUM IN (1,2,3,4,5)
+		UNION  SELECT DATA.* FROM ( 
+			SELECT SEQ,
+			       CATEGORY,
+			       TITLE,
+			       VIEW_CNT,
+			       DATE_FORMAT(IFNULL(A.UPDATE_DATE,A.CREATE_DATE), '%y.%m.%d %H:%i') CREATE_DATE,
+			       B.DD_VALUE CATEGORY_NAME,
+		           IF(DATE_FORMAT(A.CREATE_DATE, '%y.%m.%d') = DATE_FORMAT(SYSDATE(), '%y.%m.%d'),'Y','N') IS_NEW,
+			       @ROWNUM := @ROWNUM + 1 ROWNUM
+			  FROM BOARD_FAQ A LEFT OUTER JOIN CODE B ON A.CATEGORY = B.DD_KEY AND B.DD_MAIN = 'FAQ',
+			       (SELECT @ROWNUM := 0) NUM
+			 WHERE CATEGORY = '03'
+			 ORDER BY VIEW_CNT DESC
+		) DATA 
+        WHERE ROWNUM IN (1,2,3,4,5)
+		UNION  SELECT DATA.* FROM ( 
+			SELECT SEQ,
+			       CATEGORY,
+			       TITLE,
+			       VIEW_CNT,
+			       DATE_FORMAT(IFNULL(A.UPDATE_DATE,A.CREATE_DATE), '%y.%m.%d %H:%i') CREATE_DATE,
+			       B.DD_VALUE CATEGORY_NAME,
+		           IF(DATE_FORMAT(A.CREATE_DATE, '%y.%m.%d') = DATE_FORMAT(SYSDATE(), '%y.%m.%d'),'Y','N') IS_NEW,
+			       @ROWNUM := @ROWNUM + 1 ROWNUM
+			  FROM BOARD_FAQ A LEFT OUTER JOIN CODE B ON A.CATEGORY = B.DD_KEY AND B.DD_MAIN = 'FAQ',
+			       (SELECT @ROWNUM := 0) NUM
+			 WHERE CATEGORY = '04'
+			 ORDER BY VIEW_CNT DESC
+		) DATA 
+        WHERE ROWNUM IN (1,2,3,4,5)
+		UNION  SELECT DATA.* FROM ( 
+			SELECT SEQ,
+			       CATEGORY,
+			       TITLE,
+			       VIEW_CNT,
+			       DATE_FORMAT(IFNULL(A.UPDATE_DATE,A.CREATE_DATE), '%y.%m.%d %H:%i') CREATE_DATE,
+			       B.DD_VALUE CATEGORY_NAME,
+		           IF(DATE_FORMAT(A.CREATE_DATE, '%y.%m.%d') = DATE_FORMAT(SYSDATE(), '%y.%m.%d'),'Y','N') IS_NEW,
+			       @ROWNUM := @ROWNUM + 1 ROWNUM
+			  FROM BOARD_FAQ A LEFT OUTER JOIN CODE B ON A.CATEGORY = B.DD_KEY AND B.DD_MAIN = 'FAQ',
+			       (SELECT @ROWNUM := 0) NUM
+			 WHERE CATEGORY = '05'
+			 ORDER BY VIEW_CNT DESC
+		) DATA 
+        WHERE ROWNUM IN (1,2,3,4,5)
     </select>	
 
         

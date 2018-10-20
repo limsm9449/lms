@@ -319,16 +319,14 @@ public class UserService {
     	BoardVO board = new BoardVO();
     	board.setFindString(set.getCondiVO().getFindString());
     	board.setCourseId("0");
-    	
-    	//쿼리에서 가져올 갯수 지정
-    	set.getCondiVO().setLimitUnit(Constant.unitForBoard);
+    	board.setPageNum(set.getCondiVO().getPageNum());
     	board.setLimitUnit(Constant.unitForBoard);
-
+    	
     	List<BoardVO> list = sqlSession.selectList("boardNotice.boardNoticeList",board);
     	set.setBoardNoticeList(list);
     	
     	//페이징 처리 변수 세팅
-    	set.setTotalCount(((BoardVO)sqlSession.selectOne("boardNotice.boardNoticeTotal",set.getCondiVO())).getCnt());
+    	set.setTotalCount(((BoardVO)sqlSession.selectOne("boardNotice.boardNoticeTotal",board)).getCnt());
     	set.setPageUnit(Constant.unitForBoard);
     	
         return set ;
@@ -345,21 +343,6 @@ public class UserService {
     	
     	set.setBoardNotice((BoardVO) sqlSession.selectOne("boardNotice.boardNoticeData",board));
     	
-    	// 다음
-    	BoardVO nextVO = (BoardVO)sqlSession.selectOne("boardNotice.nextNoticeSeq",board);
-    	if ( nextVO != null && !"".equals(nextVO.getSeq()) ) {
-    		set.getBoardNotice().setNextSeq(nextVO.getSeq());
-    	} else {
-    		set.getBoardNotice().setNextSeq("");
-    	}
-    	// 이전
-    	BoardVO prevVO = (BoardVO)sqlSession.selectOne("boardNotice.prevNoticeSeq",board);
-    	if ( prevVO != null && !"".equals(prevVO.getSeq()) ) {
-    		set.getBoardNotice().setPrevSeq(prevVO.getSeq());;
-    	} else {
-    		set.getBoardNotice().setPrevSeq("");
-    	}
-    	
         return set ;
     }
     
@@ -372,16 +355,14 @@ public class UserService {
     	BoardFaqVO board = new BoardFaqVO();
     	board.setFindString(set.getCondiVO().getFindString());
     	board.setCategory(set.getCondiVO().getCategory());
-    	
-    	//쿼리에서 가져올 갯수 지정
-    	set.getCondiVO().setLimitUnit(Constant.unitForBoard);
+    	board.setPageNum(set.getCondiVO().getPageNum());
     	board.setLimitUnit(Constant.unitForBoard);
 
     	List<BoardFaqVO> list = sqlSession.selectList("boardFaq.boardFaqList",board);
     	set.setBoardFaqList(list);
     	
     	//페이징 처리 변수 세팅
-    	set.setTotalCount(((BoardFaqVO)sqlSession.selectOne("boardFaq.boardFaqTotal",set.getCondiVO())).getCnt());
+    	set.setTotalCount(((BoardFaqVO)sqlSession.selectOne("boardFaq.boardFaqTotal",board)).getCnt());
     	set.setPageUnit(Constant.unitForBoard);
     	
         return set ;

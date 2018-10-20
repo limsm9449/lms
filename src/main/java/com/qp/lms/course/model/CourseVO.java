@@ -103,39 +103,7 @@ public class CourseVO extends CommonVO {
 	private String totalCnt;
 	private String answerCnt;
 	private String postscriptYn;
-		
-		
-	public String getPeriodProgress() {
-		return periodProgress;
-	}
-
-	public void setPeriodProgress(String periodProgress) {
-		this.periodProgress = periodProgress;
-	}
-
-	public String getAttendCourseCnt() {
-		return attendCourseCnt;
-	}
-
-	public void setAttendCourseCnt(String attendCourseCnt) {
-		this.attendCourseCnt = attendCourseCnt;
-	}
-
-	public String getCompleteCourseCnt() {
-		return completeCourseCnt;
-	}
-
-	public void setCompleteCourseCnt(String completeCourseCnt) {
-		this.completeCourseCnt = completeCourseCnt;
-	}
-
-	public String getCourseRemainDay() {
-		return courseRemainDay;
-	}
-
-	public void setCourseRemainDay(String courseRemainDay) {
-		this.courseRemainDay = courseRemainDay;
-	}
+	private String resourceCnt;
 
 	private String isReport;
 	private String isExam;
@@ -211,7 +179,46 @@ public class CourseVO extends CommonVO {
     private String waitingCourseCnt;
     private String completeCourseCnt;
     private String courseRemainDay;
+    private String termYn;
 
+    private String termPeriodFrom;
+    private String termPeriodTo;
+    private String studyPeriodFrom;
+    private String studyPeriodTo;
+
+    
+	public String getPeriodProgress() {
+		return periodProgress;
+	}
+	
+	public void setPeriodProgress(String periodProgress) {
+		this.periodProgress = periodProgress;
+	}
+	
+	public String getAttendCourseCnt() {
+		return attendCourseCnt;
+	}
+	
+	public void setAttendCourseCnt(String attendCourseCnt) {
+		this.attendCourseCnt = attendCourseCnt;
+	}
+	
+	public String getCompleteCourseCnt() {
+		return completeCourseCnt;
+	}
+	
+	public void setCompleteCourseCnt(String completeCourseCnt) {
+		this.completeCourseCnt = completeCourseCnt;
+	}
+	
+	public String getCourseRemainDay() {
+		return courseRemainDay;
+	}
+	
+	public void setCourseRemainDay(String courseRemainDay) {
+		this.courseRemainDay = courseRemainDay;
+	}
+	
 	public String getCourseCode() {
 		return courseCode;
 	}
@@ -1276,6 +1283,54 @@ public class CourseVO extends CommonVO {
 
 	public void setPostscriptYn(String postscriptYn) {
 		this.postscriptYn = postscriptYn;
+	}
+
+	public String getResourceCnt() {
+		return resourceCnt;
+	}
+
+	public void setResourceCnt(String resourceCnt) {
+		this.resourceCnt = resourceCnt;
+	}
+
+	public String getTermYn() {
+		return termYn;
+	}
+
+	public void setTermYn(String termYn) {
+		this.termYn = termYn;
+	}
+
+	public String getTermPeriodFrom() {
+		return termPeriodFrom;
+	}
+
+	public void setTermPeriodFrom(String termPeriodFrom) {
+		this.termPeriodFrom = termPeriodFrom;
+	}
+
+	public String getTermPeriodTo() {
+		return termPeriodTo;
+	}
+
+	public void setTermPeriodTo(String termPeriodTo) {
+		this.termPeriodTo = termPeriodTo;
+	}
+
+	public String getStudyPeriodFrom() {
+		return studyPeriodFrom;
+	}
+
+	public void setStudyPeriodFrom(String studyPeriodFrom) {
+		this.studyPeriodFrom = studyPeriodFrom;
+	}
+
+	public String getStudyPeriodTo() {
+		return studyPeriodTo;
+	}
+
+	public void setStudyPeriodTo(String studyPeriodTo) {
+		this.studyPeriodTo = studyPeriodTo;
 	}
 
 

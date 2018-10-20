@@ -4,6 +4,34 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="postscript">
 
+    <select id="coursePostscriptList" parameterType="PostScript" resultType="PostScript">
+    <![CDATA[
+	    SELECT 	A.USER_ID
+	           	,B.USER_NAME
+		       	,A.CONTENTS
+		       	,A.EVAL
+                ,CASE WHEN IFNULL(A.EVAL, 0) > 0 AND IFNULL(A.EVAL, 0) <= 0.5 THEN 'active5'
+					 WHEN IFNULL(A.EVAL, 0) > 0.5 THEN 'star_active'
+                     ELSE 'star_inactive' END EVAL1
+                ,CASE WHEN IFNULL(A.EVAL, 0) > 1 AND IFNULL(A.EVAL, 0) <= 1.5 THEN 'active5'
+					 WHEN IFNULL(A.EVAL, 0) > 1.5 THEN 'star_active'
+                     ELSE 'star_inactive' END EVAL2
+                ,CASE WHEN IFNULL(A.EVAL, 0) > 2 AND IFNULL(A.EVAL, 0) <= 2.5 THEN 'active5'
+					 WHEN IFNULL(A.EVAL, 0) > 2.5 THEN 'star_active'
+                     ELSE 'star_inactive' END EVAL3
+                ,CASE WHEN IFNULL(A.EVAL, 0) > 3 AND IFNULL(A.EVAL, 0) <= 3.5 THEN 'active5'
+					 WHEN IFNULL(A.EVAL, 0) > 3.5 THEN 'star_active'
+                     ELSE 'star_inactive' END EVAL4
+                ,CASE WHEN IFNULL(A.EVAL, 0) > 4 AND IFNULL(A.EVAL, 0) <= 4.5 THEN 'active5'
+					 WHEN IFNULL(A.EVAL, 0) > 4.5 THEN 'star_active'
+                     ELSE 'star_inactive' END EVAL5
+	       	   	,DATE_FORMAT(IFNULL(A.UPDATE_DATE,A.CREATE_DATE), '%Y.%m.%d') CREATE_DATE
+		FROM 	POSTSCRIPT A LEFT OUTER JOIN USER B ON A.USER_ID = B.USER_ID
+		WHERE 	A.COURSE_ID = #{courseId}
+	 	ORDER 	BY 5 DESC
+	]]>
+    </select>	
+
     <select id="postscriptList" parameterType="PostScript" resultType="PostScript">
 	<![CDATA[
 	SELECT DATA.* FROM (

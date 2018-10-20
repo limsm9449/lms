@@ -36,14 +36,14 @@ $(document).ready(function(){
     <div class='wrap'>
         
 		<!-- HEAD -->
-       	<%@ include file="./mainTop.jsp" %>
+       	<%@ include file="../common/mainTop.jsp" %>
        	<!-- HEAD END -->
 
         <!-- CONTENTS -->
         <div class='contents_wrap process' onmouseover='sub_hide()'>
             <div class='contents_wrap_box'>
                 <!-- QUICK MENU -->
-            	<%@ include file="./mainQuickMenu.jsp" %>
+            	<%@ include file="../common/mainQuickMenu.jsp" %>
 
                 <!-- Top -->
                 <div class='process_top_area'>
@@ -348,7 +348,7 @@ $(document).ready(function(){
         <!-- CONTENTS END -->
 
 		<!-- FOOTER -->
-       	<%@ include file="./mainBottom.jsp" %>
+       	<%@ include file="../common/mainBottom.jsp" %>
         <!-- FOOTER END -->
         
     </div>

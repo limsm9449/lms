@@ -33,11 +33,10 @@
 	<select id="applicationCourseWeekList" resultType="Course">
 	SELECT C.WEEK,
 	       C.TITLE,
-	       B.WEEK_COST
-	  FROM COURSE A LEFT OUTER JOIN COURSE_WEEK_COST B ON A.COURSE_ID = B.COURSE_ID
-	                LEFT OUTER JOIN COURSE_RESOURCE C ON C.COURSE_CODE = A.COURSE_CODE AND C.WEEK = B.WEEK 
+	       C.WEEK_COST
+	  FROM COURSE A LEFT OUTER JOIN COURSE_RESOURCE C ON C.COURSE_CODE = A.COURSE_CODE 
 	 WHERE A.COURSE_ID = #{courseId}
-	   AND B.WEEK IN 
+	   AND C.WEEK IN 
 	 	<foreach item="item" index="index" collection="list" open="(" separator="," close=")">
          	#{item}
  		</foreach>

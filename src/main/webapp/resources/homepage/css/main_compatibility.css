@@ -13,8 +13,16 @@
     height:100%;
 }
 
-body{
+/* html body{
+    background:#000;
+}
+html body .learning_wrap{
     background:yellow;
+} */
+
+
+body .learnig_wrap button{
+    margin-right:1.45%;
 }
 @media all and (max-width:420px){
     .study_estimation_table_line .esti_btn button{

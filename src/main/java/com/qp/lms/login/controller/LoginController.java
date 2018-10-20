@@ -82,9 +82,9 @@ public class LoginController {
 	   	 		sess.setCompName(set.getData().getCompName());
 	   	 		
 	   	 		if ( "".equals(CommUtil.getString(set.getData().getCompCd())) ) {
-	   	 			sess.setUserCompCd("B2C");
+	   	 			sess.setCompCd("B2C");
 	   	 		} else {
-	   	 			sess.setUserCompCd(set.getData().getCompCd());
+	   	 			sess.setCompCd(set.getData().getCompCd());
 	   	 		}
 
 	   	 		sess.setAuth(auth);
@@ -95,7 +95,7 @@ public class LoginController {
 		    	else
 		    		sess.setDownloadAuth("N");
 
- 	 			sess.setCompCd(set.getCondiVO().getCompCd());
+ 	 			//sess.setCompCd(set.getCondiVO().getCompCd());
 
 	   	 		SessionUtil.setAttribute("session", sess);
    	 		}

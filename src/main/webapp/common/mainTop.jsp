@@ -68,10 +68,10 @@
                             <a href="javascript:" onclick="page.goPage('/main/myClassroom', '');">나의강의실</a>
                         </li>
                         <li>
-                            <a href='/resources/homepage/html/tutorial/tutorial.html'>교육안내</a>
+                            <a href="javascript:" onclick="page.goPage('/main/tutorial', '');">교육안내</a>
                         </li>
                         <li>
-                            <a href='/resources/homepage/html/service/service.html'>고객지원</a>
+                            <a href="javascript:" onclick="page.goPage('/main/service', '');">고객지원</a>
                         </li>
                     </ul>
                     <div class='menu_tutor'>
@@ -169,20 +169,6 @@
                         <a href='#'>${session.userName}님 반갑습니다</p>
 </c:if>  
                     </div>
-                    <div class='mobile_menu process_all'>
-                        <button onclick='sub_menu_open(this, "main")'>
-                            전체과정
-                        </button>
-                        <ul>
-                            <li class='first_depth'><a href='./html/course/process.html'>전체과정-1</a></li> 
-                            <li><a href=''>경영직무</a></li>
-                            <li><a href=''>업종직무</a></li>
-                            <li><a href=''>비즈니스</a></li>
-                            <li><a href=''>정보기술</a></li>
-                            <li><a href=''>외국어</a></li>
-                            <li><a href=''>교양</a></li>
-                        </ul>
-                    </div>                    
                     <div class='mobile_menu process_all'>
                         <button onclick='sub_menu_open(this, "main")'>
                             전체과정

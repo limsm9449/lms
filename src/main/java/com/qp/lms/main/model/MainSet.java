@@ -2,6 +2,7 @@ package com.qp.lms.main.model;
 
 import java.util.List;
 
+import com.qp.lms.board.model.BoardFaqVO;
 import com.qp.lms.board.model.BoardVO;
 import com.qp.lms.common.CodeVO;
 import com.qp.lms.common.CommonSet;
@@ -11,6 +12,7 @@ import com.qp.lms.course.model.CourseResourceVO;
 import com.qp.lms.course.model.CourseVO;
 import com.qp.lms.guest.model.BankVO;
 import com.qp.lms.member.model.MemberVO;
+import com.qp.lms.postscript.model.PostScriptVO;
 
 
 
@@ -44,6 +46,10 @@ public class MainSet extends CommonSet {
 	private List<CourseVO> attendCourseList;
 	private List<CourseVO> completeCourseList;
 	private CourseVO courseSummary;
+	private List<PostScriptVO> postScriptList;
+	private List<BoardFaqVO> boardFaqList;
+	private List<CodeVO> ddCategory;
+	
 	
 	public void setCondiVO(MainVO condiVO) {
 		this.condiVO = condiVO;
@@ -152,6 +158,24 @@ public class MainSet extends CommonSet {
 	}
 	public void setCourseSummary(CourseVO courseSummary) {
 		this.courseSummary = courseSummary;
+	}
+	public List<PostScriptVO> getPostScriptList() {
+		return postScriptList;
+	}
+	public void setPostScriptList(List<PostScriptVO> postScriptList) {
+		this.postScriptList = postScriptList;
+	}
+	public List<BoardFaqVO> getBoardFaqList() {
+		return boardFaqList;
+	}
+	public void setBoardFaqList(List<BoardFaqVO> boardFaqList) {
+		this.boardFaqList = boardFaqList;
+	}
+	public List<CodeVO> getDdCategory() {
+		return ddCategory;
+	}
+	public void setDdCategory(List<CodeVO> ddCategory) {
+		this.ddCategory = ddCategory;
 	}
 	
 	

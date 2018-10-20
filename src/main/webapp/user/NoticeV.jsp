@@ -1,119 +1,101 @@
 <%@ page contentType="text/html;charset=utf-8"%>
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
-<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="ko" xml:lang="ko">
+<!DOCTYPE html>
+<html lang='ko'>
+
 <head>
-<title>
-</title>
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1'>
+    <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+    <title>Q learning - 공지사항 상세보기</title>
 
-<%@ include file="../common/commUserInclude.jsp" %>
-
-
+	<%@ include file="../common/commMainInclude.jsp" %>
+	
+    <link href='https://fonts.googleapis.com/css?family=Nanum+Gothic' rel='stylesheet'>
+    <link rel='stylesheet' href='/resources/homepage/css/initialization.css'>
+    <link rel='stylesheet' href='/resources/homepage/css/support/notice_detail.css'>
 </head>
 
-<script type="text/javascript">
-
-$(document).ready(function() {
-});
-
-function lfn_btn(pKind, pParam) {
-	if ( pKind == "list" ) {
-		gfn_goPage("/user/noticeList",$("#frm").serialize()); 
-	} else if ( pKind == "nextNotice" ) {
-		gfn_goPage("/user/noticeV","seq=" + pParam.seq); 
-	} else if ( pKind == "prevNotice" ) {
-		gfn_goPage("/user/noticeV","seq=" + pParam.seq); 
-	}
-}
-
-</script>
-
 <body>
-
 <form name="frm" id="frm" method="post">
 
-<input id="findString" name="findString" type="hidden" value="${set.condiVO.findString}">
-<input id="seq" name="seq" type="hidden" value="${set.condiVO.seq}">
+    <frameset rows='*'>
+        <div class='wrap'>
+            <!-- PC HEADER -->
+            <%@ include file="../common/mainTop.jsp" %>
+            <!-- HEAD END -->
 
-<!-- skipnav -->
-<div id="skipnav"><a href="#side" class="skip">좌측메뉴 바로가기</a></div>
-<div id="skipnav"><a href="#contents" class="skip">컨텐츠 바로가기</a></div>
-<!-- skipnav -->
+            <!-- CONTENTS -->
+            <div class='contents_wrap support' onmouseover='sub_hide()'>
+                <div class='contents_wrap_box'>
+                    <!-- QUICK MENU -->
+                    <%@ include file="../common/mainQuickMenu.jsp" %>
 
-<!-- wrap -->
-<div id="wrap" class="site">
-  <%@ include file="../home/userTop.jsp" %>
-  <hr />
-  <!-- container -->
-  <div id="container" class="site">
-   	 	<!-- side -->
-   	 	<%
-   	 		String menuId = "noticeList";
-   	 	%>
-		<%@ include file="../home/userLeft3.jsp" %>
-		<!-- end side -->
-		
-    	<!-- contents -->
-		<div id="contents" class="site">
-			<!-- location -->
-			<div id="location"><a href="/" class="home">HOME</a><span>&gt;</span>학습지원<span>&gt;</span>공지사항</div>
-			<!-- title -->
-			<h3 class="tit_big">공지사항</h3>
-		      <div class="artcle">
-		        <div class="notice_view_box">
-		        	&nbsp;
-		          <div id="bod_search_r">
-		            <a href="javascript:" onclick="lfn_btn('list');"><img src="/resources/images/sub/btn_go_list.png" alt="목록으로 돌아가기" /></a>
-		          </div>
-		          <div id="bodview_box">
-		            <div class="title">${set.boardNotice.title}</div>
-		            <div class="tool_box">
-		              <dl>
-		                <dt>조회</dt>
-		                <dd>${set.boardNotice.viewCnt}</dd>
-		                <dt class="date">등록일</dt>
-		                <dd>${set.boardNotice.createDate}</dd>
-		              </dl>
-		            </div>
-		            <div class="text">
-		              ${set.boardNotice.contents}
-		            </div>
-		          </div>
-		          <div id="bod_search_r">
-<c:if test="${set.boardNotice.prevSeq ne ''}">
-		            <a href="javascript:" onclick="lfn_btn('prevNotice',{seq:'${set.boardNotice.prevSeq}'});">이전글</a>
-</c:if>		            
-<c:if test="${set.boardNotice.nextSeq ne ''}">
-		            <a href="javascript:" onclick="lfn_btn('nextNotice',{seq:'${set.boardNotice.nextSeq}'});">다음글</a>
-</c:if>		            
-		            <a href="javascript:" onclick="lfn_btn('list');"><img src="/resources/images/sub/btn_go_list.png" alt="목록으로 돌아가기" /></a>
-		          </div>
-		            
-		        </div>
-		      </div>
-			
-		</div>
-		<!-- end content -->
+                    <!-- Top -->
+                    <div class='top_area'>
+                        <div class='clear_fix'>
+                            <div class='process_history_box clear_fix'>
+                                <span>
+                                    <img src='/resources/homepage/img/course/ic_home.jpg' alt=' '>
+                                </span>
+                                <p>HOME</p>
+                                <span>
+                                    <img src='/resources/homepage/img/course/arr_right.jpg' alt=' '>
+                                </span>
+                                <p>수강신청</p>
+                                <span>
+                                    <img src='/resources/homepage/img/course/arr_right.jpg' alt=' '>
+                                </span>
+                                <p>교육과정</p>
+                            </div>
+                        </div>
+                        <h1>
+                            공지<span>사항</span>
+                        </h1>
+                    </div>
+                    <!-- Top END -->
 
+                    <!-- Contents -->
+                    <div class='notice_detail_box'>
+                        <div class='notice_title_box'>
+                            <p>${set.boardNotice.title}</p>
+                        </div>
+                        <div class='notice_info_box clear_fix'>
+                            <div class='notice_visit'>
+                                <p class='type'>조회</p>
+                                <p>${set.boardNotice.viewCnt}</p>
+                            </div>
+                            <div class='notice_regDate'>
+                                <p class='type'>등록일</p>
+                                <p>${set.boardNotice.createDate}</p>
+                            </div>
+                        </div>
+                        <div>
+			             	${set.boardNotice.contents}
+			            </div>
+                    </div>
+                    <div class='detail_btn_area'>
+                        <a href="javascript:" onclick="history.go(-1);" class='bg_color'>목록으로 돌아가기</a>
+                    </div>
+                    
+                    <!-- Contents END -->
+                </div>
+            </div>
+            <!-- CONTENTS END -->
 
-		
-		
-	</div>
-  <!-- end container -->
-  <!-- footer_wrap -->
-	<%@ include file="../home/bottom.jsp" %>
-  <!-- end footer_wrap -->
-</div>
-
+            <!-- FOOTER -->
+            <%@ include file="../common/mainBottom.jsp" %>
+            <!-- FOOTER END -->
+        </div>
+    </frameset>
 </form>
-
-
-<iframe id="tranFrameS" name="tranFrameS" style="display:none;"></iframe>
-
+    
+    <script src='/resources/homepage/js/sub.js'></script>
 </body>
-</html>
 
+</html>

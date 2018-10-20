@@ -115,6 +115,7 @@ public class MainController {
     		else {
     			set.getCondiVO().setIsLogin("Y");
     			set.getCondiVO().setUserId(SessionUtil.getSessionUserId());
+    			set.getCondiVO().setCompCd(SessionUtil.getCompCd());
     		}
     		
 			set = svr.mainCourseData(set);
@@ -586,6 +587,27 @@ public class MainController {
     	}
 
     	return "/homepage/myClassroom";
+    }
+
+    @RequestMapping(value = "/main/tutorial")
+    public String tutorial(@ModelAttribute MainVO vo, Model model) throws Exception {
+    	return "/homepage/tutorial";
+    }
+
+    @RequestMapping(value = "/main/service")
+    public String service(@ModelAttribute MainVO vo, Model model) throws Exception {
+    	try {
+    		MainSet set = new MainSet();
+    		set.setCondiVO(vo);
+
+			set = svr.service(set);
+		    	
+	        model.addAttribute("set", set );
+    	} catch ( Exception e ) {
+    		e.printStackTrace();
+    	}
+
+    	return "/homepage/service";
     }
 
 }

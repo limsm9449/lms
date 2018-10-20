@@ -6,8 +6,7 @@
     <meta name='viewport' content='width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1'>
     <meta http-equiv='X-UA-Compatible' content='ie=edge'>
     <title>Q learning - Main</title>
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    
     <script src='./js/jquery_3.3.1.js'></script>
     <!--[if IE8]>
         <script src="http://code.jquery.com/jquery-1.12.3.js></script>
@@ -25,7 +24,7 @@
 </head>
 
 <body>
-<!-- <frameset rows='*'> -->
+<frameset rows='*'>
     <div class="wrap">
         <!-- HEAD -->
         <div id='width_text'></div>
@@ -44,9 +43,14 @@
                     </button>
                 </div>
                 <div class='head_con util_box'>
-                    <a href='#' class='last_right'>로그아웃</a>
+                    <!-- 로그인 상태 -->
+                    <!-- <a href='#' class='last_right'>로그아웃</a>
                     <a href='#' class='pc'>회원정보수정</a>
-                    <p class='pc'>OOO님 반갑습니다.</p>
+                    <p class='pc'>OOO님 반갑습니다.</p> -->
+
+                    <!-- 로그오프 상태 -->
+                    <a href='./html/etc/signup_step1.html' class='last_right'>회원가입</a>
+                    <a href='./html/etc/signin.html'>로그인</a>
                 </div>
             </div>
             <div class="head_wrap mobile clear_fix">
@@ -88,7 +92,7 @@
                             <a href='./html/guidance/tutorial.html'>교육안내</a>
                         </li>
                         <li>
-                            <a href='./html/support/service.html'>고객지원</a>
+                            <a href='./html/support/support.html'>고객지원</a>
                         </li>
                     </ul>
                     <div class='menu_tutor'>
@@ -131,11 +135,11 @@
                             </ul>
                             <span class='menu_sub_line'></span>
                             <ul class='menu_sub'>
-                                <li><a href=''>공지사항</a></li>
-                                <li><a href=''>FAQ</a></li>
-                                <li><a href=''>1:1 메일문의</a></li>
+                                <li><a href='./html/support/notice.html'>공지사항</a></li>
+                                <li><a href='./html/support/faq.html'>FAQ</a></li>
+                                <li><a href='./html/support/mail.html'>1:1 메일문의</a></li>
                                 <li><a href=''>원격지원</a></li>
-                                <li><a href=''>입금계좌안내</a></li>
+                                <li><a href='./html/support/account.html'>입금계좌안내</a></li>
                                 <li><a href=''>찾아오시는길</a></li>
                             </ul>
                         </div>
@@ -163,7 +167,7 @@
                     </a>
                 </div>
                 <div class='head_con util_box'>
-                    <a href='#' class='last_right' onclick='login()'>로그인</a>
+                    <a href='./html/etc/signin.html' class='last_right' onclick='login()'>로그인</a>
                 </div>
                 <div class='head_con search_box'>
                     <input type="text">
@@ -232,12 +236,12 @@
                             고객지원
                         </button>
                         <ul>
-                            <li class='first_depth'><a href='./html/support/service.html'>고객지원</a></li>
-                            <li><a href=''>공지사항</a></li>
-                            <li><a href=''>FAQ</a></li>
-                            <li><a href=''>1:1 메일문의</a></li>
+                            <li class='first_depth'><a href='./html/support/support.html'>고객지원</a></li>
+                            <li><a href='./html/support/notice.html'>공지사항</a></li>
+                            <li><a href='./html/support/faq.html'>FAQ</a></li>
+                            <li><a href='./html/support/mail.html'>1:1 메일문의</a></li>
                             <li><a href=''>원격지원</a></li>
-                            <li><a href=''>입금계좌안내</a></li>
+                            <li><a href='./html/support/account.html'>입금계좌안내</a></li>
                             <li><a href=''>찾아오시는길</a></li>
                         </ul>
                     </div>
@@ -670,8 +674,12 @@
         </div>
         <!-- FOOTER END -->
     </div>
+    <!-- Local -->
     <script src='./js/main.js'></script>
-<!-- </frameset> -->
+
+    <!-- Server -->
+    <!-- <script src='./js/dev.js'></script> -->
+</frameset>
 </body>
 
 </html>

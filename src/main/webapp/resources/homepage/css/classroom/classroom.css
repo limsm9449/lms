@@ -549,6 +549,7 @@ header{
 }
 .user_cs_notice_box > ul,
 .user_cs_counsel > ul{
+    min-height:76px;
     padding: 20px;
     border-top: solid 1px #333;
 }
@@ -936,9 +937,6 @@ header{
     }
 }
 @media all and (max-width:1122px){
-    body{
-        background:#fff;
-    }
     
     /* HEAD */
     .head_wrap,
@@ -1382,21 +1380,20 @@ header{
         padding:0 0 0 6px;
     }
 
-    .process_pager_prev,
-    .process_pager_next{
+    /* .pager_prev,
+    .pager_next{
         width:50px;
     }
-    .process_pager_prev div,
-    .process_pager_next div{
+    .pager_prev div,
+    .pager_next div{
         width:44%;
     }
-    .process_pager ul {
+    .pager ul {
         margin-right: 0;
     }
-    .process_pager ul li {
+    .pager ul li {
         width: 30px;
-        /* margin-right: 2px; */
-    }
+    } */
 
 
     /* FOOTER */

@@ -34,13 +34,13 @@
     <div class="wrap">
        	
        	<!-- HEAD -->
-       	<%@ include file="./mainTop.jsp" %>
+       	<%@ include file="../common/mainTop.jsp" %>
        	<!-- HEAD END -->
 
         <!-- CONTENTS -->
         <div class='contents_wrap' onmouseover='sub_hide()'>
             <!-- QUICK MENU -->
-            <%@ include file="./mainQuickMenu.jsp" %>
+            <%@ include file="../common/mainQuickMenu.jsp" %>
 
             <!-- VISUAL -->
             <ul class='slider_wrap tabs' id='tab1'>
@@ -383,7 +383,7 @@
         <!-- CONTENTS END -->
 
 		<!-- FOOTER -->
-       	<%@ include file="./mainBottom.jsp" %>
+       	<%@ include file="../common/mainBottom.jsp" %>
         <!-- FOOTER END -->
         
     </div>

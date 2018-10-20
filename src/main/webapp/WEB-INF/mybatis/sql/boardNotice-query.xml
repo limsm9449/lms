@@ -4,28 +4,32 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="boardNotice">
 
-	<select id="boardNoticeList" parameterType="Board" resultType="Board">
-	SELECT PAGE.* FROM ( SELECT DATA.* FROM ( 
+	<sql id="boardNoticeQuery">
 		SELECT SEQ,
 		       COURSE_ID,
 		       TITLE,
 		       VIEW_CNT,
 		       DATE_FORMAT(IFNULL(UPDATE_DATE,CREATE_DATE), '%y.%m.%d %H:%i') CREATE_DATE,
 		       IF(DATE_FORMAT(CREATE_DATE, '%y.%m.%d') = DATE_FORMAT(SYSDATE(), '%y.%m.%d'),'Y','N') IS_NEW,
-		       @ROWNUM := @ROWNUM + 1 ROWNUM
+	       		@ROWNUM := @ROWNUM + 1 ROWNUM
 		  FROM BOARD_NOTICE,
-		       (SELECT @ROWNUM := 0) NUM
+	       		(SELECT @ROWNUM := 0) NUM
 		 WHERE COURSE_ID = #{courseId}
 		   <if test="findString != null and findString != ''"> AND TITLE LIKE CONCAT('%',#{findString},'%')</if> 
-		 ORDER BY SEQ
-	) DATA ORDER BY SEQ DESC ) PAGE LIMIT #{limitStart},#{limitUnit}    
-	</select>	
-	
+		 ORDER BY SEQ DESC
+	</sql>
+	<select id="boardNoticeList" parameterType="Board" resultType="Board">
+		SELECT 	DATA.* 
+		FROM 	(
+					<include refid="boardNoticeQuery" />
+				) DATA 
+		LIMIT #{limitStart},#{limitUnit}
+	</select>	        
 	<select id="boardNoticeTotal" parameterType="Board" resultType="Board">
-	SELECT COUNT(*) CNT
-	  FROM BOARD_NOTICE
-	 WHERE COURSE_ID = #{courseId}
-	   <if test="findString != null and findString != ''"> AND TITLE LIKE CONCAT('%',#{findString},'%')</if> 
+		SELECT 	COUNT(*) CNT
+		FROM	(
+			<include refid="boardNoticeQuery" />
+				) DATA
 	</select>
 
     <select id="boardNoticeData" parameterType="Board" resultType="Board">

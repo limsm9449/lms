@@ -137,7 +137,7 @@ var page = {
 	},
 
 	goPage : function(urlPage, urlParam) {
-		window.location = urlPage + ".do" + (urlParam != undefined ? "?" + urlParam : "");
+		window.location = urlPage + ".do" + (urlParam != undefined ? "?" + urlParam + "&timestamp=" + timestamp : "");
 	},
 
 	goJsp : function(jspPage) {

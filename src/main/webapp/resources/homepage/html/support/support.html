@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang='ko'>
+
+<head>
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1'>
+    <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+    <title>Q learning - 고객 지원</title>
+
+    <link href='https://fonts.googleapis.com/css?family=Nanum+Gothic' rel='stylesheet'>
+    <link rel='stylesheet' href='../../css/initialization.css'>
+    <link rel='stylesheet' href='../../css/support/support.css'>
+</head>
+
+<body>
+    <frameset rows='*'>
+        <div class='wrap'>
+            <!-- PC HEADER -->
+            <header class='head_pc'>
+                <div class='head_wrap pc clear_fix' onmouseover='sub_hide()'>
+                    <div class='head_con logo_box'>
+                        <a href='../../index.html'>
+                            <img src='../../img/logo.png' alt=' '>
+                        </a>
+                    </div>
+                    <div class='head_con search_box'>
+                        <input type='text'>
+                        <button>
+                            <img src='../../img/search_ic.png' alt=' '>
+                        </button>
+                    </div>
+                    <div class='head_con util_box'>
+                        <!-- 로그인 상태 -->
+                        <!-- <a href='#' class='last_right'>로그아웃</a>
+                        <a href='#' class='pc'>회원정보수정</a>
+                        <p class='pc'>OOO님 반갑습니다.</p> -->
+
+                        <!-- 로그오프 상태 -->
+                        <a href='../../html/etc/signup_step1.html' class='last_right'>회원가입</a>
+                        <a href='../../html/etc/signin.html'>로그인</a>
+                    </div>
+                </div>
+                <div class='head_wrap mobile clear_fix'>
+                    <div class='mobile_btn'>
+                        <button>
+                            <span></span><span></span><span></span>
+                        </button>
+                    </div>
+                    <div class='head_con logo_box'>
+                        <img src='../../img/logo.png' alt=' '>
+                    </div>
+                    <div class='head_con util_box'>
+                        <a href='#' class='last_right'>로그아웃</a>
+                    </div>
+                    <div class='head_con search_box'>
+                        <input type='text'>
+                        <button>
+                            <img src='../../img/search_ic.png' alt=' '>
+                        </button>
+                    </div>
+                </div>
+                <div class='menu_wrap'>
+                    <div class='menu_layout pc' onmouseover='sub_show()'>
+                        <div class='mobile_btn'>
+                            <button>
+                                <span></span><span></span><span></span>
+                            </button>
+                        </div>
+                        <ul class='menu'>
+                            <li>
+                                <a href='../course/process.html'>전체과정</a>
+                            </li>
+                            <li>
+                                <a href='../classroom/classroom.html'>나의강의실</a>
+                            </li>
+                            <li>
+                                <a href='../guidance/tutorial.html'>교육안내</a>
+                            </li>
+                            <li>
+                                <a href='../support/support.html'>고객지원</a>
+                            </li>
+                        </ul>
+                        <div class='menu_tutor'>
+                            <span>
+                                <img src='../../img/channel_ic.png' alt=''>
+                            </span>
+                            <p>강사소개</p>
+                        </div>
+                    </div>
+                    <div class='menu_dropdown_wrapper' id='menu_dropdown_pc'>
+                        <div class='menu_dropdown_wrap'>
+                            <div class='menu_dropdown clear_fix'>
+                                <ul class='menu_sub'>
+                                    <li><a href=''>경영직무</a></li>
+                                    <li><a href=''>업종직무</a></li>
+                                    <li><a href=''>비즈니스</a></li>
+                                    <li><a href=''>정보기술</a></li>
+                                    <li><a href=''>외국어</a></li>
+                                    <li><a href=''>교양</a></li>
+                                </ul>
+                                <span class='menu_sub_line'></span>
+                                <ul class='menu_sub classroom'>
+                                    <li><a href=''>수강과정</a></li>
+                                    <li><a href=''>수강대기과정</a></li>
+                                    <li><a href=''>수강취소과정</a></li>
+                                    <li><a href=''>장바구니</a></li>
+                                    <li><a href=''>수강완료과정</a></li>
+                                    <li><a href=''>회원정보수정</a></li>
+                                    <li><a href=''>비밀번호변경</a></li>
+                                    <li><a href=''>상담내역</a></li>
+                                    <li><a href=''>회원탈퇴</a></li>
+                                </ul>
+                                <span class='menu_sub_line'></span>
+                                <ul class='menu_sub'>
+                                    <li><a href=''>수강신청방법</a></li>
+                                    <li><a href=''>학습방법</a></li>
+                                    <li><a href=''>학습관리</a></li>
+                                    <li><a href=''>수강후기</a></li>
+                                    <li><a href=''>학습지원프로그램</a></li>
+                                </ul>
+                                <span class='menu_sub_line'></span>
+                                <ul class='menu_sub'>
+                                    <li><a href='../support/notice.html'>공지사항</a></li>
+                                    <li><a href='../support/faq.html'>FAQ</a></li>
+                                    <li><a href='../support/mail.html'>1:1 메일문의</a></li>
+                                    <li><a href=''>원격지원</a></li>
+                                    <li><a href='../support/account.html'>입금계좌안내</a></li>
+                                    <li><a href=''>찾아오시는길</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+            <!-- PC HEADER END -->
+
+            <!-- MOBILE HEADER -->
+            <header class='head_mobile'>
+                <div class='head_wrap pc clear_fix'>
+                    <div class='menu_wrap'>
+                        <div class='menu_layout pc' onclick='sub_show_hide()'>
+                            <div class='mobile_btn'>
+                                <button onclick='mobile_menu()'>
+                                    <span></span><span></span><span></span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class='head_con logo_box'>
+                        <a href='../../index.html'>
+                            <img src='../../img/logo.png' alt=' '>
+                        </a>
+                    </div>
+                    <div class='head_con util_box'>
+                        <a href='../etc/signin.html' class='last_right' onclick='login()'>로그인</a>
+                    </div>
+                    <div class='head_con search_box'>
+                        <input type='text'>
+                        <button>
+                            <img src='../../img/search_ic.png' alt=' '>
+                        </button>
+                    </div>
+                </div>
+                <div class='mobile_dropwdown_wrap'>
+                    <div class='mobile_bg_box'>
+                        <div class='close_btn_area' onclick='mobile_menu_close()'>
+                            <img src='../../img/ic_menu_close.png' alt=' '>
+                        </div>
+                        <div class='mobile_menu login clear_fix'>
+                            <span>
+                                <img src='../../img/ic_login.png' alt=' '>
+                            </span>
+                            <a href='#'>로그인</a>
+                        </div>
+                        <div class='mobile_menu process_all'>
+                            <button onclick='sub_menu_open(this, "others")'>
+                                전체과정
+                            </button>
+                            <ul>
+                                <li class='first_depth'><a href='../course/process.html'>전체과정</a></li>
+                                <li><a href=''>경영직무</a></li>
+                                <li><a href=''>업종직무</a></li>
+                                <li><a href=''>비즈니스</a></li>
+                                <li><a href=''>정보기술</a></li>
+                                <li><a href=''>외국어</a></li>
+                                <li><a href=''>교양</a></li>
+                            </ul>
+                        </div>
+                        <div class='mobile_menu classroom'>
+                            <button onclick='sub_menu_open(this, "others")'>
+                                나의강의실
+                            </button>
+                            <ul>
+                                <li class='first_depth'><a href='../classroom/classroom.html'>나의강의실</a></li>
+                                <li><a href=''>수강과정</a></li>
+                                <li><a href=''>수강대기과정</a></li>
+                                <li><a href=''>수강취소과정</a></li>
+                                <li><a href=''>장바구니</a></li>
+                                <li><a href=''>수강완료과정</a></li>
+                                <li><a href=''>회원정보수정</a></li>
+                                <li><a href=''>비밀번호변경</a></li>
+                                <li><a href=''>상담내역</a></li>
+                                <li><a href=''>회원탈퇴</a></li>
+                            </ul>
+                        </div>
+                        <div class='mobile_menu tutorial'>
+                            <button onclick='sub_menu_open(this, "others")'>
+                                교육안내
+                            </button>
+                            <ul>
+                                <li class='first_depth'><a href='../guidance/tutorial.html'>교육안내</a></li>
+                                <li><a href=''>수강신청방법</a></li>
+                                <li><a href=''>학습방법</a></li>
+                                <li><a href=''>학습관리</a></li>
+                                <li><a href=''>수강후기</a></li>
+                                <li><a href=''>학습지원프로그램</a></li>
+                            </ul>
+                        </div>
+                        <div class='mobile_menu service'>
+                            <button onclick='sub_menu_open(this, "others")'>
+                                고객지원
+                            </button>
+                            <ul>
+                                <li class='first_depth'><a href='../support/support.html'>고객지원</a></li>
+                                <li><a href='../support/notice.html'>공지사항</a></li>
+                                <li><a href='../support/faq.html'>FAQ</a></li>
+                                <li><a href='../support/mail.html'>1:1 메일문의</a></li>
+                                <li><a href=''>원격지원</a></li>
+                                <li><a href='../support/account.html'>입금계좌안내</a></li>
+                                <li><a href=''>찾아오시는길</a></li>
+                            </ul>
+                        </div>
+                        <div class='mobile_menu introduce'>
+                            <a href='#'>강사소개</a>
+                        </div>
+                    </div>
+                </div>
+            </header>
+            <!-- MOBILE HEADER END -->
+            <!-- HEAD END -->
+
+            <!-- CONTENTS -->
+            <div class='contents_wrap support' onmouseover='sub_hide()'>
+                <div class='contents_wrap_box'>
+                    <!-- QUICK MENU -->
+                    <div class='quick_menu_wrap'>
+                        <p class='quick_title'>
+                            Quick Menu
+                            <span></span>
+                        </p>
+                        <ul>
+                            <li class='quick_menu_list'>
+                                <a href='#'>
+                                    <span></span>
+                                    <img src='../../img/quick_menu1.png' alt=' '>
+                                    장바구니
+                                </a>
+                            </li>
+                            <li class='quick_menu_list'>
+                                <a href='#'>
+                                    <span></span>
+                                    <img src='../../img/quick_menu2.png' alt=' '>
+                                    학습가이드
+                                </a>
+                            </li>
+                            <li class='quick_menu_list'>
+                                <a href='#'>
+                                    <span></span>
+                                    <img src='../../img/quick_menu3.png' alt=' '>
+                                    FAQ
+                                </a>
+                            </li>
+                            <li class='quick_menu_list'>
+                                <a href='#'>
+                                    <span></span>
+                                    <img src='../../img/quick_menu4.png' alt=' '>
+                                    학습지원프로그램
+                                </a>
+                            </li>
+                        </ul>
+                        <p class='quick_top'>
+                            <span>
+                                <img src='../../img/quick_top.png' alt=' '>
+                            </span>
+                            TOP
+                        </p>
+                    </div>
+
+                    <!-- Top -->
+                    <div class='top_area'>
+                        <div class='clear_fix'>
+                            <div class='process_history_box clear_fix'>
+                                <span>
+                                    <img src='../../img/course/ic_home.jpg' alt=' '>
+                                </span>
+                                <p>HOME</p>
+                                <span>
+                                    <img src='../../img/course/arr_right.jpg' alt=' '>
+                                </span>
+                                <p>수강신청</p>
+                                <span>
+                                    <img src='../../img/course/arr_right.jpg' alt=' '>
+                                </span>
+                                <p>교육과정</p>
+                            </div>
+                        </div>
+                        <h1>
+                            고객<span>지원</span>
+                        </h1>
+                    </div>
+                    <!-- Top END -->
+
+                    <!-- Question Search -->
+                    <div class='support_search_wrap'>
+                        <p class='support_search_text'>찾고 싶은 단어를 검색하거나, 자주묻는 질문을 통해 먼저 답변을 확인하세요.</p>
+                        <p>전화나 게시판 상담보다 더 빠르게 해결할 수 있습니다.</p>
+                        <div class='support_search_box clear_fix'>
+                            <select name='' id=''>
+                                <option value=''>전체</option>
+                                <option value=''>선택1</option>
+                                <option value=''>선택2선택2</option>
+                            </select>
+                            <input type='text' name='' id=''>
+                            <span>
+                                <img src='../../img/course/ic_search.jpg' alt="">
+                            </span>
+                            <!-- <button>
+                                <img src='../../img/course/ic_search.png' alt=' '>
+                            </button> -->
+                        </div>
+                    </div>
+
+                    <!-- Question Tab -->
+                    <div class='support_tab_box clear_fix'>
+                        <button class='support_btn active' onclick='list_tab(this,"support_qna_1")'>
+                            <span>
+                                <img src='../../img/support/type_1.png' alt=' '>
+                            </span>
+                            <p>동영상 강의 수강</p>
+                        </button>
+                        <button class='support_btn' onclick='list_tab(this,"support_qna_2")'>
+                            <span>
+                                <img src='../../img/support/type_2.png' alt=' '>
+                            </span>
+                            <p>회원가입/탈퇴</p>
+                        </button>
+                        <button class='support_btn' onclick='list_tab(this,"support_qna_3")'>
+                            <span>
+                                <img src='../../img/support/type_3.png' alt=' '>
+                            </span>
+                            <p>결제관련</p>
+                        </button>
+                        <button class='support_btn' onclick='list_tab(this,"support_qna_4")'>
+                            <span>
+                                <img src='../../img/support/type_4.png' alt=' '>
+                            </span>
+                            <p>동영상 문제해결</p>
+                        </button>
+                        <button onclick='list_tab(this,"support_qna_5")' class='support_btn last_right'>
+                            <span>
+                                <img src='../../img/support/type_5.png' alt=' '>
+                            </span>
+                            <p>M러닝</p>
+                        </button>
+                    </div>
+
+                    <!-- Posting List -->
+                    <div class='support_support_list_box'>
+                        <p>자주 묻는 질문 BEST 5</p>
+                        <ul class='support_list_wrap' id='support_qna_1'>
+                            <li class='support_list_box clear_fix'>
+                                <span>Q1</span>
+                                <p>[플레이어 오류1] Kollus 플레이어를 설치했는데도 계속 설치하라고 떠요</p>
+                            </li>
+                            <li class='support_list_box clear_fix'>
+                                <span>Q2</span>
+                                <p>[플레이어 오류1] Kollus 플레이어를 설치했는데도 계속 설치하라고 떠요</p>
+                            </li>
+                            <li class='support_list_box clear_fix'>
+                                <span>Q3</span>
+                                <p>[플레이어 오류1] Kollus 플레이어를 설치했는데도 계속 설치하라고 떠요</p>
+                            </li>
+                            <li class='support_list_box clear_fix'>
+                                <span>Q4</span>
+                                <p>[플레이어 오류1] Kollus 플레이어를 설치했는데도 계속 설치하라고 떠요 [플레이어 오류] Kollus 플레이어를 설치했는데도 계속 설치하라고 떠요</p>
+                            </li>
+                            <li class='support_list_box clear_fix'>
+                                <span>Q5</span>
+                                <p>[플레이어 오류1] Kollus 플레이어를 설치했는데도 계속 설치하라고 떠요</p>
+                            </li>
+                        </ul>
+                        <ul class='support_list_wrap' id='support_qna_2'>
+                            <li class='support_list_box clear_fix'>
+                                <span>Q1</span>
+                                <p>[플레이어 오류2] Kollus 플레이어를 설치했는데도 계속 설치하라고 떠요</p>
+                            </li>
+                            <li class='support_list_box clear_fix'>
+                                <span>Q2</span>
+                                <p>[플레이어 오류2] Kollus 플레이어를 설치했는데도 계속 설치하라고 떠요</p>
+                            </li>
+                            <li class='support_list_box clear_fix'>
+                                <span>Q3</span>
+                                <p>[플레이어 오류2] Kollus 플레이어를 설치했는데도 계속 설치하라고 떠요</p>
+                            </li>
+                            <li class='support_list_box clear_fix'>
+                                <span>Q4</span>
+                                <p>[플레이어 오류2] Kollus 플레이어를 설치했는데도 계속 설치하라고 떠요 [플레이어 오류] Kollus 플레이어를 설치했는데도 계속 설치하라고 떠요</p>
+                            </li>
+                            <li class='support_list_box clear_fix'>
+                                <span>Q5</span>
+                                <p>[플레이어 오류2] Kollus 플레이어를 설치했는데도 계속 설치하라고 떠요</p>
+                            </li>
+                        </ul>
+                        <ul class='support_list_wrap' id='support_qna_3'>
+                            <li class='support_list_box clear_fix'>
+                                <span>Q1</span>
+                                <p>[플레이어 오류3] Kollus 플레이어를 설치했는데도 계속 설치하라고 떠요</p>
+                            </li>
+                            <li class='support_list_box clear_fix'>
+                                <span>Q2</span>
+                                <p>[플레이어 오류3] Kollus 플레이어를 설치했는데도 계속 설치하라고 떠요</p>
+                            </li>
+                            <li class='support_list_box clear_fix'>
+                                <span>Q3</span>
+                                <p>[플레이어 오류3] Kollus 플레이어를 설치했는데도 계속 설치하라고 떠요</p>
+                            </li>
+                            <li class='support_list_box clear_fix'>
+                                <span>Q4</span>
+                                <p>[플레이어 오류3] Kollus 플레이어를 설치했는데도 계속 설치하라고 떠요 [플레이어 오류] Kollus 플레이어를 설치했는데도 계속 설치하라고 떠요</p>
+                            </li>
+                            <li class='support_list_box clear_fix'>
+                                <span>Q5</span>
+                                <p>[플레이어 오류3] Kollus 플레이어를 설치했는데도 계속 설치하라고 떠요</p>
+                            </li>
+                        </ul>
+                        <ul class='support_list_wrap' id='support_qna_4'>
+                            <li class='support_list_box clear_fix'>
+                                <span>Q1</span>
+                                <p>[플레이어 오류4] Kollus 플레이어를 설치했는데도 계속 설치하라고 떠요</p>
+                            </li>
+                            <li class='support_list_box clear_fix'>
+                                <span>Q2</span>
+                                <p>[플레이어 오류4] Kollus 플레이어를 설치했는데도 계속 설치하라고 떠요</p>
+                            </li>
+                            <li class='support_list_box clear_fix'>
+                                <span>Q3</span>
+                                <p>[플레이어 오류4] Kollus 플레이어를 설치했는데도 계속 설치하라고 떠요</p>
+                            </li>
+                            <li class='support_list_box clear_fix'>
+                                <span>Q4</span>
+                                <p>[플레이어 오류4] Kollus 플레이어를 설치했는데도 계속 설치하라고 떠요 [플레이어 오류] Kollus 플레이어를 설치했는데도 계속 설치하라고 떠요</p>
+                            </li>
+                            <li class='support_list_box clear_fix'>
+                                <span>Q5</span>
+                                <p>[플레이어 오류4] Kollus 플레이어를 설치했는데도 계속 설치하라고 떠요</p>
+                            </li>
+                        </ul>
+                        <ul class='support_list_wrap' id='support_qna_5'>
+                            <li class='support_list_box clear_fix'>
+                                <span>Q1</span>
+                                <p>[플레이어 오류5] Kollus 플레이어를 설치했는데도 계속 설치하라고 떠요</p>
+                            </li>
+                            <li class='support_list_box clear_fix'>
+                                <span>Q2</span>
+                                <p>[플레이어 오류5] Kollus 플레이어를 설치했는데도 계속 설치하라고 떠요</p>
+                            </li>
+                            <li class='support_list_box clear_fix'>
+                                <span>Q3</span>
+                                <p>[플레이어 오류5] Kollus 플레이어를 설치했는데도 계속 설치하라고 떠요</p>
+                            </li>
+                            <li class='support_list_box clear_fix'>
+                                <span>Q4</span>
+                                <p>[플레이어 오류5] Kollus 플레이어를 설치했는데도 계속 설치하라고 떠요 [플레이어 오류] Kollus 플레이어를 설치했는데도 계속 설치하라고 떠요</p>
+                            </li>
+                            <li class='support_list_box clear_fix'>
+                                <span>Q5</span>
+                                <p>[플레이어 오류5] Kollus 플레이어를 설치했는데도 계속 설치하라고 떠요</p>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- User CS -->
+                    <div class='user_cs clear_fix'>
+                        <div class='user_cs_notice_box'>
+                            <div class='user_cs_title clear_fix'>
+                                <p>공지사항</p>
+                                <p class='user_cs_more'>MORE +</p>
+                            </div>
+                            <ul>
+                                <li class='user_cs_list'>
+                                    <a href='' class='clear_fix'>
+                                        <p>[공지] 개인정보처리방침 변경 안내</p>
+                                        <p class='user_cs_list_date'>2018.08.01</p>
+                                    </a>
+                                </li>
+                                <li class='user_cs_list'>
+                                    <a href='' class='clear_fix'>
+                                        <p>[공지] 시스템 점검으로 인한 서비스 중단 시스템 점검으로 인한 서비스 중단</p>
+                                        <p class='user_cs_list_date'>2018.04.19</p>
+                                    </a>
+                                </li>
+                                <li class='user_cs_list'>
+                                    <a href='' class='clear_fix'>
+                                        <p>[공지] 개인정보처리방침 변경 안내</p>
+                                        <p class='user_cs_list_date'>2018.03.06</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class='user_cs_counsel'>
+                            <div class='user_cs_title clear_fix'>
+                                <p>
+                                    이벤트
+                                    <span>(1)</span>
+                                </p>
+                                <p class='user_cs_more'>MORE +</p>
+                            </div>
+                            <ul>
+                                <li class='user_cs_list'>
+                                    <a href='' class='clear_fix'>
+                                        <p>[큐피플] 1월 수강신청 이벤트 당첨 안내</p>
+                                        <p class='user_cs_list_date'>2018.07.26</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- User CS END -->
+
+                    <!-- Remote Service -->
+                    <div class="support_remote_service clear_fix">
+                        <div class="support_remote_text">
+                            <p class='support_remote_title'>
+                                PC <span></span>원격지원 서비스
+                            </p>
+                            <p>
+                                전화상담만으로 해결이 <span></span>어려운 경우, 전문 상담원이 <span></span>직접 PC 화면을 컨트롤해 <span></span>문제를
+                                해결해 드립니다.
+                            </p>
+                            <div class='support_text_btn_box clear_fix'>
+                                <button>신청하기</button>
+                                <button class='last_right'>연결하기</button>
+                            </div>
+                        </div>
+                        <div class="support_remote_step">
+                            <ol class='support_step_list clear_fix'>
+                                <li>
+                                    <p class='support_step_list_title'>
+                                        Step 1.
+                                        <strong>신청하기</strong>
+                                    </p>
+                                    <p>
+                                        버튼을 통해 <span></span>신청서 작성
+                                    </p>
+                                </li>
+                                <li class='mobile_last_right'>
+                                    <p class='support_step_list_title'>
+                                        Step 2.
+                                        <strong>전화연결</strong>
+                                    </p>
+                                    <p>
+                                        신청 접수 후 큐러닝 <span></span>콜센터에서 전화연결
+                                    </p>
+                                </li>
+                                <li>
+                                    <p class='support_step_list_title'>
+                                        Step 3.
+                                        <strong>PC 연결</strong>
+                                    </p>
+                                    <p>
+                                        상담원과 시간 협의 후 <span></span>지정시간에 연결
+                                    </p>
+                                </li>
+                                <li class='last_right'>
+                                    <p class='support_step_list_title'>
+                                        Step 4.
+                                        <strong>진단 및 해결</strong>
+                                    </p>
+                                    <p>
+                                        상담원과 통화 후 <span></span>문제 진단 및 해결
+                                    </p>
+                                </li>
+                            </ol>
+                            <ul class='support_step_text_list'>
+                                <li>
+                                    <p>* PC에 설치되어 있는 방화벽, 보안 프로그램 등에 의해 원격지원 서비스가 불가한 경우도 있습니다.</p>
+                                </li>
+                                <li>
+                                    <p>* 공공장소의 PC는 원격제어에 제한이 있을 수 있습니다.</p>
+                                </li>
+                                <li>
+                                    <p>* PC 원격지원 운영시간: 평일 09:00 ~ 20:30(화, 목 운영 / 주말 및 공휴일은 휴무)</p>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <!-- CONTENTS END -->
+
+            <!-- FOOTER -->
+            <div class='footer_wrap'>
+                <ul class='foot_link_box clear_fix'>
+                    <li>
+                        <a href='#'>회사소개</a>
+                    </li>
+                    <li>
+                        <a href='#'>서비스이용약관</a>
+                    </li>
+                    <li>
+                        <a href='#'>개인정보취급방침</a>
+                    </li>
+                    <li class='foot_link_pc'>
+                        <a href='#'>기업교육 문의</a>
+                    </li>
+                    <li class='foot_link_pc'>
+                        <a href='#'>교강사 모집</a>
+                    </li>
+                    <li class='foot_link_pc last_right'>
+                        <a href='#'>사이트맵</a>
+                    </li>
+                </ul>
+                <div class='foot_box'>
+                    <p>
+                        (주)큐피플 서울시 금천구 가산동 371-50번지 에이스하이엔드3차 410/411호 | 대표이사 : 이준호<br>개인정보관리책임자 : 최삼열 | 통신판매업:
+                        2015-서울금천-0658 | 사업자등록번호: 119-81-78776 |
+                        <span>
+                            Copyright 2017 Qpeople Academy. ALL Rights Reserved
+                        </span>
+                    </p>
+                </div>
+            </div>
+            <!-- FOOTER END -->
+        </div>
+    </frameset>
+    <script src='../../js/sub.js'></script>
+    <!-- <script src='../../js/dev_sub.js'></script> -->
+</body>
+
+</html>
