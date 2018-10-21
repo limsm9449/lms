@@ -34,11 +34,11 @@ function lfn_btn(pKind, pParam) {
 		else if ( pKind == "paging" )
 			$("#pageNum").val(pParam.page);
 		
-		f_submitSelf("/user/faqList");
+		f_submitSelf("/main/noticeList");
 	} else if ( pKind == "view") {
 		$("#seq").val(pParam.seq);
 		
-		gfn_goPage("/user/faqV",$("#frm").serialize());
+		gfn_goPage("/main/noticeV",$("#frm").serialize());
 	}
 }
 
@@ -71,34 +71,29 @@ function lfn_btn(pKind, pParam) {
                                 <span>
                                     <img src='/resources/homepage/img/course/arr_right.jpg' alt=' '>
                                 </span>
-                                <p>수강신청</p>
+                                <p>고객지원</p>
                                 <span>
                                     <img src='/resources/homepage/img/course/arr_right.jpg' alt=' '>
                                 </span>
-                                <p>교육과정</p>
+                                <p>공지사항</p>
                             </div>
                         </div>
                         <h1>
-                            FA<span>Q</span>
+                            공지<span>사항</span>
                         </h1>
                         <div class='top_text_box clear_fix'>
-                            <span><img src='/resources/homepage/img/support/faq_bg.jpg' alt=' '></span>
-                            <p class='top_title'>FAQ BEST</p>
+                            <span><img src='/resources/homepage/img/support/notice_bg.jpg' alt=' '></span>
+                            <p class='top_title'>NEWS & NOTICE!</p>
                             <p>
-                                궁금하신 사항이 있으실 때 먼저 자주하는 질문을 참고하시면 <span></span>고객님의 궁금증을 빠르게 해결하실 수 있습니다.
+                                큐러닝의 소식과 공지사항을 알려드립니다. <span></span>항상 유익하고 풍성한 소식 놓치지 말고 확인하세요.
                             </p>
                         </div>
                     </div>
                     <!-- Top END -->
 
+
                     <!-- Contents -->
                     <div class='notice_search_box'>
-						<select name="category">
-			          		<option value="">전체</option>
-			          		<c:forEach var="row" items="${set.ddCategory}">
-				              	<option value="${row.ddKey}" <c:if test="${set.condiVO.category eq row.ddKey}">selected</c:if>>${row.ddValue}</option>
-							</c:forEach>
-			          	</select>
                         <input type='text' name='findString' id='findString' value="${set.condiVO.findString}" placeholder='검색어를 입력해 주세요.'>
                         <button onclick="lfn_btn('search');">검색</button>
                     </div>
@@ -107,15 +102,13 @@ function lfn_btn(pKind, pParam) {
                         <table>
                             <tr class='notice_table_head'>
                                 <th class='notice_col1'>번호</th>
-                                <th class='notice_col1'>분류</th>
                                 <th class='notice_col3'>제목</th>
                                 <th class='notice_col4'>등록일</th>
                                 <th class='notice_col5 last_right'>조회</th>
                             </tr>
-<c:forEach var="row" items="${set.boardFaqList}" varStatus="idx">
+<c:forEach var="row" items="${set.boardNoticeList}" varStatus="idx">
                             <tr>
                                 <td class='notice_col1'>${row.rownum}</td>
-                                <td class='notice_col2'>${row.categoryName}</td>
                                 <td class='notice_col3'><a href="#" onClick="javascript:lfn_btn('view',{seq:'${row.seq}'}); return false;">${row.title}</a></td>
                                 <td class='notice_col4'>${row.createDate}</td>
                                 <td class='notice_col5 last_right'>${row.viewCnt}</td>

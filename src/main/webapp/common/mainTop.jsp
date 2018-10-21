@@ -111,9 +111,11 @@
                             </ul>
                             <span class='menu_sub_line'></span>
                             <ul class='menu_sub'>
-                                <li><a href="javascript:" onclick="page.goPage('/user/noticeList');">공지사항</a></li>
-								<li><a href="javascript:" onclick="page.goPage('/user/faqList');">FAQ</a></li>
+                                <li><a href="javascript:" onclick="page.goPage('/main/noticeList');">공지사항</a></li>
+								<li><a href="javascript:" onclick="page.goPage('/main/faqList');">FAQ</a></li>
+								<li><a href="javascript:" onclick="page.goPage('/main/eventList');">Event</a></li>
 								<li><a href="javascript:" onclick="page.goPage('/main/mailQuestion');">1:1 메일문의</a></li>
+								<li><a href="javascript:" onclick="page.goPage('/counsel/userCounselList');">상담내역</a></li>
 								<li><a href="javascript:" onclick="page.goPage('/guest/bankInfo');">입금계좌안내</a></li>
                                 <li><a href=''>원격지원</a></li>
                                 <li><a href=''>찾아오시는길</a></li>
@@ -202,7 +204,7 @@
                             교육안내
                         </button>
                         <ul>
-                            <li class='first_depth'><a href='./html/guidance/tutorial.html'>교육안내</a></li>
+                            <li class='first_depth'><a href="javascript:" onclick="page.goPage('/main/tutorial', '');">교육안내</a></li>
                             <li><a href="javascript:" onclick="page.goNsJsp('how');">수강신청방법</a></li>
                             <li><a href=''>학습방법</a></li>
                             <li><a href=''>학습관리</a></li>
@@ -215,10 +217,12 @@
                             고객지원
                         </button>
                         <ul>
-                            <li class='first_depth'><a href='./html/support/service.html'>고객지원</a></li>
-                            <li><a href="javascript:" onclick="page.goPage('/user/noticeList');">공지사항</a></li>
-							<li><a href="javascript:" onclick="page.goPage('/user/faqList');">FAQ</a></li>
+                            <li class='first_depth'><a href="javascript:" onclick="page.goPage('/main/service', '');">고객지원</a></li>
+                            <li><a href="javascript:" onclick="page.goPage('/main/noticeList');">공지사항</a></li>
+							<li><a href="javascript:" onclick="page.goPage('/main/faqList');">FAQ</a></li>
+							<li><a href="javascript:" onclick="page.goPage('/main/eventList');">Event</a></li>
 							<li><a href="javascript:" onclick="page.goPage('/main/mailQuestion');">1:1 메일문의</a></li>
+							<li><a href="javascript:" onclick="page.goPage('/counsel/userCounselList');">상담내역</a></li>
 							<li><a href="javascript:" onclick="page.goPage('/guest/bankInfo');">입금계좌안내</a></li>
                             <li><a href=''>원격지원</a></li>
                             <li><a href=''>찾아오시는길</a></li>

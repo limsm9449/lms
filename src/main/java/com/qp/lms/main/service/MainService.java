@@ -31,6 +31,7 @@ public class MainService {
 	private DdService ddService;
 
 	public MainSet mainCourseList(MainSet set) throws Exception {
+		/*
     	//쿼리에서 가져올 갯수 지정
     	set.getCondiVO().setLimitUnit(Constant.unitForMain);
 
@@ -40,6 +41,16 @@ public class MainService {
     	//페이징 처리 변수 세팅
     	set.setTotalCount(((CourseVO)sqlSession.selectOne("main.mainCourseTotal",set.getCondiVO())).getCnt());
     	set.setPageUnit(Constant.unitForMain);
+    	*/
+
+		//공지사항
+		set.getCondiVO().setCnt(5);
+    	List<BoardVO> noticeList = sqlSession.selectList("main.noticeList", set.getCondiVO());
+		set.setNoticeList(noticeList);
+
+		//공지사항
+    	List<BoardVO> faqList = sqlSession.selectList("main.faqList", set.getCondiVO());
+		set.setFaqList(faqList);
 
     	return set;
     }
@@ -138,6 +149,8 @@ public class MainService {
 		CourseVO courseSummary = sqlSession.selectOne("main.courseSummary", set.getCondiVO());
 		set.setCourseSummary(courseSummary);
 		
+		set.getCondiVO().setCnt(3);
+		
 		//공지사항
     	List<BoardVO> noticeList = sqlSession.selectList("main.noticeList", set.getCondiVO());
 		set.setNoticeList(noticeList);
@@ -175,7 +188,107 @@ public class MainService {
 		set.setNoticeList(noticeList);
     	
     	//이벤트
-    	return set;
+    	List<BoardVO> eventList = sqlSession.selectList("main.eventList", set.getCondiVO());
+		set.setBoardEventList(eventList);
+
+		return set;
     }
 
+	public MainSet noticeList(MainSet set) throws Exception {
+    	// 리스트 조회
+    	BoardVO board = new BoardVO();
+    	board.setFindString(set.getCondiVO().getFindString());
+    	board.setCourseId("0");
+    	board.setPageNum(set.getCondiVO().getPageNum());
+    	board.setLimitUnit(Constant.unitForBoard);
+    	
+    	List<BoardVO> list = sqlSession.selectList("boardNotice.boardNoticeList",board);
+    	set.setBoardNoticeList(list);
+    	
+    	//페이징 처리 변수 세팅
+    	set.setTotalCount(((BoardVO)sqlSession.selectOne("boardNotice.boardNoticeTotal",board)).getCnt());
+    	set.setPageUnit(Constant.unitForBoard);
+    	
+        return set ;
+    }
+
+    public MainSet noticeV(MainSet set) throws Exception {
+    	// 상세조회
+    	BoardVO board = new BoardVO();
+    	board.setSeq(set.getCondiVO().getSeq());
+    	board.setCourseId("0");
+
+    	//조회수를 증가 시킨다.
+    	sqlSession.update("boardNotice.boardNoticeViewCntUpd",board);
+    	
+    	set.setBoardNotice((BoardVO) sqlSession.selectOne("boardNotice.boardNoticeData",board));
+    	
+        return set ;
+    }
+    
+    public MainSet faqList(MainSet set) throws Exception {
+    	//category
+    	List<CodeVO> ddList = sqlSession.selectList("comm.getDdCodeKeyDdMain","FAQ");
+    	set.setDdCategory(ddList);
+
+    	// 리스트 조회
+    	BoardFaqVO board = new BoardFaqVO();
+    	board.setFindString(set.getCondiVO().getFindString());
+    	board.setCategory(set.getCondiVO().getCategory());
+    	board.setPageNum(set.getCondiVO().getPageNum());
+    	board.setLimitUnit(Constant.unitForBoard);
+
+    	List<BoardFaqVO> list = sqlSession.selectList("boardFaq.boardFaqList",board);
+    	set.setBoardFaqList(list);
+    	
+    	//페이징 처리 변수 세팅
+    	set.setTotalCount(((BoardFaqVO)sqlSession.selectOne("boardFaq.boardFaqTotal",board)).getCnt());
+    	set.setPageUnit(Constant.unitForBoard);
+    	
+        return set ;
+    }
+
+    public MainSet faqV(MainSet set) throws Exception {
+    	// 상세조회
+    	BoardFaqVO board = new BoardFaqVO();
+    	board.setSeq(set.getCondiVO().getSeq());
+
+    	//조회수를 증가 시킨다.
+    	sqlSession.update("boardFaq.boardFaqViewCntUpd",board);
+    	
+    	set.setBoardFaq((BoardFaqVO) sqlSession.selectOne("boardFaq.boardFaqData",board));
+    	
+        return set ;
+    }
+    
+	public MainSet eventList(MainSet set) throws Exception {
+    	// 리스트 조회
+    	BoardVO board = new BoardVO();
+    	board.setFindString(set.getCondiVO().getFindString());
+    	board.setPageNum(set.getCondiVO().getPageNum());
+    	board.setLimitUnit(Constant.unitForBoard);
+    	
+    	List<BoardVO> list = sqlSession.selectList("boardEvent.boardEventList",board);
+    	set.setBoardNoticeList(list);
+    	
+    	//페이징 처리 변수 세팅
+    	set.setTotalCount(((BoardVO)sqlSession.selectOne("boardEvent.boardEventTotal",board)).getCnt());
+    	set.setPageUnit(Constant.unitForBoard);
+    	
+        return set ;
+    }
+
+    public MainSet eventV(MainSet set) throws Exception {
+    	// 상세조회
+    	BoardVO board = new BoardVO();
+    	board.setSeq(set.getCondiVO().getSeq());
+
+    	//조회수를 증가 시킨다.
+    	sqlSession.update("boardEvent.boardEventViewCntUpd",board);
+    	
+    	set.setBoardNotice((BoardVO) sqlSession.selectOne("boardEvent.boardEventData",board));
+    	
+        return set ;
+    }
+    
 }

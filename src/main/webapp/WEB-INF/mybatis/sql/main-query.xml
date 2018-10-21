@@ -338,14 +338,32 @@
 			<include refid="courseListQuery" />
 				) DATA
 	</select>
+
+	<select id="faqList" parameterType="Main" resultType="Board">
+		SELECT  SEQ
+				,TITLE
+				,DATE_FORMAT(IFNULL(UPDATE_DATE,CREATE_DATE), '%y.%m.%d %H:%i') CREATE_DATE
+		FROM	BOARD_FAQ
+		ORDER 	BY SEQ DESC
+		LIMIT 	3
+	</select>	        
 	
 	<select id="noticeList" parameterType="Main" resultType="Board">
 		SELECT  SEQ
 				,TITLE
 				,DATE_FORMAT(IFNULL(UPDATE_DATE,CREATE_DATE), '%y.%m.%d %H:%i') CREATE_DATE
 		FROM	BOARD_NOTICE
-		ORDER 	BY CREATE_DATE DESC
-		LIMIT 	3
+		ORDER 	BY SEQ DESC
+		LIMIT 	#{cnt}
+	</select>	        
+
+	<select id="eventList" parameterType="Main" resultType="Board">
+		SELECT  SEQ
+				,TITLE
+				,DATE_FORMAT(IFNULL(UPDATE_DATE,CREATE_DATE), '%y.%m.%d %H:%i') CREATE_DATE
+		FROM	BOARD_EVENT
+		ORDER 	BY SEQ DESC
+		LIMIT 	#{cnt}
 	</select>	        
 
 	<select id="counselList" parameterType="Main" resultType="Counsel">
@@ -354,8 +372,8 @@
 				,DATE_FORMAT(IFNULL(UPDATE_DATE,CREATE_DATE), '%y.%m.%d %H:%i') CREATE_DATE
 		FROM	COUNSEL
 		WHERE	USER_ID = #{userId}
-		ORDER 	BY IFNULL(UPDATE_DATE,CREATE_DATE) DESC
-		LIMIT 	3
+		ORDER 	BY SEQ DESC
+		LIMIT 	#{cnt}
 	</select>	        
 
 	<select id="courseSummary" parameterType="Main" resultType="Course">

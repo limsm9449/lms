@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="boardEvent">
+
+	<sql id="boardEventQuery">
+		SELECT SEQ,
+		       TITLE,
+		       VIEW_CNT,
+		       DATE_FORMAT(IFNULL(UPDATE_DATE,CREATE_DATE), '%y.%m.%d %H:%i') CREATE_DATE,
+		       IF(DATE_FORMAT(CREATE_DATE, '%y.%m.%d') = DATE_FORMAT(SYSDATE(), '%y.%m.%d'),'Y','N') IS_NEW,
+	       		@ROWNUM := @ROWNUM + 1 ROWNUM
+		  FROM BOARD_EVENT,
+	       		(SELECT @ROWNUM := 0) NUM
+		 ORDER BY SEQ DESC
+	</sql>
+	<select id="boardEventList" parameterType="Board" resultType="Board">
+		SELECT 	DATA.* 
+		FROM 	(
+					<include refid="boardEventQuery" />
+				) DATA 
+		LIMIT #{limitStart},#{limitUnit}
+	</select>	        
+	<select id="boardEventTotal" parameterType="Board" resultType="Board">
+		SELECT 	COUNT(*) CNT
+		FROM	(
+			<include refid="boardEventQuery" />
+				) DATA
+	</select>
+
+    <select id="boardEventData" parameterType="Board" resultType="Board">
+		SELECT SEQ,
+		       TITLE,
+		       CONTENTS,
+		       VIEW_CNT,
+		       DATE_FORMAT(IFNULL(UPDATE_DATE,CREATE_DATE), '%y.%m.%d %H:%i') CREATE_DATE
+		  FROM BOARD_EVENT
+		 WHERE SEQ = #{seq}
+    </select>	
+
+    <select id="boardEventViewCntUpd" parameterType="Board">
+		UPDATE BOARD_EVENT
+		   SET VIEW_CNT = VIEW_CNT + 1
+		 WHERE SEQ = #{seq}
+    </select>	
+        
+</mapper>

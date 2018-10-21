@@ -28,17 +28,23 @@ $(document).ready(function() {
 
 function lfn_btn(pKind, pParam) {
 	if ( pKind == "faqSearch" ) {
-		f_submitSelf("/user/faqList");
+		f_submitSelf("/main/faqList");
 	} else if ( pKind == "noticeSearch" ) {
-		f_submitSelf("/user/noticeList");
+		f_submitSelf("/main/noticeList");
+	} else if ( pKind == "eventSearch" ) {
+		f_submitSelf("/main/eventList");
 	} else if ( pKind == "noticeView") {
 		$("#seq").val(pParam.seq);
 		
-		gfn_goPage("/user/noticeV",$("#frm").serialize());
+		gfn_goPage("/main/noticeV",$("#frm").serialize());
+	} else if ( pKind == "eventView") {
+		$("#seq").val(pParam.seq);
+		
+		gfn_goPage("/main/eventV",$("#frm").serialize());
 	} else if ( pKind == "faqView") {
 		$("#seq").val(pParam.seq);
 		
-		gfn_goPage("/user/faqV",$("#frm").serialize());
+		gfn_goPage("/main/faqV",$("#frm").serialize());
 	}
 }
 
@@ -163,63 +169,73 @@ function lfn_btn(pKind, pParam) {
                     <div class='support_support_list_box'>
                         <p>자주 묻는 질문 BEST 5</p>
                         <ul class='support_list_wrap' id='support_qna_1'>
+<c:set var="count" value="1"/>                        
 <c:forEach var="row" items="${set.boardFaqList}" varStatus="idx">
 	<c:if test="${row.category eq '01'}">    
                             <li class='support_list_box clear_fix'>
                             	<a href="#" onClick="javascript:lfn_btn('faqView',{seq:'${row.seq}'}); return false;" class='clear_fix'>
-	                                <span>Q${idx.index + 1}</span>
+	                                <span>Q${count}</span>
 	                                <p>${row.title}</p>
 	                           	</a>
                             </li>
-	</c:if>                            
+		<c:set var="count" value="${count + 1}" />                         
+	</c:if>   
 </c:forEach>                            
                         </ul>
                         <ul class='support_list_wrap' id='support_qna_2'>
+<c:set var="count" value="1"/>                        
 <c:forEach var="row" items="${set.boardFaqList}" varStatus="idx">
 	<c:if test="${row.category eq '02'}">    
                             <li class='support_list_box clear_fix'>
                             	<a href="#" onClick="javascript:lfn_btn('faqView',{seq:'${row.seq}'}); return false;" class='clear_fix'>
-	                                <span>Q${idx.index + 1}</span>
+	                                <span>Q${count}</span>
 	                                <p>${row.title}</p>
 	                           	</a>
                             </li>
-	</c:if>                            
+		<c:set var="count" value="${count + 1}" />                       
+	</c:if>       
 </c:forEach>                            
                         </ul>
                         <ul class='support_list_wrap' id='support_qna_3'>
+<c:set var="count" value="1"/>                        
 <c:forEach var="row" items="${set.boardFaqList}" varStatus="idx">
 	<c:if test="${row.category eq '03'}">    
                             <li class='support_list_box clear_fix'>
                             	<a href="#" onClick="javascript:lfn_btn('faqView',{seq:'${row.seq}'}); return false;" class='clear_fix'>
-	                                <span>Q${idx.index + 1}</span>
+	                                <span>Q${count}</span>
 	                                <p>${row.title}</p>
 	                           	</a>
                             </li>
-	</c:if>                            
+		<c:set var="count" value="${count + 1}" />                      
+	</c:if>        
 </c:forEach>                            
                         </ul>
                         <ul class='support_list_wrap' id='support_qna_4'>
+<c:set var="count" value="1"/>                        
 <c:forEach var="row" items="${set.boardFaqList}" varStatus="idx">
 	<c:if test="${row.category eq '04'}">    
                             <li class='support_list_box clear_fix'>
                             	<a href="#" onClick="javascript:lfn_btn('faqView',{seq:'${row.seq}'}); return false;" class='clear_fix'>
-	                                <span>Q${idx.index + 1}</span>
+	                                <span>Q${count}</span>
 	                                <p>${row.title}</p>
 	                           	</a>
                             </li>
-	</c:if>                            
+		<c:set var="count" value="${count + 1}" />                 
+	</c:if>             
 </c:forEach>                            
                         </ul>
                         <ul class='support_list_wrap' id='support_qna_5'>
+<c:set var="count" value="1"/>                        
 <c:forEach var="row" items="${set.boardFaqList}" varStatus="idx">
 	<c:if test="${row.category eq '05'}">    
                             <li class='support_list_box clear_fix'>
                             	<a href="#" onClick="javascript:lfn_btn('faqView',{seq:'${row.seq}'}); return false;" class='clear_fix'>
-	                                <span>Q${idx.index + 1}</span>
+	                                <span>Q${count}</span>
 	                                <p>${row.title}</p>
 	                           	</a>
                             </li>
-	</c:if>                            
+		<c:set var="count" value="${count + 1}" />                  
+	</c:if>            
 </c:forEach>                            
                         </ul>
                     </div>
@@ -246,17 +262,18 @@ function lfn_btn(pKind, pParam) {
                             <div class='user_cs_title clear_fix'>
                                 <p>
                                     이벤트
-                                    <span>(1)</span>
                                 </p>
-                                <p class='user_cs_more'>MORE +</p>
+                                <p class='user_cs_more' onclick="lfn_btn('eventSearch');">MORE +</p>
                             </div>
                             <ul>
+<c:forEach var="row" items="${set.boardEventList}" varStatus="idx">
                                 <li class='user_cs_list'>
-                                    <a href='' class='clear_fix'>
-                                        <p>[큐피플] 1월 수강신청 이벤트 당첨 안내</p>
-                                        <p class='user_cs_list_date'>2018.07.26</p>
+                                    <a href="#" onClick="javascript:lfn_btn('eventView',{seq:'${row.seq}'}); return false;" class='clear_fix'>
+                                        <p>${row.title}</p>
+                                        <p class='user_cs_list_date'>${row.createDate}</p>
                                     </a>
                                 </li>
+</c:forEach>                                
                             </ul>
                         </div>
                     </div>

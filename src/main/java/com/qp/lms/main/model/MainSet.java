@@ -42,6 +42,7 @@ public class MainSet extends CommonSet {
 	private List<CodeVO> ddCategory3Depth;		// 카테고리 소분류
 
 	private List<BoardVO> noticeList;
+	private List<BoardVO> faqList;
 	private List<CounselVO> counselList;
 	private List<CourseVO> attendCourseList;
 	private List<CourseVO> completeCourseList;
@@ -49,7 +50,11 @@ public class MainSet extends CommonSet {
 	private List<PostScriptVO> postScriptList;
 	private List<BoardFaqVO> boardFaqList;
 	private List<CodeVO> ddCategory;
-	
+	private List<BoardVO> boardEventList;
+	private List<BoardVO> boardNoticeList;
+	private BoardVO boardNotice;
+	private BoardFaqVO boardFaq;
+
 	
 	public void setCondiVO(MainVO condiVO) {
 		this.condiVO = condiVO;
@@ -177,6 +182,35 @@ public class MainSet extends CommonSet {
 	public void setDdCategory(List<CodeVO> ddCategory) {
 		this.ddCategory = ddCategory;
 	}
-	
+	public List<BoardVO> getBoardEventList() {
+		return boardEventList;
+	}
+	public void setBoardEventList(List<BoardVO> boardEventList) {
+		this.boardEventList = boardEventList;
+	}
+	public List<BoardVO> getBoardNoticeList() {
+		return boardNoticeList;
+	}
+	public void setBoardNoticeList(List<BoardVO> boardNoticeList) {
+		this.boardNoticeList = boardNoticeList;
+	}
+	public BoardVO getBoardNotice() {
+		return boardNotice;
+	}
+	public void setBoardNotice(BoardVO boardNotice) {
+		this.boardNotice = boardNotice;
+	}
+	public BoardFaqVO getBoardFaq() {
+		return boardFaq;
+	}
+	public void setBoardFaq(BoardFaqVO boardFaq) {
+		this.boardFaq = boardFaq;
+	}
+	public List<BoardVO> getFaqList() {
+		return faqList;
+	}
+	public void setFaqList(List<BoardVO> faqList) {
+		this.faqList = faqList;
+	}
 	
 }

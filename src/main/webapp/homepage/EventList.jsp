@@ -28,17 +28,10 @@ $(document).ready(function() {
 });
 
 function lfn_btn(pKind, pParam) {
-	if ( pKind == "search" || pKind == "paging" || pKind == "refresh" ) {
-		if ( pKind == "search" )
-			$("#pageNum").val(1);
-		else if ( pKind == "paging" )
-			$("#pageNum").val(pParam.page);
-		
-		f_submitSelf("/user/noticeList");
-	} else if ( pKind == "view") {
+	if ( pKind == "view") {
 		$("#seq").val(pParam.seq);
 		
-		gfn_goPage("/user/noticeV",$("#frm").serialize());
+		gfn_goPage("/main/eventV",$("#frm").serialize());
 	}
 }
 
@@ -71,21 +64,21 @@ function lfn_btn(pKind, pParam) {
                                 <span>
                                     <img src='/resources/homepage/img/course/arr_right.jpg' alt=' '>
                                 </span>
-                                <p>수강신청</p>
+                                <p>고객지원</p>
                                 <span>
                                     <img src='/resources/homepage/img/course/arr_right.jpg' alt=' '>
                                 </span>
-                                <p>교육과정</p>
+                                <p>Event</p>
                             </div>
                         </div>
                         <h1>
-                            공지<span>사항</span>
+                            Event</span>
                         </h1>
                         <div class='top_text_box clear_fix'>
                             <span><img src='/resources/homepage/img/support/notice_bg.jpg' alt=' '></span>
-                            <p class='top_title'>NEWS & NOTICE!</p>
+                            <p class='top_title'>Event</p>
                             <p>
-                                큐러닝의 소식과 공지사항을 알려드립니다. <span></span>항상 유익하고 풍성한 소식 놓치지 말고 확인하세요.
+                                큐러닝의 Event를 알려드립니다. <span></span>항상 유익하고 풍성한 소식 놓치지 말고 확인하세요.
                             </p>
                         </div>
                     </div>
@@ -94,8 +87,6 @@ function lfn_btn(pKind, pParam) {
 
                     <!-- Contents -->
                     <div class='notice_search_box'>
-                        <input type='text' name='findString' id='findString' value="${set.condiVO.findString}" placeholder='검색어를 입력해 주세요.'>
-                        <button onclick="lfn_btn('search');">검색</button>
                     </div>
 
                     <div class='notice_list_box'>

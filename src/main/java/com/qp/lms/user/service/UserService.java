@@ -314,72 +314,6 @@ public class UserService {
     	return set;
     }
 
-    public UserSet noticeList(UserSet set) throws Exception {
-    	// 리스트 조회
-    	BoardVO board = new BoardVO();
-    	board.setFindString(set.getCondiVO().getFindString());
-    	board.setCourseId("0");
-    	board.setPageNum(set.getCondiVO().getPageNum());
-    	board.setLimitUnit(Constant.unitForBoard);
-    	
-    	List<BoardVO> list = sqlSession.selectList("boardNotice.boardNoticeList",board);
-    	set.setBoardNoticeList(list);
-    	
-    	//페이징 처리 변수 세팅
-    	set.setTotalCount(((BoardVO)sqlSession.selectOne("boardNotice.boardNoticeTotal",board)).getCnt());
-    	set.setPageUnit(Constant.unitForBoard);
-    	
-        return set ;
-    }
-
-    public UserSet noticeV(UserSet set) throws Exception {
-    	// 상세조회
-    	BoardVO board = new BoardVO();
-    	board.setSeq(set.getCondiVO().getSeq());
-    	board.setCourseId("0");
-
-    	//조회수를 증가 시킨다.
-    	sqlSession.update("boardNotice.boardNoticeViewCntUpd",board);
-    	
-    	set.setBoardNotice((BoardVO) sqlSession.selectOne("boardNotice.boardNoticeData",board));
-    	
-        return set ;
-    }
-    
-    public UserSet faqList(UserSet set) throws Exception {
-    	//category
-    	List<CodeVO> ddList = sqlSession.selectList("comm.getDdCodeKeyDdMain","FAQ");
-    	set.setDdCategory(ddList);
-
-    	// 리스트 조회
-    	BoardFaqVO board = new BoardFaqVO();
-    	board.setFindString(set.getCondiVO().getFindString());
-    	board.setCategory(set.getCondiVO().getCategory());
-    	board.setPageNum(set.getCondiVO().getPageNum());
-    	board.setLimitUnit(Constant.unitForBoard);
-
-    	List<BoardFaqVO> list = sqlSession.selectList("boardFaq.boardFaqList",board);
-    	set.setBoardFaqList(list);
-    	
-    	//페이징 처리 변수 세팅
-    	set.setTotalCount(((BoardFaqVO)sqlSession.selectOne("boardFaq.boardFaqTotal",board)).getCnt());
-    	set.setPageUnit(Constant.unitForBoard);
-    	
-        return set ;
-    }
-
-    public UserSet faqV(UserSet set) throws Exception {
-    	// 상세조회
-    	BoardFaqVO board = new BoardFaqVO();
-    	board.setSeq(set.getCondiVO().getSeq());
-
-    	//조회수를 증가 시킨다.
-    	sqlSession.update("boardFaq.boardFaqViewCntUpd",board);
-    	
-    	set.setBoardFaq((BoardFaqVO) sqlSession.selectOne("boardFaq.boardFaqData",board));
-    	
-        return set ;
-    }
 
     /*
 	public UserSet courseList(UserSet set) throws Exception {
@@ -408,5 +342,7 @@ public class UserService {
     }
     */
 
+
+    
 
 }

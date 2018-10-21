@@ -72,7 +72,7 @@ $(document).ready(function(){
                 <!-- User Info -->
                 <div class='user_info'>
                     <p class='user_info_name'>
-                        <span>최삼열님</span>의 나의강의실입니다.
+                        <span>${session.userName}님</span>의 나의강의실입니다.
                     </p>
                     <div class='clear_fix'>
                         <div class='user_info_text'>
@@ -125,12 +125,12 @@ $(document).ready(function(){
                     <div class='user_cs_notice_box'>
                         <div class='user_cs_title clear_fix'>
                             <p>공지사항</p>
-                            <p class='user_cs_more' onclick="page.goPage('/user/noticeList');">MORE +</p>
+                            <p class='user_cs_more' onclick="page.goPage('/main/noticeList');">MORE +</p>
                         </div>
                         <ul>
 <c:forEach var="row" items="${set.noticeList}" varStatus="idx">
                             <li class='user_cs_list'>
-                                <a href="javascript:" onclick="page.goPage('/user/noticeV','seq=${row.seq}&pageNum=0&findString=');" class='clear_fix'>
+                                <a href="javascript:" onclick="page.goPage('/main/noticeV','seq=${row.seq}&pageNum=0&findString=');" class='clear_fix'>
                                     <p>${row.title}</p>
                                     <p class='user_cs_list_date'>${row.createDate}</p>
                                 </a>

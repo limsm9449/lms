@@ -40,7 +40,20 @@ $(document).ready(function() {
 	
 	//10분에 페이지 reload...
 	window.setTimeout(function() {
-			location.reload();	
+			//location.reload();
+			$.ajax({
+				url : context + "/sessionContinue.do",
+				type : "POST",
+				async : true,
+				dataType :"json",
+				contentType : "application/json; charset=UTF-8",
+				data : JSON.stringify({}),
+				success : function(data){
+				},
+				error : function(e) {
+					alert(resource.msg.systemError);
+				}
+			});
 		}, 1000 * 60 * 10);
 });
 
@@ -1092,4 +1105,9 @@ function gfn_gridDupCheck(_grid, _pks) {
   	}
    	
    	return -1;
+}
+
+function gfn_goPrevPage() {
+	alert(document.referrer);
+	window.location = document.referrer;
 }

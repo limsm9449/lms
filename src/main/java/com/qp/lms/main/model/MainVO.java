@@ -36,7 +36,12 @@ public class MainVO extends CommonVO {
 	private String courseName;
 	
 	private String compCd;
-	private String[] category;
+	private String[] categorys;
+	
+	private String seq;
+	private String findString;
+	private String category;
+
 	
 	public String getC1Code() {
 		return c1Code;
@@ -185,10 +190,28 @@ public class MainVO extends CommonVO {
 	public void setCompCd(String compCd) {
 		this.compCd = compCd;
 	}
-	public String[] getCategory() {
+	public String getSeq() {
+		return seq;
+	}
+	public void setSeq(String seq) {
+		this.seq = seq;
+	}
+	public String getFindString() {
+		return findString;
+	}
+	public void setFindString(String findString) {
+		this.findString = findString;
+	}
+	public String[] getCategorys() {
+		return categorys;
+	}
+	public void setCategorys(String[] categorys) {
+		this.categorys = categorys;
+	}
+	public String getCategory() {
 		return category;
 	}
-	public void setCategory(String[] category) {
+	public void setCategory(String category) {
 		this.category = category;
 	}
 	

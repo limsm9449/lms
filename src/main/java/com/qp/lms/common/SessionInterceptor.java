@@ -37,6 +37,7 @@ public class SessionInterceptor extends HandlerInterceptorAdapter {
 	    	// 기본적으로 제외 되어야 할 URL
 	    	String[] urls = {
 				"/login.do",
+				"/sessionContinue.do",
 	    		"/loginCheck.do",
 	    		"/backdorLoginCheck.do",
 				"/manageLogin.do",
@@ -46,8 +47,6 @@ public class SessionInterceptor extends HandlerInterceptorAdapter {
 	    	
 	    	// Session이 있을 수도 있고 없을 수도 있는 URL
 	    	String[] exceptUrls = {
-					"/user/noticeList.do", "/user/noticeV.do", "/user/nextNotice.do", "/user/prevNotice.do",
-		    		"/user/faqList.do", "/user/faqV.do",
 		    		"/common/ddCategory2Depth.do","/common/ddCategory3Depth.do",
 		    		"/goIndex.do"
 		    	};

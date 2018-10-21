@@ -609,5 +609,115 @@ public class MainController {
 
     	return "/homepage/service";
     }
+    
+    @RequestMapping(value = "/main/noticeList")
+    public String noticeList(@ModelAttribute MainVO vo,Model model) throws Exception {
+    	try {
+    		MainSet set = new MainSet();
+	    	set.setCondiVO(vo);
+	    	
+	    	//set.getCondiVO().setUserId(SessionUtil.getSessionUserId());
+	    	
+	    	set = svr.noticeList(set);
+	    	
+	        model.addAttribute("set", set ); 
+    	} catch ( Exception e ) {
+    		e.printStackTrace();
+    	}
+
+        return "/homepage/NoticeList";
+    }
+
+
+    @RequestMapping(value = "/main/noticeV")
+    public String noticeV(@ModelAttribute MainVO vo,Model model) throws Exception {
+    	try {
+    		MainSet set = new MainSet();
+	    	set.setCondiVO(vo);
+	    	
+	    	//set.getCondiVO().setUserId(SessionUtil.getSessionUserId());
+	    	
+	    	set = svr.noticeV(set);
+	    	
+	        model.addAttribute("set", set ); 
+    	} catch ( Exception e ) {
+    		e.printStackTrace();
+    	}
+
+        return "/homepage/NoticeV";
+    }
+
+    @RequestMapping(value = "/main/faqList")
+    public String faqList(@ModelAttribute MainVO vo,Model model) throws Exception {
+    	try {
+    		MainSet set = new MainSet();
+	    	set.setCondiVO(vo);
+	    	
+	    	//set.getCondiVO().setUserId(SessionUtil.getSessionUserId());
+	    	
+	    	set = svr.faqList(set);
+	    	
+	        model.addAttribute("set", set ); 
+    	} catch ( Exception e ) {
+    		e.printStackTrace();
+    	}
+
+        return "/homepage/FaqList";
+    }
+
+    @RequestMapping(value = "/main/faqV")
+    public String faqV(@ModelAttribute MainVO vo,Model model) throws Exception {
+    	try {
+    		MainSet set = new MainSet();
+	    	set.setCondiVO(vo);
+	    	
+	    	//set.getCondiVO().setUserId(SessionUtil.getSessionUserId());
+	    	
+	    	set = svr.faqV(set);
+	    	
+	        model.addAttribute("set", set ); 
+    	} catch ( Exception e ) {
+    		e.printStackTrace();
+    	}
+
+        return "/homepage/FaqV";
+    }
+
+    @RequestMapping(value = "/main/eventList")
+    public String eventList(@ModelAttribute MainVO vo,Model model) throws Exception {
+    	try {
+    		MainSet set = new MainSet();
+	    	set.setCondiVO(vo);
+	    	
+	    	//set.getCondiVO().setUserId(SessionUtil.getSessionUserId());
+	    	
+	    	set = svr.eventList(set);
+	    	
+	        model.addAttribute("set", set ); 
+    	} catch ( Exception e ) {
+    		e.printStackTrace();
+    	}
+
+        return "/homepage/EventList";
+    }
+
+    @RequestMapping(value = "/main/eventV")
+    public String eventV(@ModelAttribute MainVO vo,Model model) throws Exception {
+    	try {
+    		MainSet set = new MainSet();
+	    	set.setCondiVO(vo);
+	    	
+	    	//set.getCondiVO().setUserId(SessionUtil.getSessionUserId());
+	    	
+	    	set = svr.eventV(set);
+	    	
+	        model.addAttribute("set", set ); 
+    	} catch ( Exception e ) {
+    		e.printStackTrace();
+    	}
+
+        return "/homepage/EventV";
+    }
+
 
 }

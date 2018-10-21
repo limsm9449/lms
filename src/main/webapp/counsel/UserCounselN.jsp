@@ -42,7 +42,7 @@ function lfn_btn(pKind, pParam) {
 		<%
 			String returnParameter = 
 					"findString=" + request.getParameter("findString") +
-					"&pageNum=" + request.getParameter("pageNum")
+					"&pageNum=" + 1
 					;
 		%>
 		gfn_goPage("/counsel/userCounselList","<%=returnParameter%>"); 

@@ -47,15 +47,15 @@
                                 <span>
                                     <img src='/resources/homepage/img/course/arr_right.jpg' alt=' '>
                                 </span>
-                                <p>수강신청</p>
+                                <p>고객지원</p>
                                 <span>
                                     <img src='/resources/homepage/img/course/arr_right.jpg' alt=' '>
                                 </span>
-                                <p>교육과정</p>
+                                <p>Event</p>
                             </div>
                         </div>
                         <h1>
-                            공지<span>사항</span>
+                            Event</span>
                         </h1>
                     </div>
                     <!-- Top END -->
@@ -80,7 +80,7 @@
 			            </div>
                     </div>
                     <div class='detail_btn_area'>
-                        <a href="javascript:" onclick="history.go(-1);" class='bg_color'>목록으로 돌아가기</a>
+                        <a href="javascript:" onclick="page.goPage('/main/eventList');" class='bg_color'>목록으로 돌아가기</a>
                     </div>
                     
                     <!-- Contents END -->

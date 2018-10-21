@@ -73,7 +73,7 @@ function lfn_btn(pKind, pParam) {
 		          <p>회원님께서 문의하셨던 내용에 대한 답변을 확인하실 수 있습니다.</p>
 		          <div id="bod_search_r">
 		            <form class="search_forum" action="" method="get">
-		              <input type="text" class="search_input" id="findString" name="findString" value="" />
+		              <input type="text" class="search_input" id="findString" name="findString" value="${set.condiVO.findString}" />
 		              <a href="javascript:" onclick="javascript:lfn_btn('search');"><img src="/resources/images/sub/btn_search.png" alt="검색하기" /></a>
 		            </form>
 		          </div>

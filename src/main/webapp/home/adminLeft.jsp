@@ -123,6 +123,7 @@ var pageObj = {
 	axBoardFreeList :		{	page : "/ax/board/axBoardFreeList"	},
 	axBoardQnaList :		{	page : "/ax/board/axBoardQnaList"	},
 	axBoardDiscussionList :	{	page : "/ax/board/axBoardDiscussionList"	},
+	axBoardEventList :		{	page : "/ax/board/axBoardEventList"	},
 	axCounselList :			{	page : "/ax/counsel/axCounselList"	},
 	axConfigList :			{	page : "/ax/setting/axConfigList"	},
 	axMailList :			{	page : "/ax/setting/axMailList"	},
@@ -226,6 +227,7 @@ function gfn_openMenu(pageId, params) {
 			              	<li><a href="#" class="subMenu linker" onclick="gfn_openMenu('axBoardReportList'); gfn_subMenu(this);"><span>레포트</span></a></li>
 			              	<li><a href="#" class="subMenu linker" onclick="gfn_openMenu('axBoardQnaList'); gfn_subMenu(this);"><span>Q&A</span></a></li>
 			              	<li><a href="#" class="subMenu linker" onclick="gfn_openMenu('axBoardDiscussionList'); gfn_subMenu(this);"><span>토론</span></a></li>
+			              	<li><a href="#" class="subMenu linker" onclick="gfn_openMenu('axBoardEventList'); gfn_subMenu(this);"><span>이벤트</span></a></li>
 			         	</ul>
 			      	</li>
 	          		<li><a href="#" class="mainMenu linker" onclick="gfn_openMenu('axCounselList'); gfn_menu(this)"><span>상담내역</span></a>

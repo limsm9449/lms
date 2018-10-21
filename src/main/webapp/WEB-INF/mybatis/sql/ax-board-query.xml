@@ -430,4 +430,43 @@
 		 WHERE SEQ = #{seq}
     </update>	
     
+   	<select id="axBoardEventList" resultType="hashmap">
+		SELECT 	SEQ,
+		       	TITLE,
+		       	VIEW_CNT,
+		       	DATE_FORMAT(IFNULL(UPDATE_DATE,CREATE_DATE), '%y.%m.%d %H:%i') CREATE_DATE
+		FROM 	BOARD_EVENT
+		<if test="SEARCH_STR != null and SEARCH_STR != ''">
+			WHERE UPPER(TITLE) LIKE CONCAT('%',UPPER(#{SEARCH_STR}),'%')
+		</if>
+		ORDER 	BY IFNULL(UPDATE_DATE,CREATE_DATE) DESC
+	</select>
+
+	<select id="axBoardEventOne" resultType="hashmap">
+		SELECT 	SEQ,
+		       	TITLE,
+		       	CONTENTS,
+		       	VIEW_CNT
+		FROM 	BOARD_EVENT
+		WHERE 	SEQ = #{SEQ}
+	</select>
+	
+	<insert id="axBoardEventInsert" parameterType="hashmap">
+		INSERT INTO BOARD_EVENT (TITLE,CONTENTS,VIEW_CNT,CREATE_DATE)
+		VALUES (#{TITLE},#{CONTENTS},0,CURRENT_TIMESTAMP)
+    </insert>	
+    
+    <update id="axBoardEventUpdate" parameterType="hashmap">
+		UPDATE BOARD_EVENT
+		   SET TITLE = #{TITLE},
+		       CONTENTS = #{CONTENTS},
+		       UPDATE_DATE = CURRENT_TIMESTAMP
+		 WHERE SEQ = #{SEQ}
+    </update>	
+
+    <delete id="axBoardEventDelete" parameterType="hashmap">
+		DELETE FROM BOARD_EVENT
+		 WHERE SEQ = #{SEQ}
+    </delete>
+    
 </mapper>

@@ -31,6 +31,7 @@
 </head>
 
 <body>
+<form name="frm" id="frm" method="post">
     <div class="wrap">
        	
        	<!-- HEAD -->
@@ -303,63 +304,29 @@
             <div class="cs clear_fix">
                 <div class="notice clear_fix">
                     <p class='cs_title'>공지사항</p>
-                    <span class='cs_more'>+</span>
+                    <span class='cs_more' onclick="f_submitSelf('/main/noticeList')">+</span>
                     <ul>
+<c:forEach var="row" items="${set.noticeList}" varStatus="idx">
                         <li class='notice_list'>
-                            <a href='#'>
-                                <p>[오픈] Grammar Zone Grammar Zone Grammar Zone</p>
-                                <span>2017.04.12</span>
+                            <a href="#" onClick="javascript:gfn_goPage('/main/noticeV','seq=${row.seq}'); return false;">
+                                <p>${row.title}</p>
+                                <span>${row.createDate}</span>
                             </a>
                         </li>
-                        <li class='notice_list'>
-                            <a href='#'>
-                                <p>[OPEN] 진로특강 강점편 오픈!!</p>
-                                <span>2017.04.12</span>
-                            </a>
-                        </li>
-                        <li class='notice_list'>
-                            <a href='#'>
-                                <p>[OPEN] 진로특강 강점편 오픈!!</p>
-                                <span>2017.04.12</span>
-                            </a>
-                        </li>
-                        <li class='notice_list'>
-                            <a href='#'>
-                                <p>[OPEN] 진로특강 강점편 오픈!!</p>
-                                <span>2017.04.12</span>
-                            </a>
-                        </li>
+</c:forEach>                        
                     </ul>
                 </div>
                 <div class="faq clear_fix">
                     <p class='cs_title'>FAQ</p>
-                    <span class='cs_more'>+</span>
+                    <span class='cs_more' onclick="f_submitSelf('/main/faqList')">+</span>
                     <ul>
+<c:forEach var="row" items="${set.faqList}" varStatus="idx">
                         <li class='faq_list'>
-                            <a href='#'>
-                                <p>무통장입금(가상계좌) 결제 방법을 알려주세요</p>
+                            <a href="#" onClick="javascript:gfn_goPage('/main/faqV','seq=${row.seq}'); return false;">
+                                <p>${row.title}</p>
                             </a>
                         </li>
-                        <li class='faq_list'>
-                            <a href='#'>
-                                <p>배송 확인(조회)은 어떻게 하나요?</p>
-                            </a>
-                        </li>
-                        <li class='faq_list'>
-                            <a href='#'>
-                                <p>회원정보를 수정하고 싶어요</p>
-                            </a>
-                        </li>
-                        <li class='faq_list'>
-                            <a href='#'>
-                                <p>학습종료 후에도 학습내용을 볼 수 있습니까?</p>
-                            </a>
-                        </li>
-                        <li class='faq_list'>
-                            <a href='#'>
-                                <p>[학습장애] 학습 중 넥스트 버튼이 안보입니다.</p>
-                            </a>
-                        </li>
+</c:forEach>                        
                     </ul>
                 </div>
                 <div class="guide clear_fix">
@@ -387,6 +354,7 @@
         <!-- FOOTER END -->
         
     </div>
+</form>    
     <script src='/resources/homepage/js/main.js?timestamp=<%=timestamp%>'></script>
 </body>
 
