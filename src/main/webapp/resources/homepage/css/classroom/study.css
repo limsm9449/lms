@@ -269,7 +269,8 @@ body{
     display:none;
 }
 .study_tab_area a:hover,
-.study_support_list_box li a:hover p{
+.study_support_list_box li a:hover p,
+.study_support_list_box li button:hover p{
     color:#aaa;
 }
 .study_support_list_box{
@@ -279,10 +280,18 @@ body{
     background:#f8fbfb;
 }
 .study_support_list_box li{}
-.study_support_list_box li a{
+.study_support_list_box li a,
+.study_support_list_box li button{
     display:block;
+    width: 100%;
+    text-align: left;
+    margin: 0;
+    padding: 0;
+    background: none;
+    font-size: 12px;
 }
-.study_support_list_box li a p{
+.study_support_list_box li a p,
+.study_support_list_box li button p{
     float:left;
     width:70%;
     line-height:140%;
@@ -304,7 +313,8 @@ body{
     height:2px;
     background:#555;
 }
-.study_support_list_box li a .study_support_date{
+.study_support_list_box li a .study_support_date,
+.study_support_list_box li button .study_support_date{
     float:right;
     width:30%;
     text-align:right;
@@ -520,13 +530,15 @@ body{
     /* display:inline-block; */
     margin:0 auto;
 }
-.study_bottom_box a{
+.study_bottom_box a,
+.study_bottom_box button{
     font-size:12px;
     font-weight:900;
     color:#fff;
+    background:none;
 }
 .study_bottom_box a:hover{
-    color:#ccc;
+    /* color:#ccc; */
 }
 .study_bottom_box span{
     display:inline-block;

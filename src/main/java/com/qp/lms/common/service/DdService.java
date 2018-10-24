@@ -1,26 +1,25 @@
 package com.qp.lms.common.service;
 
-import java.io.File;
-import java.sql.Connection;
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
-import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.qp.lms.course.model.CourseSet;
+import com.qp.lms.common.CodeVO;
 import com.qp.lms.course.model.CourseVO;
 import com.qp.lms.course.model.RegisterVO;
-import com.qp.lms.board.model.AttachVO;
-import com.qp.lms.common.CodeVO;
-import com.qp.lms.common.SessionUtil;
-import com.qp.lms.common.model.CommSet;
 
 @Service
 public class DdService {
 	@Autowired
 	private SqlSession sqlSession;
+
+	public HashMap<String, Object> getSettingData(HashMap<String, Object> params) throws Exception {
+		HashMap<String, Object> hm = (HashMap<String, Object>)sqlSession.selectOne("comm.getSettingData", params);
+        return hm;
+    }
 
 	/**
 	 * 대분류 DD

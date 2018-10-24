@@ -466,6 +466,7 @@ header{
 
 /* MAIL ASK */
 .mail_ask{
+    width:80%;
     border-top: solid 2px #1291de;
 }
 
@@ -479,11 +480,11 @@ header{
 }
 .form_box div{
     float: left;
-    width: 90%;
+    width: 85%;
 }
 .form_box .title{
     background: #f7f7f7;
-    width: 10%;
+    width: 15%;
     line-height: 300%;
     text-align: center;
     font-size: 16px;
@@ -494,12 +495,11 @@ header{
     width:95%;
     padding:8px 1%;
     margin:10px 1.5% 6px;
-    border:0;
-    border-bottom:solid 1px #ddd;
+    border:solid 1px #ddd;
 }
 .form_box div select{
     display:block;
-    width:95%;
+    width:97%;
     padding:8px 1%;
     margin:10px 1.5% 6px;
     border:solid 1px #ddd;
@@ -530,10 +530,10 @@ header{
     padding: 8px 2%;
 }
 .form_box.half div{
-    width:80%;
+    width:70%;
 }
 .form_box.half .title{
-    width: 20%;
+    width:30%;
 }
 
 
@@ -777,6 +777,11 @@ header{
         width:100%;
         color:#fff;
     }
+
+
+    .mail_ask{
+        width:100%;
+    }
     .form_box.half{
         width:100%;
     }
@@ -801,8 +806,12 @@ header{
     .form_box div input[type='text']{
         width:90%;
     }
-    .form_box div iframe{
+    .form_box div select{
+        box-sizing:inherit;
         width:90%;
+    }
+    .form_box div iframe{
+        width:92%;
         min-height:200px;
         margin:10px 3%;
     }

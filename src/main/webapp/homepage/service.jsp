@@ -357,7 +357,7 @@ function lfn_btn(pKind, pParam) {
         </div>
     </frameset>
 </form>    
-    <script src='/resources/homepage/js/sub.js'></script>
+    <script src='/resources/homepage/js/sub.js?timestamp=<%=timestamp%>'></script>
 </body>
 
 </html>

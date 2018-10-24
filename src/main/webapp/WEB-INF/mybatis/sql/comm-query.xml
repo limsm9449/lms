@@ -4,6 +4,11 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="comm">
 
+    <select id="getSettingData" parameterType="hashmap" resultType="hashmap">
+    	SELECT *
+    	  FROM SETTING
+    	 WHERE OPTION_KEY = #{OPTION_KEY}
+    </select>
 
 
 

@@ -90,3 +90,8 @@ body{
 .wrap{
 	background:#fff;
 }
+
+iframe{
+	display:block;
+	width:100%;
+}

@@ -1,26 +1,34 @@
 <%@ page contentType="text/html;charset=utf-8"%>
-<%@ page import="java.util.Calendar"%>
-
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="ko" xml:lang="ko">
+<!DOCTYPE html>
+<html lang='ko' data-useragent='Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; Trident/6.0)'>
+
 <head>
-<title>
-</title>
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1'>
+    <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+    <title>Q learning - 회원가입 - 회원정보입력</title>
 
-<%@ include file="../common/commUserInclude.jsp" %>
+    <%@ include file="../common/commMainInclude.jsp" %>
+    
+    <link href='https://fonts.googleapis.com/css?family=Nanum+Gothic' rel='stylesheet'>
 
-
+    <link rel='stylesheet' href='/resources/homepage/css/initialization.css'>
+    <link rel='stylesheet' href='/resources/homepage/css/etc/signup.css'>
 </head>
-
-
 
 <script type="text/javascript">
 var preUrl = "/guest/"; 
 
-$(document).ready(function() {
+$(document.body).ready(function () {
+	$("#userYear").val("${set.condiVO.userYear}");
+	$("#userMonth").val("${set.condiVO.userMonth}");
+	$("#userDay").val("${set.condiVO.userDay}");
 });
 
 function lfn_btn(pKind, pParam) {
@@ -28,6 +36,9 @@ function lfn_btn(pKind, pParam) {
 		if ( lfn_validate() == false )
 			return false;
 		
+		$("#sex").val($("input:radio[name=user_gender]:checked").val());
+  		$("#birthDay").val("${set.condiVO.userYear}" + "-" + "${set.condiVO.userMonth}" + "-" + "${set.condiVO.userDay}");
+
 		if ( confirm("회원가입 하시겠습니까?") == true ) {
 			btnUnbind("saveBtn");
 			$.ajax({
@@ -94,8 +105,8 @@ function lfn_goBack() {
 
 function lfn_validate() {
 	if ( formValid.check("userId",{isNecess:true,msg:"아이디를 입력하세요.",minLeng:7,maxLeng:15}) == false ) return false;
-	if ( formValid.check("userPassword",{isNecess:true,msg:"비밀번호를 입력하세요.",minLeng:6,maxLeng:15}) == false ) return false;
-	if ( formValid.check("userPassword2",{isNecess:true,msg:"비밀번호 확인을 입력하세요.",minLeng:6,maxLeng:15}) == false ) return false;
+	if ( formValid.check("userPassword",{isNecess:true,msg:"비밀번호를 입력하세요.",minLeng:1,maxLeng:15}) == false ) return false;
+	if ( formValid.check("userPassword2",{isNecess:true,msg:"비밀번호 확인을 입력하세요.",minLeng:1,maxLeng:15}) == false ) return false;
 	if ( isExistNumAlpha($("#userPassword").val()) == false ) {
 		alert("영문/숫자(혼용)를 입력하셔야 합니다.");
 		$("#userPassword").focus();
@@ -106,10 +117,10 @@ function lfn_validate() {
 		$("#userPassword2").focus();
 		return false;
 	}
-	if ( formValid.check("mobile1",{isNecess:true,msg:"휴대전화번호를 입력하세요.",maxLeng:3}) == false ) return false;
-	if ( formValid.check("mobile2",{isNecess:true,msg:"휴대전화번호를 입력하세요.",minLeng:3,maxLeng:4,isNum:true}) == false ) return false;
-	if ( formValid.check("mobile3",{isNecess:true,msg:"휴대전화번호를 입력하세요.",minLeng:4,maxLeng:4,isNum:true}) == false ) return false;
+	if ( formValid.check("mobile",{isNecess:true,msg:"휴대전화번호를 입력하세요.",minLeng:11,maxLeng:12,isNum:true}) == false ) return false;
 	if ( formValid.check("email",{isNecess:true,msg:"이메일주소를 입력하세요.",maxLeng:50,isEmail:true}) == false ) return false;
+	if ( formValid.check("homeZipcode",{isNecess:true,msg:"우편번호를 입력하세요.",maxLeng:50}) == false ) return false;
+	if ( formValid.check("homeAddr",{isNecess:true,msg:"주소를 입력하세요.",maxLeng:50}) == false ) return false;
 	if ( $("#userIdCheck").val() != "Y" ) {
 		alert("회원 아이디 검색을 하셔야 합니다.");
 		$("#userId").focus();
@@ -123,123 +134,171 @@ function lfn_validate() {
 
 <body>
 
-
 <form id="frm" name="frm" method="post">
-	<input type="hidden" id="compCd" name="compCd" value="<c:out value="${set.condiVO.compCd}"/>">
+	<input type="hidden" id="sex" name="sex">
+	<input type="hidden" id="birthDay" name="birthDay">
+	
+<frameset rows='*'>
+    <div class='wrap'>
+        <!-- HEAD -->
+        <%@ include file="../common/mainTop.jsp" %>
+        <!-- HEAD END -->
 
-<!-- skipnav -->
-<div id="skipnav"><a href="#side" class="skip">좌측메뉴 바로가기</a></div>
-<div id="skipnav"><a href="#contents" class="skip">컨텐츠 바로가기</a></div>
-<!-- skipnav -->
-<!-- wrap -->
-<div id="wrap" class="site">
-  <%@ include file="../home/userTop.jsp" %>
-  <hr />
-  <!-- container -->
-  <div id="container" class="site">
-    	<!-- side -->
-		<div id="side" class="site">
-			<h2 class="s_mid">회원<span class="blue">가입</span></h2>
-			<ul class="snb">
-				<li><a href="javascript:" onclick="page.goPage('/guest/join');" class="here">회원가입</a></li>
-				<li><a href="javascript:" onclick="page.goPage('/guest/termsconditions');">서비스이용약관</a></li>
-				<li><a href="javascript:" onclick="page.goPage('/guest/privacy');">개인정보 취급방침</a></li>
-			</ul>
-		</div>
-		<!-- end side -->
-		
-   		<!-- contents -->
-		<div id="contents" class="site">
-			<!-- location -->
-			<div id="location"><a href="/" class="home">HOME</a><span>&gt;</span>회원가입<span>&gt;</span>회원정보입력</div>
-			<!-- title -->
-			<h3 class="tit_big">회원가입</h3>
-		      <div class="artcle">
-		        <div class="joinflow_box">
-		          <img src="/resources/images/sub/img_joinflow_3.png" alt="가입순서 3단계 회원정보입력" />
-		          <p class="big_2"><span class="blue">회원정보입력</span></p>
-		          <p><img src="/resources/images/sub/icon/icon_bullet_1.png" />&nbsp;표시는 반드시 입력하셔야 하는 필수 정보입니다.</p>
-		        </div>
-		        <div class="user_join_box">
-		          <table>
-		            <caption>회원가입폼</caption>
-		  					<thead>
-		  					  <tr class="guide">
-		    						<th width="150"></th>
-		    						<th></th>
-		    					</tr>
-		  					</thead>
-		  					<tbody>
-		              <tr>
-		                <th><label for="userName" class="must">이름</label></th>
-		                <td>${set.condiVO.userName}<input type="hidden" name="userName" id="userName" value="${set.condiVO.userName}"/></td>
-		              </tr>
-		              <tr>
-		                <th><label for="sex" class="must">성별</label></th>
-		                <td>
-		                	<c:if test="${set.condiVO.sex eq 'M' }">남</c:if>
-		                	<c:if test="${set.condiVO.sex ne 'M' }">여</c:if>
-		                	<input name="sex" id="sex" type="hidden" value="${set.condiVO.sex}"/>
-		                </td>
-		              </tr>
-		              <tr>
-		                <th><label for="birthDay" class="must">생년월일</label></th>
-		                <td>${set.condiVO.birthDay}<input name="birthDay" id="birthDay" type="hidden" value="${set.condiVO.birthDay}"/></td>
-		              </tr>
-		              <tr>
-		                <th><label for="userId" class="must">아이디</label></th>
-		                <td>
-		                  <input type="text" name="userId" id="userId" onchange="$('#userIdCheck').val('N');"/>
+        <!-- CONTENTS -->
+        <div class='contents_wrap_box' onmouseover='sub_hide()'>
+            <!-- QUICK MENU -->
+            <%@ include file="../common/mainQuickMenu.jsp" %>
+
+            <!-- Top -->
+            <div class='top_area'>
+                <div class='clear_fix'>
+                    <div class='process_history_box clear_fix'>
+                        <span>
+                            <img src='/resources/homepage/img/course/ic_home.jpg' alt=' '>
+                        </span>
+                        <p>HOME</p>
+                        <span>
+                            <img src='/resources/homepage/img/course/arr_right.jpg' alt=' '>
+                        </span>
+                        <p>회원가입</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Top END -->
+
+            <div class='util_wrap'>
+                <h1>
+                    회원가입
+                </h1>
+                <div class='util_step_box clear_fix'>
+                    <div class='pd'>
+                        <span><img src='/resources/homepage/img/etc/ic_step1.png' alt=''></span>
+                        <p>이용약관</p>
+                    </div>
+                    <div class='arrow'><img src='/resources/homepage/img/etc/arr_right.png' alt=''></div>
+                    <div>
+                        <span><img src='/resources/homepage/img/etc/ic_step2.png' alt=''></span>
+                        <p>가입여부<span></span>확인</p>
+                    </div>
+                    <div class='arrow'><img src='/resources/homepage/img/etc/arr_right.png' alt=''></div>
+                    <div class='active'>
+                        <span><img src='/resources/homepage/img/etc/ic_step3_active.png' alt=''></span>
+                        <p>회원정보<span></span>입력</p>
+                    </div>
+                    <div class='arrow'><img src='/resources/homepage/img/etc/arr_right.png' alt=''></div>
+                    <div class='last_right pd'>
+                        <span><img src='/resources/homepage/img/etc/ic_step4.png' alt=''></span>
+                        <p>가입완료</p>
+                    </div>
+                </div>
+                <div class='signup_title_box'>
+                    <p class='signup_title line'>회원정보입력</p>
+                    <p>
+                        <span class='circle'></span> 표시는 반드시 입력하셔야 하는 필수 정보입니다
+                    </p>
+                </div>
+                <div class='signup_input_list'>
+                    <div class='certification_name clear_fix'>
+                        <p>이름</p>
+                        <input type="text" name="userName" id="userName" value="${set.condiVO.userName}" readonly="readonly"/>
+                    </div>
+                    <div class='certification_gender clear_fix'>
+                        <p>성별</p>
+                        <input type='radio' name='user_gender' id='g_male' value="M" <c:if test="${set.condiVO.sex eq 'M' }">checked</c:if> disabled><span>남자</span>
+                        <input type='radio' name='user_gender' id='g_female' value="F" <c:if test="${set.condiVO.sex eq 'F' }">checked</c:if> disabled><span>여자</span>
+                    </div>
+                    <div class='certification_birth clear_fix'>
+                        <p>생년월일</p>
+                        <select id="userYear" name="userYear" disabled>
+                                <option value=''>선택</option>
+<c:forEach var="i" begin="${set.birthFromYear}" end="${set.birthToYear}" step="1" varStatus ="status">
+    							<option value="${i}">${i}</option> 
+</c:forEach>   
+                            </select>
+                        년
+                        <select id="userMonth" name="userMonth" disabled>
+                                <option value=''>선택</option>
+<c:forEach var="i" begin="1" end="12" step="1" varStatus ="status">
+	<c:if test="${i < 10}">
+                                <option value="0${i}">${i}</option>
+	</c:if>     
+	<c:if test="${i >= 10}">
+                                <option value="${i}">${i}</option>
+	</c:if>     
+</c:forEach>    
+                            </select>
+                            월
+                            <select id="userDay" name="userDay" disabled>
+                                <option value=''>선택</option>
+<c:forEach var="i" begin="1" end="31" step="1" varStatus ="status">
+	<c:if test="${i < 10}">
+                                <option value="0${i}">${i}</option>
+	</c:if>     
+	<c:if test="${i >= 10}">
+                                <option value="${i}">${i}</option>
+	</c:if>     
+</c:forEach>     
+                            </select>
+                        일
+                    </div>
+                    <div class='certification_name clear_fix'>
+                        <p>아이디</p>
+                        <input type="text" name="userId" id="userId" onchange="$('#userIdCheck').val('N');"/>
 		                  <input type="hidden" name="userIdCheck" id="userIdCheck" />
 		                  <a href="#" id="checkBtn" onClick="javascript:lfn_btn('isExistUserId'); return false;"><img src="/resources/images/sub/btn_id_chk.png" /></a>
-		                </td>
-		              </tr>
-		              <tr>
-		                <th><label for="userPassword" class="must">비밀번호</label></th>
-		                <td><input type="password" name="userPassword" id="userPassword" /><span> ※ 영문/숫자(혼용) 6~12글자 이내로 입력</span></td>
-		              </tr>
-		              <tr>
-		                <th><label for="userPassword2" class="must">비밀번호 확인</label></th>
-		                <td><input type="password" name="userPassword2" id="userPassword2" /><span> ※ 비밀번호를 한번 더 입력, 잊지 않도록 주의하세요.</span></td>
-		              </tr>
-		              <tr>
-		                <th><label for="mobile1" class="must">휴대전화번호</label></th>
-		                <td>
-		                  <select name="mobile1" id="mobile1">
-				            <option value="">선택</option>
-				            <c:forEach var="row" items="${set.ddMobile}">
-						       <option value="${row.ddKey}">${row.ddValue}</option>
-							</c:forEach>
-						  </select>
-						  <input type="text" name="mobile2" id="mobile2" maxlength="4" title="휴대전화 중간번호" />
-						  <input type="text" name="mobile3" id="mobile3" maxlength="4" title="휴대전화 마지막번호" />
-		                </td>
-		              </tr>
-		              <tr>
-		                <th><label for="email" class="must">이메일주소</label></th>
-		                <td><input type="text" name="email" id="email" title="이메일 주소" /></td>
-		              </tr>
-		            </tbody>  
-		          </table>
-		          <div class="center_btn">
-		            <a href="#" id="saveBtn" onclick="javascript:lfn_btn('save'); return false;""><img src="/resources/images/sub/btn_ok.png" /></a>&nbsp;<a href="/"><img src="/resources/images/sub/btn_censel.png" /></a>
-		          </div>
-		        </div>
-		      </div>
-			
-		</div>
-		<!-- end content -->
-		
-	</div>
-  <!-- end container -->
-  <!-- footer_wrap -->
-	<%@ include file="../home/bottom.jsp" %>
-  <!-- end footer_wrap -->
-</div>
+                    </div>
+                    <div class='info_input_phone clear_fix'>
+                        <p>휴대폰 번호</p>
+                        <select name='agency' id='agency'>
+                            <option value='선택'>선택</option>
+                            <option value='SK'>SK</option>
+                            <option value='KT'>KT</option>
+                            <option value='LG'>LG U+</option>
+                            <option value='알뜰폰'>알뜰폰</option>
+                        </select>
+                        <input type='text' name='mobile' id='mobile' placeholder='- 없이 숫자만'>
+                        <button>인증번호요청</button>
+                    </div>
+                    <div class='certification_name clear_fix'>
+                        <p>비밀번호</p>
+                        <input type='password' name='userPassword' id='userPassword' placeholder='8자리 이상 입력해주세요'>
+                    </div>
+                    <div class='certification_name clear_fix'>
+                        <p>비밀번호 확인</p>
+                        <input type='password' name='userPassword2' id='userPassword2' placeholder='비밀번호를 확인해주세요'>
+                    </div>
+                    <div class='certification_name clear_fix'>
+                        <p>E-Mail</p>
+                        <input type="text" name="email" id="email" value=""/>
+                    </div>
+                    <div class='info_input_address clear_fix'>
+                        <p>주소</p>
+                        <input type='text' name='homeZipcode' id='homeZipcode' placeholder='우편번호'>
+                        <button onClick="window.open('${set.zipcodeUrl}', 'zipcode','width=900,height=650');">우편번호검색</button>
+                        <input type='text' name='homeAddr' id='homeAddr' placeholder='주소를 입력해주세요.'>
+                    </div>
+                </div>
+                <div class='signup_btn_box clear_fix'>
+                    <button onclick='page.goHome();'>취소</button>
+                    <button class='last' id="saveBtn" onclick="lfn_btn('save');">회원가입</button>
+                </div>
+            </div>
 
+        </div>
+        <!-- CONTENTS END -->
+
+        <!-- FOOTER -->
+        <%@ include file="../common/mainBottom.jsp" %>
+        <!-- FOOTER END -->
+    </div>
 </form>
-	
+    
+    <!-- Local -->
+    <script src='/resources/homepage/js/sub.js'></script>
+
+    <!-- Server -->
+    <!-- <script src='/resources/homepage/js/dev_sub.js'></script> -->
+</frameset>
 </body>
+
 </html>
-
-

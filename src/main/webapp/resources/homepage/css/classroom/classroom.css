@@ -438,6 +438,9 @@ header{
     text-align:center;
     border-right:dashed 1px #ddd;
 }
+.user_info_text a{
+    display:block;
+}
 .user_info_text p{
     font-size:16px;
     letter-spacing:-1px;

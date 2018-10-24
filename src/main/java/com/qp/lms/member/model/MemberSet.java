@@ -1,5 +1,6 @@
 package com.qp.lms.member.model;
 
+import java.util.HashMap;
 import java.util.List;
 
 import com.qp.lms.board.model.BoardFaqVO;
@@ -20,6 +21,10 @@ public class MemberSet extends CommonSet {
 	private List<BoardFaqVO> faqList;
 	
 
+	private String zipcodeUrl;
+	private String birthFromYear;
+	private String birthToYear;
+	
 	public MemberVO getCondiVO() {
 		return condiVO;
 	}
@@ -67,6 +72,24 @@ public class MemberSet extends CommonSet {
 	}
 	public void setFaqList(List<BoardFaqVO> faqList) {
 		this.faqList = faqList;
+	}
+	public String getZipcodeUrl() {
+		return zipcodeUrl;
+	}
+	public void setZipcodeUrl(String zipcodeUrl) {
+		this.zipcodeUrl = zipcodeUrl;
+	}
+	public String getBirthFromYear() {
+		return birthFromYear;
+	}
+	public void setBirthFromYear(String birthFromYear) {
+		this.birthFromYear = birthFromYear;
+	}
+	public String getBirthToYear() {
+		return birthToYear;
+	}
+	public void setBirthToYear(String birthToYear) {
+		this.birthToYear = birthToYear;
 	}
 
 	

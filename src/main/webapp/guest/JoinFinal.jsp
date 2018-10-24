@@ -1,96 +1,115 @@
 <%@ page contentType="text/html;charset=utf-8"%>
-<%@ page import="java.util.Calendar"%>
-
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="ko" xml:lang="ko">
+<!DOCTYPE html>
+<html lang='ko' data-useragent='Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; Trident/6.0)'>
+
 <head>
-<title>
-</title>
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1'>
+    <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+    <title>Q learning - 회원가입 - 가입완료</title>
 
-<%@ include file="../common/commUserInclude.jsp" %>
+    <%@ include file="../common/commMainInclude.jsp" %>
 
+    <link href='https://fonts.googleapis.com/css?family=Nanum+Gothic' rel='stylesheet'>
 
+    <link rel='stylesheet' href='/resources/homepage/css/initialization.css'>
+    <link rel='stylesheet' href='/resources/homepage/css/etc/signup.css'>
 </head>
 
-
-
-<script type="text/javascript">
-
-</script>
-
 <body>
+<frameset rows='*'>
+    <div class='wrap'>
+        <!-- HEAD -->
+        <%@ include file="../common/mainTop.jsp" %>
+        <!-- HEAD END -->
 
+        <!-- CONTENTS -->
+        <div class='contents_wrap_box' onmouseover='sub_hide()'>
+            <!-- QUICK MENU -->
+            <%@ include file="../common/mainQuickMenu.jsp" %>
 
-<form id="frm" name="frm" method="post">
-	<input type="hidden" id="compCd" name="compCd" value="<c:out value="${set.condiVO.compCd}"/>">
+            <!-- Top -->
+            <div class='top_area'>
+                <div class='clear_fix'>
+                    <div class='process_history_box clear_fix'>
+                        <span>
+                            <img src='/resources/homepage/img/course/ic_home.jpg' alt=' '>
+                        </span>
+                        <p>HOME</p>
+                        <span>
+                            <img src='/resources/homepage/img/course/arr_right.jpg' alt=' '>
+                        </span>
+                        <p>회원가입</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Top END -->
 
-<!-- skipnav -->
-<div id="skipnav"><a href="#side" class="skip">좌측메뉴 바로가기</a></div>
-<div id="skipnav"><a href="#contents" class="skip">컨텐츠 바로가기</a></div>
-<!-- skipnav -->
-<!-- wrap -->
-<div id="wrap" class="site">
-  <%@ include file="../home/userTop.jsp" %>
-  <hr />
-  <!-- container -->
-  <div id="container" class="site">
-    	<!-- side -->
-		<div id="side" class="site">
-			<h2 class="s_mid">회원<span class="blue">가입</span></h2>
-			<ul class="snb">
-				<li><a href="javascript:" onclick="page.goPage('/guest/join');" class="here">회원가입</a></li>
-				<li><a href="javascript:" onclick="page.goPage('/guest/termsconditions');">서비스이용약관</a></li>
-				<li><a href="javascript:" onclick="page.goPage('/guest/privacy');">개인정보 취급방침</a></li>
-			</ul>
-		</div>
-		<!-- end side -->
-		
-   		<!-- contents -->
-		<div id="contents" class="site">
-			<!-- location -->
-			<div id="location"><a href="/" class="home">HOME</a><span>&gt;</span>회원가입<span>&gt;</span>가입완료</div>
-			<!-- title -->
-			<h3 class="tit_big">회원가입</h3>
-		      <div class="artcle">
-		        <div class="joinflow_box">
-		          <img src="/resources/images/sub/img_joinflow_4.png" alt="가입순서 4단계 가입완료" />
-		          <p class="big_2"><span class="blue">회원가입완료</span></p>
-		          <p>큐러닝 회원가입이 정상적으로 완료되었습니다. <br />국내 최고의 온라인 교육 서비스를 제공하도록 최선을 다하겠습니다.</p>
-		        </div>
-		        <div class="join_congratulate_box">
-		          <p class="big_1 c_white">메일 인증을 완료하셔야 정상적으로 로그인 하실 수 있습니다.</p>
-		          <p class="msg c_white" style="width:285px">입력하신 메일주소로 인증 메일이 도착하지 않았다면 스팸메일로 분류되지 않았는지 확인해 보십시오.<br /></p>
-		          <div class="right_btn"><a href="javascript:" onclick="page.goHome();" alt="메인페이지로 이동"><img src="/resources/images/sub/btn_go_main.png" /></a></div>
-		        </div>
-		        <div class="banner_faq_box">
-		          <div class="banner"><a href="#"><img src="/resources/images/sub/img_joinfinal_banner_1.jpg" title="김정구 교수의 미래창조경영 위기와 역경을 기회로" /></a></div>
-		          <div class="faq">
-		            <p class="big_2">자주찾는 질문<span class="blue">FAQ</span></p>
-		            <p class="more"><a href="javascript:" onclick="page.goPage('/user/faqList');"><img src="/resources/images/sub/btn_more.png" title="FAQ 더보기" /></a></p>
-		            <ul>
-<c:forEach var="row" items="${set.faqList}" varStatus="idx">
-		              <li><a href="#" onClick="gfn_goPage('/user/faqV','seq=${row.seq}');"><nobr>${row.title}</nobr></a></li>
-</c:forEach>		              
-		            </ul>
-		          </div>
-		        </div>
-		      </div>
-		</div>
-		<!-- end content -->
-		
-	</div>
-  <!-- end container -->
-  <!-- footer_wrap -->
-	<%@ include file="../home/bottom.jsp" %>
-  <!-- end footer_wrap -->
-</div>
+            <div class='util_wrap'>
+                <h1>
+                    회원가입
+                </h1>
+                <div class='util_step_box clear_fix completed'>
+                    <div class='pd'>
+                        <span><img src='/resources/homepage/img/etc/ic_step1.png' alt=''></span>
+                        <p>이용약관</p>
+                    </div>
+                    <div class='arrow'><img src='/resources/homepage/img/etc/arr_right.png' alt=''></div>
+                    <div>
+                        <span><img src='/resources/homepage/img/etc/ic_step2.png' alt=''></span>
+                        <p>가입여부<span></span>확인</p>
+                    </div>
+                    <div class='arrow'><img src='/resources/homepage/img/etc/arr_right.png' alt=''></div>
+                    <div>
+                        <span><img src='/resources/homepage/img/etc/ic_step3.png' alt=''></span>
+                        <p>회원정보<span></span>입력</p>
+                    </div>
+                    <div class='arrow'><img src='/resources/homepage/img/etc/arr_right.png' alt=''></div>
+                    <div class='active last_right pd'>
+                        <span><img src='/resources/homepage/img/etc/ic_step4_active.png' alt=''></span>
+                        <p>가입완료</p>
+                    </div>
+                </div>
+                <div class='signup_title_box'>
+                    <p class='signup_title'>회원가입완료</p>
+                    <p>
+                        큐러닝 회원가입이 정상적으로 완료되었습니다.<span></span>
+                        국내 최고의 온라인 교육 서비스를 제공하도록 최선을 다하겠습니다.
+                    </p>
+                </div>
+                <div class='signup_completed_box clear_fix'>
+                    <p>메인 인증을 완료하셔야 정상적으로 로그인하실 수 있습니다.</p>
+                    <a href='#' onclick='page.goHome();'>
+                        큐러닝 <span></span>메인 가기
+                    </a>
+                    <div class='completed_note'>
+                        <span>
+                            <img src='/resources/homepage/img/etc/completed_image.png' alt=' '>
+                        </span>
+                        <p>입력하신 메일 주소로 인증 메일이 도착하지 않았다면 <span></span>스팸메일로 분류되지 않았는지 확인해보십시오.</p>
+                    </div>
+                </div>
+                <div class='signup_completed_bg'>
+                    <span><img src='/resources/homepage/img/etc/completed_bg.jpg' alt=' '></span>
+                </div>
+            </div>
 
-</form>
-	
+        </div>
+        <!-- CONTENTS END -->
+
+        <!-- FOOTER -->
+        <%@ include file="../common/mainBottom.jsp" %>
+        <!-- FOOTER END -->
+    </div>
+    <!-- Local -->
+    <script src='/resources/homepage/js/sub.js'></script>
+</frameset>
 </body>
+
 </html>
-
-

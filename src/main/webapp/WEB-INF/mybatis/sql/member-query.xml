@@ -325,5 +325,17 @@
     	 WHERE USER_ID = #{userId} 
     </select>
 
+    <select id="joinUserInsert" parameterType="Member">
+    	INSERT INTO USER(USER_ID, USER_NAME, EMAIL, USER_PASSWORD, 
+    	                 HOME_ZIPCODE, HOME_ADDR, MOBILE, 
+    	                 SEX,BIRTH_DAY,
+    	                 CERTIFICATION_YN,CERTIFICATION_KEY,CREATE_DATE)
+	    VALUES (	#{userId},#{userName},#{email},PASSWORD(#{userPassword}),
+	    	        #{homeZipcode},#{homeAddr},#{mobile},
+	    	        #{sex},#{birthDay},
+	    	        #{certificationYn},#{certificationKey},CURRENT_TIMESTAMP
+    	        )
+    </select>
+
    
 </mapper>

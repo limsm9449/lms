@@ -361,6 +361,18 @@ function close_popup(page) {
 
 
 
+// --- classroom - lecture detail (popup) ---
+function lecture_open_popup(page, popup) {
+    var url = page + '.html';
+    var size = '';
+    if(popup){
+        size = 'width=750, height=840';
+    }
+    window.open(url, 'win_'+page, size);
+}
+
+
+
 // --- support ---
 
 // 고객지원 Tab

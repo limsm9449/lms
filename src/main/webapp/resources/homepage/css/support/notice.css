@@ -493,7 +493,7 @@ table tr .last_right{
     width: 6%;
 }
 .notice_col2{
-    width: 10%;
+    width: 13%;
 }
 .notice_col3{
     width: 59%;
@@ -509,6 +509,9 @@ table tr .last_right{
 }
 .notice_col5{
     width: 8%;
+}
+.notice_col3:hover{
+    background:#eee;
 }
 
 

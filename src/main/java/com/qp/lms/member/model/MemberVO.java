@@ -15,21 +15,11 @@ public class MemberVO extends CommonVO{
 	private String adminYnName;	
 	private String teacherYn;
 	private String tutorYn;
-	private String homeZipcodeSeq;	
+	private String homeZipcode;	
 	private String homeZip;	
-	private String homeZip1;	
-	private String homeZip2;	
 	private String homeAddr;	
-	private String homeAddr1;	
-	private String homeAddr2;	
 	private String homeTel;	
-	private String homeTel1;	
-	private String homeTel2;	
-	private String homeTel3;	
 	private String mobile;	
-	private String mobile1;	
-	private String mobile2;	
-	private String mobile3;	
 	private String job;
 	private String jobName;
 	private String compCd;
@@ -61,7 +51,9 @@ public class MemberVO extends CommonVO{
 	//2014.9.27
 	private String certificationYnName;
 	
-	
+	private String userYear;
+	private String userMonth;
+	private String userDay;
 	
 	public String getUserId() {
 		return userId;
@@ -81,66 +73,6 @@ public class MemberVO extends CommonVO{
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public String getHomeZip1() {
-		return homeZip1;
-	}
-	public void setHomeZip1(String homeZip1) {
-		this.homeZip1 = homeZip1;
-	}
-	public String getHomeZip2() {
-		return homeZip2;
-	}
-	public void setHomeZip2(String homeZip2) {
-		this.homeZip2 = homeZip2;
-	}
-	public String getHomeAddr1() {
-		return homeAddr1;
-	}
-	public void setHomeAddr1(String homeAddr1) {
-		this.homeAddr1 = homeAddr1;
-	}
-	public String getHomeAddr2() {
-		return homeAddr2;
-	}
-	public void setHomeAddr2(String homeAddr2) {
-		this.homeAddr2 = homeAddr2;
-	}
-	public String getHomeTel1() {
-		return homeTel1;
-	}
-	public void setHomeTel1(String homeTel1) {
-		this.homeTel1 = homeTel1;
-	}
-	public String getHomeTel2() {
-		return homeTel2;
-	}
-	public void setHomeTel2(String homeTel2) {
-		this.homeTel2 = homeTel2;
-	}
-	public String getHomeTel3() {
-		return homeTel3;
-	}
-	public void setHomeTel3(String homeTel3) {
-		this.homeTel3 = homeTel3;
-	}
-	public String getMobile1() {
-		return mobile1;
-	}
-	public void setMobile1(String mobile1) {
-		this.mobile1 = mobile1;
-	}
-	public String getMobile2() {
-		return mobile2;
-	}
-	public void setMobile2(String mobile2) {
-		this.mobile2 = mobile2;
-	}
-	public String getMobile3() {
-		return mobile3;
-	}
-	public void setMobile3(String mobile3) {
-		this.mobile3 = mobile3;
-	}
 	public String getJob() {
 		return job;
 	}
@@ -149,12 +81,6 @@ public class MemberVO extends CommonVO{
 	}
 	public static long getSerialversionuid() {
 		return serialVersionUID;
-	}
-	public String getHomeZipcodeSeq() {
-		return homeZipcodeSeq;
-	}
-	public void setHomeZipcodeSeq(String homeZipcodeSeq) {
-		this.homeZipcodeSeq = homeZipcodeSeq;
 	}
 	public String getHomeAddr() {
 		return homeAddr;
@@ -335,6 +261,30 @@ public class MemberVO extends CommonVO{
 	}
 	public void setCertificationYnName(String certificationYnName) {
 		this.certificationYnName = certificationYnName;
+	}
+	public String getUserYear() {
+		return userYear;
+	}
+	public void setUserYear(String userYear) {
+		this.userYear = userYear;
+	}
+	public String getUserMonth() {
+		return userMonth;
+	}
+	public void setUserMonth(String userMonth) {
+		this.userMonth = userMonth;
+	}
+	public String getUserDay() {
+		return userDay;
+	}
+	public void setUserDay(String userDay) {
+		this.userDay = userDay;
+	}
+	public String getHomeZipcode() {
+		return homeZipcode;
+	}
+	public void setHomeZipcode(String homeZipcode) {
+		this.homeZipcode = homeZipcode;
 	}
 	
 

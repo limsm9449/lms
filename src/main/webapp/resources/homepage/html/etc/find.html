@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang='ko' data-useragent="Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; Trident/6.0)">
+<html lang='ko' data-useragent='Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; Trident/6.0)'>
 
 <head>
     <meta charset='utf-8'>
     <meta name='viewport' content='width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1'>
     <meta http-equiv='X-UA-Compatible' content='ie=edge'>
     <title>Q learning - 아이디/비밀번호 찾기</title>
-    
+
     <!--[if IE]>
         <link rel='stylesheet' href='../../css/main_compatibility.css'>
     <![endif]-->
@@ -14,23 +14,24 @@
     <link href='https://fonts.googleapis.com/css?family=Nanum+Gothic' rel='stylesheet'>
 
     <link rel='stylesheet' href='../../css/initialization.css'>
+    <link rel='stylesheet' href='../../css/etc/find.css'>
 </head>
 
 <body>
 <frameset rows='*'>
-    <div class="wrap">
+    <div class='wrap'>
         <!-- HEAD -->
         <div id='width_text'></div>
         <!-- PC HEADER -->
         <header class='head_pc'>
-            <div class="head_wrap pc clear_fix" onmouseover='sub_hide()'>
+            <div class='head_wrap pc clear_fix' onmouseover='sub_hide()'>
                 <div class='head_con logo_box'>
-                    <a href='#'>
+                    <a href='../../index.html'>
                         <img src='../../img/logo.png' alt=' '>
                     </a>
                 </div>
                 <div class='head_con search_box'>
-                    <input type="text">
+                    <input type='text'>
                     <button>
                         <img src='../../img/search_ic.png' alt=' '>
                     </button>
@@ -46,7 +47,7 @@
                     <a href='../../html/etc/signin.html'>로그인</a>
                 </div>
             </div>
-            <div class="head_wrap mobile clear_fix">
+            <div class='head_wrap mobile clear_fix'>
                 <div class='mobile_btn'>
                     <button>
                         <span></span><span></span><span></span>
@@ -61,7 +62,7 @@
                     <a href='#' class='last_right'>로그아웃</a>
                 </div>
                 <div class='head_con search_box'>
-                    <input type="text">
+                    <input type='text'>
                     <button>
                         <img src='../../img/search_ic.png' alt=' '>
                     </button>
@@ -109,10 +110,10 @@
                             <span class='menu_sub_line'></span>
                             <ul class='menu_sub classroom'>
                                 <li><a href=''>수강과정</a></li>
-                                <li><a href=''>수강대기과정</a></li>
+                                <li><a href='../classroom/lecture_standby.html'>수강대기과정</a></li>
                                 <li><a href=''>수강취소과정</a></li>
                                 <li><a href=''>장바구니</a></li>
-                                <li><a href=''>수강완료과정</a></li>
+                                <li><a href='../classroom/lecture_completed.html'>수강완료과정</a></li>
                                 <li><a href=''>회원정보수정</a></li>
                                 <li><a href=''>비밀번호변경</a></li>
                                 <li><a href=''>상담내역</a></li>
@@ -144,7 +145,7 @@
 
         <!-- MOBILE HEADER -->
         <header class='head_mobile'>
-            <div class="head_wrap pc clear_fix">
+            <div class='head_wrap pc clear_fix'>
                 <div class='menu_wrap'>
                     <div class='menu_layout pc' onclick='sub_show_hide()'>
                         <div class='mobile_btn'>
@@ -155,7 +156,7 @@
                     </div>
                 </div>
                 <div class='head_con logo_box'>
-                    <a href='#'>
+                    <a href='../../index.html'>
                         <img src='../../img/logo.png' alt=' '>
                     </a>
                 </div>
@@ -163,7 +164,7 @@
                     <a href='../etc/signin.html' class='last_right' onclick='login()'>로그인</a>
                 </div>
                 <div class='head_con search_box'>
-                    <input type="text">
+                    <input type='text'>
                     <button>
                         <img src='../../img/search_ic.png' alt=' '>
                     </button>
@@ -181,7 +182,7 @@
                         <a href='#'>로그인</a>
                     </div>
                     <div class='mobile_menu process_all'>
-                        <button onclick='sub_menu_open(this, "main")'>
+                        <button onclick='sub_menu_open(this, "others")'>
                             전체과정
                         </button>
                         <ul>
@@ -195,16 +196,16 @@
                         </ul>
                     </div>
                     <div class='mobile_menu classroom'>
-                        <button onclick='sub_menu_open(this, "main")'>
+                        <button onclick='sub_menu_open(this, "others")'>
                             나의강의실
                         </button>
                         <ul>
                             <li class='first_depth'><a href='../../html/classroom/classroom.html'>나의강의실</a></li>
                             <li><a href=''>수강과정</a></li>
-                            <li><a href=''>수강대기과정</a></li>
+                            <li><a href='../classroom/lecture_standby.html'>수강대기과정</a></li>
                             <li><a href=''>수강취소과정</a></li>
                             <li><a href=''>장바구니</a></li>
-                            <li><a href=''>수강완료과정</a></li>
+                            <li><a href='../classroom/lecture_completed.html'>수강완료과정</a></li>
                             <li><a href=''>회원정보수정</a></li>
                             <li><a href=''>비밀번호변경</a></li>
                             <li><a href=''>상담내역</a></li>
@@ -212,7 +213,7 @@
                         </ul>
                     </div>
                     <div class='mobile_menu tutorial'>
-                        <button onclick='sub_menu_open(this, "main")'>
+                        <button onclick='sub_menu_open(this, "others")'>
                             교육안내
                         </button>
                         <ul>
@@ -225,7 +226,7 @@
                         </ul>
                     </div>
                     <div class='mobile_menu service'>
-                        <button onclick='sub_menu_open(this, "main")'>
+                        <button onclick='sub_menu_open(this, "others")'>
                             고객지원
                         </button>
                         <ul>
@@ -314,7 +315,93 @@
             </div>
             <!-- Top END -->
 
-            <div class='util_wrap'></div>
+            <div class='util_wrap'>
+                <h1>
+                    아이디 / 비밀번호 찾기
+                </h1>
+
+                <div class='signup_title_box'>
+                    <p class='signup_title'>아이디 찾기</p>
+                    <p>
+                        회원정보에 등록된 정보로 인증번호를 전송하여 아이디를 찾을 수 있습니다.
+                    </p>
+                </div>
+                <div class='certification_list'>
+                    <div class='certification_name clear_fix'>
+                        <p>이름</p>
+                        <input type='text' name='' id='' placeholder='이름을 입력해주세요.'>
+                    </div>
+                    <div class='certification_gender clear_fix'>
+                        <p>본인인증</p>
+                        <div class='certification_type_wrap clear_fix'>
+                            <div class='find_by_email clear_fix'>
+                                <input type='radio' name='type' id=''>
+                                <span>이메일</span>
+                                <input type='text' name='' id=''>
+                            </div>
+                            <div class='find_by_phone clear_fix'>
+                                <input type='radio' name='type' id=''>
+                                <span>휴대폰</span>
+                                <select name='agency' id=''>
+                                    <option value='통신사'>통신사</option>
+                                    <option value='SK'>SK</option>
+                                    <option value='KT'>KT</option>
+                                    <option value='LG'>LG U+</option>
+                                    <option value='알뜰폰'>알뜰폰</option>
+                                </select>
+                                <input type='text' name='' id='' placeholder='- 없이 숫자만'>
+                                <button>인증번호요청</button>
+                                <p>정확한 휴대폰 번호를 입력해주세요.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>                
+                <div class='signup_btn_box clear_fix'>
+                    <button onclick='location.href = "../../index.html"'>이전</button>
+                    <button class='last' onclick='location.href="#"'>아이디 찾기</button>
+                </div>
+
+                <div class='signup_title_box'>
+                    <p class='signup_title'>비밀번호 찾기</p>
+                    <p>
+                        회원정보에 등록된 정보로 인증번호를 전송하여 비밀번호를 찾을 수 있습니다.
+                    </p>
+                </div>
+                <div class='certification_list'>
+                    <div class='certification_name clear_fix'>
+                        <p>이름</p>
+                        <input type='text' name='' id='' placeholder='이름을 입력해주세요.'>
+                    </div>
+                    <div class='certification_gender clear_fix'>
+                        <p>본인인증</p>
+                        <div class='certification_type_wrap clear_fix'>
+                            <div class='find_by_email clear_fix'>
+                                <input type='radio' name='type' id=''>
+                                <span>이메일</span>
+                                <input type='text' name='' id=''>
+                            </div>
+                            <div class='find_by_phone clear_fix'>
+                                <input type='radio' name='type' id=''>
+                                <span>휴대폰</span>
+                                <select name='agency' id=''>
+                                    <option value='통신사'>통신사</option>
+                                    <option value='SK'>SK</option>
+                                    <option value='KT'>KT</option>
+                                    <option value='LG'>LG U+</option>
+                                    <option value='알뜰폰'>알뜰폰</option>
+                                </select>
+                                <input type='text' name='' id='' placeholder='- 없이 숫자만'>
+                                <button>인증번호요청</button>
+                                <p>정확한 휴대폰 번호를 입력해주세요.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>  
+                <div class='signup_btn_box clear_fix'>
+                    <button onclick='location.href = "../../index.html"'>이전</button>
+                    <button class='last' onclick='location.href="#"'>비밀번호 찾기</button>
+                </div>
+            </div>
 
         </div>
         <!-- CONTENTS END -->
@@ -354,10 +441,10 @@
         <!-- FOOTER END -->
     </div>
     <!-- Local -->
-    <script src='../../js/main.js'></script>
+    <script src='../../js/sub.js'></script>
 
     <!-- Server -->
-    <!-- <script src='../../js/dev.js'></script> -->
+    <!-- <script src='../../js/dev_sub.js'></script> -->
 </frameset>
 </body>
 

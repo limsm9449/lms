@@ -184,7 +184,7 @@ $(document).ready(function(){
                         <tr class='study_list_table_line'>
                             <td class='text_left'>
                                 <span>${idx.index + 1}</span>
-                                <p>${row.title}</p>
+                                <p onclick="javascript:Popup.showUserCourseWeek('${set.courseInfo.courseId}','${row.week}','${set.courseInfo.hPx + 100}','${set.courseInfo.vPx + 100}')">${row.title}</p>
                             </td>
                             <td>${row.weekTime}분</td>
                             <td>${row.studyEnd}</td> 
@@ -249,6 +249,8 @@ $(document).ready(function(){
         <div class='study_bottom_area clear_fix'>
             <div class='study_bottom_box'>
                 <a href=''>학습노트</a>
+                <span>I</span>
+                <a href='#' onclick="javascript:Popup.showUserBoard('NOTICE','${set.courseInfo.courseId}'); return false;">공지사항</a>
                 <span>I</span>
                 <a href='#' onclick="javascript:Popup.showUserBoard('DATA','${set.courseInfo.courseId}'); return false;">자료실</a>
                 <span>I</span>

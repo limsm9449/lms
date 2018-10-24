@@ -107,7 +107,7 @@ function lfn_btn(pKind, pParam) {
                         <table>
                             <tr class='notice_table_head'>
                                 <th class='notice_col1'>번호</th>
-                                <th class='notice_col1'>분류</th>
+                                <th class='notice_col2'>분류</th>
                                 <th class='notice_col3'>제목</th>
                                 <th class='notice_col4'>등록일</th>
                                 <th class='notice_col5 last_right'>조회</th>

@@ -286,9 +286,13 @@ function study_btn_click(btn) {
     }
     inactive_btn = document.querySelector(other_id);
     inactive_list = document.querySelector(other_class);
-    if(btn.classList){
+    if (btn.classList) {
         btn.classList.add('on');
         inactive_btn.classList.remove('on');
+    }else{
+        // IE 9
+        btn.setAttribute('class', 'on');
+        inactive_btn.setAttribute('class', '');
     }
     inactive_list.style.display = 'none';
 }
@@ -322,6 +326,16 @@ function new_window(page) {
 function close_popup(page) {
     var temp = document.getElementById(page);
     temp.style.display = 'none';
+}
+
+
+// --- classroom - lecture detail (popup) ---
+function lecture_open_popup(page, popup) {
+    var size = '';
+    if(popup){
+        size = 'width=750, height=840';
+    }
+    window.open(resourceUrl + 'html/classroom/' + page + '.html', 'win_'+page, size);
 }
 
 

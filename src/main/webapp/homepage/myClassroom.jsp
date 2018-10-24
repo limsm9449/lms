@@ -196,7 +196,7 @@ $(document).ready(function(){
                     <ul class='user_lecture_list present clear_fix'>
 <c:forEach var="row" items="${set.attendCourseList}" varStatus="idx">
                         <li class='list clear_fix'>
-                            <p class='user_lecture_list_subject'>
+                            <p class='user_lecture_list_subject' onclick="javascript:Popup.showStudyroom('${row.courseId}');">
                                 ${row.courseName}
                             </p>
                             <p>${row.progress}%</p>
@@ -353,7 +353,7 @@ $(document).ready(function(){
         
     </div>
 </frameset>    
-    <script src='/resources/homepage/js/main.js?timestamp=<%=timestamp%>'></script>
+    <script src='/resources/homepage/js/sub.js?timestamp=<%=timestamp%>'></script>
 </body>
 
 </html>

@@ -47,14 +47,6 @@ public class MemberService {
     	return set;
     }
     
-    public MemberSet getMemberI(MemberSet set) throws Exception {
-    	set.setDdTel(ddService.getDdCodeKeyDdMain("TEL"));
-    	set.setDdMobile(ddService.getDdCodeKeyDdMain("MOBILE"));
-    	set.setDdJob(ddService.getDdCodeKeyDdMain("JOB"));
-
-    	return set;
-    }
-
     public MemberSet isExistUserId(MemberSet set) throws Exception {
     	MemberVO vo = (MemberVO)sqlSession.selectOne("member.isExistUserId",set.getCondiVO());
 
@@ -77,9 +69,6 @@ public class MemberService {
     	
     	//사용자 정보를 가져온다.
     	MemberVO vo = (MemberVO)sqlSession.selectOne("member.userData",set.getCondiVO());
-    	if ( vo != null ) {
-    		vo.setHomeAddr2(vo.getHomeAddr());
-    	}
     	
     	set.setData(vo);
     	
@@ -103,29 +92,6 @@ public class MemberService {
 
     	//사용자 정보를 가져온다.
     	MemberVO vo = (MemberVO)sqlSession.selectOne("member.userData",set.getCondiVO());
-    	if ( vo != null ) {
-    		vo.setHomeAddr2(vo.getHomeAddr());
-
-    		if ( vo.getHomeZip() != null && !"".equals(vo.getHomeZip()) ) {
-	    		String[] homeZip = vo.getHomeZip().split("-");
-	    		vo.setHomeZip1(homeZip[0]);
-	    		vo.setHomeZip2(homeZip[1]);
-    		}
-    		
-    		if ( vo.getHomeTel() != null && !"".equals(vo.getHomeTel()) ) {
-    			String[] homeTel = vo.getHomeTel().split("-");
-	    		vo.setHomeTel1(homeTel[0]);
-	    		vo.setHomeTel2(homeTel[1]);
-	    		vo.setHomeTel3(homeTel[2]);
-    		}
-    		
-    		if ( vo.getMobile() != null && !"".equals(vo.getMobile()) ) {
-	    		String[] mobile = vo.getMobile().split("-");
-	    		vo.setMobile1(mobile[0]);
-	    		vo.setMobile2(mobile[1]);
-	    		vo.setMobile3(mobile[2]);
-    		}
-    	}
     	
     	set.setData(vo);
     	
@@ -135,9 +101,6 @@ public class MemberService {
     @Transactional(propagation=Propagation.REQUIRED, rollbackFor={Throwable.class})
     public MemberSet memberInsert(MemberSet set) throws Exception {
     	MemberVO vo = set.getCondiVO();
-    	vo.setHomeAddr(vo.getHomeAddr2());
-    	vo.setHomeTel(vo.getHomeTel1() + "-" + vo.getHomeTel2() + "-" + vo.getHomeTel3());
-    	vo.setMobile(vo.getMobile1() + "-" + vo.getMobile2() + "-" + vo.getMobile3());
 
     	if ( "--".equals(vo.getHomeTel()) )
     		vo.setHomeTel("");
@@ -155,10 +118,6 @@ public class MemberService {
     @Transactional(propagation=Propagation.REQUIRED, rollbackFor={Throwable.class})
     public MemberSet memberUpd(MemberSet set) throws Exception {
     	MemberVO vo = set.getCondiVO();
-    	vo.setHomeAddr(vo.getHomeAddr2());
-    	vo.setHomeTel(vo.getHomeTel1() + "-" + vo.getHomeTel2() + "-" + vo.getHomeTel3());
-    	vo.setMobile(vo.getMobile1() + "-" + vo.getMobile2() + "-" + vo.getMobile3());
-
     	if ( "--".equals(vo.getMobile()) )
     		vo.setMobile("");
     	if ( "--".equals(vo.getHomeTel()) )
@@ -270,8 +229,6 @@ public class MemberService {
     		set.setRtnMode("EXIST_EMAIL");
     	} else {
 	    	MemberVO vo = set.getCondiVO();
-	    	vo.setHomeAddr(vo.getHomeAddr2());
-	    	vo.setMobile(vo.getMobile1() + "-" + vo.getMobile2() + "-" + vo.getMobile3());
 	
 	    	//cerification key 생성
 	    	String certificationKey = "";
@@ -284,7 +241,7 @@ public class MemberService {
 	    	vo.setCertificationKey(certificationKey);
 	    	vo.setCertificationYn("N");
 	
-	    	sqlSession.insert("member.userInsert",set.getCondiVO());
+	    	sqlSession.insert("member.joinUserInsert",set.getCondiVO());
 	    	
 	    	try {
 	        	//메일 발송
@@ -293,7 +250,7 @@ public class MemberService {
 		    	mail.setSubject("[회원가입 인증메일] 큐러닝에 가입하신 환영합니다.");
 	
 		    	StringBuffer contents = new StringBuffer();
-		    	if ( CommUtil.isEqual(set.getCondiVO().getCompCd(),"") == true ) {
+		    	//if ( CommUtil.isEqual(set.getCondiVO().getCompCd(),"") == true ) {
 			    	contents.append("<div style='font-size: 12px; width: 650px; height:500px; margin:0 auto;' align='center'>");
 			    	contents.append("  <div align='left'>");
 			    	contents.append("    <a href='http://www.qlearning.co.kr'><img src='http://www.qlearning.co.kr/resources/images/common/toplogo.png' style='border:0;' /></a>");
@@ -313,7 +270,7 @@ public class MemberService {
 			    	
 			    	mail.setReceiver(vo.getEmail());
 	    	    	mail.setContent(contents.toString());
-	        	} else {
+	        	/*} else {
 			    	contents.append("<div style='font-size: 12px; width: 650px; height:500px; margin:0 auto;' align='center'>");
 			    	contents.append("  <div align='left'>");
 			    	contents.append("    <a href='http://www.qlearning.co.kr'><img src='http://www.qlearning.co.kr/resources/images/common/toplogo.png' style='border:0;' /></a>");
@@ -334,7 +291,7 @@ public class MemberService {
 	        		MemberVO tutorVO = (MemberVO)sqlSession.selectOne("member.companyTutor",set.getCondiVO().getCompCd());
 	    	    	mail.setReceiver(tutorVO.getEmail());
 	    	    	mail.setContent(contents.toString());
-	        	}
+	        	}*/
 	
 	        	mail.SendMail();
 	    	} catch ( UnsupportedEncodingException e ) {
@@ -408,14 +365,6 @@ public class MemberService {
     public MemberSet teacherV(MemberSet set) throws Exception {
     	//사용자 정보를 가져온다.
     	MemberVO vo = (MemberVO)sqlSession.selectOne("member.teacherData",set.getCondiVO());
-    	if ( vo != null ) {
-    		if ( vo.getMobile() != null && !"".equals(vo.getMobile()) ) {
-	    		String[] mobile = vo.getMobile().split("-");
-	    		vo.setMobile1(mobile[0]);
-	    		vo.setMobile2(mobile[1]);
-	    		vo.setMobile3(mobile[2]);
-    		}
-    	}
     	
     	set.setData(vo);
     	

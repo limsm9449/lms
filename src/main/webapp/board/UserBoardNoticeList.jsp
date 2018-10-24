@@ -1,25 +1,31 @@
 <%@ page contentType="text/html;charset=utf-8"%>
-
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/functions"  prefix="fn"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="ko" xml:lang="ko">
+<!DOCTYPE html>
+<html lang='ko'>
+
 <head>
-<title>
-</title>
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1'>
+    <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+    <title>Q learning - 자료실</title>
 
-<%@ include file="../common/commUserInclude.jsp" %>
+	<%@ include file="../common/commMainInclude.jsp" %>
 
-
+    <link href='https://fonts.googleapis.com/css?family=Nanum+Gothic' rel='stylesheet'>
+    <link rel='stylesheet' href='/resources/homepage/css/initialization.css'>
+    <link rel='stylesheet' href='/resources/homepage/css/classroom/lecture_detail.css'>
 </head>
 
 <script type="text/javascript">
 var preUrl = "/board/"; 
 
 $(document).ready(function() {
-	f_makePageNavigator("paging",${set.condiVO.pageNum},${set.totalCount},${set.pageUnit});
+	f_makePageNavigator("pagingLayer",${set.condiVO.pageNum},${set.totalCount},${set.pageUnit});
 });
 
 function lfn_btn(pKind, pParam) {
@@ -31,8 +37,6 @@ function lfn_btn(pKind, pParam) {
 		
 		f_submitSelf(preUrl + "userBoardNoticeList");
 	} else if ( pKind == "view") {
-		lfn_setCondition();
-		
 		$("#seq").val(pParam.seq);
 		
 		gfn_goPage(preUrl + "userBoardNoticeV",$("#frm").serialize());
@@ -41,76 +45,90 @@ function lfn_btn(pKind, pParam) {
 	}
 }
 
-function lfn_setCondition() {
-	opener.top.gCondition.boardNotice = {
-		param : "findString=" + $("#findString").val() + 
-				"&pageNum=" + $("#pageNum").val() + 
-				"&courseId=" + $("#courseId").val()
-	}	
-}
-
-
 </script>
 
-<body>
-
+<body style='background:#fff'>
 <form id="frm" name="frm" method="post">
 	<input id="courseId" name="courseId" value="${set.condiVO.courseId}" type="hidden"/>
-	<input id="isPopup" name="isPopup" value="${set.condiVO.isPopup}" type="hidden"/>
 	<input id="seq" name="seq" value="0" type="hidden"/>
 
-<div id="popup_wrap">
-  <div class="pop_header">
-    <h3 class="title">공지사항</h3>
-    <p class="closeBtn" onClick="window.close();">Close</p>
-  </div>
-  <div class="pop_content">
-    <div id="bod_search_r">
-        <input type="text" id="findString" name="findString" value="${set.condiVO.findString}">
-        <a href="javascript:" onclick="javascript:lfn_btn('search');return false;"><img src="/resources/images/sub/btn_search.png" alt="검색하기" /></a>
+<frameset rows='*'>
+    <div class='wrap'>
+        <!-- CONTENTS -->
+        <div class='contents_wrap process'>
+            <div class='contents_wrap_box popup'>
+                <!-- TOP -->
+                <div class='top_area'>
+                    <h1>
+                        자료<span>실</span>
+                    </h1>
+                    <div class='top_text_box clear_fix'>
+                        <span><img src='/resources/homepage/img/support/notice_bg.jpg' alt=' '></span>
+                        <p class='top_title'>NEWS & NOTICE!</p>
+                        <p>
+                            큐러닝의 소식과 공지사항을 알려드립니다. <span></span>항상 유익하고 풍성한 소식 놓치지 말고 확인하세요.
+                        </p>
+                    </div>
+                </div>
+                <!-- TOP END -->
+
+                <div class='notice_search_box'>
+                    <input type='text' name='findString' id='findString' placeholder='검색어를 입력해 주세요.' value="${set.condiVO.findString}">
+                    <button onclick="lfn_btn('search');return false;">검색</button>
+                </div>
+
+                <div class='lecture_detail_table_box documents'>
+                    <table>
+                        <tr>
+                            <th class='col_1'>번호</th>
+                            <th class='col_2'>제목</th>
+                            <th class='col_4'>등록일자</th>
+                            <th class='col_5'>조회</th>
+                        </tr>
+<c:if test="${empty set.list}">
+						<tr class="last_line">
+							<td colspan="4"><spring:message code="lms.msg.noSearchData" text="-" /></td>
+						</tr>
+</c:if>
+<c:forEach var="row" items="${set.list}" varStatus="idx">
+                        <tr>
+                            <td class='col_1'>${row.rownum}</td>
+                            <td class='col_2'><a href="#" onClick="javascript:lfn_btn('view',{seq:'${row.seq}'}); return false;"><c:out value="${row.title}" escapeXml="true" /></a></td>
+                            <td class='col_4'>${row.createDate}</td>
+                            <td class='col_5'>${row.viewCnt}</td>
+                        </tr>
+</c:forEach>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <!-- CONTENTS END -->
+        
+        <input type='hidden' id='pageNum' name='pageNum' value="${set.condiVO.pageNum}">
+        <div class='pager_box'>
+             <div class='pager clear_fix'>
+                 <div class='pager_prev clear_fix' id="pagingLayerPrev">
+                     <div>&laquo;</div>
+                     <div>&lsaquo;</div>
+                 </div>
+                 <ul class='clear_fix' id="pagingLayer">
+                     <li class='on'>1</li>
+                     <li>2</li>
+                     <li>3</li>
+                     <li>4</li>
+                     <li>5</li>
+                 </ul>
+                 <div class='pager_next clear_fix' id="pagingLayerNext">
+                     <div>&rsaquo;</div>
+                     <div>&raquo;</div>
+                 </div>
+             </div>
+        </div>
+      	<!-- Pager Area END -->
     </div>
-    <table class="bod_list">
-      <caption>목록</caption>
-		<thead>
-		  <tr class="guide">
-				<th width="42"></th>
-				<th></th>
-				<th width="90"></th>
-				<th width="70"></th>
-			</tr>
-			<tr class="t_list">
-				<th>No</th>
-				<th>제목</th>
-				<th>등록일자</th>
-				<th class="no_line">조회</th>
-			</tr>
-		</thead>
-		<tbody>
-			<c:if test="${empty set.list}">
-				<tr class="last_line">
-					<td colspan="4" class="last center"><spring:message code="lms.msg.noSearchData" text="-" /></td>
-				</tr>
-			</c:if>
-			<c:forEach var="row" items="${set.list}" varStatus="idx">
-				<tr <c:if test="${idx.index + 1 eq fn:length(set.list)}"> class="last_line"</c:if>>
-	              	<td class="right">${row.rownum}</td>
-	              	<td class="title2"><span><a href="#" onClick="javascript:lfn_btn('view',{seq:'${row.seq}'}); return false;" class="click"><c:out value="${row.title}" escapeXml="true" /></a></span></td>
-	              	<td class="center">${row.createDate}</td>
-	              	<td class="last right">${row.viewCnt}</td>
-				</tr>
-			</c:forEach> 
-      	</tbody>
-    </table>
-	<%-- 페이징 --%>
-	<div id="paging"></div>
-  </div>	
-</div>
-
-
+</frameset>
 </form>
-
-
+    
+<script src='/resources/homepage/js/sub.js'></script>
 </body>
 </html>
-
-

@@ -408,7 +408,7 @@ header{
 .top_area h1{
     clear: both;
     font-family:"NanumSquare";
-    font-size: 44px;
+    font-size: 20px;
     letter-spacing: -2px;
     padding-bottom: 16px;
     border-bottom: solid 1px #003366;
@@ -422,9 +422,11 @@ header{
 /* REGISTER COURSE */
 .register_course_title{
     border-bottom: solid 1px #ddd;
+    text-align:center;
 }
 .register_course_title div{
-    width: 410px;
+    display:inline-block;
+    width: inherit;
     padding: 20px 0 10px;
     margin: 0 auto;
 }
@@ -624,6 +626,10 @@ header{
     padding: 14px 0;
     border-bottom: dashed 1px #ddd;
 }
+.register_introduce_list > div{
+    float:right;
+    width:84%;
+}
 .register_introduce_list > p{
     float: left;
     width:78%;
@@ -655,7 +661,7 @@ header{
 .register_introduce_goal_list li p{}
 .register_introduce_target_list li{}
 .register_introduce_target_list li p{}
-.register_introduce_list span{
+.register_introduce_list > span{
     display: block;
     float: left;
     width: 12%;

@@ -39,12 +39,12 @@
                     </button>
                 </div>
                 <div class='head_con logo_box'>
-                    <a href='#'>
+                    <a href="javascript:" onclick="page.goHome();">
                         <img src='/resources/homepage/img/logo.png' alt=' '>
                     </a>
                 </div>
                 <div class='head_con util_box'>
-                    <a href='#' class='last_right'>로그아웃</a>
+                    <a href="javascript:" onclick="gfn_ajax.logout()" class='last_right'>로그아웃</a>
                 </div>
                 <div class='head_con search_box'>
                     <input type="text">
@@ -172,7 +172,7 @@
 </c:if>  
                     </div>
                     <div class='mobile_menu process_all'>
-                        <button onclick='sub_menu_open(this, "main")'>
+                        <button onclick='sub_menu_open(this, "others")'>
                             전체과정
                         </button>
                         <ul>

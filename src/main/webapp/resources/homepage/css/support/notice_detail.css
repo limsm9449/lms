@@ -322,6 +322,9 @@ header{
     padding-top:155px;
     margin:0 auto;
 }
+.contents_wrap_box.popup{
+    width:98%;
+}
 
 /* QUICK MENU */
 .quick_menu_wrap{
@@ -408,20 +411,53 @@ header{
     font-size: 44px;
     letter-spacing: -2px;
     padding-bottom: 16px;
-    /* border-bottom: solid 1px #003366; */
 }
 .top_area h1 span{
     font-family:"NanumSquare";
     color: #0180d3;
+}
+.top_text_box{
+    padding: 20px 5% 0 5%;
+    width: 90%;
+    background: #1291de;
+    border-bottom: solid 1px #1291de;
+}
+.top_text_box > span{
+    float: right;
+}
+.top_text_box > span img{
+    display:block;
+}
+.top_text_box p{
+    float: left;
+    width: 60%;
+    font-size: 15px;
+    letter-spacing: -1px;
+    color: #fff;
+    line-height: 150%;
+}
+.top_text_box .top_title{
+    font-family:'NanumSquare';
+    font-size: 34px;
+}
+.top_text_box p span{
+    display:block;
 }
 
 
 
 /* NOTICE DETAIL */
 .notice_detail_box{
+    margin-top:20px;
     border-top: solid 2px #0180d5;
     border-bottom: solid 1px #ddd;
     min-height: 500px;
+}
+.contents_wrap_box.popup{
+    width:100%;
+    max-width:800px;
+    margin:0 auto;
+    padding-top:20px;
 }
 .notice_title_box{}
 .notice_title_box p{
@@ -431,6 +467,19 @@ header{
     text-align: center;
     padding: 12px 0;
     background: #f7f7f7;
+}
+.contents_wrap_box.popup .notice_register{
+    margin-top:0;
+}
+.editor_area{
+    width:93%;
+    padding:20px 2%;
+    min-height:300px;
+    margin:10px 1.5%;
+    border:solid 1px #eee;
+}
+.contents_wrap_box.popup .form_box div iframe{
+    min-height:100px;
 }
 .notice_info_box{
     padding: 10px 0;
@@ -442,7 +491,13 @@ header{
     width: 20%;
 }
 .notice_visit{}
-.notice_regDate{}
+.notice_info_box .notice_regDate{
+    float:right;
+    width:24%;
+}
+.contents_wrap_box.popup .notice_info_box .notice_regDate{
+    width:30%;
+}
 .notice_info_box div p{
     float: left;
     font-size: 16px;
@@ -666,6 +721,7 @@ header{
     .quick_menu_wrap{
         display:none;
     }
+    
 
     /* Top */
     .top_area h1 {
@@ -687,6 +743,7 @@ header{
         width:100%;
         text-align:center;
     }
+    
 
 
     /* NOTICE DETAIL */
@@ -724,6 +781,13 @@ header{
         width:40%;
         min-width:150px;
         padding:16px 0;
+    }
+
+    .contents_wrap_box.popup .form_box .editor_area{
+        width:73%;
+    }
+    .contents_wrap_box.popup .notice_info_box .notice_regDate{
+        width:50%;
     }
 
 

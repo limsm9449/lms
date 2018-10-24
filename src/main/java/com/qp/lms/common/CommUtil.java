@@ -509,4 +509,17 @@ public class CommUtil {
 		}
 		return rtn;
 	}
+	
+	public static HashMap<String, Object> getParamsHashMap(String params) throws Exception {
+		HashMap<String, Object> hm = new HashMap<String, Object>();
+		
+		String[] paramsArr1 = params.split(",");
+		for ( int i = 0 ; i < paramsArr1.length; i++ ) {
+			String[] paramsArr2 = paramsArr1[i].split("=");
+			hm.put(paramsArr2[0], paramsArr2[1]);
+		}
+		
+		return hm;
+	}
+	
 }

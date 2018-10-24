@@ -18,6 +18,7 @@ import com.qp.lms.board.model.BoardVO;
 import com.qp.lms.board.service.BoardFaqService;
 import com.qp.lms.board.service.BoardNoticeService;
 import com.qp.lms.common.CommUtil;
+import com.qp.lms.common.service.DdService;
 import com.qp.lms.education.model.EducationSet;
 import com.qp.lms.education.model.EducationVO;
 import com.qp.lms.education.service.EducationService;
@@ -50,7 +51,9 @@ public class GuestController {
     private BoardFaqService boardFaqSvr;
     @Autowired
     private EducationService educationSvr;
-    
+	@Autowired
+	private DdService ddService;
+
     /*
      * 과정코드를 가져온다.
      */
@@ -127,6 +130,9 @@ public class GuestController {
 	    	MemberSet set = new MemberSet();
 	    	set.setCondiVO(vo);
 	    	
+	    	set.setBirthFromYear((String)ddService.getSettingData(CommUtil.getParamsHashMap("OPTION_KEY=BIRTH_FROM_YEAR")).get("OPTION_VALUE"));
+	    	set.setBirthToYear((String)ddService.getSettingData(CommUtil.getParamsHashMap("OPTION_KEY=BIRTH_TO_YEAR")).get("OPTION_VALUE"));
+
 	        model.addAttribute("set", set );
     	} catch ( Exception e ) {
     		e.printStackTrace();
@@ -158,7 +164,9 @@ public class GuestController {
 	    	MemberSet set = new MemberSet();
 	    	set.setCondiVO(vo);
 	    	
-	    	set = memberSvr.getMemberI(set);
+	    	set.setZipcodeUrl((String)ddService.getSettingData(CommUtil.getParamsHashMap("OPTION_KEY=ZIPCODE_URL")).get("OPTION_VALUE"));
+	    	set.setBirthFromYear((String)ddService.getSettingData(CommUtil.getParamsHashMap("OPTION_KEY=BIRTH_FROM_YEAR")).get("OPTION_VALUE"));
+	    	set.setBirthToYear((String)ddService.getSettingData(CommUtil.getParamsHashMap("OPTION_KEY=BIRTH_TO_YEAR")).get("OPTION_VALUE"));
 	    	
 	        model.addAttribute("set", set );
     	} catch ( Exception e ) {
@@ -173,8 +181,6 @@ public class GuestController {
     	try {
     		MemberSet set = new MemberSet();
 	    	set.setCondiVO(vo);
-	    	
-	    	set = svr.boardFaqList(set);
 	    	
 	        model.addAttribute("set", set );
     	} catch ( Exception e ) {

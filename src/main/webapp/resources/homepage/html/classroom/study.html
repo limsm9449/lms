@@ -99,48 +99,48 @@
                 </div>
                 <ul class='study_support_list_box notice'>
                     <li>
-                        <a href='' class='clear_fix'>
+                        <button class='clear_fix' onclick='lecture_open_popup("../support/notice_detail", false)'>
                             <p class='study_support_text'>[큐러닝] 개인정보처리방침 변경 안내</p>
                             <p class='study_support_date'>2017.03.05</p>
-                        </a>
+                        </button>
                     </li>
                     <li>
-                        <a href='' class='clear_fix'>
+                        <button class='clear_fix' onclick='lecture_open_popup("../support/notice_detail", false)'>
                             <p class='study_support_text'>[큐러닝] 개인정보처리방침 변경 안내</p>
                             <p class='study_support_date'>2017.03.05</p>
-                        </a>
+                        </button>
                     </li>
                 </ul>
                 <ul class='study_support_list_box qna'>
                     <li>
-                        <a href='' class='clear_fix'>
+                        <button class='clear_fix' onclick='lecture_open_popup("lecture_qna", true)'>
                             <p class='study_support_text'>질문1</p>
                             <p class='study_support_date'>2017.03.05</p>
-                        </a>
+                        </button>
                     </li>
                     <li>
-                        <a href='' class='clear_fix'>
+                        <button class='clear_fix' onclick='lecture_open_popup("lecture_qna", true)'>
                             <p class='study_support_text'>질문2 질문2 질문2 질문2 질문2 질문2 질문2 질문2</p>
                             <p class='study_support_date'>2017.03.05</p>
-                        </a>
+                        </button>
                     </li>
                     <li>
-                        <a href='' class='clear_fix'>
+                        <button class='clear_fix' onclick='lecture_open_popup("lecture_qna", true)'>
                             <p class='study_support_text'>질문3</p>
                             <p class='study_support_date'>2017.03.05</p>
-                        </a>
+                        </button>
                     </li>
                     <li>
-                        <a href='' class='clear_fix'>
+                        <button class='clear_fix' onclick='lecture_open_popup("lecture_qna", true)'>
                             <p class='study_support_text'>질문4</p>
                             <p class='study_support_date'>2017.03.05</p>
-                        </a>
+                        </button>
                     </li>
                     <li>
-                        <a href='' class='clear_fix'>
+                        <button class='clear_fix' onclick='lecture_open_popup("lecture_qna", true)'>
                             <p class='study_support_text'>질문5</p>
                             <p class='study_support_date'>2017.03.05</p>
-                        </a>
+                        </button>
                     </li>
                 </ul>
             </div>
@@ -149,7 +149,7 @@
                 <button>학습<span></span>가이드</button>
                 <button>동영상<span></span>설정</button>
                 <button>환경<span></span>설정</button>
-                <button class='last_right'>학습<span></span>질문답변</button>
+                <button class='last_right' onclick='lecture_open_popup("lecture_qna", true)'>학습<span></span>질문답변</button>
             </div>
             <div class='study_remote_support_btn'>
                 <button>원격지원 서비스</button>
@@ -429,20 +429,20 @@
                 <button>학습<span></span>가이드</button>
                 <button>동영상<span></span>설정</button>
                 <button>환경<span></span>설정</button>
-                <button class='last_right'>학습<span></span>질문답변</button>
+                <button class='last_right' onclick='lecture_open_popup("lecture_qna", true)'>학습<span></span>질문답변</button>
             </div>
         </div>
         <div class='study_bottom_area clear_fix'>
             <div class='study_bottom_box'>
                 <a href=''>학습노트</a>
                 <span></span>
-                <a href=''>자료실</a>
+                <button onclick='lecture_open_popup("lecture_documents", true)'>자료실</button>
                 <span></span>
                 <a href=''>용어사전</a>
                 <span></span>
                 <a href=''>나의노하우</a>
                 <span class='mobile'></span>
-                <a href=''>토론톡 나도 한마디</a>
+                <button onclick='lecture_open_popup("lecture_detail", true)'>진도상세보기</button>
                 <span></span>
                 <a href=''>학습후기</a>
                 <span></span>
