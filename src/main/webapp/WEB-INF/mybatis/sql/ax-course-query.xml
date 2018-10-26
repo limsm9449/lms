@@ -24,7 +24,7 @@
                 ,A.POPULAR_YN
                 ,A.COURSE_EXAM_TYPE_ID
                 ,F.TYPE_NAME COURSE_EXAM_TYPE_NAME
-                ,A.TERM_YN
+                ,IFNULL(A.TERM_YN,'N') TERM_YN
                 ,IFNULL(A.TERM_PERIOD_FROM, '') TERM_PERIOD_FROM
                 ,IFNULL(A.TERM_PERIOD_TO, '') TERM_PERIOD_TO
                 ,IFNULL(A.STUDY_PERIOD_FROM, '') STUDY_PERIOD_FROM

@@ -266,15 +266,21 @@ function lfn_btn(pKind, pParam) {
                         <ul>
                             <li class='register_introduce_list clear_fix'>
                                 <p class='register_introduce_list_title'>강의개요</p>
-                                <p>${set.courseData.learingContent}</p>
+                                <div>
+                                	<p>${set.courseData.learingContent}</p>
+                                </div>
                             </li>
                             <li class='register_introduce_list clear_fix'>
                                 <p class='register_introduce_list_title'>학습목표</p>
-                                <p>${set.courseData.learingGoal}</p>
+                                <div>
+                                	<p>${set.courseData.learingGoal}</p>
+                                </div>
                             </li>
                             <li class='register_introduce_list clear_fix'>
                                 <p class='register_introduce_list_title'>교육대상</p>
-                                <p>${set.courseData.learingTarget}</p>
+                                <div>
+                                	<p>${set.courseData.learingTarget}</p>
+                                </div>
                             </li>
                             <li class='register_introduce_list clear_fix'>
                                 <p class='register_introduce_list_title'>교수소개</p>
@@ -286,7 +292,9 @@ function lfn_btn(pKind, pParam) {
                                     </div>
                                     <div class='register_tutor_explain clear_fix'>
                                         <p class='register_tutor_title'>경력</p>
-                                        <p>${set.courseData.career}</p>
+                                        <div>
+                                        	<p>${set.courseData.career}</p>
+                                        </div>
                                     </div>
                                 </div>
                             </li>

@@ -400,3 +400,64 @@ function answer(elem){
         box.style.background = '#fff';
     }
 }
+
+
+
+// --- admin ---
+
+function admin_sub_open(elem){
+    var btn = elem.target;
+    var list_box = btn.parentNode;
+    var list_all = document.querySelectorAll('.gnb > li');
+
+    for(var i = 0; i < list_all.length; i++){
+        var temp = list_all[i];
+        if(temp === list_box){
+            if(temp.classList){
+                temp.classList.add('on');
+            }else{
+                // IE
+                temp.className = 'on';
+            }
+        }else{
+            if(temp.classList){
+                temp.classList.remove('on');
+            }else{
+                // IE
+                temp.className = '';
+            }
+        }
+    }
+}
+
+function admin_popup_open(type){
+    window.open(resourceUrl + 'html/popup/admin_popup_type' + type + '.html', '_blank', 'width=500, height=700');
+}
+
+function admin_popup_close(){
+    window.open('about:blank', '_self').close();
+}
+
+
+
+function qna_answer_open(){
+    var elem = document.getElementById('notice_detail_answer');
+    elem.style.display = 'block';
+}
+
+function qna_answer_close(){
+    var elem = document.getElementById('notice_detail_answer');
+    elem.style.display = 'none';
+}
+
+function review_score(num){
+    var elem = document.getElementsByClassName('score');
+    for(var i = 0; i < elem.length; i++){
+        var temp = elem[i];
+        if(i < num){
+            temp.style.background = 'url("' + resourceUrl + 'img/course/register_star_active.png") no-repeat';
+        }else{
+            temp.style.background = 'url("' + resourceUrl + 'img/course/register_star_inactive.png") no-repeat';
+        }
+    }
+}

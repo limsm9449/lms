@@ -1,18 +1,24 @@
 <%@ page contentType="text/html;charset=utf-8"%>
-
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
-<%@ taglib prefix="FCK" uri="http://java.fckeditor.net" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
+<!DOCTYPE html>
+<html lang='ko'>
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="ko" xml:lang="ko">
 <head>
-<title>
-</title>
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1'>
+    <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+    <title>Q learning - 자료실</title>
 
-<%@ include file="../common/commUserInclude.jsp" %>
+    <%@ include file="../common/commMainInclude.jsp" %>
 
+    <link href='https://fonts.googleapis.com/css?family=Nanum+Gothic' rel='stylesheet'>
+    <link rel='stylesheet' href='/resources/homepage/css/initialization.css'>
+    <link rel='stylesheet' href='/resources/homepage/css/support/notice_detail.css'>
 </head>
 
 <script type="text/javascript">
@@ -37,7 +43,7 @@ function lfn_btn(pKind, pParam) {
 			data : $("#frm").serialize(),
 			success : function(json){
 				if ( json.rtnMode == "DELETE_OK") {
-					lfn_btn("list");
+					page.goPage('/board/userBoardDataList', decodeURIComponent('${set.condiVO.prevParams}'));
 				}
 			},
 			error : function(e) {
@@ -46,69 +52,75 @@ function lfn_btn(pKind, pParam) {
 		})
 	} else if ( pKind =="update" ) {
 		gfn_goPage(preUrl + "userBoardDataU",$("#frm").serialize()); 
-	} else if ( pKind =="list" ) {
-		gfn_goPage(preUrl + "userBoardDataList",opener.top.gCondition.boardData.param); 
 	}
 }
 
 </script>
 
-<body>
-
-
+<body style='background:#fff'>
 <form id="frm" name="frm" action="" method="post">
 	<input id="courseId" name="courseId" value="${set.condiVO.courseId}" type="hidden"/>
-	<input id="isPopup" name="isPopup" value="${set.condiVO.isPopup}" type="hidden"/>
 	<input id="seq" name="seq" value="${set.condiVO.seq}" type="hidden"/>
+	<input id="prevParams" name="prevParams" type="hidden" value="${set.condiVO.prevParams}">
+	
+<frameset rows='*'>
+    <div class='wrap'>
+        <!-- CONTENTS -->
+        <div class='contents_wrap process'>
+            <div class='contents_wrap_box popup'>
+                <!-- TOP -->
+                <div class='top_area'>
+                    <h1>
+                        자료실 <span>상세</span>보기
+                    </h1>
+                    <div class='top_text_box clear_fix'>
+                        <span><img src='/resources/homepage/img/support/notice_bg.jpg' alt=' '></span>
+                        <p class='top_title'>NEWS & NOTICE!</p>
+                        <p>
+                            큐러닝의 소식과 공지사항을 알려드립니다. <span></span>항상 유익하고 풍성한 소식 놓치지 말고 확인하세요.
+                        </p>
+                    </div>
+                </div>
+                <!-- TOP END -->
 
-<div id="popup_wrap">
-  <div class="pop_header">
-    <h3 class="title">자료실 - 상세</h3>
-    <p class="closeBtn" onClick="window.close();">Close</p>
-  </div>
-  <div class="pop_content">
-    <div id="bod_search_r">
-      <a href="#" onclick="javascript:lfn_btn('list'); return false;"><img src="/resources/images/sub/btn_go_list.png" alt="목록으로 돌아가기" /></a>
-    </div>
-    <div id="bodview_box">
-      <div class="title"><c:out value="${set.data.title}" escapeXml="true" /></div>
-      <div class="tool_box">
-        <dl>
-          <dt>작성자</dt>
-          <dd>${set.data.userName}</dd>
-<c:if test="${set.condiVO.isEdit eq 'Y' && set.userId eq set.data.userId}">
-          <dd class="btn"><a href="#" onclick="javascript:lfn_btn('update'); return false;">수정</a></dd>
-          <dd class="btn"><a href="#" id="saveBtn" onclick="javascript:lfn_btn('delete'); return false;">삭제</a></dd>
-</c:if>
-        </dl>
-        <hr class="dash" />
-        <dl>
-          <dt>조회</dt>
-          <dd>${set.data.viewCnt}</dd>
-          <dt class="date">등록일</dt>
-          <dd>${set.data.createDate}</dd>
-        </dl>
-      </div>
-      <div class="text" style="width:828px">
-        <c:out value="${set.data.contents}" escapeXml="" />
-      </div>
-    </div>
-    <div class="text">
-        <iframe id="attachFrame" name="attachFrame" style="width:100%;height:100px"></iframe>
-    </div>
-    <div id="bod_search_r">
-      <a href="#" onclick="javascript:lfn_btn('list'); return false;"><img src="/resources/images/sub/btn_go_list.png" alt="목록으로 돌아가기" /></a>
-    </div>
-  </div>
-</div>
+                <div class='notice_detail_box'>
+                    <div class='notice_title_box'>
+                        <p><c:out value="${set.data.title}" escapeXml="true" /></p>
+                    </div>
+                    <div class='notice_info_box clear_fix'>
+                        <div class='notice_visit'>
+                            <p class='type'>작성자</p>
+                            <p>${set.data.userName}</p>
+                        </div>
+                        <div class='notice_visit'>
+                            <p class='type'>조회</p>
+                            <p>${set.data.viewCnt}</p>
+                        </div>
+                        <div class='notice_regDate'>
+                            <p class='type'>등록일</p>
+                            <p>${set.data.createDate}</p>
+                        </div>
+                    </div>
+                    <div class='iframe_contents'>
+                        <c:out value="${set.data.contents}" escapeXml="" />
+                    </div>
+                    <iframe id="attachFrame" name="attachFrame" style="width:100%;height:100px"></iframe>
+                </div>
+                <div class='detail_btn_area'>
+<c:if test="${session.userId eq set.data.userId}">
+                    <button onclick="lfn_btn('update');" class='bg_color'>수정</button>
+                    <button id="deleteBtn" onclick="lfn_btn('delete');">삭제</button>
+</c:if>                    
+                    <button onclick="page.goPage('/board/userBoardDataList', decodeURIComponent('${set.condiVO.prevParams}'));">목록으로</button>
+                </div>
 
-
-
+            </div>
+        </div>
+        <!-- CONTENTS END -->
+    </div>
+</frameset>
 
 </form>
-
-
+<script src='/resources/homepage/js/sub.js'></script>
 </body>
 </html>
-
-

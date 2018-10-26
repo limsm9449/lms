@@ -1,47 +1,29 @@
 <%@ page contentType="text/html;charset=utf-8"%>
-
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
-
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="ko" xml:lang="ko">
+<!DOCTYPE html>
+<html lang='ko'>
 <head>
-<title>
-</title>
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1'>
+    <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+    <title>File</title>
 
-<%@ include file="../common/commAdminInclude.jsp" %>
-
-<style>
-  table {border: 1px solid #e0e0e0; border-collapse: collapse; table-layout: fixed; }
-  table tbody tr {border-bottom: 1px solid #e0e0e0; height: 25px;}
-  table tbody td { padding-left: 10px; }
-  /* input file css */
-  .file_url { float:left; width: 150px; margin-right: 5px;}
-  .file_btn_group { position:relative; width: 70px; height: 23px; overflow: hidden; margin-bottom: 5px; }
-  .file_button { position: absolute; top:0px; }
-  .hidden_inputfile { cursor:pointer; font-size: 45px; position: absolute; right: 0px; top: 0px; opacity: 0; filter: alpha(opacity=0); -ms-filter: "alpha(opacity=0)"; -khtml-opacity: 0; -moz-opacity: 0; }
-  
-  /*table */
-  .title_bg td { -moz-box-shadow:inset 0px -15px 0px 0px #f4f5f7; -webkit-box-shadow:inset 0px -15px 0px 0px #f4f5f7; box-shadow:inset 0px -15px 0px 0px #f4f5f7; background-color:#ffffff; }
-  .file_list { height: 40px; padding:0;}
-  .sum_bottom { background-color: #f6f7f8; }
-  div.scroll {  padding: 5px 10px;  overflow-y: auto; overflow-x: hidden; }
-  div.scroll li { height: 24px; margin-bottom: 5px;}
-  div.scroll li span { display:block; text-align: right; margin: -17px 0 0 20px;}
-</style>
-
+	<%@ include file="../common/commMainInclude.jsp" %>
+	
+    <link rel='stylesheet' href='/resources/homepage/css/initialization.css'>
+    <link rel='stylesheet' href='/resources/homepage/css/etc/iframe_file_view.css'>
 </head>
 
 <script type="text/javascript">
-var preUrl = "/board/";
+
+var preUrl = "/board/"; 
 
 $(document).ready(function() {
-	var bodyHeight = $(document).height();
-	parent.$("#attachFrame").height(bodyHeight);
-	top.gfn_resize();
 });
 
 function lfn_btn(pKind, pParam) {
@@ -69,60 +51,31 @@ function lfn_btn(pKind, pParam) {
 
 </script>
 
-<body>
-
-
+<body style='background:#fff'>
 <form id="frm" name="frm" action="" method="post" enctype="multipart/form-data">
+	<input id="seq" name="seq" value="0" type="hidden"/>
+	<input id="pSeq" name="pSeq" value="${set.condiVO.pSeq}" type="hidden"/>
+	<input id="kind" name="kind" value="${set.condiVO.kind}" type="hidden"/>
+	<input id="mode" name="mode" value="" type="hidden"/>
 
-<div id="contents">
-	<div id="div1">
-		<input id="seq" name="seq" value="0" type="hidden"/>
-		<input id="pSeq" name="pSeq" value="${set.condiVO.pSeq}" type="hidden"/>
-		<input id="kind" name="kind" value="${set.condiVO.kind}" type="hidden"/>
-		<input id="mode" name="mode" value="" type="hidden"/>
-
-	    <div class="file_btn_group">
-	      <a class="grayBtn file_button">파일찾기</a>
-	      <input type="file" name="newFile" class="hidden_inputfile" title="" onChange="javascript:lfn_btn('attachIns'); return false;">
-	    </div>
-	    
-	    <!-- file_list -->
-    	<table>
-			<thead>
-		  	<tr class="guide">
-					<th></th>
-					<th width="100"></th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr class="title_bg">
-					<td class="no_line">파일이름</td>
-					<td class="no_line center">파일크기</td>
-				</tr>
-				<tr>
-					<td colspan="2" class="file_list">
-					  <div class="scroll">
-					    <ul>
+    <div class='ifame_wrap'>
+        <input type='file' name='newFile' id='newFile' onChange="javascript:lfn_btn('attachIns'); return false;">
+        <div class='item_head clear_fix'>
+            <p class='name'>파일이름</p>
+            <p>파일크기</p>
+        </div>
+        <div class='item_list'>
 <c:forEach var="row" items="${set.list}" varStatus="idx">
-    					  <li><a href="#" onclick="javascript:lfn_btn('download',{seq:'${row.seq}'}); return false;">${row.orgFileName}</a> <a href="javascript:" class="grayBtn" onclick="javascript:lfn_btn('delete',{seq:'${row.seq}'}); return false;">삭제</a><span><fmt:formatNumber value="${row.fileSize/1000}" pattern="#,##0"/> KB</span></li>
-</c:forEach>
-    					</ul>
-  					</div>
-					</td>
-				</tr>
-				<tr class="sum_bottom">
-					<td colspan="2">파일개수: ${fn:length(set.list)} 개</td>
-				</tr>
-			</tbody>
-		</table>
-	</div>
-</div>
-
+            <div class='clear_fix'>
+				<p class='name'><a href="#" onclick="javascript:lfn_btn('download',{seq:'${row.seq}'}); return false;">${row.orgFileName}</a>&nbsp;&nbsp;&nbsp;<a href="javascript:" class="grayBtn" onclick="javascript:lfn_btn('delete',{seq:'${row.seq}'}); return false;">삭제</a></p>
+                <p><fmt:formatNumber value="${row.fileSize/1000}" pattern="#,##0"/> KB</p>
+            </div>
+</c:forEach>            
+        </div>
+    </div>
 </form>
 
-<iframe name="tranFrameS" style="display:none;"></iframe>
-
+<iframe id="tranFrameS" name="tranFrameS" style="display:none;"></iframe>
+    
 </body>
 </html>
-
-

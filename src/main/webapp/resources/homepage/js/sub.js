@@ -433,3 +433,78 @@ function answer(elem) {
         box.style.background = '#fff';
     }
 }
+
+
+
+// --- admin ---
+
+function admin_sub_open(elem){
+    var btn = elem.target;
+    var list_box = btn.parentNode;
+    var list_all = document.querySelectorAll('.gnb > li');
+
+    for(var i = 0; i < list_all.length; i++){
+        var temp = list_all[i];
+        if(temp === list_box){
+            if(temp.classList){
+                temp.classList.add('on');
+            }else{
+                // IE
+                temp.className = 'on';
+            }
+        }else{
+            if(temp.classList){
+                temp.classList.remove('on');
+            }else{
+                // IE
+                temp.className = '';
+            }
+        }
+    }
+}
+
+function admin_popup_open(type){
+    var url = '';
+    // var url = '../popup/admin_popup_type' + type + '.html';
+    switch(type){
+        case '':
+        break;
+        default:
+            url = '../popup/admin_popup_type1.html';
+        break;
+    }
+    
+    window.open(url, '_blank', 'width=400, height=500');
+}
+
+function admin_popup_close(){
+    window.open('about:blank', '_self').close();
+}
+
+
+
+
+
+
+
+function qna_answer_open(){
+    var elem = document.getElementById('notice_detail_answer');
+    elem.style.display = 'block';
+}
+
+function qna_answer_close(){
+    var elem = document.getElementById('notice_detail_answer');
+    elem.style.display = 'none';
+}
+
+function review_score(num){
+    var elem = document.getElementsByClassName('score');
+    for(var i = 0; i < elem.length; i++){
+        var temp = elem[i];
+        if(i < num){
+            temp.style.background = 'url("../../img/course/register_star_active.png") #fff 90% 50% no-repeat';
+        }else{
+            temp.style.background = 'url("../../img/course/register_star_inactive.png") #fff 90% 50% no-repeat';
+        }
+    }
+}

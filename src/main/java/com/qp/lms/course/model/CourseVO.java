@@ -185,6 +185,7 @@ public class CourseVO extends CommonVO {
     private String termPeriodTo;
     private String studyPeriodFrom;
     private String studyPeriodTo;
+    private String approvalCnt;
 
     
 	public String getPeriodProgress() {
@@ -1331,6 +1332,14 @@ public class CourseVO extends CommonVO {
 
 	public void setStudyPeriodTo(String studyPeriodTo) {
 		this.studyPeriodTo = studyPeriodTo;
+	}
+
+	public String getApprovalCnt() {
+		return approvalCnt;
+	}
+
+	public void setApprovalCnt(String approvalCnt) {
+		this.approvalCnt = approvalCnt;
 	}
 
 

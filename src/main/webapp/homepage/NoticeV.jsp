@@ -87,7 +87,7 @@
 			            </div>
                     </div>
                     <div class='detail_btn_area'>
-                        <a href="javascript:" onclick="page.goPage('/main/noticeList');" class='bg_color'>목록으로 돌아가기</a>
+                        <a href="javascript:" onclick="page.goPage('/main/noticeList', decodeURIComponent('${set.condiVO.prevParams}'));" class='bg_color'>목록으로 돌아가기</a>
                     </div>
                     
                     <!-- Contents END -->

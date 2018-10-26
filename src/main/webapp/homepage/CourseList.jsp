@@ -27,14 +27,14 @@
 $(document).ready(function(){
     $("#categoryAll").click(function(){
         if ( $("#categoryAll").prop("checked") ) {
-            $("input[name=category]").prop("checked",true);
+            $("input[name=categorys]").prop("checked",true);
         }else{
-            $("input[name=category]").prop("checked",false);
+            $("input[name=categorys]").prop("checked",false);
         }
     })
     
-	<c:forEach var="row" items="${set.condiVO.category}" varStatus="idx">
-		$("input[name=category][value=${row}]").prop("checked",true);
+	<c:forEach var="row" items="${set.condiVO.categorys}" varStatus="idx">
+		$("input[name=categorys][value=${row}]").prop("checked",true);
 	</c:forEach>
 	
 	f_makePageNavigator("pagingLayer",${set.condiVO.pageNum},${set.totalCount},${set.condiVO.limitUnit});
@@ -273,7 +273,7 @@ function lfn_btn(pKind, pParam) {
 	            <div class='process_search clear_fix'>
 	                <div class='process_search_text con'>
 	                    <p>과정명</p>
-	                    <span><input type='text' name='' id=''></span>
+	                    <span><input type='text' id="courseName" name="courseName" value="${set.condiVO.courseName}" />
 	                </div>
 	                <div class='process_search_category con'>
 	                    <p class='process_category_text'>카테고리</p>
@@ -285,7 +285,7 @@ function lfn_btn(pKind, pParam) {
 	                            </div>
 	                            <div class='process_category_etc clear_fix'>
 <c:forEach var="row" items="${courseCategoryList}" varStatus="idx">
-	                                <input type='checkbox' id='category' name='category' value="${row.code}">
+	                                <input type='checkbox' id='categorys' name='categorys' value="${row.code}">
 	                                <p>${row.codeName}</p>
 </c:forEach>                            
 	                            </div>

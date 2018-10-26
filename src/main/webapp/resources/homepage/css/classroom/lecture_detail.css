@@ -148,6 +148,110 @@
     text-overflow:ellipsis;
 }
 
+
+/* LECTURE REVIEW */
+.classroom_lecture{
+    width: 100%;
+    border-top: solid 2px #0071bc;
+    border-bottom: solid 1px #ccc;
+    margin-bottom: 50px;
+    margin-top:20px;
+}
+.classroom_lecture tr th{
+    font-family: 'NanumSquare';
+    font-size: 16px;
+    font-weight: 600;
+    padding: 8px 0;
+    background: #f7f7f7;
+    border-right: solid 1px #ddd;
+}
+.classroom_lecture tr td{
+    padding: 10px 0;
+    text-align: center;
+    font-size: 16px;
+    border-top: solid 1px #ddd;
+    border-right: solid 1px #ddd;
+    height: 20px;
+}
+.classroom_lecture tr td button{
+    display: block;
+    margin: 0 auto;
+    width: 80%;
+    padding: 4px 0;
+    margin-top: -4px;
+    background: #0071bc;
+    color: #fff;
+    font-size: 16px;
+}
+.classroom_lecture.review tr .col_2{
+    width:40%;
+    max-width:0;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    padding-left:1%;
+    padding-right:1%;
+}
+.classroom_lecture.review tr .col_1{
+    width:8%;
+}
+.classroom_lecture.review tr .col_4{
+    width:18%;
+}
+.classroom_lecture.review tr .col_5{
+    width:20%;
+}
+
+
+/* PAGER */
+.pager_box{
+    text-align:center;
+    padding: 50px 0 0;
+}
+.pager{
+    display:inline-block;
+    margin: 0 auto;
+}
+.pager > *{
+    float:left;
+}
+.pager_prev,
+.pager_next{
+    width:80px;
+    margin:0 2px;
+}
+.pager_prev div,
+.pager_next div{
+    float: left;
+    width: 45%;
+    font-family: sans-serif;
+    font-size: 30px;
+    text-align: center;
+    vertical-align: middle;
+    padding-bottom: 10px;
+    margin-right:1px;
+    border: solid 1px #ccc;
+    cursor:pointer;
+}
+.pager ul{
+    display:inline;
+    margin-right:2px;
+}
+.pager ul li{
+    float: left;
+    width: 35px;
+    font-size: 18px;
+    text-align: center;
+    padding: 11px 0;
+    border: solid 1px #ccc;
+    cursor:pointer;
+}
+.pager ul .on{
+    color:#fff;
+    background:#1976d2;
+    border:solid 1px #1976d2;
+}
+
 /* BUTTON */
 .detail_btn_area{
     text-align: center;
@@ -236,9 +340,32 @@
         width: 12%;
     }
     .lecture_detail_table_box.contents .col_4,
-    .lecture_detail_table_box.documents .col_4{
+    .lecture_detail_table_box.documents .col_4,
+    .lecture_detail_table_box.qna .col_3{
         display:none;
     }
+
+    /* LECTURE REVIEW */
+    .classroom_lecture.review tr .col_1, .classroom_lecture.review tr .col_3, .classroom_lecture.review tr .col_4{
+        display: none;
+    }    
+    .classroom_lecture.review tr .col_2{
+        width:65%;
+    }
+
+    /* PAGER */
+    .pager_prev,
+    .pager_next{
+        width:50px;
+    }
+    .pager_prev div,
+    .pager_next div{
+        width:44%;
+    }
+    .pager ul {
+        margin-right: 0;
+    }
+    
 
     /* BUTTON */
     .detail_btn_area{
@@ -253,5 +380,12 @@
 @media all and (max-width:360px){
     .lecture_detail_table_box.qna .col_1,.lecture_detail_table_box.qna .col_5{
         width:11%;
+    }
+
+    /* LECTURE REVIEW */
+    .classroom_lecture tr th,
+    .classroom_lecture tr td,
+    .classroom_lecture tr td button{
+        font-size:14px;
     }
 }

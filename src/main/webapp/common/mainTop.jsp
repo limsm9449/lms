@@ -86,7 +86,7 @@
                         <div class='menu_dropdown clear_fix'>
                             <ul class='menu_sub'>
 <c:forEach var="row" items="${courseCategoryList}" varStatus="idx">
-                                <li><a href="javascript:" onclick="page.goPage('/main/courseList', 'category=${row.code}');">${row.codeName}</a></li>
+                                <li><a href="javascript:" onclick="page.goPage('/main/courseList', 'categorys=${row.code}');">${row.codeName}</a></li>
 </c:forEach>
                             </ul>
                             <span class='menu_sub_line'></span>
@@ -115,7 +115,6 @@
 								<li><a href="javascript:" onclick="page.goPage('/main/faqList');">FAQ</a></li>
 								<li><a href="javascript:" onclick="page.goPage('/main/eventList');">Event</a></li>
 								<li><a href="javascript:" onclick="page.goPage('/main/mailQuestion');">1:1 메일문의</a></li>
-								<li><a href="javascript:" onclick="page.goPage('/counsel/userCounselList');">상담내역</a></li>
 								<li><a href="javascript:" onclick="page.goPage('/guest/bankInfo');">입금계좌안내</a></li>
                                 <li><a href=''>원격지원</a></li>
                                 <li><a href=''>찾아오시는길</a></li>
@@ -178,7 +177,7 @@
                         <ul>
                             <li class='first_depth'><a href="javascript:" onclick="page.goPage('/main/courseList', '');">전체과정</a></li>
 <c:forEach var="row" items="${courseCategoryList}" varStatus="idx">
-                         	<li><a href="javascript:" onclick="page.goPage('/main/courseList', 'category=${row.code}');">${row.codeName}</a></li>
+                         	<li><a href="javascript:" onclick="page.goPage('/main/courseList', 'categorys=${row.code}');">${row.codeName}</a></li>
 </c:forEach>
                         </ul>
                     </div>
@@ -222,7 +221,6 @@
 							<li><a href="javascript:" onclick="page.goPage('/main/faqList');">FAQ</a></li>
 							<li><a href="javascript:" onclick="page.goPage('/main/eventList');">Event</a></li>
 							<li><a href="javascript:" onclick="page.goPage('/main/mailQuestion');">1:1 메일문의</a></li>
-							<li><a href="javascript:" onclick="page.goPage('/counsel/userCounselList');">상담내역</a></li>
 							<li><a href="javascript:" onclick="page.goPage('/guest/bankInfo');">입금계좌안내</a></li>
                             <li><a href=''>원격지원</a></li>
                             <li><a href=''>찾아오시는길</a></li>

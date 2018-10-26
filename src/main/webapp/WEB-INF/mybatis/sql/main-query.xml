@@ -60,7 +60,7 @@
 		       ,E.CAREER
 		       ,C.MOBILE_YN
 		       ,(SELECT COUNT(*) FROM COURSE_RESOURCE WHERE COURSE_CODE = A.COURSE_CODE) WEEK_CNT 
-		       	,A.TERM_YN
+		       	,IFNULL(A.TERM_YN,'N') TERM_YN
                 ,IFNULL(A.TERM_PERIOD_FROM, '') TERM_PERIOD_FROM
                 ,IFNULL(A.TERM_PERIOD_TO, '') TERM_PERIOD_TO
                 ,IFNULL(A.STUDY_PERIOD_FROM, '') STUDY_PERIOD_FROM
@@ -315,9 +315,9 @@
 		WHERE 	A.OPEN_YN = 'Y'
 		AND		A.CLOSE_YN = 'N'
 		AND		( IFNULL(A.TERM_YN,'N') = 'N' OR ( A.TERM_YN = 'Y' AND DATE_FORMAT(CURDATE(),'%Y-%m-%d') BETWEEN A.TERM_PERIOD_FROM AND A.TERM_PERIOD_TO ) )
-		<if test="category != null"> 
+		<if test="categorys != null"> 
 			AND C.C1_CODE IN
-			<foreach item="item" index="index" collection="category"
+			<foreach item="item" index="index" collection="categorys"
 			      open="(" separator="," close=")">
 			        #{item}
 			  </foreach>

@@ -35,6 +35,7 @@ public class CommonVO implements Serializable{
 
 	private String isViewTitle;	//타이블 보여줄지 여부
 
+	private String prevParams;
 
 	// 삭제하면 안됨.-------------------------------------------------
 	public int getPageNum() {
@@ -178,6 +179,12 @@ public class CommonVO implements Serializable{
 	}
 	public void setIsViewTitle(String isViewTitle) {
 		this.isViewTitle = isViewTitle;
+	}
+	public String getPrevParams() {
+		return prevParams;
+	}
+	public void setPrevParams(String prevParams) {
+		this.prevParams = prevParams;
 	}
 
 	

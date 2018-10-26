@@ -7,6 +7,7 @@ public class BoardVO extends CommonVO{
 	
 	private String seq;
 	private String pSeq;
+	private String aSeq;
 	private String courseId;
 	private String title;
 	private String contents;
@@ -143,6 +144,12 @@ public class BoardVO extends CommonVO{
 	}
 	public void setLimit(String limit) {
 		this.limit = limit;
+	}
+	public String getaSeq() {
+		return aSeq;
+	}
+	public void setaSeq(String aSeq) {
+		this.aSeq = aSeq;
 	}
 	
 	

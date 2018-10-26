@@ -99,7 +99,8 @@
 		       B.USER_NAME,
 		       DATE_FORMAT(IFNULL(A.UPDATE_DATE,A.CREATE_DATE), '%y.%m.%d %H:%i') CREATE_DATE
 		  FROM BOARD_QNA_ANSWER A LEFT OUTER JOIN USER B ON A.USER_ID = B.USER_ID
-		 WHERE A.SEQ = #{seq}
+		 WHERE A.SEQ = #{aSeq}
+		 ORDER BY A.SEQ DESC
     </select>
     
     <!-- 답변 추가 -->
@@ -113,7 +114,7 @@
 		UPDATE BOARD_QNA_ANSWER
 		   SET CONTENTS = #{contents},
 		       UPDATE_DATE = CURRENT_TIMESTAMP
-		 WHERE SEQ = #{seq}
+		 WHERE SEQ = #{aSeq}
     </select>	
 
 	<!-- 답변 삭제 -->
@@ -145,7 +146,6 @@
 		       DATE_FORMAT(IFNULL(A.UPDATE_DATE,A.CREATE_DATE), '%y.%m.%d %H:%i') CREATE_DATE
 		  FROM BOARD_QNA A LEFT OUTER JOIN USER B ON A.USER_ID = B.USER_ID
 		 WHERE A.COURSE_ID = #{courseId}
-		   <if test="userId != null and userId != ''"> AND A.USER_ID = #{userId}</if> 
 		 ORDER BY A.SEQ
 		 LIMIT ${limit}
     </select>	

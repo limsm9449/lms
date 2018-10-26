@@ -11,14 +11,15 @@
 
     <link href='https://fonts.googleapis.com/css?family=Nanum+Gothic' rel='stylesheet'>
     <link rel='stylesheet' href='../../css/initialization.css'>
-    <link rel='stylesheet' href='../../css/classroom/lecture.css'>
+    <!-- <link rel='stylesheet' href='../../css/classroom/lecture.css'> -->
+    <link rel='stylesheet' href='../../css/classroom/lecture_detail.css'>
 </head>
 
-<body>
+<body style='background:#fff'>
 <frameset rows='*'>
     <div class='wrap'>
         <!-- PC HEADER -->
-        <header class='head_pc'>
+        <!-- <header class='head_pc'>
             <div class='head_wrap pc clear_fix' onmouseover='sub_hide()'>
                 <div class='head_con logo_box'>
                     <a href='../../index.html'>
@@ -38,7 +39,7 @@
                     <p class='pc'>OOO님 반갑습니다.</p> -->
 
                     <!-- 로그오프 상태 -->
-                    <a href='../../html/etc/signup_step1.html' class='last_right'>회원가입</a>
+                    <!--<a href='../../html/etc/signup_step1.html' class='last_right'>회원가입</a>
                     <a href='../../html/etc/signin.html'>로그인</a>
                 </div>
             </div>
@@ -133,11 +134,11 @@
                     </div>
                 </div>
             </div>
-        </header>
+        </header> -->
         <!-- PC HEADER END -->
 
         <!-- MOBILE HEADER -->
-        <header class='head_mobile'>
+        <!-- <header class='head_mobile'>
             <div class='head_wrap pc clear_fix'>
                 <div class='menu_wrap'>
                     <div class='menu_layout pc' onclick='sub_show_hide()'>
@@ -237,15 +238,15 @@
                     </div>
                 </div>
             </div>
-        </header>
+        </header> -->
         <!-- MOBILE HEADER END -->
         <!-- HEAD END -->
 
         <!-- CONTENTS -->
-        <div class='contents_wrap process' onmouseover='sub_hide()'>
-            <div class='contents_wrap_box'>
+        <div class='contents_wrap process'>
+            <div class='contents_wrap_box popup'>
                 <!-- QUICK MENU -->
-                <div class='quick_menu_wrap'>
+                <!-- <div class='quick_menu_wrap'>
                     <p class='quick_title'>
                         Quick Menu
                         <span></span>
@@ -286,11 +287,11 @@
                         </span>
                         TOP
                     </p>
-                </div>
+                </div> -->
 
                 <!-- Top -->
                 <div class='top_area'>
-                    <div class='clear_fix'>
+                    <!-- <div class='clear_fix'>
                         <div class='process_history_box clear_fix'>
                             <span>
                                 <img src='../../img/course/ic_home.jpg' alt=' '>
@@ -305,54 +306,100 @@
                             </span>
                             <p>교육과정</p>
                         </div>
-                    </div>
+                    </div> -->
                     <h1>
-                        나의<span>강의실</span>
+                        학습<span>후기</span>
                     </h1>
+                    <div class='top_text_box clear_fix'>
+                        <span><img src='../../img/support/notice_bg.jpg' alt=' '></span>
+                        <p class='top_title'>NEWS & NOTICE!</p>
+                        <p>
+                            큐러닝의 소식과 공지사항을 알려드립니다. <span></span>항상 유익하고 풍성한 소식 놓치지 말고 확인하세요.
+                        </p>
+                    </div>
                 </div>
                 <!-- Top END -->
 
-                <div class='classroom_subtitle'>
+                <!-- <div class='classroom_subtitle'>
                     <p class='subtitle'>나의 수강후기</p>
                     <p>과정 수료 후 내가 쓴 수강후기입니다.</p>
-                </div>
+                </div> -->
 
                 <table class='classroom_lecture review'>
                     <tr>
                         <th class='col_1'>번호</th>
-                        <th class='col_2'>과정명</th>
-                        <th class='col_3'>입력/수정</th>
-                        <th class='col_4'>교육기간</th>
+                        <th class='col_2'>내용</th>
+                        <th class='col_4'>평점</th>
                         <th class='col_5'>후기 등록일</th>
                     </tr>
                     <tr>
                         <td class='col_1'>1</td>
-                        <td class='col_2'>5억 4천 벌게 해드릴까요? [학습후기]</td>
-                        <td class='col_3'>신청중</td>
-                        <td class='col_4'>2018.01.05~2018.01.05</td>
+                        <td class='col_2'><a href='./lecture_review_detail.html'>후기내용</a></td>
+                        <td class='col_4'>
+                            <span><img src='../../img/course/register_star_active.png' alt=' '></span>
+                            <span><img src='../../img/course/register_star_active.png' alt=' '></span>
+                            <span><img src='../../img/course/register_star_active.png' alt=' '></span>
+                            <span><img src='../../img/course/register_star_active.png' alt=' '></span>
+                            <span><img src='../../img/course/register_star_inactive.png' alt=' '></span>
+                        </td>
                         <td class='col_5'></td>
                     </tr>
                     <tr>
                         <td class='col_1'>2</td>
-                        <td class='col_2'>자산설계도 맞춤 시대: Financial Map [학습후기] 자산설계도 맞춤 시대: Financial Map [학습후기] 자산설계도 맞춤 시대: Financial Map [학습후기]</td>
-                        <td class='col_3'>신청중</td>
-                        <td class='col_4'>2018.01.05~2018.01.05</td>
+                        <td class='col_2'><a href='./lecture_review_detail.html'>후기내용후기내용후기내용후기내용후기내용후기내용후기내용후기내용후기내용후기내용후기내용</a></td>
+                        <td class='col_4'>
+                            <span><img src='../../img/course/register_star_active.png' alt=' '></span>
+                            <span><img src='../../img/course/register_star_active.png' alt=' '></span>
+                            <span><img src='../../img/course/register_star_active.png' alt=' '></span>
+                            <span><img src='../../img/course/register_star_active.png' alt=' '></span>
+                            <span><img src='../../img/course/register_star_inactive.png' alt=' '></span>
+                        </td>
                         <td class='col_5'></td>
                     </tr>
                     <tr>
                         <td class='col_1'>3</td>
-                        <td class='col_2'>5억 4천 벌게 해드릴까요? [학습후기]</td>
-                        <td class='col_3'>승인대기</td>
-                        <td class='col_4'>2018.01.05~2018.01.05</td>
+                        <td class='col_2'><a href='./lecture_review_detail.html'>후기내용</a></td>
+                        <td class='col_4'>
+                            <span><img src='../../img/course/register_star_active.png' alt=' '></span>
+                            <span><img src='../../img/course/register_star_active.png' alt=' '></span>
+                            <span><img src='../../img/course/register_star_active.png' alt=' '></span>
+                            <span><img src='../../img/course/register_star_active.png' alt=' '></span>
+                            <span><img src='../../img/course/register_star_inactive.png' alt=' '></span>
+                        </td>
                         <td class='col_5'>2018.01.07</td>
                     </tr>
                 </table>                
+                <!-- Pager Area -->
+                <div class='pager_box'>
+                    <div class='pager clear_fix'>
+                        <div class='pager_prev clear_fix'>
+                            <div>&laquo;</div>
+                            <div>&lsaquo;</div>
+                        </div>
+                        <ul class='clear_fix'>
+                            <li class='on'>1</li>
+                            <li>20</li>
+                            <li>30</li>
+                            <li>40</li>
+                            <li>255</li>
+                        </ul>
+                        <div class='pager_next clear_fix'>
+                            <div>&rsaquo;</div>
+                            <div>&raquo;</div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Pager Area END -->
+
+                <div class='detail_btn_area'>
+                    <a href='./review_register.html' class='bg_color'>등록하기</a>
+                </div>
             </div>
         </div>
         <!-- CONTENTS END -->
 
         <!-- FOOTER -->
-        <div class='footer_wrap'>
+        <!-- <div class='footer_wrap'>
             <ul class='foot_link_box clear_fix'>
                 <li>
                     <a href='#'>회사소개</a>
@@ -382,7 +429,7 @@
                     </span>
                 </p>
             </div>
-        </div>
+        </div> -->
         <!-- FOOTER END -->
     </div>
 </frameset>

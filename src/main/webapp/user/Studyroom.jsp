@@ -21,10 +21,12 @@
     <link rel='stylesheet' href='/resources/homepage/css/initialization.css'>
     <link rel='stylesheet' href='/resources/homepage/css/classroom/study.css'>
     
-    <script src='/resources/homepage/js/study.js?timestamp=<%=timestamp%>'></script>
+    <script src='/resources/homepage/js/sub.js?timestamp=<%=timestamp%>'></script>
 </head>
 
 <script type="text/javascript">
+
+var flag = "NOTICE";
 
 $(document).ready(function(){
 });
@@ -126,14 +128,14 @@ $(document).ready(function(){
             </div>
             <div class='study_support_box'>
                 <div class='study_tab_area clear_fix'>
-                    <button onclick='study_btn_click(this)' class='on' id='notice'>과정 공지사항</button>
-                    <button onclick='study_btn_click(this)' id='qna'>질문 답변</button>
-                    <a href=''>MORE +</a>
+                    <button onclick='study_btn_click(this); flag = "NOTICE";' class='on' id='notice'>과정 공지사항</button>
+                    <button onclick='study_btn_click(this); flag = "QNA";' id='qna'>질문 답변</button>
+                    <a href='#' onclick="javascript:Popup.showUserBoard(flag,'${set.courseInfo.courseId}'); return false;">MORE +</a>
                 </div>
                 <ul class='study_support_list_box notice'>
 <c:forEach var="row" items="${set.boardNoticeList}" varStatus="idx"> 
                     <li>
-                        <a href='' class='clear_fix'>
+                        <a href='#' onclick="javascript:Popup.showUserBoard('NOTICE','${set.courseInfo.courseId}','${row.seq}'); return false;" class='clear_fix'>
                             <p class='study_support_text'>${row.title}</p>
                             <p class='study_support_date'>${row.createDate}</p>
                         </a>
@@ -143,7 +145,7 @@ $(document).ready(function(){
                 <ul class='study_support_list_box qna'>
 <c:forEach var="row" items="${set.boardQnaList}" varStatus="idx"> 
                     <li>
-                        <a href='' class='clear_fix'>
+                        <a href='#' onclick="javascript:Popup.showUserBoard('QNA','${set.courseInfo.courseId}','${row.seq}'); return false;" class='clear_fix'>
                             <p class='study_support_text'>${row.title}</p>
                             <p class='study_support_date'>${row.createDate}</p>
                         </a>
@@ -156,7 +158,7 @@ $(document).ready(function(){
                 <button>학습<span></span>가이드</button>
                 <button>동영상<span></span>설정</button>
                 <button>환경<span></span>설정</button>
-                <button class='last_right'>학습<span></span>질문답변</button>
+                <button onclick="Popup.showUserBoard('QNA','${set.courseInfo.courseId}'); return false;" class='last_right'>학습<span></span>질문답변</button>
             </div>
             <div class='study_remote_support_btn'>
                 <button>원격지원 서비스</button>

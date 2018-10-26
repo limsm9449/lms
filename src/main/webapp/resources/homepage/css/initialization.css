@@ -95,3 +95,13 @@ iframe{
 	display:block;
 	width:100%;
 }
+
+.iframe_contents{
+	min-height: 300px;
+}
+.contents_wrap.qna .iframe_contents{
+	min-height:0;
+}
+.iframe_contents *{
+	line-height:130%;
+}

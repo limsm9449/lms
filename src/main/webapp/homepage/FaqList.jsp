@@ -37,6 +37,8 @@ function lfn_btn(pKind, pParam) {
 		f_submitSelf("/main/faqList");
 	} else if ( pKind == "view") {
 		$("#seq").val(pParam.seq);
+
+		$("#prevParams").val(encodeURIComponent($("#frm").serialize()));
 		
 		gfn_goPage("/main/faqV",$("#frm").serialize());
 	}
@@ -47,6 +49,7 @@ function lfn_btn(pKind, pParam) {
 <body>
 <form name="frm" id="frm" method="post">
 	<input id="seq" name="seq" type="hidden" value="">
+	<input id="prevParams" name="prevParams" type="hidden" value="">
 	
     <frameset rows='*'>
         <div class='wrap'>

@@ -37,12 +37,11 @@ function lfn_btn(pKind, pParam) {
 		
 		f_submitSelf(preUrl + "userBoardDataList");
 	} else if ( pKind == "new" ) {
-		
 		gfn_goPage(preUrl + "userBoardDataN",$("#frm").serialize());
 	} else if ( pKind == "view") {
-		lfn_setCondition();
-		
 		$("#seq").val(pParam.seq);
+		
+		$("#prevParams").val(encodeURIComponent($("#frm").serialize()));
 		
 		gfn_goPage(preUrl + "userBoardDataV",$("#frm").serialize());
 	} else if ( pKind == "close") {
@@ -56,6 +55,7 @@ function lfn_btn(pKind, pParam) {
 <form id="frm" name="frm" method="post">
 	<input id="courseId" name="courseId" value="${set.condiVO.courseId}" type="hidden"/>
 	<input id="seq" name="seq" value="0" type="hidden"/>
+	<input id="prevParams" name="prevParams" type="hidden" value="">
 
 <frameset rows='*'>
     <div class='wrap'>
@@ -108,35 +108,35 @@ function lfn_btn(pKind, pParam) {
                     </table>
                 </div>
 
+		        <input type='hidden' id='pageNum' name='pageNum' value="${set.condiVO.pageNum}">
+		        <div class='pager_box'>
+		             <div class='pager clear_fix'>
+		                 <div class='pager_prev clear_fix' id="pagingLayerPrev">
+		                     <div>&laquo;</div>
+		                     <div>&lsaquo;</div>
+		                 </div>
+		                 <ul class='clear_fix' id="pagingLayer">
+		                     <li class='on'>1</li>
+		                     <li>2</li>
+		                     <li>3</li>
+		                     <li>4</li>
+		                     <li>5</li>
+		                 </ul>
+		                 <div class='pager_next clear_fix' id="pagingLayerNext">
+		                     <div>&rsaquo;</div>
+		                     <div>&raquo;</div>
+		                 </div>
+		             </div>
+		        </div>
+		      	<!-- Pager Area END -->
+
                 <div class='detail_btn_area'>
-                    <a href='./document_register.html' class='bg_color'>등록하기</a>
+                    <a href='#' onclick="javascript:lfn_btn('new'); return false;" class='bg_color'>등록하기</a>
                 </div>
                 
             </div>
         </div>
         <!-- CONTENTS END -->
-        
-        <input type='hidden' id='pageNum' name='pageNum' value="${set.condiVO.pageNum}">
-        <div class='pager_box'>
-             <div class='pager clear_fix'>
-                 <div class='pager_prev clear_fix' id="pagingLayerPrev">
-                     <div>&laquo;</div>
-                     <div>&lsaquo;</div>
-                 </div>
-                 <ul class='clear_fix' id="pagingLayer">
-                     <li class='on'>1</li>
-                     <li>2</li>
-                     <li>3</li>
-                     <li>4</li>
-                     <li>5</li>
-                 </ul>
-                 <div class='pager_next clear_fix' id="pagingLayerNext">
-                     <div>&rsaquo;</div>
-                     <div>&raquo;</div>
-                 </div>
-             </div>
-        </div>
-      	<!-- Pager Area END -->
     </div>
 </frameset>
 </form>

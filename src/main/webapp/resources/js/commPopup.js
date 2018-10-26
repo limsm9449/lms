@@ -118,21 +118,38 @@ var Popup = {
 	 * 게시판 팝업을 보여준다.
 	 * @returns
 	 */
-	showUserBoard : function(pKind,pCourseId) {
-		if ( pKind == "NOTICE" )
-			Popup.showPopup(context + "/board/userBoardNoticeList.do?courseId=" + pCourseId + "&isPopup=Y",900,700,"boardPopup");
-		else if ( pKind == "FREE" )
-			Popup.showPopup(context + "/board/userBoardFreeList.do?courseId=" + pCourseId + "&isPopup=Y",900,700,"boardPopup");
-		else if ( pKind == "DATA" )
-			Popup.showPopup(context + "/board/userBoardDataList.do?courseId=" + pCourseId + "&isPopup=Y",900,700,"boardPopup");
-		else if ( pKind == "QNA" )
-			Popup.showPopup(context + "/board/userBoardQnaList.do?courseId=" + pCourseId + "&isPopup=Y",900,700,"boardPopup");
-		else if ( pKind == "REPORT" )
-			Popup.showPopup(context + "/board/userBoardReportList.do?courseId=" + pCourseId + "&isPopup=Y",900,700,"boardPopup");
-		else if ( pKind == "DISCUSSION" )
-			Popup.showPopup(context + "/board/userBoardDiscussionList.do?courseId=" + pCourseId + "&isPopup=Y",900,700,"boardPopup");
-		else
-			alert("구분자 오류");
+	showUserBoard : function(pKind,pCourseId,pSeq) {
+		if ( pSeq == undefined ) {
+			if ( pKind == "NOTICE" )
+				Popup.showPopup(context + "/board/userBoardNoticeList.do?courseId=" + pCourseId,900,850,"boardPopup");
+			else if ( pKind == "FREE" )
+				Popup.showPopup(context + "/board/userBoardFreeList.do?courseId=" + pCourseId,900,850,"boardPopup");
+			else if ( pKind == "DATA" )
+				Popup.showPopup(context + "/board/userBoardDataList.do?courseId=" + pCourseId,900,850,"boardPopup");
+			else if ( pKind == "QNA" )
+				Popup.showPopup(context + "/board/userBoardQnaList.do?courseId=" + pCourseId,900,850,"boardPopup");
+			else if ( pKind == "REPORT" )
+				Popup.showPopup(context + "/board/userBoardReportList.do?courseId=" + pCourseId,900,850,"boardPopup");
+			else if ( pKind == "DISCUSSION" )
+				Popup.showPopup(context + "/board/userBoardDiscussionList.do?courseId=" + pCourseId,900,850,"boardPopup");
+			else
+				alert("구분자 오류");
+		} else {
+			if ( pKind == "NOTICE" )
+				Popup.showPopup(context + "/board/userBoardNoticeV.do?courseId=" + pCourseId + "&seq=" + pSeq + "&prevParams=" + encodeURIComponent("courseId=" + pCourseId),900,850,"boardPopup");
+			else if ( pKind == "FREE" )
+				Popup.showPopup(context + "/board/userBoardFreeV.do?courseId=" + pCourseId + "&seq=" + pSeq + "&prevParams=" + encodeURIComponent("courseId=" + pCourseId),900,850,"boardPopup");
+			else if ( pKind == "DATA" )
+				Popup.showPopup(context + "/board/userBoardDataV.do?courseId=" + pCourseId + "&seq=" + pSeq + "&prevParams=" + encodeURIComponent("courseId=" + pCourseId),900,850,"boardPopup");
+			else if ( pKind == "QNA" )
+				Popup.showPopup(context + "/board/userBoardQnaV.do?courseId=" + pCourseId + "&seq=" + pSeq + "&prevParams=" + encodeURIComponent("courseId=" + pCourseId),900,850,"boardPopup");
+			else if ( pKind == "REPORT" )
+				Popup.showPopup(context + "/board/userBoardReportV.do?courseId=" + pCourseId + "&seq=" + pSeq + "&prevParams=" + encodeURIComponent("courseId=" + pCourseId),900,850,"boardPopup");
+			else if ( pKind == "DISCUSSION" )
+				Popup.showPopup(context + "/board/userBoardDiscussionV.do?courseId=" + pCourseId + "&seq=" + pSeq + "&prevParams=" + encodeURIComponent("courseId=" + pCourseId),900,850,"boardPopup");
+			else
+				alert("구분자 오류");
+		}
 	},
 
 	/**

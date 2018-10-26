@@ -39,6 +39,8 @@ function lfn_btn(pKind, pParam) {
 	} else if ( pKind == "view") {
 		$("#seq").val(pParam.seq);
 		
+		$("#prevParams").val(encodeURIComponent($("#frm").serialize()));
+		
 		gfn_goPage(preUrl + "userBoardNoticeV",$("#frm").serialize());
 	} else if ( pKind == "close") {
 		self.close();
@@ -51,6 +53,7 @@ function lfn_btn(pKind, pParam) {
 <form id="frm" name="frm" method="post">
 	<input id="courseId" name="courseId" value="${set.condiVO.courseId}" type="hidden"/>
 	<input id="seq" name="seq" value="0" type="hidden"/>
+	<input id="prevParams" name="prevParams" type="hidden" value="">
 
 <frameset rows='*'>
     <div class='wrap'>
@@ -60,7 +63,7 @@ function lfn_btn(pKind, pParam) {
                 <!-- TOP -->
                 <div class='top_area'>
                     <h1>
-                        자료<span>실</span>
+                        공지사항</span>
                     </h1>
                     <div class='top_text_box clear_fix'>
                         <span><img src='/resources/homepage/img/support/notice_bg.jpg' alt=' '></span>
@@ -100,31 +103,32 @@ function lfn_btn(pKind, pParam) {
 </c:forEach>
                     </table>
                 </div>
+                
+                <input type='hidden' id='pageNum' name='pageNum' value="${set.condiVO.pageNum}">
+		        <div class='pager_box'>
+		             <div class='pager clear_fix'>
+		                 <div class='pager_prev clear_fix' id="pagingLayerPrev">
+		                     <div>&laquo;</div>
+		                     <div>&lsaquo;</div>
+		                 </div>
+		                 <ul class='clear_fix' id="pagingLayer">
+		                     <li class='on'>1</li>
+		                     <li>2</li>
+		                     <li>3</li>
+		                     <li>4</li>
+		                     <li>5</li>
+		                 </ul>
+		                 <div class='pager_next clear_fix' id="pagingLayerNext">
+		                     <div>&rsaquo;</div>
+		                     <div>&raquo;</div>
+		                 </div>
+		             </div>
+		        </div>
+		      	<!-- Pager Area END -->
             </div>
         </div>
         <!-- CONTENTS END -->
         
-        <input type='hidden' id='pageNum' name='pageNum' value="${set.condiVO.pageNum}">
-        <div class='pager_box'>
-             <div class='pager clear_fix'>
-                 <div class='pager_prev clear_fix' id="pagingLayerPrev">
-                     <div>&laquo;</div>
-                     <div>&lsaquo;</div>
-                 </div>
-                 <ul class='clear_fix' id="pagingLayer">
-                     <li class='on'>1</li>
-                     <li>2</li>
-                     <li>3</li>
-                     <li>4</li>
-                     <li>5</li>
-                 </ul>
-                 <div class='pager_next clear_fix' id="pagingLayerNext">
-                     <div>&rsaquo;</div>
-                     <div>&raquo;</div>
-                 </div>
-             </div>
-        </div>
-      	<!-- Pager Area END -->
     </div>
 </frameset>
 </form>

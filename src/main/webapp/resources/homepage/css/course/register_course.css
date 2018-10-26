@@ -634,6 +634,9 @@ header{
     float: left;
     width:78%;
 }
+.register_introduce_list div p {
+    line-height: 150%;
+}
 .register_introduce_list > p,
 .register_introduce_goal_list li p,
 .register_introduce_target_list li p{
@@ -670,7 +673,8 @@ header{
     display: block;
     width: 100%;
 }
-.register_introduce_list > div{
+.register_introduce_list > div,
+.register_tutor_explain > div{
     float: left;
     width: 72%;
 }
@@ -1091,7 +1095,7 @@ header{
     .register_introduce_target_list{
         width:78%;
     }
-    .register_introduce_list span{
+    .register_introduce_list > span{
         float:right;
         width:45%;
         margin-right:15%;

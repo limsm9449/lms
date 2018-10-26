@@ -1,2 +1,7 @@
 C:\Users\limsm9449\git\lms\target\
 qlearning / zbvl7805
+
+
+
+
+* 어드민 입금 관리에서 그리드 내용을 분리해야 한다. 결재시 여러개를 같이 한 경우 복수개가 나와서 문제 발생

@@ -508,7 +508,6 @@ header{
     display:block;
     width:95%;
     min-height:300px;
-    padding: 8px 1%;
     margin: 10px 1.5%;
     border:solid 1px #ddd;
     resize:none;
@@ -531,12 +530,29 @@ header{
 }
 
 
+
+.form_box_score{
+    padding:14px 0 0; 
+}
+.form_box_score .first_left{
+    margin-left:10px;
+}
+.form_box_score span{
+    display:inline-block;
+    width:13px;
+    height:13px;
+    cursor:pointer;
+    background:url('../../img/course/register_star_inactive.png') no-repeat;
+}
+
+
 /* NOTICE DETAIL BUTTON */
 .detail_btn_area{
     text-align: center;
     padding:50px 0;
 }
-.detail_btn_area a{
+.detail_btn_area a,
+.detail_btn_area button{
     display:inline-block;
     width: 20%;
     min-width: 170px;
@@ -545,6 +561,7 @@ header{
     color: #555;
     text-align:center;
     padding: 20px 0;
+    margin-bottom: 4px;
     background: #fff;
     border:solid 1px #ddd;
 }
@@ -805,5 +822,13 @@ header{
     }
     .foot_link_pc{
         display:none;
+    }
+}
+
+@media all and (max-width:380px){
+    .detail_btn_area a,
+    .detail_btn_area button{
+        width:49%;
+        min-width:inherit;
     }
 }
