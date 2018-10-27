@@ -10,11 +10,10 @@
 			SELECT A.SEQ,
 			       A.TITLE,
 			       A.USER_ID,
-			       A.USER_IP,
 			       B.USER_NAME,
 			       A.VIEW_CNT,
-			       A.REPLY_CNT,
 			       DATE_FORMAT(IFNULL(A.UPDATE_DATE,A.CREATE_DATE), '%y.%m.%d %H:%i') CREATE_DATE,
+			       IF(LENGTH(A.ANSWER) > 0, 'Y','N') ANSWER_YN,
 			       @ROWNUM := @ROWNUM + 1 ROWNUM
 			  FROM BOARD_QNA A LEFT OUTER JOIN USER B ON A.USER_ID = B.USER_ID,
 			       (SELECT @ROWNUM := 0) NUM
@@ -37,11 +36,10 @@
 		SELECT A.SEQ,
 		       A.TITLE,
 		       A.CONTENTS,
+		       A.ANSWER,
 		       A.USER_ID,
-		       A.USER_IP,
 		       B.USER_NAME,
 		       A.VIEW_CNT,
-		       A.REPLY_CNT,
 		       DATE_FORMAT(IFNULL(A.UPDATE_DATE,A.CREATE_DATE), '%y.%m.%d %H:%i') CREATE_DATE
 		  FROM BOARD_QNA A LEFT OUTER JOIN USER B ON A.USER_ID = B.USER_ID
 		 WHERE A.SEQ = #{seq}
@@ -49,8 +47,8 @@
     
     <!-- QNA 추가 -->
     <select id="boardQnaIns" parameterType="Board">
-		INSERT INTO BOARD_QNA (COURSE_ID,TITLE,CONTENTS,USER_ID,USER_IP,VIEW_CNT,REPLY_CNT,CREATE_DATE)
-		VALUES (#{courseId},#{title},#{contents},#{userId},#{userIp},0,0,CURRENT_TIMESTAMP)
+		INSERT INTO BOARD_QNA (COURSE_ID,TITLE,CONTENTS,USER_ID,VIEW_CNT,CREATE_DATE)
+		VALUES (#{courseId},#{title},#{contents},#{userId},0,CURRENT_TIMESTAMP)
     </select>	
     
     <!-- QNA 수정 -->
@@ -75,74 +73,12 @@
 		 WHERE SEQ = #{seq}
     </select>	
 
-    <!-- 답변 조회 -->
-    <select id="boardQnaAnswerList" parameterType="Board" resultType="Board">
-		SELECT A.SEQ,
-		       A.P_SEQ,
-		       A.CONTENTS,
-		       A.USER_ID,
-		       A.USER_IP,
-		       B.USER_NAME,
-		       DATE_FORMAT(IFNULL(A.UPDATE_DATE,A.CREATE_DATE), '%y.%m.%d %H:%i') CREATE_DATE
-		  FROM BOARD_QNA_ANSWER A LEFT OUTER JOIN USER B ON A.USER_ID = B.USER_ID
-		 WHERE A.P_SEQ = #{pSeq}
-		 ORDER BY SEQ
-    </select>	
-
-    <!-- 답변 데이타 -->
-	<select id="boardQnaAnswerData" parameterType="Board" resultType="Board">
-		SELECT A.SEQ,
-		       A.P_SEQ,
-		       A.CONTENTS,
-		       A.USER_ID,
-		       A.USER_IP,
-		       B.USER_NAME,
-		       DATE_FORMAT(IFNULL(A.UPDATE_DATE,A.CREATE_DATE), '%y.%m.%d %H:%i') CREATE_DATE
-		  FROM BOARD_QNA_ANSWER A LEFT OUTER JOIN USER B ON A.USER_ID = B.USER_ID
-		 WHERE A.SEQ = #{aSeq}
-		 ORDER BY A.SEQ DESC
-    </select>
-    
-    <!-- 답변 추가 -->
-    <select id="boardQnaAnswerIns" parameterType="Board">
-		INSERT INTO BOARD_QNA_ANSWER (P_SEQ,CONTENTS,USER_ID,USER_IP,CREATE_DATE)
-		VALUES (#{pSeq},#{contents},#{userId},#{userIp},CURRENT_TIMESTAMP)
-    </select>	
-    
-    <!-- 답변 수정 -->
-    <select id="boardQnaAnswerUpd" parameterType="Board">
-		UPDATE BOARD_QNA_ANSWER
-		   SET CONTENTS = #{contents},
-		       UPDATE_DATE = CURRENT_TIMESTAMP
-		 WHERE SEQ = #{aSeq}
-    </select>	
-
-	<!-- 답변 삭제 -->
-    <select id="boardQnaAnswerDel" parameterType="Board">
-		DELETE FROM BOARD_QNA_ANSWER
-		 WHERE SEQ = #{seq}
-    </select>	
-
-	<!-- 답변 삭제 -->
-    <select id="boardQnaAnswerDelKeyPSeq" parameterType="Board">
-		DELETE FROM BOARD_QNA_ANSWER
-		 WHERE P_SEQ = #{pSeq}
-    </select>	
-
-	<!-- QNA REPLY 증가 -->
-    <select id="boardQnaReplyCntUpd" parameterType="Board">
-		UPDATE BOARD_QNA
-		   SET REPLY_CNT = (SELECT COUNT(*) FROM BOARD_QNA_ANSWER WHERE P_SEQ = #{pSeq})
-		 WHERE SEQ = #{pSeq}
-    </select>	
-
     <select id="boardQnaLimitList" parameterType="Board" resultType="Board">
 		SELECT A.SEQ,
 		       A.TITLE,
 		       A.USER_ID,
 		       B.USER_NAME,
 		       A.VIEW_CNT,
-		       A.REPLY_CNT,
 		       DATE_FORMAT(IFNULL(A.UPDATE_DATE,A.CREATE_DATE), '%y.%m.%d %H:%i') CREATE_DATE
 		  FROM BOARD_QNA A LEFT OUTER JOIN USER B ON A.USER_ID = B.USER_ID
 		 WHERE A.COURSE_ID = #{courseId}

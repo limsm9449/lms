@@ -27,7 +27,6 @@ var preUrl = "/board/";
 
 $(document).ready(function() {
 	$("#attachFrame").attr("src","/board/attachV.do?" + "pSeq=${set.condiVO.seq}&kind=B_DATA");
-	
 });
 
 function lfn_btn(pKind, pParam) {
@@ -107,7 +106,7 @@ function lfn_btn(pKind, pParam) {
                     <iframe id="attachFrame" name="attachFrame" style="width:100%;height:100px"></iframe>
                 </div>
                 <div class='detail_btn_area'>
-<c:if test="${session.userId eq set.data.userId}">
+<c:if test="${set.condiVO.isEdit eq 'Y' && session.userId eq set.data.userId}">
                     <button onclick="lfn_btn('update');" class='bg_color'>수정</button>
                     <button id="deleteBtn" onclick="lfn_btn('delete');">삭제</button>
 </c:if>                    

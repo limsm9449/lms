@@ -202,7 +202,6 @@ public class CommService {
 		    	if ( "N".equals(comm.getCompleteYn()) && "Y".equals(comm.getIsPeriod()) ) {
 		    		editYn = "Y";
 		    	}
-		    		
 	    	}
     	}
     	

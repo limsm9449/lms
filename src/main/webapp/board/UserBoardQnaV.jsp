@@ -113,11 +113,11 @@ function lfn_btn(pKind, pParam) {
                             <p>${set.data.userName}</p>
                         </div>
                         <div class='btn_box'>
-<c:if test="${session.userId eq set.data.userId}">
+<c:if test="${set.condiVO.isEdit eq 'Y' && session.userId eq set.data.userId}">
                             <button onclick="lfn_btn('update');">삭제</button>
                             <button onclick="lfn_btn('update');">수정</button>
 </c:if>                            
-<c:if test="${session.userId ne set.data.userId}">
+<c:if test="${set.condiVO.isEdit eq 'Y' && session.userId ne set.data.userId}">
                             <button onclick="lfn_btn('boardQnaAnswerN');">답글</button>
 </c:if>                            
                         </div>
@@ -136,32 +136,16 @@ function lfn_btn(pKind, pParam) {
                         <c:out value="${set.data.contents}" escapeXml="" />
                     </div>
                 </div>
-<c:forEach var="row" items="${set.answerList}" varStatus="idx">
+<c:if test="${set.data.answer ne null && set.data.answer ne ''}">
                 <div class='notice_detail_box answer'>
                     <div class='notice_title_box'>
                         <p>답변</p>
                     </div>
-                    <div class='notice_info_box clear_fix'>
-                        <div class='notice_visit'>
-                            <p class='type'>작성자</p>
-                            <p>${row.userName}</p>
-                        </div>
-<c:if test="${session.userId eq row.userId}">
-                        <div class='btn_box'>
-                            <button onClick="lfn_btn('boardQnaAnswerDel',{seq:'${row.seq}'});">삭제</button>
-                            <button onClick="lfn_btn('boardQnaAnswerU',{seq:'${row.seq}'});">수정</button>
-                        </div>
-</c:if>                        
-                        <div class='notice_regDate'>
-                            <p class='type'>등록일</p>
-                            <p>${row.createDate}</p>
-                        </div>
-                    </div>
                     <div class='iframe_contents'>
-                        <c:out value="${row.contents}" escapeXml="" />
+                        <c:out value="${set.data.answer}" escapeXml="" />
                     </div>
                 </div>
-</c:forEach>                
+</c:if>                
                 <div class='detail_btn_area'>
                     <button onclick="page.goPage('/board/userBoardQnaList', decodeURIComponent('${set.condiVO.prevParams}'));">목록으로</button>
                 </div>

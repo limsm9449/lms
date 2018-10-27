@@ -106,7 +106,6 @@
                                 <li><a href="javascript:" onclick="page.goNsJsp('how');">수강신청방법</a></li>
                                 <li><a href=''>학습방법</a></li>
                                 <li><a href=''>학습관리</a></li>
-                                <li><a href=''>수강후기</a></li>
                                 <li><a href=''>학습지원프로그램</a></li>
                             </ul>
                             <span class='menu_sub_line'></span>
@@ -207,7 +206,6 @@
                             <li><a href="javascript:" onclick="page.goNsJsp('how');">수강신청방법</a></li>
                             <li><a href=''>학습방법</a></li>
                             <li><a href=''>학습관리</a></li>
-                            <li><a href=''>수강후기</a></li>
                             <li><a href=''>학습지원프로그램</a></li>
                         </ul>
                     </div>

@@ -42,7 +42,9 @@ public class SessionInterceptor extends HandlerInterceptorAdapter {
 	    		"/backdorLoginCheck.do",
 				"/manageLogin.do",
 				"/companyLogin.do",
-				"/cms"
+				"/cms",
+				"/postscript/postscriptList.do",
+				"/postscript/postscriptV.do"
 	    	};
 	    	
 	    	// Session이 있을 수도 있고 없을 수도 있는 URL
@@ -52,6 +54,7 @@ public class SessionInterceptor extends HandlerInterceptorAdapter {
 		    	};
 	    	
 	    	String url = request.getRequestURI();
+	    	System.out.println("URL ===================> " + url);
 	    	if ( url.indexOf("/resources/") > -1 ) {
 	    		return true;
 	    	} else {

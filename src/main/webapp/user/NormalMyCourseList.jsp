@@ -71,7 +71,7 @@
                         <th class='col_4'>총점수</th>
                         <th class='col_5'>시험</th>
                         <th class='col_6'>수료여부</th>
-                        <th class='col_7'>후기작성</th>
+                        <th class='col_7'>수강후기</th>
                     </tr>
 <c:if test="${empty set.course}">
 					<tr class="last_line"><td colspan="7" class="last center">수강 완료과정이 없습니다.</td></tr>
@@ -117,7 +117,7 @@
 		</c:when>
 		<c:otherwise>
        					<td class=""col_7"">
-							<div class='clear_fix'>
+							<div class='clear_fix' onclick="Popup.showPostscriptV('${row.courseId}')">
                                 <span><img src='/resources/homepage/img/process/${row.grade1}.png' alt=''></span>
                                 <span><img src='/resources/homepage/img/process/${row.grade2}.png' alt=''></span>
                                 <span><img src='/resources/homepage/img/process/${row.grade3}.png' alt=''></span>

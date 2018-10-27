@@ -130,10 +130,11 @@ function lfn_btn(pKind, pParam) {
 		        </div>
 		      	<!-- Pager Area END -->
 
+<c:if test="${set.condiVO.isEdit eq 'Y'}">
                 <div class='detail_btn_area'>
                     <a href='#' onclick="javascript:lfn_btn('new'); return false;" class='bg_color'>등록하기</a>
                 </div>
-                
+</c:if>                
             </div>
         </div>
         <!-- CONTENTS END -->

@@ -719,5 +719,4 @@ public class MainController {
         return "/homepage/EventV";
     }
 
-
 }

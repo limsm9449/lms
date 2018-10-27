@@ -55,7 +55,17 @@ $(document.body).ready(function () {
 	        	for ( var i = 0; i < rows.length; i++ ) {
 					if ( rows[i].STATUS != "B" && rows[i].STATUS != "C") {
 	            		mask.open();
-	            		dialog.alert( { msg : (rows[i].__index + 1) + " 라인 : 은행입금 또는 거걸(사용자 취소)이 아닙니다."	}, function () { mask.close();	} );
+	            		dialog.alert( { msg : (rows[i].__index + 1) + " 라인 : 은행입금 또는 거절(사용자 취소)이 아닙니다."	}, function () { mask.close();	} );
+	            		return;
+					}		        			
+	        	}
+	        	var approvalDup = {};
+	        	for ( var i = 0; i < rows.length; i++ ) {
+					if ( approvalDup[rows[i].APPROVAL_ID] == undefined ) {
+						approvalDup[rows[i].APPROVAL_ID] = rows[i].APPROVAL_ID;
+					} else {
+	            		mask.open();
+	            		dialog.alert( { msg : (rows[i].__index + 1) + " 라인 : 동일 결재ID로 여러개를 선택할 수 없습니다. 한개만 선택해 주세요."	}, function () { mask.close();	} );
 	            		return;
 					}		        			
 	        	}
@@ -85,6 +95,16 @@ $(document.body).ready(function () {
 	            		return;
 					}
 	        	}
+	        	var approvalDup = {};
+	        	for ( var i = 0; i < rows.length; i++ ) {
+					if ( approvalDup[rows[i].APPROVAL_ID] == undefined ) {
+						approvalDup[rows[i].APPROVAL_ID] = rows[i].APPROVAL_ID;
+					} else {
+	            		mask.open();
+	            		dialog.alert( { msg : (rows[i].__index + 1) + " 라인 : 동일 결재ID로 여러개를 선택할 수 없습니다. 한개만 선택해 주세요."	}, function () { mask.close();	} );
+	            		return;
+					}		        			
+	        	}
 	        	for ( var i = 0; i < rows.length; i++ ) {
 					grid.setValue(rows[i].__index, "STATUS", "B");
 	        	}
@@ -103,6 +123,16 @@ $(document.body).ready(function () {
 					if ( rows[i].STATUS != "B") {
 	            		mask.open();
 	            		dialog.alert( { msg : (rows[i].__index + 1) + " 라인 : 은행입금만 거절 할 수 있습니다."	}, function () { mask.close();	} );
+	            		return;
+					}		        			
+	        	}
+	        	var approvalDup = {};
+	        	for ( var i = 0; i < rows.length; i++ ) {
+					if ( approvalDup[rows[i].APPROVAL_ID] == undefined ) {
+						approvalDup[rows[i].APPROVAL_ID] = rows[i].APPROVAL_ID;
+					} else {
+	            		mask.open();
+	            		dialog.alert( { msg : (rows[i].__index + 1) + " 라인 : 동일 결재ID로 여러개를 선택할 수 없습니다. 한개만 선택해 주세요."	}, function () { mask.close();	} );
 	            		return;
 					}		        			
 	        	}
@@ -156,40 +186,10 @@ function fn_makeGrid() {
 	            width : 40,
 	            align : "right"
 	        },{
-	            key : "CATEGORY_NAME",
-	            label : "카테고리",
-	            width : 150,
-	            align : "left"
-	        },{
-	            key : "COURSE_NAME",
-	            label : "과정명",
-	            width : 150,
-	            align : "left"
-	        },{
-	            key : "COURSE_CODE",
-	            label : "과정코드",
-	            width : 90,
-	            align : "left"
-	        },{
-	            key : "YEAR", 
-	            label : "년",
-	            width : 50,
-	            align : "center"
-	        },{
-	            key : "MONTH",
-	            label : "월",
-	            width : 50,
-	            align : "center"
-	        },{
-	            key : "CHASU",
-	            label : "차수",
-	            width : 50,
-	            align : "right"
-	        },{
-	            key : "REQUEST_DATE",
-	            label : "신청일자",
+	            key : "APPROVAL_ID",
+	            label : "결재ID",
 	            width : 100,
-	            align : "center"
+	            align : "left"
 	        },{
 	            key : "USER_ID",
 	            label : "신청자 ID",
@@ -200,6 +200,11 @@ function fn_makeGrid() {
 	            label : "신청자명",
 	            width : 80,
 	            align : "left"
+	        },{
+	            key : "REQUEST_DATE",
+	            label : "신청일자",
+	            width : 100,
+	            align : "center"
 	        },{
 	            key : "STATUS",
 	            label : "신청상태", 
@@ -291,7 +296,38 @@ function fn_makeGrid() {
 			            width : 120,
 			            align : "center"
 			        }
-			  	]
+			  	]	            
+	        },{
+	            key : "CATEGORY_NAME",
+	            label : "카테고리",
+	            width : 150,
+	            align : "left"
+	        },{
+	            key : "COURSE_NAME",
+	            label : "과정명",
+	            width : 150,
+	            align : "left"
+	        },{
+	            key : "COURSE_CODE",
+	            label : "과정코드",
+	            width : 90,
+	            align : "left"
+	        },{
+	            key : "YEAR", 
+	            label : "년",
+	            width : 50,
+	            align : "center"
+	        },{
+	            key : "MONTH",
+	            label : "월",
+	            width : 50,
+	            align : "center"
+	        },{
+	            key : "CHASU",
+	            label : "차수",
+	            width : 50,
+	            align : "right"
+
 	        },{
               	key : undefined, 
               	label: "환불", 
@@ -550,8 +586,8 @@ function fn_hidePopupDiv(popupDivId) {
 
 <div>
     <button class="btn btn-default" data-grid-control="search">검색</button>
-    <button class="btn btn-default" data-grid-control="bankConfirm">은행 입금 확인</button>
-    <button class="btn btn-default" data-grid-control="approvalToBank">은행 입금 확인 취소</button>
+    <button class="btn btn-default" data-grid-control="bankConfirm">은행 입금 승인</button>
+    <button class="btn btn-default" data-grid-control="approvalToBank">은행 입금 승인 취소</button>
     <button class="btn btn-default" data-grid-control="reject">거절</button>
     <button class="btn btn-default" data-grid-control="refund">환불</button>
     <button class="btn btn-default" data-grid-control="save">저장</button>

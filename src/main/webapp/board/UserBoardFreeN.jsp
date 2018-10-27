@@ -1,25 +1,32 @@
 <%@ page contentType="text/html;charset=utf-8"%>
-
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
-<%@ taglib prefix="FCK" uri="http://java.fckeditor.net" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
+<!DOCTYPE html>
+<html lang='ko'>
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="ko" xml:lang="ko">
 <head>
-<title>
-</title>
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1'>
+    <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+    <title>Q learning - 자료실 등록</title>
 
-<%@ include file="../common/commUserInclude.jsp" %>
+    <%@ include file="../common/commMainInclude.jsp" %>
 
+    <link href='https://fonts.googleapis.com/css?family=Nanum+Gothic' rel='stylesheet'>
+    <link rel='stylesheet' href='/resources/homepage/css/initialization.css'>
+    <link rel='stylesheet' href='/resources/homepage/css/support/notice_register.css'>
 </head>
 
 <script type="text/javascript">
+
 var preUrl = "/board/"; 
 
 $(document).ready(function() {
-	$("textarea[name='contents']").cleditor({height:350});
+	$("textarea[name='contents']").cleditor();
 	$("textarea[name='contents']").val("");
 });
 
@@ -28,25 +35,26 @@ function lfn_btn(pKind, pParam) {
 		if ( lfn_validate() == false )
 			return false;
 		
-		if ( confirm("저장하시겠습니까?") == true ) {
-			btnUnbind("saveBtn");
-			$.ajax({
-				type :"POST",
-				url : context + preUrl + "boardFreeIns.do",
-				dataType :"json",
-				data : $("#frm").serialize(),
-				success : function(json){
-					if ( json.rtnMode == "INSERT_OK") {
-						lfn_btn("list");
-					}
-				},
-				error : function(e) {
-					alert("<spring:message code="lms.msg.systemError" text="-" />");
+		if ( confirm("저장하시겠습니까?") == false )
+			return false;
+		
+		btnUnbind("saveBtn");
+		$.ajax({
+			type :"POST",
+			url : context + preUrl + "boardFreeIns.do",
+			dataType :"json",
+			data : $("#frm").serialize(),
+			success : function(json){
+				if ( json.rtnMode == "INSERT_OK") {
+					lfn_btn("list");
 				}
-			})
-		}
+			},
+			error : function(e) {
+				alert("<spring:message code="lms.msg.systemError" text="-" />");
+			}
+		})
 	} else if ( pKind =="list" ) {
-		gfn_goPage(preUrl + "userBoardFreeList",opener.top.gCondition.boardFree.param); 
+		gfn_goPage(preUrl + "userBoardFreeList","courseId=${set.condiVO.courseId}"); 
 	}
 }
 
@@ -73,59 +81,64 @@ function lfn_validate() {
 	return true;
 }
 
+
 </script>
 
-<body>
-
+<body style='background:#fff'>
 <form id="frm" name="frm" action="" method="post">
 	<input id="courseId" name="courseId" value="${set.condiVO.courseId}" type="hidden"/>
-	<input id="isPopup" name="isPopup" value="${set.condiVO.isPopup}" type="hidden"/>
 
+<frameset rows='*'>
+    <div class='wrap'>
+        <!-- CONTENTS -->
+        <div class='contents_wrap process'>
+            <div class='contents_wrap_box popup'>
+                <!-- TOP -->
+                <div class='top_area'>
+                    <h1>
+                        자유게시판 <span>등록</span>
+                    </h1>
+                    <div class='top_text_box clear_fix'>
+                        <span><img src='/resources/homepage/img/support/notice_bg.jpg' alt=' '></span>
+                        <p class='top_title'>NEWS & NOTICE!</p>
+                        <p>
+                            큐러닝의 소식과 공지사항을 알려드립니다. <span></span>항상 유익하고 풍성한 소식 놓치지 말고 확인하세요.
+                        </p>
+                    </div>
+                </div>
+                <!-- TOP END -->
 
-<div id="popup_wrap">
-  <div class="pop_header">
-    <h3 class="title">자유게시판 - 글쓰기</h3>
-    <p class="closeBtn" onClick="window.close();">Close</p>
-  </div>
-  <div class="pop_content">
-    <div id="bod_search_r">
-      <a href="#" onclick="javascript:lfn_btn('list'); return false;"><img src="/resources/images/sub/btn_go_list.png" alt="목록으로 돌아가기" /></a>
-    </div>
-    <table class="bod_input">
-      <caption>input</caption>
-			<thead>
-			  <tr class="guide">
-					<th width="90"></th>
-					<th></th>
-				</tr>
-			</thead>
-			<tbody>
-        <tr>
-          <th><label for="subject">제목</label></th>
-          <td><input id="title" name="title" type="text" value="" style="width:100%"/></td>
-        </tr>
-        <tr class="last_line">
-          <th><label for="contents">내용</label></th>
-          <td>
-            <textarea id="contents" name="contents"></textarea>
-          </td>
-        </tr>
-      </tbody>  
-    </table>
-    <div class="center_btn">
-      <a href="#" id="saveBtn" onclick="javascript:lfn_btn('save'); return false;"><img src="/resources/images/sub/btn_reg.png" /></a>&nbsp;<a href="#" onclick="javascript:lfn_btn('list'); return false;"><img src="/resources/images/sub/btn_censel.png" /></a>
-    </div>
-    <div id="bod_search_r">
-      <a href="#" onclick="javascript:lfn_btn('list'); return false;"><img src="/resources/images/sub/btn_go_list.png" alt="목록으로 돌아가기" /></a>
-    </div>
-    <br /><br />
-  </div><!-- end pop_content -->
-</div>
+                <div class='notice_register clear_fix'>
+                    <div class='form_box clear_fix'>
+                        <div class='title'>
+                            <p>제목</p>
+                        </div>
+                        <div>
+                            <input type='text' name='title' id='title'>
+                        </div>
+                    </div>
+                    <div class='form_box clear_fix flex'>
+                        <div class='title'>
+                            <p>내용</p>
+                        </div>
+                        <div class='editor_area'>
+                        	<textarea id="contents" name="contents"></textarea>
+                        </div>
+                    </div>
+                </div>
 
-	
+                <div class='detail_btn_area'>
+                    <a href="#" onclick="javascript:lfn_btn('list'); return false;">취소</a>
+                    <a href="#" id="saveBtn" onclick="javascript:lfn_btn('save'); return false;" class='bg_color'>등록하기</a>
+                </div> 
+
+            </div>
+        </div>
+        <!-- CONTENTS END -->
+    </div>
+</frameset>
+
 </form>
-
+<script src='/resources/homepage/js/sub.js'></script>
 </body>
 </html>
-
-

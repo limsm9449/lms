@@ -245,7 +245,7 @@ $(document).ready(function(){
                 <button>학습<span></span>가이드</button>
                 <button>동영상<span></span>설정</button>
                 <button>환경<span></span>설정</button>
-                <button class='last_right'>학습<span></span>질문답변</button>
+                <button onclick="Popup.showUserBoard('QNA','${set.courseInfo.courseId}');" class='last_right'>학습<span></span>질문답변</button>
             </div>
         </div>
         <div class='study_bottom_area clear_fix'>
@@ -256,11 +256,13 @@ $(document).ready(function(){
                 <span>I</span>
                 <a href='#' onclick="javascript:Popup.showUserBoard('DATA','${set.courseInfo.courseId}'); return false;">자료실</a>
                 <span>I</span>
+                <a href='#' onclick="javascript:Popup.showUserBoard('FREE','${set.courseInfo.courseId}'); return false;">자유게시판</a>
+                <span>I</span>
                 <a href=''>용어사전</a>
                 <span>I</span>
                 <a href=''>나의노하우</a>
                 <span>I</span>
-                <a href=''>토론톡 나도 한마디</a>
+                <a href='#' onclick="javascript:Popup.showProgress('${set.courseInfo.courseId}'); return false;">진도상세보기</a>
                 <span>I</span>
 <c:choose>
 	<c:when test="${set.courseInfo.postscriptYn eq 'Y'}">
@@ -272,7 +274,7 @@ $(document).ready(function(){
 </c:choose>                 
                 
                 <span>I</span>
-                <a href=''>강사님께 질문하기</a>
+                <a href='#' onclick="javascript:Popup.showUserBoard('QNA','${set.courseInfo.courseId}'); return false;">강사님께 질문하기</a>
             </div>
         </div>
     </div>

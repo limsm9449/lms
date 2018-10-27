@@ -142,6 +142,8 @@ public class AxCostService {
 
 			if ( "DATA".equals(row.get("KIND")) ) {
 				sqlSession.update("axCost.axCostCalcBoardDataUpdate", row);
+			} else if ( "QNA_REPLY".equals(row.get("KIND")) ) {
+				sqlSession.update("axCost.axCostCalcBoardQnaUpdate", row);
 			} else {
 				sqlSession.update("axCost.axCostCalcReplyUpdate", row);
 			}

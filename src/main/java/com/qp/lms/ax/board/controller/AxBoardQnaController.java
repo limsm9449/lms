@@ -67,12 +67,12 @@ public class AxBoardQnaController {
         return hm;
     }
 
-    @RequestMapping(value = "/board/axBoardQnaReplySave", method = RequestMethod.POST, consumes = "application/json" )
-    public @ResponseBody HashMap<String,Object> axBoardQnaReplySave(@RequestBody HashMap<String, Object> paramMap, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    @RequestMapping(value = "/board/axBoardQnaAnswerSave", method = RequestMethod.POST, consumes = "application/json" )
+    public @ResponseBody HashMap<String,Object> axBoardQnaAnswerSave(@RequestBody HashMap<String, Object> paramMap, HttpServletRequest request, HttpServletResponse response) throws Exception {
     	HashMap<String, Object> hm = new HashMap<String, Object>();
     	
 		try {
-    		hm = svr.axBoardQnaReplySave(paramMap);
+    		hm = svr.axBoardQnaAnswerSave(paramMap);
     	} catch ( Exception e ) {
     		e.printStackTrace();
     		hm.put("RtnMode", Constant.mode.ERROR.name());

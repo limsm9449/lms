@@ -11,7 +11,8 @@ public class ReplyVO extends CommonVO{
 	private String contents;
 	private String userId;
 	private String userName;
-	private String userIp;	
+	private String userIp;
+	private String rSeq;
 	
 	//2014.8.17
 	private String courseId;
@@ -66,6 +67,12 @@ public class ReplyVO extends CommonVO{
 	}
 	public void setCourseId(String courseId) {
 		this.courseId = courseId;
+	}
+	public String getrSeq() {
+		return rSeq;
+	}
+	public void setrSeq(String rSeq) {
+		this.rSeq = rSeq;
 	}
 	
 	

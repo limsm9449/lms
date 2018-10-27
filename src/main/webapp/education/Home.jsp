@@ -80,7 +80,7 @@ $(document).ready(function() {
 <c:if test="${set.data.isDiscussion eq 'Y'}">
 			<button onclick="javascript:Popup.showUserBoard('DISCUSSION','${set.condiVO.courseId}'); return false;">Discussion</button>
 </c:if>	   		
-			<button onclick="javascript:Popup.showUserProgress('QNA','${set.condiVO.courseId}'); return false;">진도</button>
+			<button onclick="javascript:Popup.showProgress('${set.condiVO.courseId}'); return false;">진도</button>
 
 <c:if test="${set.data.examYn eq 'Y'}">
             <button onclick="javascript:Popup.showExamResult('${set.condiVO.courseId}'); return false;">시험 결과</button>

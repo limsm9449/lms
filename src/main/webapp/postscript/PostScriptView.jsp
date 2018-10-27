@@ -1,77 +1,92 @@
 <%@ page contentType="text/html;charset=utf-8"%>
-
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
-<%@ taglib prefix="FCK" uri="http://java.fckeditor.net" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
+<!DOCTYPE html>
+<html lang='ko'>
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="ko" xml:lang="ko">
 <head>
-<title>
-</title>
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1'>
+    <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+    <title>Q learning - 질문하기</title>
 
-<%@ include file="../common/commAdminInclude.jsp" %>
+    <%@ include file="../common/commMainInclude.jsp" %>
 
+    <link href='https://fonts.googleapis.com/css?family=Nanum+Gothic' rel='stylesheet'>
+    <link rel='stylesheet' href='/resources/homepage/css/initialization.css'>
+    <link rel='stylesheet' href='/resources/homepage/css/support/notice_register.css'>
 </head>
 
-<script type="text/javascript">
-var gCondition = {
-}
 
+<script type="text/javascript">
+$(document).ready(function() {
+	review_score(${set.data.eval});
+});
 </script>
 
-
-<body>
+<body style='background:#fff'>
 
 <form id="frm" name="frm" action="" method="post">
-	<input type="hidden" id="courseId" name="courseId" value="${set.condiVO.courseId}"/> 
 	
-<div id="popup_wrap">
-  	<div class="pop_header">
-    	<h3 class="title">수강후기</h3>
-    	<p class="closeBtn" onClick="window.close();">Close</p>
-  	</div>
-  	<div class="pop_content">
-		<%-- 테이블 --%>
-   		<table summary="" class="view">
-			<caption></caption>
-			<thead>
-			  	<tr class="guide">
-					<th width="100"></th>
-					<th></th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<th>강좌 평점</th> 
-					<td class="no_line">
-						<ul class="exam">
-	              			<li><input type="radio" id="eval" name="eval" value="2" disabled <c:if test="${set.data.eval eq '2'}">checked</c:if>/>2 점</li>
-	              			<li><input type="radio" id="eval" name="eval" value="4" disabled <c:if test="${set.data.eval eq '4'}">checked</c:if>/>4 점</li>
-	              			<li><input type="radio" id="eval" name="eval" value="6" disabled <c:if test="${set.data.eval eq '6'}">checked</c:if>/>6 점</li>
-	              			<li><input type="radio" id="eval" name="eval" value="8" disabled <c:if test="${set.data.eval eq '8'}">checked</c:if>/>8 점</li>
-	              			<li><input type="radio" id="eval" name="eval" value="10" disabled <c:if test="${set.data.eval eq '10'}">checked</c:if>/>10 점</li>
-		              	</ul>
-					</td>
-				</tr>
-				<tr>
-					<th>수강후기</th>
-					<td class="textbox no_line">
-						<textarea id="contents" name="contents" class="polltext" style="height:100px" disabled><c:out value="${set.data.contents}" escapeXml="" /></textarea>
-					</td>
-				</tr>
-			</tbody>
-		</table>
-	</div>
-	
-</div>
+
+<frameset rows='*'>
+    <div class='wrap'>
+        <!-- CONTENTS -->
+        <div class='contents_wrap process'>
+            <div class='contents_wrap_box popup'>
+                <!-- TOP -->
+                <div class='top_area'>
+                    <h1>
+                        수강후기 <span></span>
+                    </h1>
+                    <div class='top_text_box clear_fix'>
+                        <span><img src='/resources/homepage/img/support/notice_bg.jpg' alt=' '></span>
+                        <p class='top_title'>NEWS & NOTICE!</p>
+                        <p>
+                            큐러닝의 소식과 공지사항을 알려드립니다. <span></span>항상 유익하고 풍성한 소식 놓치지 말고 확인하세요.
+                        </p>
+                    </div>
+                </div>
+                <!-- TOP END -->
+
+                <div class='notice_register clear_fix'>
+                    <div class='form_box clear_fix flex'>
+                        <div class='title'>
+                            <p>내용</p>
+                        </div>
+                        <div class='editor_area'>
+                        	<c:out value="${set.data.contents}" escapeXml="" /> 
+                        </div>
+                    </div>
+                    <div class='form_box clear_fix'>
+                        <div class='title'>
+                            <p>평점</p>
+                        </div>
+                        <div class='form_box_score'>
+                            <span onclick='' class='score first_left'></span>
+                            <span onclick='' class='score'></span>
+                            <span onclick='' class='score'></span>
+                            <span onclick='' class='score'></span>
+                            <span onclick='' class='score'></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class='detail_btn_area'>
+                    <button onclick='window.close();'>닫기</button>
+                </div> 
+
+            </div>
+        </div>
+        <!-- CONTENTS END -->
+    </div>
+</frameset>
 
 </form>
-
+<script src='/resources/homepage/js/sub.js?timestamp=<%=timestamp%>'></script>
 </body>
 </html>
-
-

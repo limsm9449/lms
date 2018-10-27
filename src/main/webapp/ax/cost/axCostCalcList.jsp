@@ -49,7 +49,7 @@ $(document.body).ready(function () {
             		var urlParams = "page=/ax/cost/axCostCalcTutorBoardPopup";
             		urlParams += "&COURSE_ID=" + row[0]["COURSE_ID"];
             		
-            		f_popup('/common/axOpenPage', {displayName:'popup',option:'width=800,height=820', urlParams:urlParams});
+            		f_popup('/common/axOpenPage', {displayName:'popup',option:'width=1000,height=820', urlParams:urlParams});
             	}
 	        	
 	            break;

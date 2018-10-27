@@ -17,14 +17,14 @@ SELECT A.SEQ,
   FROM REPLY A LEFT OUTER JOIN USER B ON A.USER_ID = B.USER_ID
  WHERE A.KIND = #{kind}
    AND A.P_SEQ = #{pSeq}  
- ORDER BY SEQ DESC
+ ORDER BY 8 DESC
 </select>	
 
 <select id="replyData" parameterType="Reply" resultType="Reply">
 SELECT SEQ,
        CONTENTS
   FROM REPLY
- WHERE SEQ = #{seq}  
+ WHERE SEQ = #{rSeq}  
 </select>	
 
 <select id="replyIns" parameterType="Reply">
@@ -36,12 +36,12 @@ VALUES (#{kind},#{pSeq},#{contents},#{userId},#{userIp},CURRENT_TIMESTAMP)
 UPDATE REPLY 
    SET CONTENTS = #{contents},
        UPDATE_DATE = CURRENT_TIMESTAMP
- WHERE SEQ = #{seq}
+ WHERE SEQ = #{rSeq}
 </select>	
     
 <select id="replyDel" parameterType="Reply">
 DELETE FROM REPLY
- WHERE SEQ = #{seq}
+ WHERE SEQ = #{rSeq}
 </select>	
 
 <select id="replyDelKeyPSeq" parameterType="Reply">

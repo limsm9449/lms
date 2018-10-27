@@ -378,7 +378,7 @@ function lfn_btn(pKind, pParam) {
 	                            </div>
 	                        </div>
 	                        <div class='process_result_review con'>
-	                            <div class='clear_fix'>
+	                            <div class='clear_fix' onclick="Popup.showPostscriptList('${row.courseId}')">
 	                                <span><img src='/resources/homepage/img/process/${row.grade1}.png' alt=''></span>
 	                                <span><img src='/resources/homepage/img/process/${row.grade2}.png' alt=''></span>
 	                                <span><img src='/resources/homepage/img/process/${row.grade3}.png' alt=''></span>

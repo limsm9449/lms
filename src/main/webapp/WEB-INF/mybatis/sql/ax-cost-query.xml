@@ -354,7 +354,7 @@
 		SET		COST = (	SELECT 	A.REPORT_COST * B.REPORT_CNT +
 									A.EVAL_COST * B.EXAM_CNT +
 									A.DATA_COST * C.DATA_CNT +
-							        A.ANSWER_COST * (D.QNA_REPLY_CNT + E.FREE_REPLY_CNT) TUTOR_COST
+							        A.ANSWER_COST * (D.QNA_CNT + E.FREE_REPLY_CNT) TUTOR_COST
 							FROM	COST A
 										JOIN (	
 											SELECT 	SUM(CASE WHEN COMPLETE_YN = 'Y' AND REPORT_YN = 'Y' AND REPORT > 0 THEN 1 ELSE 0 END) REPORT_CNT
@@ -369,12 +369,11 @@
 											AND		A.USER_ID = #{USER_ID}
 											AND 	ACCEPT_YN = 'Y' ) C ON 1 = 1
 										LEFT OUTER JOIN (
-											SELECT 	COUNT(*) QNA_REPLY_CNT
-											FROM 	REPLY A
-											WHERE 	A.KIND = 'QNA'
-											AND		A.P_SEQ IN ( SELECT SEQ FROM BOARD_QNA WHERE COURSE_ID = #{COURSE_ID} )
-											AND		A.USER_ID = #{USER_ID}
-											AND 	A.ACCEPT_YN = 'Y' ) D ON 1 = 1
+											SELECT 	COUNT(*) QNA_CNT
+											FROM 	BOARD_QNA A
+											WHERE	A.COURSE_ID = #{COURSE_ID}
+											AND		A.ANSWER_USER_ID = #{USER_ID}
+											AND 	ACCEPT_YN = 'Y' ) D ON 1 = 1
 										LEFT OUTER JOIN (
 											SELECT 	COUNT(*) FREE_REPLY_CNT
 											FROM 	REPLY A
@@ -430,6 +429,7 @@
 					        ,U1.USER_NAME TUTOR_NAME
 					        ,A.ACCEPT_YN
 					        ,0 P_SEQ
+					        ,A.NO_REASON
 					FROM 	BOARD_DATA A
 								LEFT OUTER JOIN USER U1 ON A.USER_ID = U1.USER_ID
 					WHERE	A.COURSE_ID = #{COURSE_ID}
@@ -437,22 +437,21 @@
 											UNION 
 											SELECT TUTOR_ID FROM COURSE_TUTOR WHERE COURSE_ID = #{COURSE_ID} )
 					UNION
-					SELECT 	A.SEQ 		
+					SELECT 	B.SEQ 		
 							,'QNA_REPLY' KIND 
 							,'QNA 답변' KIND_NAME 
 							,B.TITLE
 					        ,U2.USER_NAME
 					        ,U1.USER_ID TUTOR_ID
 					        ,U1.USER_NAME TUTOR_NAME        
-					        ,A.ACCEPT_YN
-					        ,A.P_SEQ
-					FROM 	REPLY A
-								JOIN BOARD_QNA B ON B.SEQ = A.P_SEQ
-					            JOIN USER U1 ON U1.USER_ID = A.USER_ID
-					            JOIN USER U2 ON U2.USER_ID = B.USER_ID
-					WHERE 	A.KIND = 'QNA'
-					AND		A.P_SEQ IN ( SELECT SEQ FROM BOARD_QNA WHERE COURSE_ID = #{COURSE_ID} )
-					AND		A.USER_ID IN ( 	SELECT TUTOR_ID FROM COURSE WHERE COURSE_ID = #{COURSE_ID}
+					        ,B.ACCEPT_YN
+					        ,0 P_SEQ
+					        ,B.NO_REASON
+					FROM 	BOARD_QNA B
+					            JOIN USER U1 ON U1.USER_ID = B.USER_ID
+					            JOIN USER U2 ON U2.USER_ID = B.ANSWER_USER_ID
+					WHERE 	B.COURSE_ID = #{COURSE_ID}
+					AND		B.ANSWER_USER_ID IN ( 	SELECT TUTOR_ID FROM COURSE WHERE COURSE_ID = #{COURSE_ID}
 											UNION 
 											SELECT TUTOR_ID FROM COURSE_TUTOR WHERE COURSE_ID = #{COURSE_ID} ) 
 					UNION 
@@ -465,6 +464,7 @@
 					        ,U1.USER_NAME TUTOR_NAME        
 					        ,A.ACCEPT_YN
 					        ,A.P_SEQ
+					        ,A.NO_REASON
 					FROM 	REPLY A
 								JOIN BOARD_FREE B ON B.SEQ = A.P_SEQ
 					            JOIN USER U1 ON U1.USER_ID = A.USER_ID
@@ -483,16 +483,24 @@
 
 	<update id="axCostCalcBoardDataUpdate" parameterType="hashmap">
 		UPDATE BOARD_DATA
-    	   SET ACCEPT_YN = #{ACCEPT_YN}
+    	   SET ACCEPT_YN = #{ACCEPT_YN},
+    	   	   NO_REASON = #{NO_REASON}
+    	 WHERE SEQ = #{SEQ} 
+	</update>  
+
+	<update id="axCostCalcBoardQnaUpdate" parameterType="hashmap">
+		UPDATE BOARD_QNA
+    	   SET ACCEPT_YN = #{ACCEPT_YN},
+    	   	   NO_REASON = #{NO_REASON}
     	 WHERE SEQ = #{SEQ} 
 	</update>  
 
 	<update id="axCostCalcReplyUpdate" parameterType="hashmap">
 		UPDATE REPLY
-    	   SET ACCEPT_YN = #{ACCEPT_YN}
+    	   SET ACCEPT_YN = #{ACCEPT_YN},
+    	   	   NO_REASON = #{NO_REASON}
     	 WHERE SEQ = #{SEQ} 
 	</update>  
-		  
 		  
 	<select id="axCostCalcPaymentList" parameterType="hashmap" resultType="hashmap">
 		SELECT	A.COURSE_ID

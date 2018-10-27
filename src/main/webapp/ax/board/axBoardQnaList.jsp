@@ -40,6 +40,11 @@ $(document.body).ready(function () {
 	            width : 500,
 	            align : "left"
 	        },{
+  	            key : "ANSWER_YN",
+  	            label : "답변여부",
+  	            width : 70,
+  	            align : "center"
+	        },{
 	            key : "USER_NAME",
 	            label : "작성자",
 	            width : 120,
@@ -73,6 +78,19 @@ $(document.body).ready(function () {
 	        case "search":
 	            fn_search();
 	            break;
+		    case "answer":
+		    	var row = grid.getList("selected");
+            	if ( row.length == 0 ) {
+            		mask.open();
+            		dialog.alert( { msg : "답변할 글을 선택하셔야 합니다." }, function () { mask.close();	} );
+            		return;
+            	}
+           		var urlParams = "page=/ax/board/axBoardQnaAnswerPopup";
+           		urlParams += "&COURSE_ID=" + params.COURSE_ID + "&SEQ=" + row[0]["SEQ"];
+           		
+           		f_popup('/common/axOpenPage', {displayName:'boardQnaPopup',option:'width=900,height=700', urlParams:urlParams});
+
+		    	break;
 		    case "add":
            		var urlParams = "page=/ax/board/axBoardQnaPopup";
            		urlParams += "&MODE=INSERT&SEQ=&COURSE_ID=0";
@@ -188,6 +206,7 @@ function fn_gridEvent(event, obj) {
 
 <div>
     <button class="btn btn-default" data-grid-control="search">검색</button>
+    <button class="btn btn-default" data-grid-control="answer">답변</button>
     <button class="btn btn-default" data-grid-control="add">추가</button>
     <button class="btn btn-default" data-grid-control="delete">삭제</button>
     <button class="btn btn-default" data-grid-control="export">엑셀</button>

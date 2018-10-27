@@ -101,7 +101,7 @@ function lfn_btn(pKind, pParam) {
 <c:forEach var="row" items="${set.list}" varStatus="idx"> 
                         <tr>
                             <td class='col_1'>${row.rownum}</td>
-                            <td class='col_2'><a href="#" onClick="javascript:lfn_btn('view',{seq:'${row.seq}'}); return false;"><c:out value="${row.title}" escapeXml="true" /></a></td>
+                            <td class='col_2'><a href="#" onClick="javascript:lfn_btn('view',{seq:'${row.seq}'}); return false;"><c:out value="${row.title}" escapeXml="true" /><c:if test="${row.answerYn eq 'Y'}">&nbsp;&nbsp;&nbsp;[답변완료]</c:if></a></td>
 			              	<td class='col_3'>${row.userName}</td>
                             <td class='col_4'>${row.createDate}</td>
                             <td class='col_5'>${row.viewCnt}</td>
@@ -132,10 +132,11 @@ function lfn_btn(pKind, pParam) {
 		        </div>
 		      	<!-- Pager Area END -->
       	
+<c:if test="${set.condiVO.isEdit eq 'Y'}">
                 <div class='detail_btn_area'>
                     <a href='#' onclick="javascript:lfn_btn('new'); return false;" class='bg_color'>등록하기</a>
                 </div>
-
+</c:if>
             </div>
         </div>
         <!-- CONTENTS END -->

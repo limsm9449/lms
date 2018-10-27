@@ -80,6 +80,17 @@ function fn_makeGrid() {
 				styleClass: function () {
 	                return "grid-cell-edit";
 	            } 
+	        },{
+	            key : "NO_REASON",
+	            label : "미적용 사유",
+	            width : 200,
+	            align : "left",
+	            editor : { 
+	            	type : "text"
+				},
+				styleClass: function () {
+                    return "grid-cell-edit"; 
+                }
 	        }	], 
 	  	null,
 	  	{
@@ -161,8 +172,8 @@ function fn_gridEvent(event, obj) {
 	   		
 	   		f_popup('/common/axOpenPage', {displayName:'boardPopup',option:'width=900,height=700', urlParams:urlParams});
 		} else if ( obj.item["KIND"] == "QNA_REPLY" ) {		
-	   		var urlParams = "page=/ax/board/axBoardQnaPopup";
-	   		urlParams += "&MODE=VIEW&SEQ=" + obj.item["P_SEQ"] + "&COURSE_ID=" + gfn_getUrlParams("COURSE_ID");
+	   		var urlParams = "page=/ax/board/axBoardQnaAnswerPopup";
+	   		urlParams += "&MODE=VIEW&SEQ=" + obj.item["SEQ"] + "&COURSE_ID=" + gfn_getUrlParams("COURSE_ID");
 	   		
 	   		f_popup('/common/axOpenPage', {displayName:'boardPopup',option:'width=900,height=700', urlParams:urlParams});
 		} else {		

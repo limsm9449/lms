@@ -54,29 +54,6 @@ public class PostScriptController {
     }
 
     /**
-     * 수강후기 사용자 조회 화면
-     * @param vo
-     * @param model
-     * @return
-     * @throws Exception
-     */
-    @RequestMapping(value = "/postscript/postscriptUserList")
-    public String postscriptUserList(@ModelAttribute PostScriptVO vo, Model model) throws Exception {
-    	try {
-    		PostScriptSet set = new PostScriptSet();
-	    	set.setCondiVO(vo);
-	    	
-	    	set = svr.postscriptUserList(set);
-	    	
-	    	model.addAttribute("set", set );
-    	} catch ( Exception e ) {
-    		e.printStackTrace();
-    	}
-
-        return "/postscript/PostScriptUserList";
-    }
-
-    /**
      *  수강후기 작성 화면
      * @param model
      * @return

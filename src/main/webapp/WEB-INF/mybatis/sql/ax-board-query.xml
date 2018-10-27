@@ -295,16 +295,9 @@
 		       	VIEW_CNT,
 		       	DATE_FORMAT(IFNULL(A.UPDATE_DATE,A.CREATE_DATE), '%y.%m.%d %H:%i') CREATE_DATE,
 		       	IF(A.USER_ID = #{USER_ID}, 'Y','N') MY_BOARD_YN,
-                C.CNT REPLY_CNT
+		       	IF(LENGTH(A.ANSWER) > 0, 'Y','N') ANSWER_YN
 		FROM 	BOARD_QNA A 
 					LEFT OUTER JOIN USER B ON A.USER_ID = B.USER_ID
-					LEFT OUTER JOIN (
-						SELECT 	P_SEQ, COUNT(*) CNT
-						FROM	REPLY
-						WHERE 	KIND = 'QNA'
-						AND 	P_SEQ IN (SELECT SEQ FROM BOARD_QNA WHERE COURSE_ID = #{COURSE_ID})
-						GROUP	BY P_SEQ
-					) C ON C.P_SEQ = A.SEQ
 		WHERE 	( A.COURSE_ID = #{COURSE_ID} OR
 					A.COURSE_ID IN ( 	SELECT 	COURSE_ID 
 										FROM 	COURSE 
@@ -320,7 +313,8 @@
 		SELECT 	SEQ,
 		       	COURSE_ID,
 		       	TITLE,
-		       	CONTENTS
+		       	CONTENTS,
+		       	ANSWER
 		FROM 	BOARD_QNA
 		WHERE 	SEQ = #{SEQ}
 	</select>
@@ -334,6 +328,14 @@
 		UPDATE BOARD_QNA
 		   SET TITLE = #{TITLE},
 		       CONTENTS = #{CONTENTS},
+		       UPDATE_DATE = CURRENT_TIMESTAMP
+		 WHERE SEQ = #{SEQ}
+    </update>	
+
+    <update id="axBoardQnaAnswerUpdate" parameterType="hashmap">
+		UPDATE BOARD_QNA
+		   SET ANSWER = #{ANSWER},
+		   	   ANSWER_USER_ID = #{USER_ID},	
 		       UPDATE_DATE = CURRENT_TIMESTAMP
 		 WHERE SEQ = #{SEQ}
     </update>	

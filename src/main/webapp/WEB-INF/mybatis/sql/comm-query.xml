@@ -89,19 +89,22 @@ SELECT IF(CURDATE() < G_FROM_DATE,'G_BEFORE',
 ]]> 
 </select>
 
-<select id="courseEditInfo" parameterType="Comm" resultType="Comm">
-<![CDATA[
-SELECT CE.COMPLETE_YN,
-       C.COURSE_KIND,
-       IF(CR.STATUS='A' AND CURDATE() >= DATE_FORMAT(CR.CONFIRM_DATE,'%Y-%m-%d') AND CURDATE() <= DATE_ADD(DATE_FORMAT(CR.CONFIRM_DATE,'%Y-%m-%d'),INTERVAL C.C_PERIOD DAY),'Y','N') IS_PERIOD,
-       DATE_FORMAT(CR.CONFIRM_DATE,'%Y-%m-%d') CONFIRM_DATE,
-       C.C_PERIOD
-  FROM COURSE_EVAL CE JOIN COURSE C ON C.COURSE_ID = CE.COURSE_ID
-                      JOIN COURSE_REGISTER CR ON CR.COURSE_ID = CE.COURSE_ID AND CR.USER_ID = CE.USER_ID
-]]> 
- WHERE CE.COURSE_ID = #{courseId} 
-   AND CE.USER_ID = #{userId} 
-</select>
+	<select id="courseEditInfo" parameterType="Comm" resultType="Comm">
+	<![CDATA[
+		SELECT CE.COMPLETE_YN,
+		       C.COURSE_KIND,
+		       IF(DATE_FORMAT(CURDATE(),'%Y-%m-%d')
+						BETWEEN 	CASE WHEN C.TERM_YN = 'Y' THEN C.STUDY_PERIOD_FROM ELSE DATE_FORMAT(CR.CONFIRM_DATE,'%Y-%m-%d') END
+						AND 		CASE WHEN C.TERM_YN = 'Y' THEN C.STUDY_PERIOD_TO ELSE DATE_FORMAT(DATE_ADD(CR.CONFIRM_DATE,INTERVAL C.C_PERIOD DAY),'%Y-%m-%d') END
+						,'Y','N') IS_PERIOD,
+		       DATE_FORMAT(CR.CONFIRM_DATE,'%Y-%m-%d') CONFIRM_DATE,
+		       C.C_PERIOD
+		  FROM COURSE_EVAL CE JOIN COURSE C ON C.COURSE_ID = CE.COURSE_ID
+		                      JOIN COURSE_REGISTER CR ON CR.COURSE_ID = CE.COURSE_ID AND CR.USER_ID = CE.USER_ID
+		 WHERE CE.COURSE_ID = #{courseId} 
+		   AND CE.USER_ID = #{userId} 
+	]]> 
+	</select>
 
 <!-- 임시 SEQ : 시분초로 구성 -->
 <select id="tempSeq" resultType="String">

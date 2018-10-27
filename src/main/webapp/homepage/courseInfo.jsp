@@ -317,11 +317,11 @@ function lfn_btn(pKind, pParam) {
                                         <p>${row.contents}</p>
                                     </td>
                                     <td class='mobile_last'>
-                                        <span><img src='/resources/homepage/img/course/register_star_${row.eval1}.png' alt=' '></span>
-                                        <span><img src='/resources/homepage/img/course/register_star_${row.eval2}.png' alt=' '></span>
-                                        <span><img src='/resources/homepage/img/course/register_star_${row.eval3}.png' alt=' '></span>
-                                        <span><img src='/resources/homepage/img/course/register_star_${row.eval4}.png' alt=' '></span>
-                                        <span><img src='/resources/homepage/img/course/register_star_${row.eval5}.png' alt=' '></span>
+                                        <span><img src='/resources/homepage/img/course/register_${row.eval1}.png' alt=' '></span>
+                                        <span><img src='/resources/homepage/img/course/register_${row.eval2}.png' alt=' '></span>
+                                        <span><img src='/resources/homepage/img/course/register_${row.eval3}.png' alt=' '></span>
+                                        <span><img src='/resources/homepage/img/course/register_${row.eval4}.png' alt=' '></span>
+                                        <span><img src='/resources/homepage/img/course/register_${row.eval5}.png' alt=' '></span>
                                     </td>
                                     <td class='mobile_none'>${row.userName}</td>
                                     <td class='last_right mobile_none'>${row.createDate}</td>

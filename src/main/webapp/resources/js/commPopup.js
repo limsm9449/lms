@@ -157,7 +157,7 @@ var Popup = {
 	 * @returns
 	 */
 	showProgress : function(pCourseId) {
-		Popup.showPopup(context + "/education/progress.do?courseId=" + pCourseId + "&isPopup=Y",690,710,"boardPopup");
+		Popup.showPopup(context + "/education/progress.do?courseId=" + pCourseId + "&isPopup=Y",900,850,"boardPopup");
 	},
 
 	/**
@@ -276,11 +276,19 @@ var Popup = {
 	},
 
 	/**
+	 * 수강후기
+	 * @param pCourseId
+	 */
+	showPostscriptList : function(pCourseId) {
+		Popup.showPopup(context + "/postscript/postscriptList.do?courseId=" + pCourseId,900,800,"educationSubPopup");
+	},
+	
+	/**
 	 * 수강후기 작성
 	 * @param pCourseId
 	 */
 	showPostscript : function(pCourseId) {
-		Popup.showPopup(context + "/postscript/postscriptN.do?courseId=" + pCourseId,900,270,"educationSubPopup");
+		Popup.showPopup(context + "/postscript/postscriptN.do?courseId=" + pCourseId,900,800,"educationSubPopup");
 	},
 
 	/**
@@ -288,7 +296,7 @@ var Popup = {
 	 * @param pCourseId
 	 */
 	showPostscriptV : function(pCourseId) {
-		Popup.showPopup(context + "/postscript/postscriptV.do?courseId=" + pCourseId,900,270);
+		Popup.showPopup(context + "/postscript/postscriptV.do?courseId=" + pCourseId,900,800);
 	},
 	
 	/**

@@ -202,7 +202,12 @@ $(document).ready(function(){
                             <p>${row.progress}%</p>
                             <p class='user_lecture_list_date'>${row.cFromDate} ~ ${row.cToDate}</p>
                             <p>D-${row.remainDay}</p>
+	<c:if test="${row.isStudy eq 'Y'}">                            
                             <button class='user_lecture_list_start' onclick="javascript:Popup.showStudyroom('${row.courseId}');">학습시작</button>
+	</c:if>                            
+	<c:if test="${row.isStudy eq 'N'}">                            
+                            <button class='user_lecture_list_start' onclick="">학습대기중</button>
+	</c:if>                            
                         </li>
 </c:forEach>                        
                     </ul>

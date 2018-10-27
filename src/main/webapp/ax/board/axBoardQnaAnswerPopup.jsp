@@ -27,8 +27,21 @@ var SEQ = gfn_getUrlParams("SEQ");
 var COURSE_ID = gfn_getUrlParams("COURSE_ID");
 
 $(document.body).ready(function () {
-    $("#CONTENTS").cleditor({height:490}); 
+   	$("#TITLE").attr("readonly", true);
+
+   	$("#CONTENTS").cleditor({height:240});
     $("#CONTENTS").cleditor()[0].refresh();
+    $("#CONTENTS").cleditor()[0].disable(true).refresh();
+	
+    if ( MODE == "VIEW" ) {
+    	$("#ANSWER").cleditor({height:240});
+    	$("#ANSWER").cleditor()[0].disable(true).refresh();
+    	
+    	$("#btn_save").hide();
+    }  else {
+    	$("#ANSWER").cleditor({height:240});
+    	$("#ANSWER").cleditor()[0].refresh();
+    }
 
    	fn_search();
 }); 
@@ -53,14 +66,11 @@ function fn_callbackAjax(data, id) {
 	
 	if ( id == "search" ) {
 		$('#TITLE').val(data.row.TITLE);
-		
 		$('#CONTENTS').val(data.row.CONTENTS);
-		
-		if ( MODE == "UPDATE" ) {
-			$("#CONTENTS").cleditor()[0].refresh();
-		} else {
-			$("#CONTENTS").cleditor()[0].disable(true).refresh();
-		}
+		$('#ANSWER').val(data.row.ANSWER);
+
+		$("#CONTENTS").cleditor()[0].refresh();
+		$("#ANSWER").cleditor()[0].refresh();
 	} else if ( id == "save" ){
 		mask.close();
 
@@ -73,16 +83,6 @@ function fn_callbackAjax(data, id) {
 		}
 		
 		isSave = true;
-	} else if ( id == "replySave" ){
-		mask.close();
-
-		if ( data.RtnMode && data.RtnMode != "OK" ) {
-			mask.open();
-			dialog.alert( { msg : "저장시 문제가 발생했습니다. (" + data.RtnMode + ")" }, function () { mask.close(); } );
-		} else {
-			mask.open();
-			dialog.alert( { msg : "저장 되었습니다." }, function () { mask.close();} );
-		}
 	}
 }
 
@@ -97,6 +97,11 @@ function fn_save() {
 		dialog.alert( { msg : "내용을 입력하셔야 합니다." }, function () { mask.close(); } );
 		return;
 	}
+	if ( $("#ANSWER").val() == "" ) {
+		mask.open();
+		dialog.alert( { msg : "답변을 입력하셔야 합니다." }, function () { mask.close(); } );
+		return;
+	}
 
 	mask.open();
    	confirmDialog.confirm(
@@ -107,13 +112,11 @@ function fn_save() {
        	function(){
          	if ( this.key == "ok" ) {
          		var saveParams = {
-         				TITLE : $('#TITLE').val(),
-         				CONTENTS : $('#CONTENTS').val(),
-         				MODE : MODE,
+         				ANSWER : $('#ANSWER').val(),
          				SEQ : SEQ,
          				COURSE_ID : COURSE_ID
          		};
-         		gfn_callAjax("/board/axBoardQnaSave.do", saveParams, fn_callbackAjax, "save");
+         		gfn_callAjax("/board/axBoardQnaAnswerSave.do", saveParams, fn_callbackAjax, "save");
            	} else {
            		mask.close();
            	}
@@ -133,7 +136,7 @@ function fn_close() {
 
 <body style="padding : 10px">
 
-<h2>Q&A 게시물</h2>
+<h2>Q&A 답변</h2>
 
 <form class="form-horizontal">
   	<div class="form-group">
@@ -146,6 +149,12 @@ function fn_close() {
     	<label for="CONTENTS" class="col-sm-2 control-label">내용</label>
     	<div class="col-sm-10">
       		<textarea id="CONTENTS" name="CONTENTS"></textarea>
+    	</div>
+  	</div>
+  	<div class="form-group">
+    	<label for="CONTENTS" class="col-sm-2 control-label">답변</label>
+    	<div class="col-sm-10">
+      		<textarea id="ANSWER" name="ANSWER"></textarea>
     	</div>
   	</div>
   	<div class="form-group">
