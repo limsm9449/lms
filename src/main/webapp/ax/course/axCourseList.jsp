@@ -457,7 +457,7 @@ function fn_makeGrid() {
                 } 
 	        },{
 	        	key : "OPEN_YN", 
-	        	label : "오픈 여부", 
+	        	label : "오픈", 
 	            width : 90,
 	        	align : "center", 
 	        	editor : { type : "checkbox", config : {height: 17, trueValue: "Y", falseValue: "N"} } ,
@@ -466,8 +466,8 @@ function fn_makeGrid() {
                 } 
 	        },{
 	        	key : "POPULAR_YN", 
-	        	label : "인기 강의 여부", 
-	            width : 110,
+	        	label : "인기 과정", 
+	            width : 80,
 	        	align : "center", 
 	        	editor : { type : "checkbox", config : {height: 17, trueValue: "Y", falseValue: "N"} } ,
 				styleClass: function () {
@@ -475,8 +475,8 @@ function fn_makeGrid() {
                 } 
 	        },{
 	        	key : "RECOMMEND_COURSE_YN", 
-	        	label : "추천과정 여부", 
-	            width : 110,
+	        	label : "추천과정", 
+	            width : 80,
 	        	align : "center", 
 	        	editor : { type : "checkbox", config : {height: 17, trueValue: "Y", falseValue: "N"} } ,
 				styleClass: function () {
@@ -484,8 +484,17 @@ function fn_makeGrid() {
                 } 
 	        },{
 	        	key : "NEW_COURSE_YN", 
-	        	label : "신규과정 여부", 
-	            width : 110,
+	        	label : "신규과정", 
+	            width : 80,
+	        	align : "center", 
+	        	editor : { type : "checkbox", config : {height: 17, trueValue: "Y", falseValue: "N"} } ,
+				styleClass: function () {
+                    return "grid-cell-edit";
+                } 
+	        },{
+	        	key : "CATEGORY_MAIN_YN", 
+	        	label : "카테고리별 메인 과정", 
+	            width : 150,
 	        	align : "center", 
 	        	editor : { type : "checkbox", config : {height: 17, trueValue: "Y", falseValue: "N"} } ,
 				styleClass: function () {
@@ -493,8 +502,8 @@ function fn_makeGrid() {
                 } 
 	        },{
 	        	key : "CLOSE_YN", 
-	        	label : "강의 종료 여부", 
-	            width : 110,
+	        	label : "강의 종료", 
+	            width : 80,
 	        	align : "center", 
 	        	editor : { type : "checkbox", config : {height: 17, trueValue: "Y", falseValue: "N"} } ,
 				styleClass: function () {
@@ -570,7 +579,8 @@ function fn_hidePopupDiv(popupDivId, mode) {
 				CLOSE_YN : "N",
 				MOBILE_YN : "N",
 				RECOMMEND_COURSE_YN : "N",
-				NEW_COURSE_YN : "N"
+				NEW_COURSE_YN : "N",
+				CATEGORY_MAIN_YN : "N"
 			}, "last", {focus: "END"});
 	} else if ( popupDivId == "examTypeDiv" ) {
 		if ( mode == "delete" ) {
@@ -632,7 +642,8 @@ function fn_hidePopupDiv(popupDivId, mode) {
 					CLOSE_YN : "N",
 					MOBILE_YN : "N",
 					RECOMMEND_COURSE_YN : "N",
-					NEW_COURSE_YN : "N"
+					NEW_COURSE_YN : "N",
+					CATEGORY_MAIN_YN : "N"
 				}, "last", {focus: "END"});
 			
 			grid.repaint();

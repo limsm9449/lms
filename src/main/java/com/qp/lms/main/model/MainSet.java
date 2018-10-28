@@ -54,6 +54,8 @@ public class MainSet extends CommonSet {
 	private List<BoardVO> boardNoticeList;
 	private BoardVO boardNotice;
 	private BoardFaqVO boardFaq;
+	private List<CourseVO> categoryMainCourseList;
+
 
 	
 	public void setCondiVO(MainVO condiVO) {
@@ -211,6 +213,12 @@ public class MainSet extends CommonSet {
 	}
 	public void setFaqList(List<BoardVO> faqList) {
 		this.faqList = faqList;
+	}
+	public List<CourseVO> getCategoryMainCourseList() {
+		return categoryMainCourseList;
+	}
+	public void setCategoryMainCourseList(List<CourseVO> categoryMainCourseList) {
+		this.categoryMainCourseList = categoryMainCourseList;
 	}
 	
 }

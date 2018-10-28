@@ -195,7 +195,7 @@ function lfn_btn(pKind, pParam) {
                     </div>
 
                     <div class='detail_btn_area'>
-                        <a href='javascript:' onclick="page.refresh();">취소</a>
+                        <a href='javascript:' onclick="page.goHome();">취소</a>
                         <a href="javascript:" onclick="lfn_btn('sendMailQuestion');" class='bg_color'>등록하기</a>
                     </div> 
                     <!-- Contents END -->
@@ -208,7 +208,7 @@ function lfn_btn(pKind, pParam) {
             <!-- FOOTER END -->
         </div>
     </frameset>
-    <script src='/resources/homepage/js/sub.js'></script>
+    <script src='/resources/homepage/js/sub.js?timestamp=<%=timestamp%>'></script>
 </body>
 
 </html>

@@ -1,49 +1,29 @@
 <%@ page contentType="text/html;charset=utf-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
-<html>
+<!DOCTYPE html>
+<html lang='ko'>
+
 <head>
-	<title>Login</title>
-	
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1'>
+    <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+    <title>Q learning - 나의강의실</title>
 
-<style>
-  /* layout */
-  #wrap { width: 100%; height: 100%; text-align: center; margin: 0; padding: 0; border-top: 5px solid #0096dd; }
-  #container { width: 710px; margin: 110px auto 0; }
-  #content_head { width: 642px; margin-bottom: 60px; padding: 0 0 20px 30px;border-bottom: 2px solid #36a9b4; }
-  #content_head h1 { text-align: left; font: bold 16px 'Nanum Gothic'; color: #555; }
-  #content_head h1 img { vertical-align: bottom; margin: 0 5px -8px 0; }
-  
-  h3.title { text-align: left; margin-left: 40px; }
-  p.tit_cmt { text-align: left; margin-left: 40px; font: 12px 'Nanum Gothic'; color: #555; }
-  legend { display: none; }
-  input[type="image"] { border: 0; width: auto; height: auto; }
-  
-  /* LOGIN form */
-  .login_bg { width: 100%; background:url(../images/admin/login/img_login.jpg) no-repeat right 30px; }
-  .login_form {position:relative; width: 672px; height: 220px; border-bottom: 1px solid #e0e0e0; }
-  .login_form label {font: 14px 'Nanum Gothic'; color: #555; padding-right:10px; vertical-align:middle;}
-  
-  .login_form .input_log_id, .login_form .input_log_pw, .login_form .input_log_auth {width: 80px; text-align: right; padding-right: 20px; }
-  .login_form .input_log.id, .login_form .input_log.pw, .login_form .input_log.auth {width: 170px; height: 22px; border: 1px solid #e0e0e0;}
-  .login_form .input_log.auth {width: 172px;}
-  .login_form .input_log_id {position:absolute; left:0; top:32px;}
-  .login_form .input_log.id {position:absolute; left:100px; top:30px;}
-  .login_form .input_log_pw {position:absolute; left:0; top:59px;}
-  .login_form .input_log.pw {position:absolute; left:100px; top:57px;}
-  .login_form .input_log_auth {position:absolute; left:0; top:86px;}
-  .login_form .input_log.auth {position:absolute; left:100px; top:84px;}
-  .login_form .btn_login {position:absolute; left:280px; top:30px;}
-</style>
-	
+    <%@ include file="../common/commMainInclude.jsp" %>
+
+    <link href='https://fonts.googleapis.com/css?family=Nanum+Gothic' rel='stylesheet'>
+    <link rel='stylesheet' href='/resources/homepage/css/initialization.css'>
+    <link rel='stylesheet' href='/resources/homepage/css/etc/admin.css'>
 </head>
-
-<%@ include file="../common/commInclude.jsp" %>
 
 <script type="text/javascript">
 
-function login() {
+function lfn_cms_login() {
 	if ( $("#userId").val() == "") {
 		alert("<spring:message code="lms.msg.inputUserId" text="-" />");
 		$("#userId").focus();
@@ -71,55 +51,41 @@ function lfn_page() {
 function lfn_login(userId) {
 	$("#userId").val(userId);
 	$("#password").val("1");
-	login();
+	lfn_cms_login();
 }
 
 </script> 
 
-<body>
+<body style='background:#fff'>
 
 <form name="frm" action="/loginCheck.do" method="post">
 
-<div id="wrap">
-  	<!-- container -->
-  	<div id="container">    
-    	<!-- content ---------------------------------------------------------------------------------------------->
-    	<div id="contents">
-      		<div id="content_head">
-        		<h1 class="title"><img src="/resources/images/admin/login/logo.png" alt="Qlearning logo" />System administrator</h1>
-      		</div>
-      		<div class="login_bg">
-	  			<h3 class="title"><img src="/resources/images/admin/login/txt_login.png" alt="login" /></h3>
-	  			<p class="tit_cmt">큐러닝 관리자 시스템에 오신것을 환영합니다.</p>
-	  			<!-- login  -->
-	  			<div class="login_form">
-	  				<fieldset>
-	  					<legend>로그인 폼</legend>
-	  					<label for="user_id" class="input_log_id">아이디</label>
-	  					<input type="text" id="userId" name="userId" class="input_log id" />
-	  					<label for="user_pw" class="input_log_pw">비밀번호</label>
-	  					<input type="password" id="password" name="password" class="input_log pw" />
-	  					<label for="user_auth" class="input_log_auth">인증</label>
-	  					<select id="auth" name="auth" class="input_log auth">
-	    		          	<option value="">권한 선택</option>
-	    					<option value="ADMIN" selected="">Admin</option>
-	    					<option value="CONTENTS_MANAGER">컨텐츠 관리자</option>
-	    					<option value="SITE_MANAGER">사이트 관리자</option>
-	    					<option value="TEACHER">Teacher</option>
-	    					<option value="TUTOR">Tutor</option>
-	            		</select>
-	  					<input type="image" src="/resources/images/admin/login/btn_login.png" alt="로그인" class="btn_login" onclick="login()"/>
-	  				</fieldset>
-	  			</div>
-			</div>
-			<!-- end content body -->
-	    </div>
-    	<!-- end content ---------------------------------------------------------------------------------------------->
-  	</div>
-  	<!-- end container -->
-</div>
+<frameset rows='*'>
+    <div class='wrap_login'>
+        <span><img src='/resources/homepage/img/logo.png' alt=''></span>
+        <div class='login_box clear_fix'>
+            <h1>Login</h1>
+            <p>큐러닝 관리자 시스템에 오신 것을 환영합니다</p>
+            <div class='login_form_box'>
+                <p>아이디</p>
+                <input type='text' name='userId' id='userId'>
+                <p>비밀번호</p>
+                <input type='password' name='password' id='password'>
+                <p>인증</p>
+				<select id="auth" name="auth" class="input_log auth">
+   		          	<option value="">권한 선택</option>
+   					<option value="ADMIN" selected="">Admin</option>
+   					<option value="CONTENTS_MANAGER">컨텐츠 관리자</option>
+   					<option value="SITE_MANAGER">사이트 관리자</option>
+   					<option value="TEACHER">Teacher</option>
+   					<option value="TUTOR">Tutor</option>
+           		</select>
+            </div>
+            <button onclick = 'lfn_cms_login()'>로그인</button>
+        </div>
+    </div>
+</frameset>
 
-		
 </form>
 <iframe name="tranFrame" style="display:none;"></iframe>
 
@@ -147,8 +113,7 @@ function lfn_login(userId) {
 		<a href="#" onclick="javascript:lfn_login('TEACHER5'); return false;">TEACHER5</a><br>
 		<a href="#" onclick="javascript:lfn_login('c1user001'); return false;">c1user001</a>
 		<a href="#" onclick="javascript:lfn_login('c5user001'); return false;">c5user001</a>
-
-
-
+		
+<script src='/resources/homepage/js/sub.js'></script>
 </body>
 </html>

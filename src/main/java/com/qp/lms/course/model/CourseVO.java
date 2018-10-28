@@ -35,6 +35,7 @@ public class CourseVO extends CommonVO {
 	private String categoryName;
 	
 	private String c1Code;			/** 대분류 코드 */
+	private String c1CodeName;		/** 대분류 코드 */
 	private String c2Code;			/** 중분류 코드 */
 	private String c3Code;			/** 소분류 코드 */
 	
@@ -1340,6 +1341,14 @@ public class CourseVO extends CommonVO {
 
 	public void setApprovalCnt(String approvalCnt) {
 		this.approvalCnt = approvalCnt;
+	}
+
+	public String getC1CodeName() {
+		return c1CodeName;
+	}
+
+	public void setC1CodeName(String c1CodeName) {
+		this.c1CodeName = c1CodeName;
 	}
 
 

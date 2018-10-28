@@ -139,6 +139,9 @@ public class MainService {
 		int totalCnt = sqlSession.selectOne("main.courseListTotal", set.getCondiVO());
 		set.setTotalCount(totalCnt);
 
+    	List<CourseVO> categoryMainCourseList = sqlSession.selectList("main.categoryMainCourseList", set.getCondiVO());
+		set.setCategoryMainCourseList(categoryMainCourseList);
+
     	return set;
     }
 	

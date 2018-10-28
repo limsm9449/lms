@@ -150,119 +150,55 @@ function lfn_btn(pKind, pParam) {
 	                        <p>교육과정</p>
 	                    </div>
 	                </div>
+<c:if test="${!empty set.categoryMainCourseList}">	                
 	                <h1>
 	                    전체<span>과정</span>
 	                </h1>
+</c:if>	                
 	            </div>
+<c:if test="${!empty set.categoryMainCourseList}">	                
 	            <ul class='process_list_wrap clear_fix'>
-	                <li>
-	                    <p class='process_category'>리더십 일반</p>
-	                    <a href=''><img src='/resources/homepage/img/process/process_1.jpg' alt=' '></a>
+	<c:forEach var="row" items="${set.categoryMainCourseList}" varStatus="idx">
+	                <li <c:if test="${idx.last}">class='last_right'</c:if>>
+	                    <p class='process_category'>${row.c1CodeName}</p>
+	                    <a href=''><img src='/cImage/contents/${row.courseCode}/mImg1.jpg' alt=' '></a>
 	                    <div class='process_text_box'>
 	                        <div class='process_info_box'>
 	                            <div>
 	                                <p>일반</p>
+		<c:if test="${row.mobileYn eq 'Y'}">       	                                
 	                                <p>모바일</p>
+		</c:if>	                                
 	                            </div>
 	                            <p class='process_title'>
-	                                [스마트러닝] 김정구 교수의 미래창조경영 위기와 역경을 기회로
+	                                ${row.courseName}
 	                            </p>
 	                        </div>
 	                        <div class='process_btn_area clear_fix'>
-	                            <button>맛보기</button>
-	                            <button>장바구니</button>
-	                            <button class='admission'>수강신청</button>
+	                            <button onclick="javascript:Popup.showSampleCourse('${row.courseId}','${row.hPx + 100}','${row.vPx + 100}'); return false;">맛보기</button>
+	                            <button onclick="javascript:lfn_btn('cart',{courseId:'${row.courseId}',cnt:'${row.cnt}'}); return false;">장바구니</button>
+	                            <button onclick="javascript:lfn_btn('view',{courseId:'${row.courseId}'}); return false;" class='admission'>수강신청</button>
 	                        </div>
 	                        <div class='process_score_box clear_fix'>
-	                            <div class='process_score_image clear_fix'>
-	                                <span><img src='/resources/homepage/img/process/star_active.png' alt=' '></span>
-	                                <span><img src='/resources/homepage/img/process/star_active.png' alt=' '></span>
-	                                <span><img src='/resources/homepage/img/process/star_active.png' alt=' '></span>
-	                                <span><img src='/resources/homepage/img/process/star_active.png' alt=' '></span>
-	                                <span><img src='/resources/homepage/img/process/star_inactive.png' alt=' '></span>
+	                            <div class='process_score_image clear_fix' onclick="Popup.showPostscriptList('${row.courseId}')">
+	                                <span><img src='/resources/homepage/img/process/${row.grade1}.png' alt=''></span>
+	                                <span><img src='/resources/homepage/img/process/${row.grade2}.png' alt=''></span>
+	                                <span><img src='/resources/homepage/img/process/${row.grade3}.png' alt=''></span>
+	                                <span><img src='/resources/homepage/img/process/${row.grade4}.png' alt=''></span>
+	                                <span><img src='/resources/homepage/img/process/${row.grade5}.png' alt=''></span>
 	                            </div>
 	                            <p class='process_score_text'>
-	                                평점 : <span id='process_score_num'>4.5</span> / 후기 : <span id='process_review_num'>2</span>건
+	                                평점 : <span id='process_score_num'>${row.grade}</span> / 후기 : <span id='process_review_num'>${row.gradeCnt}</span>건
 	                            </p>
 	                        </div>
 	                        <div class='process_payment_box clear_fix'>
 	                            <p>교육비</p>
-	                            <p class='process_payment'>50,000원</p>
+	                            <p class='process_payment'><fmt:formatNumber value="${row.courseCost}" type="number"/> 원</p>
 	                        </div>
 	                    </div>
 	                </li>
-	                <li>
-	                    <p class='process_category'>재테크</p>
-	                    <a href=''><img src='/resources/homepage/img/process/process_2.jpg' alt=' '></a>
-	                    <div class='process_text_box'>
-	                        <div class='process_info_box'>
-	                            <div>
-	                                <p>일반</p>
-	                                <p>모바일</p>
-	                            </div>
-	                            <p class='process_title'>
-	                                [스마트러닝] 김정구 교수의 미래창조경영 위기와 역경을 기회로
-	                            </p>
-	                        </div>
-	                        <div class='process_btn_area clear_fix'>
-	                            <button>맛보기</button>
-	                            <button>장바구니</button>
-	                            <button class='admission'>수강신청</button>
-	                        </div>
-	                        <div class='process_score_box clear_fix'>
-	                            <div class='process_score_image clear_fix'>
-	                                <span><img src='/resources/homepage/img/process/star_active.png' alt=' '></span>
-	                                <span><img src='/resources/homepage/img/process/star_active.png' alt=' '></span>
-	                                <span><img src='/resources/homepage/img/process/star_active.png' alt=' '></span>
-	                                <span><img src='/resources/homepage/img/process/star_active.png' alt=' '></span>
-	                                <span><img src='/resources/homepage/img/process/star_inactive.png' alt=' '></span>
-	                            </div>
-	                            <p class='process_score_text'>
-	                                평점 : <span id='process_score_num'>4.5</span> / 후기 : <span id='process_review_num'>2</span>건
-	                            </p>
-	                        </div>
-	                        <div class='process_payment_box clear_fix'>
-	                            <p>교육비</p>
-	                            <p class='process_payment'>50,000원</p>
-	                        </div>
-	                    </div>
-	                </li>
-	                <li class='last_right'>
-	                    <p class='process_category'>자기개발</p>
-	                    <a href=''><img src='/resources/homepage/img/process/process_3.jpg' alt=' '></a>
-	                    <div class='process_text_box'>
-	                        <div class='process_info_box'>
-	                            <div>
-	                                <p>일반</p>
-	                                <p>모바일</p>
-	                            </div>
-	                            <p class='process_title'>
-	                                [스마트러닝] 김정구 교수의 미래창조경영 위기와 역경을 기회로
-	                            </p>
-	                        </div>
-	                        <div class='process_btn_area clear_fix'>
-	                            <button>맛보기</button>
-	                            <button>장바구니</button>
-	                            <button class='admission'>수강신청</button>
-	                        </div>
-	                        <div class='process_score_box clear_fix'>
-	                            <div class='process_score_image clear_fix'>
-	                                <span><img src='/resources/homepage/img/process/star_active.png' alt=' '></span>
-	                                <span><img src='/resources/homepage/img/process/star_active.png' alt=' '></span>
-	                                <span><img src='/resources/homepage/img/process/star_active.png' alt=' '></span>
-	                                <span><img src='/resources/homepage/img/process/star_active.png' alt=' '></span>
-	                                <span><img src='/resources/homepage/img/process/star_inactive.png' alt=' '></span>
-	                            </div>
-	                            <p class='process_score_text clear_fix'>
-	                                평점 : <span id='process_score_num'>4.5</span> / 후기 : <span id='process_review_num'>2</span>건
-	                            </p>
-	                        </div>
-	                        <div class='process_payment_box clear_fix'>
-	                            <p>교육비</p>
-	                            <p class='process_payment'>50,000원</p>
-	                        </div>
-	                    </div>
-	                </li>
+	</c:forEach>
+</c:if>	
 	            </ul>
 	            <!-- Process END -->
 
@@ -368,7 +304,9 @@ function lfn_btn(pKind, pParam) {
 	                            <div class='process_result_text'>
 	                                <div class='process_result_text_top clear_fix'>
 	                                    <p>일반</p>
+	<c:if test="${row.mobileYn eq 'Y'}">     	                                    
 	                                    <p class='process_result_mobile'>모바일</p>
+	</c:if>	                                    
 	                                </div>
 	                                <p>${row.courseName}</p>
 	                                <div class='process_result_text_bottom clear_fix'>

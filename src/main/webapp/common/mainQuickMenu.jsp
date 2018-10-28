@@ -21,7 +21,7 @@
                         </a>
                     </li>
                     <li class='quick_menu_list'>
-                        <a href="javascript:" onclick="page.goPage('/user/faqList');">
+                        <a href="javascript:" onclick="f_submitSelf('/main/faqList')">
                             <span></span>
                             <img src='/resources/homepage/img/quick_menu3.png' alt=' '>
                             FAQ

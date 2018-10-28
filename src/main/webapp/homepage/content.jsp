@@ -355,7 +355,7 @@
         
     </div>
 </form>    
-    <script src='/resources/homepage/js/main.js?timestamp=<%=timestamp%>'></script>
+    <script src='/resources/homepage/js/dev.js?timestamp=<%=timestamp%>'></script>
 </body>
 
 </html>

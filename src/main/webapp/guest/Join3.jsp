@@ -295,9 +295,6 @@ function lfn_validate() {
     
     <!-- Local -->
     <script src='/resources/homepage/js/sub.js'></script>
-
-    <!-- Server -->
-    <!-- <script src='/resources/homepage/js/dev_sub.js'></script> -->
 </frameset>
 </body>
 
