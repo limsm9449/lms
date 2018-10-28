@@ -183,6 +183,8 @@ public class MainService {
     	List<BoardFaqVO> boardFaqlist = sqlSession.selectList("boardFaq.boardFaqCategory5List", null);
     	set.setBoardFaqList(boardFaqlist);
 
+    	set.getCondiVO().setCnt(4);
+    	
 		//공지사항
     	List<BoardVO> noticeList = sqlSession.selectList("main.noticeList", set.getCondiVO());
 		set.setNoticeList(noticeList);
