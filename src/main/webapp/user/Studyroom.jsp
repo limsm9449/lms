@@ -21,7 +21,7 @@
     <link rel='stylesheet' href='/resources/homepage/css/initialization.css'>
     <link rel='stylesheet' href='/resources/homepage/css/classroom/study.css'>
     
-    <script src='/resources/homepage/js/sub.js?timestamp=<%=timestamp%>'></script>
+    <script src='/resources/homepage/js/dev_sub.js?timestamp=<%=timestamp%>'></script>
 </head>
 
 <script type="text/javascript">

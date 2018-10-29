@@ -257,7 +257,8 @@
     text-align: center;
     padding:50px 0;
 }
-.detail_btn_area a{
+.detail_btn_area a,
+.detail_btn_area button{
     display:inline-block;
     width: 20%;
     min-width: 170px;
@@ -370,6 +371,9 @@
     /* BUTTON */
     .detail_btn_area{
         padding:20px 0 0;
+    }
+    .contents_wrap_box.page .detail_btn_area{
+        padding:20px 0;
     }
     .detail_btn_area a{
         width:40%;

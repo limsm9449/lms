@@ -65,7 +65,7 @@
 
                 <table class='classroom_lecture completed'>
                     <tr>
-                        <th class='col_1'>강의제목</th>
+                        <th class='col_1'>과정명</th>
                         <th class='col_2'>학습기간</th>
                         <th class='col_3'>진도</th>
                         <th class='col_4'>총점수</th>
@@ -139,6 +139,6 @@
         <!-- FOOTER END -->
     </div>
 </frameset>
-<script src='/resources/homepage/js/sub.js?timestamp=<%=timestamp%>'></script>
+<script src='/resources/homepage/js/dev_sub.js?timestamp=<%=timestamp%>'></script>
 </body>
 </html>

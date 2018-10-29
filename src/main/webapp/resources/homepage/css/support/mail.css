@@ -478,7 +478,7 @@ header{
     clear:both;
     display:flex;
 }
-.form_box div{
+.form_box > div{
     float: left;
     width: 85%;
 }
@@ -515,9 +515,10 @@ header{
     width:95%;
     min-height:300px;
     padding: 8px 1%;
-    margin: 10px 1.5%;
-    border:solid 1px #ddd;
+    margin:0;
+    border:0;
     resize:none;
+    box-sizing:border-box;
 }
 .form_box.half{
     float: left;

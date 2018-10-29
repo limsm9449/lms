@@ -136,6 +136,6 @@ function lfn_validate() {
 </frameset>
 
 </form>
-<script src='/resources/homepage/js/sub.js'></script>
+<script src='/resources/homepage/js/dev_sub.js?timestamp=<%=timestamp%>'></script>
 </body>
 </html>

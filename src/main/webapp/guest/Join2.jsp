@@ -213,7 +213,7 @@ function form_chk() {
 </form>
     
     <!-- Local -->
-    <script src='/resources/homepage/js/sub.js'></script>
+    <script src='/resources/homepage/js/dev_sub.js?timestamp=<%=timestamp%>'></script>
 </frameset>
 </body>
 

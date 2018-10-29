@@ -1,17 +1,47 @@
 <%@ page contentType="text/html;charset=utf-8"%>
-
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="ko" xml:lang="ko">
 <head>
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-<title>
-</title>
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1'>
+    <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+    <title>Q learning - 관리자 - 과정관리 - 과정코드관리</title>
 
-<%@ include file="../../common/commAxAdminInclude.jsp" %>
+	<%@ include file="../../common/commMainInclude.jsp" %>
+	
+	<link rel="stylesheet" type="text/css" href="/resources/ax5ui/dist/ax5mask.css"/>
+	<link rel="stylesheet" type="text/css" href="/resources/ax5ui/dist/ax5calendar.css"/>
+	<link rel="stylesheet" type="text/css" href="/resources/ax5ui/dist/ax5picker.css"/>
+	<link rel="stylesheet" type="text/css" href="/resources/ax5ui/dist/ax5select.css"/>
+	<link rel="stylesheet" type="text/css" href="/resources/ax5ui/dist/ax5grid.css"/>
+	<link rel="stylesheet" type="text/css" href="/resources/ax5ui/dist/ax5dialog.css"/>
+	<link rel="stylesheet" type="text/css" href="/resources/ax5ui/dist/ax5toast.css"/>
+	<link rel="stylesheet" type="text/css" href="/resources/ax5ui/dist/ax5combobox.css"/>
+	<link rel="stylesheet" type="text/css" href="/resources/ax5ui/dist/ax5layout.css"/>
+	<script src="/resources/ax5ui/dist/ax5core.js"></script>
+	<script src="/resources/ax5ui/dist/ax5mask.js"></script>
+	<script src="/resources/ax5ui/dist/ax5formatter.min.js"></script>
+	<script src="/resources/ax5ui/dist/ax5calendar.min.js"></script>
+	<script src="/resources/ax5ui/dist/ax5picker.min.js"></script>
+	<script src="/resources/ax5ui/dist/ax5select.js"></script>
+	<script src="/resources/ax5ui/dist/ax5grid.js"></script>
+	<script src="/resources/ax5ui/dist/ax5dialog.js"></script>
+	<script src="/resources/ax5ui/dist/ax5toast.js"></script>
+	<script src="/resources/ax5ui/dist/ax5combobox.js"></script>
+	<script src="/resources/ax5ui/dist/ax5layout.js"></script>
 
+
+    <link href='https://fonts.googleapis.com/css?family=Nanum+Gothic' rel='stylesheet'>
+    <link rel='stylesheet' href='/resources/homepage/css/initialization.css'>
+    <link rel='stylesheet' href='/resources/homepage/css/etc/admin.css'>
+    
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="/resources/multiselect/js/bootstrap-multiselect.js"></script>
+    
 </head>
 
 <script type="text/javascript">
@@ -26,7 +56,9 @@ var dd;
 
 $(document.body).ready(function () {
 	$( window ).resize( function() {
-		gfn_gridResize("grid-parent", grid);
+		//gfn_gridResize("grid-parent", grid);
+		$("#" + "grid-parent").height($(window).height() - $("#" + "grid-parent").position().top - 20);
+		grid.setHeight($(window).height() - $("#" + "grid-parent").position().top - 20);
 	} );
 	
     confirmDialog.setConfig({
@@ -402,57 +434,57 @@ function fn_cbChange(id) {
 
 </script>
 
-<body style="padding : 10px">
-
-
-<h2>과정 코드 관리</h2>
-<div style="height:10px"></div>
+<body style='background:#fff'>
 
 <form id="frm" name="frm" method="post" class="form-inline">
-  	<div class="form-group">
-    	<label for="CB_LEVEL1">카테고리</label>
-		<select class="form-control" id="CB_LEVEL1" onchange="fn_cbChange('CB_LEVEL1')">
-			<option value="">전체</option>
-		</select>
-		<select class="form-control" id="CB_LEVEL2" onchange="fn_cbChange('CB_LEVEL2')">
-			<option value="">전체</option>
-		</select>
-		<select class="form-control" id="CB_LEVEL3">
-			<option value="">전체</option>
-		</select>
-  	</div>
-  	<div class="form-group">
-    	<label for="courseName">&nbsp;과정명</label>
-    	<input type="text" class="form-control" id="courseName" name="courseName">
-  	</div>
-  	<div class="form-group">
-    	<label for="useYn">&nbsp;사용여부</label>
-    	<select class="form-control" id="useYn">
-			<option value="">전체</option>
-			<option value="Y">Y</option>
-			<option value="N">N</option>
-		</select>
-  	</div>
-</form>
-<div style="height:10px"></div>
 
-<div>
-    <button class="btn btn-default" data-grid-control="search">검색</button>
-    <button class="btn btn-default" data-grid-control="add">추가</button>
-    <button class="btn btn-default" data-grid-control="delete">삭제</button>
-    <button class="btn btn-default" data-grid-control="reset">초기화</button>
-    <button class="btn btn-default" data-grid-control="save">저장</button>
-    <button class="btn btn-default" data-grid-control="export">엑셀</button>
-    <button class="btn btn-default" data-grid-control="editDetail">주차 편집</button>
-</div>
-<div style="height:10px"></div>
-
-
-<div style="position: relative;height:400px;" id="grid-parent">
-    <div data-ax5grid="first-grid" style="height: 100%;"></div>
-</div>
-
-
+<frameset rows='*'>
+    <div class='wrap clear_fix'>
+        <div class='contents_wrap'>
+            <div class='content_top'>
+                <h1>과정 코드 관리</h1>
+                <div class='filter_box clear_fix'>
+                    <div>
+                        <p>카테고리</p>
+                        <select name='CB_LEVEL1' id="CB_LEVEL1" onchange="fn_cbChange('CB_LEVEL1')">
+                            <option value=''>전체</option>
+                        </select>
+                        <select name='CB_LEVEL2' id="CB_LEVEL2" onchange="fn_cbChange('CB_LEVEL2')">
+                            <option value=''>전체</option>
+                        </select>
+                        <select name='CB_LEVEL3' id="CB_LEVEL3">
+                            <option value=''>전체</option>
+                        </select>
+                    </div>
+                    <div>
+                        <p>과정명</p>
+                        <input type='text' name='courseName' id='courseName'>
+                    </div>
+                    <div>
+                        <p>사용여부</p>
+                        <select name='useYn' id="useYn">
+                            <option value=''>전체</option>
+							<option value="Y">Y</option>
+							<option value="N">N</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class='content_btn_box clear_fix'>
+			    <button class="btn btn-default" data-grid-control="search">검색</button>
+			    <button class="btn btn-default" data-grid-control="add">추가</button>
+			    <button class="btn btn-default" data-grid-control="delete">삭제</button>
+			    <button class="btn btn-default" data-grid-control="reset">초기화</button>
+			    <button class="btn btn-default" data-grid-control="save">저장</button>
+			    <button class="btn btn-default" data-grid-control="export">엑셀</button>
+			    <button class="btn btn-default" data-grid-control="editDetail">주차 편집</button>                
+            </div>
+            <div class='grid_area' style="overflow-x: hidden;" id="grid-parent">
+			    <div data-ax5grid="first-grid" ></div>
+			</div>
+        </div>
+    </div>
+    
 <div class="mask"></div>
 <div class="popupDiv" id="categoryDiv" style="width:300px; height:200px;">
 	대분류
@@ -470,9 +502,12 @@ function fn_cbChange(id) {
 	<div style="height:30px"></div>
 	<input type="button" href="#" value="확인" onclick="fn_hidePopupDiv('categoryDiv')"/>
     <input type="button" href="#" value="닫기" onclick="gfn_hidePopupDiv('categoryDiv');"/>
-</div>
-	
+</div>    
+</frameset>
 
+</form>
+
+<script src='/resources/homepage/js/dev_sub.js'></script>
 </body>
 </html>
 

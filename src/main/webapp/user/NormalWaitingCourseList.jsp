@@ -99,9 +99,9 @@ function lfn_btn(pKind, pParam) {
                     <p>현재 수강대기과정입니다. 학습이 시작되면 수강과정으로 이동합니다.</p>
                 </div>
 
-                <table class='classroom_lecture standby'>
+                <table class='classroom_lecture lectures'>
                     <tr>
-                        <th class='col_1'>강의제목</th>
+                        <th class='col_1'>과정명</th>
                         <th class='col_2'>학습기간</th>
                         <th class='col_3'>신청일자</th>
                         <th class='col_4'>승인여부</th>
@@ -139,6 +139,6 @@ function lfn_btn(pKind, pParam) {
 
 </form>
 
-<script src='/resources/homepage/js/sub.js?timestamp=<%=timestamp%>'></script>
+<script src='/resources/homepage/js/dev_sub.js?timestamp=<%=timestamp%>'></script>
 </body>
 </html>

@@ -116,7 +116,7 @@ function lfn_btn(pKind, pParam) {
                         </div>
                         <div class='btn_box'>
 <c:if test="${set.condiVO.isEdit eq 'Y' && session.userId eq set.data.userId}">
-                            <button onclick="lfn_btn('update');">삭제</button>
+                            <button onclick="lfn_btn('delete');">삭제</button>
                             <button onclick="lfn_btn('update');">수정</button>
 </c:if>                            
 <c:if test="${set.condiVO.isEdit eq 'Y' && session.userId ne set.data.userId}">
@@ -131,7 +131,7 @@ function lfn_btn(pKind, pParam) {
                         </div>
                         <div class='notice_regDate'>
                             <p class='type'>등록일</p>
-                            <p>${set.data.updateDate}</p>
+                            <p>${set.data.createDate}</p>
                         </div>
                     </div>
                     <div class='iframe_contents'>
@@ -175,6 +175,5 @@ function lfn_btn(pKind, pParam) {
 </frameset>
 
 </form>
-<script src='/resources/homepage/js/sub.js'></script>
 </body>
 </html>

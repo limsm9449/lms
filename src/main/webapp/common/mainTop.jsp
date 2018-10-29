@@ -137,7 +137,7 @@
                     </div>
                 </div>
                 <div class='head_con logo_box'>
-                    <a href='#'>
+                    <a href="javascript:" onclick="page.goHome();">
                         <img src='/resources/homepage/img/logo.png' alt=' '>
                     </a>
                 </div>

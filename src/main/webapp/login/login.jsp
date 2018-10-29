@@ -146,7 +146,7 @@ function lfn_page() {
 </form>
     
     <!-- Local -->
-    <script src='/resources/homepage/js/sub.js?timestamp=<%=timestamp%>'></script>
+    <script src='/resources/homepage/js/dev_sub.js?timestamp=<%=timestamp%>'></script>
     
 </frameset>
 

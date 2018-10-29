@@ -82,7 +82,7 @@ function lfn_btn(pKind, pParam) {
                 </div>
                 <!-- TOP END -->
 
-                <div class='notice_detail_box'>
+                <div class='notice_detail_box question'>
                     <div class='notice_title_box'>
                         <p><c:out value="${set.data.title}" escapeXml="true" /></p>
                     </div>
@@ -91,6 +91,14 @@ function lfn_btn(pKind, pParam) {
                             <p class='type'>작성자</p>
                             <p>${set.data.userName}</p>
                         </div>
+                        <div class='btn_box'>
+<c:if test="${set.condiVO.isEdit eq 'Y' && session.userId eq set.data.userId}">
+                            <button onclick="lfn_btn('delete');">삭제</button>
+                            <button onclick="lfn_btn('update');">수정</button>
+</c:if>                            
+                        </div>
+					</div>                                                
+                    <div class='notice_info_box clear_fix'>
                         <div class='notice_visit'>
                             <p class='type'>조회</p>
                             <p>${set.data.viewCnt}</p>
@@ -106,10 +114,6 @@ function lfn_btn(pKind, pParam) {
                     <iframe id="attachFrame" name="attachFrame" style="width:100%;height:100px"></iframe>
                 </div>
                 <div class='detail_btn_area'>
-<c:if test="${set.condiVO.isEdit eq 'Y' && session.userId eq set.data.userId}">
-                    <button onclick="lfn_btn('update');" class='bg_color'>수정</button>
-                    <button id="deleteBtn" onclick="lfn_btn('delete');">삭제</button>
-</c:if>                    
                     <button onclick="page.goPage('/board/userBoardDataList', decodeURIComponent('${set.condiVO.prevParams}'));">목록으로</button>
                 </div>
 
@@ -120,6 +124,6 @@ function lfn_btn(pKind, pParam) {
 </frameset>
 
 </form>
-<script src='/resources/homepage/js/sub.js'></script>
+<script src='/resources/homepage/js/dev_sub.js?timestamp=<%=timestamp%>'></script>
 </body>
 </html>

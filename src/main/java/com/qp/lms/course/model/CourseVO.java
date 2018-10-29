@@ -187,6 +187,7 @@ public class CourseVO extends CommonVO {
     private String studyPeriodFrom;
     private String studyPeriodTo;
     private String approvalCnt;
+    private String directory;
 
     
 	public String getPeriodProgress() {
@@ -1349,6 +1350,14 @@ public class CourseVO extends CommonVO {
 
 	public void setC1CodeName(String c1CodeName) {
 		this.c1CodeName = c1CodeName;
+	}
+
+	public String getDirectory() {
+		return directory;
+	}
+
+	public void setDirectory(String directory) {
+		this.directory = directory;
 	}
 
 

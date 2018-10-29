@@ -57,12 +57,12 @@ var Popup = {
 	showPopup : function(pUrl,pWidth,pHeight,pName,pOpt) {
 		var url = pUrl;
 		var left = window.screen.availWidth / 2 - pWidth / 2;
-		var top = window.screen.availHeight / 2 - pHeight / 2;
+		var top = window.screen.availHeight / 2 - 40 - pHeight / 2;
 		var opts = 'top=' + top + 
 				     ',left=' + left +
 				     ',width=' + pWidth + 
 				     ',height=' + pHeight +
-				     ',' + (pOpt == null || pOpt == undefined ? 'scrollbars=no,resizable=no,status=no,toolbar=no,menubar=no' : pOpt); 
+				     ',' + (pOpt == null || pOpt == undefined ? 'scrollbars=no,resizable=yes,status=no,toolbar=no,menubar=no' : pOpt); 
 		var popupName = (pName == null || pName == undefined ? "gWinPopup" : pName); 
 
 		gWinPopup[popupName] = window.open(url,popupName,opts);
@@ -226,7 +226,12 @@ var Popup = {
 	 * @param pHeight
 	 */
 	showSampleCourse : function(pCourseId,pWidth,pHeight) {
-		Popup.showPopup(context + "/guest/eduSampleHome.do?courseId=" + pCourseId + "&isPopup=Y",pWidth,pHeight);
+		//Popup.showPopup(context + "/guest/eduSampleHome.do?courseId=" + pCourseId + "&isPopup=Y",pWidth,pHeight);
+		if ( gfn_deviceCheck() == "PC" ) {
+			Popup.showPopup(context + "/guest/eduSampleHome.do?courseId=" + pCourseId + "&isPopup=Y",screen.availWidth - 50,screen.availHeight - 90);
+		} else {
+			Popup.showPopup(context + "/guest/eduSampleHome.do?courseId=" + pCourseId + "&isPopup=Y",400,400);
+		}
 	},
 
 	/**

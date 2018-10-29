@@ -118,12 +118,12 @@ function sub_menu_open(btn, page) {
 
     switch (page) {
         case 'main':
-            url_up = 'url("/resources/homepage/img/menu_arr_up.png") #fff 90% 50% no-repeat';
-            url_down = 'url("/resources/homepage/img/menu_arr_down.png") #fff 90% 50% no-repeat';
+            url_up = 'url("./img/menu_arr_up.png") #fff 90% 50% no-repeat';
+            url_down = 'url("./img/menu_arr_down.png") #fff 90% 50% no-repeat';
             break;
         case 'others':
-            url_up = 'url("/resources/homepage/img/menu_arr_up.png") #fff 90% 50% no-repeat';
-            url_down = 'url("/resources/homepage/img/menu_arr_down.png") #fff 90% 50% no-repeat';
+            url_up = 'url("../../img/menu_arr_up.png") #fff 90% 50% no-repeat';
+            url_down = 'url("../../img/menu_arr_down.png") #fff 90% 50% no-repeat';
             break;
     }
 
@@ -231,3 +231,21 @@ function list_tab(target, tochange) {
         }
     }
 }
+
+
+
+// PC / MOBILE CHECK
+function device_check() {
+    var size = {
+        width: window.innerWidth || document.body.clientWidth,
+        height: window.innerHeight || document.body.clientHeight
+    }
+    if (size){
+        if((size.width <= 420) || ((size.height <= 420) && (size.width > size.height))) {
+            window.alert('device - mobile');
+        }else{
+            window.alert('device - pc');
+        }
+    }
+}
+// device_check();

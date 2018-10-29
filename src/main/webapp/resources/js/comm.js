@@ -1111,3 +1111,19 @@ function gfn_goPrevPage() {
 	alert(document.referrer);
 	window.location = document.referrer;
 }
+
+function gfn_deviceCheck() {
+	var size = {
+			width: window.innerWidth || document.body.clientWidth,
+			height: window.innerHeight || document.body.clientHeight
+	}
+	if (size) {
+		if((size.width <= 420) || ((size.height <= 420) && (size.width > size.height))) {
+			//window.alert('device - mobile');
+			return "MOBILE";
+		} else {
+			//window.alert('device - pc');
+			return "PC";
+		}
+	}
+}

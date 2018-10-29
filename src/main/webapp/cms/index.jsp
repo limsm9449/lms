@@ -114,6 +114,6 @@ function lfn_login(userId) {
 		<a href="#" onclick="javascript:lfn_login('c1user001'); return false;">c1user001</a>
 		<a href="#" onclick="javascript:lfn_login('c5user001'); return false;">c5user001</a>
 		
-<script src='/resources/homepage/js/sub.js'></script>
+<script src='/resources/homepage/js/dev_sub.js?timestamp=<%=timestamp%>'></script>
 </body>
 </html>

@@ -503,7 +503,6 @@ header{
     height: 2px;
     background: #555;
 }
-.user_info_info_box li span{}
 .user_info_btn_box{
     float:left;
     padding-top:4px;
@@ -720,7 +719,6 @@ header{
 .user_lecture_list{
     min-height:240px;
 }
-.user_lecture_list li{}
 .user_lecture_list p{
     float:left;
     width:8%;
@@ -728,7 +726,6 @@ header{
     text-align:center;
     padding:20px 0;
 }
-.user_lecture_list li button{}
 .past .list .last{
     color:#fff;
     padding:10px 0;

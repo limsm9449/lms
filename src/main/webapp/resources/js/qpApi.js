@@ -169,16 +169,28 @@ var QP_API = {
 	 * @param page
 	 */
 	openWeek : function(week) {
-		currentWeek = week;
-		currentPage = 1;
-		
-		document.frm.action = contents + directorys[currentWeek - 1] + QP_API.currPageHtml();
-		document.frm.target = "eduContent";
-		document.frm.method = "GET";	
-		document.frm.submit();
+		if ( mobileYn == "Y" && gfn_deviceCheck() == "MOBLIE" ) {
+			currentWeek = week;
+			
+			document.frm.action = contents + "mp4/" + ( currentWeek < 10 ? "0" : "" ) +  currentWeek + ".html";
+			document.frm.target = "eduContent";
+			document.frm.method = "GET";	
+			document.frm.submit();
 
-		//현재 페이지 시작 처리
-		QP_API.updPage();
+			//현재 페이지 시작 처리
+			QP_API.updPage();
+		} else {
+			currentWeek = week;
+			currentPage = 1;
+			
+			document.frm.action = contents + directorys[currentWeek - 1] + QP_API.currPageHtml();
+			document.frm.target = "eduContent";
+			document.frm.method = "GET";	
+			document.frm.submit();
+
+			//현재 페이지 시작 처리
+			QP_API.updPage();
+		}
 	},
 
 	/**

@@ -1,25 +1,29 @@
 <%@ page contentType="text/html;charset=utf-8"%>
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
-<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="ko" xml:lang="ko">
+<!DOCTYPE html>
+<html lang='ko'>
+
 <head>
-<title>
-</title>
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1'>
+    <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+    <title>Q learning - 나의강의실 - 수강과정</title>
 
-<%@ include file="../common/commUserInclude.jsp" %>
+    <%@ include file="../common/commMainInclude.jsp" %>
 
-
+    <link href='https://fonts.googleapis.com/css?family=Nanum+Gothic' rel='stylesheet'>
+    <link rel='stylesheet' href='/resources/homepage/css/initialization.css'>
+    <link rel='stylesheet' href='/resources/homepage/css/classroom/lecture.css'>
 </head>
 
 <script type="text/javascript">
 function lfn_btn(pKind, pParam) {
-	if ( pKind == "refresh" ) {
-		f_submitSelf("/normalUser/attendCourseList");	
-	} else if ( pKind == "view" ) {
+	if ( pKind == "view" ) {
 		$("#courseId").val(pParam.courseId);
 		
 		gfn_goPage("/user/studyroom",$("#frm").serialize());
@@ -31,125 +35,100 @@ function lfn_btn(pKind, pParam) {
 <body>
 
 <form name="frm" id="frm" method="post">
+	<input id="courseId" name="courseId" type="hidden" value="">
+	
+<frameset rows='*'>
+    <div class='wrap'>
+        <!-- PC HEADER -->
+        <%@ include file="../common/mainTop.jsp" %>
+        <!-- HEAD END -->
 
-<input id="courseId" name="courseId" type="hidden" value="">
+        <!-- CONTENTS -->
+        <div class='contents_wrap process' onmouseover='sub_hide()'>
+            <div class='contents_wrap_box'>
+                <!-- QUICK MENU -->
+                <%@ include file="../common/mainQuickMenu.jsp" %>
 
-<!-- skipnav -->
-<div id="skipnav"><a href="#side" class="skip">좌측메뉴 바로가기</a></div>
-<div id="skipnav"><a href="#contents" class="skip">컨텐츠 바로가기</a></div>
-<!-- skipnav -->
+                <!-- Top -->
+                <div class='top_area'>
+                    <div class='clear_fix'>
+                        <div class='process_history_box clear_fix'>
+                            <span>
+                                <img src='/resources/homepage/img/course/ic_home.jpg' alt=' '>
+                            </span>
+                            <p>HOME</p>
+                            <span>
+                                <img src='/resources/homepage/img/course/arr_right.jpg' alt=' '>
+                            </span>
+                            <p>수강신청</p>
+                            <span>
+                                <img src='/resources/homepage/img/course/arr_right.jpg' alt=' '>
+                            </span>
+                            <p>교육과정</p>
+                        </div>
+                    </div>
+                    <h1>
+                        나의<span>강의실</span>
+                    </h1>
+                </div>
+                <!-- Top END -->
 
-<!-- wrap -->
-<div id="wrap" class="site">
-  <%@ include file="../home/userTop.jsp" %>
-  <hr />
-  <!-- container -->
-  <div id="container" class="site">
-   	 	<!-- side -->
-   	 	<%
-   	 		String menuId = "attendCourseList";
-   	 	%>
-		<%@ include file="../home/userLeft.jsp" %>
-		<!-- end side -->
-		
-    	<!-- contents -->
-		<div id="contents" class="site">
-			<!-- location -->
-			<div id="location"><a href="/" class="home">HOME</a><span>&gt;</span>나의강의실<span>&gt;</span>수강과정</div>
-			<!-- title -->
-			<h3 class="tit_big">수강과정</h3>
-		      <div class="artcle">
-		        <div class="yourinfo_box">
-		          <div class="portrait"><img src="/resources/images/sub/img_base_photo.png" alt="your photo" /></div>
-		          <div class="your_info">
-		            <p class="big_2"><span class="blue">${set.data.userName}</span> 님 큐러닝 나의강의실 방문을 환영 합니다.</p>
-		            <dl>
-		              <dt>휴대폰 번호</dt><dd>${set.data.mobile}</dd>
-		              <dt>이메일</dt><dd>${set.data.email}</dd>
-		              <dt>상담현황</dt><dd>${set.data.counselCnt}개</dd>
-		            </dl>
-		          </div>
-		        </div>
-		        <div class="study_list_box">
-		          <p class="big_2"><span class="blue">나의 강의 리스트</span></p>
-		          <p>Start 버튼을 누르시면 학습을 하실 수 있습니다.</p>
-		          <table class="high_list">
-		            <caption>수강중인 강좌 목록</caption>
-		  					<thead>
-		  					  <tr class="guide">
-		    						<th></th>
-		    						<th width="100"></th>
-		    						<th width="98"></th>
-		    						<th width="86"></th>
-		    						<th width="84"></th>
-		    						<th width="60"></th>
-		    						<th width="84"></th>
-		    					</tr>
-		    					<tr class="t_list">
-		    						<th>강의제목</th>
-		    						<th>학습기간</th>
-		    						<th>남은 학습일</th>
-		    						<th>진도율</th>
-		    						<th>시험여부</th>
-		    						<th>점수</th>
-		    						<th>학습시작</th>
-		    					</tr>
-		  					</thead>
-		  					<tbody>
-		              <c:if test="${empty set.course}">
-							<tr class="last_line"><td colspan="7" class="last center">데이타가 없습니다.</td></tr>
-					  </c:if>					
- 					  <c:forEach var="row" items="${set.course}" varStatus="idx">
-			              <tr <c:if test="${idx.index + 1 eq fn:length(set.course)}"> class="last_line"</c:if>>
-<c:choose>
-	<c:when test="${row.startYn eq 'Y'}">
-			                <td class="title"><nobr><span><a href="javascript:" onclick="javascript:lfn_btn('view',{courseId:'${row.courseId}'});">${row.courseName}</a></span></nobr></td>
-	</c:when>
-	<c:otherwise>
-			                <td class="title"><nobr><span>${row.courseName}</span></nobr></td>
-	</c:otherwise>
-</c:choose>		            
-			                <td class="center">${row.cFromDate} ~ ${row.cToDate}</td>
-			                <td class="center">${row.remainDay}일</td>
-			                <td class="center">${row.progress} %</td>
-<c:choose>
-	<c:when test="${row.examRate ne '0' && row.progress eq '100' && row.examYn eq 'N'}">
-			            	<td class="center"><a href="#" onclick="javascript:Popup.showExam('${row.courseId}')" class="click">${row.examYn}</a></td>
-	</c:when>
-	<c:otherwise>
-	            			<td class="center">${row.examYn}</td>
-	</c:otherwise>
-</c:choose>		            
-			            	<td class="right">${row.total}</td>
-<c:choose>
-	<c:when test="${row.startYn eq 'Y'}">
-			                <td class="center last"><a href="#" onclick="javascript:Popup.showUserCourse('${row.courseId}','${row.hPx + 100}','${row.vPx + 100}'); lfn_btn('view',{courseId:'${row.courseId}'});"><img src="/resources/images/sub/btn_start.png" alt="학습시작" /></a></td>
-	</c:when>
-	<c:otherwise>
-			                <td class="center last">대기</td>
-	</c:otherwise>
-</c:choose>		            
-			              </tr>
-		              </c:forEach>
-		            </tbody>
-		          </table>
-		        </div>
-		      </div>
-			
-		</div>
-		<!-- end content -->
-		
-		
-	</div>
-  <!-- end container -->
-  <!-- footer_wrap -->
-	<%@ include file="../home/bottom.jsp" %>
-  <!-- end footer_wrap -->
-</div>
+                <div class='classroom_subtitle'>
+                    <p class='subtitle'>수강과정</p>
+                    <p>현재 수강과정입니다.</p>
+                </div>
+
+                <table class='classroom_lecture lectures'>
+                    <tr>
+                        <th class='col_1'>과정명</th>
+                        <th class='col_2'>진도율</th>
+                        <th class='col_3'>학습상태</th>
+                        <th class='col_4'>학습기간</th>
+                        <th class='col_5'>학습마감</th>
+                        <th class='col_6'>수강여부</th>
+                    </tr>
+<c:if test="${empty set.course}">
+					<tr class="last_line"><td colspan="6" class="center last">수강과정이 없습니다.</td></tr>
+</c:if>	                    
+<c:forEach var="row" items="${set.course}" varStatus="idx">
+                    <tr>
+                        <td class='col_1'><a href='./study.html' target='_blank' class='user_lecture_list_subject'>${row.courseName}</a></td>
+                        <td class='col_2'>${row.progress} %</td>
+	<c:if test="${row.isStudy eq 'Y'}">                            
+                        <td class='col_3'>학습중</td>
+	</c:if>                            
+	<c:if test="${row.isStudy eq 'N'}">                            
+                        <td class='col_3'>학습대기중</td>
+	</c:if>                            
+	<c:if test="${row.termYn eq 'Y'}">
+                        <td class='col_4'>${row.cFromDate} ~ ${row.cToDate}</td>
+	</c:if>	                    
+	<c:if test="${row.termYn eq 'N'}">
+                        <td class='col_4'>${row.cPeriod} 일</td>
+	</c:if>	                    
+                        <td class='col_5'>D-${row.remainDay}</td>
+	<c:if test="${row.isStudy eq 'Y'}">                            
+                        <td class='col_6'><button onclick="javascript:Popup.showUserCourse('${row.courseId}','${row.hPx + 100}','${row.vPx + 100}'); lfn_btn('view',{courseId:'${row.courseId}'});">학습시작</button></td>
+	</c:if>                            
+	<c:if test="${row.isStudy eq 'N'}">                            
+                        <td class='col_6'><button>학습대기중</button></td>
+	</c:if>                            
+                    </tr>
+</c:forEach>                    
+                </table>
+                
+            </div>
+        </div>
+        <!-- CONTENTS END -->
+
+        <!-- FOOTER -->
+        <%@ include file="../common/mainBottom.jsp" %>
+        <!-- FOOTER END -->
+    </div>
+</frameset>
 
 </form>
-
+<script src='/resources/homepage/js/dev_sub.js?timestamp=<%=timestamp%>'></script>
 
 </body>
 </html>
-

@@ -440,7 +440,6 @@ header{
     border-bottom: solid 1px #ccc;
     margin-bottom: 50px;
 }
-.classroom_lecture tr{}
 .classroom_lecture tr th{
     font-family: 'NanumSquare';
     font-size: 16px;
@@ -470,7 +469,8 @@ header{
 
 .classroom_lecture.standby tr .col_1,
 .classroom_lecture.completed tr .col_1,
-.classroom_lecture.review tr .col_2{
+.classroom_lecture.review tr .col_2,
+.classroom_lecture.lectures tr .col_1{
     width:40%;
     max-width:0;
     white-space:nowrap;
@@ -480,31 +480,15 @@ header{
     padding-right:1%;
 }
 
-/* TABLE STANDBY */
-.classroom_lecture.standby tr .col_1{}
-.classroom_lecture.standby tr .col_2{}
-.classroom_lecture.standby tr .col_3{}
-.classroom_lecture.standby tr .col_4{}
-.classroom_lecture.standby tr .col_5{}
-.classroom_lecture.standby tr .col_6{}
-
-/* TABLE COMPLETED */
-.classroom_lecture.completed tr .col_1{}
-.classroom_lecture.completed tr .col_2{}
-.classroom_lecture.completed tr .col_3{}
-.classroom_lecture.completed tr .col_4{}
-.classroom_lecture.completed tr .col_5{}
-.classroom_lecture.completed tr .col_6{}
-
 /* TABLE REVIEW */
+.contents_wrap_box.page{
+    width: 1122px;
+    max-width: inherit;
+    padding-top: 150px;
+}
 .classroom_lecture.review tr .col_1{
     width:8%;
 }
-.classroom_lecture.review tr .col_2{}
-.classroom_lecture.review tr .col_3{}
-.classroom_lecture.review tr .col_4{}
-.classroom_lecture.review tr .col_5{}
-.classroom_lecture.review tr .col_6{}
 
 
 /* FOOTER */
@@ -682,7 +666,8 @@ header{
 
 
     /* CONTENTS */
-    .contents_wrap_box {
+    .contents_wrap_box,
+    .contents_wrap_box.page{
         width:92%;
         min-height: 500px;
         padding-top:95px;
@@ -709,7 +694,8 @@ header{
     /* MY CLASSROOM TABLE COMMON */
     .classroom_lecture.standby tr .col_2, .classroom_lecture.standby tr .col_3, .classroom_lecture.standby tr .col_5,
     .classroom_lecture.completed tr .col_2, .classroom_lecture.completed tr .col_3, .classroom_lecture.completed tr .col_4, .classroom_lecture.completed tr .col_5,
-    .classroom_lecture.review tr .col_1, .classroom_lecture.review tr .col_3, .classroom_lecture.review tr .col_4{
+    .classroom_lecture.review tr .col_1, .classroom_lecture.review tr .col_3, .classroom_lecture.review tr .col_4,
+    .classroom_lecture.lectures tr .col_2, .classroom_lecture.lectures tr .col_3, .classroom_lecture.lectures tr .col_4, .classroom_lecture.lectures tr .col_5{
         display: none;
     }
     .classroom_lecture.standby tr .col_1, .classroom_lecture.completed tr .col_1{
@@ -725,6 +711,9 @@ header{
     
     .classroom_lecture.review tr .col_2{
         width:65%;
+    }
+    .classroom_lecture.lectures tr .col_1{
+        width:70%;
     }
 
 

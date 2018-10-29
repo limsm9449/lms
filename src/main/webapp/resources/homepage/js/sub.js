@@ -47,12 +47,12 @@ function sub_menu_open(btn, page) {
 
     switch (page) {
         case 'main':
-            url_up = 'url("/resources/homepage/img/menu_arr_up.png") #fff 90% 50% no-repeat';
-            url_down = 'url("/resources/homepage/img/menu_arr_down.png") #fff 90% 50% no-repeat';
+            url_up = 'url("./img/menu_arr_up.png") #fff 90% 50% no-repeat';
+            url_down = 'url("./img/menu_arr_down.png") #fff 90% 50% no-repeat';
             break;
         case 'others':
-            url_up = 'url("/resources/homepage/img/menu_arr_up.png") #fff 90% 50% no-repeat';
-            url_down = 'url("/resources/homepage/img/menu_arr_down.png") #fff 90% 50% no-repeat';
+            url_up = 'url("../../img/menu_arr_up.png") #fff 90% 50% no-repeat';
+            url_down = 'url("../../img/menu_arr_down.png") #fff 90% 50% no-repeat';
             break;
     }
 
@@ -182,7 +182,7 @@ function thumbnail(event, num) {
         }
     }
 
-    change_target.src = '/resources/homepage/img/course/register_' + num + '.jpg';
+    change_target.src = '../../img/course/register_' + num + '.jpg';
 }
 
 function register_select_handler() {
@@ -424,11 +424,11 @@ function answer(elem) {
     var arrow = box.querySelector('.faq_arrow > img');
 
     if (window.getComputedStyle(answer)['display'] === 'none') {
-        arrow.setAttribute('src', '/resources/homepage/img/support/arr_up.jpg');
+        arrow.setAttribute('src', '../../img/support/arr_up.jpg');
         answer.style.display = 'block';
         box.style.background = '#f7f7f7';
     } else {
-        arrow.setAttribute('src', '/resources/homepage/img/support/arr_down.jpg');
+        arrow.setAttribute('src', '../../img/support/arr_down.jpg');
         answer.style.display = 'none';
         box.style.background = '#fff';
     }
@@ -467,7 +467,8 @@ function admin_popup_open(type){
     var url = '';
     // var url = '../popup/admin_popup_type' + type + '.html';
     switch(type){
-        case '':
+        case '7':
+            url = '../popup/admin_popup_type7.html';
         break;
         default:
             url = '../popup/admin_popup_type1.html';
@@ -480,10 +481,6 @@ function admin_popup_open(type){
 function admin_popup_close(){
     window.open('about:blank', '_self').close();
 }
-
-
-
-
 
 
 
@@ -502,9 +499,27 @@ function review_score(num){
     for(var i = 0; i < elem.length; i++){
         var temp = elem[i];
         if(i < num){
-            temp.style.background = 'url("/resources/homepage/img/course/register_star_active.png") #fff 90% 50% no-repeat';
+            temp.style.background = 'url("../../img/course/register_star_active.png") #fff 90% 50% no-repeat';
         }else{
-            temp.style.background = 'url("/resources/homepage/img/course/register_star_inactive.png") #fff 90% 50% no-repeat';
+            temp.style.background = 'url("../../img/course/register_star_inactive.png") #fff 90% 50% no-repeat';
         }
     }
 }
+
+
+
+// PC / MOBILE CHECK
+function device_check() {
+    var size = {
+        width: window.innerWidth || document.body.clientWidth,
+        height: window.innerHeight || document.body.clientHeight
+    }
+    if (size){
+        if((size.width <= 420) || ((size.height <= 420) && (size.width > size.height))) {
+            window.alert('device - mobile');
+        }else{
+            window.alert('device - pc');
+        }
+    }
+}
+// device_check();

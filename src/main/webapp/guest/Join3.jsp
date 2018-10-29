@@ -294,7 +294,7 @@ function lfn_validate() {
 </form>
     
     <!-- Local -->
-    <script src='/resources/homepage/js/sub.js'></script>
+    <script src='/resources/homepage/js/dev_sub.js?timestamp=<%=timestamp%>'></script>
 </frameset>
 </body>
 

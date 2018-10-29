@@ -358,7 +358,7 @@ $(document).ready(function(){
         
     </div>
 </frameset>    
-    <script src='/resources/homepage/js/sub.js?timestamp=<%=timestamp%>'></script>
+    <script src='/resources/homepage/js/dev_sub.js?timestamp=<%=timestamp%>'></script>
 </body>
 
 </html>
