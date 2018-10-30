@@ -10,6 +10,7 @@ public class EducationVO extends CommonVO {
 	private String page;
 	private String courseCode;
 	private String jucha;
+	private String mobileYn;
 
 	
 
@@ -55,6 +56,14 @@ public class EducationVO extends CommonVO {
 
 	public void setJucha(String jucha) {
 		this.jucha = jucha;
+	}
+
+	public String getMobileYn() {
+		return mobileYn;
+	}
+
+	public void setMobileYn(String mobileYn) {
+		this.mobileYn = mobileYn;
 	}
 
 

@@ -52,7 +52,7 @@
 		       ,A.EXAM_RATE
 		       ,A.DISCUSSION_RATE
 		       ,A.PROGRESS_RATE
-		       ,(SELECT COUNT(*) FROM COURSE_REGISTER WHERE COURSE_ID = A.COURSE_ID AND USER_ID = #{userId} AND STATUS IN ('A','Y')) SUB_CNT
+		       ,(SELECT COUNT(*) FROM COURSE_REGISTER WHERE COURSE_ID = A.COURSE_ID AND USER_ID = #{userId} AND STATUS IN ('A','B')) SUB_CNT
 		       ,B.H_Px
 		       ,B.V_Px
 		       ,C.WEEK_COST_YN
@@ -113,9 +113,11 @@
 	       ,B.COURSE_NAME
 	       ,A.COURSE_COST
 	       ,A.COURSE_CODE
-	       ,DATE_FORMAT(CURDATE(),'%y.%m.%d') C_FROM_DATE
-	       ,DATE_FORMAT(DATE_ADD(CURDATE(),INTERVAL A.C_PERIOD DAY),'%y.%m.%d') C_TO_DATE
-	       ,A.C_PERIOD C_PERIOD
+		   ,CASE WHEN A.TERM_YN = 'Y' THEN A.STUDY_PERIOD_FROM ELSE DATE_FORMAT(CURDATE(),'%Y-%m-%d') END C_FROM_DATE
+		   ,CASE WHEN A.TERM_YN = 'Y' THEN A.STUDY_PERIOD_TO ELSE DATE_FORMAT(DATE_ADD(CURDATE(),INTERVAL A.C_PERIOD DAY),'%Y-%m-%d') END  C_TO_DATE
+	       ,CASE WHEN A.TERM_YN = 'Y' THEN DATEDIFF(A.STUDY_PERIOD_TO, A.STUDY_PERIOD_FROM) + 1 ELSE A.C_PERIOD END C_PERIOD
+           ,A.TERM_YN
+           ,A.MOBILE_YN
 	  FROM COURSE A LEFT OUTER JOIN COURSE_CODE B ON A.COURSE_CODE = B.COURSE_CODE
 		                LEFT OUTER JOIN (
 							   SELECT C3.CODE C3_CODE,
@@ -279,20 +281,20 @@
 		       	B.V_Px,
 			   	(SELECT COUNT(*) FROM COURSE_REGISTER WHERE COURSE_ID = A.COURSE_ID AND USER_ID = #{userId} AND STATUS = 'A') CNT,
                 IFNULL(ROUND(D.GRADE, 1), 0) GRADE,
-                CASE WHEN IFNULL(GRADE, 0) > 0 AND IFNULL(GRADE, 0) <![CDATA[<=]]> 0.5 THEN 'star_active5'
-					 WHEN IFNULL(GRADE, 0) > 0.5 AND IFNULL(GRADE, 0) <![CDATA[<=]]> 1 THEN 'star_active'
+                CASE WHEN IFNULL(D.GRADE, 0) > 0 AND IFNULL(D.GRADE, 0) <![CDATA[<=]]> 0.5 THEN 'star_active5'
+					 WHEN IFNULL(D.GRADE, 0) > 0.5 THEN 'star_active'
                      ELSE 'star_inactive' END GRADE1,
-                CASE WHEN IFNULL(GRADE, 0) > 1 AND IFNULL(GRADE, 0) <![CDATA[<=]]> 1.5 THEN 'star_active5'
-					 WHEN IFNULL(GRADE, 0) > 1.5 AND IFNULL(GRADE, 0) <![CDATA[<=]]> 2 THEN 'star_active'
+                CASE WHEN IFNULL(D.GRADE, 0) > 1 AND IFNULL(D.GRADE, 0) <![CDATA[<=]]> 1.5 THEN 'star_active5'
+					 WHEN IFNULL(D.GRADE, 0) > 1.5 THEN 'star_active'
                      ELSE 'star_inactive' END GRADE2,
-                CASE WHEN IFNULL(GRADE, 0) > 2 AND IFNULL(GRADE, 0) <![CDATA[<=]]> 2.5 THEN 'star_active5'
-					 WHEN IFNULL(GRADE, 0) > 2.5 AND IFNULL(GRADE, 0) <![CDATA[<=]]> 3 THEN 'star_active'
+                CASE WHEN IFNULL(D.GRADE, 0) > 2 AND IFNULL(D.GRADE, 0) <![CDATA[<=]]> 2.5 THEN 'star_active5'
+					 WHEN IFNULL(D.GRADE, 0) > 2.5 THEN 'star_active'
                      ELSE 'star_inactive' END GRADE3,
-                CASE WHEN IFNULL(GRADE, 0) > 3 AND IFNULL(GRADE, 0) <![CDATA[<=]]> 3.5 THEN 'star_active5'
-					 WHEN IFNULL(GRADE, 0) > 3.5 AND IFNULL(GRADE, 0) <![CDATA[<=]]> 4 THEN 'star_active'
+                CASE WHEN IFNULL(D.GRADE, 0) > 3 AND IFNULL(D.GRADE, 0) <![CDATA[<=]]> 3.5 THEN 'star_active5'
+					 WHEN IFNULL(D.GRADE, 0) > 3.5 THEN 'star_active'
                      ELSE 'star_inactive' END GRADE4,
-                CASE WHEN IFNULL(GRADE, 0) > 4 AND IFNULL(GRADE, 0) <![CDATA[<=]]> 4.5 THEN 'star_active5'
-					 WHEN IFNULL(GRADE, 0) > 4.5 AND IFNULL(GRADE, 0) <![CDATA[<=]]> 5 THEN 'star_active'
+                CASE WHEN IFNULL(D.GRADE, 0) > 4 AND IFNULL(D.GRADE, 0) <![CDATA[<=]]> 4.5 THEN 'star_active5'
+					 WHEN IFNULL(D.GRADE, 0) > 4.5 THEN 'star_active'
                      ELSE 'star_inactive' END GRADE5,
                 IFNULL(D.GRADE_CNT, 0) GRADE_CNT,
                 IFNULL(A.MOBILE_YN, 'N') MOBILE_YN

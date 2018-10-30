@@ -65,7 +65,7 @@
 
                 <div class='classroom_subtitle'>
                     <p class='subtitle'>수강취소과정</p>
-                    <p>현재 수강취소과정입니다. </p>
+                    <p>수강 취소된 과정입니다.</p>
                 </div>
 
                 <table class='classroom_lecture lectures'>

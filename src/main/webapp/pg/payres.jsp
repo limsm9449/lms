@@ -13,7 +13,7 @@
 <title>
 </title>
 
-<%@ include file="../common/commAxAdminInclude.jsp" %>
+<%@ include file="../common/commMainInclude.jsp" %>
 
 </head>
 
@@ -187,6 +187,11 @@ request.setCharacterEncoding("euc-kr");
      	out.println("최종결제요청 결과 실패 DB처리하시기 바랍니다.<br>");
      }
 %>
+
+<script type="text/javascript">
+	opener.page.goPage('/paymentGateway/complete');
+	window.close();
+</script>
 
 </body>
 </html>

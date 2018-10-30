@@ -228,9 +228,9 @@ var Popup = {
 	showSampleCourse : function(pCourseId,pWidth,pHeight) {
 		//Popup.showPopup(context + "/guest/eduSampleHome.do?courseId=" + pCourseId + "&isPopup=Y",pWidth,pHeight);
 		if ( gfn_deviceCheck() == "PC" ) {
-			Popup.showPopup(context + "/guest/eduSampleHome.do?courseId=" + pCourseId + "&isPopup=Y",screen.availWidth - 50,screen.availHeight - 90);
+			Popup.showPopup(context + "/guest/eduSampleHome.do?courseId=" + pCourseId + "&mobileYn=N",screen.availWidth - 50,screen.availHeight - 90);
 		} else {
-			Popup.showPopup(context + "/guest/eduSampleHome.do?courseId=" + pCourseId + "&isPopup=Y",400,400);
+			Popup.showPopup(context + "/guest/eduSampleHome.do?courseId=" + pCourseId + "&mobileYn=Y",400,400);
 		}
 	},
 

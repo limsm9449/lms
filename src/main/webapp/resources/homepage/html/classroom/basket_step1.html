@@ -5,13 +5,13 @@
     <meta charset='utf-8'>
     <meta name='viewport' content='width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1'>
     <meta http-equiv='X-UA-Compatible' content='ie=edge'>
-    <title>Q learning - 나의강의실 - 수강대기과정</title>
+    <title>Q learning - 나의강의실 - 장바구니</title>
 
     <script src='../../js/jquery_3.3.1.js'></script>
 
     <link href='https://fonts.googleapis.com/css?family=Nanum+Gothic' rel='stylesheet'>
     <link rel='stylesheet' href='../../css/initialization.css'>
-    <link rel='stylesheet' href='../../css/classroom/lecture.css'>
+    <link rel='stylesheet' href='../../css/classroom/basket.css'>
 </head>
 
 <body>
@@ -307,51 +307,166 @@
                         </div>
                     </div>
                     <h1>
-                        나의<span>강의실</span>
+                        장바<span>구니</span>
                     </h1>
                 </div>
                 <!-- Top END -->
 
-                <div class='classroom_subtitle'>
-                    <p class='subtitle'>수강대기과정</p>
-                    <p>현재 수강대기과정입니다. 학습이 시작되면 수강과정으로 이동합니다.</p>
+                <div class='basket_step_box'>
+                    <ul>
+                        <li class='basket_step_list clear_fix on'>
+                            <span><img src='../../img/classroom/basket_step1_active.png' alt=' '></span>
+                            <p class='basket_title'>장바구니</p>
+                            <p>장바구니의 최종 금액을 확인하시고 선택하여 주십시오.</p>
+                        </li>
+                        <li class='basket_arr'>
+                            <img src='../../img/etc/arr_right.png' alt=' '>
+                        </li>
+                        <li class='basket_step_list clear_fix'>
+                            <span><img src='../../img/classroom/basket_step2_inactive.png' alt=' '></span>
+                            <p class='basket_title'>결제정보입력</p>
+                        </li>
+                        <li class='basket_arr'>
+                            <img src='../../img/etc/arr_right.png' alt=' '>
+                        </li>
+                        <li class='basket_step_list clear_fix'>
+                            <span><img src='../../img/classroom/basket_step3_inactive.png' alt=' '></span>
+                            <p class='basket_title'>결제완료</p>
+                        </li>
+                    </ul>
+                    <p class='basket_note'>
+                        <span></span>고객님께서 장바구니에 담으신 과정 및 상품입니다. 담긴 날로부터 30일간 자동저장됩니다.<br>
+                        <span></span>결제시 가격정보를 확인한 후 구매하시기 바랍니다.<br>
+                        <span></span>과정은 매월 21일 기준으로 정보 변경됩니다. (참고도서 포함)
+                    </p>
                 </div>
 
-                <table class='classroom_lecture standby'>
-                    <tr>
-                        <th class='col_1'>강의제목</th>
-                        <th class='col_2'>학습기간</th>
-                        <th class='col_3'>신청일자</th>
-                        <th class='col_4'>승인여부</th>
-                        <th class='col_5'>교육비</th>
-                        <th class='col_6'>수강여부</th>
-                    </tr>
-                    <tr>
-                        <td class='col_1'><a href='./study.html' target='_blank' class='user_lecture_list_subject'>5억 4천 벌게 해드릴까요? [학습후기] 5억 4천 벌게 해드릴까요? [학습후기] 5억 4천 벌게 해드릴까요? [학습후기]</a></td>
-                        <td class='col_2'>30</td>
-                        <td class='col_3'>2018.10.28</td>
-                        <td class='col_4'>신청중</td>
-                        <td class='col_5'>80,000원</td>
-                        <td class='col_6'><button>수강취소</button></td>
-                    </tr>
-                    <tr>
-                        <td class='col_1'><a href='./study.html' target='_blank' class='user_lecture_list_subject'>자산설계도 맞춤 시대: Financial Map [학습후기]</a></td>
-                        <td class='col_2'>60</td>
-                        <td class='col_3'>2018.10.28</td>
-                        <td class='col_4'>신청중</td>
-                        <td class='col_5'>80,000원</td>
-                        <td class='col_6'></td>
-                    </tr>
-                    <tr>
-                        <td class='col_1'><a href='./study.html' target='_blank' class='user_lecture_list_subject'>5억 4천 벌게 해드릴까요? [학습후기]</a></td>
-                        <td class='col_2'>30</td>
-                        <td class='col_3'>2018.10.28</td>
-                        <td class='col_4'>승인대기</td>
-                        <td class='col_5'>80,000원</td>
-                        <td class='col_6'></td>
-                    </tr>
-                </table>
-                
+                <div class='process_search_result'>
+                    <p class='basket_list_title'>신청과정</p>
+                    <div class='clear_fix'>
+                        <div class='process_result_checkbox'>
+                            <input type='checkbox' name='' id=''>
+                        </div>
+                        <p class='process_result_con'>과정명</p>
+                        <p class='process_result_btn'>선택</p>
+                        <p class='process_result_review'>주문금액</p>
+                    </div>
+                    <ul class='process_result_list'>
+                        <li class='clear_fix'>
+                            <div class='process_result_checkbox con'>
+                                <input type='checkbox' name='' id=''>
+                            </div>
+                            <div class='process_result_con con clear_fix'>
+                                <div class='process_result_img'>
+                                    <img src='../../img/course/process_3.jpg' alt=' '>
+                                </div>
+                                <div class='process_result_text'>
+                                    <div class='process_result_text_top clear_fix'>
+                                        <p>일반</p>
+                                        <p class='process_result_mobile'>모바일</p>
+                                    </div>
+                                    <p>[스마트러닝] 윤코치의 보고서 작성법</p>
+                                    <div class='process_result_text_bottom clear_fix'>
+                                        <p>교육기간</p>
+                                        <p class='process_result_payment'>18.10.26~18.1125 (30일)</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class='process_result_btn con'>
+                                <button class='bg_color'>선택과정 삭제</button>
+                            </div>
+                            <div class='process_result_review con'>
+                                <p>50,000원</p>
+                            </div>
+                        </li>
+                        <li class='clear_fix'>
+                            <div class='process_result_checkbox con'>
+                                <input type='checkbox' name='' id=''>
+                            </div>
+                            <div class='process_result_con con clear_fix'>
+                                <div class='process_result_img'>
+                                    <img src='../../img/course/process_1.jpg' alt=' '>
+                                </div>
+                                <div class='process_result_text'>
+                                    <div class='process_result_text_top clear_fix'>
+                                        <p>일반</p>
+                                        <p class='process_result_mobile'>모바일</p>
+                                    </div>
+                                    <p>[스마트러닝] 김정구 교수의 미래창조경영 위기와 역경을 기회로</p>
+                                    <div class='process_result_text_bottom clear_fix'>
+                                        <p>교육기간</p>
+                                        <p class='process_result_payment'>18.10.26~18.1125 (30일)</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class='process_result_btn con'>
+                                <button class='bg_color'>선택과정 삭제</button>
+                            </div>
+                            <div class='process_result_review con'>
+                                <p>50,000원</p>
+                            </div>
+                        </li>
+                        <li class='clear_fix'>
+                            <div class='process_result_checkbox con'>
+                                <input type='checkbox' name='' id=''>
+                            </div>
+                            <div class='process_result_con con clear_fix'>
+                                <div class='process_result_img'>
+                                    <img src='../../img/course/process_2.jpg' alt=' '>
+                                </div>
+                                <div class='process_result_text'>
+                                    <div class='process_result_text_top clear_fix'>
+                                        <p>일반</p>
+                                        <p class='process_result_mobile'>모바일</p>
+                                    </div>
+                                    <p>[스마트러닝] 토끼와 거북의의 재테크 비법</p>
+                                    <div class='process_result_text_bottom clear_fix'>
+                                        <p>교육기간</p>
+                                        <p class='process_result_payment'>18.10.26~18.1125 (30일)</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class='process_result_btn con'>
+                                <button class='bg_color'>선택과정 삭제</button>
+                            </div>
+                            <div class='process_result_review con'>
+                                <p>50,000원</p>
+                            </div>
+                        </li>
+                        <li class='clear_fix'>
+                            <div class='process_result_checkbox con'>
+                                <input type='checkbox' name='' id=''>
+                            </div>
+                            <div class='process_result_con con clear_fix'>
+                                <div class='process_result_img'>
+                                    <img src='../../img/course/process_1.jpg' alt=' '>
+                                </div>
+                                <div class='process_result_text'>
+                                    <div class='process_result_text_top clear_fix'>
+                                        <p>일반</p>
+                                        <p class='process_result_mobile'>모바일</p>
+                                    </div>
+                                    <p>[스마트러닝] 남다른 교구활용의 정석</p>
+                                    <div class='process_result_text_bottom clear_fix'>
+                                        <p>교육기간</p>
+                                        <p class='process_result_payment'>18.10.26~18.1125 (30일)</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class='process_result_btn con'>
+                                <button class='bg_color'>선택과정 삭제</button>
+                            </div>
+                            <div class='process_result_review con'>
+                                <p>50,000원</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class='detail_btn_area'>
+                    <button onclick='location.href="./basket_step2.html"'>선택과정 주문</button>
+                    <button onclick='location.href="./basket_step2.html"' class='bg_color'>전체과정 주문</button>
+                </div>
             </div>
         </div>
         <!-- CONTENTS END -->

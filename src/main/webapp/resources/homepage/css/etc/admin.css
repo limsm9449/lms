@@ -17,6 +17,7 @@
 
 
 .wrap{
+    position:relative;
     height:100%;
     background:#fff;
 }
@@ -209,7 +210,7 @@ header{
 
 /*--- CONTENTS ---*/
 .contents_wrap{
-    width: calc(100% - 201px);
+    /* width: calc(100% - 201px); */
     float: left;
 }
 .content_top{
@@ -288,6 +289,66 @@ header{
     min-height: 300px;
     margin: 10px 20px 0;
     overflow-x: scroll;
+}
+
+
+
+
+/* ---------- ADMIN POPUP ---------- */
+.admin_popup{
+    display:none;
+    padding:10px;
+}
+.admin_popup.div{
+    position: absolute;
+    background: #fff;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border: solid 1px #ccc;
+}
+.admin_popup *{
+  box-sizing:border-box;
+}
+.admin_popup.type1{
+  width:100%;
+  max-width:350px;
+  margin:0 auto;
+}
+.admin_popup_title{
+  font-family: 'NanumSquare';
+  font-size: 24px;
+  color: #fff;
+  padding: 16px 10px;
+  background: #36a9b4;
+}
+.category_box{
+  padding-bottom: 4px;
+}
+.category_box p{
+  float: left;
+  width: 30%;
+  font-size: 16px;
+  line-height: 190%;
+}
+.category_box select{
+    display: block;
+    float: left;
+    width: 70%;
+    padding: 6px;
+}
+.admin_popup_btn{
+    text-align: center;
+    padding-top: 30px;
+}
+.admin_popup_btn button{
+    padding: 10px 0;
+    font-family: 'NanumSquare';
+    font-size: 18px;
+    font-weight: 900;
+    color: #fff;
+    width: 49%;
+    background: #14939f;
 }
 
 

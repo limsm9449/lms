@@ -30,6 +30,11 @@ html body{
 .admin_popup *{
     box-sizing:border-box;
 }
+.admin_popup.type1{
+    width:100%;
+    max-width:350px;
+    margin:0 auto;
+}
 .admin_popup_title{
     font-family: 'NanumSquare';
     font-size: 24px;

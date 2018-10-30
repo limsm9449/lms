@@ -144,7 +144,7 @@
             </div>
             <div class='content_btn_box clear_fix'>
                 <button onclick='admin_popup_open("1")'>검색</button>
-                <button onclick='admin_popup_open("2")'>추가</button>
+                <button onclick='admin_popup_open("1", true)'>추가</button>
                 <button onclick='admin_popup_open("3")'>삭제</button>
                 <button onclick='admin_popup_open("4")'>초기화</button>
                 <button onclick='admin_popup_open("5")'>저장</button>
@@ -153,6 +153,30 @@
             <div class='grid_area'>
                 <p>수정 안되는 데이터</p>
                 <p>수정 안되는 데이터</p>
+            </div>
+        </div>
+        <div class='admin_popup type1 div'>
+            <div>
+                <div class='category_box clear_fix'>
+                    <p>대분류</p>
+                    <select name='' id=''></select>
+                </div>
+                <div class='category_box clear_fix'>
+                    <p>중분류</p>
+                    <select name='' id=''></select>
+                </div>
+                <div class='category_box clear_fix'>
+                    <p>소분류</p>
+                    <select name='' id=''></select>
+                </div>
+                <div class='category_box clear_fix'>
+                    <p>과정명</p>
+                    <select name='' id=''></select>
+                </div>
+            </div>
+            <div class='admin_popup_btn'>
+                <button>확인</button>
+                <button onclick='admin_popup_close(true)'>닫기</button>
             </div>
         </div>
     </div>

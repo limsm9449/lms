@@ -1119,10 +1119,8 @@ function gfn_deviceCheck() {
 	}
 	if (size) {
 		if((size.width <= 420) || ((size.height <= 420) && (size.width > size.height))) {
-			//window.alert('device - mobile');
 			return "MOBILE";
 		} else {
-			//window.alert('device - pc');
 			return "PC";
 		}
 	}

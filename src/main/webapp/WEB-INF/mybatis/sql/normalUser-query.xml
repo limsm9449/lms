@@ -64,7 +64,7 @@
 		       	C.PROGRESS_RATE,
 		       	C.C_PERIOD,
 		       	DATE_FORMAT(CR.CREATE_DATE,'%Y/%m/%d') CREATE_DATE,
-		       	C.COURSE_COST,
+		       	CR.COURSE_COST,
 		       	CR.APPROVAL_ID
 		       	,C.TERM_YN
 		       	,IFNULL(C.STUDY_PERIOD_FROM, '') STUDY_PERIOD_FROM
@@ -89,7 +89,7 @@
 		       	C.PROGRESS_RATE,
 		       	C.C_PERIOD,
 		       	DATE_FORMAT(CR.CREATE_DATE,'%Y/%m/%d') CREATE_DATE,
-		       	C.COURSE_COST,
+		       	CR.COURSE_COST,
 		       	CR.APPROVAL_ID
 		       	,C.TERM_YN
 		       	,IFNULL(C.STUDY_PERIOD_FROM, '') STUDY_PERIOD_FROM

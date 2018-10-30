@@ -138,4 +138,9 @@ public class PgController {
     	return "/pg/Cancel";
     }
 
+    @RequestMapping(value = "/paymentGateway/complete", method = RequestMethod.POST)
+    public String complete(HttpServletRequest request, @ModelAttribute PgVO vo, Model model) throws Exception {
+        return "/pg/complete";
+    }
+
 }

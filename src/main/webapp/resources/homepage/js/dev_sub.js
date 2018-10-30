@@ -430,12 +430,34 @@ function admin_sub_open(elem){
     }
 }
 
-function admin_popup_open(type){
-    window.open(resourceUrl + 'html/popup/admin_popup_type' + type + '.html', '_blank', 'width=500, height=700');
+function admin_popup_open(type, isDiv){
+    if(isDiv){
+        var inner_popup = document.querySelector('.admin_popup.type'+type);
+        inner_popup.style.display = 'block';
+    }else{
+        var url = resourceUrl + 'html/popup/admin_popup_type' + type + '.html';
+        if(type){
+            switch(type){
+                case '7':
+                    url = '../popup/admin_popup_type7.html';
+                break;
+                default:
+                    url = '../popup/admin_popup_type1.html';
+                break;
+            }
+            
+            window.open(url, '_blank', 'width=400, height=500');
+        }
+    }
 }
 
-function admin_popup_close(){
-    window.open('about:blank', '_self').close();
+function admin_popup_close(isDiv){
+    var inner_popup = document.querySelector('.admin_popup');
+    if(isDiv){
+        inner_popup.style.display = 'none';
+    }else{
+        window.open('about:blank', '_self').close();
+    }
 }
 
 
@@ -460,4 +482,37 @@ function review_score(num){
             temp.style.background = 'url("' + resourceUrl + 'img/course/register_star_inactive.png") no-repeat';
         }
     }
+}
+
+
+// PC / MOBILE CHECK
+function device_check() {
+    var size = {
+        width: window.innerWidth || document.body.clientWidth,
+        height: window.innerHeight || document.body.clientHeight
+    }
+    if (size){
+        if((size.width <= 420) || ((size.height <= 420) && (size.width > size.height))) {
+            window.alert('device - mobile');
+        }else{
+            window.alert('device - pc');
+        }
+    }
+}
+// device_check();
+
+
+// BASKET POPUP CLOSE
+function basket_popup_close(){
+    var popup = document.querySelector('.basket_completed_popup');
+
+    popup.style.display = 'none';
+}
+function basket_popup_open(){
+    window.open(resourceUrl + 'html/classroom/basket_popup.html', '_blank', 'width=620, height=500');
+}
+
+function windows(){
+    window.open(resourceUrl + 'html/classroom/basket_step3.html', '_self');
+    basket_popup_open();
 }

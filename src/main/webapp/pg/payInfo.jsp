@@ -1,31 +1,33 @@
 <%@ page contentType="text/html;charset=utf-8"%>
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="ko" xml:lang="ko">
+<!DOCTYPE html>
+<html lang='ko'>
+
 <head>
-<title>
-</title>
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1'>
+    <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+    <title>Q learning - 나의강의실 - 장바구니</title>
 
-<%@ include file="../common/commUserInclude.jsp" %>
+    <%@ include file="../common/commMainInclude.jsp" %>
 
-
+    <link href='https://fonts.googleapis.com/css?family=Nanum+Gothic' rel='stylesheet'>
+    <link rel='stylesheet' href='/resources/homepage/css/initialization.css'>
+    <link rel='stylesheet' href='/resources/homepage/css/classroom/basket.css'>
 </head>
-
 
 <script type="text/javascript">
 
 function lfn_kindChg() {
 	if ( $("#LGD_CUSTOM_USABLEPAY").val() == "SC0030" ) {
-		$("#bankTr").css("display","table-row");
-		$("#orderTr").css("display","none");
+		$("#bankLi").css("display","table-row");
 	} else {
-		$("#bankTr").css("display","none");
-		$("#orderTr").css("display","table-row");
+		$("#bankLi").css("display","none");
 	}
 }
 
@@ -80,7 +82,7 @@ function lfn_pay() {
 			success : function(json){
 				if ( json.rtnMode == "OK") {
 					alert("입금 확인후에 수강신청이 완료됩니다.\n승인후에 나의 강의실에서 과정을 들으시면 됩니다.");
-					page.goPage("/normalUser/attendCourseList");
+					page.goPage('/main/myClassroom');
 				}
 			},
 			error : function(e) {
@@ -92,10 +94,6 @@ function lfn_pay() {
 		document.frm.target = "xpay";
 		document.frm.submit();
 	}
-}
-
-function lfn_attendCourse() {
-	page.goPage("/normalUser/attendCourseList");
 }
 
 function LPad(digit, size, attatch) {
@@ -140,132 +138,131 @@ $(document.body).ready(function () {
 	<input type="hidden" name="LGD_TIMESTAMP" id="LGD_TIMESTAMP" value=""/>
 	<input type="hidden" name="LGD_PRODUCTINFO" id="LGD_PRODUCTINFO" value="${set.condiVO.coursePayDesc}"/>
 
+<frameset rows='*'>
+    <div class='wrap'>
+        <!-- PC HEADER -->
+        <%@ include file="../common/mainTop.jsp" %>
+        <!-- HEAD END -->
 
+        <!-- CONTENTS -->
+        <div class='contents_wrap process' onmouseover='sub_hide()'>
+            <div class='contents_wrap_box'>
+                <!-- QUICK MENU -->
+                <%@ include file="../common/mainQuickMenu.jsp" %>
 
-<!-- skipnav -->
-<div id="skipnav"><a href="#side" class="skip">좌측메뉴 바로가기</a></div>
-<div id="skipnav"><a href="#contents" class="skip">컨텐츠 바로가기</a></div>
-<!-- skipnav -->
+                <!-- Top -->
+                <div class='top_area'>
+                    <div class='clear_fix'>
+                        <div class='process_history_box clear_fix'>
+                            <span>
+                                <img src='/resources/homepage/img/course/ic_home.jpg' alt=' '>
+                            </span>
+                            <p>HOME</p>
+                            <span>
+                                <img src='/resources/homepage/img/course/arr_right.jpg' alt=' '>
+                            </span>
+                            <p>나의강의실</p>
+                            <span>
+                                <img src='/resources/homepage/img/course/arr_right.jpg' alt=' '>
+                            </span>
+                            <p>장바구니</p>
+                        </div>
+                    </div>
+                    <h1>
+                        장바<span>구니</span>
+                    </h1>
+                </div>
+                <!-- Top END -->
 
-<!-- wrap -->
-<div id="wrap" class="site">
-  <%@ include file="../home/userTop.jsp" %>
-  <hr />
-  <!-- container -->
-  <div id="container" class="site">
-   	 	<!-- side -->
-   	 	<%
-   	 		String menuId = "cart";
-   	 	%>
-		<%@ include file="../home/userLeft2.jsp" %>
-		<!-- end side -->
-		
-    	<!-- contents -->
-		<div id="contents" class="site">
-			<!-- location -->
-			<div id="location"><a href="/" class="home">HOME</a><span>&gt;</span>수강신청<span>&gt;</span>결제정보입력</div>
-			<!-- title -->
-			<h3 class="tit_big">장바구니</h3>
-		      <div class="artcle">
-		      	<div class="orderflow_box">
-		          <img src="/resources/images/sub/img_orderflow_2.png" alt="결제순서 2단계 결제정보입력" />
-		          <ul class="order_tip">
-		            <li>고객님께서 장바구니에 담으신 과정 및 상품입니다. 담긴 날로부터 30일간 자동 저장됩니다.</li>
-								<li>결제 시 가격정보를 확인 후 구매하시기 바랍니다.</li>
-								<li>과정은 매월 21일 기준으로 정보 변경됩니다.(참고도서 포함)</li>
-		          </ul>
-		        </div>
-		        <div class="payment_box">
-		          <p class="big_4"><span class="blue">결제하는 과정 및 상품</span></p>
-		          <table class="cart_list">
-		          	<caption>결제 리스트</caption>
-		  					<thead>
-		  					  <tr class="guide">
-		    						<th width="10"></th>
-		    						<th></th>
-		    						<th width="160"></th>
-		    					</tr>
-		  					</thead>
-		  					<tbody>
-		  						<tr class="head">
-		  							<td></td>
-		  							<td class="center">강의 및 교재 정보</td>
-		  							<td class="center">금액</td>
-		  						</tr>
-					  <c:forEach var="row" items="${set.courseList}" varStatus="idx">
-			              <tr <c:if test="${idx.index + 1 eq fn:length(set.courseList)}"> class="last_line"</c:if>>
-			              	<td class="center"></td>
-			                <td class="title">
-			                	<nobr><p class="subject"><span class="blue">[${row.categoryName}] ${row.courseName}</span></p></nobr>
-								<c:forEach var="subRow" items="${row.cartWeekList}">
-									<nobr><p class="chap">${subRow.week}. ${subRow.title} => ${subRow.weekCost}</p></nobr>
-									<br>
-								</c:forEach>
-			               	</td>
-			                <td class="center"><fmt:formatNumber value="${row.courseCost}" type="number"/> 원</td>
-			              </tr>
-		              </c:forEach>
-		            </tbody>
-		          </table>
-		          <div id="payment_total">
-		          	<p>
-			          	주문금액 :
-			          	<span class="blue big"><fmt:formatNumber value="${set.condiVO.paymentCost}" type="number"/></span>
-			          	원
-			          	<span class="icon"><img src="/resources/images/sub/icon/icon_minus.png" alt="" /></span>
-			          	포인트 :
-			          	<span class="blue big"><input id="paymentPoint" name="paymentPoint" type="text" value="0" onblur="lfn_pointChg();" style="width:40px"/></span>
-			          	원 (잔여 포인트 : ${set.condiVO.point})
-			          	<span class="icon"><img src="/resources/images/sub/icon/icon_eq.png" alt="" /></span>
-			          	<span class="strong">최종 결제금액 :</span>
-			          	<span class="blue big" id="paymentCost1"><fmt:formatNumber value="${set.condiVO.paymentCost}" type="number"/></span>
-			          	원
-			          	<input id="totalCost" name="totalCost" type="hidden" readonly value="${set.condiVO.paymentCost}"/>
+                <div class='basket_step_box'>
+                    <ul>
+                        <li class='basket_step_list clear_fix'>
+                            <span><img src='/resources/homepage/img/classroom/basket_step1_inactive.png' alt=' '></span>
+                            <p class='basket_title'>장바구니</p>
+                        </li>
+                        <li class='basket_arr'>
+                            <img src='/resources/homepage/img/etc/arr_right.png' alt=' '>
+                        </li>
+                        <li class='basket_step_list clear_fix on'>
+                            <span><img src='/resources/homepage/img/classroom/basket_step2_active.png' alt=' '></span>
+                            <p class='basket_title'>결제정보입력</p>
+                            <p>총 결제금액을 확인하시고 배송 및 결제정보를 확인해주십시오.</p>
+                        </li>
+                        <li class='basket_arr'>
+                            <img src='/resources/homepage/img/etc/arr_right.png' alt=' '>
+                        </li>
+                        <li class='basket_step_list clear_fix'>
+                            <span><img src='/resources/homepage/img/classroom/basket_step3_inactive.png' alt=' '></span>
+                            <p class='basket_title'>결제완료</p>
+                        </li>
+                    </ul>
+                    <p class='basket_note'>
+                        <span></span>고객님께서 장바구니에 담으신 과정 및 상품입니다.<br>
+                        <span></span>결제시 가격정보를 확인한 후 구매하시기 바랍니다.<br>
+                        <span></span>과정은 매월 21일 기준으로 정보 변경됩니다. (참고도서 포함)
+                    </p>
+                </div>
+
+                <p class='basket_payment_title'>결제하는 과정 및 상품</p>
+                <div class='basket_payment lectures'>
+                    <div class='basket_lectures_title clear_fix'>
+                        <p>강의 및 교재 정보</p>
+                        <p class='sum'>주문 금액</p>
+                    </div>
+<c:forEach var="row" items="${set.courseList}" varStatus="idx">
+                    <div class='basket_lectures_lecture clear_fix'>
+                        <p>[${row.categoryName}] ${row.courseName}</p>
+                        <p class='sum'><span class='text'><fmt:formatNumber value="${row.courseCost}" type="number"/></span>원</p>
+                    </div>
+                    <div>
+	<c:forEach var="subRow" items="${row.cartWeekList}">
+						<nobr><p class="chap">${subRow.week}. ${subRow.title} => ${subRow.weekCost}</p></nobr>
+						<br>
+	</c:forEach>
+					</div>
+</c:forEach>                    
+                    <div class='basket_lectures_result clear_fix'>
+                        <p class='first'>주문금액 : <span class='text'><fmt:formatNumber value="${set.condiVO.paymentCost}" type="number"/></span>원</p>
+                        <span class='ic_first'><img src='/resources/homepage/img/classroom/basket_ic1.png' alt=' '></span>
+                        <p class='second'>할인금액 : <span class='text'><input id="paymentPoint" name="paymentPoint" type="text" value="0" onblur="lfn_pointChg();" style="width:40px"/></span>원</p>
+                        (잔여 포인트 : ${set.condiVO.point})
+                        <span class='ic_second'><img src='/resources/homepage/img/classroom/basket_ic2.png' alt=' '></span>
+                        <p class='last_payment'>최종결제금액 : <span class='text' id="paymentCost1"><fmt:formatNumber value="${set.condiVO.paymentCost}" type="number"/></span>원</p>
+                        
+                        <input id="totalCost" name="totalCost" type="hidden" readonly value="${set.condiVO.paymentCost}"/>
 			          	<input id="remainPoint" name="remainPoint" type="hidden" value="${set.condiVO.point}"/>
 			          	<input id="paymentCost" name="paymentCost" type="hidden" value="${set.condiVO.paymentCost}"/>
 			          	<input type="hidden" name="LGD_AMOUNT" id="LGD_AMOUNT" class="w100" readonly value="${set.condiVO.paymentCost}" maxlength="9"/>
-		          	</p>
-		          </div>
-				  <div class="space_div"></div>
-		          <p class="big_4 no_bd"><span class="blue">주문하시는 분 정보</span></p>
-		          <table class="mem_form">
-		            <caption>결제자 정보</caption>
-		  					<thead>
-		  					  <tr class="guide">
-		    						<th width="140"></th>
-		    						<th></th>
-		    					</tr>
-		  					</thead>
-		  					<tbody>
-	                    <tr>
-	                        <th>주문자명</th>
-	                        <td>${set.memberVO.userName}<input type="hidden" name="LGD_BUYER" class="w100" readonly value="${set.memberVO.userName}"/></td>
-	                    </tr>
-	                    <tr>
-	                        <th>E-mail</th>
-	                        <td>${set.memberVO.email}<input type="hidden" name="LGD_BUYEREMAIL" class="w200" readonly value="${set.memberVO.email}" maxlength="30" /></td>
-	                    </tr>
-	                    <tr>
-	                        <th>휴대폰번호</th>
-	                        <td>${set.memberVO.mobile}<input type="hidden" name="buyr_tel2" class="w100" readonly value="${set.memberVO.mobile}"/></td>
-	                    </tr>		
-		            </tbody>  
-		          </table>
-		          <br />
-		          <br />
-		          <p class="big_4 no_bd"><span class="blue">결제정보 입력</span></p>
-		          <table class="mem_form">
-		            <caption>결제 선택</caption>
-		  					<thead>
-		  					  <tr class="guide">
-		    						<th width="140"></th>
-		    						<th></th>
-		    					</tr>
-		  					</thead>
-		  					<tbody>
-		              <tr>
-		                <th><label for="LGD_CUSTOM_USABLEPAY" class="must">결제방식 선택</label></th>
-		                <td>
+                    </div>
+                </div>
+
+                <p class='basket_payment_title'>주문하시는 분 정보</p>
+                <div class='basket_payment user'>
+                    <ul>
+                        <li class='basket_user_list clear_fix'>
+                            <span></span>
+                            <p class='basket_user_type'>주문자명</p>
+                            <p>${set.memberVO.userName}<input type="hidden" name="LGD_BUYER" class="w100" readonly value="${set.memberVO.userName}"/></p>
+                        </li>
+                        <li class='basket_user_list clear_fix'>
+                            <span></span>
+                            <p class='basket_user_type'>E - mail</p>
+                            <p>${set.memberVO.email}<input type="hidden" name="LGD_BUYEREMAIL" class="w200" readonly value="${set.memberVO.email}" maxlength="30" /></p>
+                        </li>
+                        <li class='basket_user_list clear_fix'>
+                            <span></span>
+                            <p class='basket_user_type'>휴대폰번호</p>
+                            <p>${set.memberVO.mobile}<input type="hidden" name="buyr_tel2" class="w100" readonly value="${set.memberVO.mobile}"/></p>
+                        </li>
+                    </ul>
+                </div>
+
+                <p class='basket_payment_title'>결제정보 입력</p>
+                <div class='basket_payment info'>    
+                    <ul>
+                        <li class='basket_info_list clear_fix'>
+                            <span></span>
+                            <p class='basket_info_type'>결제방식 선택</p>
                             <select id="LGD_CUSTOM_USABLEPAY" name="LGD_CUSTOM_USABLEPAY" onchange="lfn_kindChg()" style="width:100px">
                                 <option value="SC0010">신용카드</option>				
 								<option value="SC0030">계좌이체</option>				
@@ -277,45 +274,40 @@ $(document.body).ready(function () {
 								<option value="SC0112">게임문화상품권</option>	
                             </select>
                             <input type="hidden" name="paymentKind" id="paymentKind"/>
-						</td>
-		              </tr>
-                      <tr id="bankTr" style="display:none">
-                        <th><label for="paymentBank" class="must">은행</label></th>
-	                        <td>
-								<select id="paymentBank" name="paymentBank" style="width:200px">
+                        </li>
+                        <li class='basket_info_list clear_fix' id="bankLi" style="display:none">
+                            <span></span>
+                            <p class='basket_info_type'>은행 선택</p>
+                            <select id="paymentBank" name="paymentBank" style="width:300px">
 									<option value="" selected></option>
 									<c:forEach var="row" items="${set.bankList}" varStatus="idx">
 										<option value="${row.seq}">${row.bankName} ${row.accNo} ${row.user}</option>
 									</c:forEach>
 								</select>
-	                        </td>
-                      </tr>
-		              <tr>
-		                <th><label for="pay_type" class="must">결제금액</label></th>
-		                <td><p class="total">최종결제 금액 : <span class="blue big" id="paymentCost2"><fmt:formatNumber value="${set.condiVO.paymentCost}" type="number"/></span>원</p></td>
-		              </tr>
-		            </tbody>
-		          </table>
-		        	<div class="center_btn"><a href="javascript:" id="approvalBtn" onclick="lfn_pay();"><img src="/resources/images/sub/btn_pay_next.png" alt="결제신청" /></a></div>
-		          
-		          
-		        </div>
-		      </div>
-			
-		</div>
-		<!-- end content -->
+                        </li>
+                        <li class='basket_info_list clear_fix'>
+                            <span></span>
+                            <p class='basket_info_type'>결제금액</p>
+                            <p>최종결제금액 : <span class='text' id="paymentCost2"><fmt:formatNumber value="${set.condiVO.paymentCost}" type="number"/></span>원</p>
+                        </li>
+                    </ul>
+                </div>
 
-	</div>
-  <!-- end container -->
-  <!-- footer_wrap -->
-	<%@ include file="../home/bottom.jsp" %>
-  <!-- end footer_wrap -->
-</div>
+                <div class='detail_btn_area'>
+                    <button id="approvalBtn" onclick="lfn_pay();" class='bg_color'>결제하기</button>
+                </div>
+            </div>
+        </div>
+        <!-- CONTENTS END -->
 
+        <!-- FOOTER -->
+        <%@ include file="../common/mainBottom.jsp" %>
+        <!-- FOOTER END -->
+    </div>
+</frameset>
 
 </form>
 
-
+<script src='/resources/homepage/js/dev_sub.js'></script>
 </body>
 </html>
-

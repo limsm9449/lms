@@ -1,19 +1,24 @@
 <%@ page contentType="text/html;charset=utf-8"%>
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="ko" xml:lang="ko">
+<!DOCTYPE html>
+<html lang='ko'>
+
 <head>
-<title>
-</title>
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1'>
+    <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+    <title>Q learning - 나의강의실 - 장바구니</title>
 
-<%@ include file="../common/commUserInclude.jsp" %>
+    <%@ include file="../common/commMainInclude.jsp" %>
 
-
+    <link href='https://fonts.googleapis.com/css?family=Nanum+Gothic' rel='stylesheet'>
+    <link rel='stylesheet' href='/resources/homepage/css/initialization.css'>
+    <link rel='stylesheet' href='/resources/homepage/css/classroom/basket.css'>
 </head>
 
 <script type="text/javascript">
@@ -37,13 +42,11 @@ function lfn_btn(pKind, pParam) {
 			gfn_goPage("/main/cartDel","cartCourseId=" + pParam.courseId);
 		}
 	} else if ( pKind == "cartSelectDel" ) {
-		if ( gfn_cbCheckedValues("chk",",") == "" ) {
-			alert("선택된 데이타가 없습니다.");
-			return false;
-		} else {
-			if ( confirm("장바구니에서 삭제 하시겠습니까?") == true ) {
-				gfn_goPage("/main/cartSelectDel","cartCourseId=" + gfn_cbCheckedValues("chk",","));
-			}
+		$("#aChk").prop("checked", "checked");
+		gfn_allChk('aChk','chk');
+
+		if ( confirm("장바구니에서 삭제 하시겠습니까?") == true ) {
+			gfn_goPage("/main/cartSelectDel","cartCourseId=" + gfn_cbCheckedValues("chk",","));
 		}
 	}
 }
@@ -54,101 +57,140 @@ function lfn_btn(pKind, pParam) {
 
 <form name="frm" id="frm" method="post">
 
-<!-- skipnav -->
-<div id="skipnav"><a href="#side" class="skip">좌측메뉴 바로가기</a></div>
-<div id="skipnav"><a href="#contents" class="skip">컨텐츠 바로가기</a></div>
-<!-- skipnav -->
+<frameset rows='*'>
+    <div class='wrap'>
+        <!-- PC HEADER -->
+        <%@ include file="../common/mainTop.jsp" %>
+        <!-- HEAD END -->
 
-<!-- wrap -->
-<div id="wrap" class="site">
-  <%@ include file="../home/userTop.jsp" %>
-  <hr />
-  <!-- container -->
-  <div id="container" class="site">
-   	 	<!-- side -->
-   	 	<%
-   	 		String menuId = "cart";
-   	 	%>
-		<%@ include file="../home/userLeft2.jsp" %>
-		<!-- end side -->
-		
-    	<!-- contents -->
-		<div id="contents" class="site">
-			<!-- location -->
-			<div id="location"><a href="/" class="home">HOME</a><span>&gt;</span>수강신청<span>&gt;</span>장바구니</div>
-			<!-- title -->
-			<h3 class="tit_big">장바구니</h3>
-		      <div class="artcle">
-		      	<div class="orderflow_box">
-		          <img src="/resources/images/sub/img_orderflow_1.png" alt="결제순서 1단계 장바구니" />
-		          <ul class="order_tip">
-		            <li>고객님께서 장바구니에 담으신 과정 및 상품입니다. 담긴 날로부터 30일간 자동 저장됩니다.</li>
-								<li>결제 시 가격정보를 확인 후 구매하시기 바랍니다.</li>
-								<li>과정은 매월 21일 기준으로 정보 변경됩니다.(참고도서 포함)</li>
-		          </ul>
-		        </div>
-		        <div class="cart_box">
-		          <p class="big_4"><span class="blue">신청과정</span></p>
-		          <table class="cart_list">
-		          	<caption>카트 리스트</caption>
-  					<thead>
-  					  <tr class="guide">
-    						<th width="43"></th>
-    						<th width="120"></th>
-    						<th></th>
-    						<th width="140"></th>
-    					</tr>
-  					</thead>
-  					<tbody>
-  						<tr class="sel_all">
-  							<td class="center"><input type="checkbox" name="aChk" id="aChk"  onclick="gfn_allChk('aChk','chk');"/></td>
-  							<td colspan="3">전체 선택</td>
-  						</tr>
-						<c:forEach var="row" items="${set.courseList}" varStatus="idx">
-					    	<tr <c:if test="${idx.index + 1 eq fn:length(set.courseList)}"> class="last_line"</c:if>>
-			              	<td class="center"><input type="checkbox" name="chk" id="chk" value="${row.courseId}" /></td>
-			                <td class="center"><img src="/cImage/contents/${row.courseCode}/sImg1.jpg" /></td>
-			                <td class="title">
-			                	<nobr><p class="big_2"><a href="content1.html"><span class="blue">${row.courseName}</span></a></p></nobr>
-			                	<p class="period">교육기간 : ${row.cFromDate} ~ ${row.cToDate} (${row.cPeriod} 일)</p>
-			                	<c:if test="${not empty row.cartWeekList}">
-				                	<ul class="chapter">
-										<c:forEach var="subRow" items="${row.cartWeekList}">
-											<li>[${subRow.week} 차시] ${subRow.title} (<fmt:formatNumber value="${subRow.weekCost}" type="number"/> 원)</li>
-										</c:forEach>
-				                	</ul>
-			                	</c:if>
-			                	<ul class="option">
-			                		<li>교육비 | <fmt:formatNumber value="${row.courseCost}" type="number"/> 원</li>
-			                	</ul>
-			               	</td>
-			                <td class="center"><a href="javascript:" onclick="javascript:lfn_btn('cartDel',{courseId:'${row.courseId}'}); return false;"><img src="/resources/images/sub/btn_cart_out.png" alt="카트에서 제거" /></a></td>
-			              </tr>
-			            </c:forEach>
-		            </tbody>
-		          </table>
-		        </div>
-		        <div class="center_btn">
-		        	<a href="javascript:" onclick="javascript:lfn_btn('cartApplication'); return false;"><img src="/resources/images/sub/btn_pay_next.png" alt="결제신청" /></a>&nbsp;<a href="javascript:" onclick="javascript:lfn_btn('cartSelectDel'); return false;"><img src="/resources/images/sub/btn_all_cartout.png" alt="카트비우기" /></a>
-		        </div>
-		      </div>
-			
-		</div>
-		<!-- end content -->
+        <!-- CONTENTS -->
+        <div class='contents_wrap process' onmouseover='sub_hide()'>
+            <div class='contents_wrap_box'>
+                <!-- QUICK MENU -->
+                <%@ include file="../common/mainQuickMenu.jsp" %>
 
+                <!-- Top -->
+                <div class='top_area'>
+                    <div class='clear_fix'>
+                        <div class='process_history_box clear_fix'>
+                            <span>
+                                <img src='/resources/homepage/img/course/ic_home.jpg' alt=' '>
+                            </span>
+                            <p>HOME</p>
+                            <span>
+                                <img src='/resources/homepage/img/course/arr_right.jpg' alt=' '>
+                            </span>
+                            <p>나의강의실</p>
+                            <span>
+                                <img src='/resources/homepage/img/course/arr_right.jpg' alt=' '>
+                            </span>
+                            <p>장바구니</p>
+                        </div>
+                    </div>
+                    <h1>
+                        장바<span>구니</span>
+                    </h1>
+                </div>
+                <!-- Top END -->
 
-		
-		
-	</div>
-  <!-- end container -->
-  <!-- footer_wrap -->
-	<%@ include file="../home/bottom.jsp" %>
-  <!-- end footer_wrap -->
-</div>
+                <div class='basket_step_box'>
+                    <ul>
+                        <li class='basket_step_list clear_fix on'>
+                            <span><img src='/resources/homepage/img/classroom/basket_step1_active.png' alt=' '></span>
+                            <p class='basket_title'>장바구니</p>
+                            <p>장바구니의 최종 금액을 확인하시고 선택하여 주십시오.</p>
+                        </li>
+                        <li class='basket_arr'>
+                            <img src='/resources/homepage/img/etc/arr_right.png' alt=' '>
+                        </li>
+                        <li class='basket_step_list clear_fix'>
+                            <span><img src='/resources/homepage/img/classroom/basket_step2_inactive.png' alt=' '></span>
+                            <p class='basket_title'>결제정보입력</p>
+                        </li>
+                        <li class='basket_arr'>
+                            <img src='/resources/homepage/img/etc/arr_right.png' alt=' '>
+                        </li>
+                        <li class='basket_step_list clear_fix'>
+                            <span><img src='/resources/homepage/img/classroom/basket_step3_inactive.png' alt=' '></span>
+                            <p class='basket_title'>결제완료</p>
+                        </li>
+                    </ul>
+                    <p class='basket_note'>
+                        <span></span>고객님께서 장바구니에 담으신 과정 및 상품입니다.<br>
+                        <span></span>결제시 가격정보를 확인한 후 구매하시기 바랍니다.<br>
+                        <span></span>과정은 매월 21일 기준으로 정보 변경됩니다. (참고도서 포함)
+                    </p>
+                </div>
+
+                <div class='process_search_result'>
+                    <p class='basket_list_title'>신청과정</p>
+                    <div class='clear_fix'>
+                        <div class='process_result_checkbox'>
+                            <input type='checkbox' name="aChk" id="aChk"  onclick="gfn_allChk('aChk','chk');">
+                        </div>
+                        <p class='process_result_con'>과정명</p>
+                        <p class='process_result_btn'>선택</p>
+                        <p class='process_result_review'>주문금액</p>
+                    </div>
+                    <ul class='process_result_list'>
+<c:forEach var="row" items="${set.courseList}" varStatus="idx">
+                        <li class='clear_fix'>
+                            <div class='process_result_checkbox con'>
+                                <input type='checkbox' name="chk" id="chk" value="${row.courseId}">
+                            </div>
+                            <div class='process_result_con con clear_fix'>
+                                <div class='process_result_img'>
+                                    <img src='/cImage/contents/${row.courseCode}/mImg1.jpg' alt=' '>
+                                </div>
+                                <div class='process_result_text'>
+                                    <div class='process_result_text_top clear_fix'>
+                                        <p>일반</p>
+	<c:if test="${row.mobileYn eq 'Y'}">
+                                        <p class='process_result_mobile'>모바일</p>
+	</c:if>                                        
+                                    </div>
+                                    <p>${row.courseName}</p>
+	<c:if test="${not empty row.cartWeekList}">
+				                	<div class='process_result_text_top clear_fix'>
+		<c:forEach var="subRow" items="${row.cartWeekList}">
+										[${subRow.week} 차시] ${subRow.title} (<fmt:formatNumber value="${subRow.weekCost}" type="number"/> 원)<br>
+		</c:forEach>
+				                	</div>
+	</c:if>
+                                    
+                                    <div class='process_result_text_bottom clear_fix'>
+                                        <p>교육기간</p>
+                                        <p class='process_result_payment'>${row.cFromDate} ~ ${row.cToDate} (${row.cPeriod} 일)</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class='process_result_btn con'>
+                                <button class='bg_color' onclick="lfn_btn('cartDel',{courseId:'${row.courseId}'}); return false;">선택과정 삭제</button>
+                            </div>
+                            <div class='process_result_review con'>
+                                <p><fmt:formatNumber value="${row.courseCost}" type="number"/> 원</p>
+                            </div>
+                        </li>
+</c:forEach>                        
+                    </ul>
+                </div>
+
+                <div class='detail_btn_area'>
+                    <button onclick="lfn_btn('cartSelectDel'); return false;">장바구니 비우기</button>
+                    <button onclick="lfn_btn('cartApplication'); return false;" class='bg_color'>전체과정 주문</button>
+                </div>
+            </div>
+        </div>
+        <!-- CONTENTS END -->
+
+        <!-- FOOTER -->
+        <%@ include file="../common/mainBottom.jsp" %>
+        <!-- FOOTER END -->
+    </div>
+</frameset>
 
 </form>
 
-
+<script src='/resources/homepage/js/dev_sub.js'></script>
 </body>
 </html>
-

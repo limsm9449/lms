@@ -169,10 +169,10 @@ var QP_API = {
 	 * @param page
 	 */
 	openWeek : function(week) {
-		if ( mobileYn == "Y" && gfn_deviceCheck() == "MOBLIE" ) {
+		if ( mobileYn == "Y" ) {
 			currentWeek = week;
 			
-			document.frm.action = contents + "mp4/" + ( currentWeek < 10 ? "0" : "" ) +  currentWeek + ".html";
+			document.frm.action = contents + rootDirectory + "/mp4/" + ( currentWeek < 10 ? "0" : "" ) +  currentWeek + ".html";
 			document.frm.target = "eduContent";
 			document.frm.method = "GET";	
 			document.frm.submit();

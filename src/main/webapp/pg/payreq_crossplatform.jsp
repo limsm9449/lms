@@ -150,9 +150,18 @@
 <script language="javascript" src="https://xpay.uplus.co.kr/xpay/js/xpay_crossplatform.js" type="text/javascript"></script>
  -->
  
-<script language="javascript" src="<%=request.getAttribute("g_xpay_js")%>" type="text/javascript"></script>
+	<script language="javascript" src="<%=request.getAttribute("g_xpay_js")%>" type="text/javascript"></script>
+	<script type="text/javascript" src="/resources/js/jquery-3.3.1.min.js"></script>
+
+
+</head>
 
 <script type="text/javascript">
+
+$(document.body).ready(function () {
+	launchCrossPlatform();
+});
+
 
 /*
 * 수정불가.
@@ -193,7 +202,6 @@ function payment_return() {
 }
 
 </script>
-</head>
 <body>
 <form method="post" name="LGD_PAYINFO" id="LGD_PAYINFO" action="/paymentGateway/payres.do">
 <table>

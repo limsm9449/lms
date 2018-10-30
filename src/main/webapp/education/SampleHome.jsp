@@ -44,7 +44,7 @@ var directorys = [<c:forEach var="row" items="${set.resourceList}" varStatus="id
 var titles = [<c:forEach var="row" items="${set.resourceList}" varStatus="idx"><c:if test="${idx.index ne 0}">,</c:if> "${row.week}/${row.title}/"</c:forEach>];
 
 var rootDirectory = "${set.data.directory}";
-var mobileYn = "${set.data.mobileYn}";
+var mobileYn = "${set.condiVO.mobileYn}";
 	
 $(document).ready(function() {
 	<%-- 초기값 세팅 --%>
