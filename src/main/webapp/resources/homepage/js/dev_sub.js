@@ -516,3 +516,70 @@ function windows(){
     window.open(resourceUrl + 'html/classroom/basket_step3.html', '_self');
     basket_popup_open();
 }
+
+
+// REMOVE FOR IE
+if (!('remove' in Element.prototype)) {
+    Element.prototype.remove = function() {
+        if (this.parentNode) {
+            this.parentNode.removeChild(this.nextSibling);
+            this.parentNode.removeChild(this);
+        }
+    };
+}
+
+
+// REGISTER COURSE LIST
+function register_list(checkbox){
+    var area = document.querySelector('.register_course_list');
+    var parent = getParentByTagName(checkbox, 'td').parentNode;
+    var course = parent.querySelector('.register_compose_lecture p');
+    var price = parent.querySelector('.last_right.part_only');
+    var text = course.innerText;
+    var text_price = price.innerText;
+
+    // create html element
+    var elem_p = document.createElement('p');
+    elem_p.className = 'n_course_list_left';
+    var elem_p_price = document.createElement('p');
+    elem_p_price.className = 'n_course_list_right';
+
+    // checked
+    if(checkbox.checked){
+        var content = document.createTextNode(text);
+        var content_price = document.createTextNode(text_price);
+        elem_p.appendChild(content);
+        elem_p_price.appendChild(content_price);
+        area.appendChild(elem_p);
+        area.appendChild(elem_p_price);
+    }else{
+    // unchecked    
+        var elems_p = area.getElementsByTagName('p');
+        for(var i = 0; i < elems_p.length; i++){
+            var temp = elems_p[i];
+            if(temp.innerHTML === text){
+                temp.nextSibling.remove();
+                temp.remove();
+            }
+
+        }
+    }
+    
+}
+
+// GET PARNET NODE
+function getParentByTagName(node, tagname) {
+	var parent;
+	if (node === null || tagname === '') return;
+	parent  = node.parentNode;
+	tagname = tagname.toUpperCase();
+
+	while (parent.tagName !== "HTML") {
+		if (parent.tagName === tagname) {
+			return parent;
+		}
+		parent = parent.parentNode;
+    }
+    
+	return parent;
+}

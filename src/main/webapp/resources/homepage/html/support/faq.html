@@ -37,7 +37,7 @@
 
                         <!-- 로그오프 상태 -->
                         <a href='../../html/etc/signup_step1.html' class='last_right'>회원가입</a>
-                        <a href='../../html/etc/signin.html'>로그인</a>
+                        <a href='../../html/etc/signin.html' onclick='login()'>로그인</a>
                     </div>
                 </div>
                 <div class='head_wrap mobile clear_fix'>
@@ -170,7 +170,12 @@
                             <span>
                                 <img src='../../img/ic_login.png' alt=' '>
                             </span>
-                            <a href='#'>로그인</a>
+                            <a href='../etc/signin.html' onclick='login()'>로그인</a>
+                        </div>
+                        <div class='mobile_study_box'>
+                            <a href='../classroom/mobile_study.html'>
+                                나의강의실
+                            </a>
                         </div>
                         <div class='mobile_menu process_all'>
                             <button onclick='sub_menu_open(this, "others")'>
@@ -326,7 +331,7 @@
                             <option value='동영상'>동영상</option>
                             <option value='학습진도'>학습진도</option>
                             <option value='시험/과제'>시험/과제</option>
-                            <option value='로그인'>로그인</option>
+                            <option value='로그인' onclick='login()'>로그인</option>
                         </select>
                         <input type='text' name='' id=''>
                         <button>검색</button>
@@ -338,7 +343,7 @@
                         <button>동영상</button>
                         <button>학습진도</button>
                         <button>시험/과제</button>
-                        <button>로그인</button>
+                        <button onclick='login()'>로그인</button>
                     </div>
 
                     <ul class='faq_list_box'>

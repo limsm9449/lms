@@ -301,18 +301,19 @@ header{
     display:none;
 }
 .mobile_menu ul li{
-    padding:10px 20px;
 }
 .mobile_menu ul li a{
+    display:block;
     font-size:14px;
+    padding:10px 20px;
 }
 .mobile_menu ul .first_depth{
-    padding:15px 20px;
     background:#eee;
 }
 .mobile_menu ul .first_depth a{
     font-size:16px;
     letter-spacing:-1px;
+    padding:15px 20px;
 }
 
 
@@ -659,6 +660,9 @@ header{
 .signup_input_list > div input[type='password']{
     width:460px;
 }
+.signup_input_list .certification_name.type_id input[type='text'] {
+    width: 319px;
+}
 .signup_input_list .info_input_phone select{
     float:left;
     width:100px;
@@ -679,7 +683,8 @@ header{
     margin-top:8px;
 }
 .info_input_phone button,
-.info_input_address button{
+.info_input_address button,
+.certification_name.type_id button{
     width:136px;
     font-family:'NanumSquare';
     font-size:16px;
@@ -1075,6 +1080,7 @@ header{
     .signup_input_list > div input[type='text'],
     .signup_input_list > div input[type='password'],
     .signup_input_list .info_input_address input[type='text'],
+    .signup_input_list .certification_name.type_id input[type='text'],
     .info_input_address textarea{
         width:56%;
     }
@@ -1090,13 +1096,10 @@ header{
     .signup_input_list .info_input_phone input[type='text']{
         width:38%;
     }
-    .info_input_phone button{
-        width: 59.5%;
-        margin-left: 40%;
-        margin-top: 4px;
-    }
-    .info_input_address button {
-        width: 59.5%;
+    .info_input_phone button,
+    .certification_name.type_id button,
+    .info_input_address button{
+        width:60%;
         margin-left: 40%;
         margin-top: 4px;
     }
@@ -1157,6 +1160,13 @@ header{
     }
 
 
+    /* BTN AREA */
+    .signup_btn_box button{
+        width:40%;
+    }
+
+
+
     /* FOOTER */
     .foot_link_box{
         width:100%;
@@ -1181,8 +1191,14 @@ header{
     .info_input_phone button,
     .certification_birth .second,
     .info_input_address button,
+    .certification_name.type_id button,
     .signup_input_list .info_input_address textarea{
         margin-left:38%;
+    }
+}
+@media all and (max-width:370px){
+    .certification_tab_box button{
+        font-size:14px;
     }
 }
 @media all and (max-width:360px){

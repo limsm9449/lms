@@ -50,7 +50,7 @@
 
                     <!-- 로그오프 상태 -->
                     <a href='./html/etc/signup_step1.html' class='last_right'>회원가입</a>
-                    <a href='./html/etc/signin.html'>로그인</a>
+                    <a href='./html/etc/signin.html' onclick='login()'>로그인</a>
                 </div>
             </div>
             <div class="head_wrap mobile clear_fix">
@@ -187,7 +187,12 @@
                         <span>
                             <img src='./img/ic_login.png' alt=' '>
                         </span>
-                        <a href='#'>로그인</a>
+                        <a href='../etc/signin.html' onclick='login()'>로그인</a>
+                    </div>
+                    <div class='mobile_study_box'>
+                        <a href='./html/classroom/mobile_study.html'>
+                            나의강의실
+                        </a>
                     </div>
                     <div class='mobile_menu process_all'>
                         <button onclick='sub_menu_open(this, "main")'>

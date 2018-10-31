@@ -169,6 +169,11 @@
                         <a href='#'>${session.userName}님 반갑습니다</p>
 </c:if>  
                     </div>
+                    <div class='mobile_study_box'>
+                        <a href="javascript:" onclick="page.goPage('/main/myClassroom', '');">
+                            나의강의실
+                        </a>
+                    </div>
                     <div class='mobile_menu process_all'>
                         <button onclick='sub_menu_open(this, "others")'>
                             전체과정

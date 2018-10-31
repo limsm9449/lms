@@ -189,7 +189,7 @@ request.setCharacterEncoding("euc-kr");
 %>
 
 <script type="text/javascript">
-	opener.page.goPage('/paymentGateway/complete');
+	opener.gfn_goPage('/paymentGateway/complete',{});
 	window.close();
 </script>
 

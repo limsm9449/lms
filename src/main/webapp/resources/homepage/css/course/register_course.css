@@ -301,18 +301,19 @@ header{
     display:none;
 }
 .mobile_menu ul li{
-    padding:10px 20px;
 }
 .mobile_menu ul li a{
+    display:block;
     font-size:14px;
+    padding:10px 20px;
 }
 .mobile_menu ul .first_depth{
-    padding:15px 20px;
     background:#eee;
 }
 .mobile_menu ul .first_depth a{
     font-size:16px;
     letter-spacing:-1px;
+    padding:15px 20px;
 }
 
 
@@ -383,8 +384,6 @@ header{
     cursor:pointer;
 }
 
-
-
 /* Top */
 .process_history_box{
     font-size: 13px;
@@ -408,7 +407,7 @@ header{
 .top_area h1{
     clear: both;
     font-family:"NanumSquare";
-    font-size: 20px;
+    font-size: 44px;
     letter-spacing: -2px;
     padding-bottom: 16px;
     border-bottom: solid 1px #003366;
@@ -613,11 +612,11 @@ header{
     display:block;
 }
 #compose{
-    padding: 40px 6%;
+    /* padding: 40px 6%; */
 }
 #estimate{
     min-height:800px;
-    padding: 40px 6%;
+    /* padding: 40px 6%; */
 }
 #introduce > ul{
     padding-bottom:50px;
@@ -823,6 +822,36 @@ header{
 .register_compose_col4{
     width: 10%;
 }
+
+
+#compose .register_course_list_text {
+    padding: 10px 20px;
+    margin-top: 10px;
+    font-size: 20px;
+    font-weight: 600;
+    background: #eee;
+    border: solid 1px #ccc;
+    border-bottom: 0;
+}
+.register_course_list{
+    padding:10px 20px;
+    border: solid 1px #ccc;
+}
+.register_course_list p{
+    box-sizing:border-box;
+    font-size:16px;
+    line-height:150%;
+}
+.n_course_list_left{
+    width:90%;
+    float:left;
+}
+.n_course_list_right{
+    float:right;
+    width:10%;
+    text-align:right;
+}
+
 
 .register_estimate_table{
     width: 100%;

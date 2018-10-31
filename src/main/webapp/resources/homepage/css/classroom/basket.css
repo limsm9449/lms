@@ -302,18 +302,19 @@ header{
     display:none;
 }
 .mobile_menu ul li{
-    padding:10px 20px;
 }
 .mobile_menu ul li a{
+    display:block;
     font-size:14px;
+    padding:10px 20px;
 }
 .mobile_menu ul .first_depth{
-    padding:15px 20px;
     background:#eee;
 }
 .mobile_menu ul .first_depth a{
     font-size:16px;
     letter-spacing:-1px;
+    padding:15px 20px;
 }
 
 

@@ -241,11 +241,11 @@ function lfn_validate() {
                             </select>
                         일
                     </div>
-                    <div class='certification_name clear_fix'>
+                    <div class='certification_name type_id clear_fix'>
                         <p>아이디</p>
-                        <input type="text" name="userId" id="userId" onchange="$('#userIdCheck').val('N');"/>
-		                  <input type="hidden" name="userIdCheck" id="userIdCheck" />
-		                  <a href="#" id="checkBtn" onClick="javascript:lfn_btn('isExistUserId'); return false;"><img src="/resources/images/sub/btn_id_chk.png" /></a>
+                        <input type='text' name="userId" id="userId" onchange="$('#userIdCheck').val('N');" placeholder='아이디를 입력해주세요'>
+	                  	<input type="hidden" name="userIdCheck" id="userIdCheck" />
+                        <button id="checkBtn" onClick="lfn_btn('isExistUserId'); return false;">중복확인</button>
                     </div>
                     <div class='info_input_phone clear_fix'>
                         <p>휴대폰 번호</p>

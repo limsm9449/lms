@@ -44,7 +44,7 @@
 
                     <!-- 로그오프 상태 -->
                     <a href='../../html/etc/signup_step1.html' class='last_right'>회원가입</a>
-                    <a href='../../html/etc/signin.html'>로그인</a>
+                    <a href='../../html/etc/signin.html' onclick='login()'>로그인</a>
                 </div>
             </div>
             <div class="head_wrap mobile clear_fix">
@@ -179,7 +179,12 @@
                         <span>
                             <img src='../../img/ic_login.png' alt=' '>
                         </span>
-                        <a href='#'>로그인</a>
+                        <a href='../etc/signin.html' onclick='login()'>로그인</a>
+                    </div>
+                    <div class='mobile_study_box'>
+                        <a href='../classroom/mobile_study.html'>
+                            나의강의실
+                        </a>
                     </div>
                     <div class='mobile_menu process_all'>
                         <button onclick='sub_menu_open(this, "others")'>
@@ -320,15 +325,15 @@
                     <span>Welcome</span>
                     큐러닝에 오신 것을 환영합니다.
                 </h1>
-                <p>로그인을 위하여 아래 아이디와 비밀번호를 입력하여 주십시요.</p>
+                <p onclick='login()'>로그인을 위하여 아래 아이디와 비밀번호를 입력하여 주십시요.</p>
                 <div class='signin_main_control clear_fix'>
                     <input type='text' name='' id='' placeholder='아이디'>
                     <input type='password' name='' id='' placeholder='비밀번호'>
-                    <button class='signin_complete_btn'>로그인</button>
+                    <button class='signin_complete_btn' onclick='login()'>로그인</button>
                     <div>
                         <div class='signin_sub_control left clear_fix'>
                             <input type='checkbox' name='' id=''>
-                            <p>로그인 상태유지</p>
+                            <p onclick='login()'>로그인 상태유지</p>
                         </div>
                         <div class='signin_sub_control right clear_fix'>
                             <a href='./signup_step1.html'>회원가입</a>

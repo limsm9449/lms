@@ -105,3 +105,16 @@ iframe{
 .iframe_contents *{
 	line-height:130%;
 }
+
+.mobile_study_box a{
+	display: block;
+    font-size: 20px;
+    font-weight: 500;
+    color: #fff;
+    text-align: center;
+    padding: 16px 0;
+    background: #0584c3;
+    width: 90%;
+    margin: 8px auto;
+    border-radius: 6px;
+}
