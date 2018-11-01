@@ -1,17 +1,25 @@
 <%@ page contentType="text/html;charset=utf-8"%>
-
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="ko" xml:lang="ko">
+<!DOCTYPE html>
+<html lang='ko' data-useragent='Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; Trident/6.0)'>
+
 <head>
-<title>
-</title>
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1'>
+    <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+    <title>Q learning - 나의강의실 - 회원정보수정</title>
 
-<%@ include file="../common/commUserInclude.jsp" %>
+    <%@ include file="../common/commMainInclude.jsp" %>
 
+    <link href='https://fonts.googleapis.com/css?family=Nanum+Gothic' rel='stylesheet'>
 
+    <link rel='stylesheet' href='/resources/homepage/css/initialization.css'>
+    <link rel='stylesheet' href='/resources/homepage/css/etc/signup.css'>
 </head>
 
 <script type="text/javascript">
@@ -38,7 +46,7 @@ function lfn_btn(pKind, pParam) {
 						$("#userPassword").focus();
 					} else if ( json.rtnMode == "PASSWORD_OK") {
 						alert("비밀번호가 변경되었습니다.");
-						window.location = "/member/memberChangePassword.do";
+						page.goHome();
 					}
 				},
 				error : function(e) {
@@ -72,76 +80,83 @@ function lfn_validate() {
 
 <body>
 
-
 <form id="frm" name="frm" method="post">
+	<input type="hidden" name="userId" id="userId" value="${set.data.userId}" />
+	<input type="hidden" id="sex" name="sex">
+	<input type="hidden" id="birthDay" name="birthDay">
+	
+<frameset rows='*'>
+    <div class='wrap'>
+        <!-- HEAD -->
+        <%@ include file="../common/mainTop.jsp" %>
+        <!-- HEAD END -->
 
+        <!-- CONTENTS -->
+        <div class='contents_wrap_box' onmouseover='sub_hide()'>
+            <!-- QUICK MENU -->
+            <%@ include file="../common/mainQuickMenu.jsp" %>
 
-<!-- skipnav -->
-<div id="skipnav"><a href="#side" class="skip">좌측메뉴 바로가기</a></div>
-<div id="skipnav"><a href="#contents" class="skip">컨텐츠 바로가기</a></div>
-<!-- skipnav -->
+            <!-- Top -->
+            <div class='top_area'>
+                <div class='clear_fix'>
+                    <div class='process_history_box clear_fix'>
+                        <span>
+                            <img src='/resources/homepage/img/course/ic_home.jpg' alt=' '>
+                        </span>
+                        <p>HOME</p>
+                        <span>
+                            <img src='/resources/homepage/img/course/arr_right.jpg' alt=' '>
+                        </span>
+                        <p>나의강의실</p>
+                        <span>
+                            <img src='/resources/homepage/img/course/arr_right.jpg' alt=' '>
+                        </span>
+                        <p>비밀번호변경</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Top END -->
 
-<!-- wrap -->
-<div id="wrap" class="site">
-  <%@ include file="../home/userTop.jsp" %>
-  <hr />
-  <!-- container -->
-  <div id="container" class="site">
-   	 	<!-- side -->
-		<%
-   	 		String menuId = "memberChangePassword";
-   	 	%>
-		<%@ include file="../home/userLeft.jsp" %>
-		<!-- end side -->
-		
-    	<!-- contents -->
-		<div id="contents" class="site">
-			<!-- location -->
-			<div id="location"><a href="/" class="home">HOME</a><span>&gt;</span>나의정보<span>&gt;</span>비밀번호 변경</div>
-			<!-- title -->
-			<h3 class="tit_big">비밀번호 변경</h3>
-		      <div class="artcle">
-		        <div class="msg_box">
-		          <p>현재 비밀번호를 입력한 후 새로 사용할 비밀번호를 입력해 주십시오.</p>
-		        </div>
-		        <div class="repassword_box">
-		          <form name="frm" method="post">
-		          <div class="pass_form">
-		            <fieldset>
-		    					<legend>비밀번호 변경</legend>
-		    					<label for="now_pw">현재 비밀번호</label>
-		    					<div class="input_pw"><input type="password" id="userPassword" name="userPassword" /></div>
-		    					<label for="new_pw">변경 비밀번호</label>
-		    				  <div class="input_pw"><input type="password" id="newUserPassword" name="newUserPassword" /><span>※ 영문/숫자(혼용) 6~12글자 이내로 입력</span></div>
-		    					<label for="new_pw2">변경 비밀번호 확인</label>
-		    					<div class="input_pw"><input type="password" id="newUserPassword2" name="newUserPassword2" /><span>※ 비밀번호를 한번 더 입력, 잊지 않도록 주의하세요.</span></div>
-		    				</fieldset>
-		    			</div>
-		          <div class="center_btn">
-		            <a href="javascript:" id="saveBtn" onclick="lfn_btn('save');"><img src="/resources/images/sub/btn_ok.png" /></a>&nbsp;<a href="javascript:" onclick="window.location='/member/memberChangePassword.do';"><img src="/resources/images/sub/btn_censel.png" /></a>
-		          </div>
-		          </form>
-		        </div>
-		      </div>
-		</div>
-		<!-- end content -->
-		
-		
-	</div>
-  <!-- end container -->
-  <!-- footer_wrap -->
-	<%@ include file="../home/bottom.jsp" %>
-  <!-- end footer_wrap -->
-</div>
+            <div class='util_wrap'>
+                <h1>
+                    비밀번호 변경
+                </h1>
+                <div class='signup_title_box'>
+                </div>
+                <div class='signup_input_list'>
+                	<div class='certification_name clear_fix'>
+                        <p>현재 비밀번호</p>
+                        <input type='password' name='userPassword' id='userPassword' placeholder='현재 비밀번호를 입력해주세요'>
+                    </div>
+                	<div class='certification_name clear_fix'>
+                        <p>비밀번호</p>
+                        <input type='password' name='newUserPassword' id='newUserPassword' placeholder='※ 영문/숫자(혼용) 6~12글자 이내로 입력'>
+                    </div>
+                    <div class='certification_name clear_fix'>
+                        <p>비밀번호 확인</p>
+                        <input type='password' name='newUserPassword2' id='newUserPassword2' placeholder='※ 비밀번호를 한번 더 입력, 잊지 않도록 주의하세요.'>
+                    </div>
+                </div>
+                <div class='signup_btn_box clear_fix'>
+                    <button onclick='page.goHome();'>취소</button>
+                    <button class='last' id="saveBtn" onclick="lfn_btn('save');">저장</button>
+                </div>
+            </div>
+
+        </div>
+        <!-- CONTENTS END -->
+
+        <!-- FOOTER -->
+        <%@ include file="../common/mainBottom.jsp" %>
+        <!-- FOOTER END -->
+    </div>
+
+    <script src='/resources/homepage/js/dev_sub.js?timestamp=<%=timestamp%>'></script>
+
+</frameset>
 
 </form>
 
-
 </body>
+
 </html>
-
-
-
-</div>
-</div>
-	

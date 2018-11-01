@@ -242,7 +242,7 @@ header{
 }
 .close_btn_area{
     position: absolute;
-    right: -10%;
+    right: -12%;
     top: 10px;
     width: 30px;
 }
@@ -269,7 +269,7 @@ header{
 }
 .mobile_menu.login a{
     display:block;
-    float:left;
+    float:right;
     line-height:38px;
     padding-left:14px;
 }

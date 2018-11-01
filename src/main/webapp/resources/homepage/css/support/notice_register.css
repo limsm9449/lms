@@ -242,7 +242,7 @@ header{
 }
 .close_btn_area{
     position: absolute;
-    right: -10%;
+    right: -12%;
     top: 10px;
     width: 30px;
 }
@@ -269,7 +269,7 @@ header{
 }
 .mobile_menu.login a{
     display:block;
-    float:left;
+    float:right;
     line-height:38px;
     padding-left:14px;
 }
@@ -496,9 +496,9 @@ header{
     clear:both;
     display:flex;
 }
-.form_box div{
+.form_box > div{
     float: left;
-    width: 90%;
+    width: 85%;
 }
 .form_box .title{
     background: #f7f7f7;

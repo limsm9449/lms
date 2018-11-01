@@ -254,12 +254,12 @@ $(document).ready(function(){
                                 </p>
                             </div>
                             <div class='process_btn_area clear_fix'>
-                                <button>맛보기</button>
-                                <button>장바구니</button>
-                                <button class='admission'>수강신청</button>
+	                            <button onclick="javascript:Popup.showSampleCourse('21','1200','900'); return false;">맛보기</button>
+	                            <button onclick="page.goCart(21, 0);">장바구니</button>
+	                            <button onclick="gfn_goPage('/main/mainCourseData','courseId=21');" class='admission'>수강신청</button>
                             </div>
                             <div class='process_score_box clear_fix'>
-                                <div class='process_score_image clear_fix'>
+                                <div class='process_score_image clear_fix' onclick="Popup.showPostscriptList('21')">
                                     <span><img src='/resources/homepage/img/course/star_active.png' alt=' '></span>
                                     <span><img src='/resources/homepage/img/course/star_active.png' alt=' '></span>
                                     <span><img src='/resources/homepage/img/course/star_active.png' alt=' '></span>
@@ -285,16 +285,16 @@ $(document).ready(function(){
                                     <p>모바일</p>
                                 </div>
                                 <p class='process_title'>
-                                    [스마트러닝] 김정구 교수의 미래창조경영 위기와 역경을 기회로
+                                    [스마트러닝] 토기와 거북이의 재테크 비법
                                 </p>
                             </div>
                             <div class='process_btn_area clear_fix'>
-                                <button>맛보기</button>
-                                <button>장바구니</button>
-                                <button class='admission'>수강신청</button>
+	                            <button onclick="javascript:Popup.showSampleCourse('22','1200','900'); return false;">맛보기</button>
+	                            <button onclick="page.goCart(22, 0);">장바구니</button>
+	                            <button onclick="gfn_goPage('/main/mainCourseData','courseId=22');" class='admission'>수강신청</button>
                             </div>
                             <div class='process_score_box clear_fix'>
-                                <div class='process_score_image clear_fix'>
+                                <div class='process_score_image clear_fix' onclick="Popup.showPostscriptList('22')">
                                     <span><img src='/resources/homepage/img/course/star_active.png' alt=' '></span>
                                     <span><img src='/resources/homepage/img/course/star_active.png' alt=' '></span>
                                     <span><img src='/resources/homepage/img/course/star_active.png' alt=' '></span>
@@ -320,16 +320,16 @@ $(document).ready(function(){
                                     <p>모바일</p>
                                 </div>
                                 <p class='process_title'>
-                                    [스마트러닝] 김정구 교수의 미래창조경영 위기와 역경을 기회로
+                                    [스마트러닝] 윤코치의 보고서 작성법
                                 </p>
                             </div>
                             <div class='process_btn_area clear_fix'>
-                                <button>맛보기</button>
-                                <button>장바구니</button>
-                                <button class='admission'>수강신청</button>
+	                            <button onclick="javascript:Popup.showSampleCourse('19','1200','900'); return false;">맛보기</button>
+	                            <button onclick="page.goCart(19, 0);">장바구니</button>
+	                            <button onclick="gfn_goPage('/main/mainCourseData','courseId=19');" class='admission'>수강신청</button>
                             </div>
                             <div class='process_score_box clear_fix'>
-                                <div class='process_score_image clear_fix'>
+                                <div class='process_score_image clear_fix' onclick="Popup.showPostscriptList('19')">
                                     <span><img src='/resources/homepage/img/course/star_active.png' alt=' '></span>
                                     <span><img src='/resources/homepage/img/course/star_active.png' alt=' '></span>
                                     <span><img src='/resources/homepage/img/course/star_active.png' alt=' '></span>

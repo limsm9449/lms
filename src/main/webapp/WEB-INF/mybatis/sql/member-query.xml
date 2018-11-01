@@ -97,31 +97,12 @@
 		SELECT USER_ID,
 		       USER_NAME,
 		       EMAIL,
-		       B.ZIPCODE HOME_ZIP,
+		       HOME_ZIPCODE,
 		       HOME_ADDR,
-		       HOME_TEL,
 		       MOBILE,
-		       JOB,
-			   (SELECT DD_VALUE FROM CODE WHERE DD_MAIN = 'JOB' AND DD_KEY = A.JOB) JOB_NAME,
-		       IF(RETIRED_YN = 'N','',RETIRED_YN) RETIRED_YN,
-		       RETIRED_REASON,
-		       COMP_CD,
-		       CONCAT(B.SIDO,IFNULL(CONCAT(' ',B.GUGUN),'')
-			                  ,IFNULL(CONCAT(' ',B.DONG),'')
-			                  ,IFNULL(CONCAT(' ',B.RI),'')
-			                  ,IFNULL(CONCAT(' ',B.BLDG),'')
-		    	              ) HOME_ADDR1,
-		       HOME_ZIPCODE_SEQ,
-		       A.ADMIN_YN,
-		       (SELECT DD_VALUE FROM CODE WHERE DD_MAIN = 'ADMIN_AUH' AND DD_KEY = A.ADMIN_YN) ADMIN_YN_NAME,
-		       A.TEACHER_YN,
-		       A.TUTOR_YN,
-		       A.SEX,
-		       (SELECT DD_VALUE FROM CODE WHERE DD_MAIN = 'SEX' AND DD_KEY = A.SEX) SEX_NAME,
-		       A.BIRTH_DAY,
-		       A.CERTIFICATION_YN,
-		       A.CERTIFICATION_KEY
-		  FROM USER A LEFT OUTER JOIN ZIPCODE B ON A.HOME_ZIPCODE_SEQ = B.SEQ
+		       SEX,
+		       BIRTH_DAY
+		  FROM USER
 		 WHERE USER_ID = #{userId}
     </select>
 
@@ -251,9 +232,12 @@
     
     <select id="userUpdateForUser" parameterType="Member">
     	UPDATE USER
-    	   SET EMAIL = #{email},
-    	       HOME_TEL = #{homeTel}, 
+    	   SET SEX = #{sex},
+    	       BIRTH_DAY = #{birthDay}, 
     	       MOBILE = #{mobile}, 
+    	       HOME_ZIPCODE = #{homeZipcode}, 
+    	       HOME_ADDR = #{homeAddr}, 
+    	       EMAIL = #{email},
     	       UPDATE_DATE = CURRENT_TIMESTAMP
     	 WHERE USER_ID = #{userId} 
     </select>

@@ -13,18 +13,9 @@
 
 	<%@ include file="../common/commMainInclude.jsp" %>
 
-    <script src='/resources/homepage/js/jquery_3.3.1.js'></script>
-    <!--[if IE8]>
-        <script src="http://code.jquery.com/jquery-1.12.3.js></script>
-    <![endif]-->
     <script src='/resources/homepage/js/jquery.bxslider.js'></script>
     
-    <!--[if IE]>
-        <link rel='stylesheet' href='./css/main_compatibility.css'>
-    <![endif]-->
-
     <link href='https://fonts.googleapis.com/css?family=Nanum+Gothic' rel='stylesheet'>
-
     <link rel='stylesheet' href='/resources/homepage/css/initialization.css'>
     <link rel='stylesheet' href='/resources/homepage/css/main.css'>
     
@@ -271,7 +262,7 @@
                             <strong>[스마트러닝] 윤코치의 보고서 작성법</strong>
                             퇴짜맞는 보고서, 형식적인 보고서는 더 이상 없다!
                         </p>
-                        <a class='lecture_more' href=''>상세보기</a>
+                        <a class='lecture_more' href='#' onclick="gfn_goPage('/main/mainCourseData','courseId=19');">상세보기</a>
                     </li>
                     <li class='recommend recommend2 clear_fix'>
                         <a href='' class='recommend_title'>
@@ -285,7 +276,7 @@
                             <strong>[스마트러닝] 토끼와 거북의의 재테크 비법</strong>
                             퇴짜맞는 보고서, 형식적인 보고서는 더 이상 없다!
                         </p>
-                        <a class='lecture_more' href=''>상세보기</a>
+                        <a class='lecture_more' href='#' onclick="gfn_goPage('/main/mainCourseData','courseId=22');">상세보기</a>
                     </li>
                     <li class='recommend recommend3 clear_fix last_right'>
                         <a href='' class='recommend_title'>
@@ -294,7 +285,7 @@
                             <strong>[스마트러닝] 시원하게 뚫어 주는 비즈니스 스킬</strong>
                             업무에 대한 답답한 마음을 실제적인 비즈니스 스킬을<br>통해 시원하게 해결해 주는 솔루션
                         </p>
-                        <a class='lecture_more' href=''>상세보기</a>
+                        <a class='lecture_more' href='#' onclick="gfn_goPage('/main/mainCourseData','courseId=23');">상세보기</a>
                     </li>
                 </ul>
             </div>

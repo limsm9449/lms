@@ -44,13 +44,13 @@
                 </div>
                 <div class='head_con util_box'>
                     <!-- 로그인 상태 -->
-                    <!-- <a href='#' class='last_right'>로그아웃</a>
-                    <a href='#' class='pc'>회원정보수정</a>
-                    <p class='pc'>OOO님 반갑습니다.</p> -->
+                    <a href='./index.html' class='last_right'>로그아웃</a>
+                    <a href='./html/etc/user_info_change.html' class='pc'>회원정보수정</a>
+                    <p class='pc'>OOO님 반갑습니다.</p>
 
                     <!-- 로그오프 상태 -->
-                    <a href='./html/etc/signup_step1.html' class='last_right'>회원가입</a>
-                    <a href='./html/etc/signin.html' onclick='login()'>로그인</a>
+                    <!-- <a href='./html/etc/signup_step1.html' class='last_right'>회원가입</a>
+                    <a href='./html/etc/signin.html' onclick='login()'>로그인</a> -->
                 </div>
             </div>
             <div class="head_wrap mobile clear_fix">
@@ -65,7 +65,7 @@
                     </a>
                 </div>
                 <div class='head_con util_box'>
-                    <a href='#' class='last_right'>로그아웃</a>
+                    <a href='./index.html' class='last_right'>로그아웃</a>
                 </div>
                 <div class='head_con search_box'>
                     <input type="text">
@@ -89,7 +89,7 @@
                             <a href='./html/classroom/classroom.html'>나의강의실</a>
                         </li>
                         <li>
-                            <a href='./html/guidance/tutorial.html'>교육안내</a>
+                            <a href='../guidance/tutorial.html#quick_to'>교육안내</a>
                         </li>
                         <li>
                             <a href='./html/support/support.html'>고객지원</a>
@@ -122,7 +122,7 @@
                                 <li><a href='../classroom/lecture_cancel.html'>수강취소과정</a></li>
                                 <li><a href='./html/classroom/basket_step1.html'>장바구니</a></li>
                                 <li><a href='./html/classroom/lecture_completed.html'>수강완료과정</a></li>
-                                <li><a href=''>회원정보수정</a></li>
+                                <li><a href='./html/etc/user_info_change.html'>회원정보수정</a></li>
                                 <li><a href=''>비밀번호변경</a></li>
                                 <li><a href=''>상담내역</a></li>
                                 <li><a href=''>회원탈퇴</a></li>
@@ -169,7 +169,8 @@
                     </a>
                 </div>
                 <div class='head_con util_box'>
-                    <a href='./html/etc/signin.html' class='last_right' onclick='login()'>로그인</a>
+                    <!-- <a href='./html/etc/signin.html' class='last_right' onclick='login()'>로그인</a> -->
+                    <a href='./index.html' class='last_right' onclick=''>로그아웃</a>
                 </div>
                 <div class='head_con search_box'>
                     <input type="text">
@@ -187,7 +188,8 @@
                         <span>
                             <img src='./img/ic_login.png' alt=' '>
                         </span>
-                        <a href='../etc/signin.html' onclick='login()'>로그인</a>
+                        <!-- <a href='./html/etc/signin.html' onclick='login()'>로그인</a> -->
+                        <a href='./index.html'>로그아웃</a>
                     </div>
                     <div class='mobile_study_box'>
                         <a href='./html/classroom/mobile_study.html'>
@@ -219,7 +221,7 @@
                             <li><a href='./html/classroom/lecture_cancel.html'>수강취소과정</a></li>
                             <li><a href='./html/classroom/basket_step1.html'>장바구니</a></li>
                             <li><a href='./html/classroom/lecture_completed.html'>수강완료과정</a></li>
-                            <li><a href=''>회원정보수정</a></li>
+                            <li><a href='./html/etc/user_info_change.html'>회원정보수정</a></li>
                             <li><a href=''>비밀번호변경</a></li>
                             <li><a href=''>상담내역</a></li>
                             <li><a href=''>회원탈퇴</a></li>
@@ -230,7 +232,7 @@
                             교육안내
                         </button>
                         <ul>
-                            <li class='first_depth'><a href='./html/guidance/tutorial.html'>교육안내</a></li>
+                            <li class='first_depth'><a href='../guidance/tutorial.html#quick_to'>교육안내</a></li>
                             <li><a href=''>수강신청방법</a></li>
                             <li><a href=''>학습방법</a></li>
                             <li><a href=''>학습관리</a></li>
@@ -292,7 +294,7 @@
                         </a>
                     </li>
                     <li class='quick_menu_list'>
-                        <a href='#'>
+                        <a href='./html/guidance/tutorial.html#quick_to'>
                             <span></span>
                             <img src='./img/quick_menu4.png' alt=' '>
                             학습지원프로그램
@@ -356,7 +358,7 @@
                             <div class='slider_text_box left'>
                                 <img src='./img/visual2_text.png' class='pc' alt=' '>
                             </div>
-                            <button class='right_bottom'>상세보기2</button>
+                            <button class='right_bottom'>이벤트2</button>
                         </div>
                     </div>
                 </li>
@@ -387,7 +389,7 @@
                             <div class='slider_text_box left'>
                                 <img src='./img/visual2_text.png' class='pc' alt=' '>
                             </div>
-                            <button class='right_bottom'>상세보기2</button>
+                            <button class='right_bottom'>공지사항2</button>
                         </div>
                     </div>
                 </li>
@@ -404,8 +406,8 @@
             <div class='slider_tab_wrap'>
                 <div class='slider_tab'>
                     <button onclick='change_tab(0, this)' class='on'>베스트 과정</button>
-                    <button onclick='change_tab(1, this)' id='btn_center'>9월 신규 이벤트</button>
-                    <button onclick='change_tab(2, this)'>주요 공지사항</button>
+                    <button onclick='change_tab(1, this)' id='btn_center'>11월 신규 이벤트</button>
+                    <button onclick='change_tab(2, this)' class='last_right'>주요 공지사항</button>
                 </div>
             </div>
             <!-- VISUAL END -->
@@ -472,11 +474,12 @@
                             <div class='process'>
                                 <p class='process_title'>
                                     <span>
-                                        남다른 <strong>교구활용의 정석</strong>
+                                        윤코치의 <strong>보고서 작성법</strong>
                                     </span>
                                 </p>
                                 <p class='process_text'>
-                                    활기찬 교실! 재미있는 수업!<br>다양한 교구를 통한 남다른 교실 만들기!
+                                    퇴짜맞는 보고서, 형식적인 보고서는 더이상 없다!<br>
+                                    상대방의 마음을 한번에 잡을 수 있는 설득력있는 보고서 작성법의 결정판!
                                 </p>
                                 <a href=''>바로가기1</a>
                             </div>
@@ -487,11 +490,12 @@
                             <div class='process'>
                                 <p class='process_title'>
                                     <span>
-                                        남다른 <strong>교구활용의 정석</strong>
+                                        윤코치의 <strong>보고서 작성법</strong>
                                     </span>
                                 </p>
                                 <p class='process_text'>
-                                    활기찬 교실! 재미있는 수업!<br>다양한 교구를 통한 남다른 교실 만들기!
+                                    퇴짜맞는 보고서, 형식적인 보고서는 더이상 없다!<br>
+                                    상대방의 마음을 한번에 잡을 수 있는 설득력있는 보고서 작성법의 결정판!
                                 </p>
                                 <a href=''>바로가기2</a>
                             </div>
@@ -502,11 +506,12 @@
                             <div class='process'>
                                 <p class='process_title'>
                                     <span>
-                                        남다른 <strong>교구활용의 정석</strong>
+                                        윤코치의 <strong>보고서 작성법</strong>
                                     </span>
                                 </p>
                                 <p class='process_text'>
-                                    활기찬 교실! 재미있는 수업!<br>다양한 교구를 통한 남다른 교실 만들기!
+                                    퇴짜맞는 보고서, 형식적인 보고서는 더이상 없다!<br>
+                                    상대방의 마음을 한번에 잡을 수 있는 설득력있는 보고서 작성법의 결정판!
                                 </p>
                                 <a href=''>바로가기3</a>
                             </div>
@@ -681,11 +686,7 @@
         </div>
         <!-- FOOTER END -->
     </div>
-    <!-- Local -->
     <script src='./js/dev.js'></script>
-
-    <!-- Server -->
-    <!-- <script src='./js/dev.js'></script> -->
 </frameset>
 </body>
 

@@ -59,12 +59,6 @@ public class MemberService {
     }
 
     public MemberSet memberU(MemberSet set) throws Exception {
-    	//DD 데이타를 가져온다.
-    	set.setDdTel(ddService.getDdCodeKeyDdMain("TEL"));
-    	set.setDdMobile(ddService.getDdCodeKeyDdMain("MOBILE"));
-    	set.setDdJob(ddService.getDdCodeKeyDdMain("JOB"));
-    	set.setDdUserKind(ddService.getDdCodeKeyDdMain("AUTH"));
-
     	set.setIsAdminYn(SessionUtil.isAdminYn());
     	
     	//사용자 정보를 가져온다.

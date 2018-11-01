@@ -5,7 +5,7 @@
     <meta charset='utf-8'>
     <meta name='viewport' content='width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1'>
     <meta http-equiv='X-UA-Compatible' content='ie=edge'>
-    <title>Q learning - 회원가입 - 가입여부확인</title>
+    <title>Q learning - 나의강의실 - 회원정보수정</title>
 
     <!--[if IE]>
         <link rel='stylesheet' href='../../css/main_compatibility.css'>
@@ -323,89 +323,79 @@
 
             <div class='util_wrap'>
                 <h1>
-                    회원가입
+                    회원정보수정
                 </h1>
-                <div class='util_step_box clear_fix'>
-                    <div class='pd'>
-                        <span><img src='../../img/etc/ic_step1.png' alt=''></span>
-                        <p>이용약관</p>
-                    </div>
-                    <div class='arrow'><img src='../../img/etc/arr_right.png' alt=''></div>
-                    <div class='active'>
-                        <span><img src='../../img/etc/ic_step2_active.png' alt=''></span>
-                        <p>가입여부<span></span>확인</p>
-                    </div>
-                    <div class='arrow'><img src='../../img/etc/arr_right.png' alt=''></div>
-                    <div>
-                        <span><img src='../../img/etc/ic_step3.png' alt=''></span>
-                        <p>회원정보<span></span>입력</p>
-                    </div>
-                    <div class='arrow'><img src='../../img/etc/arr_right.png' alt=''></div>
-                    <div class='last_right pd'>
-                        <span><img src='../../img/etc/ic_step4.png' alt=''></span>
-                        <p>가입완료</p>
-                    </div>
-                </div>
                 <div class='signup_title_box'>
-                    <p class='signup_title'>가입여부확인</p>
+                    <!-- <p class='signup_title line'>회원정보입력</p>
                     <p>
-                        주민등록번호 입력 없이 휴대폰 인증으로 회원가입이 가능합니다.
-                    </p>
+                        <span class='circle'></span> 표시는 반드시 입력하셔야 하는 필수 정보입니다
+                    </p> -->
                 </div>
-                <div class='signup_certification_box'>
-                    <div class='certification_tab_box clear_fix'>
-                        <button class='on'>생년월일</button>
-                        <button class='last_right'>아이핀(i-pin)으로 찾기</button>
+                <div class='signup_input_list'>
+                    <div class='info_input_phone clear_fix'>
+                        <p>휴대폰 번호</p>
+                        <select name='agency' id=''>
+                            <option value='선택'>선택</option>
+                            <option value='SK'>SK</option>
+                            <option value='KT'>KT</option>
+                            <option value='LG'>LG U+</option>
+                            <option value='알뜰폰'>알뜰폰</option>
+                        </select>
+                        <input type='text' name='' id='' placeholder='- 없이 숫자만'>
+                        <button>인증번호요청</button>
                     </div>
-                    <div class='certification_list'>
-                        <div class='certification_name clear_fix'>
-                            <p>이름(한글/영문)</p>
-                            <input type='text' name='' id=''>
-                        </div>
-                        <div class='certification_gender clear_fix'>
-                            <p>성별</p>
-                            <input type='radio' name='gender' id=''><span>남자</span>
-                            <input type='radio' name='gender' id=''><span>여자</span>
-                        </div>
-                        <div class='certification_birth clear_fix'>
-                            <p>생년월일</p>
-                            <select class='first' name='year' id=''>
-                                <option value='선택'>선택</option>
-                                <option value='1999'>1999</option>
-                                <option value='2000'>2000</option>
-                                <option value='2001'>2001</option>
-                                <option value='2002'>2002</option>
-                                <option value='2003'>2003</option>
-                                <option value='2004'>2004</option>
-                            </select>
-                            년
-                            <select name='month' id=''>
-                                <option value='선택'>선택</option>
-                                <option value='01'>01</option>
-                                <option value='02'>02</option>
-                                <option value='03'>03</option>
-                                <option value='04'>04</option>
-                            </select>
-                            월
-                            <select name='day' id=''>
-                                <option value='선택'>선택</option>
-                                <option value='01'>01</option>
-                                <option value='02'>02</option>
-                                <option value='03'>03</option>
-                                <option value='04'>04</option>
-                            </select>
-                            일
-                        </div>
+                    <div class='certification_name clear_fix'>
+                        <p>비밀번호</p>
+                        <input type='password' name='' id='' placeholder='8자리 이상 입력해주세요'>
                     </div>
-                    <div class='certification_note'>
-                        <p>
-                            주민등록 번호 입력 없이 휴대폰 인증으로 회원가입이 가능합니다.<span></span><strong>이름, 생년월일, 성별은 가입 후에 변경이 불가능합니다. 추후 본인확인을 위해 정확하게 가입 부탁드립니다.</strong><span></span>회원가입 후 고용보험과정을 수강 신청 시 노동부에 고용보험신고를 위해 주민등록 번호를 수집하고 있습니다.<span></span>가급적 신분증과 동일한 정보를 입력하시면 향후 고용보험 과정 수강 시 본인 확인이 용의합니다.
-                        </p>
+                    <div class='certification_name clear_fix'>
+                        <p>비밀번호 확인</p>
+                        <input type='password' name='' id='' placeholder='비밀번호를 확인해주세요'>
+                    </div>
+                    <div class='certification_birth clear_fix'>
+                        <p>생년월일</p>
+                        <select name='year' id=''>
+                            <option value='선택'>선택</option>
+                            <option value='1999'>1999</option>
+                            <option value='2000'>2000</option>
+                            <option value='2001'>2001</option>
+                            <option value='2002'>2002</option>
+                            <option value='2003'>2003</option>
+                            <option value='2004'>2004</option>
+                        </select>
+                        년
+                        <select class='second' name='month' id=''>
+                            <option value='선택'>선택</option>
+                            <option value='01'>01</option>
+                            <option value='02'>02</option>
+                            <option value='03'>03</option>
+                            <option value='04'>04</option>
+                        </select>
+                        월
+                        <select name='day' id=''>
+                            <option value='선택'>선택</option>
+                            <option value='01'>01</option>
+                            <option value='02'>02</option>
+                            <option value='03'>03</option>
+                            <option value='04'>04</option>
+                        </select>
+                        일
+                    </div>
+                    <div class='certification_gender clear_fix'>
+                        <p>성별</p>
+                        <input type='radio' name='gender' id=''><span>남자</span>
+                        <input type='radio' name='gender' id=''><span>여자</span>
+                    </div>
+                    <div class='info_input_address clear_fix'>
+                        <p>주소</p>
+                        <input type='text' name='' id='' placeholder='우편번호'>
+                        <button>우편번호검색</button>
+                        <input type='text' name='' id='' placeholder='상세주소를 입력해주세요'>
                     </div>
                 </div>
                 <div class='signup_btn_box clear_fix'>
-                    <button onclick='location.href="./signup_step1.html"'>이전</button>
-                    <button class='last' onclick='location.href="./signup_step3.html"'>다음</button>
+                    <button onclick='location.href="../classroom/classroom.html"'>이전</button>
+                    <button class='last' onclick='location.href="../classroom/classroom.html"'>저장</button>
                 </div>
             </div>
 

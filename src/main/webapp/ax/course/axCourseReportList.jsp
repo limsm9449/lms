@@ -269,7 +269,7 @@ function fn_cbChange(id) {
 
 <body style="padding : 10px">
 
-<h2>과정 레포트 관리</h2>
+<h2>과정 리포트 관리</h2>
 <div style="height:10px"></div>
 
 <form id="frm" name="frm" method="post" class="form-inline">

@@ -30,6 +30,9 @@ var directorys = [<c:forEach var="row" items="${set.resourceList}" varStatus="id
 <%-- 주차별 목차 --%>
 var titles = [<c:forEach var="row" items="${set.resourceList}" varStatus="idx"><c:if test="${idx.index ne 0}">,</c:if> "${row.week}/${row.title}/"</c:forEach>];
 
+var rootDirectory = "${set.data.directory}";
+var mobileYn = "${set.condiVO.mobileYn}";
+
 $(document).ready(function() {
 	<%-- 초기값 세팅 --%>
 	QP_API.init(${set.condiVO.courseId}, ${set.condiVO.week}, 1, ${set.data.totalWeek}, false, false);

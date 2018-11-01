@@ -145,6 +145,10 @@
 <c:if test="${empty session}">
                     <a href='/login.do' class='last_right' onclick='login()'>로그인</a>
 </c:if>      		
+<c:if test="${!empty session}">      		
+                    <a href="javascript:" onclick="gfn_ajax.logout()">로그아웃</a>
+</c:if>  
+
                 </div>
                 <div class='head_con search_box'>
                     <input type="text">
@@ -166,7 +170,7 @@
                         <a href='/login.do'>로그인</a>
 </c:if>      		
 <c:if test="${!empty session}">
-                        <a href='#'>${session.userName}님 반갑습니다</p>
+                        <a href='#'>${session.userName}님 반갑습니다</a>
 </c:if>  
                     </div>
                     <div class='mobile_study_box'>

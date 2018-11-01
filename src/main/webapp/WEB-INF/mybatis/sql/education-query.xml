@@ -3,7 +3,15 @@
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="education">
-	
+
+	<select id="checkMyCourse" parameterType="Education" resultType="Course">
+		SELECT 	COURSE_ID
+			   	,MOBILE_YN
+			   	,(SELECT COUNT(*) FROM COURSE_REGISTER WHERE COURSE_ID = #{courseId} AND USER_ID = #{userId}) CNT
+	  	FROM 	COURSE
+		WHERE 	COURSE_ID = #{courseId}	
+    </select>
+    
 	<!-- 과정 정보를 가져온다. -->
     <select id="courseData" parameterType="Education" resultType="Course">
 		SELECT B.COURSE_NAME,
@@ -26,7 +34,8 @@
                E.PROGRESS_COMPLETE_YN,
                C.EXAM_YN,
                C.QUEST_YN,
-               C.REPORT_YN
+               C.REPORT_YN,
+	       	   A.MOBILE_YN
 		  FROM COURSE A 
 		  			LEFT OUTER JOIN COURSE_CODE B ON A.COURSE_CODE = B.COURSE_CODE 
 		            LEFT OUTER JOIN COURSE_EVAL C ON A.COURSE_ID = C.COURSE_ID
@@ -36,7 +45,7 @@
 								,IF(COUNT(*) - SUM(IF(PROGRESS_RATE = 100, 1 ,0)) = 0, 'Y', 'N') PROGRESS_COMPLETE_YN
                         FROM 	COURSE_WEEK
                         WHERE	COURSE_ID = 11
-						AND 	USER_ID = 'limsm9449'
+						AND 	USER_ID = #{userId}
                         GROUP	BY COURSE_ID ) E ON E.COURSE_ID = A.COURSE_ID
 		 WHERE A.COURSE_ID = #{courseId}
 		   AND C.USER_ID = #{userId}
@@ -59,7 +68,7 @@
 		       (SELECT COUNT(*) FROM COURSE_RESOURCE WHERE COURSE_CODE = B.COURSE_CODE) TOTAL_WEEK,
 		       H_PX,
 	       	   V_PX,
-	       	   MOBILE_YN
+	       	   A.MOBILE_YN
 		  FROM COURSE A LEFT OUTER JOIN COURSE_CODE B ON A.COURSE_CODE = B.COURSE_CODE 
 		 WHERE A.COURSE_ID = #{courseId}
     </select>    

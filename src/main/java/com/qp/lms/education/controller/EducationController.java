@@ -14,12 +14,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.qp.lms.common.CommUtil;
+import com.qp.lms.common.SessionUtil;
 import com.qp.lms.course.model.CourseVO;
 import com.qp.lms.education.model.EducationSet;
 import com.qp.lms.education.model.EducationVO;
 import com.qp.lms.education.service.EducationService;
 import com.qp.lms.evaluation.model.EvaluationSet;
 import com.qp.lms.evaluation.model.EvaluationVO;
+import com.qp.lms.user.model.UserSet;
+import com.qp.lms.user.model.UserVO;
 
 import net.sf.json.JSONObject;
 
@@ -37,6 +40,29 @@ public class EducationController {
     @Autowired
     private EducationService svr;
 
+    @RequestMapping(value = "/education/checkMyCourse")
+    public String checkMyCourse(@ModelAttribute EducationVO vo,Model model) throws Exception {
+    	try {
+    		EducationSet set = new EducationSet();
+	    	set.setCondiVO(vo);
+	    	
+	    	set.getCondiVO().setUserId(SessionUtil.getSessionUserId());
+	    	
+	    	set = svr.checkMyCourse(set);
+	    	
+	    	HashMap hm = new HashMap();
+	    	hm.put("mobileYn", set.getData().getMobileYn());
+	    	hm.put("cnt", set.getData().getCnt());
+	    	
+	    	model.addAttribute("json", JSONObject.fromObject(hm));
+    	} catch ( Exception e ) {
+    		e.printStackTrace();
+    	}
+
+    	return "/common/json";
+    }
+
+    
     /**
      * 교육 팝업 Home
      * @param vo
@@ -46,18 +72,26 @@ public class EducationController {
      */
     @RequestMapping(value = "/education/eduHome")
     public String eduHome(@ModelAttribute EducationVO vo, Model model) throws Exception {
+    	String jspPage = "";
+    	
     	try {
 	    	EducationSet set = new EducationSet();
 	    	set.setCondiVO(vo);
 	    	
 	    	set = svr.eduHome(set);
 	
+	    	if ( "Y".equals(set.getData().getMobileYn()) ) {
+	    		jspPage = "/education/HomeMobile";
+	    	} else {
+	    		jspPage = "/education/Home";
+	    	}
+	    	
 	    	model.addAttribute("set", set );
     	} catch ( Exception e ) {
     		e.printStackTrace();
     	}
 
-        return "/education/Home";
+        return jspPage;
     }
 
     /*

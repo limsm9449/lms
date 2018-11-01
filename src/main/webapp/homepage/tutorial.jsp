@@ -94,7 +94,7 @@
                     </div>
 
                     <!-- Tutorial download -->
-                    <div class='tutorial_download clear_fix'>
+                    <div class='tutorial_download clear_fix' id='quick_to'>
                         <div>
                             <p class='tutorial_download_title'>
                                 학습에 <span></span>도움이 되는 <span></span>프로그램
@@ -111,7 +111,7 @@
                                     <p>
                                         플래시가 브라우저에서 실행되기 위한 <span></span>ActiveX Plug-in 입니다.
                                     </p>
-                                    <a href=''>다운로드</a>
+                                    <a href='https://get.adobe.com/flashplayer/?loc=kr'>다운로드</a>
                                 </div>
                             </li>
                             <li class='even'>
@@ -121,27 +121,27 @@
                                     <p>
                                         샘플 강의 재생 시 <span></span>(OS가 정품일 경우 설치가능)
                                     </p>
-                                    <a href=''>다운로드</a>
+                                    <a href='https://www.microsoft.com/ko-kr/download/windows-media-player-details.aspx'>다운로드</a>
                                 </div>
                             </li>
                             <li>
                                 <div class='tutorial_download_image'><img src='/resources/homepage/img/guidance/download_3.jpg' alt=''></div>
                                 <div class='tutorial_download_text clear_fix'>
-                                    <p class='tutorial_download_name'>익스플로러 7.0</p>
+                                    <p class='tutorial_download_name'>익스플로러 8.0</p>
                                     <p>
                                         익스플로러 오류 날 때 <span></span>재설치합니다.
                                     </p>
-                                    <a href=''>다운로드</a>
+                                    <a href='https://www.microsoft.com/ko-kr/download/internet-explorer-8-details.aspx'>다운로드</a>
                                 </div>
                             </li>
                             <li class='even'>
                                 <div class='tutorial_download_image'><img src='/resources/homepage/img/guidance/download_4.jpg' alt=''></div>
                                 <div class='tutorial_download_text clear_fix'>
-                                    <p class='tutorial_download_name'>익스플로러 8.0</p>
+                                    <p class='tutorial_download_name'>익스플로러 9.0</p>
                                     <p>
                                         익스플로러 오류 날 때 <span></span>재설치합니다.
                                     </p>
-                                    <a href=''>다운로드</a>
+                                    <a href='https://www.microsoft.com/ko-kr/download/internet-explorer-9-details.aspx'>다운로드</a>
                                 </div>
                             </li>
                             <li>
@@ -151,7 +151,7 @@
                                     <p>
                                         플레이어 원활한 이용에 <span></span>필요합니다.
                                     </p>
-                                    <a href=''>다운로드</a>
+                                    <a href='https://www.google.com/intl/ko_ALL/chrome/'>다운로드</a>
                                 </div>
                             </li>
                             <li class='even'>
@@ -161,12 +161,11 @@
                                     <p>
                                         강의 노트(PDF 문서)를 볼 때 <span></span>필요합니다.
                                     </p>
-                                    <a href=''>다운로드</a>
+                                    <a href='https://get.adobe.com/reader/?loc=kr'>다운로드</a>
                                 </div>
                             </li>
                         </ul>
                     </div>
-
 
                 </div>
             </div>

@@ -163,6 +163,32 @@ var page = {
 	
 	refresh : function() {
 		window.location = window.location;
+	},
+	
+	goCart : function(courseId, cnt) {
+		if ( cnt > "0" ) {
+			alert("신청한 과정입니다.")
+		} else {
+			$.ajax({
+				type :"POST",
+				url : context + "/main/cartAdd.do",
+				dataType :"json",
+				data : "cartCourseId=" + courseId + "&cartWeeks=",
+				success : function(json){
+					if ( json.rtnMode == "OK") {
+						if ( confirm("강의를 장바구니에 넣었습니다.\n장바구니로 이동하시겠습니까?") == true )
+							page.goPage('/main/cart');
+						else
+							window.location.reload();
+					} else if ( json.rtnMode == "NO_SESSION") {
+						top.location = "/login.do?preUrl=/main/courseList.do";		
+					}
+				},
+				error : function(e) {
+					alert("시스템 오류 발생하였습니다. 관리자에게 문의하세요.");
+				}
+			})
+		}
 	}
 
 }

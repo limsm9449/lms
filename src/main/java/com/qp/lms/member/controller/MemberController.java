@@ -26,6 +26,7 @@ import com.qp.lms.common.Constant;
 import com.qp.lms.common.PlainMail;
 import com.qp.lms.common.SessionUtil;
 import com.qp.lms.common.service.CommService;
+import com.qp.lms.common.service.DdService;
 import com.qp.lms.member.model.MemberSet;
 import com.qp.lms.member.model.MemberVO;
 import com.qp.lms.member.service.MemberService;
@@ -40,6 +41,8 @@ public class MemberController {
 
     @Autowired
     private CommService commSvr;
+	@Autowired
+	private DdService ddService;
 
     /**
      * 사용자 리스트
@@ -369,7 +372,11 @@ public class MemberController {
 	    	set.getCondiVO().setUserId(SessionUtil.getSessionUserId());
 	    	
 	    	set = svr.memberU(set);
-	    	
+
+	    	set.setZipcodeUrl((String)ddService.getSettingData(CommUtil.getParamsHashMap("OPTION_KEY=ZIPCODE_URL")).get("OPTION_VALUE"));
+	    	set.setBirthFromYear((String)ddService.getSettingData(CommUtil.getParamsHashMap("OPTION_KEY=BIRTH_FROM_YEAR")).get("OPTION_VALUE"));
+	    	set.setBirthToYear((String)ddService.getSettingData(CommUtil.getParamsHashMap("OPTION_KEY=BIRTH_TO_YEAR")).get("OPTION_VALUE"));
+
 	        model.addAttribute("set", set );
     	} catch ( Exception e ) {
     		e.printStackTrace();
