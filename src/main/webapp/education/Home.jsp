@@ -13,10 +13,6 @@
 
 	<%@ include file="../common/commMainInclude.jsp" %>
 	
-    <!--[if IE]>
-        <link rel='stylesheet' href='/resources/homepagePopup/css/main_ie.css'>
-    <![endif]-->
-
     <link href='https://fonts.googleapis.com/css?family=Nanum+Gothic' rel='stylesheet'>
 
     <link rel='stylesheet' href='/resources/homepage/css/initialization.css'>
