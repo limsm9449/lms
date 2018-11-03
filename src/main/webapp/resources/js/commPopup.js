@@ -195,26 +195,7 @@ var Popup = {
 	 * @param pHeight
 	 */
 	showUserCourse : function(pCourseId,pWidth,pHeight) {
-		if ( gfn_deviceCheck() == "MOBILE" ) {
-			$.ajax({
-				type :"POST",
-				url : context + "/education/checkMyCourse.do",
-				dataType :"json",
-				data : "courseId=" + pCourseId,
-				success : function(json){
-					if ( json.cnt == "1" && json.mobileYn == "Y" ) {
-						pWidth = window.innerWidth || document.body.clientWidth;
-						pHeight = window.innerHeight || document.body.clientHeight
-					}
-					Popup.showPopup(context + "/education/eduHome.do?courseId=" + pCourseId + "&week=",pWidth,pHeight);
-				},
-				error : function(e) {
-					alert("시스템 오류 발생하였습니다. 관리자에게 문의하세요.");
-				}
-			})	
-		} else {
-			Popup.showPopup(context + "/education/eduHome.do?courseId=" + pCourseId + "&week=",pWidth,pHeight);
-		}
+		Popup.showPopup(context + "/education/eduHome.do?courseId=" + pCourseId + "&week=",pWidth,pHeight);
 	},
 
 	/**
@@ -342,7 +323,28 @@ var Popup = {
 	},
 
 	showStudyroom : function(pCourseId) {
-		Popup.showPopup(context + "/user/studyroom.do?courseId=" + pCourseId, 1185, 810, "studyroom");
+		if ( gfn_deviceCheck() == "MOBILE" ) {
+			$.ajax({
+				type :"POST",
+				url : context + "/user/checkMyCourse.do",
+				dataType :"json",
+				data : "courseId=" + pCourseId,
+				success : function(json){
+					if ( json.cnt == "1" && json.mobileYn == "Y" ) {
+						pWidth = window.innerWidth || document.body.clientWidth;
+						pHeight = window.innerHeight || document.body.clientHeight
+						Popup.showPopup(context + "/education/eduHomeMobile.do?courseId=" + pCourseId + "&week=",pWidth,pHeight);
+					} else {
+						Popup.showPopup(context + "/user/studyroom.do?courseId=" + pCourseId, 1185, 810, "studyroom");
+					}
+				},
+				error : function(e) {
+					alert("시스템 오류 발생하였습니다. 관리자에게 문의하세요.");
+				}
+			})	
+		} else {
+			Popup.showPopup(context + "/user/studyroom.do?courseId=" + pCourseId, 1185, 810, "studyroom");
+		}
 	}
 
 

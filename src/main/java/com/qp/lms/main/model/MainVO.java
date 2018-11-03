@@ -41,6 +41,7 @@ public class MainVO extends CommonVO {
 	private String seq;
 	private String findString;
 	private String category;
+	private String shap;
 
 	
 	public String getC1Code() {
@@ -213,6 +214,12 @@ public class MainVO extends CommonVO {
 	}
 	public void setCategory(String category) {
 		this.category = category;
+	}
+	public String getShap() {
+		return shap;
+	}
+	public void setShap(String shap) {
+		this.shap = shap;
 	}
 	
 	

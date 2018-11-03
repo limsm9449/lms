@@ -4,13 +4,6 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="education">
 
-	<select id="checkMyCourse" parameterType="Education" resultType="Course">
-		SELECT 	COURSE_ID
-			   	,MOBILE_YN
-			   	,(SELECT COUNT(*) FROM COURSE_REGISTER WHERE COURSE_ID = #{courseId} AND USER_ID = #{userId}) CNT
-	  	FROM 	COURSE
-		WHERE 	COURSE_ID = #{courseId}	
-    </select>
     
 	<!-- 과정 정보를 가져온다. -->
     <select id="courseData" parameterType="Education" resultType="Course">

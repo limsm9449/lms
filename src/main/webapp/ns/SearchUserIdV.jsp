@@ -1,57 +1,38 @@
 <%@ page contentType="text/html;charset=utf-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
-<html>
+<!DOCTYPE html>
+<html lang='ko' data-useragent='Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; Trident/6.0)'>
+
 <head>
-	<title>Login</title>
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1'>
+    <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+    <title>Q learning - 아이디/비밀번호 찾기</title>
+
+    <%@ include file="../common/commMainInclude.jsp" %>
+
+    <link href='https://fonts.googleapis.com/css?family=Nanum+Gothic' rel='stylesheet'>
+
+    <link rel='stylesheet' href='/resources/homepage/css/initialization.css'>
+    <link rel='stylesheet' href='/resources/homepage/css/etc/find.css'>
 </head>
-
-<%@ include file="../common/commUserInclude.jsp" %>
-
-<script type="text/javascript">
-<!--
-  $(function() { 
-    $(".tab_content").hide(); 
-    $(".tab_content:first").show(); 
-    
-    $("ul.tabs li").click(function() { 
-      $("ul.tabs li").removeClass("active");
-      $(this).addClass("active");
-      $(".tab_content").hide(); 
-      var activeTab = $(this).attr("rel"); 
-      $("#"+activeTab).fadeIn() 
-    }); 
-  });
-//-->  
-</script>
 
 <script type="text/javascript">
 $(document).ready(function() {
-	$("#userName1").focus();
+	$("#userName").focus();
 });
 
 function lfn_btn(pKind, pParam) {
-	if ( pKind =="type1" || pKind =="type2" ) {
-		if ( pKind == "type1" ) {
-			if ( formValid.check("userName1",{isNecess:true}) == false )
-				return false;
-			if ( formValid.check("email",{isNecess:true}) == false )
-				return false;
-			
-			$("#type").val("type1");
-		} else {
-			if ( formValid.check("userName2",{isNecess:true}) == false )
-				return false;
-			if ( formValid.check("mobile1",{isNecess:true}) == false )
-				return false;
-			if ( formValid.check("mobile2",{isNecess:true}) == false )
-				return false;
-			if ( formValid.check("mobile3",{isNecess:true}) == false )
-				return false;
-			
-			$("#type").val("type2");
-		}
+	if ( pKind =="find" ) {
+		if ( formValid.check("userName",{isNecess:true}) == false )
+			return false;
+		if ( formValid.check("email",{isNecess:true}) == false )
+			return false;
 			
 		$.ajax({
 			type :"POST",
@@ -73,8 +54,6 @@ function lfn_btn(pKind, pParam) {
 				alert("<spring:message code="lms.msg.systemError" text="-" />");
 			}
 		})
-	} else if ( pKind =="findPassword" ) {
-		gfn_goPage('/ns/searchPasswordV'); 
 	}
 }
 
@@ -83,123 +62,74 @@ function lfn_btn(pKind, pParam) {
 
 <body>
 
-<form name="frm" id="frm" >
+<form id="frm" name="frm">
 
-<input type="hidden" id="type" name="type"/>
+<frameset rows='*'>
+    <div class='wrap'>
+        <!-- HEAD -->
+        <%@ include file="../common/mainTop.jsp" %>
+        <!-- HEAD END -->
 
-<!-- skipnav -->
-<div id="skipnav"><a href="#side" class="skip">좌측메뉴 바로가기</a></div>
-<div id="skipnav"><a href="#contents" class="skip">컨텐츠 바로가기</a></div>
-<!-- skipnav -->
-<!-- wrap -->
-<div id="wrap" class="site">
-  <%@ include file="../home/userTop.jsp" %>
-  <hr />
-  <!-- container -->
-  <div id="container" class="site">
-    <!-- side -->
-		<div id="side" class="site">
-			<h2>로그<span class="blue">인</span></h2>
-			<ul class="snb">
-				<li><a href="/login.do" class="here">로그인</a></li>
-				<li><a href="#">아이디찾기</a></li>
-				<li><a href="#" onclick="window.location='/ns/searchPasswordV.do'">비밀번호찾기</a></li>
-			</ul>
-		</div>
-		<!-- end side -->
-		
-    	<!-- contents -->
-		<div id="contents" class="site">
-			<!-- location -->
-			<div id="location"><a href="/" class="home">HOME</a><span>&gt;</span>로그인<span>&gt;</span>아이디 찾기</div>
-			<!-- title -->
-			<h3 class="tit_big">아이디 찾기</h3>
-		      <div class="artcle">
-		        <div class="msg_box">
-		          <p class="big_2"><span class="blue">아이디 찾기</span></p>
-		          <p>실인증 또는 아이핀 인증 회원정보로 찾기 중 하나를 선택하여 아이디 찾기를 진행하여 주십시요.</p>
-		        </div>
-		        <div class="id_find_box">
-		          <ul class="tabs">
-		            <li class="active" rel="tab1"><span>등록한 메일 정보로 찾기</span></li>
-		            <li rel="tab2"><span>등록한 휴대폰 번호로 찾기</span></li>
-		            <li rel="tab3"><span>아이핀(i-pin)으로 찾기</span></li>
-		          </ul>
-		          <div class="tab_contents">
-		            <!-- tab1 -->
-		            <div id="tab1" class="tab_content">
-		              <fieldset>
-		                <legend>이메일로 아이디 확인</legend>
-		                <dl>
-		                  <dt><label for="user_name">이름(한글/영문)</label></dt>
-		                  <dd><input type="text" id="userName1" name="userName1" style="width: 180px;" /></dd>
-		                  <dt><label for="user_email">이메일</label></dt>
-		                  <dd><input type="text" id="email" name="email" style="width: 180px;" /></dd>
-		                </dl>
-		              </fieldset>
-		              <div class="center_btn">
-		                <a href="#" onclick="lfn_btn('type1');"><img src="/resources/images/sub/btn_id_find.png" /></a>
-		              </div>
-		            </div>
-		            <!-- end tab1 -->
-		            <!-- tab2 -->
-		            <div id="tab2" class="tab_content">
-		              <fieldset>
-		                <legend>휴대폰 번호로 아이디 확인</legend>
-		                <dl>
-		                  <dt><label for="user_name">이름(한글/영문)</label></dt>
-		                  <dd><input type="text" id="userName2" name="userName2" style="width: 180px;" /></dd>
-		                  <dt><label for="user_year">휴대폰 번호</label></dt>
-		                  <dd>
-		                    <select name="mobile1" id="mobile1">
-		  		              	<option value="">선택</option>
-		  		              	<option value="010">010</option>
-		  		              	<option value="011">011</option>
-		  		              	<option value="016">016</option>
-		  		              	<option value="017">017</option>
-		  		              	<option value="018">018</option>
-		  		              	<option value="019">019</option>
-							  </select>
-							  <input type="text" name="mobile2" id="mobile2" maxlength="4" title="휴대전화 중간번호" />
-							  <input type="text" name="mobile3" id="mobile3" maxlength="4" title="휴대전화 마지막번호" />
-		                  </dd>
-		                </dl>
-		              </fieldset>
-		              <div class="center_btn">
-		                <a href="#" onclick="lfn_btn('type2');"><img src="/resources/images/sub/btn_id_find.png" /></a>
-		              </div>
-		            </div>
-		            <!-- end tab2 -->
-		            <!-- tab3 -->
-		            <div id="tab3" class="tab_content">
-		              <p class="center">아이핀 인증을 통한 회원정보 찾기를 원하시면 아이핀 인증 버튼을 눌러 아이핀 인증 절차를 진행하여 주십시오.</p>
-		              <div class="center_btn">
-		                <a href="#" onclick="lfn_btn('type3');"><img src="/resources/images/sub/btn_ipin.png" /></a>
-		              </div>
-		            </div>
-		            <!-- end tab3 -->
-		          </div>
-		        </div>
-		      </div>
-		</div>
-		<!-- end content -->
+        <!-- CONTENTS -->
+        <div class='contents_wrap_box' onmouseover='sub_hide()'>
+            <!-- QUICK MENU -->
+            <%@ include file="../common/mainQuickMenu.jsp" %>
 
-	</div>
-  <!-- end container -->
-  <!-- footer_wrap -->
-	<%@ include file="../home/bottom.jsp" %>
-  <!-- end footer_wrap -->
-</div>
+            <!-- Top -->
+            <div class='top_area'>
+                <div class='clear_fix'>
+                    <div class='process_history_box clear_fix'>
+                        <span>
+                            <img src='/resources/homepage/img/course/ic_home.jpg' alt=' '>
+                        </span>
+                        <p>HOME</p>
+                        <span>
+                            <img src='/resources/homepage/img/course/arr_right.jpg' alt=' '>
+                        </span>
+                        <p>수강신청</p>
+                        <span>
+                            <img src='/resources/homepage/img/course/arr_right.jpg' alt=' '>
+                        </span>
+                        <p>교육과정</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Top END -->
 
-			
+            <div class='util_wrap'>
+                <h1>
+                    아이디 찾기
+                </h1>
+
+                <div class='certification_list'>
+                    <div class='certification_name clear_fix'>
+                        <p>이름</p>
+                        <input type='text' name='userName' id='userName' placeholder='이름을 입력해주세요.'>
+                    </div>
+                    <div class='certification_name clear_fix'>
+                        <p>이메일</p>
+                        <input type='text' name='email' id='email' placeholder='이메일을 입력해주세요.'>
+                    </div>
+                </div>  
+                <div class='signup_btn_box clear_fix'>
+                    <button onclick='page.goHome();'>취소</button>
+                    <button class='last' onclick="lfn_btn('find');">아이디 찾기</button>
+                </div>
+            </div>
+
+        </div>
+        <!-- CONTENTS END -->
+
+        <!-- FOOTER -->
+        <%@ include file="../common/mainBottom.jsp" %>
+        <!-- FOOTER END -->
+    </div>
+    <script src='/resources/homepage/js/dev_sub.js'></script>
+    
+</frameset>
 
 </form>
 
-
-
-
-		
-<iframe name="tranFrame" style="display:none;"></iframe>
-
 </body>
+
 </html>

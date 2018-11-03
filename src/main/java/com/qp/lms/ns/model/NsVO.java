@@ -12,6 +12,7 @@ public class NsVO extends CommonVO{
 	private String email;
 	private String newPassword;
 	private String type;
+	private String userId;
 	private String userId1;
 	private String userId2;
 	private String userName1;
@@ -154,6 +155,14 @@ public class NsVO extends CommonVO{
 
 	public void setRetiredYn(String retiredYn) {
 		this.retiredYn = retiredYn;
+	}
+
+	public String getUserId() {
+		return userId;
+	}
+
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
 	
 	

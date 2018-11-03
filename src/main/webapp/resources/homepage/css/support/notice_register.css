@@ -416,7 +416,7 @@ header{
     font-size: 44px;
     letter-spacing: -2px;
     padding-bottom: 16px;
-    /* border-bottom: solid 1px #003366; */
+    border-bottom: solid 1px #003366;
 }
 .top_area h1 span{
     font-family:"NanumSquare";
@@ -476,7 +476,7 @@ header{
     border-bottom:solid 1px #ccc;
 }
 .form_box .editor_area {
-    width: 87%;
+    width: 83%;
     padding:0;
     min-height: 100px;
     margin: 10px 1.5%;
@@ -498,7 +498,7 @@ header{
 }
 .form_box > div{
     float: left;
-    width: 85%;
+    width: 90%;
 }
 .form_box .title{
     background: #f7f7f7;
@@ -508,16 +508,26 @@ header{
     font-size: 16px;
     font-weight: 500;
 }
-.form_box div input[type='text']{
+.form_box div input[type='text'],
+.form_box div .type{
     display:block;
-    width:95%;
+    box-sizing:border-box;
+    width:98%;
     padding:8px 1%;
-    margin:10px 1.5% 6px;
+    margin:10px 1% 6px;
     border:solid 1px #ddd;
+}
+.form_box div select.type{
+    margin:6px 1%;
+}
+
+.form_box > .test{
+    width:90%;
 }
 .form_box div iframe{
     display:block;
-    width:95%;
+    width:100%;
+    /* width:95%; */
     min-height:300px;
     padding:8px 1%;
     margin: 0;
@@ -582,6 +592,258 @@ header{
     background:#0280d4;
     border:solid 1px #0280d4;
 }
+
+
+/* MEMBER WITHDRAW MODIFIED */
+/* CONTENTS */
+.util_wrap{
+    width:100%;
+    max-width:1122px;
+    margin:50px auto;
+}
+.util_wrap h1{
+    font-family: 'NanumSquare';
+    font-size: 24px;
+    font-weight: 900;
+    letter-spacing: -1px;
+    padding-bottom:14px;
+}
+.util_step_box{
+    padding: 40px 0 50px;
+}
+.util_step_box .active{
+    background: #0180d3;
+    border: solid 4px #0180d3;
+}
+.util_step_box .active p{
+    color: #fff;
+}
+.util_step_box div{
+    float: left;
+    width: 17.8%;
+    border-radius: 74px;
+    padding: 24px 0;
+    text-align: center;
+    border: solid 4px #ddd;
+}
+.util_step_box div p{
+    font-size: 16px;
+    font-weight: 900;
+    color: #888;
+    font-family: 'NanumSquare';
+}
+.util_step_box .arrow{
+    width: 8%;
+    padding: 40px 0px;
+    border: 0;
+}
+.signup_certification_box{
+    padding-top: 30px;
+}
+.certification_tab_box{
+    text-align: center;
+}
+.certification_tab_box button{
+    width: 50%;
+    padding: 10px 0;
+    float: left;
+    display: block;
+    font-family: 'NanumSquare';
+    font-size: 18px;
+    font-weight: 900;
+    color: #fff;
+}
+.certification_tab_box .on{
+    background: #0a88d9;
+    position: relative;
+}
+.certification_tab_box button.on:before {
+    display: block;
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-top: 10px solid #0a88d9;
+    bottom: -10px;
+    left: 47%;
+}
+.certification_list{
+    padding: 50px 0 60px;
+    border-bottom: solid 1px #ddd;
+}
+.signup_input_list{
+    padding:30px 0 20px;
+}
+.certification_list > div,
+.signup_input_list > div{
+    padding-bottom: 20px;
+}
+.certification_list > div p,
+.signup_input_list > div p{
+    font-family: 'NanumSquareB';
+    font-size: 17px;
+    color: #555;
+    width: 160px;
+    float: left;
+    line-height: 220%;
+}
+.certification_list > div p:before,
+.signup_input_list > div p:before{
+    display: block;
+    content: '';
+    width: 6px;
+    height: 6px;
+    border: solid 4px #54a7d8;
+    border-radius: 7px;
+    float: left;
+    margin: 10px 5% 0 0;
+}
+.certification_name .note{
+    font-family: 'NanumGothic';
+    width: 100%;
+    text-indent: 160px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #999;
+}
+.certification_name .note:before{
+    display:none;
+}
+.certification_name input[type='text'],
+.signup_input_list > div input[type='text'],
+.signup_input_list > div input[type='password']{
+    display: block;
+    float: left;
+    padding: 10px 6px;
+    border: solid 1px #ccc;
+}
+.certification_name input[type='text']{
+    width:230px;
+}
+.signup_input_list > div input[type='text'],
+.signup_input_list > div input[type='password']{
+    width:460px;
+}
+.signup_input_list .certification_name.type_id input[type='text'] {
+    width: 319px;
+}
+.signup_input_list .info_input_phone select{
+    float:left;
+    width:100px;
+    padding:9px 6px;
+    border:solid 1px #ccc;
+}
+.signup_input_list .info_input_phone input[type='text']{
+    width:220px;
+    border-left: 0;
+}
+.certification_gender input[type='radio'],
+.signup_input_list > div input[type='radio']{
+    display:block;
+    float:left;
+    width: 20px;
+    height: 20px;
+    margin-top:8px;
+}
+.info_input_phone button,
+.info_input_address button,
+.certification_name.type_id button{
+    width:136px;
+    font-family:'NanumSquare';
+    font-size:16px;
+    font-weight:900;
+    color:#fff;
+    padding:10px 0 9px;
+    margin-left:4px;
+    background:#0180d3;
+}
+.certification_gender span{
+    float:left;
+    padding:10px 10px 0 8px;
+}
+.certification_birth select{
+    padding: 8px 6px;
+    border: solid 1px #ccc;
+}
+.certification_birth select{
+    width:80px;
+}
+.certification_note{
+    padding: 30px 0 150px;
+}
+.certification_note p{
+    font-size: 16px;
+    color: #555;
+    line-height: 150%;
+    letter-spacing: -1px;
+}
+.certification_note p strong{
+    font-size: 16px;
+    font-weight: 500;
+    color: #0180d3;
+}
+.certification_note p span{
+    display: block;
+}
+.signup_input_list .info_input_address input[type='text'] {
+    width: 320px;
+}
+.info_input_address textarea{
+    margin-top: 8px;
+    display: block;
+    width: 100%;
+    resize: none;
+    min-height: 200px;
+    border: solid 1px #ccc;
+    float: left;
+    padding:10px;
+    box-sizing:border-box;
+}
+.signup_title_box p{
+    font-size: 14px;
+    color:#555;
+    line-height: 130%;
+}
+.signup_title_box p .circle{
+    display:block;
+    float:left;
+    width:4px;
+    height:4px;
+    margin:4px 4px 0 0;
+    border:solid 2px #54a7d8;
+    border-radius:4px;
+}
+.signup_title_box .signup_title{
+    font-family: 'NanumSquareB';
+    font-size: 24px;
+    color: #0180d3;
+    padding: 20px 0 4px;
+}
+.signup_title_box .signup_title.line{
+    padding:20px 0 2px;
+    margin-bottom:4px;
+    border-bottom:solid 1px #ccc;
+}
+.signup_title_box p span{
+    display:block;
+}
+.withdraw_note{
+    background: #f3f3f3;
+    padding: 20px;
+}
+.withdraw_note p{
+    font-size: 15px;
+    font-weight: 500;
+    line-height: 150%;
+    letter-spacing:-1px;
+}
+.withdraw_note p strong{
+    display: block;
+    color: #0180d3;
+}
+
 
 
 
@@ -823,6 +1085,26 @@ header{
     }
 
 
+    /* MEMBER WITHDRAW */
+    .util_wrap{
+        margin:30px auto;
+    }
+    .signup_input_list > div input[type='text'],
+    .signup_input_list > div input[type='password'] {
+        width: 100%;
+        box-sizing: border-box;
+    }
+    .withdraw_note{
+        padding:15px;
+    }
+    .withdraw_note p{
+        font-size: 14px;
+    }
+    .certification_name .note{
+        text-indent:0;
+    }
+
+
 
 
 
@@ -843,5 +1125,10 @@ header{
     .detail_btn_area button{
         width:49%;
         min-width:inherit;
+    }
+}
+@media all and (max-width:360px){
+    .certification_name .note{
+        font-size:13px;
     }
 }

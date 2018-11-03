@@ -22,12 +22,6 @@ public class EducationService {
 	@Autowired
 	private SqlSession sqlSession;
 
-	public EducationSet checkMyCourse(EducationSet set) throws Exception {
-    	set.getCondiVO().setUserId(SessionUtil.getSessionUserId());
-    	set.setData((CourseVO) sqlSession.selectOne("education.checkMyCourse",set.getCondiVO()));
-    	
-        return set ;
-    }
 	
     public EducationSet eduHome(EducationSet set) throws Exception {
     	set.getCondiVO().setUserId(SessionUtil.getSessionUserId());

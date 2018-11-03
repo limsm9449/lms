@@ -5,29 +5,21 @@
 <mapper namespace="counsel">
 
 	<select id="userCounselList" parameterType="Counsel" resultType="Counsel">
-	SELECT PAGE.* FROM ( SELECT DATA.* FROM ( 
-		SELECT SEQ,
-		       B.DD_VALUE CATEGORY_NAME,
-		       TITLE,
-		       CONTENTS,
-		       ANSWER,
-		       IF(ANSWER IS NULL,'X','O') ANSWER_YN,
-		       DATE_FORMAT(IFNULL(UPDATE_DATE,CREATE_DATE), '%y.%m.%d %H:%i') CREATE_DATE,
-		       @ROWNUM := @ROWNUM + 1 ROWNUM
-		  FROM COUNSEL A LEFT OUTER JOIN CODE B ON A.CATEGORY = B.DD_KEY AND B.DD_MAIN = 'FAQ',
-		       (SELECT @ROWNUM := 0) NUM
-		 WHERE USER_ID = #{userId}
-		   <if test="findString != null and findString != ''"> AND TITLE LIKE CONCAT('%',#{findString},'%')</if> 
-		 ORDER BY SEQ
-	) DATA ORDER BY SEQ DESC ) PAGE LIMIT #{limitStart},#{limitUnit}    
+		SELECT DATA.* FROM ( 
+			SELECT SEQ,
+			       B.DD_VALUE CATEGORY_NAME,
+			       TITLE,
+			       CONTENTS,
+			       ANSWER,
+			       IF(ANSWER IS NULL,'X','O') ANSWER_YN,
+			       DATE_FORMAT(IFNULL(UPDATE_DATE,CREATE_DATE), '%y.%m.%d %H:%i') CREATE_DATE,
+			       @ROWNUM := @ROWNUM + 1 ROWNUM
+			  FROM COUNSEL A LEFT OUTER JOIN CODE B ON A.CATEGORY = B.DD_KEY AND B.DD_MAIN = 'FAQ',
+			       (SELECT @ROWNUM := 0) NUM
+			 WHERE USER_ID = #{userId}
+			 ORDER BY SEQ
+		) DATA ORDER BY SEQ DESC    
 	</select>	
-	
-	<select id="userCounselTotal" parameterType="Counsel" resultType="Counsel">
-	SELECT COUNT(*) CNT
-	  FROM COUNSEL
-	 WHERE USER_ID = #{userId}
-		   <if test="findString != null and findString != ''"> AND TITLE LIKE CONCAT('%',#{findString},'%')</if> 
-	</select>
 
 	<select id="counselList" parameterType="Counsel" resultType="Counsel">
 	SELECT PAGE.* FROM ( SELECT DATA.* FROM ( 

@@ -156,4 +156,11 @@
 	   	<if test="courseName != null and courseName != ''"> AND B.COURSE_NAME LIKE CONCAT('%',#{courseName},'%')</if>
 	</select>
 
+	<select id="checkMyCourse" parameterType="User" resultType="Course">
+		SELECT 	COURSE_ID
+			   	,MOBILE_YN
+			   	,(SELECT COUNT(*) FROM COURSE_REGISTER WHERE COURSE_ID = #{courseId} AND USER_ID = #{userId}) CNT
+	  	FROM 	COURSE
+		WHERE 	COURSE_ID = #{courseId}	
+    </select>
 </mapper>

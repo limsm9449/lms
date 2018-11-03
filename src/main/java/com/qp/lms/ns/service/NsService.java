@@ -34,20 +34,15 @@ public class NsService {
 	public NsSet searchUserId(NsSet set) throws Exception {
 		NsVO nsVO = null;
 		
-		if ( "type1".equals(set.getCondiVO().getType()) ) {
-			nsVO = (NsVO) sqlSession.selectOne("ns.findUseridType1",set.getCondiVO());
-		} else {
-			nsVO = (NsVO) sqlSession.selectOne("ns.findUseridType2",set.getCondiVO());
-		}
+		nsVO = (NsVO) sqlSession.selectOne("ns.findUserid",set.getCondiVO());
 		
 		if ( nsVO == null ) {
 			set.setRtnMode(Constant.mode.NOT_EXIST.name());
 		} else {
-			//3,4,7,8은 * 처리..
 			String userId = nsVO.getUserId();
 			String chgUserId = "";
 			for ( int i = 0; i < userId.length(); i++ ) {
-				if ( i == 2 || i == 3 || i == 6 || i == 7 ) {
+				if ( i == 3 || i == 5 || i == 7 || i == 9 ) {
 					chgUserId += "*";
 				} else {
 					chgUserId += userId.substring(i, i + 1);
@@ -70,15 +65,7 @@ public class NsService {
 	public NsSet searchPassword(NsSet set) throws Exception {
 		NsVO vo = null;
 		
-		if ( "type1".equals(set.getCondiVO().getType()) ) {
-			vo = (NsVO) sqlSession.selectOne("ns.findEmailType1",set.getCondiVO());
-
-			set.getCondiVO().setUserId(set.getCondiVO().getUserId1());
-		} else {
-			vo = (NsVO) sqlSession.selectOne("ns.findEmailType2",set.getCondiVO());
-
-			set.getCondiVO().setUserId(set.getCondiVO().getUserId2());
-		}
+		vo = (NsVO) sqlSession.selectOne("ns.findPassword",set.getCondiVO());
 		
 		if ( vo == null ) {
 			set.setRtnMode("INCORRECT_USER");

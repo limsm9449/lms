@@ -56,11 +56,7 @@ $(document).ready(function(){
                             <span>
                                 <img src='/resources/homepage/img/course/arr_right.jpg' alt=' '>
                             </span>
-                            <p>수강신청</p>
-                            <span>
-                                <img src='/resources/homepage/img/course/arr_right.jpg' alt=' '>
-                            </span>
-                            <p>교육과정</p>
+                            <p>나의강의실</p>
                         </div>
                     </div>
                     <h1>

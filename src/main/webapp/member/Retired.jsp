@@ -1,27 +1,30 @@
 <%@ page contentType="text/html;charset=utf-8"%>
-
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="ko" xml:lang="ko">
+<!DOCTYPE html>
+<html lang='ko'>
+
 <head>
-<title>
-</title>
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1'>
+    <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+    <title>Q learning - 나의강의실 - 회원탈퇴</title>
 
-<%@ include file="../common/commUserInclude.jsp" %>
-
-<%-- CLEditor --%>
-<link rel="stylesheet" type="text/css" href="<c:url value="/resources/CLEditor/jquery.cleditor.css"/>" />
-<script type="text/javascript" src="<c:url value="/resources/CLEditor/jquery.cleditor.min.js"/>"></script>
-
-
+    <%@ include file="../common/commMainInclude.jsp" %>
+    
+    <link href='https://fonts.googleapis.com/css?family=Nanum+Gothic' rel='stylesheet'>
+    <link rel='stylesheet' href='/resources/homepage/css/initialization.css'>
+    <link rel='stylesheet' href='/resources/homepage/css/support/notice_register.css'>
 </head>
 
 <script type="text/javascript">
 
 $(document).ready(function() {
-	$("textarea[name='retiredReason']").cleditor();
+	//$("textarea[name='retiredReason']").cleditor();
 	$("textarea[name='retiredReason']").val("");
 });
 
@@ -75,89 +78,97 @@ function lfn_validate() {
 
 </script>
 
-<body>
-
+<body style='background:#fff'>
 
 <form id="frm" name="frm" method="post">
 
+    <frameset rows='*'>
+        <div class='wrap'>
+            <!-- PC HEADER -->
+            <%@ include file="../common/mainTop.jsp" %>
+            <!-- HEAD END -->
 
+            <!-- CONTENTS -->
+            <div class='contents_wrap process' onmouseover='sub_hide()'>
+                <div class='contents_wrap_box'>
+                    <!-- QUICK MENU -->
+                    <%@ include file="../common/mainQuickMenu.jsp" %>
 
+                    <!-- Top -->
+                    <div class='top_area'>
+                        <div class='clear_fix'>
+                            <div class='process_history_box clear_fix'>
+                                <span>
+                                    <img src='/resources/homepage/img/course/ic_home.jpg' alt=' '>
+                                </span>
+                                <p>HOME</p>
+                                <span>
+                                    <img src='/resources/homepage/img/course/arr_right.jpg' alt=' '>
+                                </span>
+                                <p>나의강의실</p>
+                                <span>
+                                    <img src='/resources/homepage/img/course/arr_right.jpg' alt=' '>
+                                </span>
+                                <p>회원탈퇴</p>
+                            </div>
+                        </div>
+                        <h1>
+                            나의 <span>강의실</span>
+                        </h1>
+                    </div>
+                    <!-- Top END -->
 
-<!-- skipnav -->
-<div id="skipnav"><a href="#side" class="skip">좌측메뉴 바로가기</a></div>
-<div id="skipnav"><a href="#contents" class="skip">컨텐츠 바로가기</a></div>
-<!-- skipnav -->
+                    <div class='util_wrap'>
+                        <h1>
+                            회원탈퇴
+                        </h1>
+                        <div class='signup_title_box'>
+                            <p>
+                                회원탈퇴정보입력 / 회원님의 정보보호를 위해 다시 한 번 본인임을 확인합니다.
+                            </p>
+                        </div>
+                        <div class='signup_input_list'>
+                            <div class='certification_name clear_fix'>
+                                <p>아이디</p>
+                                <input type='text' name='userId' id='userId' value="" placeholder='아이디를 입력해주세요'>
+                            </div>
+                            <div class='certification_name clear_fix'>
+                                <p>비밀번호</p>
+                                <input type='password' name='userPassword' id='userPassword' value="" placeholder='비밀번호를 입력해주세요'>
+                            </div>
+                            
+                            <div class='info_input_address clear_fix'>
+                                <p>탈퇴 사유</p>
+                                <textarea name='retiredReason' id='retiredReason' cols='30' rows='10'></textarea>
+                            </div>
+                        </div>
+                        <div class='withdraw_note'>
+                            <p>
+                                <strong>※ 회원탈퇴 신청 전에 반드시 확인해 주시기 바랍니다.</strong>
+                                회원탈퇴 신청 후에는 모든 정보가 삭제되며, 복원이 불가능하오니 신중하게 결정하여 주시기 바랍니다.<br>
+                                - 회원탈퇴 신청 후에는 큐피플 웹사이트에서 이용하셨던 수강정보, 결제 및 포인트, 개인정보 등 모든 정보가 삭제되며, 복구가 불가능합니다.<br>
+                                - 회원탈퇴 신청 후 재가입 시 동일한 아이디로 회원가입이 불가능합니다.
+                            </p>
+                        </div>
+                        <div class='detail_btn_area'>
+                            <button onclick='page.goHome();'>탈퇴취소</button>
+                            <button id="saveBtn" onclick="lfn_btn('save');" class='bg_color'>회원탈퇴확인</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- CONTENTS END -->
 
-<!-- wrap -->
-<div id="wrap" class="site">
-  <%@ include file="../home/userTop.jsp" %>
-  <hr />
-  <!-- container -->
-  <div id="container" class="site">
-   	 	<!-- side -->
-		<%
-   	 		String menuId = "memberRetired";
-   	 	%>
-		<%@ include file="../home/userLeft.jsp" %>
-		<!-- end side -->
-		
-    	<!-- contents -->
-		<div id="contents" class="site">
-			<!-- location -->
-			<div id="location"><a href="/" class="home">HOME</a><span>&gt;</span>나의정보<span>&gt;</span>회원탈퇴</div>
-			<!-- title -->
-			<h3 class="tit_big">회원탈퇴</h3>
-		      <div class="artcle">
-		        <div class="msg_box">
-		          <p>회원탈퇴정보입력 / 회원님의 정보보호를 위해 다시 한 번 본인임을 확인합니다.</p>
-		        </div>
-		        <div class="withdraw_box">
-		          <form name="frm" method="post">
-		          <div class="info_form">
-		            <fieldset>
-		    					<legend>회원탈퇴</legend>
-		    					<label for="your_id">아이디</label>
-		    					<div class="input_info"><input type="text" id="userId" name="userId" /></div>
-		    					<label for="your_pw">비밀번호</label>
-		    				  <div class="input_info"><input type="password" id="userPassword" name="userPassword" /></div>
-		    					<label for="your_pw">탈퇴 사유</label>
-		    				  <div class="input_info"><textarea id="retiredReason" name="retiredReason"></textarea></div>
-		    				</fieldset>
-		    			</div>
-		    			<div class="div_description">
-		    			  <p class="strong">※ 회원탈퇴 신청 전에 반드시 확인해 주시기 바랍니다.</p>
-		            <p>회원탈퇴 신청 후에는 모든 정보가 삭제되며, 복원이 불가능하오니 신중하게 결정하여 주시기 바랍니다.</p>
-		            <ul>
-		              <li>- 회원탈퇴 신청 후에는 큐피플 웹사이트에서 이용하셨던 수강정보, 결제 및 포인트, 개인정보 등 모든 정보가 삭제되며, 복구가 불가능합니다.</li>
-		              <li>- 회원탈퇴 신청 후 재가입 시 동일한 아이디로 회원가입이 불가능합니다.</li>
-		            </ul>
-		          </div>
-		          <div class="center_btn">
-		            <a href="javascript:" id="saveBtn" onclick="javascript:lfn_btn('save'); return false;"><img src="/resources/images/sub/btn_ok.png" /></a>&nbsp;<a href="javascript:" onclick="window.location='/member/memberRetired.do';"><img src="/resources/images/sub/btn_censel.png" /></a>
-		          </div>
-		          </form>
-		        </div>
-		      </div>
-			
-		</div>
-		<!-- end content -->
-		
-		
-	</div>
-  <!-- end container -->
-  <!-- footer_wrap -->
-	<%@ include file="../home/bottom.jsp" %>
-  <!-- end footer_wrap -->
-</div>
-
+            <!-- FOOTER -->
+            <%@ include file="../common/mainBottom.jsp" %>
+            <!-- FOOTER END -->
+        </div>
+    </frameset>
 
 </form>
+    
+    <script src='/resources/homepage/js/dev_sub.js'></script>
 
 </body>
+
 </html>
-
-
-
-</div>
-</div>
-	

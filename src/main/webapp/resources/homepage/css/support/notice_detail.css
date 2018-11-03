@@ -512,6 +512,7 @@ header{
 .notice_info_box div p{
     float: left;
     font-size: 14px;
+    line-height:150%;
     padding-left: 10%;
 }
 .notice_info_box div .type{
@@ -631,6 +632,7 @@ header{
     border: solid 1px #ccc;
     resize: none;
     min-height: 100px;
+    padding:10px;
 }
 
 .review_scroe_box{}

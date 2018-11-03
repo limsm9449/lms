@@ -58,7 +58,7 @@
 		       ,C.WEEK_COST_YN
 		       ,(SELECT DD_VALUE FROM CODE WHERE DD_MAIN = 'WEEK_COST_YN' AND DD_KEY = C.WEEK_COST_YN) WEEK_COST_YN_NAME
 		       ,E.CAREER
-		       ,C.MOBILE_YN
+		       ,A.MOBILE_YN
 		       ,(SELECT COUNT(*) FROM COURSE_RESOURCE WHERE COURSE_CODE = A.COURSE_CODE) WEEK_CNT 
 		       	,IFNULL(A.TERM_YN,'N') TERM_YN
                 ,IFNULL(A.TERM_PERIOD_FROM, '') TERM_PERIOD_FROM
@@ -345,16 +345,16 @@
 	<select id="faqList" parameterType="Main" resultType="Board">
 		SELECT  SEQ
 				,TITLE
-				,DATE_FORMAT(IFNULL(UPDATE_DATE,CREATE_DATE), '%y.%m.%d %H:%i') CREATE_DATE
+				,DATE_FORMAT(IFNULL(UPDATE_DATE,CREATE_DATE), '%y.%m.%d') CREATE_DATE
 		FROM	BOARD_FAQ
 		ORDER 	BY SEQ DESC
-		LIMIT 	3
+		LIMIT 	#{cnt}
 	</select>	        
 	
 	<select id="noticeList" parameterType="Main" resultType="Board">
 		SELECT  SEQ
 				,TITLE
-				,DATE_FORMAT(IFNULL(UPDATE_DATE,CREATE_DATE), '%y.%m.%d %H:%i') CREATE_DATE
+				,DATE_FORMAT(IFNULL(UPDATE_DATE,CREATE_DATE), '%y.%m.%d') CREATE_DATE
 		FROM	BOARD_NOTICE
 		ORDER 	BY SEQ DESC
 		LIMIT 	#{cnt}
@@ -363,7 +363,7 @@
 	<select id="eventList" parameterType="Main" resultType="Board">
 		SELECT  SEQ
 				,TITLE
-				,DATE_FORMAT(IFNULL(UPDATE_DATE,CREATE_DATE), '%y.%m.%d %H:%i') CREATE_DATE
+				,DATE_FORMAT(IFNULL(UPDATE_DATE,CREATE_DATE), '%y.%m.%d') CREATE_DATE
 		FROM	BOARD_EVENT
 		ORDER 	BY SEQ DESC
 		LIMIT 	#{cnt}
@@ -372,7 +372,7 @@
 	<select id="counselList" parameterType="Main" resultType="Counsel">
 		SELECT	SEQ
 				,TITLE
-				,DATE_FORMAT(IFNULL(UPDATE_DATE,CREATE_DATE), '%y.%m.%d %H:%i') CREATE_DATE
+				,DATE_FORMAT(IFNULL(UPDATE_DATE,CREATE_DATE), '%y.%m.%d') CREATE_DATE
 		FROM	COUNSEL
 		WHERE	USER_ID = #{userId}
 		ORDER 	BY SEQ DESC

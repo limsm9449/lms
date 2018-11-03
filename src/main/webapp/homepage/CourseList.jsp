@@ -143,11 +143,7 @@ function lfn_btn(pKind, pParam) {
 	                        <span>
 	                            <img src='/resources/homepage/img/process/arr_right.jpg' alt=' '>
 	                        </span>
-	                        <p>수강신청</p>
-	                        <span>
-	                            <img src='/resources/homepage/img/process/arr_right.jpg' alt=' '>
-	                        </span>
-	                        <p>교육과정</p>
+	                        <p>전체과정</p>
 	                    </div>
 	                </div>
 <c:if test="${!empty set.categoryMainCourseList}">	                
@@ -308,7 +304,7 @@ function lfn_btn(pKind, pParam) {
 	                                    <p class='process_result_mobile'>모바일</p>
 	</c:if>	                                    
 	                                </div>
-	                                <p>${row.courseName}</p>
+	                                <p><a href="javascript:" onclick="lfn_btn('view',{courseId:'${row.courseId}'}); return false;">${row.courseName}</a></p>
 	                                <div class='process_result_text_bottom clear_fix'>
 	                                    <p>교육비</p>
 	                                    <p class='process_result_payment'><fmt:formatNumber value="${row.courseCost}" type="number"/> 원</p>
@@ -341,6 +337,7 @@ function lfn_btn(pKind, pParam) {
 	            <!-- Search Result Area END -->
 	
 	            <!-- Pager Area -->
+	            <input type='hidden' id='pageNum' name='pageNum' value="${set.condiVO.pageNum}">
 	            <div class='pager_box'>
                     <div class='pager clear_fix'>
                         <div class='pager_prev clear_fix' id="pagingLayerPrev">

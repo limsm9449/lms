@@ -1,28 +1,31 @@
 <%@ page contentType="text/html;charset=utf-8"%>
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
-<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="ko" xml:lang="ko">
+<!DOCTYPE html>
+<html lang='ko'>
+
 <head>
-<title>
-</title>
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1'>
+    <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+    <title>Q learning - 나의강의실 - 상담 등록</title>
 
-<%@ include file="../common/commUserInclude.jsp" %>
+    <%@ include file="../common/commMainInclude.jsp" %>
 
+    <link href='https://fonts.googleapis.com/css?family=Nanum+Gothic' rel='stylesheet'>
+    <link rel='stylesheet' href='/resources/homepage/css/initialization.css'>
+    <link rel='stylesheet' href='/resources/homepage/css/support/notice_register.css'>
 </head>
 
-<%
-	String returnParameter = 
-			"findString=" + request.getParameter("findString") +
-			"&pageNum=" + request.getParameter("pageNum") +
-			"&seq=" + request.getParameter("seq")
-			;
-%>
-
 <script type="text/javascript">
+
+$(document).ready(function() {
+	$("textarea[name='contents']").cleditor();
+});
 
 function lfn_btn(pKind, pParam) {
 	if ( pKind =="save" ) {
@@ -47,7 +50,7 @@ function lfn_btn(pKind, pParam) {
 			})
 		}
 	} else if ( pKind =="list" ) {
-		gfn_goPage("/counsel/userCounselList","<%=returnParameter%>"); 
+		gfn_goPage("/counsel/userCounselList",""); 
 	}
 }
 
@@ -80,99 +83,98 @@ function lfn_validate() {
 	return true;
 }
 
-
 </script>
 
-<body>
+<body style='background:#fff'>
 
 <form id="frm" name="frm" method="post">
+	<input type="hidden" id="seq" name="seq" value="${set.condiVO.seq}"/>
+	
+<frameset rows='*'>
+    <div class='wrap'>
+        <!-- PC HEADER -->
+        <%@ include file="../common/mainTop.jsp" %>
+        <!-- HEAD END -->
+        
+        <!-- CONTENTS -->
+        <div class='contents_wrap process' onmouseover='sub_hide()'>
+            <div class='contents_wrap_box'>
+                <!-- QUICK MENU -->
+                <%@ include file="../common/mainQuickMenu.jsp" %>
 
-<input type="hidden" id="seq" name="seq" value="${set.condiVO.seq}"/>
+                <!-- Top -->
+                <div class='top_area'>
+                    <div class='clear_fix'>
+                        <div class='process_history_box clear_fix'>
+                            <span>
+                                <img src='/resources/homepage/img/course/ic_home.jpg' alt=' '>
+                            </span>
+                            <p>HOME</p>
+                            <span>
+                                <img src='/resources/homepage/img/course/arr_right.jpg' alt=' '>
+                            </span>
+                            <p>나의강의실</p>
+                            <span>
+                                <img src='/resources/homepage/img/course/arr_right.jpg' alt=' '>
+                            </span>
+                            <p>상담수정</p>
+                        </div>
+                    </div>
+                    <h1>
+                        상담 <span>수정</span>
+                    </h1>
+                </div>
+                <!-- Top END -->
 
+                <div class='notice_register clear_fix'>
+                    <div class='form_box clear_fix'>
+                        <div class='title'>
+                            <p>분류</p>
+                        </div>
+                        <div>
+                            <select name='category' id='category' class='type'>
+                                <option value=''>분류를 선택해주세요.</option>
+<c:forEach var="row" items="${set.ddCategory}">
+				              	<option value="${row.ddKey}" <c:if test="${set.data.category eq row.ddKey}">selected</c:if>>${row.ddValue}</option>
+</c:forEach>
+                            </select>
+                        </div>
+                    </div>
+                    <div class='form_box clear_fix'>
+                        <div class='title'>
+                            <p>제목</p>
+                        </div>
+                        <div>
+                            <input type='text' name='title' id='title' value="${set.data.title}">
+                        </div>
+                    </div>
+                    <div class='form_box clear_fix flex'>
+                        <div class='title'>
+                            <p>내용</p>
+                        </div>
+                        <div class='editor_area'>
+                        	<textarea id="contents" name="contents">${set.data.contents}</textarea>
+                        </div>
+                    </div>
+                </div>
 
-<!-- skipnav -->
-<div id="skipnav"><a href="#side" class="skip">좌측메뉴 바로가기</a></div>
-<div id="skipnav"><a href="#contents" class="skip">컨텐츠 바로가기</a></div>
-<!-- skipnav -->
+                <div class='detail_btn_area'>
+                    <button onclick="lfn_btn('list');">취소</button>
+                    <button id="saveBtn" onclick="lfn_btn('save');" class='bg_color'>수정하기</button>
+                </div> 
+            </div>
+        </div>
+        <!-- CONTENTS END -->
 
-<!-- wrap -->
-<div id="wrap" class="site">
-  <%@ include file="../home/userTop.jsp" %>
-  <hr />
-  <!-- container -->
-  <div id="container" class="site">
-   	 	<!-- side -->
-   	 	<%
-   	 		String menuId = "userCounselList";
-   	 	%>
-		<%@ include file="../home/userLeft.jsp" %>
-		<!-- end side -->
-		
-    	<!-- contents -->
-		<div id="contents" class="site">
-			<!-- location -->
-			<div id="location"><a href="/" class="home">HOME</a><span>&gt;</span>나의정보<span>&gt;</span>상담내역</div>
-			<!-- title -->
-			<h3 class="tit_big">상담내역</h3>
-		      <div class="artcle">
-		        <div class="qna_list_box">
-		          <p class="big_2"><span class="blue">수정하기</span></p>
-		          <div id="bod_search_r">
-		            <a href="javascript:" onclick="javascript:lfn_btn('list'); return false;"><img src="/resources/images/sub/btn_go_list.png" alt="목록으로 돌아가기" /></a>
-		          </div>
-		          <div id="bodinput_box">
-		            <form name="frm" method="post">
-		            <table>
-		              <caption>질문하기 폼</caption>
-		    					<thead>
-		    					  <tr class="guide">
-		      						<th width="90"></th>
-		      						<th></th>
-		      					</tr>
-		    					</thead>
-		    					<tbody>
-		                <tr>
-		                  <th><label for="subject">제목</label></th>
-		                  <td><input type="text" name="title" id="title" class="full" value="${set.data.title}"/></td>
-		                </tr>
-		                <tr>
-		                  <th><label for="category">분류</label></th>
-		                  <td>
-		                    <select id="category" name="category">
-					            <option value="">전체</option>
-								<c:forEach var="row" items="${set.ddCategory}">
-					              	<option value="${row.ddKey}" <c:if test="${set.data.category eq row.ddKey}">selected</c:if>>${row.ddValue}</option>
-								</c:forEach>
-							</select>
-		                  </td>
-		                </tr>
-		                <tr>
-		                  <th><label for="contents">내용</label></th>
-		                  <td>
-		                    <textarea id="contents" name="contents">${set.data.contents}</textarea>
-		                  </td>
-		                </tr>
-		              </tbody>  
-		            </table>
-		            <div class="center_btn">
-		              <a href="javascript:" id="saveBtn" onclick="javascript:lfn_btn('save'); return false;"><img src="/resources/images/sub/btn_reg.png" /></a>&nbsp;<a href="javascript:" onclick="javascript:lfn_btn('list'); return false;"><img src="/resources/images/sub/btn_censel.png" /></a>
-		            </div>
-		            </form>
-		          </div>
-		        </div>
-		      </div>
-		</div>
-		<!-- end content -->
-		
-	</div>
-  <!-- end container -->
-  <!-- footer_wrap -->
-	<%@ include file="../home/bottom.jsp" %>
-  <!-- end footer_wrap -->
-</div>
+        <!-- FOOTER -->
+        <%@ include file="../common/mainBottom.jsp" %>
+        <!-- FOOTER END -->
+    </div>
+</frameset>
 
 </form>
 
+<script src='/resources/homepage/js/dev_sub.js'></script>
 
 </body>
 </html>

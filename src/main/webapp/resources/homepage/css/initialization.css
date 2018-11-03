@@ -560,7 +560,7 @@ header{
         padding-left:7.5%;
     }
 }
-@media all and (max-width:900px){
+@media all and (max-width:420px){
     /* HEAD */
     .head_pc{
         display:none;

@@ -77,11 +77,7 @@ function lfn_btn(pKind, pParam) {
                                 <span>
                                     <img src='/resources/homepage/img/course/arr_right.jpg' alt=' '>
                                 </span>
-                                <p>수강신청</p>
-                                <span>
-                                    <img src='/resources/homepage/img/course/arr_right.jpg' alt=' '>
-                                </span>
-                                <p>교육과정</p>
+                                <p>고객지원</p>
                             </div>
                         </div>
                         <h1>

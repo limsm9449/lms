@@ -28,7 +28,7 @@ var COURSE_ID = gfn_getUrlParams("COURSE_ID");
 var KIND = gfn_getUrlParams("KIND");
 
 $(document.body).ready(function () {
-    $("#CONTENTS").cleditor({height:490});
+    $("#CONTENTS").cleditor({height:345});
     $("#CONTENTS").cleditor()[0].refresh();
 
     if ( MODE == "INSERT" ) {

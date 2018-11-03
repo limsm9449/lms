@@ -21,6 +21,16 @@
     <link rel='stylesheet' href='/resources/homepage/css/guidance/tutorial.css'>
 </head>
 
+<script type="text/javascript">
+$(document).ready(function() {
+	<c:if test="${!empty set.condiVO.shap}">	      	
+		window.scroll(0, $("#${set.condiVO.shap}").offset().top);
+	</c:if>
+});
+</script>
+
+ 
+ 
 <body>
     <frameset rows='*'>
         <div class='wrap'>
@@ -45,11 +55,7 @@
                                 <span>
                                     <img src='/resources/homepage/img/course/arr_right.jpg' alt=' '>
                                 </span>
-                                <p>수강신청</p>
-                                <span>
-                                    <img src='/resources/homepage/img/course/arr_right.jpg' alt=' '>
-                                </span>
-                                <p>교육과정</p>
+                                <p>교육안내</p>
                             </div>
                         </div>
                         <h1>
@@ -111,7 +117,7 @@
                                     <p>
                                         플래시가 브라우저에서 실행되기 위한 <span></span>ActiveX Plug-in 입니다.
                                     </p>
-                                    <a href='https://get.adobe.com/flashplayer/?loc=kr'>다운로드</a>
+                                    <a href='https://get.adobe.com/flashplayer/?loc=kr' target='_blank'>다운로드</a>
                                 </div>
                             </li>
                             <li class='even'>
@@ -121,7 +127,7 @@
                                     <p>
                                         샘플 강의 재생 시 <span></span>(OS가 정품일 경우 설치가능)
                                     </p>
-                                    <a href='https://www.microsoft.com/ko-kr/download/windows-media-player-details.aspx'>다운로드</a>
+                                    <a href='https://www.microsoft.com/ko-kr/download/windows-media-player-details.aspx' target='_blank'>다운로드</a>
                                 </div>
                             </li>
                             <li>
@@ -131,7 +137,7 @@
                                     <p>
                                         익스플로러 오류 날 때 <span></span>재설치합니다.
                                     </p>
-                                    <a href='https://www.microsoft.com/ko-kr/download/internet-explorer-8-details.aspx'>다운로드</a>
+                                    <a href='https://www.microsoft.com/ko-kr/download/internet-explorer-8-details.aspx' target='_blank'>다운로드</a>
                                 </div>
                             </li>
                             <li class='even'>
@@ -141,7 +147,7 @@
                                     <p>
                                         익스플로러 오류 날 때 <span></span>재설치합니다.
                                     </p>
-                                    <a href='https://www.microsoft.com/ko-kr/download/internet-explorer-9-details.aspx'>다운로드</a>
+                                    <a href='https://www.microsoft.com/ko-kr/download/internet-explorer-9-details.aspx' target='_blank'>다운로드</a>
                                 </div>
                             </li>
                             <li>
@@ -151,7 +157,7 @@
                                     <p>
                                         플레이어 원활한 이용에 <span></span>필요합니다.
                                     </p>
-                                    <a href='https://www.google.com/intl/ko_ALL/chrome/'>다운로드</a>
+                                    <a href='https://www.google.com/intl/ko_ALL/chrome/' target='_blank'>다운로드</a>
                                 </div>
                             </li>
                             <li class='even'>
@@ -161,7 +167,7 @@
                                     <p>
                                         강의 노트(PDF 문서)를 볼 때 <span></span>필요합니다.
                                     </p>
-                                    <a href='https://get.adobe.com/reader/?loc=kr'>다운로드</a>
+                                    <a href='https://get.adobe.com/reader/?loc=kr' target='_blank'>다운로드</a>
                                 </div>
                             </li>
                         </ul>

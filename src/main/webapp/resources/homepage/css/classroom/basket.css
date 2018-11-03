@@ -699,7 +699,7 @@ header{
     float: right;
 }
 .basket_lectures_lecture{
-    padding: 30px 0;
+    padding: 30px 0 20px;
 }
 .basket_lectures_lecture p{
     font-family: 'NanumSquareB';
@@ -845,6 +845,37 @@ header{
     background: #0180d3;
     padding: 20px 0;
     margin: 40px auto 0;
+}
+
+
+/* BASKET COURSE LIST */
+.register_course_list_text {
+    padding: 10px 20px;
+    margin-top: 10px;
+    font-size: 20px;
+    font-weight: 600;
+    background: #eee;
+    border: solid 1px #ccc;
+    border-bottom: 0;
+}
+.register_course_list{
+    padding:10px 20px;
+    margin-bottom:10px;
+    border: solid 1px #ccc;
+}
+.register_course_list p{
+    box-sizing:border-box;
+    font-size:16px;
+    line-height:150%;
+}
+.n_course_list_left{
+    width:82%;
+    float:left;
+}
+.n_course_list_right{
+    float:right;
+    width:18%;
+    text-align:center;
 }
 
 

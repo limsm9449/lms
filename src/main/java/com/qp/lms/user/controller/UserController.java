@@ -2,6 +2,8 @@ package com.qp.lms.user.controller;
 
 
 
+import java.util.HashMap;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,9 +15,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.qp.lms.ax.common.service.AxCommService;
 import com.qp.lms.common.CommUtil;
 import com.qp.lms.common.SessionUtil;
+import com.qp.lms.education.model.EducationSet;
+import com.qp.lms.education.model.EducationVO;
 import com.qp.lms.user.model.UserSet;
 import com.qp.lms.user.model.UserVO;
 import com.qp.lms.user.service.UserService;
+
+import net.sf.json.JSONObject;
 
 
 @Controller
@@ -332,6 +338,29 @@ public class UserController {
 
         return "/homepage/" + vo.getPageUrl();
     }
+    
+    @RequestMapping(value = "/user/checkMyCourse")
+    public String checkMyCourse(@ModelAttribute UserVO vo,Model model) throws Exception {
+    	try {
+    		UserSet set = new UserSet();
+	    	set.setCondiVO(vo);
+	    	
+	    	set.getCondiVO().setUserId(SessionUtil.getSessionUserId());
+	    	
+	    	set = svr.checkMyCourse(set);
+	    	
+	    	HashMap hm = new HashMap();
+	    	hm.put("mobileYn", set.getCourseInfo().getMobileYn());
+	    	hm.put("cnt", set.getCourseInfo().getCnt());
+	    	
+	    	model.addAttribute("json", JSONObject.fromObject(hm));
+    	} catch ( Exception e ) {
+    		e.printStackTrace();
+    	}
+
+    	return "/common/json";
+    }
+
     
 
 	    

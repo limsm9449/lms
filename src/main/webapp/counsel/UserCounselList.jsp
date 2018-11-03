@@ -1,22 +1,28 @@
 <%@ page contentType="text/html;charset=utf-8"%>
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
-<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="ko" xml:lang="ko">
+<!DOCTYPE html>
+<html lang='ko'>
+
 <head>
-<title>
-</title>
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1'>
+    <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+    <title>Q learning - 나의강의실 - 상담내역</title>
 
-<%@ include file="../common/commUserInclude.jsp" %>
+    <%@ include file="../common/commMainInclude.jsp" %>
 
+    <link href='https://fonts.googleapis.com/css?family=Nanum+Gothic' rel='stylesheet'>
+    <link rel='stylesheet' href='/resources/homepage/css/initialization.css'>
+    <link rel='stylesheet' href='/resources/homepage/css/classroom/lecture.css'>
 </head>
 
 <script type="text/javascript">
 $(document).ready(function() {
-	f_makePageNavigator("paging",${set.condiVO.pageNum},${set.totalCount},${set.pageUnit});
 });
 
 function lfn_btn(pKind, pParam) {
@@ -41,97 +47,91 @@ function lfn_btn(pKind, pParam) {
 <body>
 
 <form id="frm" name="frm" method="post">
+	<input type="hidden" id="seq" name="seq" value=""/>
+	
+<frameset rows='*'>
+    <div class='wrap'>
+        <!-- PC HEADER -->
+        <%@ include file="../common/mainTop.jsp" %>
+        <!-- HEAD END -->
 
-<input type="hidden" id="seq" name="seq" value=""/>
+        <!-- CONTENTS -->
+        <div class='contents_wrap process' onmouseover='sub_hide()'>
+            <div class='contents_wrap_box'>
+                <!-- QUICK MENU -->
+                <%@ include file="../common/mainQuickMenu.jsp" %>
 
-<!-- skipnav -->
-<div id="skipnav"><a href="#side" class="skip">좌측메뉴 바로가기</a></div>
-<div id="skipnav"><a href="#contents" class="skip">컨텐츠 바로가기</a></div>
-<!-- skipnav -->
+                <!-- Top -->
+                <div class='top_area'>
+                    <div class='clear_fix'>
+                        <div class='process_history_box clear_fix'>
+                            <span>
+                                <img src='/resources/homepage/img/course/ic_home.jpg' alt=' '>
+                            </span>
+                            <p>HOME</p>
+                            <span>
+                                <img src='/resources/homepage/img/course/arr_right.jpg' alt=' '>
+                            </span>
+                            <p>나의강의실</p>
+                            <span>
+                                <img src='/resources/homepage/img/course/arr_right.jpg' alt=' '>
+                            </span>
+                            <p>상담내역</p>
+                        </div>
+                    </div>
+                    <h1>
+                        나의<span>강의실</span>
+                    </h1>
+                </div>
+                <!-- Top END -->
 
-<!-- wrap -->
-<div id="wrap" class="site">
-  <%@ include file="../home/userTop.jsp" %>
-  <hr />
-  <!-- container -->
-  <div id="container" class="site">
-   	 	<!-- side -->
-   	 	<%
-   	 		String menuId = "userCounselList";
-   	 	%>
-		<%@ include file="../home/userLeft.jsp" %>
-		<!-- end side -->
-		
-    	<!-- contents -->
-		<div id="contents" class="site">
-			<!-- location -->
-			<div id="location"><a href="/" class="home">HOME</a><span>&gt;</span>나의정보<span>&gt;</span>상담내역</div>
-			<!-- title -->
-			<h3 class="tit_big">상담내역</h3>
-		      <div class="artcle">
-		        <div class="qna_list_box">
-		          <p>회원님께서 문의하셨던 내용에 대한 답변을 확인하실 수 있습니다.</p>
-		          <div id="bod_search_r">
-		            <form class="search_forum" action="" method="get">
-		              <input type="text" class="search_input" id="findString" name="findString" value="${set.condiVO.findString}" />
-		              <a href="javascript:" onclick="javascript:lfn_btn('search');"><img src="/resources/images/sub/btn_search.png" alt="검색하기" /></a>
-		            </form>
-		          </div>
-		          <table class="bod_list">
-		            <caption>QnA 목록</caption>
-		  					<thead>
-		  					  <tr class="guide">
-		    						<th width="42"></th>
-		    						<th width="130"></th>
-		    						<th></th>
-		    						<th width="110"></th>
-		    						<th width="100 "></th>
-		    					</tr>
-		    					<tr class="t_list">
-		    						<th>No</th>
-		    						<th>분류 </th>
-		    						<th>제목</th>
-		    						<th>등록일</th>
-		    						<th>답변상태</th>
-		    					</tr>
-		  					</thead>
-		  					<tbody>
-						<c:if test="${empty set.list}">
-							<tr class="last_line">
-								<td colspan="5" class="last center"><spring:message code="lms.msg.noSearchData" text="-" /></td>
-							</tr>
-						</c:if>
-						<c:forEach var="row" items="${set.list}" varStatus="idx">
-							<tr <c:if test="${idx.index + 1 eq fn:length(set.list)}"> class="last_line"</c:if>>
-				              	<td class="right">${row.rownum}</td>
-				              	<td class="center">${row.categoryName}</td>
-				              	<td class="title2"><span><a href="#" onClick="javascript:lfn_btn('view',{seq:'${row.seq}'}); return false;" class="click"><c:out value="${row.title}" escapeXml="true" /></a></span></td>
-				              	<td class="center">${row.createDate}</td>
-				              	<td class="last center">${row.answerYn}</td>
-							</tr>
-						</c:forEach> 
-		            </tbody>
-		          </table>
-		          	<%-- 페이징 --%>
-					<div id="paging"></div>
-	    			<div class="right_btn up_btn">
-	    			  <a href="javascript:" onclick="javascript:lfn_btn('new');"><img src="/resources/images/sub/btn_qna.png" alt="질문하기" /></a>
-	    			</div>
-		        </div>
-		      </div>
-		</div>
-		<!-- end content -->
-		
-		
-	</div>
-  <!-- end container -->
-  <!-- footer_wrap -->
-	<%@ include file="../home/bottom.jsp" %>
-  <!-- end footer_wrap -->
-</div>
+                <div class='classroom_subtitle'>
+                    <p class='subtitle'>상담내역</p>
+                    <p>회원님께서 문의하셨던 내용에 대한 답변을 확인하실 수 있습니다.</p>
+                </div>
+
+                <table class='classroom_lecture counsel'>
+                    <tr>
+                        <th class='col_1'>번호</th>
+                        <th class='col_2'>분류</th>
+                        <th class='col_3'>제목</th>
+                        <th class='col_4'>등록일</th>
+                        <th class='col_5'>답변상태</th>
+                    </tr>
+<c:if test="${empty set.list}">
+					<tr class="last_line">
+						<td colspan="5" class="last center"><spring:message code="lms.msg.noSearchData" text="-" /></td>
+					</tr>
+</c:if>                  
+<c:forEach var="row" items="${set.list}" varStatus="idx">  
+                    <tr>
+                        <td class='col_1'>${row.rownum}</td>
+                        <td class='col_2'>${row.categoryName}</td>
+                        <td class='col_3'>
+                            <a href="#" onClick="javascript:lfn_btn('view',{seq:'${row.seq}'}); return false;"><c:out value="${row.title}" escapeXml="true" /></a>
+                        </td>
+                        <td class='col_4'>${row.createDate}</td>
+                        <td class='col_5'>${row.answerYn}</td>
+                    </tr>
+</c:forEach>                    
+                </table>
+                
+                <div class='detail_btn_area'>
+                    <a href="#" onclick="javascript:lfn_btn('new');" class='bg_color'>등록하기</a>
+                </div>
+            </div>
+        </div>
+        <!-- CONTENTS END -->
+
+        <!-- FOOTER -->
+        <%@ include file="../common/mainBottom.jsp" %>
+        <!-- FOOTER END -->
+    </div>
+</frameset>
 
 </form>
 
+<script src='/resources/homepage/js/dev_sub.js'></script>
 
 </body>
 </html>

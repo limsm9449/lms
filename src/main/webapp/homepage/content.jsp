@@ -42,7 +42,7 @@
                             <div class='slider_text_box'>
                                 <img src='/resources/homepage/img/visual_text.png' class='pc' alt=' '>
                             </div>
-                            <button>상세보기1</button>
+                            <button onclick="gfn_goPage('/main/mainCourseData','courseId=21');">상세보기1</button>
                         </div>
                     </div>
                 </li>
@@ -52,7 +52,7 @@
                             <div class='slider_text_box left'>
                                 <img src='/resources/homepage/img/visual2_text.png' class='pc' alt=' '>
                             </div>
-                            <button class='right_bottom'>상세보기2</button>
+                            <button class='right_bottom' onclick="gfn_goPage('/main/mainCourseData','courseId=22');">상세보기22</button>
                         </div>
                     </div>
                 </li>
@@ -61,7 +61,7 @@
                         <div class='slide clear_fix'>
                             <div class='slider_text_box'>
                             </div>
-                            <button class='right_bottom_nonText'>상세보기3</button>
+                            <button class='right_bottom_nonText' onclick="gfn_goPage('/main/mainCourseData','courseId=23');">상세보기33</button>
                         </div>
                     </div>
                 </li>
@@ -154,7 +154,7 @@
                                     패러다임이 급변하는 사회, 최고의 위기라고도 할 수 있는 향후 10년. 위기와 역경을 기회로 만들어 당신을 도약시킬 수 있는 미래창조 비결을
                                     제시합니다.
                                 </p>
-                                <a href=''>바로가기1</a>
+                                <a href='#' onclick="gfn_goPage('/main/mainCourseData','courseId=21');">바로가기1</a>
                             </div>
                         </div>
                     </div>
@@ -171,7 +171,7 @@
                                     패러다임이 급변하는 사회, 최고의 위기라고도 할 수 있는 향후 10년. 위기와 역경을 기회로 만들어 당신을 도약시킬 수 있는 미래창조 비결을
                                     제시합니다.
                                 </p>
-                                <a href=''>바로가기2</a>
+                                <a href='#' onclick="gfn_goPage('/main/mainCourseData','courseId=21');">바로가기2</a>
                             </div>
                         </div>
                     </div>
@@ -188,7 +188,7 @@
                                     패러다임이 급변하는 사회, 최고의 위기라고도 할 수 있는 향후 10년. 위기와 역경을 기회로 만들어 당신을 도약시킬 수 있는 미래창조 비결을
                                     제시합니다.
                                 </p>
-                                <a href=''>바로가기3</a>
+                                <a href='#' onclick="gfn_goPage('/main/mainCourseData','courseId=21');">바로가기3</a>
                             </div>
                         </div>
                     </div>
@@ -199,13 +199,14 @@
                             <div class='process'>
                                 <p class='process_title'>
                                     <span>
-                                        남다른 <strong>교구활용의 정석</strong>
+                                        윤코치의 <strong>보고서 작성법</strong>
                                     </span>
                                 </p>
                                 <p class='process_text'>
-                                    활기찬 교실! 재미있는 수업!<br>다양한 교구를 통한 남다른 교실 만들기!
+                                    퇴짜맞는 보고서, 형식적인 보고서는 더이상 없다!<br>
+                                    상대방의 마음을 한번에 잡을 수 있는 설득력있는 보고서 작성법의 결정판!
                                 </p>
-                                <a href=''>바로가기1</a>
+                                <a href='#' onclick="gfn_goPage('/main/mainCourseData','courseId=19');">바로가기1</a>
                             </div>
                         </div>
                     </div>
@@ -214,13 +215,14 @@
                             <div class='process'>
                                 <p class='process_title'>
                                     <span>
-                                        남다른 <strong>교구활용의 정석</strong>
+                                        윤코치의 <strong>보고서 작성법</strong>
                                     </span>
                                 </p>
                                 <p class='process_text'>
-                                    활기찬 교실! 재미있는 수업!<br>다양한 교구를 통한 남다른 교실 만들기!
+                                    퇴짜맞는 보고서, 형식적인 보고서는 더이상 없다!<br>
+                                    상대방의 마음을 한번에 잡을 수 있는 설득력있는 보고서 작성법의 결정판!
                                 </p>
-                                <a href=''>바로가기2</a>
+                                <a href='#' onclick="gfn_goPage('/main/mainCourseData','courseId=19');">바로가기2</a>
                             </div>
                         </div>
                     </div>
@@ -229,13 +231,14 @@
                             <div class='process'>
                                 <p class='process_title'>
                                     <span>
-                                        남다른 <strong>교구활용의 정석</strong>
+                                        윤코치의 <strong>보고서 작성법</strong>
                                     </span>
                                 </p>
                                 <p class='process_text'>
-                                    활기찬 교실! 재미있는 수업!<br>다양한 교구를 통한 남다른 교실 만들기!
+                                    퇴짜맞는 보고서, 형식적인 보고서는 더이상 없다!<br>
+                                    상대방의 마음을 한번에 잡을 수 있는 설득력있는 보고서 작성법의 결정판!
                                 </p>
-                                <a href=''>바로가기3</a>
+                                <a href='#' onclick="gfn_goPage('/main/mainCourseData','courseId=19');">바로가기3</a>
                             </div>
                         </div>
                     </div>
@@ -323,7 +326,7 @@
                 <div class="guide clear_fix">
                     <p class='cs_title blue'>처음오셨나요?</p>
                     <p class='guide_text'>이용가이드를 확인해 주세요.</p>
-                    <a href='#'>바로가기</a>
+                    <a href="javascript:" onclick="page.goPage('/main/tutorial', '');">바로가기</a>
                 </div>
                 <div class="center clear_fix">
                     <p class='cs_title'>고객센터</p>

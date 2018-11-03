@@ -14,21 +14,21 @@
                         </a>
                     </li>
                     <li class='quick_menu_list'>
-                        <a href='#'>
+                        <a href="javascript:" onclick="page.goPage('/main/tutorial', '');">
                             <span></span>
                             <img src='/resources/homepage/img/quick_menu2.png' alt=' '>
                             학습가이드
                         </a>
                     </li>
                     <li class='quick_menu_list'>
-                        <a href="javascript:" onclick="f_submitSelf('/main/faqList')">
+                        <a href="javascript:" onclick="page.goPage('/main/faqList', '')">
                             <span></span>
                             <img src='/resources/homepage/img/quick_menu3.png' alt=' '>
                             FAQ
                         </a>
                     </li>
                     <li class='quick_menu_list'>
-                        <a href='#'>
+                        <a href="javascript:" onclick="page.goPage('/main/tutorial', 'shap=quick_to');">
                             <span></span>
                             <img src='/resources/homepage/img/quick_menu4.png' alt=' '>
                             학습지원프로그램

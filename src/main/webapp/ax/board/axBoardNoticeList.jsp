@@ -62,12 +62,12 @@ $(document.body).ready(function () {
         switch (this.getAttribute("data-grid-control")) {
 	        case "search":
 	            fn_search();
-	            break;
+	            break; 
 		    case "add":
            		var urlParams = "page=/ax/board/axBoardNoticePopup";
            		urlParams += "&MODE=INSERT&SEQ=&COURSE_ID=0";
            		
-           		f_popup('/common/axOpenPage', {displayName:'boardNoticePopup',option:'width=900,height=500', urlParams:urlParams});
+           		f_popup('/common/axOpenPage', {displayName:'boardNoticePopup',option:'width=900,height=560', urlParams:urlParams});
 
 		    	break;
 		    case "delete":
@@ -145,7 +145,7 @@ function fn_gridEvent(event, obj) {
    		var urlParams = "page=/ax/board/axBoardNoticePopup";
    		urlParams += "&MODE=" + mode + "&SEQ=" + obj.item["SEQ"] + "&COURSE_ID=0";
    		
-   		f_popup('/common/axOpenPage', {displayName:'boardNoticePopup',option:'width=900,height=500', urlParams:urlParams});
+   		f_popup('/common/axOpenPage', {displayName:'boardNoticePopup',option:'width=900,height=560', urlParams:urlParams});
 	} else if ( event == "DataChanged" ) {
 	}
 }

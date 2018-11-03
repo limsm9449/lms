@@ -480,6 +480,18 @@ header{
     padding-left:1%;
     padding-right:1%;
 }
+.classroom_lecture.counsel tr .col_3{
+    width: 60%;
+    padding:0;
+    max-width: 0;
+}
+.classroom_lecture.counsel tr .col_3 a{
+    display:block;
+    line-height:200%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
 
 /* TABLE REVIEW */
 .contents_wrap_box.page{
@@ -489,6 +501,30 @@ header{
 }
 .classroom_lecture.review tr .col_1{
     width:8%;
+}
+
+
+/* BTN AREA */
+.detail_btn_area{
+    text-align: center;
+    padding:50px 0;
+}
+.detail_btn_area a{
+    display:inline-block;
+    width: 20%;
+    min-width: 170px;
+    font-size: 16px;
+    font-weight: 500;
+    color: #555;
+    text-align:center;
+    padding: 20px 0;
+    background: #fff;
+    border:solid 1px #ddd;
+}
+.detail_btn_area .bg_color{
+    color:#fff;
+    background:#0280d4;
+    border:solid 1px #0280d4;
 }
 
 
@@ -696,7 +732,8 @@ header{
     .classroom_lecture.standby tr .col_2, .classroom_lecture.standby tr .col_3, .classroom_lecture.standby tr .col_5,
     .classroom_lecture.completed tr .col_2, .classroom_lecture.completed tr .col_3, .classroom_lecture.completed tr .col_4, .classroom_lecture.completed tr .col_5,
     .classroom_lecture.review tr .col_1, .classroom_lecture.review tr .col_3, .classroom_lecture.review tr .col_4,
-    .classroom_lecture.lectures tr .col_2, .classroom_lecture.lectures tr .col_3, .classroom_lecture.lectures tr .col_4, .classroom_lecture.lectures tr .col_5{
+    .classroom_lecture.lectures tr .col_2, .classroom_lecture.lectures tr .col_3, .classroom_lecture.lectures tr .col_4, .classroom_lecture.lectures tr .col_5,
+    .classroom_lecture.counsel tr .col_2, .classroom_lecture.counsel tr .col_4{
         display: none;
     }
     .classroom_lecture.standby tr .col_1, .classroom_lecture.completed tr .col_1{
@@ -713,7 +750,8 @@ header{
     .classroom_lecture.review tr .col_2{
         width:65%;
     }
-    .classroom_lecture.lectures tr .col_1{
+    .classroom_lecture.lectures tr .col_1,
+    .classroom_lecture.counsel tr .col_3{
         width:70%;
     }
 

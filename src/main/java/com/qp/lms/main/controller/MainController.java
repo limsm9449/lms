@@ -591,6 +591,15 @@ public class MainController {
 
     @RequestMapping(value = "/main/tutorial")
     public String tutorial(@ModelAttribute MainVO vo, Model model) throws Exception {
+    	try {
+    		MainSet set = new MainSet();
+    		set.setCondiVO(vo);
+
+	        model.addAttribute("set", set );
+    	} catch ( Exception e ) {
+    		e.printStackTrace();
+    	}
+
     	return "/homepage/tutorial";
     }
 

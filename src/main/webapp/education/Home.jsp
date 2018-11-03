@@ -19,9 +19,9 @@
 
     <link href='https://fonts.googleapis.com/css?family=Nanum+Gothic' rel='stylesheet'>
 
-    <link rel='stylesheet' href='/resources/homepagePopup/css/common/reset.css'>
-    <link rel='stylesheet' href='/resources/homepagePopup/css/common/common.css'>
-    <link rel='stylesheet' href='/resources/homepagePopup/css/main.css'>
+    <link rel='stylesheet' href='/resources/homepage/css/initialization.css'>
+    <link rel='stylesheet' href='/resources/homepage/css/popup/popup_learning.css'>
+
 
 </head>
 
@@ -44,7 +44,7 @@ var directorys = [<c:forEach var="row" items="${set.resourceList}" varStatus="id
 var titles = [<c:forEach var="row" items="${set.resourceList}" varStatus="idx"><c:if test="${idx.index ne 0}">,</c:if> "${row.week}.${row.title}"</c:forEach>];
 
 var rootDirectory = "${set.data.directory}";
-var mobileYn = "${set.condiVO.mobileYn}";
+var mobileYn = "N";
 
 $(document).ready(function() {
 	<%-- 초기값 세팅 --%>
@@ -64,24 +64,24 @@ $(document).ready(function() {
 
 
 <body onunload="Popup.hideAllPopup()">
-    <div class='wrap'>
-        <div class='lecture_head clear_fix'>
-            <p class='lecture_title'>
+    <div class='learnig_wrap'>
+        <div class='learnig_lecture_head clear_fix'>
+            <p class='learnig_lecture_title'>
                 ${set.data.courseName}
             </p>
         </div>
-		<iframe name="eduContent" id="eduContent" src="about:blank;" style="width: ${set.data.hPx}px; height: ${set.data.vPx}px;">학습 컨텐츠 영역</iframe>
-        <div class='btn_area'>
+        <div class='learnig_test_image'>
+            <iframe name="eduContent" id="eduContent" src="about:blank;" style="width: ${set.data.hPx}px; height: ${set.data.vPx}px;">학습 컨텐츠 영역</iframe>
+        </div>
+        <div class='learnig_btn_area clear_fix'>
             <button onclick="javascript:Popup.showUserBoard('NOTICE','${set.condiVO.courseId}'); return false;">공지사항</button>
             <button onclick="javascript:Popup.showUserBoard('FREE','${set.condiVO.courseId}'); return false;">자유게시판</button>
             <button onclick="javascript:Popup.showUserBoard('DATA','${set.condiVO.courseId}'); return false;">자료실</button>
             <button onclick="javascript:Popup.showUserBoard('QNA','${set.condiVO.courseId}'); return false;">Q&A</button>
 
 <c:if test="${set.data.isReport eq 'Y'}">
-			<button onclick="javascript:Popup.showUserBoard('REPORT','${set.condiVO.courseId}'); return false;">Report</button>
 </c:if>	   		
 <c:if test="${set.data.isDiscussion eq 'Y'}">
-			<button onclick="javascript:Popup.showUserBoard('DISCUSSION','${set.condiVO.courseId}'); return false;">Discussion</button>
 </c:if>	   		
 			<button onclick="javascript:Popup.showProgress('${set.condiVO.courseId}'); return false;">진도</button>
 
@@ -103,9 +103,10 @@ $(document).ready(function() {
 </c:if>	   		
 <c:if test="${set.data.isReport eq 'Y' && set.data.reportYn eq 'N'}">
             <button onclick="javascript:Popup.showReport('${set.condiVO.courseId}'); return false;">과정리포트 제출</button>
-</c:if>	   		
+</c:if>	
         </div>
     </div>
+
 	<form name="frm" method="post">
 	</form>
 </body>

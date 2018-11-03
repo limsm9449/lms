@@ -12,16 +12,11 @@
     <title>Popup Sample</title>
 
 	<%@ include file="../common/commMainInclude.jsp" %>
-	
-    <!--[if IE]>
-        <link rel='stylesheet' href='/resources/homepagePopup/css/main_ie.css'>
-    <![endif]-->
 
     <link href='https://fonts.googleapis.com/css?family=Nanum+Gothic' rel='stylesheet'>
 
-    <link rel='stylesheet' href='/resources/homepagePopup/css/common/reset.css'>
-    <link rel='stylesheet' href='/resources/homepagePopup/css/common/common.css'>
-    <link rel='stylesheet' href='/resources/homepagePopup/css/main.css'>
+    <link rel='stylesheet' href='/resources/homepage/css/initialization.css'>
+    <link rel='stylesheet' href='/resources/homepage/css/popup/popup_learning.css'>
 
 </head>
 

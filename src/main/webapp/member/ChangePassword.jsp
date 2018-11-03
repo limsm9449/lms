@@ -19,7 +19,7 @@
     <link href='https://fonts.googleapis.com/css?family=Nanum+Gothic' rel='stylesheet'>
 
     <link rel='stylesheet' href='/resources/homepage/css/initialization.css'>
-    <link rel='stylesheet' href='/resources/homepage/css/etc/signup.css'>
+    <link rel='stylesheet' href='/resources/homepage/css/support/notice_register.css'>
 </head>
 
 <script type="text/javascript">
@@ -111,38 +111,46 @@ function lfn_validate() {
                         <span>
                             <img src='/resources/homepage/img/course/arr_right.jpg' alt=' '>
                         </span>
-                        <p>비밀번호변경</p>
+                        <p>비밀번호 변경</p>
                     </div>
                 </div>
             </div>
             <!-- Top END -->
-
-            <div class='util_wrap'>
+			
+			<div class='util_wrap'>
                 <h1>
                     비밀번호 변경
                 </h1>
                 <div class='signup_title_box'>
+                    <p>
+                        현재 비밀번호를 입력한 후 새로 사용할 비밀번호를 입력해 주십시오.
+                    </p>
                 </div>
                 <div class='signup_input_list'>
-                	<div class='certification_name clear_fix'>
+                    <div class='certification_name clear_fix'>
                         <p>현재 비밀번호</p>
-                        <input type='password' name='userPassword' id='userPassword' placeholder='현재 비밀번호를 입력해주세요'>
-                    </div>
-                	<div class='certification_name clear_fix'>
-                        <p>비밀번호</p>
-                        <input type='password' name='newUserPassword' id='newUserPassword' placeholder='※ 영문/숫자(혼용) 6~12글자 이내로 입력'>
+                        <input type='password' name='userPassword' id='userPassword' placeholder='비밀번호를 입력해주세요'>
                     </div>
                     <div class='certification_name clear_fix'>
-                        <p>비밀번호 확인</p>
-                        <input type='password' name='newUserPassword2' id='newUserPassword2' placeholder='※ 비밀번호를 한번 더 입력, 잊지 않도록 주의하세요.'>
+                        <p>변경 비밀번호</p>
+                        <input type='password' name='newUserPassword' id='newUserPassword' placeholder='비밀번호를 입력해주세요'>
+                        <p class='note'>
+                            영문/숫자(혼용) 6~12글자 이내로 입력
+                        </p>
+                    </div>
+                    <div class='certification_name clear_fix'>
+                        <p>변경 비밀번호 확인</p>
+                        <input type='password' name='newUserPassword2' id='newUserPassword2' placeholder='비밀번호를 확인해주세요'>
+                        <p class='note'>
+                            비밀번호를 한번 더 입력, 잊지 않도록 주의하세요.
+                        </p>
                     </div>
                 </div>
-                <div class='signup_btn_box clear_fix'>
-                    <button onclick='page.goHome();'>취소</button>
-                    <button class='last' id="saveBtn" onclick="lfn_btn('save');">저장</button>
+                <div class='detail_btn_area'>
+                    <button onclick='page.goHome();'>변경취소</button>
+                    <button id="saveBtn" onclick="lfn_btn('save');" class='bg_color'>변경완료</button>
                 </div>
             </div>
-
         </div>
         <!-- CONTENTS END -->
 

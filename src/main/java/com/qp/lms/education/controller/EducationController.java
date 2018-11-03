@@ -40,29 +40,6 @@ public class EducationController {
     @Autowired
     private EducationService svr;
 
-    @RequestMapping(value = "/education/checkMyCourse")
-    public String checkMyCourse(@ModelAttribute EducationVO vo,Model model) throws Exception {
-    	try {
-    		EducationSet set = new EducationSet();
-	    	set.setCondiVO(vo);
-	    	
-	    	set.getCondiVO().setUserId(SessionUtil.getSessionUserId());
-	    	
-	    	set = svr.checkMyCourse(set);
-	    	
-	    	HashMap hm = new HashMap();
-	    	hm.put("mobileYn", set.getData().getMobileYn());
-	    	hm.put("cnt", set.getData().getCnt());
-	    	
-	    	model.addAttribute("json", JSONObject.fromObject(hm));
-    	} catch ( Exception e ) {
-    		e.printStackTrace();
-    	}
-
-    	return "/common/json";
-    }
-
-    
     /**
      * 교육 팝업 Home
      * @param vo
@@ -72,26 +49,34 @@ public class EducationController {
      */
     @RequestMapping(value = "/education/eduHome")
     public String eduHome(@ModelAttribute EducationVO vo, Model model) throws Exception {
-    	String jspPage = "";
-    	
     	try {
 	    	EducationSet set = new EducationSet();
 	    	set.setCondiVO(vo);
 	    	
 	    	set = svr.eduHome(set);
 	
-	    	if ( "Y".equals(set.getData().getMobileYn()) ) {
-	    		jspPage = "/education/HomeMobile";
-	    	} else {
-	    		jspPage = "/education/Home";
-	    	}
-	    	
 	    	model.addAttribute("set", set );
     	} catch ( Exception e ) {
     		e.printStackTrace();
     	}
 
-        return jspPage;
+        return "/education/Home";
+    }
+
+    @RequestMapping(value = "/education/eduHomeMobile")
+    public String eduHomeMobile(@ModelAttribute EducationVO vo, Model model) throws Exception {
+    	try {
+	    	EducationSet set = new EducationSet();
+	    	set.setCondiVO(vo);
+	    	
+	    	set = svr.eduHome(set);
+	
+	    	model.addAttribute("set", set );
+    	} catch ( Exception e ) {
+    		e.printStackTrace();
+    	}
+
+        return "/education/HomeMobile";
     }
 
     /*

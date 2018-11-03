@@ -16,6 +16,7 @@ import com.qp.lms.common.Constant;
 import com.qp.lms.common.SessionUtil;
 import com.qp.lms.common.service.DdService;
 import com.qp.lms.course.model.CourseVO;
+import com.qp.lms.education.model.EducationSet;
 import com.qp.lms.evaluation.model.EvaluationVO;
 import com.qp.lms.main.model.MainSet;
 import com.qp.lms.user.model.UserSet;
@@ -343,6 +344,12 @@ public class UserService {
     */
 
 
+	public UserSet checkMyCourse(UserSet set) throws Exception {
+    	set.getCondiVO().setUserId(SessionUtil.getSessionUserId());
+    	set.setCourseInfo((CourseVO) sqlSession.selectOne("user.checkMyCourse",set.getCondiVO()));
+    	
+        return set ;
+    }
     
 
 }

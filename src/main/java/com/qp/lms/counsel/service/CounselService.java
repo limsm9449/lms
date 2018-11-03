@@ -24,15 +24,8 @@ public class CounselService {
 	private DdService ddService;
 
     public CounselSet userCounselList(CounselSet set) throws Exception {
-    	//쿼리에서 가져올 갯수 지정
-    	set.getCondiVO().setLimitUnit(Constant.unitPerPage);
-
     	List<CounselVO> list = sqlSession.selectList("counsel.userCounselList",set.getCondiVO());
     	set.setList(list);
-    	
-    	//페이징 처리 변수 세팅
-    	set.setTotalCount(((CounselVO)sqlSession.selectOne("counsel.userCounselTotal",set.getCondiVO())).getCnt());
-    	set.setPageUnit(Constant.unitPerPage);
     	
     	return set;
     }
