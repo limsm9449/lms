@@ -24,7 +24,7 @@
 <script type="text/javascript">
 $(document).ready(function() {
 	<c:if test="${!empty set.condiVO.shap}">	      	
-		window.scroll(0, $("#${set.condiVO.shap}").offset().top);
+		gfn_goScreenPosition("${set.condiVO.shap}");
 	</c:if>
 });
 </script>

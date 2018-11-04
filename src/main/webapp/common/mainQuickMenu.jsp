@@ -35,7 +35,7 @@
                         </a>
                     </li>
                 </ul>
-                <p class='quick_top'>
+                <p class='quick_top' onclick="gfn_goScreenPosition('screen_top');">
                     <span>
                         <img src='/resources/homepage/img/quick_top.png' alt=' '>
                     </span>

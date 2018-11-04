@@ -1163,3 +1163,7 @@ function gfn_findValueInList(list, findField, findValue, returnField) {
 	
 	return "";
 }
+
+function gfn_goScreenPosition(objId) {
+	window.scroll(0, $("#" + objId).offset().top);
+}

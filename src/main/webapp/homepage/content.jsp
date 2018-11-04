@@ -52,7 +52,7 @@
                             <div class='slider_text_box left'>
                                 <img src='/resources/homepage/img/visual2_text.png' class='pc' alt=' '>
                             </div>
-                            <button class='right_bottom' onclick="gfn_goPage('/main/mainCourseData','courseId=22');">상세보기22</button>
+                            <button class='right_bottom' onclick="gfn_goPage('/main/mainCourseData','courseId=22');">상세보기2</button>
                         </div>
                     </div>
                 </li>
@@ -61,7 +61,7 @@
                         <div class='slide clear_fix'>
                             <div class='slider_text_box'>
                             </div>
-                            <button class='right_bottom_nonText' onclick="gfn_goPage('/main/mainCourseData','courseId=23');">상세보기33</button>
+                            <button class='right_bottom_nonText' onclick="gfn_goPage('/main/mainCourseData','courseId=23');">상세보기3</button>
                         </div>
                     </div>
                 </li>
@@ -131,7 +131,7 @@
             <div class='slider_tab_wrap'>
                 <div class='slider_tab'>
                     <button onclick='change_tab(0, this)' class='on'>베스트 과정</button>
-                    <button onclick='change_tab(1, this)' id='btn_center'>9월 신규 이벤트</button>
+                    <button onclick='change_tab(1, this)' id='btn_center'>11월 신규 이벤트</button>
                     <button onclick='change_tab(2, this)'>주요 공지사항</button>
                 </div>
             </div>

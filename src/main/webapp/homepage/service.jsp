@@ -24,6 +24,9 @@
 <script type="text/javascript">
 
 $(document).ready(function() {
+	<c:if test="${!empty set.condiVO.shap}">	      	 
+		gfn_goScreenPosition("${set.condiVO.shap}");
+	</c:if>
 });
 
 function lfn_btn(pKind, pParam) {
@@ -276,7 +279,7 @@ function lfn_btn(pKind, pParam) {
                     <!-- User CS END -->
 
                     <!-- Remote Service -->
-                    <div class="support_remote_service clear_fix">
+                    <div class="support_remote_service clear_fix" id='screen_remoteService'>
                         <div class="support_remote_text">
                             <p class='support_remote_title'>
                                 PC <span></span>원격지원 서비스

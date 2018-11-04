@@ -3,22 +3,13 @@
         <div class='footer_wrap'>
             <ul class='foot_link_box clear_fix'>
                 <li>
-                    <a href='#'>회사소개</a>
+                    <a href='http://www.qpeople.co.kr/page1_1.html' target='_blank'>회사소개</a>
                 </li>
                 <li>
-                    <a href='#'>서비스이용약관</a>
+                    <a href='/guest/join.do'>서비스이용약관</a>
                 </li>
                 <li>
-                    <a href='#'>개인정보취급방침</a>
-                </li>
-                <li class='foot_link_pc'>
-                    <a href='#'>기업교육 문의</a>
-                </li>
-                <li class='foot_link_pc'>
-                    <a href='#'>교강사 모집</a>
-                </li>
-                <li class='foot_link_pc last_right'>
-                    <a href='#'>사이트맵</a>
+                    <a href='/guest/join.do'>개인정보취급방침</a>
                 </li>
             </ul>
             <div class='foot_box'>

@@ -181,16 +181,16 @@ function lfn_btn(pKind, pParam) {
                 </div>
                 <div class='register_course_contents clear_fix'>
                     <div class='register_course_image'>
-                        <div id='register_big_img'><img src='/resources/homepage/img/course/register_1.jpg' alt=' '></div>
+                        <div id='register_big_img'><img src='/cImage/contents/${set.courseData.courseCode}/mImg1.jpg' alt=' '></div>
                         <ul class='register_image_list clear_fix'>
                             <li onclick='thumbnail(event, 1)' class='register_image_list_item active'>
-                                <img src='/resources/homepage/img/course/register_1.jpg' alt=' '>
+                                <img src='/cImage/contents/${set.courseData.courseCode}/sImg1.jpg' alt=' '>
                             </li>
                             <li onclick='thumbnail(event, 2)' class='register_image_list_item'>
-                                <img src='/resources/homepage/img/course/register_2.jpg' alt=' '>
+                                <img src='/cImage/contents/${set.courseData.courseCode}/sImg2.jpg' alt=' '>
                             </li>
                             <li onclick='thumbnail(event, 3)' class='register_image_list_item last_right'>
-                                <img src='/resources/homepage/img/course/register_3.jpg' alt=' '>
+                                <img src='/cImage/contents/${set.courseData.courseCode}/sImg3.jpg' alt=' '>
                             </li>
                         </ul>
                         <div class='register_course_review clear_fix'>
@@ -201,7 +201,7 @@ function lfn_btn(pKind, pParam) {
                             <span><img src='/resources/homepage/img/course/${set.courseData.grade5}.png' alt=' '></span>
                             <p>
                                 평점 : <span>${set.courseData.grade}</span> / 후기 : <span>${set.courseData.gradeCnt}</span>건
-                            </p>
+                            </p> 
                         </div>
                     </div>
                     <div class='register_course_info'>
