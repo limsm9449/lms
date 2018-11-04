@@ -31,7 +31,7 @@ public class UserService {
 
     public UserSet studyroom(UserSet set) throws Exception {
     	set.getCondiVO().setUserId(SessionUtil.getSessionUserId());
-    	set.setCourseInfo((CourseVO) sqlSession.selectOne("user.courseData",set.getCondiVO()));
+		set.setCourseInfo((CourseVO) sqlSession.selectOne("user.courseData",set.getCondiVO()));
     	
     	List<EvaluationVO> courseWeekList = sqlSession.selectList("evaluation.courseWeekList",set.getCondiVO());
     	set.setWeek(courseWeekList);

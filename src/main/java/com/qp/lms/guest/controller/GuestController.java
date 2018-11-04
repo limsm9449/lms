@@ -2,6 +2,8 @@ package com.qp.lms.guest.controller;
 
 
 
+import java.util.HashMap;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +20,7 @@ import com.qp.lms.board.model.BoardVO;
 import com.qp.lms.board.service.BoardFaqService;
 import com.qp.lms.board.service.BoardNoticeService;
 import com.qp.lms.common.CommUtil;
+import com.qp.lms.common.SessionUtil;
 import com.qp.lms.common.service.DdService;
 import com.qp.lms.education.model.EducationSet;
 import com.qp.lms.education.model.EducationVO;
@@ -28,6 +31,10 @@ import com.qp.lms.guest.service.GuestService;
 import com.qp.lms.member.model.MemberSet;
 import com.qp.lms.member.model.MemberVO;
 import com.qp.lms.member.service.MemberService;
+import com.qp.lms.user.model.UserSet;
+import com.qp.lms.user.model.UserVO;
+
+import net.sf.json.JSONObject;
 
 /*
  * Guest를 위한 Controller
@@ -335,6 +342,22 @@ public class GuestController {
         return "/education/SampleHome";
     }
 
+    @RequestMapping(value = "/guest/eduSampleHomeMobile")
+    public String eduSampleHomeMobile(@ModelAttribute EducationVO vo, Model model) throws Exception {
+    	try {
+	    	EducationSet set = new EducationSet();
+	    	set.setCondiVO(vo);
+	    	
+	    	set = educationSvr.eduSampleHome(set);
+	
+	    	model.addAttribute("set", set );
+    	} catch ( Exception e ) {
+    		e.printStackTrace();
+    	}
+
+        return "/education/SampleHomeMobile";
+    }
+
     /**
      * 사용자 인증
      * @param vo
@@ -392,6 +415,26 @@ public class GuestController {
     	}
     	
         return "/guest/BankInfo";
+    }
+
+    
+    @RequestMapping(value = "/guest/checkCourse")
+    public String checkCourse(@ModelAttribute GuestVO vo,Model model) throws Exception {
+    	try {
+    		GuestSet set = new GuestSet();
+	    	set.setCondiVO(vo);
+	    	
+	    	set = svr.checkCourse(set);
+	    	
+	    	HashMap hm = new HashMap();
+	    	hm.put("mobileYn", set.getCourseInfo().getMobileYn());
+	    	
+	    	model.addAttribute("json", JSONObject.fromObject(hm));
+    	} catch ( Exception e ) {
+    		e.printStackTrace();
+    	}
+
+    	return "/common/json";
     }
 
 }

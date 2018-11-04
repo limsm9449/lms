@@ -147,10 +147,15 @@ function fn_gridEvent(event, obj) {
 	if ( event == "Click" ) {
 		obj.self.select(obj.dindex);
 	} else if ( event == "DBLClick" ) {
+		var mode = ""
+		if ( obj.item["MY_BOARD_YN"] == "Y" ) {
+			mode = "UPDATE";
+		}
+	
    		var urlParams = "page=/ax/board/axBoardFreePopup";
-   		urlParams += "&MODE=&SEQ=" + obj.item["SEQ"] + "&COURSE_ID=" + params.COURSE_ID;
+   		urlParams += "&MODE=" + mode + "&SEQ=" + obj.item["SEQ"] + "&COURSE_ID=" + params.COURSE_ID;
    		
-   		f_popup('/common/axOpenPage', {displayName:'boardFreePopup',option:'width=900,height=500', urlParams:urlParams});
+   		f_popup('/common/axOpenPage', {displayName:'boardFreePopup',option:'width=900,height=700', urlParams:urlParams});
 	} else if ( event == "DataChanged" ) {
 	}
 }

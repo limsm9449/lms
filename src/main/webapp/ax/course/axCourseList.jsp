@@ -448,8 +448,8 @@ function fn_makeGrid() {
 		        ]
 	        },{
 	        	key : "MOBILE_YN", 
-	        	label : "모바일 학습 여부", 
-	            width : 120,
+	        	label : "모바일", 
+	            width : 60,
 	        	align : "center", 
 	        	editor : { type : "checkbox", config : {height: 17, trueValue: "Y", falseValue: "N"} } ,
 				styleClass: function () {
@@ -556,12 +556,13 @@ function fn_hidePopupDiv(popupDivId, mode) {
 				COURSE_CODE : $("#INS_CB_COURSE_CODE option:selected").val(), 
 				COURSE_NAME : $("#INS_CB_COURSE_CODE option:selected").text(),
 				COMP_CD : 'B2C',
-				TUTOR_CNT : "",
-				COURSE_COST : 0,
-				REPORT_RATE : 0,
-				EXAM_RATE : 0,
-				DISCUSSION_RATE : 0,
-				PROGRESS_RATE : 100,
+				TUTOR_ID : gfn_findValueInList(dd.CourseCode, "value", $("#INS_CB_COURSE_CODE option:selected").val(), "TUTOR_ID"),
+				TUTOR_CNT : 0,
+				COURSE_COST : gfn_findValueInList(dd.CourseCode, "value", $("#INS_CB_COURSE_CODE option:selected").val(), "COURSE_COST"),
+				REPORT_RATE : gfn_findValueInList(dd.CourseCode, "value", $("#INS_CB_COURSE_CODE option:selected").val(), "REPORT_RATE"),
+				EXAM_RATE : gfn_findValueInList(dd.CourseCode, "value", $("#INS_CB_COURSE_CODE option:selected").val(), "EXAM_RATE"),
+				DISCUSSION_RATE : gfn_findValueInList(dd.CourseCode, "value", $("#INS_CB_COURSE_CODE option:selected").val(), "DISCUSSION_RATE"),
+				PROGRESS_RATE : gfn_findValueInList(dd.CourseCode, "value", $("#INS_CB_COURSE_CODE option:selected").val(), "PROGRESS_RATE"),
 				COURSE_EXAM_TYPE_NAME : "",
 				REPORT_FAIL : 0,
 				EXAM_FAIL : 0,
@@ -577,7 +578,7 @@ function fn_hidePopupDiv(popupDivId, mode) {
 				C_PERIOD : 30,
 				POPULAR_YN : "N",
 				CLOSE_YN : "N",
-				MOBILE_YN : "N",
+				MOBILE_YN : gfn_findValueInList(dd.CourseCode, "value", $("#INS_CB_COURSE_CODE option:selected").val(), "MOBILE_YN"),
 				RECOMMEND_COURSE_YN : "N",
 				NEW_COURSE_YN : "N",
 				CATEGORY_MAIN_YN : "N"
@@ -640,7 +641,7 @@ function fn_hidePopupDiv(popupDivId, mode) {
 					C_PERIOD : row[0].C_PERIOD,
 					POPULAR_YN : "N",
 					CLOSE_YN : "N",
-					MOBILE_YN : "N",
+					MOBILE_YN : row[0].MOBILE_YN,
 					RECOMMEND_COURSE_YN : "N",
 					NEW_COURSE_YN : "N",
 					CATEGORY_MAIN_YN : "N"
@@ -755,6 +756,7 @@ function fn_callbackAjax(data, id) {
 	} else if ( id == "INS_CB_LEVEL2" ){
 		gfn_cbRefresh("INS_CB_LEVEL3", data.CategoryLevel3, true);
 	} else if ( id == "INS_CB_COURSE_CODE" ){
+		dd.CourseCode = data.CourseCode;
 		gfn_cbRefresh("INS_CB_COURSE_CODE", data.CourseCode, true);
 	} else if ( id == "ExamType" ){
 		gfn_cbRefresh("CB_EXAM_TYPE", data.ExamType, true);

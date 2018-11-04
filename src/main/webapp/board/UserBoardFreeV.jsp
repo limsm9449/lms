@@ -156,7 +156,7 @@ function lfn_btn(pKind, pParam) {
 </c:if>                        
                         <div class='notice_regDate'>
                             <p class='type'>등록일</p>
-                            <p>${row.createDate}</p>
+                            <p>${row.updateDate}</p>
                         </div>
                     </div>
                     <div class='iframe_contents'>

@@ -67,7 +67,7 @@ function fn_callbackAjax(data, id) {
 
 <form id="frm" name="frm" method="post">
 
-<h2>이용후기</h2>
+<h2>수강후기</h2>
 <div style="height:10px"></div>
 
 <div>

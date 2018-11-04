@@ -1151,3 +1151,15 @@ function gfn_deviceCheck() {
 		}
 	}
 }
+
+function gfn_findValueInList(list, findField, findValue, returnField) {
+	if ( list ) {
+		for ( var i = 0; i < list.length; i++ ) {
+			if ( list[i][findField] == findValue ) {
+				return list[i][returnField];
+			}
+		}
+	}
+	
+	return "";
+}

@@ -81,6 +81,7 @@ function lfn_validate() {
 <body style='background:#fff'>
 <form id="frm" name="frm" action="" method="post">
 	<input id="courseId" name="courseId" value="${set.condiVO.courseId}" type="hidden"/>
+	<input id="kind" name="kind" value="${set.condiVO.kind}" type="hidden"/>
 	<input id="seq" name="seq" value="${set.condiVO.seq}" type="hidden"/>
 	<input id="pSeq" name="pSeq" value="${set.condiVO.seq}" type="hidden"/>
 	<input id="prevParams" name="prevParams" type="hidden" value="${set.condiVO.prevParams}">

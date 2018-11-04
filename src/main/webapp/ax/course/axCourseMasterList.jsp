@@ -214,6 +214,15 @@ function fn_makeGrid() {
 	                return checkThousand(this.item.COURSE_COST);
 	           	}
 	        },{
+	        	key : "MOBILE_YN", 
+	        	label : "모바일", 
+	            width : 60, 
+	        	align : "center", 
+	        	editor : { type : "checkbox", config : {height: 17, trueValue: "Y", falseValue: "N"} },
+				styleClass: function () {
+                    return "grid-cell-edit";
+                }
+	        },{
               	key : undefined, 
               	label: "학습내용", 
               	columns: [	        
@@ -496,7 +505,14 @@ function fn_hidePopupDiv(popupDivId) {
 			REPORT_RATE : 0,
 			EXAM_RATE : 0,
 			DISCUSSION_RATE : 0,
-			PROGRESS_RATE : 100
+			PROGRESS_RATE : 100,
+			MOBILE_YN : "N",
+			CP_COST_RATE : 0,
+			TEACHER_COST_RATE : 0,
+			REPORT_COST : 0,
+			EVAL_COST : 0,
+			DATA_COST : 0,
+			ANSWER_COST : 0
 		}, "last", {focus: "END"});
 }
 

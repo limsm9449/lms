@@ -226,11 +226,28 @@ var Popup = {
 	 * @param pHeight
 	 */
 	showSampleCourse : function(pCourseId,pWidth,pHeight) {
-		//Popup.showPopup(context + "/guest/eduSampleHome.do?courseId=" + pCourseId + "&isPopup=Y",pWidth,pHeight);
-		if ( gfn_deviceCheck() == "PC" ) {
-			Popup.showPopup(context + "/guest/eduSampleHome.do?courseId=" + pCourseId + "&mobileYn=N",screen.availWidth - 50,screen.availHeight - 90);
+
+		if ( gfn_deviceCheck() == "MOBILE" ) {
+			$.ajax({
+				type :"POST",
+				url : context + "/guest/checkCourse.do",
+				dataType :"json",
+				data : "courseId=" + pCourseId,
+				success : function(json){
+					if ( json.mobileYn == "Y" ) {
+						pWidth = window.innerWidth || document.body.clientWidth;
+						pHeight = window.innerHeight || document.body.clientHeight
+						Popup.showPopup(context + "/guest/eduSampleHomeMobile.do?courseId=" + pCourseId,pWidth,pHeight);
+					} else {
+						Popup.showPopup(context + "/guest/eduSampleHome.do?courseId=" + pCourseId,screen.availWidth - 50,screen.availHeight - 90);
+					}
+				},
+				error : function(e) {
+					alert("시스템 오류 발생하였습니다. 관리자에게 문의하세요.");
+				}
+			})	
 		} else {
-			Popup.showPopup(context + "/guest/eduSampleHome.do?courseId=" + pCourseId + "&mobileYn=Y",400,400);
+			Popup.showPopup(context + "/guest/eduSampleHome.do?courseId=" + pCourseId,screen.availWidth - 50,screen.availHeight - 90);
 		}
 	},
 

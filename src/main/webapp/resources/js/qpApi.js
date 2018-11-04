@@ -94,7 +94,7 @@ var QP_API = {
 					}
 				})
 			} else if ( isNext == false && isSample == true) {
-				alert("과정의 진도가 끝났습니다.");
+				alert("과정의 Sample이 끝났습니다.");
 			} else {
 				//다음 차수 오픈
 				QP_API.openWeek(currentWeek);

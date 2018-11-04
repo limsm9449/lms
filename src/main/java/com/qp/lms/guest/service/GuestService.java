@@ -8,11 +8,13 @@ import org.springframework.stereotype.Service;
 
 import com.qp.lms.board.model.BoardFaqVO;
 import com.qp.lms.common.Constant;
+import com.qp.lms.common.SessionUtil;
 import com.qp.lms.course.model.CourseCodeVO;
 import com.qp.lms.course.model.CourseVO;
 import com.qp.lms.guest.model.BankVO;
 import com.qp.lms.guest.model.GuestSet;
 import com.qp.lms.member.model.MemberSet;
+import com.qp.lms.user.model.UserSet;
 
 @Service
 public class GuestService {
@@ -53,4 +55,9 @@ public class GuestService {
     	return set;
     }
 
+	public GuestSet checkCourse(GuestSet set) throws Exception {
+    	set.setCourseInfo((CourseVO) sqlSession.selectOne("user.checkMyCourse",set.getCondiVO()));
+    	
+        return set ;
+    }
 }

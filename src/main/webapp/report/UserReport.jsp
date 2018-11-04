@@ -21,10 +21,8 @@
 
 <script type="text/javascript">
 $(document).ready(function() {
-	$("#contents2").cleditor({height:105});
-	$("#contents2").cleditor()[0].disable(true).refresh();
 	$("#contents").cleditor({height:105});
-	$("#contents").cleditor()[0].disable(true).refresh();
+	$("#contents").cleditor()[0].disable(true).refresh(); 
 	
 	$("#attachFrame").attr("src","/board/attachReportV.do?" + "pSeq=${set.data.seq}&kind=C_REPORT&isMy=Y");
 	$("#reportAttachFrame").attr("src","/board/attachU.do?" + "pSeq=${set.data.attachSeq}&kind=U_REPORT");
@@ -61,7 +59,6 @@ function lfn_btn(pKind, pParam) {
 	 
     <!-- 과정리포트 제출 POPUP -->
     <div id='popup_report_submit' class='popup'>
-    	<textarea name='contents2' id='contents2'><c:out value="${set.data.contents}" escapeXml="" /></textarea> 
         <div class='popup_fix'>
             <p class='popup_title'> 
                 과정리포트 제출
