@@ -130,7 +130,8 @@
 					JOIN COURSE_EXAM B ON B.SEQ = A.SEQ AND B.COURSE_CODE = (SELECT COURSE_CODE FROM COURSE WHERE COURSE_ID = #{courseId})
 		WHERE 	A.COURSE_ID = #{courseId}
 		AND		A.USER_ID = #{userId}
-		AND 	A.EXAM_KIND = #{examKind}
+		AND 	A.EXAM_KIND = CASE WHEN #{week} = '0' THEN 'TOTAL' ELSE 'WEEK' END
+		AND 	A.WEEK = #{week}
 	</select>
 	
 	<select id="userExamScore" parameterType="Exam" resultType="Exam">

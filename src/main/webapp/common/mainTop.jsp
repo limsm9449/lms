@@ -79,7 +79,8 @@
                         <span>
                             <img src='/resources/homepage/img/channel_ic.png' alt=''>
                         </span>
-                        <p>강사소개</p>
+                        <p><a href='#' onclick="alert('작업중입니다.'); return false;">강사소개</a></p>
+                        
                     </div>
                 </div>
                 <div class='menu_dropdown_wrapper' id='menu_dropdown_pc'>
@@ -104,9 +105,9 @@
                             </ul> 
                             <span class='menu_sub_line'></span>
                             <ul class='menu_sub'>
-                                <li><a href="javascript:" onclick="alert('작업중입니다.'); return false;">수강신청방법</a></li>
-                                <li><a href='' onclick="alert('작업중입니다.'); return false;">학습방법</a></li>
-                                <li><a href='' onclick="alert('작업중입니다.'); return false;">학습관리</a></li>
+                                <li><a href="javascript:" onclick="page.goNsJsp('register_method'); return false;">수강신청방법</a></li>
+                                <li><a href='javascript:' onclick="page.goNsJsp('study_method'); return false;">학습방법</a></li>
+                                <li><a href='javascript:' onclick="page.goNsJsp('study_manage'); return false;">학습관리</a></li>
                                 <li><a href="javascript:" onclick="page.goPage('/main/tutorial', 'shap=quick_to');">학습지원프로그램</a></li>
                             </ul>
                             <span class='menu_sub_line'></span>
@@ -117,7 +118,7 @@
 								<li><a href="javascript:" onclick="page.goPage('/main/mailQuestion');">1:1 메일문의</a></li>
 								<li><a href="javascript:" onclick="page.goPage('/guest/bankInfo');">입금계좌안내</a></li>
                                 <li><a href="javascript:" onclick="page.goPage('/main/service', 'shap=screen_remoteService');">원격지원</a></li>
-                                <li><a href=''>찾아오시는길</a></li>
+                                <li><a href="javascript:" onclick="page.goNsJsp('map'); return false;">찾아오시는길</a></li>
                             </ul>
                         </div>
                     </div>
@@ -213,9 +214,9 @@
                         </button>
                         <ul>
                             <li class='first_depth'><a href="javascript:" onclick="page.goPage('/main/tutorial', '');">교육안내</a></li>
-                            <li><a href="javascript:" onclick="alert('작업중입니다.'); return false;">수강신청방법</a></li>
-                            <li><a href='javascript:' onclick="alert('작업중입니다.'); return false;">학습방법</a></li>
-                            <li><a href='javascript:' onclick="alert('작업중입니다.'); return false;">학습관리</a></li>
+                            <li><a href="javascript:" onclick="page.goNsJsp('register_method'); return false;">수강신청방법</a></li>
+                            <li><a href='javascript:' onclick="page.goNsJsp('study_method'); return false;">학습방법</a></li>
+                            <li><a href='javascript:' onclick="page.goNsJsp('study_manage'); return false;">학습관리</a></li>
                             <li><a href="javascript:" onclick="page.goPage('/main/tutorial', 'shap=quick_to');">학습지원프로그램</a></li>
                         </ul>
                     </div>
@@ -231,11 +232,11 @@
 							<li><a href="javascript:" onclick="page.goPage('/main/mailQuestion');">1:1 메일문의</a></li>
 							<li><a href="javascript:" onclick="page.goPage('/guest/bankInfo');">입금계좌안내</a></li>
                             <li><a href="javascript:" onclick="page.goPage('/main/service', 'shap=screen_remoteService');">원격지원</a></li> 
-                            <li><a href=''>찾아오시는길</a></li>
+                            <li><a href="javascript:" onclick="page.goNsJsp('map'); return false;">찾아오시는길</a></li>
                         </ul>
                     </div>
                     <div class='mobile_menu introduce'>
-                        <a href='#'>강사소개</a>
+                        <a href='#' onclick="alert('작업중입니다.'); return false;">강사소개</a> 
                     </div>
                 </div>
             </div>

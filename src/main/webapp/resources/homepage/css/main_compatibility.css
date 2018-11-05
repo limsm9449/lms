@@ -1,5 +1,9 @@
 @charset "utf-8";
 
+html,body{
+    overflow-y:scroll;
+}
+
 .wrap .head_mobile{
     height:unset;
 }
@@ -24,6 +28,7 @@ html body .learning_wrap{
 body .learnig_wrap button{
     margin-right:1.45%;
 }
+
 @media all and (max-width:420px){
     .study_estimation_table_line .esti_btn button{
         padding:0;

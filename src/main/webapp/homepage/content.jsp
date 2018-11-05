@@ -329,14 +329,12 @@
                     <a href="javascript:" onclick="page.goPage('/main/tutorial', '');">바로가기</a>
                 </div>
                 <div class="center clear_fix">
-                    <p class='cs_title'>고객센터</p>
-                    <strong>02-888-7805</strong>
-                    <div class='center_time_box'>
-                        <p>
-                            평일 09:00 ~ 12:00<br>
-                            03:00 ~ 18:00
-                        </p>
-                    </div>
+                    <a href="mailto:sy.choi@qpeople.co.kr">
+	                    <span>
+	                        <img src='/resources/homepage/img/center_ic.png' alt=' '>
+	                    </span>
+	                    <p class='note'>궁금한 질문을 이메일로 문의하세요.</p>
+                    </a>
                 </div>
             </div>
             <!-- CUSTOMER SERVICE END -->

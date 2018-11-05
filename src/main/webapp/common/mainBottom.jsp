@@ -11,6 +11,9 @@
                 <li>
                     <a href='/guest/join.do'>개인정보취급방침</a>
                 </li>
+                <li>
+                    <a href="javascript:" onclick="page.goNsJsp('map'); return false;">찾아오시는길</a>
+                </li>
             </ul>
             <div class='foot_box'>
                 <p>

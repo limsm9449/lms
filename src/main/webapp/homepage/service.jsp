@@ -289,8 +289,8 @@ function lfn_btn(pKind, pParam) {
                                 해결해 드립니다.
                             </p>
                             <div class='support_text_btn_box clear_fix'>
-                                <button>신청하기</button>
-                                <button class='last_right'>연결하기</button>
+                                <button onclick="alert('작업중입니다.');">신청하기</button>
+                                <button onclick="alert('작업중입니다.');" class='last_right'>연결하기</button>
                             </div>
                         </div>
                         <div class="support_remote_step">

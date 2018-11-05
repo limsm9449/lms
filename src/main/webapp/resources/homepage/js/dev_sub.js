@@ -583,3 +583,34 @@ function getParentByTagName(node, tagname) {
     
 	return parent;
 }
+
+
+
+function guide_change(focused, elem){
+    var btn_box = document.querySelectorAll('.register_method_tab button');
+    var pc_box = document.getElementsByClassName('register_method_pc')[0];
+    var mobile_box = document.getElementsByClassName('register_method_mobile')[0];
+    for(var i = 0; i < btn_box.length; i++){
+        var temp = btn_box[i];
+        if(temp === elem){
+            temp.className = 'on';
+        }else{
+            temp.className = '';
+        }
+    }
+
+    if(focused === 'pc'){
+        pc_box.style.display = 'block';
+        mobile_box.style.display = 'none';
+    }else if(focused === 'mobile'){
+        pc_box.style.display = 'none';
+        mobile_box.style.display = 'block';
+    }
+}
+
+
+
+function error_msg(e){
+    e.preventDefault();
+    window.alert('작업중입니다.');
+}

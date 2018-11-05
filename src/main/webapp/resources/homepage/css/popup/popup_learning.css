@@ -56,6 +56,13 @@ body{
 
 
 /* CONTENTS */
+.wrap{
+    margin:0 auto;
+    text-align:center;
+}
+.wrap iframe{
+    margin:0 auto;
+}
 .contents_wrap_box{
     width:1122px;
     min-height:600px;

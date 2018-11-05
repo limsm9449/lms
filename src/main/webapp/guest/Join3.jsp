@@ -251,13 +251,13 @@ function lfn_validate() {
                         <p>휴대폰 번호</p>
                         <select name='agency' id='agency'>
                             <option value='선택'>선택</option>
-                            <option value='SK'>SK</option>
+                            <option value='SKT'>SKT</option>
                             <option value='KT'>KT</option>
                             <option value='LG'>LG U+</option>
                             <option value='알뜰폰'>알뜰폰</option>
                         </select>
                         <input type='text' name='mobile' id='mobile' placeholder='- 없이 숫자만'>
-                        <button>인증번호요청</button>
+                        <button onclick="alert('작업중입니다.');">인증번호요청</button>
                     </div>
                     <div class='certification_name clear_fix'>
                         <p>비밀번호</p>

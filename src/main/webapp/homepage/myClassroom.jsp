@@ -238,7 +238,7 @@ $(document).ready(function(){
                 </div>
                 <ul class='process_list_wrap clear_fix'>
                     <li>
-                        <a href=''><img src='/resources/homepage/img/course/process_1.jpg' alt=' '></a>
+                        <a href='#' onclick="gfn_goPage('/main/mainCourseData','courseId=21');"><img src='/resources/homepage/img/course/process_1.jpg' alt=' '></a>
                         <div class='process_text_box'>
                             <div class='process_info_box'>
                                 <div>
@@ -246,7 +246,7 @@ $(document).ready(function(){
                                     <p>모바일</p>
                                 </div>
                                 <p class='process_title'>
-                                    [스마트러닝] 김정구 교수의 미래창조경영 위기와 역경을 기회로
+                                    <a href='#' onclick="gfn_goPage('/main/mainCourseData','courseId=21');">[스마트러닝] 김정구 교수의 미래창조경영 위기와 역경을 기회로</a>
                                 </p>
                             </div>
                             <div class='process_btn_area clear_fix'>
@@ -273,7 +273,7 @@ $(document).ready(function(){
                         </div>
                     </li>
                     <li>
-                        <a href=''><img src='/resources/homepage/img/course/process_2.jpg' alt=' '></a>
+                        <a href='#' onclick="gfn_goPage('/main/mainCourseData','courseId=22');"><img src='/resources/homepage/img/course/process_2.jpg' alt=' '></a>
                         <div class='process_text_box'>
                             <div class='process_info_box'>
                                 <div>
@@ -281,7 +281,7 @@ $(document).ready(function(){
                                     <p>모바일</p>
                                 </div>
                                 <p class='process_title'>
-                                    [스마트러닝] 토기와 거북이의 재테크 비법
+                                    <a href='#' onclick="gfn_goPage('/main/mainCourseData','courseId=22');">[스마트러닝] 토기와 거북이의 재테크 비법</a>
                                 </p>
                             </div>
                             <div class='process_btn_area clear_fix'>
@@ -308,15 +308,15 @@ $(document).ready(function(){
                         </div>
                     </li>
                     <li class='last_right'>
-                        <a href=''><img src='/resources/homepage/img/course/process_3.jpg' alt=' '></a>
+                        <a href='#' onclick="gfn_goPage('/main/mainCourseData','courseId=19');"><img src='/resources/homepage/img/course/process_3.jpg' alt=' '></a>
                         <div class='process_text_box'>
                             <div class='process_info_box'>
                                 <div>
                                     <p>일반</p>
                                     <p>모바일</p>
                                 </div>
-                                <p class='process_title'>
-                                    [스마트러닝] 윤코치의 보고서 작성법
+                                <p class='process_title' >
+                                    <a href='#' onclick="gfn_goPage('/main/mainCourseData','courseId=19');">[스마트러닝] 윤코치의 보고서 작성법</a>
                                 </p>
                             </div>
                             <div class='process_btn_area clear_fix'>

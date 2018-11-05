@@ -241,7 +241,7 @@ public class MemberService {
 	        	//메일 발송
 	    		PlainMail mail = new PlainMail();
 	    		
-		    	mail.setSubject("[회원가입 인증메일] 큐러닝에 가입하신 환영합니다.");
+		    	mail.setSubject("[회원가입 인증메일] 큐러닝에 가입하신 것을 환영합니다.");
 	
 		    	StringBuffer contents = new StringBuffer();
 		    	//if ( CommUtil.isEqual(set.getCondiVO().getCompCd(),"") == true ) {

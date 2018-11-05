@@ -39,7 +39,7 @@ $(document).ready(function(){
         <div class='study_left_area'>
             <div class='study_title_box'>
                 <p>[스마트러닝]</p>
-                <a href=''>강사소개</a>
+                <a href='#' onclick="alert('작업중입니다.'); return false">강사소개</a>
                 <h1>
                     ${set.courseInfo.courseName}
                 </h1>
@@ -153,7 +153,7 @@ $(document).ready(function(){
 </c:forEach>                    
                 </ul>
             </div>
-            <div class='study_btn_area pc clear_fix'>
+            <div class='study_btn_area pc clear_fix' style="display:none;">
                 <button>학습/수료<span></span>기준</button>
                 <button>학습<span></span>가이드</button>
                 <button>동영상<span></span>설정</button>
@@ -161,7 +161,7 @@ $(document).ready(function(){
                 <button onclick="Popup.showUserBoard('QNA','${set.courseInfo.courseId}'); return false;" class='last_right'>학습<span></span>질문답변</button>
             </div>
             <div class='study_remote_support_btn'>
-                <button>원격지원 서비스</button>
+                <button onclick="opener.page.goPage('/main/service', 'shap=screen_remoteService');">원격지원 서비스</button>
             </div>
         </div>
         <div class='study_right_area'>
@@ -225,10 +225,10 @@ $(document).ready(function(){
                             <td class='line_4 esti_btn mobile'>
 	<c:choose>
 		<c:when test="${row.answerCnt eq '0'}">
-                                <button onclick="javascript:Popup.showExam('${set.courseInfo.courseId}', '${row.week}'); return false;">응시하기</button>
+                                <button onclick="Popup.showExam('${set.courseInfo.courseId}', '${row.week}');">응시하기</button>
 		</c:when>
 		<c:otherwise>
-                                <button>완료</button>
+                                <button onclick="Popup.showExamResult('${set.courseInfo.courseId}', '${row.week}');">완료</button>
 		</c:otherwise>
 	</c:choose>                            
                             </td>

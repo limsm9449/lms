@@ -51,7 +51,6 @@ public class UserExamService {
     
     public ExamSet userExamResult(ExamSet set) throws Exception {
 		set.getCondiVO().setUserId(SessionUtil.getSessionUserId());
-		set.getCondiVO().setExamKind("TOTAL");
 		
     	List<ExamVO> list =  sqlSession.selectList("exam.userExamResultList", set.getCondiVO());
     	set.setList(list);

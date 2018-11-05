@@ -176,8 +176,8 @@ var Popup = {
 		Popup.showPopup(context + "/exam/userExam.do?courseId=" + pCourseId + "&week=" + pWeek,900,800,"educationSubPopup");
 	},
 
-	showExamResult : function(pCourseId) {
-		Popup.showPopup(context + "/exam/userExamResult.do?courseId=" + pCourseId,900,800,"educationSubPopup");
+	showExamResult : function(pCourseId, pWeek) {
+		Popup.showPopup(context + "/exam/userExamResult.do?courseId=" + pCourseId + "&week=" + pWeek,900,800,"educationSubPopup");
 	},
 
 	/**
@@ -229,7 +229,30 @@ var Popup = {
 	 * @param pHeight
 	 */
 	showUserCourseWeek : function(pCourseId,pWeek,pWidth,pHeight) {
-		Popup.showPopup(context + "/education/eduHome.do?courseId=" + pCourseId + "&week=" + pWeek + "&isPopup=Y",pWidth,pHeight);
+		if ( gfn_deviceCheck() == "MOBILE" ) {
+			$.ajax({
+				type :"POST",
+				url : context + "/user/checkMyCourse.do",
+				dataType :"json",
+				data : "courseId=" + pCourseId,
+				success : function(json){
+					if ( json.cnt == 0 ) {
+						alert("내가 등록한 과정이 아닙니다.");
+					} else if ( json.mobileYn == "Y" ) {
+						pWidth = window.innerWidth || document.body.clientWidth;
+						pHeight = window.innerHeight || document.body.clientHeight
+						Popup.showPopup(context + "/education/eduHomeMobile.do?courseId=" + pCourseId + "&week=" + pWeek, pWidth, pHeight, "eduHome");
+					} else {
+						Popup.showPopup(context + "/education/eduHome.do?courseId=" + pCourseId + "&week=" + pWeek, 1185, 810, "eduHome");
+					}
+				},
+				error : function(e) {
+					alert("시스템 오류 발생하였습니다. 관리자에게 문의하세요.");
+				}
+			})	
+		} else {
+			Popup.showPopup(context + "/education/eduHome.do?courseId=" + pCourseId + "&week=" + pWeek + "&isPopup=Y",pWidth,pHeight);
+		}
 	},
 
 	/**

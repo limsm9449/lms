@@ -68,34 +68,42 @@ $(document).ready(function() {
                     <div class='tutorial_btn_wrap'>
                         <div class='tutorial_btn_box clear_fix'>
                             <p>처음 오셨나요? 이용가이드를 확인해주세요.</p>
-                            <button class='tutorial_btn'>
-                                <div><img src='/resources/homepage/img/guidance/ic_1.png' alt=' '></div>
-                                <p class='tutorial_btn_title'>처음이신가요?</p>
-                                <p>
-                                    큐러닝 이용이 처음이신가요?<span></span>초심자도 쉽게 이해할 수 있는<span></span>이용 가이드 입니다.
-                                </p>
-                            </button>
-                            <button class='tutorial_btn mobile_right'>
-                                <div><img src='/resources/homepage/img/guidance/ic_2.png' alt=' '></div>
-                                <p class='tutorial_btn_title'>수강신청</p>
-                                <p>
-                                    수강신청에 대해 쉽게 이해할<span></span>수 있는 신청 가이드입니다.
-                                </p>
-                            </button>
-                            <button class='tutorial_btn'>
-                                <div><img src='/resources/homepage/img/guidance/ic_3.png' alt=' '></div>
-                                <p class='tutorial_btn_title'>학습안내</p>
-                                <p>
-                                    효과적인 학습을 위한 방법을<span></span>안내해 드립니다.
-                                </p>
-                            </button>
-                            <button class='tutorial_btn last_right'>
-                                <div><img src='/resources/homepage/img/guidance/ic_4.png' alt=' '></div>
-                                <p class='tutorial_btn_title'>수료안내</p>
-                                <p>
-                                    학습 수료를 통해 수료증을<span></span>발급받을 수 있습니다.
-                                </p>
-                            </button>
+                            <a href="javascript:" onclick="page.goNsJsp('register_method'); return false;">
+	                            <button class='tutorial_btn'>
+	                                <div><img src='/resources/homepage/img/guidance/ic_1.png' alt=' '></div>
+	                                <p class='tutorial_btn_title'>처음이신가요?</p>
+	                                <p>
+	                                    큐러닝 이용이 처음이신가요?<span></span>초심자도 쉽게 이해할 수 있는<span></span>이용 가이드 입니다.
+	                                </p>
+	                            </button>
+	                        </a>
+	                        <a href="javascript:" onclick="page.goNsJsp('register_method'); return false;">
+	                            <button class='tutorial_btn mobile_right'>
+	                                <div><img src='/resources/homepage/img/guidance/ic_2.png' alt=' '></div>
+	                                <p class='tutorial_btn_title'>수강신청</p>
+	                                <p>
+	                                    수강신청에 대해 쉽게 이해할<span></span>수 있는 신청 가이드입니다.
+	                                </p>
+	                            </button>
+	                        </a>
+	                        <a href='javascript:' onclick="page.goNsJsp('study_method'); return false;">
+	                            <button class='tutorial_btn'>
+	                                <div><img src='/resources/homepage/img/guidance/ic_3.png' alt=' '></div>
+	                                <p class='tutorial_btn_title'>학습안내</p>
+	                                <p>
+	                                    효과적인 학습을 위한 방법을<span></span>안내해 드립니다.
+	                                </p>
+	                            </button>
+							</a>
+							<a href='javascript:' onclick="page.goNsJsp('study_method'); return false;">	                            
+	                            <button class='tutorial_btn last_right'>
+	                                <div><img src='/resources/homepage/img/guidance/ic_4.png' alt=' '></div>
+	                                <p class='tutorial_btn_title'>수료안내</p>
+	                                <p>
+	                                    학습 수료를 통해 수료증을<span></span>발급받을 수 있습니다.
+	                                </p>
+	                            </button>
+	                        </a>    
                         </div>
                     </div>
 

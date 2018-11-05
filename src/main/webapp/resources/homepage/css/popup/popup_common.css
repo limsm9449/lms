@@ -22,10 +22,18 @@
 html body{
     background:#fff;
 }
+html, body{
+    overflow-y:scroll;
+}
+html{
+    height:100%;
+    overflow-y:scroll;
+}
 
 /* 팝업 공통 */
 .popup{
-    width:776px;
+    width:100%;
+    max-width:776px;
     margin:0 auto;
 }
 .popup_head{
@@ -88,7 +96,7 @@ html body{
     overflow: hidden;
 }
 .question_num{
-    width: auto;
+    width: 10%;
     float: left;
     font-weight: 900;
     color: skyblue;
@@ -97,7 +105,7 @@ html body{
 }
 .question_num span{}
 .question_answer{
-    width: 680px;
+    width: 90%;
     float: right;
 }
 .question_answer.explanation{
@@ -134,7 +142,7 @@ html body{
 }
 .answer_box li p{
     float:right;
-    width:655px;
+    width:95%;
     line-height:120%;
 }
 
@@ -558,6 +566,7 @@ html body{
     }
     .question_answer{
         width:100%;
+        padding-top:10px;
     }
     .question_answer input[type='text']{
         display:block;
@@ -620,6 +629,13 @@ html body{
     }
     .report_box .left{
         margin-left:0;
+    }
+
+    .question_num{
+        width:100%;
+    }
+    .popup_question{
+        padding:0 10px 20px;
     }
 
 }

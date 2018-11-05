@@ -9,7 +9,7 @@
     <meta charset='utf-8'>
     <meta name='viewport' content='width=device-width, initial-scale=1.0'>
     <meta http-equiv='X-UA-Compatible' content='ie=edge'>
-    <title>Popup Sample</title>
+    <title>큐러닝 학습창</title>
 
 	<%@ include file="../common/commMainInclude.jsp" %>
 	
@@ -80,12 +80,11 @@ $(document).ready(function() {
 <c:if test="${set.data.isDiscussion eq 'Y'}">
 </c:if>	   		
 			<button onclick="javascript:Popup.showProgress('${set.condiVO.courseId}'); return false;">진도</button>
-
-<c:if test="${set.data.examYn eq 'Y'}">
-            <button onclick="javascript:Popup.showExamResult('${set.condiVO.courseId}'); return false;">시험 결과</button>
-</c:if>	   		
 <c:if test="${set.data.examYn eq 'N'}">
-            <button onclick="javascript:Popup.showExam('${set.condiVO.courseId}'); return false;">시험 응시</button>
+            <button onclick="javascript:Popup.showExam('${set.condiVO.courseId}', 0); return false;">시험 응시</button>
+</c:if>	   		
+<c:if test="${set.data.examYn eq 'Y'}">
+            <button onclick="javascript:Popup.showExamResult('${set.condiVO.courseId}', 0); return false;">시험 결과</button>
 </c:if>	   		
 <c:if test="${set.data.questYn eq 'Y'}">
             <button onclick="javascript:Popup.showQuestResult('${set.condiVO.courseId}'); return false;">설문 결과</button>

@@ -1,0 +1,992 @@
+@charset "utf-8";
+@import url(http://fonts.googleapis.com/earlyaccess/notosanskr.css);
+/* ------------------- 초기 설정 qpeople --------------------*/
+
+
+/*@font-face {
+    font-family:DemiLight;
+    src: url(../font/NotoSansCJKkr-DemiLight.otf.eot);
+    src: local(※), url(../font/NotoSansCJKkr-DemiLight.woff);
+    }
+	
+@font-face {
+    font-family:Regular;
+    src: url(../font/NotoSansCJKkr-Regular.otf.eot);
+    src: local(※), url(../font/NotoSansCJKkr-Regular.woff);
+    }
+	
+@font-face {
+    font-family:Thin;
+    src: url(../font/NotoSansCJKkr-Thin.otf.eot);
+    src: local(※), url(../font/NotoSansCJKkr-Thin.woff);
+    }*/
+
+/* 헤더 */
+.headerWrap{font-family: 'Noto Sans KR', sans-serif; color:#676767; position:relative; height:auto; width:100%;}
+.header { width:1024px; height:83px; margin:0 auto; margin-top:20px;}
+h1 {clear:both; float:left;}
+.gnb {font-family: 'Noto Sans KR', sans-serif; float:right; margin-bottom:15px;}
+.gnb div { float:left; font-size:10px; color:#9c9c9c; padding-right:8px; margin-left:8px; background:url(../img/gbar.png) no-repeat right center;}
+.gnb div:last-child {background:none;}
+.gnb div a {color:#9c9c9c;}
+.gnb div a:hover {color:#cc0000;}
+
+.menu {float:right;}
+.menu .mainMenu {float:left; position:relative; width:145px; margin-left:102px; margin-top:10px; height:44px;}
+.menu .first {margin-left:0;}
+.menu .mainMenu a {float:left; color:#676767; width:145px; border-top:solid 2px #cccccc; padding-top:5px;}
+.menu_m { display:none;}
+/*.menu .mainMenu a:hover {color:#cc0000; border-color:#ff3300;} */
+
+.menu li ul {position:absolute; right:0; top:43px; z-index:1; height:260px; width:145px; background:none; display:none;}
+.menu li ul li { float:none;}
+.menu .mainMenu ul li a{font-family: 'Noto Sans KR', sans-serif; font-weight:300; color:#676767; padding:10px 0 0 15px; font-size:14px; border:none; float:none; margin:0;}
+
+.subWrap {width:100%; height:260px; background-color:#FFF; clear:both; position:absolute; top:83px; left:0; border-bottom:solid 1px #ff6600; display:none;}
+.subMenu {width:1024px; height:260px; margin:0 auto; background:url(../img/subnavbg.png) no-repeat left bottom; z-index:999;}
+.sub li {margin-top:7px;}
+.sub li a:hover { text-decoration:underline; margin-top:7px;}
+.subWrap ul {width:140px; height:210px; float:left; margin-right:110px;}
+.subWrap .sub03 { margin-right:0;}
+
+.contact .root_daum_roughmap_landing{
+    width:1122px !important;
+    overflow:inherit;
+    margin:80px auto !important;
+}
+
+/*서브*/
+.subBarWrap {clear:both; width:100%; height:95px; background-color:#c32934;}
+.subbar {width:1024px; height:95px; margin:0 auto; background:url(../img/bslines.png) no-repeat center top;}
+.subbar .subleft {float:left;}
+.subbar .subright {float:right;}
+.subbar .redtxt {top:37px; margin-left:-274px; left:50%; display:none;}
+
+.contentWrap {width:100%; margin:35px 0 35px 0; z-index:-1;}
+.contentes {width:100%; max-width:1122px; margin:0 auto;}
+.sub_title {font-family: 'Noto Sans KR', sans-serif; font-weight:100; font-size:48px; color:#494949; text-align:center;}
+.sub_lt {font-family: 'Noto Sans KR', sans-serif; font-weight:100; font-size:18px; color:#494949; text-align:center;}
+.map {width:756px; margin:0 auto;}
+
+
+/*푸터*/
+.footerWrap { width:100%; border-top:solid 1px #f1f0f0; clear:both; margin-bottom:30px;}
+.footer { width:1300px; margin:0 auto;}
+
+/* 1024 */
+@media all and (max-width:1100px) {
+.header {max-width:1024px; width:80%;}
+.menu .mainMenu {margin-left:75px;}
+
+.subbar {max-width:1024px; width:100%;}
+
+.subMenu { max-width:1024px; width:100%;}
+}
+
+@media all and (max-width:1000px) {
+.menu_m {display:block; width:22px; height:17px; background-image:url(../img/menu_m.png); float:right; margin-top:10px; cursor:pointer;}
+.menu .mainMenu { display:none;}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@charset "utf-8";
+
+@font-face {
+    font-family: 'NanumSquare';
+    /* font-style: normal; */
+    /* font-weight: 500; */
+    src: local('NanumSquareR'),
+        url('../../font/NanumSquareR.woff') format('woff'),
+        url('../../font/NanumSquareR.ttf') format('truetype'),
+        url('../../font/NanumSquareR.eot') format('embedded-opentype');
+}
+@font-face {
+    font-family: 'NanumSquareB';
+    /* font-style: normal; */
+    /* font-weight: 900; */
+    src: local('NanumSquareEB'),
+        url('../../font/NanumSquareEB.woff') format('woff'),
+        url('../../font/NanumSquareEB.ttf') format('truetype'),
+        url('../../font/NanumSquareEB.eot') format('embedded-opentype');
+}
+
+/* IF IE 10 */
+
+html[data-useragent*='MSIE 10.0'] .head_mobile{
+    height:unset;
+}
+html[data-useragent*='MSIE 10.0'] .head_mobile.on{
+    height:100%;
+}
+html[data-useragent*='MSIE 10.0'] .head_mobile .mobile_dropwdown_wrap{
+    height:unset;
+}
+html[data-useragent*='MSIE 10.0'] .head_mobile.on .mobile_dropwdown_wrap{
+    height:100%;
+}
+
+
+/* HEADER */
+
+#width_text{
+    display:none;
+    position: absolute;
+    width: 80px;
+    height: 20px;
+    background: #444;
+    top: 0;
+    right: 0;
+    color: #fff;
+    text-align: center;
+    z-index: 9999999999999;
+}
+header{
+    position:absolute;
+    width:100%;
+    background:#fff;
+    z-index: 99999999;
+}
+.head_wrap{
+    position:relative;
+    width:1122px;
+    margin:24px auto 30px;
+}
+.head_wrap.mobile{display:none;}
+.head_con{
+    float:left;
+}
+.head_con img{
+    display:block;
+    width:60%;
+}
+.logo_box{
+    width:20%;
+}
+.search_box{
+    position:relative;
+    width:50%;
+}
+.search_box input[type='text']{
+    display:block;
+    width:90%;
+    padding:8px 4.5%;
+    border: solid 3px #0071bc;
+}
+.search_box button{
+    position: absolute;
+    top: 3px;
+    right: 4px;
+    padding: 5px 10px;
+    background: #fff;
+}
+.search_box button img{
+    display:block;
+    width:100%;
+}
+.util_box{
+    position:absolute;
+    top:0;
+    right:0;
+    width:30%;
+}
+.util_box p,
+.util_box a{
+    float:right;
+    font-size: 12px;
+    padding: 12px 0;
+    margin:0 4%;
+}
+.util_box a{
+    display:block;
+}
+.util_box .last_right{
+    margin-right:0;
+}
+
+
+/* MENU */
+
+.head_mobile{
+    display:none;
+}
+.menu_wrap{
+    border-top: solid 1px #ccc;
+    border-bottom: solid 1px #ccc;
+}
+.menu_wrap a:hover{
+    color:#0071bc;
+}
+.menu_layout{
+    width: 1122px;
+    margin: 0 auto;
+    overflow: hidden;
+}
+.menu_layout > * {
+    float: left;
+    overflow: hidden;
+}
+.mobile_btn button{
+    padding: 20px;
+    background: #fff;
+    border-left: solid 1px #ccc;
+    border-right: solid 1px #ccc;
+}
+.mobile_btn button span{
+    display: block;
+    width: 20px;
+    height: 2px;
+    margin-bottom: 4px;
+    background: #333;
+}
+.menu{
+    width:82%;
+}
+.menu li{
+    width: 25%;
+    float: left;
+}
+.menu li a{
+    display: block;
+    font-family:"NanumSquare";
+    font-size: 20px;;
+    text-align: center;
+    letter-spacing:-1px;
+    padding: 20px 0;
+}
+.menu_tutor{
+    border-left:solid 1px #ccc;
+}
+.menu_layout .menu_tutor{
+    float: right;
+}
+.menu_tutor span{
+    display: block;
+    float: left;
+    padding:14px 2px 0 14px;
+}
+.menu_tutor span img{
+    width:100%;
+}
+.menu_tutor p{
+    float: left;
+    font-size: 20px;
+    color: #0071bc;
+    padding: 18px 0 20px;
+}
+
+/* dropdown menu */
+.menu_dropdown_wrapper{
+    display:none;
+    border: solid 1px #0071bc;
+    background: #fff;
+}
+.menu_dropdown_wrap{
+    width:1120px;
+    margin:0 auto;
+}
+.menu_dropdown{
+    width:82%;
+    padding-left:65px;
+}
+.menu_sub{
+    float: left;
+    width: 16.5%;
+    padding-left: 8.5%;
+    margin: 20px 0 20px -1px;
+}
+.menu_sub.classroom{
+    margin: 20px 12px 20px -13px;
+}
+.menu_sub li a{
+    display: block;
+    font-size: 14px;
+    color: #666;
+    line-height: 230%;
+}
+.menu_sub_line{
+    float: left;
+    display:block;
+    width: 1px;
+    height: 328px;
+    background: #ccc;
+}
+
+
+/* MOBILE MENU */
+.mobile_dropwdown_wrap{
+    display:none;
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:-webkit-fill-available;
+    background:rgba(0,0,0,0.6);
+}
+.mobile_bg_box{
+    position:relative;
+    width:75%;
+    min-width:250px;
+    background:#fff;
+}
+.mobile_bg_box > div{
+    border-top:solid 1px #ddd;
+}
+.close_btn_area{
+    position: absolute;
+    right: -12%;
+    top: 10px;
+    width: 30px;
+}
+.mobile_bg_box .close_btn_area{
+    border:none;
+    cursor:pointer;
+}
+.close_btn_area img{
+    display:block;
+    width:100%;
+}
+.mobile_menu.login{
+    padding:10px 20px;
+    border-bottom:solid 1px #ddd;
+}
+.mobile_menu.login span{
+    display:block;
+    float:left;
+    width:36px;
+}
+.mobile_menu.login span img{
+    display:block;
+    width:100%;
+}
+.mobile_menu.login a{
+    display:block;
+    float:right;
+    line-height:38px;
+    padding-left:14px;
+}
+.mobile_menu.introduce{
+    padding:0 20px;
+    border-bottom: solid 2px #ddd;
+}
+.mobile_menu.introduce a{
+    display: block;
+    font-size: 18px;
+    font-weight: 900;
+    padding: 16px 0 16px 30px;
+    background: url('../../img/channel_ic.png') 0% 45% no-repeat;
+}
+.mobile_menu button{
+    display: block;
+    width: 100%;
+    font-size: 18px;
+    font-weight: 900;
+    text-align: left;
+    padding:16px 20px;
+    background:url('../../img/menu_arr_down.png') #fff 90% 50% no-repeat;
+    border-bottom:solid 1px #ddd;
+}
+.mobile_menu button:focus{
+    background:#eee;
+}
+.mobile_menu ul{
+    display:none;
+}
+.mobile_menu ul li{
+}
+.mobile_menu ul li a{
+    display:block;
+    font-size:14px;
+    padding:10px 20px;
+}
+.mobile_menu ul .first_depth{
+    background:#eee;
+}
+.mobile_menu ul .first_depth a{
+    font-size:16px;
+    letter-spacing:-1px;
+    padding:15px 20px;
+}
+
+
+/* CONTENTS */
+.contents_wrap_box{
+    /* width:1122px; */
+    padding-top:155px;
+    margin:0 auto;
+}
+
+/* QUICK MENU */
+.quick_menu_wrap{
+    position:fixed;
+    right:12%;
+    bottom:22%;
+    width:78px;
+    height:355px;
+    text-align:center;
+    background:#fff;
+    z-index:999999;
+}
+.quick_title{
+    position:relative;
+    font-family:"NanumSquare";
+    font-size:18px;
+    font-weight:900;
+    color:#fff;
+    letter-spacing:-1px;
+    padding:6px 0;
+    background:#374049;
+}
+.quick_title span{
+    position:absolute;
+    bottom:-4px;
+    left:45%;
+    display:block;
+    width:10px;
+    height:10px;
+    transform:rotate(45deg);
+    background:#374049;
+}
+.quick_menu_wrap ul{
+    border-left: solid 1px #ddd;
+    border-right: solid 1px #ddd;
+}
+.quick_menu_list a{
+    display:block;
+    font-size:12px;
+    text-align:center;
+    line-height:120%;
+    letter-spacing:-1px;
+    padding:10px;
+}
+.quick_menu_list a img{
+    display:block;
+    width:70%;
+    margin:0 auto;
+}
+.quick_top{
+    font-size:14px;
+    font-weight:900;
+    color:#fff;
+    letter-spacing:-1px;
+    padding: 10px;
+    margin-top:6px;
+    background: #374049;
+    cursor:pointer;
+}
+
+/* Top */
+.process_history_box{
+    font-size: 13px;
+    float: right;
+    padding: 14px 0 10px;
+}
+.process_history_box span{
+    display: block;
+    float: left;
+    width: 11px;
+    padding: 3px 0;
+}
+.process_history_box span img{
+    display: block;
+    width: 100%;
+}
+.process_history_box p{
+    float: left;
+    padding: 0 10px;
+}
+.top_area h1{
+    clear: both;
+    width:100%;
+    font-family:"NanumSquare";
+    font-size: 44px;
+    letter-spacing: -2px;
+    padding-bottom: 16px;
+    border-bottom: solid 1px #003366;
+}
+.top_area h1 span{
+    font-family:"NanumSquare";
+    color: #0180d3;
+}
+
+.tutorial .contents_wrap_box .top_area{
+    width:1122px;
+    margin:0 auto;
+}
+
+.tutorial_btn_wrap{
+    padding: 50px 0;
+    background: #dde1e6;
+}
+.tutorial_btn_box{
+    width: 1122px;
+    margin: 0 auto;
+}
+.tutorial_btn_box > p{
+    font-family: "NanumSquareB";
+    font-size: 30px;
+    text-align: center;
+    padding-bottom: 50px;
+}
+.tutorial_btn{
+    display: block;
+    float: left;
+    width: 24.2%;
+    padding: 30px 0;
+    margin-right: 1%;
+    background: #fff;
+    border:solid 3px #fff;
+    border-radius: 20px;
+}
+.tutorial_btn:hover{
+    border: solid 3px #35a6d9;
+}
+.tutorial_btn.last_right{
+    margin-right:0;
+}
+.tutorial_btn div{
+    text-align:center;
+}
+.tutorial_btn div img{
+    display:block;
+    margin: 0 auto 10px;
+}
+.tutorial_btn p{
+    height: 65px;
+    font-size: 14px;
+    color: #666;
+    line-height: 150%;
+}
+.tutorial_btn p span{
+    display: block;
+}
+.tutorial_btn .tutorial_btn_title{
+    height: auto;
+    font-family: "NanumSquare";
+    font-size: 30px;
+    font-weight: 900;
+    color: #0180d3;
+    padding-bottom: 10px;
+}
+
+.tutorial_download{
+    width: 1122px;
+    padding: 50px 0;
+    margin: 0 auto;
+}
+.tutorial_download > div{
+    float: left;
+    display: inline-block;
+}
+.tutorial_download_list{
+    float: right;
+    width: 80%;
+}
+.tutorial_download > div,
+.tutorial_download_list{}
+.tutorial_download > div p{
+    font-size: 15px;
+    color: #888;
+    line-height: 150%;
+}
+.tutorial_download > div .tutorial_download_title{
+    font-family: "NanumSquareB";
+    font-size: 24px;
+    color: #333;
+    line-height: 120%;
+    padding-bottom: 10px;
+}
+.tutorial_download > div p span{
+    display: block;
+}
+.tutorial_download_list li{
+    float: left;
+    width: 48%;
+    padding-bottom: 50px;
+    margin-right:4%;
+}
+.tutorial_download_list li.even{
+    margin-right:0;
+}
+.tutorial_download_list li:after{
+    display:block;
+    content:'';
+    clear:both;
+}
+.tutorial_download_image{
+    float: left;
+    width: 18%;
+    margin-right: 2%;
+}
+.tutorial_download_image img{
+    display: block;
+    width: 100%;
+}
+.tutorial_download_text{
+    float: left;
+    width: 80%;
+}
+.tutorial_download_text p{
+    float: left;
+    width: 68%;
+    font-size: 14px;
+    line-height: 120%;
+    letter-spacing: -1px;
+}
+.tutorial_download_text p span{
+    display:block;
+}
+.tutorial_download_text a{
+    display: block;
+    float: right;
+    width: 30%;
+    font-family:"NanumSquare";
+    font-size: 16px;
+    font-weight: 600;
+    text-align: center;
+    padding: 6px 0;
+    border: solid 2px #ddd;
+}
+.tutorial_download_text a:hover{
+    color:#fff;
+    background:#777;
+}
+.tutorial_download_text .tutorial_download_name{
+    width: 100%;
+    font-family: "NanumSquare";
+    font-size: 18px;
+    font-weight: 900;
+    padding: 6px 0;
+}
+
+
+/* FOOTER */
+.footer_wrap{
+    text-align:center;
+    border-top:solid 1px #ddd;
+}
+.foot_link_box{
+    width:56%;
+    margin:0 auto;
+}
+.foot_link_box li{
+    float:left;
+    width:15%;
+    margin-right:2%;
+}
+.foot_link_box .last_right{
+    margin-right:0;
+}
+.foot_link_box li a{
+    display:block;
+    font-size:12px;
+    color:#666;
+    padding:16px 0;
+}
+.foot_link_box li:hover a{
+    color:#111;
+}
+.foot_box{
+    text-align:center;
+    padding:16px 0 20px;
+    background:#374049;
+}
+.foot_box p{
+    display:inline-block;
+    width:94%;
+    font-size:12px;
+    color:#eee;
+    line-height:150%;
+    margin:0 auto;
+}
+.foot_box p span{
+    display:block;
+    font-size:11px;
+    color:#eee;
+}
+
+
+/* Media query */
+
+@media all and (max-width:1700px){
+    .quick_menu_wrap{
+        right:6%;
+    }
+}
+@media all and (max-width:1500px){
+    .quick_menu_wrap{
+        right:1%;
+    }
+}
+@media all and (max-width:1122px){
+
+    /* HEAD */
+    .head_wrap,
+    .menu_layout,
+    .contents_wrap_box,
+    .menu_dropdown_wrap{
+        width:100%;
+    }
+    .util_box p,
+    .util_box a{
+        margin:0 2%;
+    }
+    .menu_wrap{
+        border:none;
+    }
+    .menu{
+        width:76%;
+    }
+    .menu_tutor p{
+        padding:18px 10px 20px 0;
+    }
+    .menu_sub{
+        width:15.5%;
+        padding-left:7.5%;
+    }
+}
+@media all and (max-width:420px){
+    #width_text{
+        color:#fff;
+        background:green;
+    }
+
+    /* HEAD */
+    .head_pc{
+        display:none;
+    }
+    .head_mobile{
+        display:block;
+    }
+    .head_wrap{
+        margin:8px auto 0;
+    }
+    .head_mobile .menu_layout{
+        display:inline-block;
+        width:inherit;
+    }
+    .head_mobile .menu_wrap{
+        float:left;
+    }
+    .logo_box {
+        width:30%;
+        max-width:150px;
+        padding:6px 0 6px 20%;
+    }
+    .logo_box img{
+        width:95%;
+    }
+    .search_box {
+        width:92%;
+        margin:0 4%;
+    }
+    .search_box input[type='text'] {
+        padding:12px 4.5%;
+    }
+    .search_box button {
+        top:inherit;
+        bottom:4px;
+        right:4px;
+        padding:8px 10px;
+    }
+    .util_box{
+        position:inherit;
+        float:right;
+        top:-5px;
+        width:23%;
+    }
+    .util_box .last_right{
+        font-size:14px;
+        padding:23px 20px 0 0;
+    }
+    .util_box .pc{
+        display:none;
+    }
+    .mobile_btn{
+        float:left;
+    }
+    .mobile_btn button{
+        border:none;
+        padding:15px 20px 0;
+    }
+    .head_mobile .menu_dropdown_wrapper{
+        position:absolute;
+        top:0;
+        left:0;
+        width:80%;
+        z-index:99999;
+    }
+    .head_mobile .menu_dropdown_wrap{
+        width:100%;
+    }
+    .head_mobile .menu_dropdown{
+        padding-left:20px;
+    }
+    .head_mobile .menu_sub{
+        float:inherit;
+        width:100%;
+        padding:0;
+    }
+    .close_btn_area{
+        right:-15%;
+    }
+
+
+
+    /* CONTENTS */
+    .contents_wrap_box {
+        width:92%;
+        padding-top:95px;
+        margin:0 auto;
+    }
+    .quick_menu_wrap{
+        display:none;
+    }
+
+    /* Top */
+    .top_area h1 {
+        font-size: 30px;
+        padding-bottom:10px;
+    }
+    .process_history_box {
+        float: left;
+    }
+
+
+    .tutorial .contents_wrap_box .top_area,
+    .tutorial_download{
+        width:100%;
+    }
+    .tutorial_download{
+        padding:30px 0;
+    }
+    .tutorial_download > div p span {
+        display:none;
+    }
+    .tutorial_download > div .tutorial_download_title{
+        padding-bottom:4px;
+    }
+    .tutorial_btn_box{
+        width:96%;
+        padding:0 2%;
+    }
+    .tutorial_btn_wrap{
+        padding:20px 0;
+    }
+    .tutorial_btn_box button{
+        width:49.5%;
+        margin-bottom: 4px;
+    }
+    .tutorial_btn{
+        padding:20px 0;
+    }
+    .tutorial_btn_box > p{
+        width:80%;
+        font-size:24px;
+        line-height:120%;
+        padding-bottom: 20px;
+        margin:0 auto;
+    }
+    .tutorial_btn p span{
+        display:none;
+    }
+    .tutorial_btn.mobile_right {
+        margin-right: 0;
+    }
+    .tutorial_btn .tutorial_btn_title {
+        font-size: 20px;
+    }
+    .tutorial_download_image{
+        margin-right:4%;
+    }
+    .tutorial_download_text {
+        width: 78%;
+    }
+    .tutorial_download > div{
+        display:block;
+        float:none;
+    }
+    .tutorial_download_list{
+        float:none;
+        width:100%;
+        padding-top:20px;
+    }
+    .tutorial_download_text p{
+        width:100%;
+    }
+    .tutorial_download_text a{
+        float:none;
+        width:98%;
+        clear:both;
+    }
+    .tutorial_download_text .tutorial_download_name{
+        height:38px;
+        font-size:16px;
+        padding:6px 0 2px;
+    }
+    .tutorial_download_text .tutorial_download_name.double_line{
+        padding:0 0 8px;
+    }
+    .tutorial_download_text p{
+        height:48px;
+        padding-bottom:8px;
+    }
+    .tutorial_download_text p span {
+        display:none;
+    }
+
+    /* FOOTER */
+    .foot_link_box{
+        width:100%;
+    }
+    .foot_link_box li{
+        width:31%;
+    }
+    .foot_link_pc{
+        display:none;
+    }
+}
+@media all and (max-width:380px){
+    .tutorial_btn p{
+        display:none;
+    }
+    .tutorial_btn .tutorial_btn_title{
+        display:block;
+    }
+    .tutorial_download_list li{
+        width:100%;
+        padding-bottom:20px;
+    }
+    .tutorial_download_text .tutorial_download_name.double_line{
+        padding:6px 0 2px;
+    }
+    .tutorial_download_text .tutorial_download_name,
+    .tutorial_download_text p{
+        height:inherit;
+    }
+}
+@media all and (max-width:320px){
+    .tutorial_btn .tutorial_btn_title{
+        font-size:18px;
+    }
+}
