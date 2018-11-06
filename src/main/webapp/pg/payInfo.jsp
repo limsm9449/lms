@@ -214,12 +214,15 @@ $(document.body).ready(function () {
                         <p>[${row.categoryName}] ${row.courseName}</p>
                         <p class='sum'><span class='text'><fmt:formatNumber value="${row.courseCost}" type="number"/></span>원</p>
                     </div>
-                    <div>
-	<c:forEach var="subRow" items="${row.cartWeekList}">
-						<nobr><p class="chap">${subRow.week}. ${subRow.title} => ${subRow.weekCost}</p></nobr>
-						<br>
-	</c:forEach>
-					</div>
+	<c:if test="${not empty row.cartWeekList}">
+                    <p class='register_course_list_text'>차시 리스트</p>
+                    <div class='register_course_list clear_fix'>
+		<c:forEach var="subRow" items="${row.cartWeekList}">
+                        <p class='n_course_list_left'>${subRow.week}. ${subRow.title}</p>
+                        <p class='n_course_list_right'><fmt:formatNumber value="${subRow.weekCost}" type="number"/> 원</p>
+		</c:forEach>                        
+                    </div>
+	</c:if>                    
 </c:forEach>                    
                     <div class='basket_lectures_result clear_fix'>
                         <p class='first'>주문금액 : <span class='text'><fmt:formatNumber value="${set.condiVO.paymentCost}" type="number"/></span>원</p>

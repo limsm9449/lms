@@ -76,11 +76,12 @@
                         </li>
                     </ul>
                     <div class='menu_tutor'>
-                        <span>
-                            <img src='/resources/homepage/img/channel_ic.png' alt=''>
-                        </span>
-                        <p><a href='#' onclick="alert('작업중입니다.'); return false;">강사소개</a></p>
-                        
+                    	<a href='#'>
+                            <span>
+                                <img src='/resources/homepage/img/channel_ic.png' alt=''>
+                            </span>
+                            <a href='#' onclick="alert('작업중입니다.'); return false;">강사소개</a>
+                        </a>
                     </div>
                 </div>
                 <div class='menu_dropdown_wrapper' id='menu_dropdown_pc'>

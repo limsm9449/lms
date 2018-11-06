@@ -170,8 +170,10 @@ public class MainService {
     	List<CourseVO> completeCourseList = sqlSession.selectList("main.completeCourseList", set.getCondiVO());
 		set.setCompleteCourseList(completeCourseList);
 		
-		//관심과정 ??
-
+		//관심과정 
+    	List<CourseVO> interestCourseList = sqlSession.selectList("main.interestCourseList", set.getCondiVO());
+		set.setInterestCourseList(interestCourseList);
+		
     	return set;
     }
 

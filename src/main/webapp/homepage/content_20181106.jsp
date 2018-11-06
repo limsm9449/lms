@@ -16,7 +16,6 @@
     <script src='/resources/homepage/js/jquery.bxslider.js'></script>
     
     <link href='https://fonts.googleapis.com/css?family=Nanum+Gothic' rel='stylesheet'>
-    <link href="https://fonts.googleapis.com/css?family=Noto+Sans" rel="stylesheet">
     <link rel='stylesheet' href='/resources/homepage/css/initialization.css'>
     <link rel='stylesheet' href='/resources/homepage/css/main.css'>
     
@@ -24,7 +23,6 @@
 
 <body>
 <form name="frm" id="frm" method="post">
-<frameset rows='*'>
     <div class="wrap">
        	
        	<!-- HEAD -->
@@ -85,7 +83,7 @@
                             <div class='slider_text_box left'>
                                 <img src='/resources/homepage/img/visual2_text.png' class='pc' alt=' '>
                             </div>
-                            <button class='right_bottom'>이벤트2</button>
+                            <button class='right_bottom'>상세보기2</button>
                         </div>
                     </div>
                 </li>
@@ -116,7 +114,7 @@
                             <div class='slider_text_box left'>
                                 <img src='/resources/homepage/img/visual2_text.png' class='pc' alt=' '>
                             </div>
-                            <button class='right_bottom'>공지사항2</button>
+                            <button class='right_bottom'>상세보기2</button>
                         </div>
                     </div>
                 </li>
@@ -134,17 +132,14 @@
                 <div class='slider_tab'>
                     <button onclick='change_tab(0, this)' class='on'>베스트 과정</button>
                     <button onclick='change_tab(1, this)' id='btn_center'>11월 신규 이벤트</button>
-                    <button onclick='change_tab(2, this)' class='last_right'>주요 공지사항</button>
+                    <button onclick='change_tab(2, this)'>주요 공지사항</button>
                 </div>
             </div>
             <!-- VISUAL END -->
 
             <!-- NEW PROCESS -->
-            <div class='process_wrap lectures_wrap'>
-                <p>
-                    <strong>신규</strong> <span>교육</span>과정
-                </p>
-                <p class='pc'>큐러닝의 신규 교육과정을 만나보세요</p>
+            <div class='process_wrap'>
+                <p>신규 과정</p>
                 <div class='slider_wrap process1_slide_wrap'>
                     <div class='slide_box slide_1'>
                         <div class='process_box process1'>
@@ -152,7 +147,7 @@
                                 <p class='process_title'>
                                     김정구 교수의
                                     <span>
-                                        새로운 <strong>미래기회 <span></span>창조 및 선점전략</strong>
+                                        새로운 <strong>미래기회 창조 및 선점전략</strong>
                                     </span>
                                 </p>
                                 <p class='process_text'>
@@ -169,7 +164,7 @@
                                 <p class='process_title'>
                                     김정구 교수의
                                     <span>
-                                        새로운 <strong>미래기회 <span></span>창조 및 선점전략</strong>
+                                        새로운 <strong>미래기회 창조 및 선점전략</strong>
                                     </span>
                                 </p>
                                 <p class='process_text'>
@@ -186,7 +181,7 @@
                                 <p class='process_title'>
                                     김정구 교수의
                                     <span>
-                                        새로운 <strong>미래기회 <span></span>창조 및 선점전략</strong>
+                                        새로운 <strong>미래기회 창조 및 선점전략</strong>
                                     </span>
                                 </p>
                                 <p class='process_text'>
@@ -252,51 +247,46 @@
             <!-- NEW PROCESS END -->
 
             <!-- PROCESS RECOMMEND -->
-            <div class='recommend_wrap lectures_wrap'>
+            <div class='recommend_wrap'>
                 <p>
-                    <strong>추천</strong> <span>교육</span>과정
+                    추천 과정
+                    <span>큐매니저가 추천하는 특별한 과정을 만나보세요.</span>
                 </p>
-                <p class='pc'>큐매니저가 추천하는 특별한 교육과정을 만나보세요</p>
                 <ul class='clear_fix'>
                     <li class='recommend recommend1 clear_fix'>
-                        <a href='#' onclick="gfn_goPage('/main/mainCourseData','courseId=19');" class='recommend_title white'>
+                        <a href='' class='recommend_title white'>
                             <p class='lecture_title'>
                                 윤코치의
-                                <strong class='bot'>보고서 작성법</strong>
+                                <strong>보고서 작성법</strong>
                             </p>
                             <p>한 장의 종이로 상사의<br>마음을 움직인다!</p>
                         </a>
-                        <p class='recommend_text' onclick="gfn_goPage('/main/mainCourseData','courseId=19');">
-                            <strong>[스마트러닝] <span>윤코치의 보고서 작성법</span></strong>
-                            효율적 보고서 작성을 통해 업무 관련 <span></span>커뮤니케이션과 의사결정의 토대를 구축하고 <span></span>업무 성과를 향상시킬 수 있다.
+                        <p class='recommend_text'>
+                            <strong>[스마트러닝] 윤코치의 보고서 작성법</strong>
+                            퇴짜맞는 보고서, 형식적인 보고서는 더 이상 없다!
                         </p>
                         <a class='lecture_more' href='#' onclick="gfn_goPage('/main/mainCourseData','courseId=19');">상세보기</a>
                     </li>
                     <li class='recommend recommend2 clear_fix'>
-                        <a href='#' onclick="gfn_goPage('/main/mainCourseData','courseId=22');" class='recommend_title white'>
+                        <a href='' class='recommend_title'>
                             <p class='lecture_title'>
-                                <strong>토끼와 거북이</strong>의
-                                <strong class='bot'>재테크 비법</strong>
+                                토끼와 거북이의
+                                <strong>재테크 비법</strong>
                             </p>
-                            <p>당신만을 위한 재테크 전략을 <span></span>지금 만나보세요</p>
+                            <p>당신만을 위한 재테크 전략을<br>지금 만나보세요</p>
                         </a>
-                        <p class='recommend_text' onclick="gfn_goPage('/main/mainCourseData','courseId=22');">
-                            <strong>[스마트러닝] <span>토끼와 거북의의 재테크 비법</span></strong>
-                            당신만을 위한 재테크 전략을 <span></span>지금 만나보세요
+                        <p class='recommend_text'>
+                            <strong>[스마트러닝] 토끼와 거북의의 재테크 비법</strong>
+                            퇴짜맞는 보고서, 형식적인 보고서는 더 이상 없다!
                         </p>
                         <a class='lecture_more' href='#' onclick="gfn_goPage('/main/mainCourseData','courseId=22');">상세보기</a>
                     </li>
                     <li class='recommend recommend3 clear_fix last_right'>
-                        <a href='#' onclick="gfn_goPage('/main/mainCourseData','courseId=23');" class='recommend_title white'>
-                            <p class='lecture_title'>
-                                <strong>시원하게 뚫어</strong>주는
-                                <strong class='bot'>비즈니스 스킬</strong>
-                            </p>
-                            <p>바쁜 직장인을 위한 실제적이고<br>유익한 비즈니스 스킬</p>
+                        <a href='' class='recommend_title'>
                         </a>
-                        <p class='recommend_text' onclick="gfn_goPage('/main/mainCourseData','courseId=23');">
-                            <strong>[스마트러닝] <span>시원하게 뚫어 주는 비즈니스 스킬</span></strong>
-                            업무에 대한 답답한 마음을 실제적인 <span></span>비즈니스 스킬을 통해 시원하게 <span></span>해결해 주는 솔루션
+                        <p class='recommend_text'>
+                            <strong>[스마트러닝] 시원하게 뚫어 주는 비즈니스 스킬</strong>
+                            업무에 대한 답답한 마음을 실제적인 비즈니스 스킬을<br>통해 시원하게 해결해 주는 솔루션
                         </p>
                         <a class='lecture_more' href='#' onclick="gfn_goPage('/main/mainCourseData','courseId=23');">상세보기</a>
                     </li>
@@ -304,60 +294,51 @@
             </div>
             <!-- PROCESS RECOMMEND END -->
 
-            <div class='user_cs clear_fix'>
-                <div class='user_cs_notice_box'>
-                    <div class='user_cs_title clear_fix'>
-                        <p onclick="f_submitSelf('/main/noticeList')">공지사항</p>
-                        <p class='user_cs_more' onclick="f_submitSelf('/main/noticeList')">MORE +</p>
-                    </div>
+            <!-- CUSTOMER SERVICE -->
+            <div class="cs clear_fix">
+                <div class="notice clear_fix">
+                    <p class='cs_title'>공지사항</p>
+                    <span class='cs_more' onclick="f_submitSelf('/main/noticeList')">+</span>
                     <ul>
 <c:forEach var="row" items="${set.noticeList}" varStatus="idx">
-                        <li class='user_cs_list'>
-                            <a href="#" onClick="javascript:gfn_goPage('/main/noticeV','seq=${row.seq}'); return false;" class='clear_fix'>
+                        <li class='notice_list'>
+                            <a href="#" onClick="javascript:gfn_goPage('/main/noticeV','seq=${row.seq}'); return false;">
                                 <p>${row.title}</p>
-                                <p class='user_cs_list_date'>${row.createDate}</p>
+                                <span>${row.createDate}</span>
                             </a>
                         </li>
 </c:forEach>                        
                     </ul>
                 </div>
-                <div class='user_cs_counsel'>
-                    <div class='user_cs_title clear_fix'>
-                        <p onclick="f_submitSelf('/main/faqList')">
-                            BEST FAQ
-                        </p>
-                        <p class='user_cs_more' onclick="f_submitSelf('/main/faqList')">MORE +</p>
-                    </div>
+                <div class="faq clear_fix">
+                    <p class='cs_title'>FAQ</p>
+                    <span class='cs_more' onclick="f_submitSelf('/main/faqList')">+</span>
                     <ul>
 <c:forEach var="row" items="${set.faqList}" varStatus="idx">
-                        <li class='user_cs_list'>
-                            <a href="#" onClick="javascript:gfn_goPage('/main/faqV','seq=${row.seq}'); return false;" class='clear_fix'>
+                        <li class='faq_list'>
+                            <a href="#" onClick="javascript:gfn_goPage('/main/faqV','seq=${row.seq}'); return false;">
                                 <p>${row.title}</p>
-                                <p class='user_cs_list_date'>${row.createDate}</p>
                             </a>
                         </li>
 </c:forEach>                        
                     </ul>
                 </div>
                 <div class="guide clear_fix">
-                    <p class='cs_title blue'><span>처음</span>오셨나요?</p>
+                    <p class='cs_title blue'>처음오셨나요?</p>
                     <p class='guide_text'>이용가이드를 확인해 주세요.</p>
                     <a href="javascript:" onclick="page.goPage('/main/tutorial', '');">바로가기</a>
                 </div>
                 <div class="center clear_fix">
-                    <p class='cs_title'>1:1문의</p>
-                    <p class='info_text'>사이트/교육과정에 필요한 모든 것을 알려드립니다</p>
-                    <a href="javascript:" onclick="page.goPage('/main/mailQuestion');">문의하기</a>
-                </div>
-                <div class="center call clear_fix">
-                    <p class='cs_title'>고객센터</p>
-                    <span onclick='location.href = "mailto:sy.choi@qpeople.co.kr"'>
-                        <img src='/resources/homepage/img/center_ic.png' alt=' '>
-                    </span>
-                    <a href='mailto:sy.choi@qpeople.co.kr' class='note'>궁금한 질문을 이메일로 문의하세요.</a>
+                	<p class="cs_title">고객센터</p>
+                    <a href="mailto:sy.choi@qpeople.co.kr">
+	                    <span>
+	                        <img src='/resources/homepage/img/center_ic.png' alt=' '>
+	                    </span>
+	                    <p class='note'>궁금한 질문을 이메일로 문의하세요.</p>
+                    </a>
                 </div>
             </div>
-
+            <!-- CUSTOMER SERVICE END -->
         </div>
         <!-- CONTENTS END -->
 
@@ -366,7 +347,6 @@
         <!-- FOOTER END -->
         
     </div>
-</frameset>
 </form>    
     <script src='/resources/homepage/js/dev.js?timestamp=<%=timestamp%>'></script>
 </body>

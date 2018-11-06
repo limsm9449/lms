@@ -38,9 +38,10 @@ $(document).ready(function() {
 		$.datepicker.setDefaults($.datepicker.regional['ko']);
 	}
 	
-	//5분 마다 페이지 reload...
+	//10분 마다 페이지 reload...
 	setInterval(function() {
-			//location.reload();
+			location.reload();
+			/*
 			$.ajax({
 				url : context + "/sessionContinue.do",
 				type : "POST",
@@ -54,7 +55,8 @@ $(document).ready(function() {
 					alert(resource.msg.systemError);
 				}
 			});
-		}, 1000 * 60 * 5);
+			*/
+		}, 1000 * 60 * 10);
 });
 
 /** 

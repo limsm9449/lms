@@ -21,6 +21,9 @@
     src: local(※), url(../font/NotoSansCJKkr-Thin.woff);
     }*/
 
+
+
+
 /* 헤더 */
 .headerWrap{font-family: 'Noto Sans KR', sans-serif; color:#676767; position:relative; height:auto; width:100%;}
 .header { width:1024px; height:83px; margin:0 auto; margin-top:20px;}
@@ -84,8 +87,8 @@ h1 {clear:both; float:left;}
 }
 
 @media all and (max-width:1000px) {
-.menu_m {display:block; width:22px; height:17px; background-image:url(../img/menu_m.png); float:right; margin-top:10px; cursor:pointer;}
-.menu .mainMenu { display:none;}
+    .menu_m {display:block; width:22px; height:17px; background-image:url(../img/menu_m.png); float:right; margin-top:10px; cursor:pointer;}
+    .menu .mainMenu { display:none;}
 }
 
 
@@ -288,7 +291,7 @@ header{
 .menu_tutor span img{
     width:100%;
 }
-.menu_tutor p{
+.menu_tutor a{
     float: left;
     font-size: 20px;
     color: #0071bc;
@@ -757,7 +760,7 @@ header{
     .menu{
         width:76%;
     }
-    .menu_tutor p{
+    .menu_tutor a{
         padding:18px 10px 20px 0;
     }
     .menu_sub{

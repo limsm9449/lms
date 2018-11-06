@@ -150,14 +150,6 @@ function lfn_btn(pKind, pParam) {
 	</c:if>                                        
                                     </div>
                                     <p>${row.courseName}</p>
-	<c:if test="${not empty row.cartWeekList}">
-				                	<div class='process_result_text_top clear_fix'>
-		<c:forEach var="subRow" items="${row.cartWeekList}">
-										[${subRow.week} 차시] ${subRow.title} (<fmt:formatNumber value="${subRow.weekCost}" type="number"/> 원)<br>
-		</c:forEach>
-				                	</div>
-	</c:if>
-                                    
                                     <div class='process_result_text_bottom clear_fix'>
                                         <p>교육기간</p>
                                         <p class='process_result_payment'>${row.cFromDate} ~ ${row.cToDate} (${row.cPeriod} 일)</p>
@@ -170,6 +162,25 @@ function lfn_btn(pKind, pParam) {
                             <div class='process_result_review con'>
                                 <p><fmt:formatNumber value="${row.courseCost}" type="number"/> 원</p>
                             </div>
+<c:if test="${not empty row.cartWeekList}">
+                            <table class='register_compose_table'>
+                                <tr>
+                                    <th>차시 제목</th>
+                                    <th class='last_right part_only'>교육비</th>
+                                </tr>
+	<c:forEach var="subRow" items="${row.cartWeekList}">                                
+                                <tr>
+                                    <td class='register_compose_lecture'>
+                                        <p>
+                                            ${subRow.week}<span></span>
+                                            ${subRow.title}
+                                        </p>
+                                    </td>
+                                    <td class='last_right part_only'><fmt:formatNumber value="${subRow.weekCost}" type="number"/> 원</td>
+                                </tr>
+	</c:forEach>                                
+                            </table>
+</c:if>                            
                         </li>
 </c:forEach>                        
                     </ul>

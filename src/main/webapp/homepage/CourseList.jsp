@@ -48,47 +48,6 @@ function lfn_btn(pKind, pParam) {
 		$("#courseId").val(pParam.courseId);
 		
 		gfn_goPage("/main/mainCourseData",$("#frm").serialize());
-	} else if ( pKind == "application" ) {
-		<c:choose>
-			<c:when test="${set.condiVO.isLogin eq 'N'}">
-				alert("로그인 후에 수강신청을 하셔야 합니다.");
-				top.location = "/login.do?preUrl=" + encodeURIComponent(window.location + "?" + $("#frm").serialize());
-			</c:when>
-			<c:when test="${set.condiVO.compCd ne 'B2C'}">
-				if (pParam.cnt > "0" ) {
-					alert("신청한 과정입니다.")
-				} else {
-					if ( confirm("과정을 신청하시겠습니까?") == true ) {
-						$.ajax({
-							type :"POST",
-							url : context + "/siteManager/axUserCourseRegister.do",
-							dataType :"json",
-							data : "courseId=" + pParam.courseId,
-							success : function(json){
-								if ( json.rtnMode == "OK") {
-									if ( confirm("과정이 신청되었습니다.") == true )
-										page.goPage('/normalUser/attendCourseList');
-									else
-										lfn_btn("refresh");
-								} else if ( json.rtnMode == "NO_SESSION") {
-									top.location = "/login.do?preUrl=/main/courseList.do";		
-								}
-							},
-							error : function(e) {
-								alert("<spring:message code="lms.msg.systemError" text="-" />");
-							}
-						})
-					}
-				}
-			</c:when>
-			<c:otherwise>
-				if (pParam.cnt > "0" ) {
-					alert("신청한 과정입니다.")
-				} else {
-					gfn_goPage("/paymentGateway/pay","courseId=" + pParam.courseId + "&cartWeeks=");
-				}
-			</c:otherwise>
-		</c:choose>
 	} else if ( pKind == "cart" ) {
 		if (pParam.cnt > "0" ) {
 			alert("신청한 과정입니다.")

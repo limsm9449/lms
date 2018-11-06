@@ -62,79 +62,100 @@
                     <p class='subtitle'>학습방법</p>
                     <p>학습자, 강사, 운영자 모듈로 구성되어 있으며, 고객사에 맞는 교육관리시스템을 제공합니다.</p>
                 </div>
-                <div class='register_method_tab clear_fix'>
-                    <button onclick='guide_change("pc", this)' class='on'>PC 러닝 학습가이드</button>
-                    <button onclick='guide_change("mobile", this)'>모바일 러닝 학습가이드</button>
-                </div>
-                <div class='register_method_pc'>
-                    <img src='/resources/homepage/img/guidance/pc.jpg' alt=' '>
-                    <ol>
-                        <li>
-                            <div class='step_name'>
-                                <p class='num'></p>
-                                <p></p>
-                            </div>
-                            <span><img src='' alt=''></span>
-                            <div class='step_note'>
-                                <p class='name'></p>
-                                <p></p>
-                            </div>
-                        </li>
-                        <li>
-                            <div class='step_name'>
-                                <p class='num'></p>
-                                <p></p>
-                            </div>
-                            <span><img src='' alt=''></span>
-                            <div class='step_note'>
-                                <p class='name'></p>
-                                <p></p>
-                            </div>
-                        </li>
-                        <li>
-                            <div class='step_name'>
-                                <p class='num'></p>
-                                <p></p>
-                            </div>
-                            <span><img src='' alt=''></span>
-                            <div class='step_note'>
-                                <p class='name'></p>
-                                <p></p>
-                            </div>
-                        </li>
-                    </ol>
-                </div>
-                <div class='register_method_mobile'>
-                    <img src='/resources/homepage/img/guidance/mobile.jpg' alt=' '>
-                    <ol>
-                        <li>
-                            <div class='step_name'>
-                                <p class='num'></p>
-                                <p></p>
-                            </div>
-                            <span><img src='' alt=''></span>
-                            <div class='step_note'>
-                                <p class='name'></p>
-                                <p></p>
-                            </div>
-                        </li>
-                        <li>
-                            <div class='step_name'>
-                                <p class='num'></p>
-                                <p></p>
-                            </div>
-                            <span><img src='' alt=''></span>
-                            <div class='step_note'>
-                                <p class='name'></p>
-                                <p></p>
-                            </div>
-                        </li>
-                    </ol>
-                </div>
-                
 
+                <!-- TAB AREA -->
+                <div class='register_method_tab clear_fix'>
+                    <button onclick='guide_change("pc", this)' class='on'>PC 러닝 <span></span>학습가이드</button>
+                    <button onclick='guide_change("mobile", this)'>모바일 러닝 <span></span>학습가이드</button>
+                </div>
+
+                <!-- REGISTER PC VERSION -->
+                <div class='register_method_pc'>
+                    <!-- <img src='/resources/homepage/img/guidance/pc.jpg' alt=' '> -->
+                    <ol>
+                        <li class='pc_list_item'>
+                            <div class='step_name clear_fix'>
+                                <p class='num'>01</p>
+                                <p>회원가입</p>
+                            </div>
+                            <span><img src='/resources/homepage/img/guidance/reg_pc_1.jpg' alt=' '></span>
+                            <div class='step_note'>
+                                <p class='name'>1) 회원가입</p>
+                                <p>- 큐러닝 사이트에 오른쪽 상단의 회원가입을 합니다.</p>
+                            </div>
+                        </li>
+                        <li class='pc_list_item'>
+                            <div class='step_name clear_fix'>
+                                <p class='num'>02</p>
+                                <p>수강신청</p>
+                            </div>
+                            <span><img src='/resources/homepage/img/guidance/reg_pc_2.jpg' alt=''></span>
+                            <div class='step_note'>
+                                <p class='name'>1) 과정 수강신청하기</p>
+                                <p>- 전체과정을 선택합니다.</p>
+                                <p class='name'>
+                                    2) 개설 중인 과정을 카테고리 별 조회가 가능합니다.<br>3) 과정정보 확인, 맛보기, 평점/후기 등 확인 할 수 있습니다.<br>4) 과정을 장바구니 담아서 한꺼번에 결제하거나 개별로 수강신청하여 결제할 수 있습니다. <br>5) 그럼, 수강하기 원하는 과정을 수강 신청합니다.
+                                </p>
+                            </div>
+                        </li>
+                        <li class='pc_list_item'>
+                            <div class='step_name clear_fix'>
+                                <p class='num'>03</p>
+                                <p>나의강의실</p>
+                            </div>
+                            <span><img src='/resources/homepage/img/guidance/reg_pc_3.jpg' alt=' '></span>
+                            <div class='step_note'>
+                                <p class='name'>1) 나의 강의실을 선택합니다.<br>2) 학습중인 과정 중 학습하기 원하는 과정의 학습시작 버튼을 선택합니다.</p>
+                            </div>
+                            <span><img src='/resources/homepage/img/guidance/reg_pc_4.jpg' alt=' '></span>
+                            <div class='step_note'>
+                                <p class='name'>3) 선택한 과정의 학습창이 표시됩니다.<br>4) 학습목차 중 학습할 차시명의 시작버튼을 선택하여 학습합니다.
+                                </p>
+                            </div>
+                        </li>
+                    </ol>
+                </div>
+
+                <!-- REGISTER MOBILE VERSION -->
+                <div class='register_method_mobile'>
+                    <!-- <img src='/resources/homepage/img/guidance/mobile.jpg' alt=' '> -->
+                    <ol>
+                        <li class='mobile_list_item clear_fix'>
+                            <div class='step_name clear_fix'>
+                                <p class='num'>01</p>
+                                <p>수강신청</p>
+                            </div>
+                            <span><img src='/resources/homepage/img/guidance/reg_mobile_1.jpg' alt=' '></span>
+                            <span><img src='/resources/homepage/img/guidance/reg_mobile_2.png' alt=' '></span>
+                            <div class='step_note'>
+                                <p class='name'>1) 로그인하기</p>
+                                <p>- 로그인을 선택하여 아이디, 비밀번호를 입력하여 로그인 합니다.</p>
+                                <p class='name'>2) 수강신청하기</p>
+                                <p>- 좌측 상단의 메뉴를 선택하여 전체과정 메뉴를 선택 합니다.</p>
+                            </div>
+                            <span><img src='/resources/homepage/img/guidance/reg_mobile_3.png' alt=' '></span>
+                            <div class='step_note half'>
+                                <p class='name'>3) 과정 선택하여 수강신청하기</p>
+                                <p>- 개설 중인 과정을 카테고리 별 조회가 가능합니다.</p>
+                                <p>- 과정정보 확인, 맛보기, 평점/후기 등 확인 할 수 있습니다.</p>
+                                <p>- 과정을 장바구니 담아서 한꺼번에 결제하거나 개별로 수강신청하여 결제할 수 있습니다. <span></span>그럼, 수강하기 원하는 과정을 수강 신청합니다.</p>
+                            </div>
+                        </li>
+                        <li class='mobile_list_item clear_fix'>
+                            <div class='step_name clear_fix'>
+                                <p class='num'>02</p>
+                                <p>나의 강의실</p>
+                            </div>
+                            <span><img src='/resources/homepage/img/guidance/reg_mobile_4.jpg' alt=' '></span>
+                            <span><img src='/resources/homepage/img/guidance/reg_mobile_5.jpg' alt=' '></span>
+                            <div class='step_note'>
+                                <p class='name'>1) 나의 강의실을 선택합니다.<br>2) 학습중인 과정 중 학습하기 원하는 과정의 학습시작 버튼을 선택합니다.<br>3) 선택한 과정의 학습창이 표시됩니다.<br>4) 학습시작버튼을 선택하여 학습을 합니다.</p>
+                            </div>
+                            <span><img src='/resources/homepage/img/guidance/reg_mobile_6.png' alt=' '></span>
+                        </li>
+                    </ol>
+                </div>
             </div>
-                
         </div>
         <!-- CONTENTS END -->
 

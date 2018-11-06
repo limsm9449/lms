@@ -233,3 +233,10 @@ function list_tab(target, tochange) {
         }
     }
 }
+
+
+
+function error_msg(e){
+    e.preventDefault();
+    window.alert('작업중입니다.');
+}

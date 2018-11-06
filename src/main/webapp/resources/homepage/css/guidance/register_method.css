@@ -176,7 +176,7 @@ header{
 .menu_tutor span img{
     width:100%;
 }
-.menu_tutor p{
+.menu_tutor a{
     float: left;
     font-size: 20px;
     color: #0071bc;
@@ -458,8 +458,81 @@ header{
 .register_method_tab button:last-child{
     margin-right:0;
 }
+.register_method_pc,
+.register_method_mobile{
+    width: 90%;
+    margin: 0 auto;
+}
 .register_method_mobile{
     display:none;
+}
+.register_method_pc ol{}
+.register_method_mobile ol{}
+.pc_list_item,
+.mobile_list_item{
+    padding-bottom: 40px;
+}
+.mobile_list_item{}
+.step_name{}
+.step_name p{
+    font-family: 'NanumSquare';
+    font-size: 24px;
+    font-weight: 900;
+    display: inline-block;
+    line-height: 150%;
+    box-sizing: border-box;
+}
+.step_name .num{
+    color: #fff;
+    width: 44px;
+    font-size: 22px;
+    text-align: center;
+    padding: 6px 2px 3px 2px;
+    background:url('../../img/guidance/reg_num_ic.png') no-repeat;
+    background-size:contain;
+}
+.pc_list_item > span{
+    display: block;
+    width:80%;
+    padding: 10px 0 16px 5%;
+}
+.mobile_list_item > span{
+    display: inline-block;
+    float:left;
+    width: 45%;
+    padding: 10px 0 16px 5%;
+}
+.pc_list_item > span img,
+.mobile_list_item > span img{
+    display: block;
+    width:100%;
+    box-shadow: 1px 1px 2px #ddd;
+}
+.step_note{
+    clear:both;
+    padding-left: 5%;
+}
+.step_note.half{
+    clear: none;
+    width: 45%;
+    float: left;
+    padding: 10px 0 0 5%;
+}
+.step_note p{
+    font-size: 16px;
+    font-weight: 500;
+    color: #444;
+    padding-left:10px;
+    line-height: 150%;
+}
+.step_note .name{
+    font-size: 18px;
+    font-family: 'NanumSquare';
+    font-weight: 900;
+    padding-left:0;
+}
+.mobile_list_item .step_note{
+    padding-bottom:20px;
 }
 
 
@@ -542,7 +615,7 @@ header{
     .menu{
         width:76%;
     }
-    .menu_tutor p{
+    .menu_tutor a{
         padding:18px 10px 20px 0;
     }
     .menu_sub{
@@ -664,6 +737,35 @@ header{
     .tutorial .contents_wrap_box .top_area,
     .tutorial_download{
         width:100%;
+    }
+
+
+
+    .register_method_tab {
+        padding-bottom: 30px;
+    }
+    .register_method_tab button{
+        font-size:20px;
+        padding:14px 0;
+    }
+    .register_method_tab button span{
+        display:block;
+    }
+    .register_method_pc,
+    .register_method_mobile{
+        width:100%;
+    }
+    .pc_list_item > span,
+    .mobile_list_item > span{
+        width:100%;
+        padding:20px 0;
+    }
+    .step_note{
+        padding-left:0;
+    }
+    .step_note.half {
+        width: 100%;
+        padding:0 0 20px;
     }
 
 

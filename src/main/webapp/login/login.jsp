@@ -138,7 +138,7 @@ function lfn_page() {
 						<button class='naver' onclick="alert('작업중입니다.');">네이버
 							아이디로 로그인</button>
 						<button class='facebook' onclick="alert('작업중입니다.');">페이스북
-							아이디로 로그인</button>채
+							아이디로 로그인</button>
 					</div>
 					<div class='signin_bg_box'>
 						<img src='/resources/homepage/img/util/login_bg.png' alt=''>

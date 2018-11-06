@@ -176,7 +176,7 @@ header{
 .menu_tutor span img{
     width:100%;
 }
-.menu_tutor p{
+.menu_tutor a{
     float: left;
     font-size: 20px;
     color: #0071bc;
@@ -710,7 +710,7 @@ header{
     .menu{
         width:76%;
     }
-    .menu_tutor p{
+    .menu_tutor a{
         padding:18px 10px 20px 0;
     }
     .menu_sub{

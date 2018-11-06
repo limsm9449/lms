@@ -249,3 +249,11 @@ function device_check() {
     }
 }
 // device_check();
+
+
+
+function error_msg(e){
+    console.log('dfs');
+    e.preventDefault();
+    window.alert('작업중입니다.');
+}
