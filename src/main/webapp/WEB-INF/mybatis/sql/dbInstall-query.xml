@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dbInstall">
+	
+    <insert id="createTable">
+    	CREATE TABLE TABLE1 ( 
+			APPROVAL_ID VARCHAR(30), 
+			USER_ID VARCHAR(15), 
+			PRIMARY KEY(APPROVAL_ID) );
+
+    	CREATE TABLE TABLE2 ( 
+			APPROVAL_ID VARCHAR(30), 
+			USER_ID VARCHAR(15), 
+			PRIMARY KEY(APPROVAL_ID) );
+
+    	CREATE TABLE TABLE3 ( 
+			APPROVAL_ID VARCHAR(30), 
+			USER_ID VARCHAR(15), 
+			PRIMARY KEY(APPROVAL_ID) );
+    </insert>
+
+    <insert id="createCodeData">
+    </insert>
+
+    <insert id="createSettingData">
+    </insert>
+
+</mapper>

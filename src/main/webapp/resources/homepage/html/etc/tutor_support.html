@@ -5,16 +5,14 @@
     <meta charset='utf-8'>
     <meta name='viewport' content='width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1'>
     <meta http-equiv='X-UA-Compatible' content='ie=edge'>
-    <title>Q learning - 나의강의실 - 비밀번호 변경</title>
-
-    <script src='../../js/jquery_3.3.1.js'></script>
+    <title>Q learning - 튜터 지원</title>
 
     <link href='https://fonts.googleapis.com/css?family=Nanum+Gothic' rel='stylesheet'>
     <link rel='stylesheet' href='../../css/initialization.css'>
-    <link rel='stylesheet' href='../../css/support/notice_register.css'>
+    <link rel='stylesheet' href='../../css/support/mail.css'>
 </head>
 
-<body style='background:#fff'>
+<body>
     <frameset rows='*'>
         <div class='wrap'>
             <!-- PC HEADER -->
@@ -34,8 +32,8 @@
                     <div class='head_con util_box'>
                         <!-- 로그인 상태 -->
                         <!-- <a href='#' class='last_right'>로그아웃</a>
-                    <a href='../etc/user_info_change.html' class='pc'>회원정보수정</a>
-                    <p class='pc'>OOO님 반갑습니다.</p> -->
+                        <a href='../etc/user_info_change.html' class='pc'>회원정보수정</a>
+                        <p class='pc'>OOO님 반갑습니다.</p> -->
 
                         <!-- 로그오프 상태 -->
                         <a href='../../html/etc/signup_step1.html' class='last_right'>회원가입</a>
@@ -154,8 +152,7 @@
                         </a>
                     </div>
                     <div class='head_con util_box'>
-                        <a href='../etc/signin.html' class='last_right' onclick='login()'>로그인</a>
-                        <!--<a href='../../index.html' class='last_right' onclick=''>로그아웃</a>-->
+                        <a href='../etc/signin.html' class='last_right' onclick='login()'>로그인</a><!--<a href='../../index.html' class='last_right' onclick=''>로그아웃</a>-->
                     </div>
                     <div class='head_con search_box'>
                         <input type='text'>
@@ -249,7 +246,7 @@
             <!-- HEAD END -->
 
             <!-- CONTENTS -->
-            <div class='contents_wrap process' onmouseover='sub_hide()'>
+            <div class='contents_wrap support' onmouseover='sub_hide()'>
                 <div class='contents_wrap_box'>
                     <!-- QUICK MENU -->
                     <div class='quick_menu_wrap'>
@@ -314,45 +311,93 @@
                             </div>
                         </div>
                         <h1>
-                            나의 <span>강의실</span>
+                            튜터<span>지원</span>
                         </h1>
+                        <!-- <div class='top_text_box clear_fix'>
+                            <span><img src='../../img/support/mail_bg.jpg' alt=' '></span>
+                            <p class='top_title'>
+                                <strong>큐러닝</strong>에 문의하세요.
+                            </p>
+                            <p>
+                                온라인 교육문의 및 학습지원센터를 통해서도 찾지 못하신 문의는 1:1 메일문의로 <span></span>자세히 안내받으실 수 있습니다. <span></span>컨텐츠 오류와 같이 학습 중 불편한 사항이나 건의하고자 하는 내용, 그리고 <span></span>큐러닝을 칭찬하는 모든 사항들을 이곳에 남겨주세요. <span></span>빠른 시일 내에 답변해드리겠습니다.
+                            </p>
+                            <p class='time'>
+                                &#8251; 1:1 메일 상담시간 : 평일 08:00 ~ 17:00
+                            </p>
+                        </div> -->
                     </div>
                     <!-- Top END -->
 
-                    <div class='util_wrap'>
-                        <h1>
-                            비밀번호 변경
-                        </h1>
-                        <div class='signup_title_box'>
-                            <p>
-                                현재 비밀번호를 입력한 후 새로 사용할 비밀번호를 입력해 주십시오.
-                            </p>
-                        </div>
-                        <div class='signup_input_list'>
-                            <div class='certification_name clear_fix'>
-                                <p>현재 비밀번호</p>
-                                <input type='password' name='' id='' placeholder='비밀번호를 입력해주세요'>
+                    <!-- Contents -->
+                    <div class='mail_ask clear_fix'>
+                        <div class='form_box clear_fix flex'>
+                            <div class='title'>
+                                <p>이름</p>
                             </div>
-                            <div class='certification_name clear_fix'>
-                                <p>변경 비밀번호</p>
-                                <input type='password' name='' id='' placeholder='비밀번호를 입력해주세요'>
-                                <p class='note'>
-                                    영문/숫자(혼용) 6~12글자 이내로 입력
-                                </p>
-                            </div>
-                            <div class='certification_name clear_fix'>
-                                <p>변경 비밀번호 확인</p>
-                                <input type='password' name='' id='' placeholder='비밀번호를 확인해주세요'>
-                                <p class='note'>
-                                    비밀번호를 한번 더 입력, 잊지 않도록 주의하세요.
-                                </p>
+                            <div>
+                                <input type='text' name='' id=''>
                             </div>
                         </div>
-                        <div class='detail_btn_area'>
-                            <button onclick='location.href="./classroom.html"'>변경취소</button>
-                            <button onclick='location.href="./classroom.html"' class='bg_color'>변경완료</button>
+                        <div class='form_box phone clear_fix flex'>
+                            <div class='title'>
+                                <p>휴대폰</p>
+                            </div>
+                            <select name='agency' id=''>
+                                <option value='선택'>선택</option>
+                                <option value='SKT'>SKT</option>
+                                <option value='KT'>KT</option>
+                                <option value='LG'>LG U+</option>
+                                <option value='알뜰폰'>알뜰폰</option>
+                            </select>
+                            <input type='text' name='' id='' placeholder='- 없이 숫자만'>
+                        </div>
+                        <div class='form_box clear_fix flex'>
+                            <div class='title'>
+                                <p>전화번호</p>
+                            </div>
+                            <div>
+                                <input type='text' name='' id=''>
+                            </div>
+                        </div>
+                        <div class='form_box clear_fix flex'>
+                            <div class='title'>
+                                <p>이메일</p>
+                            </div>
+                            <div>
+                                <input type='text' name='' id=''>
+                            </div>
+                        </div>
+                        <div class='form_box clear_fix flex'>
+                            <div class='title'>
+                                <p>자기소개</p>
+                            </div>
+                            <div>
+                                <textarea name='' id='' placeholder='학력/경력 : &#13;&#10;자격증 : &#13;&#10;소개 : '></textarea>
+                            </div>
+                        </div>
+                        <div class='form_box clear_fix flex'>
+                            <div class='title'>
+                                <p>지원과정</p>
+                            </div>
+                            <div>
+                                <textarea name='' id='' placeholder='분야 : &#13;&#10;과정 : &#13;&#10;기타 : '></textarea>
+                            </div>
+                        </div>
+                        <div class='form_box clear_fix flex'>
+                            <div class='title'>
+                                <p>파일첨부</p>
+                            </div>
+                            <div>
+                                <iframe src='../etc/iframe_file_register.html' frameborder='0'></iframe>
+                            </div>
                         </div>
                     </div>
+
+                    <div class='detail_btn_area'>
+                        <a href='../../index.html'>문의하기</a>
+                        <a href='../../index.html' class='bg_color'>다시작성하기</a>
+                    </div> 
+                    <!-- Contents END -->
                 </div>
             </div>
             <!-- CONTENTS END -->
@@ -396,7 +441,7 @@
         </div>
     </frameset>
     <script src='../../js/dev_sub.js'></script>
-
+    
 </body>
 
 </html>

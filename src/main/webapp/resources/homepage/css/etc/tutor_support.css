@@ -157,7 +157,7 @@ header{
 .menu li a{
     display: block;
     font-family:"NanumSquare";
-    font-size: 20px;;
+    font-size: 20px;
     text-align: center;
     letter-spacing:-1px;
     padding: 20px 0;
@@ -320,9 +320,11 @@ header{
 /* CONTENTS */
 .contents_wrap_box{
     width:1122px;
-    padding-top:155px;
+    min-height:700px;
+    padding-top:150px;
     margin:0 auto;
 }
+
 
 /* QUICK MENU */
 .quick_menu_wrap{
@@ -383,6 +385,7 @@ header{
     cursor:pointer;
 }
 
+
 /* Top */
 .process_history_box{
     font-size: 13px;
@@ -409,171 +412,32 @@ header{
     font-size: 44px;
     letter-spacing: -2px;
     padding-bottom: 16px;
-    /* border-bottom: solid 1px #003366; */
+    border-bottom: solid 1px #003366;
 }
 .top_area h1 span{
     font-family:"NanumSquare";
     color: #0180d3;
 }
-.top_text_box{
-    padding: 4px 0;
-    margin-bottom: 30px;
-    border-top: solid 1px #ddd;
-    border-bottom: solid 1px #ddd;
-}
-.top_text_box > span{
-    float: left;
-    width: 24%;
-    background: #118bd4;
-    text-align: center;
-    padding: 4px 0 0 0;
-}
-.top_text_box > span img {
-    display: block;
-    margin: 0 auto;
-}
-.top_text_box p{
-    float: left;
-    width: 60%;
-    font-size: 15px;
-    color: #555;
-    line-height: 150%;
-    padding-left: 4%;
-}
-.top_text_box .top_title{
-    font-family: 'NanumSquare';
-    font-size: 30px;
-    font-weight: 600;
-    color: #555;
-    padding-top: 20px;
-    letter-spacing: -1px;
-}
-.top_text_box .time{
-    float: right;
-    width: inherit;
-    padding-top: 40px;
-    font-weight: 500;
-    color: #777;
-}
-.top_title strong{
-    font-family:'NanumSquare';
-    color:#118cd2;
-}
-.top_text_box p span{
-    display:block;
-}
 
 
 
-/* MAIL ASK */
-.mail_ask{
-    width:80%;
-    border-top: solid 2px #1291de;
+/* MY LECTURE TOP */
+.classroom_subtitle{
+    line-height: 130%;
+    padding: 20px 0 30px;
 }
-
-/* FORM AREA */
-.form_box{
-    border-bottom:solid 1px #ccc;
-}
-.form_box.flex{
-    clear:both;
-    display:flex;
-}
-.form_box > div{
-    float: left;
-    width: 85%;
-}
-.form_box .title{
-    background: #f7f7f7;
-    width: 15%;
-    line-height: 300%;
-    text-align: center;
+.classroom_subtitle p{
     font-size: 16px;
-    font-weight: 500;
 }
-.form_box div input[type='text']{
-    display:block;
-    width:95%;
-    padding:8px 1%;
-    margin:10px 1.5% 6px;
-    border:solid 1px #ddd;
-}
-.form_box div select{
-    display:block;
-    width:97%;
-    padding:8px 1%;
-    margin:10px 1.5% 6px;
-    border:solid 1px #ddd;
-}
-.form_box div input[type='file']{
-    display: block;
-    width: 97%;
-    margin: 10px auto;
-    border: solid 1px #ddd;
+.classroom_subtitle .subtitle{
+    font-family: 'NanumSquareB';
+    font-size: 24px;
+    padding-bottom: 14px;
 }
 
 
-.form_box div iframe{
-    display:block;
-    width:100%;
-    min-height:300px;
-    padding: 8px 1%;
-    margin:0;
-    border:0;
-    resize:none;
-    box-sizing:border-box;
-}
-.form_box select{
-    width: 10%;
-    padding: 8px 1%;
-    margin: 10px 1% 6px 1.5%;
-    border:solid 1px #ccc;
-}
-.form_box select option{}
-.form_box.phone input[type='text']{
-    padding: 8px 1%;
-    margin: 10px 1.5% 6px 0;
-    border:solid 1px #ccc;
-}
-.form_box textarea{
-    width: 95%;
-    margin: 10px 1.5%;
-    padding: 8px 1%;
-    resize: none;
-    min-height: 110px;
-    border: solid 1px #ccc;
-}
-.form_box.phone button{
-    display: none;
-    margin: 10px 0;
-    padding: 8px 1%;
-    background: #0180d3;
-    border-radius: 2px;
-    font-size: 14px;
-    font-weight: 600;
-    color: #fff;
-}
 
-
-.form_box.half{
-    float: left;
-    width: 50%;
-}
-.form_box.half div input[type='text']{
-    display: block;
-    width: 90%;
-    margin: 10px 3% 6px;
-    padding: 8px 2%;
-}
-.form_box.half div{
-    width:70%;
-}
-.form_box.half .title{
-    width:30%;
-}
-
-
-/* MAIL DETAIL BUTTON */
+/* BTN AREA */
 .detail_btn_area{
     text-align: center;
     padding:50px 0;
@@ -595,7 +459,6 @@ header{
     background:#0280d4;
     border:solid 1px #0280d4;
 }
-
 
 
 /* FOOTER */
@@ -644,7 +507,7 @@ header{
 }
 
 
-/* Media query */
+/*----- Media query -----*/
 
 @media all and (max-width:1700px){
     .quick_menu_wrap{
@@ -657,12 +520,13 @@ header{
     }
 }
 @media all and (max-width:1122px){
-
     /* HEAD */
     .head_wrap,
     .menu_layout,
     .contents_wrap_box,
-    .menu_dropdown_wrap{
+    .cs,
+    .menu_dropdown_wrap,
+    .user_lecture_interest{
         width:100%;
     }
     .util_box p,
@@ -772,9 +636,10 @@ header{
 
 
     /* CONTENTS */
-    .contents_wrap_box {
+    .contents_wrap_box,
+    .contents_wrap_box.page{
         width:92%;
-        min-height:600px;
+        min-height: 500px;
         padding-top:95px;
         margin:0 auto;
     }
@@ -790,96 +655,11 @@ header{
     .process_history_box {
         float: left;
     }
-    .top_text_box {
-        width: 90%;
-        padding: 10px 5%;
-        background: #118cd2;
-    }
-    .top_text_box > span,
-    .top_text_box p span{
-        display:none;
-    }
-    .top_text_box p{
-        width:100%;
-        text-align:center;
-    }
-    .top_text_box p,
-    .top_text_box .top_title,
-    .top_title strong{
-        color:#fff;
-        padding-left:0;
-    }
-    .top_text_box .time{
-        width:100%;
-        color:#fff;
-    }
 
-
-    .mail_ask{
-        width:100%;
+    .classroom_subtitle p {
+        line-height: 120%;
     }
-    .form_box.half{
-        width:100%;
-    }
-    .form_box .title,
-    .form_box.half .title{
-        width:25%;
-    }
-    .form_box div,
-    .form_box.half div{
-        width:75%;
-    }
-    .form_box .title{
-        font-size:14px;
-    }
-    .form_box div input[type='text'],
-    .form_box.half div input[type='text'],
-    .form_box div select{
-        margin: 6px 3% 4px;
-        padding: 6px 2%;
-        font-size: 14px;
-    }
-    .form_box div input[type='text']{
-        width:90%;
-    }
-    .form_box div select{
-        box-sizing:inherit;
-        width:90%;
-    }
-    .form_box div iframe{
-        width:95%;
-        min-height:200px;
-        margin:10px 3%;
-    }
-    .form_box div input[type='file']{
-        margin:8px auto;
-    }
-
-    .detail_btn_area a{
-        width:40%;
-        min-width:inherit;
-        padding:16px 0;
-    }
-
-
-    .form_box select {
-        width: 24%;
-        padding: 8px 1%;
-        margin: 10px 1% 6px 2%;
-    }
-    .form_box.phone input[type='text'] {
-        width:41%;
-        padding: 6px 2%;
-        margin: 10px 1.5% 6px 0;
-    }
-    .form_box textarea {
-        width: 90%;
-        margin: 10px 3%;
-        padding: 8px 2%;
-    }
-    .wrap .footer_wrap .foot_link_box .foot_link_pc.last_right{
-        display:none;
-    }
+    
 
 
     /* FOOTER */
@@ -893,30 +673,5 @@ header{
         display:none;
     }
 }
-
-@media all and (max-width:390px){
-    .top_text_box p{
-        font-size:14px;
-    }
-    .top_text_box .top_title{
-        font-size:24px;
-        padding-top:16px;
-    }
-    .top_text_box .time{
-        padding-top:20px;
-    }
-
-    .form_box .title .long{
-        font-size:13px;
-    }
-}
 @media all and (max-width:360px){
-    .form_box .title .long{
-        font-size:12px;
-    }
-}
-@media all and (max-width:340px){
-    .form_box .title .long{
-        font-size:11px;
-    }
 }

@@ -194,10 +194,20 @@ iframe{
 
 
 
-.footer_wrap .foot_link_box li{
-    width:25%;
-    margin-right:0;
-}
 .foot_link_pc{
     display:none;
+}
+
+.footer_wrap .foot_link_box{
+    width:100%;
+    max-width:1122px;
+}
+.wrap .footer_wrap .foot_link_box li{
+    display:inline-block;
+    width:initial;
+    padding:10px 4%;
+    margin-right:0;
+}
+.footer_wrap .foot_link_box li a{
+    display:inline;
 }

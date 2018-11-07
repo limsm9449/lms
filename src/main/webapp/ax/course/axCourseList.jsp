@@ -492,15 +492,6 @@ function fn_makeGrid() {
                     return "grid-cell-edit";
                 } 
 	        },{
-	        	key : "INTEREST_COURSE_YN", 
-	        	label : "관심과정", 
-	            width : 80,
-	        	align : "center", 
-	        	editor : { type : "checkbox", config : {height: 17, trueValue: "Y", falseValue: "N"} } ,
-				styleClass: function () {
-                    return "grid-cell-edit";
-                } 
-	        },{
 	        	key : "CATEGORY_MAIN_YN", 
 	        	label : "카테고리별 메인 과정", 
 	            width : 150,
@@ -590,7 +581,6 @@ function fn_hidePopupDiv(popupDivId, mode) {
 				MOBILE_YN : gfn_findValueInList(dd.CourseCode, "value", $("#INS_CB_COURSE_CODE option:selected").val(), "MOBILE_YN"),
 				RECOMMEND_COURSE_YN : "N",
 				NEW_COURSE_YN : "N",
-				INTEREST_COURSE_YN : "N",
 				CATEGORY_MAIN_YN : "N"
 			}, "last", {focus: "END"});
 	} else if ( popupDivId == "examTypeDiv" ) {
@@ -654,7 +644,6 @@ function fn_hidePopupDiv(popupDivId, mode) {
 					MOBILE_YN : row[0].MOBILE_YN,
 					RECOMMEND_COURSE_YN : "N",
 					NEW_COURSE_YN : "N",
-					INTEREST_COURSE_YN : "N",
 					CATEGORY_MAIN_YN : "N"
 				}, "last", {focus: "END"});
 			

@@ -26,38 +26,6 @@
 $(document).ready(function(){
 });
 
-function lfn_btn(pKind, pParam) {
-	if ( pKind == "view" ) {
-		$("#courseId").val(pParam.courseId);
-		
-		gfn_goPage("/main/mainCourseData",$("#frm").serialize());
-	} else if ( pKind == "cart" ) {
-		if (pParam.cnt > "0" ) {
-			alert("신청한 과정입니다.")
-		} else {
-			$.ajax({
-				type :"POST",
-				url : context + "/main/cartAdd.do",
-				dataType :"json",
-				data : "cartCourseId=" + pParam.courseId + "&cartWeeks=",
-				success : function(json){
-					if ( json.rtnMode == "OK") {
-						if ( confirm("강의를 장바구니에 넣었습니다.\n장바구니로 이동하시겠습니까?") == true )
-							page.goPage('/main/cart');
-						else
-							lfn_btn("refresh");
-					} else if ( json.rtnMode == "NO_SESSION") {
-						top.location = "/login.do?preUrl=/main/courseList.do";		
-					}
-				},
-				error : function(e) {
-					alert("<spring:message code="lms.msg.systemError" text="-" />");
-				}
-			})
-		}
-	}
-}
-
 </script>
 
 <body>
@@ -264,53 +232,117 @@ function lfn_btn(pKind, pParam) {
                 <!-- User Lecture END -->
 
                 <!-- User Interest -->
-<c:if test="${!empty set.interestCourseList}">	                
                 <div class='user_lecture_interest clear_fix'>
                     <p>관심과정</p>
                     <a href=''>더보기 +</a>
                 </div>
                 <ul class='process_list_wrap clear_fix'>
-	<c:forEach var="row" items="${set.interestCourseList}" varStatus="idx">                
-                    <li <c:if test="${idx.last}">class='last_right'</c:if>>
-                        <a href='#' onclick="gfn_goPage('/main/mainCourseData','courseId=c');"><img src='/cImage/contents/${row.courseCode}/mImg1.jpg' alt=' '></a>
+                    <li>
+                        <a href='#' onclick="gfn_goPage('/main/mainCourseData','courseId=21');"><img src='/resources/homepage/img/course/process_1.jpg' alt=' '></a>
                         <div class='process_text_box'>
                             <div class='process_info_box'>
                                 <div>
                                     <p>일반</p>
-   		<c:if test="${row.mobileYn eq 'Y'}">       	                                
-	                                <p>모바일</p>
-		</c:if>
+                                    <p>모바일</p>
                                 </div>
                                 <p class='process_title'>
-                                    <a href='#' onclick="gfn_goPage('/main/mainCourseData','courseId=${row.courseName}');">${row.courseName}</a>
+                                    <a href='#' onclick="gfn_goPage('/main/mainCourseData','courseId=21');">[스마트러닝] 김정구 교수의 미래창조경영 위기와 역경을 기회로</a>
                                 </p>
                             </div>
                             <div class='process_btn_area clear_fix'>
-	                            <button onclick="javascript:Popup.showSampleCourse('${row.courseId}','${row.hPx + 100}','${row.vPx + 100}'); return false;">맛보기</button>
-	                            <button onclick="javascript:lfn_btn('cart',{courseId:'${row.courseId}',cnt:'${row.cnt}'}); return false;">장바구니</button>
-	                            <button onclick="javascript:lfn_btn('view',{courseId:'${row.courseId}'}); return false;" class='admission'>수강신청</button>
+	                            <button onclick="javascript:Popup.showSampleCourse('21','1200','900'); return false;">맛보기</button>
+	                            <button onclick="page.goCart(21, 0);">장바구니</button>
+	                            <button onclick="gfn_goPage('/main/mainCourseData','courseId=21');" class='admission'>수강신청</button>
                             </div>
                             <div class='process_score_box clear_fix'>
-                                <div class='process_score_image clear_fix' onclick="Popup.showPostscriptList('${row.courseId}')">
-	                                <span><img src='/resources/homepage/img/process/${row.grade1}.png' alt=''></span>
-	                                <span><img src='/resources/homepage/img/process/${row.grade2}.png' alt=''></span>
-	                                <span><img src='/resources/homepage/img/process/${row.grade3}.png' alt=''></span>
-	                                <span><img src='/resources/homepage/img/process/${row.grade4}.png' alt=''></span>
-	                                <span><img src='/resources/homepage/img/process/${row.grade5}.png' alt=''></span>
-	                            </div>
+                                <div class='process_score_image clear_fix' onclick="Popup.showPostscriptList('21')">
+                                    <span><img src='/resources/homepage/img/course/star_active.png' alt=' '></span>
+                                    <span><img src='/resources/homepage/img/course/star_active.png' alt=' '></span>
+                                    <span><img src='/resources/homepage/img/course/star_active.png' alt=' '></span>
+                                    <span><img src='/resources/homepage/img/course/star_active.png' alt=' '></span>
+                                    <span><img src='/resources/homepage/img/course/star_inactive.png' alt=' '></span>
+                                </div>
                                 <p class='process_score_text'>
-                                   평점 : <span id='process_score_num'>${row.grade}</span> / 후기 : <span id='process_review_num'>${row.gradeCnt}</span>건
+                                    평점 : <span id='process_score_num'>4.5</span> / 후기 : <span id='process_review_num'>2</span>건
                                 </p>
                             </div>
                             <div class='process_payment_box clear_fix'>
                                 <p>교육비</p>
-                                <p class='process_payment'><fmt:formatNumber value="${row.courseCost}" type="number"/> 원</p>
+                                <p class='process_payment'>50,000원</p>
                             </div>
                         </div>
                     </li>
-	</c:forEach>                    
+                    <li>
+                        <a href='#' onclick="gfn_goPage('/main/mainCourseData','courseId=22');"><img src='/resources/homepage/img/course/process_2.jpg' alt=' '></a>
+                        <div class='process_text_box'>
+                            <div class='process_info_box'>
+                                <div>
+                                    <p>일반</p>
+                                    <p>모바일</p>
+                                </div>
+                                <p class='process_title'>
+                                    <a href='#' onclick="gfn_goPage('/main/mainCourseData','courseId=22');">[스마트러닝] 토기와 거북이의 재테크 비법</a>
+                                </p>
+                            </div>
+                            <div class='process_btn_area clear_fix'>
+	                            <button onclick="javascript:Popup.showSampleCourse('22','1200','900'); return false;">맛보기</button>
+	                            <button onclick="page.goCart(22, 0);">장바구니</button>
+	                            <button onclick="gfn_goPage('/main/mainCourseData','courseId=22');" class='admission'>수강신청</button>
+                            </div>
+                            <div class='process_score_box clear_fix'>
+                                <div class='process_score_image clear_fix' onclick="Popup.showPostscriptList('22')">
+                                    <span><img src='/resources/homepage/img/course/star_active.png' alt=' '></span>
+                                    <span><img src='/resources/homepage/img/course/star_active.png' alt=' '></span>
+                                    <span><img src='/resources/homepage/img/course/star_active.png' alt=' '></span>
+                                    <span><img src='/resources/homepage/img/course/star_active.png' alt=' '></span>
+                                    <span><img src='/resources/homepage/img/course/star_inactive.png' alt=' '></span>
+                                </div>
+                                <p class='process_score_text'>
+                                    평점 : <span id='process_score_num'>4.5</span> / 후기 : <span id='process_review_num'>2</span>건
+                                </p>
+                            </div>
+                            <div class='process_payment_box clear_fix'>
+                                <p>교육비</p>
+                                <p class='process_payment'>50,000원</p>
+                            </div>
+                        </div>
+                    </li>
+                    <li class='last_right'>
+                        <a href='#' onclick="gfn_goPage('/main/mainCourseData','courseId=19');"><img src='/resources/homepage/img/course/process_3.jpg' alt=' '></a>
+                        <div class='process_text_box'>
+                            <div class='process_info_box'>
+                                <div>
+                                    <p>일반</p>
+                                    <p>모바일</p>
+                                </div>
+                                <p class='process_title' >
+                                    <a href='#' onclick="gfn_goPage('/main/mainCourseData','courseId=19');">[스마트러닝] 윤코치의 보고서 작성법</a>
+                                </p>
+                            </div>
+                            <div class='process_btn_area clear_fix'>
+	                            <button onclick="javascript:Popup.showSampleCourse('19','1200','900'); return false;">맛보기</button>
+	                            <button onclick="page.goCart(19, 0);">장바구니</button>
+	                            <button onclick="gfn_goPage('/main/mainCourseData','courseId=19');" class='admission'>수강신청</button>
+                            </div>
+                            <div class='process_score_box clear_fix'>
+                                <div class='process_score_image clear_fix' onclick="Popup.showPostscriptList('19')">
+                                    <span><img src='/resources/homepage/img/course/star_active.png' alt=' '></span>
+                                    <span><img src='/resources/homepage/img/course/star_active.png' alt=' '></span>
+                                    <span><img src='/resources/homepage/img/course/star_active.png' alt=' '></span>
+                                    <span><img src='/resources/homepage/img/course/star_active.png' alt=' '></span>
+                                    <span><img src='/resources/homepage/img/course/star_inactive.png' alt=' '></span>
+                                </div>
+                                <p class='process_score_text clear_fix'>
+                                    평점 : <span id='process_score_num'>4.5</span> / 후기 : <span id='process_review_num'>2</span>건
+                                </p>
+                            </div>
+                            <div class='process_payment_box clear_fix'>
+                                <p>교육비</p>
+                                <p class='process_payment'>50,000원</p>
+                            </div>
+                        </div>
+                    </li>
                 </ul>
-</c:if>                
                 <!-- User Interest END -->
             </div>
         </div>

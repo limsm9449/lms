@@ -437,4 +437,32 @@ public class GuestController {
     	return "/common/json";
     }
 
+    @RequestMapping(value = "/guest/install")
+    public String install(@ModelAttribute GuestVO vo, Model model) throws Exception {
+        return "/guest/install";
+    }
+
+    @RequestMapping(value = "/guest/dbInstall")
+    public String dbInstall(@ModelAttribute GuestVO vo,Model model) throws Exception {
+    	HashMap hm = new HashMap();
+    	
+    	try {
+    		GuestSet set = new GuestSet();
+	    	set.setCondiVO(vo);
+	    	
+	    	if ( "1".equals(vo.getUserId()) && "1".equals(vo.getPassword()) ) { 
+	    		set = svr.dbInstall(set);
+	    		hm.put("rtnMode", "INSTALL_OK");
+	    	} else {
+	    		hm.put("rtnMode", "NO_AUTH");
+	    	}
+    	} catch ( Exception e ) {
+    		hm.put("rtnMode", "ERROR");
+    		e.printStackTrace();
+    	}
+    	model.addAttribute("json", JSONObject.fromObject(hm));
+
+    	return "/common/json";
+    }
+
 }

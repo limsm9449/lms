@@ -6,6 +6,7 @@ public class CommonVO implements Serializable{
 	private static final long serialVersionUID = -1l; 
 	
 	private String userId;
+	private String password;
 	private String createDate;
 	private String createUser;
 	private String updateDate;
@@ -185,6 +186,12 @@ public class CommonVO implements Serializable{
 	}
 	public void setPrevParams(String prevParams) {
 		this.prevParams = prevParams;
+	}
+	public String getPassword() {
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	

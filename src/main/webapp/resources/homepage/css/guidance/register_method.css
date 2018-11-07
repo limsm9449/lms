@@ -463,6 +463,11 @@ header{
     width: 90%;
     margin: 0 auto;
 }
+.register_method_pc > img,
+.register_method_mobile > img{
+    display:block;
+    width:100%;
+}
 .register_method_mobile{
     display:none;
 }

@@ -5,16 +5,14 @@
     <meta charset='utf-8'>
     <meta name='viewport' content='width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1'>
     <meta http-equiv='X-UA-Compatible' content='ie=edge'>
-    <title>Q learning - 나의강의실 - 비밀번호 변경</title>
-
-    <script src='../../js/jquery_3.3.1.js'></script>
+    <title>Q learning - 기업교육 문의</title>
 
     <link href='https://fonts.googleapis.com/css?family=Nanum+Gothic' rel='stylesheet'>
     <link rel='stylesheet' href='../../css/initialization.css'>
-    <link rel='stylesheet' href='../../css/support/notice_register.css'>
+    <link rel='stylesheet' href='../../css/etc/company_learning.css'>
 </head>
 
-<body style='background:#fff'>
+<body>
     <frameset rows='*'>
         <div class='wrap'>
             <!-- PC HEADER -->
@@ -34,8 +32,8 @@
                     <div class='head_con util_box'>
                         <!-- 로그인 상태 -->
                         <!-- <a href='#' class='last_right'>로그아웃</a>
-                    <a href='../etc/user_info_change.html' class='pc'>회원정보수정</a>
-                    <p class='pc'>OOO님 반갑습니다.</p> -->
+                        <a href='../etc/user_info_change.html' class='pc'>회원정보수정</a>
+                        <p class='pc'>OOO님 반갑습니다.</p> -->
 
                         <!-- 로그오프 상태 -->
                         <a href='../../html/etc/signup_step1.html' class='last_right'>회원가입</a>
@@ -154,8 +152,7 @@
                         </a>
                     </div>
                     <div class='head_con util_box'>
-                        <a href='../etc/signin.html' class='last_right' onclick='login()'>로그인</a>
-                        <!--<a href='../../index.html' class='last_right' onclick=''>로그아웃</a>-->
+                        <a href='../etc/signin.html' class='last_right' onclick='login()'>로그인</a><!--<a href='../../index.html' class='last_right' onclick=''>로그아웃</a>-->
                     </div>
                     <div class='head_con search_box'>
                         <input type='text'>
@@ -249,7 +246,7 @@
             <!-- HEAD END -->
 
             <!-- CONTENTS -->
-            <div class='contents_wrap process' onmouseover='sub_hide()'>
+            <div class='contents_wrap support' onmouseover='sub_hide()'>
                 <div class='contents_wrap_box'>
                     <!-- QUICK MENU -->
                     <div class='quick_menu_wrap'>
@@ -314,45 +311,62 @@
                             </div>
                         </div>
                         <h1>
-                            나의 <span>강의실</span>
+                            기업<span>교육</span> 문의
                         </h1>
                     </div>
                     <!-- Top END -->
 
-                    <div class='util_wrap'>
-                        <h1>
-                            비밀번호 변경
-                        </h1>
-                        <div class='signup_title_box'>
-                            <p>
-                                현재 비밀번호를 입력한 후 새로 사용할 비밀번호를 입력해 주십시오.
-                            </p>
+                    <div class='classroom_subtitle'>
+                        <p>최고 만족스러운 교육 서비스를 위하여 전문 튜터를 상시 모집합니다. <br>전문 강사님들의 많은 관심과 참여 부탁 드립니다.</p>
+                    </div>
+
+                    <div class='signup_input_list'>
+                        <div class='certification_name clear_fix'>
+                            <p>이름</p>
+                            <input type='text' name='' id='' placeholder='이름을 입력해주세요'>
                         </div>
-                        <div class='signup_input_list'>
-                            <div class='certification_name clear_fix'>
-                                <p>현재 비밀번호</p>
-                                <input type='password' name='' id='' placeholder='비밀번호를 입력해주세요'>
-                            </div>
-                            <div class='certification_name clear_fix'>
-                                <p>변경 비밀번호</p>
-                                <input type='password' name='' id='' placeholder='비밀번호를 입력해주세요'>
-                                <p class='note'>
-                                    영문/숫자(혼용) 6~12글자 이내로 입력
-                                </p>
-                            </div>
-                            <div class='certification_name clear_fix'>
-                                <p>변경 비밀번호 확인</p>
-                                <input type='password' name='' id='' placeholder='비밀번호를 확인해주세요'>
-                                <p class='note'>
-                                    비밀번호를 한번 더 입력, 잊지 않도록 주의하세요.
-                                </p>
-                            </div>
+                        <div class='info_input_phone clear_fix'>
+                            <p>휴대폰 번호</p>
+                            <select name='agency' id=''>
+                                <option value='선택'>선택</option>
+                                <option value='SK'>SK</option>
+                                <option value='KT'>KT</option>
+                                <option value='LG'>LG U+</option>
+                                <option value='알뜰폰'>알뜰폰</option>
+                            </select>
+                            <input type='text' name='' id='' placeholder='- 없이 숫자만'>
+                            <button>인증번호요청</button>
                         </div>
-                        <div class='detail_btn_area'>
-                            <button onclick='location.href="./classroom.html"'>변경취소</button>
-                            <button onclick='location.href="./classroom.html"' class='bg_color'>변경완료</button>
+                        <div class='info_input_phone call clear_fix'>
+                            <p>전화번호</p>
+                            <input type='text' name='' id='' placeholder='- 없이 숫자만'>
+                        </div>
+                        <div class='certification_name mail clear_fix'>
+                            <p>E-mail</p>
+                            <input type='text' name='' id=''>
+                            <span>@</span>
+                            <input type='text' name='' id=''>
+                            <select name='mail_agency' id=''>
+                                <option value='선택'>선택</option>
+                                <option value='naver.com'>naver.com</option>
+                                <option value='daum.net'>daum.net</option>
+                            </select>
+                        </div>
+                        <div class='info_input_address clear_fix'>
+                            <p>자기소개</p>
+                            <textarea name='' id='' cols='30' rows='10'></textarea>
+                        </div>
+                        <div class='info_input_address clear_fix'>
+                            <p>지원과정</p>
+                            <textarea name='' id='' cols='30' rows='10'></textarea>
                         </div>
                     </div>
+                    <div class='signup_btn_box clear_fix'>
+                        <button onclick='location.href="./signup_step2.html"'>이전</button>
+                        <button class='last' onclick='location.href="./signup_step4.html"'>회원가입</button>
+                    </div>
+
+
                 </div>
             </div>
             <!-- CONTENTS END -->
@@ -396,7 +410,7 @@
         </div>
     </frameset>
     <script src='../../js/dev_sub.js'></script>
-
+    
 </body>
 
 </html>

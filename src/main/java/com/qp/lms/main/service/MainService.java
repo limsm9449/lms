@@ -171,8 +171,6 @@ public class MainService {
 		set.setCompleteCourseList(completeCourseList);
 		
 		//관심과정 
-    	List<CourseVO> interestCourseList = sqlSession.selectList("main.interestCourseList", set.getCondiVO());
-		set.setInterestCourseList(interestCourseList);
 		
     	return set;
     }
