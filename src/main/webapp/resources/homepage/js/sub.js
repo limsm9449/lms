@@ -1,3 +1,21 @@
+/* getElementsByClassName 을 IE8 이하에서 동작하게 하는 코드 */
+if (!document.getElementsByClassName) {
+    document.getElementsByClassName = function (cn) {
+        var rx = new RegExp("(?:^|\\s)" + cn+ "(?:$|\\s)");
+        var allT = document.getElementsByTagName("*"), allCN = [],ac="", i = 0, a;
+ 
+        while (a = allT[i=i+1]) {
+            ac=a.className;
+            if ( ac && ac.indexOf(cn) !==-1) {
+                if(ac===cn){ allCN[allCN.length] = a; continue;   }
+                    rx.test(ac) ? (allCN[allCN.length] = a) : 0;
+                }
+        }
+        return allCN;
+    };
+}
+
+
 
 var doc = document.documentElement;
 doc.setAttribute('data-useragent', navigator.userAgent);
@@ -472,21 +490,27 @@ function admin_sub_open(elem) {
 
 function admin_popup_open(type, isDiv) {
     var inner_popup = document.querySelector('.admin_popup.type' + type);
-    if (isDiv) {
-        inner_popup.style.display = 'block';
-    } else {
-        var url = '../popup/admin_popup_type' + type + '.html';
-        if (type) {
-            switch (type) {
-                case '7':
-                    url = '../popup/admin_popup_type7.html';
-                    break;
-                default:
-                    url = '../popup/admin_popup_type1.html';
-                    break;
-            }
+    var flag = true;
 
-            window.open(url, '_blank', 'width=400, height=500');
+    if (type) {
+        switch (type) {
+            case '0':
+                flag = false;
+            case '7':
+                url = '../popup/admin_popup_type7.html';
+                break;
+            default:
+                url = '../popup/admin_popup_type1.html';
+                break;
+        }
+        if(flag){
+            if(isDiv) {
+                if(inner_popup){
+                    inner_popup.style.display = 'block';
+                }
+            }else{
+                window.open(url, '_blank', 'width=400, height=500');
+            }
         }
     }
 }

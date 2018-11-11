@@ -97,6 +97,12 @@ public class AxCommService {
 		    	hm.put(ddKinds[i], sqlSession.selectList("axComm.axDdContentsManager", paramMap));
 			} else if ( "CourseTutor".equals(ddKinds[i]) ) {
 		    	hm.put(ddKinds[i], sqlSession.selectList("axComm.axDdCourseTutor", paramMap));
+			} else if ( "InquiryCategory".equals(ddKinds[i]) ) {
+				paramMap.put("DD_MAIN", "INQUIRY_KIND");
+		    	hm.put(ddKinds[i], sqlSession.selectList("axComm.axDdCode", paramMap));
+			} else if ( "MainpageKind".equals(ddKinds[i]) ) {
+				paramMap.put("DD_MAIN", "MAINPAGE_KIND");
+		    	hm.put(ddKinds[i], sqlSession.selectList("axComm.axDdCode", paramMap));
 			}
 		}
 		

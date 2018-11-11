@@ -743,7 +743,7 @@ function fn_callbackAjax(data, id) {
 		gfn_cbRefresh("CB_YEAR", data.Year, true);
 
 		fn_makeGrid();
-		fn_search();
+		//fn_search();
 		
 		gfn_mcbRefresh("MCB_COMPANY", data.Company, false);
 		$('#MCB_COMPANY').multiselect('rebuild');

@@ -108,9 +108,6 @@ html{
     width: 90%;
     float: right;
 }
-.question_answer.explanation{
-    width:690px;
-}
 .question_answer > p{
     padding-left: 4px;
     margin:2px 0 15px;
@@ -130,9 +127,9 @@ html{
 .answer_box li input[type='radio']{
     display:block;
     float:left;
-    width: 18px;
+    width: 5%;
     height: 18px;
-    margin-right:6px;
+    margin-right:1%;
 }
 .answer_box li input[type='checkbox']{
     display: block;
@@ -142,8 +139,12 @@ html{
 }
 .answer_box li p{
     float:right;
-    width:95%;
+    width:94%;
     line-height:120%;
+}
+
+.report_box li > *{
+    box-sizing:border-box;
 }
 
 
@@ -228,10 +229,13 @@ html{
     margin-top:10px;
 }
 .question_answer.explanation{
-    width: 624px;
+    /* width:90%; */
+}
+.answer_box li{
+    box-sizing:border-box;
 }
 .answer_box.explanation li p {
-    width: 600px;
+    width:94%;
 }
 .marking{
     position:absolute;
@@ -250,9 +254,12 @@ html{
 }
 .answer_paper{
     float: right;
-    width: 624px;
+    box-sizing:border-box;
     border: solid 2px #555;
     margin-top: 10px;
+}
+.answer_paper * {
+    box-sizing: border-box;
 }
 .answer_paper div{
     text-align: center;
@@ -263,14 +270,14 @@ html{
 }
 .answer_paper div p{
     float: left;
-    width: 62px;
+    width: 10%;
     text-align: center;
     padding: 10px;
     line-height: 120%;
 }
 #answer_num,
 #answer_sheet{
-    width: 520px;
+    width: 90%;
     float: right;
     border-left: solid 1px #555;
 }
@@ -310,6 +317,7 @@ html{
     padding: 10px 0;
 }
 .report_box li > p + p{
+    min-height:36px;
     border-left:solid 1px #ddd;
 }
 .report_box li input[type='text']{
@@ -325,7 +333,8 @@ html{
     border-bottom:none;
 }
 .report_box .half{
-    width:366px;
+    box-sizing:border-box;
+    width:50%;
     float:left;
 }
 .report_box .half input[type='text']{
@@ -374,8 +383,10 @@ html{
     width:140px;
 }
 .btn_area button{
+    width:18%;
     font-size:16px;
     padding:10px 11px 11px;
+    margin-left:1%;
 }
 #report_score{
     display: block;
@@ -386,12 +397,16 @@ html{
     border-left: solid 1px #ddd;
 }
 
+.report_box.manage .half p {
+    width: 30%;
+}
+
 
 
 /* 과정리포트 첨삭 */
 .report_box.manage li p{
-    width:92px;
-    min-height:16px;
+    width:15%;
+    min-height:36px;
 }
 .report_box li .result_area{
     padding: 10px;
@@ -399,16 +414,17 @@ html{
 }
 .report_box.manage li input[type='text'],
 .report_box.manage .view textarea{
-    width:617px;
+    width:85%;
 }
 .report_box.manage .half input[type='text']{
-    width:248px;
+    width:70%;
 }
 .report_box.manage .view div{
     width:460px;
 }
 .report_box.manage input[type='file']{
-    width:557px;
+    box-sizing:border-box;
+    width:80%;
     font-size: 16px;
     padding:6px 0 7px 6px;
     background:#ddd;
@@ -420,7 +436,7 @@ html{
 }
 .report_box.manage .view .btn_area {
     padding: 10px;
-    width: 620px;
+    width: 85%;
 }
 .report_files{
     display:inline-block;
@@ -566,7 +582,7 @@ html{
     }
     .question_answer{
         width:100%;
-        padding-top:10px;
+        /* padding-top:10px; */
     }
     .question_answer input[type='text']{
         display:block;
@@ -577,27 +593,24 @@ html{
         width: 92%;
     }
     .report_box.manage input[type='file']{
-        padding-left: 5%;
-        width: 95%;
+        width: 100%;
     }
     .answer_box li p,
     .answer_box.explanation li p{
         width:90%;
     }
-    .question_answer.explanation{
-        width:80%;
-    }
     #popup_survey .question_answer{
         width:85%;
     }
-    .report_box.manage li p{
+    .report_box.manage li p,
+    .report_box.manage .half p{
         width:25%;
     }
     .report_box.manage li input[type='text'],
     .report_box.manage .view textarea,
     .report_box.manage .half input[type='text'],
     .report_box.manage .view .btn_area{
-        width:65%;
+        width:75%;
     }
     .question_answer.survey textarea {
         width: 92%;
@@ -624,22 +637,27 @@ html{
     }
     .btn_area button {
         width: 100%;
-        padding: 10px 0;
-        margin-top: 6px;
+        padding: 6px 0;
+        margin: 6px 0 0;
     }
     .report_box .left{
         margin-left:0;
     }
 
     .question_num{
-        width:100%;
+        width:15%;
     }
     .popup_question{
         padding:0 10px 20px;
     }
 
 }
-
+@media all and (max-width:390px){
+    .report_box li p{
+        font-size:14px;
+        letter-spacing:-1px;
+    }
+}
 @media all and (max-width:360px){
     .question_answer.explanation,
     #popup_survey .question_answer{

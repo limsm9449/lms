@@ -106,6 +106,7 @@ var pageObj = {
 	axCourseExamList : 		{	page : "/ax/course/axCourseExamList"	},
 	axCourseExamTypeList :	{	page : "/ax/course/axCourseExamTypeList"	},
 	axCourseList :			{	page : "/ax/course/axCourseList"	},
+	axMainPageList :		{	page : "/ax/course/axMainPageList"	},
 	axCostList :			{	page : "/ax/cost/axCostList"	},
 	axCardCostList :		{	page : "/ax/cost/axCardCostList"	},
 	axCostCalcList :		{	page : "/ax/cost/axCostCalcList"	},
@@ -125,6 +126,7 @@ var pageObj = {
 	axBoardDiscussionList :	{	page : "/ax/board/axBoardDiscussionList"	},
 	axBoardEventList :		{	page : "/ax/board/axBoardEventList"	},
 	axCounselList :			{	page : "/ax/counsel/axCounselList"	},
+	axInquiryList :			{	page : "/ax/counsel/axInquiryList"	},
 	axConfigList :			{	page : "/ax/setting/axConfigList"	},
 	axMailList :			{	page : "/ax/setting/axMailList"	},
 	axBankList :			{	page : "/ax/setting/axBankList"	},
@@ -202,6 +204,7 @@ function gfn_openMenu(pageId, params) {
 			         	</ul>
 			      	</li>
 	          		<li><a href="#" class="mainMenu linker" onclick="gfn_openMenu('axCourseList'); gfn_menu(this)" id="firstGroup"><span>강의 관리</span></a></li>
+	          		<li><a href="#" class="mainMenu linker" onclick="gfn_openMenu('axMainPageList'); gfn_menu(this)" id="firstGroup"><span>메인 페이지 관리</span></a></li>
 	          		<li><a href="#" class="mainMenu linker" onclick="gfn_openMenu('axScoreList'); gfn_menu(this)"><span>성적 관리</span></a></li>
 	          		<li><a href="#" class="mainMenu linker" onclick="gfn_menu(this)"><span>입금 관리</span></a>
 			            <ul style="display:none" class="subMenuUl">
@@ -222,15 +225,19 @@ function gfn_openMenu(pageId, params) {
 			            <ul style="display:none" class="subMenuUl">
 			              	<li><a href="#" class="subMenu linker" onclick="gfn_openMenu('axBoardNoticeList'); gfn_subMenu(this);"><span>공지사항</span></a></li>
 			              	<li><a href="#" class="subMenu linker" onclick="gfn_openMenu('axBoardFaqList'); gfn_subMenu(this);"><span>FAQ</span></a></li>
-			              	<li><a href="#" class="subMenu linker" onclick="gfn_openMenu('axBoardFreeList'); gfn_subMenu(this);"><span>자유게시판</span></a></li>
 			              	<li><a href="#" class="subMenu linker" onclick="gfn_openMenu('axBoardDataList'); gfn_subMenu(this);"><span>자료실</span></a></li>
-			              	<li><a href="#" class="subMenu linker" onclick="gfn_openMenu('axBoardReportList'); gfn_subMenu(this);"><span>레포트</span></a></li>
+			              	<li><a href="#" class="subMenu linker" onclick="gfn_openMenu('axBoardFreeList'); gfn_subMenu(this);"><span>자유게시판</span></a></li>
+			              	<!-- li><a href="#" class="subMenu linker" onclick="gfn_openMenu('axBoardReportList'); gfn_subMenu(this);"><span>레포트</span></a></li>
+			              	<li><a href="#" class="subMenu linker" onclick="gfn_openMenu('axBoardDiscussionList'); gfn_subMenu(this);"><span>토론</span></a></li-->
 			              	<li><a href="#" class="subMenu linker" onclick="gfn_openMenu('axBoardQnaList'); gfn_subMenu(this);"><span>Q&A</span></a></li>
-			              	<li><a href="#" class="subMenu linker" onclick="gfn_openMenu('axBoardDiscussionList'); gfn_subMenu(this);"><span>토론</span></a></li>
 			              	<li><a href="#" class="subMenu linker" onclick="gfn_openMenu('axBoardEventList'); gfn_subMenu(this);"><span>이벤트</span></a></li>
 			         	</ul>
 			      	</li>
-	          		<li><a href="#" class="mainMenu linker" onclick="gfn_openMenu('axCounselList'); gfn_menu(this)"><span>상담내역</span></a>
+	          		<li><a href="#" class="mainMenu linker" onclick="gfn_menu(this)"><span>문의 관리</span></a>
+			            <ul style="display:none" class="subMenuUl">
+			              	<li><a href="#" class="subMenu linker" onclick="gfn_openMenu('axCounselList'); gfn_subMenu(this)"><span>상담내역</span></a></li>
+			              	<li><a href="#" class="subMenu linker" onclick="gfn_openMenu('axInquiryList'); gfn_subMenu(this);"><span>기업교육/튜터지원 문의</span></a></li>
+			         	</ul>
 			      	</li>
 	          		<li><a href="#" class="mainMenu linker" onclick="gfn_openMenu('axLogList'); gfn_menu(this)"><span>로그 관리</span></a>
 			      	</li>

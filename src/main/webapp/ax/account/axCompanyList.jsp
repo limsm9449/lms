@@ -294,7 +294,7 @@ function fn_callbackAjax(data, id) {
 		dd = $.extend({}, data);
 
 		fn_makeGrid();
-		fn_search();
+		//fn_search();
 	}
 }
 

@@ -18,7 +18,9 @@
 	
     <link href='https://fonts.googleapis.com/css?family=Nanum+Gothic' rel='stylesheet'>
     <link rel='stylesheet' href='/resources/homepage/css/initialization.css'>
+    <link rel='stylesheet' href='/resources/homepage/css/support/faq.css'>
     <link rel='stylesheet' href='/resources/homepage/css/support/notice.css'>
+
 </head>
 
 <script type="text/javascript">
@@ -95,13 +97,13 @@ function lfn_btn(pKind, pParam) {
                     <!-- Top END -->
 
                     <!-- Contents -->
-                    <div class='notice_search_box'>
-						<select name="category">
-			          		<option value="">전체</option>
+                    <div class='faq_search_box'>
+                        <select name="category">
+                            <option value='전체'>전체</option>
 			          		<c:forEach var="row" items="${set.ddCategory}">
 				              	<option value="${row.ddKey}" <c:if test="${set.condiVO.category eq row.ddKey}">selected</c:if>>${row.ddValue}</option>
 							</c:forEach>
-			          	</select>
+                        </select>
                         <input type='text' name='findString' id='findString' value="${set.condiVO.findString}" placeholder='검색어를 입력해 주세요.'>
                         <button onclick="lfn_btn('search');">검색</button>
                     </div>

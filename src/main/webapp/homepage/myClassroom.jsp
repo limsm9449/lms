@@ -46,7 +46,7 @@ $(document).ready(function(){
             	<%@ include file="../common/mainQuickMenu.jsp" %>
 
                 <!-- Top -->
-                <div class='process_top_area'>
+                <div class='top_area'>
                     <div class='clear_fix'>
                         <div class='process_history_box clear_fix'>
                             <span>

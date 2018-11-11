@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="axMainPage">
+		
+	<select id="axMainPageList" parameterType="hashmap" resultType="hashmap">
+	    SELECT 	C.CATEGORY_NAME
+	           	,A.COURSE_ID
+		       	,A.COURSE_CODE
+		       	,B.COURSE_NAME
+               	,A.YEAR
+				,A.MONTH
+		       	,IFNULL(A.CHASU, 0) CHASU
+                ,A.POPULAR_YN
+				,IFNULL(A.RECOMMEND_COURSE_YN, 'N') RECOMMEND_COURSE_YN
+				,IFNULL(A.NEW_COURSE_YN, 'N') NEW_COURSE_YN
+				,IFNULL(A.CATEGORY_MAIN_YN, 'N') CATEGORY_MAIN_YN
+				,D.POPULAR_IMG1
+				,D.POPULAR_IMG2
+				,D.POPULAR_COLOR
+				,D.NEW_IMG1
+				,D.NEW_IMG2
+				,D.NEW_COLOR
+				,D.RECOMMEND_IMG1
+				,D.RECOMMEND_IMG2
+				,D.RECOMMEND_COLOR
+		  FROM COURSE A LEFT OUTER JOIN COURSE_CODE B ON A.COURSE_CODE = B.COURSE_CODE
+		                LEFT OUTER JOIN (
+							   SELECT C3.CODE C3_CODE, C2.CODE C2_CODE, C1.CODE C1_CODE,
+									  CONCAT(C1.CODE_NAME,' > ',C2.CODE_NAME,' > ',C3.CODE_NAME) CATEGORY_NAME
+								 FROM CATEGORY C3 LEFT OUTER JOIN CATEGORY C2 ON C3.PARENT_CODE = C2.CODE
+									      LEFT OUTER JOIN CATEGORY C1 ON C2.PARENT_CODE = C1.CODE
+							    WHERE C3.DEPTH = 3) C ON B.CODE = C.C3_CODE
+						LEFT OUTER JOIN COURSE_MASTER D ON D.COURSE_CODE = A.COURSE_CODE
+		WHERE 	1 = 1
+		AND 	IFNULL(A.OPEN_YN,'N') IN ('Y')
+		AND 	IFNULL(A.CLOSE_YN,'N') IN ('N')
+<choose>
+    <when test="CB_KIND != null and CB_KIND == 'POPULAR'">
+		AND		IFNULL(A.POPULAR_YN,'N') IN ('Y')
+    </when>
+    <when test="CB_KIND != null and CB_KIND == 'RECOMMEND'">
+		AND		IFNULL(A.RECOMMEND_COURSE_YN,'N') IN ('Y')
+    </when>
+    <when test="CB_KIND != null and CB_KIND == 'NEW'">
+		AND		IFNULL(A.NEW_COURSE_YN,'N') IN ('Y')
+    </when>
+    <otherwise>
+		AND 	( IFNULL(A.POPULAR_YN,'N') IN ('Y') OR
+					IFNULL(A.RECOMMEND_COURSE_YN,'N') IN ('Y') OR
+					IFNULL(A.NEW_COURSE_YN,'N') IN ('Y') )
+    </otherwise>
+</choose>
+	 ORDER BY C.CATEGORY_NAME,B.COURSE_NAME,A.YEAR,A.MONTH,A.CHASU 
+	</select>
+
+	<update id="axMainPageCourseUpdate" parameterType="hashmap">
+		UPDATE 	COURSE
+		   SET 	POPULAR_YN = #{POPULAR_YN} 
+		   		,RECOMMEND_COURSE_YN = #{RECOMMEND_COURSE_YN} 
+		   		,NEW_COURSE_YN = #{NEW_COURSE_YN} 
+		       	,UPDATE_DATE = CURRENT_TIMESTAMP
+		       	,UPDATE_USER = #{SESSION_USER_ID}
+		 WHERE 	COURSE_ID = #{COURSE_ID}
+	</update>    
+
+	<update id="axMainPageCourseMasterUpdate" parameterType="hashmap">
+		UPDATE 	COURSE_MASTER
+		   SET 	POPULAR_COLOR = #{POPULAR_COLOR} 
+		   		,NEW_COLOR = #{NEW_COLOR} 
+		   		,RECOMMEND_COLOR = #{RECOMMEND_COLOR} 
+		       	,UPDATE_DATE = CURRENT_TIMESTAMP
+		       	,UPDATE_USER = #{SESSION_USER_ID}
+		 WHERE 	COURSE_CODE = #{COURSE_CODE}
+	</update>    
+
+	<select id="axMainPageImageList" parameterType="hashmap" resultType="hashmap">
+		SELECT 	POPULAR_IMG1, POPULAR_IMG2, NEW_IMG1, NEW_IMG2, RECOMMEND_IMG1, RECOMMEND_IMG2
+		  FROM 	COURSE_MASTER  
+		 WHERE 	COURSE_CODE = #{COURSE_CODE}
+	</select>
+	
+	<update id="axMainPageImageUpdate" parameterType="hashmap">
+		UPDATE 	COURSE_MASTER
+		   SET 	UPDATE_DATE = CURRENT_TIMESTAMP
+		   		,UPDATE_USER = #{SESSION_USER_ID}
+		   <if test="kind != null and kind == 'popular1'"> ,POPULAR_IMG1 = 'Y'</if>
+		   <if test="kind != null and kind == 'popular2'"> ,POPULAR_IMG2 = 'Y'</if>
+		   <if test="kind != null and kind == 'new1'"> ,NEW_IMG1 = 'Y'</if>
+		   <if test="kind != null and kind == 'new1'"> ,NEW_IMG2 = 'Y'</if>
+		   <if test="kind != null and kind == 'recommend1'"> ,RECOMMEND_IMG1 = 'Y'</if>
+		   <if test="kind != null and kind == 'recommend2'"> ,RECOMMEND_IMG2 = 'Y'</if>
+		 WHERE COURSE_CODE = #{COURSE_CODE} 
+	</update>
+
+</mapper>

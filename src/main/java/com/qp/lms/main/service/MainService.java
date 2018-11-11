@@ -8,7 +8,10 @@ import java.util.Map;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.qp.lms.board.model.AttachVO;
 import com.qp.lms.board.model.BoardFaqVO;
 import com.qp.lms.board.model.BoardVO;
 import com.qp.lms.common.CodeVO;
@@ -296,5 +299,47 @@ public class MainService {
         return set ;
     }
 
+    @Transactional(propagation=Propagation.REQUIRED, rollbackFor={Throwable.class})
+    public MainSet companyInquiry(MainSet set) throws Exception {
+		sqlSession.insert("main.companyInquiryInsert", set.getCondiVO());
+    	
+    	//자료실 게시판 추가된 id를 구한다.
+    	String lastId = (String)sqlSession.selectOne("comm.lastInsertId");
+    	
+    	//첨부파일 처리를 위한 VO를 만든다.
+    	AttachVO attach = new AttachVO();
+    	attach.setKind(Constant.attach.COMP_LEARN.name());
+    	attach.setUserId(set.getCondiVO().getAttachUserId());
+    	attach.setpSeq(lastId);
 
+    	//추가한 첨부파일이 있으면 옮겨주고, 임시 테이블에서 삭제한다.
+    	sqlSession.insert("attach.attachFromAttachTempIns",attach);
+    	sqlSession.delete("attach.attachTempForUserDel",attach);
+    	
+    	set.setRtnMode(Constant.mode.OK.name());
+
+    	return set;
+    }
+
+    @Transactional(propagation=Propagation.REQUIRED, rollbackFor={Throwable.class})
+    public MainSet tutorInquiry(MainSet set) throws Exception {
+		sqlSession.insert("main.tutorInquiryInsert", set.getCondiVO());
+		
+    	//자료실 게시판 추가된 id를 구한다.
+    	String lastId = (String)sqlSession.selectOne("comm.lastInsertId");
+    	
+    	//첨부파일 처리를 위한 VO를 만든다.
+    	AttachVO attach = new AttachVO();
+    	attach.setKind(Constant.attach.TUTOR_SUPP.name());
+    	attach.setUserId(set.getCondiVO().getAttachUserId());
+    	attach.setpSeq(lastId);
+
+    	//추가한 첨부파일이 있으면 옮겨주고, 임시 테이블에서 삭제한다.
+    	sqlSession.insert("attach.attachFromAttachTempIns",attach);
+    	sqlSession.delete("attach.attachTempForUserDel",attach);
+
+    	set.setRtnMode(Constant.mode.OK.name());
+
+    	return set;
+    }
 }

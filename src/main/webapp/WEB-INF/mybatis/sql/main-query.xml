@@ -532,4 +532,14 @@
 		LIMIT 	3
 	</select>
 	
+	<insert id="companyInquiryInsert" parameterType="Main">
+		INSERT INTO USER_INQUIRY ( KIND, USER_ID, USER_NAME, MOBILE, TEL, EMAIL, COMPANY_NAME, TITLE, CONTENTS, CREATE_DATE )
+		VALUES ( 'COMPANY', #{userId}, #{userName}, #{mobile}, #{tel}, #{email}, #{companyName}, #{title}, #{contents}, CURRENT_TIMESTAMP ) 
+	</insert>	        
+
+	<insert id="tutorInquiryInsert" parameterType="Main">
+		INSERT INTO USER_INQUIRY ( KIND, USER_ID, USER_NAME, MOBILE, TEL, EMAIL, ABOUT_ME, MOTIVE, CREATE_DATE )
+		VALUES ( 'TUTOR', #{userId}, #{userName}, #{mobile}, #{tel}, #{email}, #{aboutMe}, #{motive}, CURRENT_TIMESTAMP ) 
+	</insert>	        
+	
 </mapper>

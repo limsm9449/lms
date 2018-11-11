@@ -90,9 +90,11 @@
                         </li>
                     </ul>
                     <div class='menu_tutor'>
-                        <span>
-                            <img src='../../img/channel_ic.png' alt=''>
-                        </span>
+                        <a href=''>
+                            <span>
+                                <img src='../../img/channel_ic.png' alt=''>
+                            </span>
+                        </a>
                         <a href='' onclick='error_msg()'>강사소개</a>
                     </div>
                 </div>
@@ -130,7 +132,7 @@
                             <span class='menu_sub_line'></span>
                             <ul class='menu_sub'>
                                 <li><a href='../support/notice.html'>공지사항</a></li>
-                                <li><a href='../support/faq.html'>FAQ</a></li>
+                                <li><a href='../support/faq.html'>FAQ</a></li><li><a href='../support/event.html'>Event</a></li>
                                 <li><a href='../support/mail.html'>1:1 메일문의</a></li>
                                 <li><a href=''>원격지원</a></li>
                                 <li><a href='../support/account.html'>입금계좌안내</a></li>
@@ -238,7 +240,7 @@
                         <ul>
                             <li class='first_depth'><a href='../../html/support/support.html'>고객지원</a></li>
                             <li><a href='../support/notice.html'>공지사항</a></li>
-                            <li><a href='../support/faq.html'>FAQ</a></li>
+                            <li><a href='../support/faq.html'>FAQ</a></li><li><a href='../support/event.html'>Event</a></li>
                             <li><a href='../support/mail.html'>1:1 메일문의</a></li>
                             <li><a href=''>원격지원</a></li>
                             <li><a href='../support/account.html'>입금계좌안내</a></li>
@@ -332,6 +334,18 @@
                     </p> -->
                 </div>
                 <div class='signup_input_list'>
+                    <div class='certification_name clear_fix'>
+                        <p>이름</p>
+                        <input type='text' name='' id='' value='name' disabled>
+                    </div>
+                    <div class='certification_name clear_fix'>
+                        <p>비밀번호</p>
+                        <input type='password' name='' id='' placeholder='8자리 이상 입력해주세요'>
+                    </div>
+                    <div class='certification_name clear_fix'>
+                        <p>비밀번호 확인</p>
+                        <input type='password' name='' id='' placeholder='비밀번호를 확인해주세요'>
+                    </div>
                     <div class='info_input_phone clear_fix'>
                         <p>휴대폰 번호</p>
                         <select name='agency' id=''>
@@ -343,14 +357,6 @@
                         </select>
                         <input type='text' name='' id='' placeholder='- 없이 숫자만'>
                         <button>인증번호요청</button>
-                    </div>
-                    <div class='certification_name clear_fix'>
-                        <p>비밀번호</p>
-                        <input type='password' name='' id='' placeholder='8자리 이상 입력해주세요'>
-                    </div>
-                    <div class='certification_name clear_fix'>
-                        <p>비밀번호 확인</p>
-                        <input type='password' name='' id='' placeholder='비밀번호를 확인해주세요'>
                     </div>
                     <div class='certification_birth clear_fix'>
                         <p>생년월일</p>
@@ -390,7 +396,7 @@
                         <p>주소</p>
                         <input type='text' name='' id='' placeholder='우편번호'>
                         <button>우편번호검색</button>
-                        <input type='text' name='' id='' placeholder='상세주소를 입력해주세요'>
+                        <input class='last_left' type='text' name='' id='' placeholder='상세주소를 입력해주세요'>
                     </div>
                 </div>
                 <div class='signup_btn_box clear_fix'>

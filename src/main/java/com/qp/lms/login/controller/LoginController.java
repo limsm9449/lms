@@ -20,6 +20,7 @@ import com.qp.lms.common.CommonSet;
 import com.qp.lms.common.Constant;
 import com.qp.lms.common.SessionUtil;
 import com.qp.lms.common.SessionVO;
+import com.qp.lms.common.service.CommService;
 import com.qp.lms.login.model.LoginSet;
 import com.qp.lms.login.model.LoginVO;
 import com.qp.lms.login.service.LoginService;
@@ -33,6 +34,9 @@ public class LoginController {
 
     @Autowired
     private AxCommService axCommService;
+    
+    @Autowired
+    private CommService commSvr;
 
     /*
      * Log In 화면 호출 
@@ -107,7 +111,10 @@ public class LoginController {
    	 	//카트 정보 삭제
 		SessionUtil.setAttribute("cart", null);
 		SessionUtil.setAttribute("tempCart", null);
-		
+
+    	//임시 파일들을 삭제한다.
+    	commSvr.delAttachTemp();
+
         return "login/loginTran";
     }
     

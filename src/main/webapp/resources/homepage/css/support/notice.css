@@ -514,6 +514,9 @@ table tr .last_right{
 .notice_col3:hover{
     background:#eee;
 }
+table th.notice_col3:hover{
+    background:#fff;
+}
 
 
 /* PAGER */

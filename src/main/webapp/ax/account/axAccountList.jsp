@@ -554,7 +554,7 @@ function fn_callbackAjax(data, id) {
 		dd.Company = [{value : "", text : ""}].concat(dd.Company);
 		
 		fn_makeGrid();
-		fn_search();
+		//fn_search();
 	}
 }
 

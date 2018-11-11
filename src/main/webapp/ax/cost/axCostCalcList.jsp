@@ -403,7 +403,7 @@ function fn_callbackAjax(data, id) {
 		gfn_cbRefresh("CB_YEAR", data.Year, true);
 		
 		fn_makeGrid();
-		fn_search();
+		//fn_search();
 	} else if ( id == "CB_LEVEL1" ){
 		gfn_cbRefresh("CB_LEVEL2", data.CategoryLevel2, true);
 	} else if ( id == "CB_LEVEL2" ){

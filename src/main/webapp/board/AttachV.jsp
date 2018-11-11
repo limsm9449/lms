@@ -50,18 +50,8 @@ function lfn_btn(pKind, pParam) {
         <div class='item_list'>
 <c:forEach var="row" items="${set.list}" varStatus="idx">
             <div class='clear_fix'>
-				<c:choose>
-					<c:when test="${(set.condiVO.kind eq 'C_REPORT' || set.condiVO.kind eq 'U_REPORT' || set.condiVO.kind eq 'T_REPORT') && set.condiVO.isMy eq 'Y'}">
-						<p class='name'><a href="#" onclick="javascript:lfn_btn('download',{seq:'${row.seq}'}); return false;">${row.orgFileName}</a>B</p>
-					</c:when>
-					<c:when test="${row.kind eq 'B_DATA'}">
-						<p class='name'><a href="#" onclick="javascript:lfn_btn('download',{seq:'${row.seq}'}); return false;">${row.orgFileName}</a>B</p>
-					</c:when>
-					<c:when test="${row.kind eq 'B_REPORT' && (set.isMy eq 'Y' || set.condiVO.isAdmin eq 'Y')}">
-						<p class='name'><a href="#" onclick="javascript:lfn_btn('download',{seq:'${row.seq}'}); return false;">${row.orgFileName}</a>B</p>
-					</c:when>
-				</c:choose>            
-                <p><fmt:formatNumber value="${row.fileSize/1000}" pattern="#,##0"/> KB</p>
+				<p class='name'><a href="#" onclick="javascript:lfn_btn('download',{seq:'${row.seq}'}); return false;">${row.orgFileName}</a>B</p>
+	            <p><fmt:formatNumber value="${row.fileSize/1000}" pattern="#,##0"/> KB</p>
             </div>
 </c:forEach>            
         </div>

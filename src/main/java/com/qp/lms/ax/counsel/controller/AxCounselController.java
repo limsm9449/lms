@@ -41,7 +41,7 @@ public class AxCounselController {
     }
 
     @RequestMapping(value = "/counsel/axCounselOne", method = RequestMethod.POST, consumes = "application/json" )
-    public @ResponseBody HashMap<String,Object> axBoardReporOne(@RequestBody HashMap<String, Object> paramMap, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public @ResponseBody HashMap<String,Object> axCounselOne(@RequestBody HashMap<String, Object> paramMap, HttpServletRequest request, HttpServletResponse response) throws Exception {
     	HashMap<String, Object> hm = new HashMap<String, Object>();
 
     	try {
@@ -67,7 +67,45 @@ public class AxCounselController {
         return hm;
     }
 
+    @RequestMapping(value = "/counsel/axInquiryList", method = RequestMethod.POST, consumes = "application/json" )
+    public @ResponseBody HashMap<String,Object> axInquiryList(@RequestBody HashMap<String, Object> paramMap, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    	HashMap<String, Object> hm = new HashMap<String, Object>();
 
+    	try {
+    		hm = svr.axInquiryList(paramMap);
+    	} catch ( Exception e ) {
+    		e.printStackTrace();
+    	}
+
+        return hm;
+    }
+
+    @RequestMapping(value = "/counsel/axInquiryOne", method = RequestMethod.POST, consumes = "application/json" )
+    public @ResponseBody HashMap<String,Object> axInquiryOne(@RequestBody HashMap<String, Object> paramMap, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    	HashMap<String, Object> hm = new HashMap<String, Object>();
+
+    	try {
+    		hm = svr.axInquiryOne(paramMap);
+    	} catch ( Exception e ) {
+    		e.printStackTrace();
+    	}
+
+        return hm;
+    }
+
+    @RequestMapping(value = "/counsel/axInquirySave", method = RequestMethod.POST, consumes = "application/json" )
+    public @ResponseBody HashMap<String,Object> axInquirySave(@RequestBody HashMap<String, Object> paramMap, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    	HashMap<String, Object> hm = new HashMap<String, Object>();
+    	
+		try {
+    		hm = svr.axInquirySave(paramMap);
+    	} catch ( Exception e ) {
+    		e.printStackTrace();
+    		hm.put("RtnMode", Constant.mode.ERROR.name());
+    	}
+
+        return hm;
+    }
 	    
 	    
 

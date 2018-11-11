@@ -12,8 +12,18 @@
                     <a href='/guest/join.do'>개인정보취급방침</a>
                 </li>
                 <li>
-                    <a href="javascript:" onclick="page.goNsJsp('map'); return false;">찾아오시는길</a>
+                    <a href="#" onclick="page.goNsJsp('map'); return false;">찾아오시는길</a>
                 </li>
+                <li>
+                    <a href="#" onclick="page.goNsJsp('company_learning'); return false;">기업교육 문의</a>
+                </li>
+                <li>
+                    <a href="#" onclick="page.goNsJsp('tutor_support'); return false;">튜터 지원</a>
+                </li>
+                <li class='last_right'>
+                    <a href='#'>사이트맵</a>
+                </li>
+                
             </ul>
             <div class='foot_box'>
                 <p>

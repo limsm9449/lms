@@ -349,7 +349,7 @@ function fn_callbackAjax(data, id) {
 		dd = $.extend({}, data);
 
 		fn_makeGrid();
-		fn_search();
+		//fn_search();
 	} else if ( id == "excelUploadList" ){
       	var allList = grid.getList();
       	var maxSeq = 0;

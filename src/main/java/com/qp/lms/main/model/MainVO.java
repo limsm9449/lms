@@ -42,7 +42,16 @@ public class MainVO extends CommonVO {
 	private String findString;
 	private String category;
 	private String shap;
-
+	private String userName;
+	private String mobile;
+	private String tel;
+	private String email;
+	private String contents;
+	private String aboutMe;
+	private String motive;
+	private String companyName;
+	private String attachUserId;
+	private String title;
 	
 	public String getC1Code() {
 		return c1Code;
@@ -220,6 +229,66 @@ public class MainVO extends CommonVO {
 	}
 	public void setShap(String shap) {
 		this.shap = shap;
+	}
+	public String getUserName() {
+		return userName;
+	}
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+	public String getMobile() {
+		return mobile;
+	}
+	public void setMobile(String mobile) {
+		this.mobile = mobile;
+	}
+	public String getTel() {
+		return tel;
+	}
+	public void setTel(String tel) {
+		this.tel = tel;
+	}
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	public String getContents() {
+		return contents;
+	}
+	public void setContents(String contents) {
+		this.contents = contents;
+	}
+	public String getAboutMe() {
+		return aboutMe;
+	}
+	public void setAboutMe(String aboutMe) {
+		this.aboutMe = aboutMe;
+	}
+	public String getMotive() {
+		return motive;
+	}
+	public void setMotive(String motive) {
+		this.motive = motive;
+	}
+	public String getCompanyName() {
+		return companyName;
+	}
+	public void setCompanyName(String companyName) {
+		this.companyName = companyName;
+	}
+	public String getAttachUserId() {
+		return attachUserId;
+	}
+	public void setAttachUserId(String attachUserId) {
+		this.attachUserId = attachUserId;
+	}
+	public String getTitle() {
+		return title;
+	}
+	public void setTitle(String title) {
+		this.title = title;
 	}
 	
 	

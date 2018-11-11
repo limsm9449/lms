@@ -734,6 +734,10 @@ header{
     border: solid 1px #ccc;
 }
 
+.info_input_address .last_left{
+    margin:4px 0 0 160px;
+}
+
 
 /* 회원가입 - 가입완료 */
 .util_step_box.completed{
@@ -1096,7 +1100,8 @@ header{
     }
     .info_input_phone button,
     .certification_name.type_id button,
-    .info_input_address button{
+    .info_input_address button,
+    .info_input_address .last_left{
         width:60%;
         margin-left: 40%;
         margin-top: 4px;
@@ -1190,7 +1195,8 @@ header{
     .certification_birth .second,
     .info_input_address button,
     .certification_name.type_id button,
-    .signup_input_list .info_input_address textarea{
+    .signup_input_list .info_input_address textarea,
+    .info_input_address .last_left{
         margin-left:38%;
     }
 }

@@ -78,7 +78,7 @@ $(document.body).ready(function () {
     
     gfn_callAjax("/common/axDd.do", { DD_KIND : "FaqCategory" }, fn_callbackAjax, "dd", { async : false });
 
-    fn_search();
+    //fn_search();
 });
 
 function fn_ddAfter() {

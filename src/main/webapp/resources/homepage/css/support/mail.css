@@ -502,7 +502,7 @@ header{
     display:block;
     width:97%;
     padding:8px 1%;
-    margin:10px 1.5% 6px;
+    margin:6px 1.5%;
     border:solid 1px #ddd;
 }
 .form_box div input[type='file']{
@@ -562,7 +562,7 @@ header{
 .form_box.half div input[type='text']{
     display: block;
     width: 90%;
-    margin: 10px 3% 6px;
+    margin: 6px 3%;
     padding: 8px 2%;
 }
 .form_box.half div{

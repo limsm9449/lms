@@ -24,7 +24,9 @@ public class AttachService {
     public AttachSet attachI(AttachSet set) throws Exception {
 		set.setIsMy("N");
 
-		set.getCondiVO().setUserId(SessionUtil.getSessionUserId());
+		if ( "".equals(CommUtil.getString(set.getCondiVO().getUserId())) ) {
+			set.getCondiVO().setUserId(SessionUtil.getSessionUserId());
+		}
 		
 		List<AttachVO> list = sqlSession.selectList("attach.attachTempList",set.getCondiVO());
 		set.setList(list);
@@ -75,7 +77,9 @@ public class AttachService {
     public AttachSet attachIns(AttachSet set) throws Exception {
     	// 추가한다.
     	if ( "TEMP".equals(CommUtil.getString(set.getCondiVO().getMode())) ) {
-    		set.getCondiVO().setUserId(SessionUtil.getSessionUserId());
+    		if ( "".equals(CommUtil.getString(set.getCondiVO().getUserId())) ) {
+    			set.getCondiVO().setUserId(SessionUtil.getSessionUserId());
+    		}
 
     		sqlSession.update("attach.attachTempIns",set.getCondiVO());
     	} else
@@ -93,7 +97,9 @@ public class AttachService {
     public AttachSet attachDel(AttachSet set) throws Exception {
     	// 파일 삭제를 위한 정보를 가지고 온다.
     	if ( "TEMP".equals(CommUtil.getString(set.getCondiVO().getMode())) ) {
-    		set.getCondiVO().setUserId(SessionUtil.getSessionUserId());
+    		if ( "".equals(CommUtil.getString(set.getCondiVO().getUserId())) ) {
+    			set.getCondiVO().setUserId(SessionUtil.getSessionUserId());
+    		}
 
     		set.setData((AttachVO) sqlSession.selectOne("attach.attachDataTemp",set.getCondiVO()));
     	} else

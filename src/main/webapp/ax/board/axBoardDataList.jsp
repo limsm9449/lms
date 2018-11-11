@@ -116,7 +116,7 @@ $(document.body).ready(function () {
         }
     });
     
-    fn_search();
+    //fn_search();
 });
 
 function fn_params() {

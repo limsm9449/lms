@@ -251,13 +251,13 @@ $(document).ready(function(){
         <div class='study_bottom_area clear_fix'>
             <div class='study_bottom_box'>
                 <a href='#' onclick="javascript:Popup.showUserBoard('NOTICE','${set.courseInfo.courseId}'); return false;">공지사항</a>
-                <span>I</span>
+                <span></span>
                 <a href='#' onclick="javascript:Popup.showUserBoard('DATA','${set.courseInfo.courseId}'); return false;">자료실</a>
-                <span>I</span>
+                <span></span>
                 <a href='#' onclick="javascript:Popup.showUserBoard('FREE','${set.courseInfo.courseId}'); return false;">자유게시판</a>
-                <span>I</span>
+                <span></span>
                 <a href='#' onclick="javascript:Popup.showProgress('${set.courseInfo.courseId}'); return false;">진도상세보기</a>
-                <span>I</span>
+                <span></span>
 <c:choose>
 	<c:when test="${set.courseInfo.postscriptYn eq 'Y'}">
              	<a href='#' onclick="javascript:Popup.showPostscriptV('${set.courseInfo.courseId}'); return false;">학습후기</a>
@@ -267,7 +267,7 @@ $(document).ready(function(){
 	</c:otherwise>
 </c:choose>                 
                 
-                <span>I</span>
+                <span></span>
                 <a href='#' onclick="javascript:Popup.showUserBoard('QNA','${set.courseInfo.courseId}'); return false;">학습 질문답변</a>
             </div>
         </div>

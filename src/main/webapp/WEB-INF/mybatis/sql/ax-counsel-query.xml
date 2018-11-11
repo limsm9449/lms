@@ -33,6 +33,37 @@
 		 WHERE SEQ = #{SEQ}
     </select>	
 
+	<select id="axInquiryList" parameterType="hashmap" resultType="hashmap">
+		SELECT 	A.*
+				,DATE_FORMAT(CREATE_DATE, '%y.%m.%d %H:%i') CREATE_DATE_STR
+				,DATE_FORMAT(UPDATE_DATE, '%y.%m.%d %H:%i') UPDATE_DATE_STR
+		FROM 	USER_INQUIRY A
+		WHERE	DATE_FORMAT(CREATE_DATE, '%Y-%m-%d') BETWEEN #{FROM_DT} AND #{TO_DT}	
+		   <if test="CB_KIND != null and CB_KIND != ''"> AND KIND = #{CB_KIND}</if>
+		   <if test="SEARCH_STR != null and SEARCH_STR != ''"> 
+		   		AND ( USER_NAME LIKE CONCAT('%',#{SEARCH_STR},'%') OR 
+		   				MOBILE LIKE CONCAT('%',#{SEARCH_STR},'%') OR
+		   				TEL LIKE CONCAT('%',#{SEARCH_STR},'%') OR
+		   				EMAIL LIKE CONCAT('%',#{SEARCH_STR},'%') )
+		   </if> 
+		 ORDER BY CREATE_DATE DESC
+	</select>	
+	
+    <select id="axInquiryOne" parameterType="hashmap" resultType="hashmap">
+		SELECT 	A.*
+				,DATE_FORMAT(CREATE_DATE, '%y.%m.%d %H:%i') CREATE_DATE_STR
+		FROM 	USER_INQUIRY A
+		WHERE 	SEQ = #{SEQ}
+    </select>	
+
+    <select id="axInquiryUpd" parameterType="hashmap">
+		UPDATE USER_INQUIRY
+		   SET COMPLETE_YN = #{COMPLETE_YN},
+		   	   MEMO = #{MEMO},	
+		       UPDATE_DATE = CURRENT_TIMESTAMP
+		 WHERE SEQ = #{SEQ}
+    </select>	
+
 
         
 </mapper>

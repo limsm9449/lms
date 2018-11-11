@@ -57,6 +57,13 @@
                         <h1>
                             FAQ</span>
                         </h1>
+                        <div class='top_text_box clear_fix'>
+                            <span><img src='/resources/homepage/img/support/notice_bg.jpg' alt=' '></span>
+                            <p class='top_title'>자주 묻는 질문</p>
+                            <p>
+                                큐러닝의 FAQ를 알려드립니다. <span></span>항상 유익하고 풍성한 소식 놓치지 말고 확인하세요.
+                            </p>
+                        </div>
                     </div>
                     <!-- Top END -->
 

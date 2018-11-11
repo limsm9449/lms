@@ -29,6 +29,10 @@ body .learnig_wrap button{
     margin-right:1.45%;
 }
 
+html .process_category_box div input, .process_support_fund div input{
+    border:0;
+}
+
 @media all and (max-width:420px){
     .study_estimation_table_line .esti_btn button{
         padding:0;

@@ -99,13 +99,13 @@
                 </div>
                 <ul class='study_support_list_box notice'>
                     <li>
-                        <button class='clear_fix' onclick='lecture_open_popup("../support/notice_detail", false)'>
+                        <button class='clear_fix' onclick='lecture_open_popup("lecture_notice_detail", true)'>
                             <p class='study_support_text'>[큐러닝] 개인정보처리방침 변경 안내</p>
                             <p class='study_support_date'>2017.03.05</p>
                         </button>
                     </li>
                     <li>
-                        <button class='clear_fix' onclick='lecture_open_popup("../support/notice_detail", false)'>
+                        <button class='clear_fix' onclick='lecture_open_popup("lecture_notice_detail", true)'>
                             <p class='study_support_text'>[큐러닝] 개인정보처리방침 변경 안내</p>
                             <p class='study_support_date'>2017.03.05</p>
                         </button>
@@ -434,19 +434,17 @@
         </div>
         <div class='study_bottom_area clear_fix'>
             <div class='study_bottom_box'>
-                <a href=''>학습노트</a>
+                <button onclick='lecture_open_popup("lecture_notice", true)'>공지사항</button>
                 <span></span>
                 <button onclick='lecture_open_popup("lecture_documents", true)'>자료실</button>
                 <span></span>
-                <a href=''>용어사전</a>
+                <button onclick='lecture_open_popup("lecture_board", true)'>자유게시판</button>
                 <span></span>
-                <a href=''>나의노하우</a>
-                <span class='mobile'></span>
                 <button onclick='lecture_open_popup("lecture_detail", true)'>진도상세보기</button>
                 <span></span>
                 <button onclick='lecture_open_popup("lecture_review", true)'>학습후기</button>
                 <span></span>
-                <button onclick='lecture_open_popup("lecture_qna", true)'>강사님께 질문하기</button>
+                <button onclick='lecture_open_popup("lecture_qna", true)'>학습 질문답변</button>
             </div>
         </div>
     </div>

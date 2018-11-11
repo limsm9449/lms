@@ -1,3 +1,21 @@
+/* getElementsByClassName 을 IE8 이하에서 동작하게 하는 코드 */
+if (!document.getElementsByClassName) {
+    document.getElementsByClassName = function (cn) {
+        var rx = new RegExp("(?:^|\\s)" + cn+ "(?:$|\\s)");
+        var allT = document.getElementsByTagName("*"), allCN = [],ac="", i = 0, a;
+ 
+        while (a = allT[i=i+1]) {
+            ac=a.className;
+            if ( ac && ac.indexOf(cn) !==-1) {
+                if(ac===cn){ allCN[allCN.length] = a; continue;   }
+                    rx.test(ac) ? (allCN[allCN.length] = a) : 0;
+                }
+        }
+        return allCN;
+    };
+}
+
+
 
 var doc = document.documentElement;
 doc.setAttribute('data-useragent', navigator.userAgent);
@@ -73,10 +91,18 @@ function change_tab(num, elem) {
     var btns = document.getElementsByClassName('slider_tab')[0].getElementsByTagName('button');
     for (var j = 0; j < btns.length; j++) {
         var btn = btns[j];
-        if (j === active_tab) {
-            btn.classList.add('on');
-        } else if (btn.classList = 'on') {
-            btn.classList.remove('on');
+        if(btn.classList){            
+            if (j === active_tab) {
+                btn.classList.add('on');
+            }else{
+                btn.classList.remove('on');
+            }
+        }else{    
+            if (j === active_tab) {
+                btn.className = 'on';
+            }else{
+                btn.className = '';
+            }
         }
     }
 
@@ -107,7 +133,11 @@ function mobile_menu() {
         doc.style.overflow = 'hidden';
         menu.style.display = 'block';
         menu_open = true;
-        head_mobile.classList.add('on');
+        if(head_mobile.classList){
+            head_mobile.classList.add('on');
+        }else{
+            head_mobile.className = 'head_mobile on';
+        }
     }
 }
 
@@ -153,7 +183,11 @@ function mobile_menu_close() {
     doc.style.overflow = 'auto';
     menu.style.display = 'none';
     menu_open = false;
-    head_mobile.classList.remove('on');
+    if(head_mobile.classList){
+        head_mobile.classList.remove('on');
+    }else{
+        head_mobile.className = 'head_mobile';
+    }
 }
 
 // login

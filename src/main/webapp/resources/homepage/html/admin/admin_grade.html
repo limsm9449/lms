@@ -128,72 +128,74 @@
                 </li>
             </ul>
         </header>
-        <div class='contents_wrap'>
-            <div class='content_top'>
-                <h1>성적 관리</h1>
-                <div class='filter_box clear_fix'>
-                    <div>
-                        <p>카테고리</p>
-                        <select name='' id=''>
-                            <option value='전체'>전체</option>
-                            <option value='선택1'>선택1</option>
-                            <option value='선택2'>선택2</option>
-                        </select>
-                        <select name='' id=''>
-                            <option value='전체'>전체</option>
-                            <option value='선택1'>선택1</option>
-                            <option value='선택2'>선택2</option>
-                        </select>
-                        <select name='' id=''>
-                            <option value='전체'>전체</option>
-                            <option value='선택1'>선택1</option>
-                            <option value='선택2'>선택2</option>
-                        </select>
+        <div class='right'>
+            <div class='contents_wrap'>
+                <div class='content_top'>
+                    <h1>성적 관리</h1>
+                    <div class='filter_box clear_fix'>
+                        <div>
+                            <p>카테고리</p>
+                            <select name='' id=''>
+                                <option value='전체'>전체</option>
+                                <option value='선택1'>선택1</option>
+                                <option value='선택2'>선택2</option>
+                            </select>
+                            <select name='' id=''>
+                                <option value='전체'>전체</option>
+                                <option value='선택1'>선택1</option>
+                                <option value='선택2'>선택2</option>
+                            </select>
+                            <select name='' id=''>
+                                <option value='전체'>전체</option>
+                                <option value='선택1'>선택1</option>
+                                <option value='선택2'>선택2</option>
+                            </select>
+                        </div>
+                        <div>
+                            <p>과정명</p>
+                            <input type='text' name='' id=''>
+                        </div>
                     </div>
-                    <div>
-                        <p>과정명</p>
-                        <input type='text' name='' id=''>
+                    <div class='filter_box clear_fix'>
+                        <div>
+                            <p>회사구분</p>
+                            <select name='' id=''>
+                                <option value='전체'>전체</option>
+                                <option value='선택1'>선택1</option>
+                                <option value='선택2'>선택2</option>
+                            </select>
+                        </div>
+                        <div>
+                            <p>종료여부</p>
+                            <select name='' id=''>
+                                <option value='전체'>전체</option>
+                                <option value='선택1'>선택1</option>
+                                <option value='선택2'>선택2</option>
+                            </select>
+                        </div>
+                        <div>
+                            <p>연도</p>
+                            <select name='' id=''>
+                                <option value='전체'>전체</option>
+                                <option value='선택1'>선택1</option>
+                                <option value='선택2'>선택2</option>
+                            </select>
+                        </div>
+                        <div>
+                            <p>차수</p>
+                            <input type='text' name='' id=''>
+                        </div>
                     </div>
                 </div>
-                <div class='filter_box clear_fix'>
-                    <div>
-                        <p>회사구분</p>
-                        <select name='' id=''>
-                            <option value='전체'>전체</option>
-                            <option value='선택1'>선택1</option>
-                            <option value='선택2'>선택2</option>
-                        </select>
-                    </div>
-                    <div>
-                        <p>종료여부</p>
-                        <select name='' id=''>
-                            <option value='전체'>전체</option>
-                            <option value='선택1'>선택1</option>
-                            <option value='선택2'>선택2</option>
-                        </select>
-                    </div>
-                    <div>
-                        <p>연도</p>
-                        <select name='' id=''>
-                            <option value='전체'>전체</option>
-                            <option value='선택1'>선택1</option>
-                            <option value='선택2'>선택2</option>
-                        </select>
-                    </div>
-                    <div>
-                        <p>차수</p>
-                        <input type='text' name='' id=''>
-                    </div>
+                <div class='content_btn_box clear_fix'>
+                    <button onclick='admin_popup_open("1", true)'>검색</button>
+                    <button onclick='admin_popup_open("6", true)'>엑셀</button>
+                    <button onclick='admin_popup_open("22", true)'>학습내용</button>
+                    <button onclick='admin_popup_open("23", true)'>수강생별 성적</button>
                 </div>
-            </div>
-            <div class='content_btn_box clear_fix'>
-                <button onclick='admin_popup_open("1")'>검색</button>
-                <button onclick='admin_popup_open("6")'>엑셀</button>
-                <button onclick='admin_popup_open("22")'>학습내용</button>
-                <button onclick='admin_popup_open("23")'>수강생별 성적</button>
-            </div>
-            <div class='grid_area'>
-                <p>데이터</p>
+                <div class='grid_area'>
+                    <p>데이터</p>
+                </div>
             </div>
         </div>
     </div>

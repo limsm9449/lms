@@ -1,3 +1,21 @@
+/* getElementsByClassName 을 IE8 이하에서 동작하게 하는 코드 */
+if (!document.getElementsByClassName) {
+    document.getElementsByClassName = function (cn) {
+        var rx = new RegExp("(?:^|\\s)" + cn+ "(?:$|\\s)");
+        var allT = document.getElementsByTagName("*"), allCN = [],ac="", i = 0, a;
+ 
+        while (a = allT[i=i+1]) {
+            ac=a.className;
+            if ( ac && ac.indexOf(cn) !==-1) {
+                if(ac===cn){ allCN[allCN.length] = a; continue;   }
+                    rx.test(ac) ? (allCN[allCN.length] = a) : 0;
+                }
+        }
+        return allCN;
+    };
+}
+
+
 
 var resourceUrl = '/resources/homepage/';
 var doc = document.documentElement;

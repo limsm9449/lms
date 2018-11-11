@@ -18,7 +18,7 @@
 
     <link href='https://fonts.googleapis.com/css?family=Nanum+Gothic' rel='stylesheet'>
     <link rel='stylesheet' href='/resources/homepage/css/initialization.css'>
-    <link rel='stylesheet' href='/resources/homepage/css/etc/admin.css'>
+    <link rel='stylesheet' href='/resources/homepage/css/etc/admin_login.css'>
 </head>
 
 <script type="text/javascript">

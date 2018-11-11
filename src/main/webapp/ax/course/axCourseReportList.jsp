@@ -37,8 +37,6 @@ $(document.body).ready(function () {
 
 	fn_makeGrid();
 
-	fn_search();
-
     $('[data-grid-control]').click(function () {
         switch (this.getAttribute("data-grid-control")) {
 	        case "search":
@@ -225,7 +223,7 @@ function fn_callbackAjax(data, id) {
 		gfn_cbRefresh("INS_CB_LEVEL1", data.CategoryLevel1, true);
 		
 		fn_makeGrid();
-		fn_search();
+		//fn_search();
 	} else if ( id == "CB_LEVEL1" ){
 		gfn_cbRefresh("CB_LEVEL2", data.CategoryLevel2, true);
 	} else if ( id == "CB_LEVEL2" ){

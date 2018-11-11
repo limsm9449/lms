@@ -203,6 +203,27 @@
 }
 
 
+/* LECTURE NOTICE */
+.classroom_lecture.notice tr .col_1{
+    width:10%;
+}
+.classroom_lecture.notice tr .col_2{
+    width:60%;
+    max-width:0;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    padding-left:1%;
+    padding-right:1%;
+}
+.classroom_lecture.notice tr .col_3{
+    /* width:20%; */
+}
+.classroom_lecture.notice tr .col_4{
+    width:10%;
+}
+
+
 /* PAGER */
 .pager_box{
     text-align:center;

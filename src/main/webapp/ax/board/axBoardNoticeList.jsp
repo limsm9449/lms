@@ -37,7 +37,7 @@ $(document.body).ready(function () {
 		[ 	{
 	            key : "TITLE",
 	            label : "제목",
-	            width : 700,
+	            width : 400,
 	            align : "left"
 	        },{
 	            key : "CREATE_DATE",
@@ -49,7 +49,36 @@ $(document.body).ready(function () {
 	        	label : "조회수", 
 	            width : 70,
 	        	align : "right"
-	        }	], 
+	        },{
+	        	key : "MAIN_YN", 
+	        	label : "메인이벤트", 
+	            width : 100,
+	        	align : "center", 
+	        	editor : { type : "checkbox", config : {height: 17, trueValue: "Y", falseValue: "N"} } ,
+				styleClass: function () {
+                    return "grid-cell-edit";
+                } 
+	        },{
+	            key : "IMG1",
+	            label : "PC 이미지",
+	            width : 100,
+	            align : "center"
+	        },{
+	            key : "IMG2",
+	            label : "모바일 이미지",
+	            width : 120,
+	            align : "center"
+	        },{
+	        	key : "COLOR", 
+	        	label : "배경색", 
+	            width : 80,
+	        	align : "center", 
+	        	editor : { type : "text" } ,
+				styleClass: function () {
+                    return "grid-cell-edit";
+                } 
+	        }
+		], 
 	  	null,
 	  	{
 	  		showRowSelector : false
@@ -78,35 +107,54 @@ $(document.body).ready(function () {
             		return;
             	}
 
-            	mask.open();
-               	confirmDialog.confirm(
-               		{
-                       	title: "Confirm",
-                       	msg: '삭제하시겠습니까?'
-                   	}, 
-                   	function(){
-                     	if ( this.key == "ok" ) {
-                     		var saveParams = {
-                     			MODE : "DELETE",
-                     			SEQ : row[0].SEQ,
-                     			COURSE_ID : row[0].COURSE_ID
-                     		};
-                     		
-                     		gfn_callAjax("/board/axBoardNoticeSave.do", saveParams, fn_callbackAjax, "delete");
-                       	} else {
-                       		mask.close();
-                       	}
-                   	}
-               	);
+            	grid.deleteRow("selected");
+            	
 		    	break;
             case "export":
                 grid.exportExcel("레포트 게시판.xls");
                 break;
+            case "save" :
+            	fn_save();
+                break;
+            case "editImage":
+            	var row = grid.getList("selected");
+            	if ( row.length == 0 ) {
+            		mask.open();
+            		dialog.alert( { msg : "과정을 선택하셔야 합니다." }, function () { mask.close();	} );
+            	} else {
+            		var urlParams = "page=/ax/board/axBoardNoticeImagePopup";
+            		urlParams += "&SEQ=" + row[0]["SEQ"];
+            		
+            		f_popup('/common/axOpenPage', {displayName:'axBoardNoticeImagePopup',option:'width=900,height=650', urlParams:urlParams});
+            	}
+            		
+                break;
         }
     });
     
-    fn_search();
+    //fn_search();
 });
+
+function fn_save() {
+	var fieldParams = {
+   	};
+   	if ( gfn_validationCheck(grid, fieldParams) ) {
+       	mask.open();
+       	confirmDialog.confirm(
+       		{
+               	title: "Confirm",
+               	msg: '저장하시겠습니까?'
+           	}, 
+           	function(){
+             	if ( this.key == "ok" ) {
+             		gfn_callAjax("/board/axBoardNoticeSave.do", gfn_getSaveData(grid), fn_callbackAjax, "save"); 
+               	} else {
+               		mask.close();
+               	}
+           	}
+       	);
+   	}
+}
 
 function fn_params() {
 	params.SEARCH_STR = $("#SEARCH_STR").val();
@@ -128,11 +176,11 @@ function fn_callbackAjax(data, id) {
 	
 	if ( id == "search" ) {
 		grid.setData(data.list);
-	} else if ( id == "delete" ) {
+	} else if ( id == "save" ){
 		mask.close();
 
 		mask.open();
-		dialog.alert( { msg : "삭제 되었습니다." }, function () { mask.close();	fn_search(); } );
+		dialog.alert( { msg : "저장 되었습니다." }, function () { mask.close();	fn_search(); } );
 	}
 }
 
@@ -170,8 +218,10 @@ function fn_gridEvent(event, obj) {
 <div>
     <button class="btn btn-default" data-grid-control="search">검색</button>
     <button class="btn btn-default" data-grid-control="add">추가</button>
-    <button class="btn btn-default" data-grid-control="delete">삭제</button>
+    <button class="btn btn-default" data-grid-control="delete">삭제</button>    
+    <button class="btn btn-default" data-grid-control="save">저장</button>
     <button class="btn btn-default" data-grid-control="export">엑셀</button>
+    <button class="btn btn-default" data-grid-control="editImage">이미지 편집</button>
 </div>
 
 <div style="height:10px"></div>

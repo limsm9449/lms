@@ -488,8 +488,13 @@ header{
 .tabs .slide_3{
     background:url('../img/main_visual3.jpg') #5ab4dc 50% -8% no-repeat;
 }
+.process1_slide_wrap .slide_box,
+.process2_slide_wrap .slide_box{
+    height:270px;
+}
 .process1_slide_wrap .slide_box{
     background:url('../img/process1.jpg') 50% 0 #f2ede7 no-repeat;
+    background-size:contain;
 }
 .process2_slide_wrap .slide_box{
     background:url('../img/process2.jpg') 50% 0 #fff no-repeat;
@@ -635,7 +640,7 @@ header{
     border:solid 1px #aaa;
 }
 .process_wrap .bx-viewport {
-    height: 230px !important;
+    height: 270px !important;
     background:#fff;
 }
 .wrap .contents_wrap .bx-wrapper .bx-controls.bx-has-controls-auto .bx-controls-auto{

@@ -117,7 +117,7 @@ function lfn_validate() {
                 	
                     <div class='certification_name clear_fix'>
                         <p>이름</p>
-                        <input type="text" name="userName" id="userName" value="${set.data.userName}" readonly="readonly"/>
+                        <input type="text" name="userName" id="userName" value="${set.data.userName}" disabled>
                     </div>
                     <div class='certification_gender clear_fix'>
                         <p>성별</p>
@@ -170,7 +170,7 @@ function lfn_validate() {
                         <p>주소</p>
                         <input type='text' name='homeZipcode' id='homeZipcode' value="${set.data.homeZipcode}">
                         <button onClick="window.open('${set.zipcodeUrl}', 'zipcode','width=900,height=650');">우편번호검색</button>
-                        <input type='text' name='homeAddr' id='homeAddr' value="${set.data.homeAddr}">
+                        <input class="last_left" type='text' name='homeAddr' id='homeAddr' value="${set.data.homeAddr}">
                     </div>
                 </div>
                 <div class='signup_btn_box clear_fix'>

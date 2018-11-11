@@ -209,6 +209,10 @@ header{
 
 
 /*--- CONTENTS ---*/
+.right{
+  float:left;
+  width:calc(100% - 200px);
+}
 .contents_wrap{
     /* width: calc(100% - 201px); */
     width:100%;
@@ -251,7 +255,8 @@ header{
     font-size: 14px;
     font-weight: 500;
     line-height: 175%;
-    padding-right: 10px;
+    padding:2px 6px 0 0;
+    margin:0;
 }
 .filter_box div select,
 .filter_box div input[type='text']{
@@ -278,10 +283,16 @@ header{
     min-width:73px;
     font-size: 14px;
     font-weight: 500;
-    color: #fff;
+    color: #333;
     padding: 10px;
-    background: #006db3;
+    background: #fff;
+    border:solid 1px #ccc;
     border-radius: 2px;
+}
+.content_btn_box button:hover{
+  color:#fff;
+  background:#006db3;
+  border:solid 1px #006db3;
 }
 
 /* GRID AREA */

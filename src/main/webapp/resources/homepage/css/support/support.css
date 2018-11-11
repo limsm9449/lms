@@ -533,6 +533,7 @@ header{
 .support_support_list_box ul{}
 .support_list_box{
     padding: 4px 0;
+    cursor:pointer;
 }
 .support_list_box span{
     display: block;

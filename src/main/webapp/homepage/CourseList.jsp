@@ -92,7 +92,7 @@ function lfn_btn(pKind, pParam) {
 	            <%@ include file="../common/mainQuickMenu.jsp" %>
 	
 	            <!-- Process -->
-	            <div class='process_top_area'>
+	            <div class='top_area'>
 	                <div class='clear_fix'>
 	                    <div class='process_history_box clear_fix'>
 	                        <span>

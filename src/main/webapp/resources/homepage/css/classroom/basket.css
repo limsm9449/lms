@@ -984,13 +984,17 @@ header{
 }
 .register_compose_table tr td{
     border-right: solid 1px #ddd;
-    padding: 10px 0;
+    padding: 10px 0 10px 1%;
 }
 .register_compose_table tr .last_right{
     border-right:0;
 }
+th.register_compose_col1.right_border.part_only {
+    padding: 0 0 10px;
+}
 .register_compose_table tr .right_border{
     border-right:0;
+    padding:10px 0;
 }
 .register_compose_table tr th input[type='checkbox'],
 .register_compose_table tr td input[type='checkbox']{

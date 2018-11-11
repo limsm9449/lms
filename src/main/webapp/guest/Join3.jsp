@@ -275,7 +275,7 @@ function lfn_validate() {
                         <p>주소</p>
                         <input type='text' name='homeZipcode' id='homeZipcode' placeholder='우편번호'>
                         <button onClick="window.open('${set.zipcodeUrl}', 'zipcode','width=900,height=650');">우편번호검색</button>
-                        <input type='text' name='homeAddr' id='homeAddr' placeholder='주소를 입력해주세요.'>
+                        <input class="last_left" type='text' name='homeAddr' id='homeAddr' placeholder='주소를 입력해주세요.'>
                     </div>
                 </div>
                 <div class='signup_btn_box clear_fix'>

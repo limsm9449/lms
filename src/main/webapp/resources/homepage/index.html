@@ -1,12 +1,11 @@
 <!DOCTYPE html>
-<html lang='ko' data-useragent="Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; Trident/6.0)">
-
+<html lang='ko'>
 <head>
     <meta charset='utf-8'>
     <meta name='viewport' content='width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1'>
     <meta http-equiv='X-UA-Compatible' content='ie=edge'>
     <title>Q learning - Main</title>
-    
+
     <script src='./js/jquery_3.3.1.js'></script>
     <!--[if IE8]>
         <script src="http://code.jquery.com/jquery-1.12.3.js></script>
@@ -14,14 +13,14 @@
     <script src='./js/jquery.bxslider.js'></script>
 
     <!--[if IE]>
-        <link rel='stylesheet' href='./css/main_compatibility.css'>
+        <link rel='stylesheet' type='text/css' href='./css/main_compatibility.css'>
     <![endif]-->
 
     <link href='https://fonts.googleapis.com/css?family=Nanum+Gothic' rel='stylesheet'>
     <link href="https://fonts.googleapis.com/css?family=Noto+Sans" rel="stylesheet">
 
-    <link rel='stylesheet' href='./css/initialization.css'>
-    <link rel='stylesheet' href='./css/main.css'>
+    <link rel='stylesheet' type='text/css' href='./css/initialization.css'>
+    <link rel='stylesheet' type='text/css' href='./css/main.css'>
 </head>
 
 <body>
@@ -44,14 +43,14 @@
                     </button>
                 </div>
                 <div class='head_con util_box'>
-                    <!-- 로그인 상태 -->
-                    <a href='./index.html' class='last_right'>로그아웃</a>
-                    <a href='./html/etc/user_info_change.html' class='pc'>회원정보수정</a>
-                    <p class='pc'>OOO님 반갑습니다.</p>
-
                     <!-- 로그오프 상태 -->
-                    <!-- <a href='./html/etc/signup_step1.html' class='last_right'>회원가입</a>
-                    <a href='./html/etc/signin.html' onclick='login()'>로그인</a> -->
+                    <a href='./html/etc/signup_step1.html' class='last_right'>회원가입</a>
+                    <a href='./html/etc/signin.html' onclick='login()'>로그인</a>
+                    
+                    <!-- 로그인 상태 -->
+                    <!-- <a href='./index.html' class='last_right'>로그아웃</a> -->
+                    <a href='./html/etc/user_info_change.html' class='pc'>회원정보수정</a>
+                    <!-- <p class='pc'>OOO님 반갑습니다.</p> -->
                 </div>
             </div>
             <div class="head_wrap mobile clear_fix">
@@ -140,6 +139,7 @@
                             <ul class='menu_sub'>
                                 <li><a href='./html/support/notice.html'>공지사항</a></li>
                                 <li><a href='./html/support/faq.html'>FAQ</a></li>
+                                <li><a href='./html/support/event.html'>EVENT</a></li>
                                 <li><a href='./html/support/mail.html'>1:1 메일문의</a></li>
                                 <li><a href=''>원격지원</a></li>
                                 <li><a href='./html/support/account.html'>입금계좌안내</a></li>
@@ -249,6 +249,7 @@
                             <li class='first_depth'><a href='./html/support/support.html'>고객지원</a></li>
                             <li><a href='./html/support/notice.html'>공지사항</a></li>
                             <li><a href='./html/support/faq.html'>FAQ</a></li>
+                            <li><a href='./html/support/event.html'>EVENT</a></li>
                             <li><a href='./html/support/mail.html'>1:1 메일문의</a></li>
                             <li><a href=''>원격지원</a></li>
                             <li><a href='./html/support/account.html'>입금계좌안내</a></li>
@@ -692,25 +693,25 @@
                     </div>
                     <ul>
                         <li class='user_cs_list'>
-                            <a href='./html/support/notice_detail.html' class='clear_fix'>
+                            <a href='./html/support/faq_detail.html' class='clear_fix'>
                                 <p>무통장입금(가상계좌) 결제 방법을 알려주세요</p>
                                 <p class='user_cs_list_date'>2018.07.26</p>
                             </a>
                         </li>
                         <li class='user_cs_list'>
-                            <a href='./html/support/notice_detail.html' class='clear_fix'>
+                            <a href='./html/support/faq_detail.html' class='clear_fix'>
                                 <p>회원정보를 수정하고 싶어요
                                 <p class='user_cs_list_date'>2018.07.26</p>
                             </a>
                         </li>
                         <li class='user_cs_list'>
-                            <a href='./html/support/notice_detail.html' class='clear_fix'>
+                            <a href='./html/support/faq_detail.html' class='clear_fix'>
                                 <p>학습종료 후에도 학습내용을 볼 수 있습니까?</p>
                                 <p class='user_cs_list_date'>2018.07.26</p>
                             </a>
                         </li>
                         <li class='user_cs_list'>
-                            <a href='./html/support/notice_detail.html' class='clear_fix'>
+                            <a href='./html/support/faq_detail.html' class='clear_fix'>
                                 <p>[학습장애] 학습 중 넥스트 버튼이 안보입니다.</p>
                                 <p class='user_cs_list_date'>2018.07.26</p>
                             </a>

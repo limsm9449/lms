@@ -2,10 +2,14 @@ package com.qp.lms.main.controller;
 
 
 
+import java.io.File;
 import java.net.URLEncoder;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -16,7 +20,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
+import com.qp.lms.board.model.AttachSet;
+import com.qp.lms.board.model.AttachVO;
+import com.qp.lms.board.service.AttachService;
 import com.qp.lms.common.CommUtil;
 import com.qp.lms.common.SessionUtil;
 import com.qp.lms.common.SessionVO;
@@ -43,7 +54,10 @@ public class MainController {
 
     @Autowired
     private CommService commSvr;
-    
+
+    @Autowired
+    private AttachService attachSvr;
+
     
     /**
      * Main Top
@@ -728,4 +742,135 @@ public class MainController {
         return "/homepage/EventV";
     }
 
+    @RequestMapping(value = "/main/companyInquiry")
+    public String companyInquiry(@ModelAttribute MainVO vo, Model model) throws Exception {
+    	try {
+    		MainSet set = new MainSet();
+    		set.setCondiVO(vo);
+
+    		if ( (SessionVO)SessionUtil.getSession() == null ) {
+        		set.getCondiVO().setUserId("GUEST");
+    		} else { 
+        		set.getCondiVO().setUserId(SessionUtil.getSessionUserId());
+    		}
+
+			set = svr.companyInquiry(set);
+		    	
+	        model.addAttribute("json", CommUtil.getJsonObject(set.getRtnMode(),""));
+    	} catch ( Exception e ) {
+    		e.printStackTrace();
+    	}
+
+    	return "/common/json";
+    }
+    
+    @RequestMapping(value = "/main/tutorInquiry")
+    public String tutorInquiry(@ModelAttribute MainVO vo, Model model) throws Exception {
+    	try {
+    		MainSet set = new MainSet();
+    		set.setCondiVO(vo);
+
+    		if ( (SessionVO)SessionUtil.getSession() == null ) {
+        		set.getCondiVO().setUserId("GUEST");
+    		} else { 
+        		set.getCondiVO().setUserId(SessionUtil.getSessionUserId());
+    		}
+
+			set = svr.tutorInquiry(set);
+		    	
+	        model.addAttribute("json", CommUtil.getJsonObject(set.getRtnMode(),""));
+    	} catch ( Exception e ) {
+    		e.printStackTrace();
+    	}
+
+    	return "/common/json";
+    }
+    
+    @RequestMapping(value = "/main/attachI")
+    public String attachI( @ModelAttribute AttachVO vo, Model model) throws Exception {
+    	try {
+	    	AttachSet set = new AttachSet();
+	    	set.setCondiVO(vo);
+	    	
+	    	set = attachSvr.attachI(set);
+	
+	    	model.addAttribute("set", set );
+    	} catch ( Exception e ) {
+    		e.printStackTrace();
+    	}
+
+        return "/homepage/AttachI";
+    }
+    
+    @RequestMapping(value = "/main/attachIns", method = RequestMethod.POST)
+    public String attachIns(MultipartHttpServletRequest request, @ModelAttribute AttachVO vo, Model model) throws Exception {
+    	try {
+	    	AttachSet set = new AttachSet();
+	    	set.setCondiVO(vo);
+	    	
+	    	Calendar cal = Calendar.getInstance();
+	    	String year = Integer.toString(cal.get(Calendar.YEAR));
+	    	String month = Integer.toString(cal.get(Calendar.MONTH) + 1);
+	    	
+	    	if ( month.length() == 1 )
+	    		month = "0" + month;
+	    	
+	    	// 첨부할 루트 디렉토리
+	    	String attachFolder = CommUtil.getFileFolder();
+	
+	    	//년별, 월별 디렉토리 존재여부 체크
+	    	File attachDir = new File(attachFolder + year);
+	    	if ( !attachDir.exists() )
+	    		attachDir.mkdir();
+	    	attachDir = new File(attachFolder + year + "//" + month);
+	    	if ( !attachDir.exists() )
+	    		attachDir.mkdir();
+	    	
+	    	// 파일 처리
+	    	Map<String, MultipartFile> files = request.getFileMap();
+	        CommonsMultipartFile cmf = (CommonsMultipartFile) files.get("newFile");
+	        
+	    	vo.setFileSize(cmf.getFileItem().getSize());
+	    	vo.setFileName(UUID.randomUUID().toString());
+	    	vo.setFilePath(year + "//" + month + "//");
+	    	vo.setOrgFileName(CommUtil.getFileName(cmf.getFileItem().getName()));
+	    
+	    	//파일 저장
+	        File f = new File(attachDir + "//" + vo.getFileName());
+	        cmf.transferTo(f);
+	
+	        //파일 정보를 DB에 저장
+	    	set = attachSvr.attachIns(set);
+	
+	    	model.addAttribute("set", set );
+    	} catch ( Exception e ) {
+    		e.printStackTrace();
+    	}
+
+        return "/board/AttachT";
+    }
+
+    @RequestMapping(value = "/main/attachDel", method = RequestMethod.POST)
+    public String attachDel(MultipartHttpServletRequest request, @ModelAttribute AttachVO vo, Model model) throws Exception {
+    	try {
+	    	AttachSet set = new AttachSet();
+	    	set.setCondiVO(vo);
+	    	
+	    	set = attachSvr.attachDel(set);
+	    	
+	    	// 파일을 삭제한다.
+	    	if ( set.getData() != null ) {
+	            String fullFileName = CommUtil.getFileFolder() + set.getData().getFilePath() + set.getData().getFileName();
+	
+	            File f = new File(fullFileName);
+	            f.delete();
+	    	}
+	     
+	    	model.addAttribute("set", set );
+    	} catch ( Exception e ) {
+    		e.printStackTrace();
+    	}
+
+    	return "/board/AttachT";
+    }
 }

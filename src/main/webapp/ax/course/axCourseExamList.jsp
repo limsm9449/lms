@@ -37,7 +37,7 @@ $(document.body).ready(function () {
 
 	fn_makeGrid();
 
-	fn_search();
+	//fn_search();
 
     $('[data-grid-control]').click(function () {
         switch (this.getAttribute("data-grid-control")) {

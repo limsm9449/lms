@@ -20,9 +20,12 @@
 </head>
 
 <script type="text/javascript">
-$(document).ready(function() {
+$(document).ready(function() { 
 	$("#contents").cleditor({height:105});
 	$("#contents").cleditor()[0].disable(true).refresh(); 
+
+	$("#reportUserContents").cleditor({height:105});
+	$("#reportUserContents").cleditor()[0].refresh(); 
 	
 	$("#attachFrame").attr("src","/board/attachReportV.do?" + "pSeq=${set.data.seq}&kind=C_REPORT&isMy=Y");
 	$("#reportAttachFrame").attr("src","/board/attachU.do?" + "pSeq=${set.data.attachSeq}&kind=U_REPORT");
@@ -71,7 +74,7 @@ function lfn_btn(pKind, pParam) {
             </li> 
             <li class='clear_fix view'>
                 <p>내용</p>
-				<textarea name='contents' id='contents' disabled="disabled"><c:out value="${set.data.contents}" escapeXml="" /></textarea>                  
+				<textarea name='contents' id='contents' style="height:100px;width:300px;"><c:out value="${set.data.contents}" escapeXml="" /></textarea>                  
             </li>
             </li>
             <li class='clear_fix'>

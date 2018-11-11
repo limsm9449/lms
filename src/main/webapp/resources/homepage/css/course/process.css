@@ -579,15 +579,15 @@ header{
     line-height: 150%;
     margin: 0 3% 0 2%;
 }
-.process_category_box div input,
-.process_support_fund div input{
+.process_category_box div input[type='checkbox'],
+.process_support_fund div input[type='checkbox']{
     display: block;
     float: left;
     width: 16px;
     height: 16px;
     margin-top: 2px;
     background: #fff;
-    border: solid 1px #aaa;
+    /* border: solid 1px #aaa; */
 }
 .process_category_all{
     width:100%;

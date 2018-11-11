@@ -17,7 +17,10 @@ public class Constant {
 	};
 	
 	/** 첨부할 종류 */
-	public static enum attach {B_DATA,B_REPORT};
+	public static enum attach {B_DATA,B_REPORT,
+		COMP_LEARN, /* 기업교육 문의 */
+		TUTOR_SUPP /* 튜터 지원 */
+	};
 	
 	
 	// 한페이지에 출력할 갯수...
@@ -27,5 +30,6 @@ public class Constant {
 	public static int unitForMain = 5;	  
 
 	//댓글 리스트 갯수
-	public static int unitForReply = 20;	  
+	public static int unitForReply = 20;
+	
 }

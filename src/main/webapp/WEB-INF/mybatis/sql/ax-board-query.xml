@@ -109,7 +109,8 @@
 		       	A.COURSE_ID,
 		       	TITLE,
 		       	VIEW_CNT,
-		       	DATE_FORMAT(IFNULL(A.UPDATE_DATE,A.CREATE_DATE), '%y.%m.%d %H:%i') CREATE_DATE
+		       	DATE_FORMAT(IFNULL(A.UPDATE_DATE,A.CREATE_DATE), '%y.%m.%d %H:%i') CREATE_DATE,
+		       	MAIN_YN, IMG1, IMG2, COLOR
 		FROM 	BOARD_NOTICE A
 		WHERE 	( A.COURSE_ID = #{COURSE_ID} OR
 					A.COURSE_ID IN ( 	SELECT 	COURSE_ID 
@@ -126,7 +127,8 @@
 		SELECT 	SEQ,
 		       	COURSE_ID,
 		       	TITLE,
-		       	CONTENTS
+		       	CONTENTS,
+		       	MAIN_YN, IMG1, IMG2, COLOR
 		FROM 	BOARD_NOTICE
 		WHERE 	SEQ = #{SEQ}
 	</select>
@@ -147,6 +149,22 @@
     <update id="axBoardNoticeViewCntUpd" parameterType="hashmap">
 		UPDATE BOARD_NOTICE
 		   SET VIEW_CNT = VIEW_CNT + 1
+		 WHERE SEQ = #{SEQ}
+    </update>	
+
+    <update id="axBoardNoticeMainUpdate" parameterType="hashmap">
+		UPDATE BOARD_NOTICE
+		   SET MAIN_YN = #{MAIN_YN},
+		       COLOR = #{COLOR},
+		       UPDATE_DATE = CURRENT_TIMESTAMP
+		 WHERE SEQ = #{SEQ}
+    </update>	
+
+    <update id="axBoardNoticeImageUpdate" parameterType="hashmap">
+		UPDATE BOARD_NOTICE
+		   SET UPDATE_DATE = CURRENT_TIMESTAMP
+		   <if test="kind != null and kind == 'img1'"> ,IMG1 = 'Y'</if>
+		   <if test="kind != null and kind == 'img2'"> ,IMG2 = 'Y'</if>
 		 WHERE SEQ = #{SEQ}
     </update>	
 
@@ -436,7 +454,8 @@
 		SELECT 	SEQ,
 		       	TITLE,
 		       	VIEW_CNT,
-		       	DATE_FORMAT(IFNULL(UPDATE_DATE,CREATE_DATE), '%y.%m.%d %H:%i') CREATE_DATE
+		       	DATE_FORMAT(IFNULL(UPDATE_DATE,CREATE_DATE), '%y.%m.%d %H:%i') CREATE_DATE,
+		       	MAIN_YN, IMG1, IMG2, COLOR
 		FROM 	BOARD_EVENT
 		<if test="SEARCH_STR != null and SEARCH_STR != ''">
 			WHERE UPPER(TITLE) LIKE CONCAT('%',UPPER(#{SEARCH_STR}),'%')
@@ -448,7 +467,8 @@
 		SELECT 	SEQ,
 		       	TITLE,
 		       	CONTENTS,
-		       	VIEW_CNT
+		       	VIEW_CNT,
+		       	MAIN_YN, IMG1, IMG2, COLOR
 		FROM 	BOARD_EVENT
 		WHERE 	SEQ = #{SEQ}
 	</select>
@@ -463,6 +483,22 @@
 		   SET TITLE = #{TITLE},
 		       CONTENTS = #{CONTENTS},
 		       UPDATE_DATE = CURRENT_TIMESTAMP
+		 WHERE SEQ = #{SEQ}
+    </update>	
+
+    <update id="axBoardEventMainUpdate" parameterType="hashmap">
+		UPDATE BOARD_EVENT
+		   SET MAIN_YN = #{MAIN_YN},
+		       COLOR = #{COLOR},
+		       UPDATE_DATE = CURRENT_TIMESTAMP
+		 WHERE SEQ = #{SEQ}
+    </update>	
+
+    <update id="axBoardEventImageUpdate" parameterType="hashmap">
+		UPDATE BOARD_EVENT
+		   SET UPDATE_DATE = CURRENT_TIMESTAMP
+		   <if test="kind != null and kind == 'img1'"> ,IMG1 = 'Y'</if>
+		   <if test="kind != null and kind == 'img2'"> ,IMG2 = 'Y'</if>
 		 WHERE SEQ = #{SEQ}
     </update>	
 

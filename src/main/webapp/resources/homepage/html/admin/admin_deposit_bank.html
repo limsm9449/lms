@@ -72,7 +72,7 @@
                     </button>
                     <ul class='sub' id='sub3'>
                         <li><a href='./admin_deposit_bank.html' class='on'>은행 입금 관리</a></li>
-                        <li><a href='./admin_deposit_card'>카드 입금 관리</a></li>
+                        <li><a href='./admin_deposit_card.html'>카드 입금 관리</a></li>
                     </ul>
                 </li>
                 <li>
@@ -128,74 +128,76 @@
                 </li>
             </ul>
         </header>
-        <div class='contents_wrap'>
-            <div class='content_top'>
-                <h1>은행 입금 관리</h1>
-                <div class='filter_box clear_fix'>
-                    <div>
-                        <p>카테고리</p>
-                        <select name='' id=''>
-                            <option value='전체'>전체</option>
-                            <option value='선택1'>선택1</option>
-                            <option value='선택2'>선택2</option>
-                        </select>
-                        <select name='' id=''>
-                            <option value='전체'>전체</option>
-                            <option value='선택1'>선택1</option>
-                            <option value='선택2'>선택2</option>
-                        </select>
-                        <select name='' id=''>
-                            <option value='전체'>전체</option>
-                            <option value='선택1'>선택1</option>
-                            <option value='선택2'>선택2</option>
-                        </select>
+        <div class='right'>
+            <div class='contents_wrap'>
+                <div class='content_top'>
+                    <h1>은행 입금 관리</h1>
+                    <div class='filter_box clear_fix'>
+                        <div>
+                            <p>카테고리</p>
+                            <select name='' id=''>
+                                <option value='전체'>전체</option>
+                                <option value='선택1'>선택1</option>
+                                <option value='선택2'>선택2</option>
+                            </select>
+                            <select name='' id=''>
+                                <option value='전체'>전체</option>
+                                <option value='선택1'>선택1</option>
+                                <option value='선택2'>선택2</option>
+                            </select>
+                            <select name='' id=''>
+                                <option value='전체'>전체</option>
+                                <option value='선택1'>선택1</option>
+                                <option value='선택2'>선택2</option>
+                            </select>
+                        </div>
+                        <div>
+                            <p>연도</p>
+                            <select name='' id=''>
+                                <option value='전체'>전체</option>
+                                <option value='선택1'>선택1</option>
+                                <option value='선택2'>선택2</option>
+                            </select>
+                        </div>
+                        <div>
+                            <p>차수</p>
+                            <input type='text' name='' id=''>
+                        </div>
+                        <div>
+                            <p>과정명</p>
+                            <input type='text' name='' id=''>
+                        </div>
                     </div>
-                    <div>
-                        <p>연도</p>
-                        <select name='' id=''>
-                            <option value='전체'>전체</option>
-                            <option value='선택1'>선택1</option>
-                            <option value='선택2'>선택2</option>
-                        </select>
-                    </div>
-                    <div>
-                        <p>차수</p>
-                        <input type='text' name='' id=''>
-                    </div>
-                    <div>
-                        <p>과정명</p>
-                        <input type='text' name='' id=''>
+                    <div class='filter_box clear_fix'>
+                        <div>
+                            <p>신청상태</p>
+                            <select name='' id=''>
+                                <option value='전체'>전체</option>
+                                <option value='선택1'>선택1</option>
+                                <option value='선택2'>선택2</option>
+                            </select>
+                        </div>
+                        <div class='more'>
+                            <p>일자</p>
+                            <input type='text' name='' id='' value='2018-10-16' disabled>
+                            <span>~</span>
+                            <input type='text' name='' id='' value='2018-10-26' disabled>
+                        </div>
+                        <div>
+                            <p>신청자</p>
+                            <input type='text' name='' id=''>
+                        </div>
                     </div>
                 </div>
-                <div class='filter_box clear_fix'>
-                    <div>
-                        <p>신청상태</p>
-                        <select name='' id=''>
-                            <option value='전체'>전체</option>
-                            <option value='선택1'>선택1</option>
-                            <option value='선택2'>선택2</option>
-                        </select>
-                    </div>
-                    <div class='more'>
-                        <p>일자</p>
-                        <input type='text' name='' id='' value='2018-10-16' disabled>
-                        <span>~</span>
-                        <input type='text' name='' id='' value='2018-10-26' disabled>
-                    </div>
-                    <div>
-                        <p>신청자</p>
-                        <input type='text' name='' id=''>
-                    </div>
+                <div class='content_btn_box clear_fix'>
+                    <button onclick='admin_popup_open("1", true)'>검색</button>
+                    <button onclick='admin_popup_open("6", true)'>엑셀</button>
+                    <button onclick='admin_popup_open("22", true)'>학습내용</button>
+                    <button onclick='admin_popup_open("23", true)'>수강생별 성적</button>
                 </div>
-            </div>
-            <div class='content_btn_box clear_fix'>
-                <button onclick='admin_popup_open("1")'>검색</button>
-                <button onclick='admin_popup_open("6")'>엑셀</button>
-                <button onclick='admin_popup_open("22")'>학습내용</button>
-                <button onclick='admin_popup_open("23")'>수강생별 성적</button>
-            </div>
-            <div class='grid_area'>
-                <p>데이터</p>
+                <div class='grid_area'>
+                    <p>데이터</p>
+                </div>
             </div>
         </div>
     </div>
