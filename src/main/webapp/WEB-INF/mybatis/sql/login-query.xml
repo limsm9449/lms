@@ -69,4 +69,34 @@
     	  FROM 	USER A
     	 WHERE 	USER_ID = #{userId}
     </select>
+    
+    <insert id="loginLogInsert" parameterType="com.qp.lms.login.model.LoginVO">
+		INSERT INTO USER_LOGIN(USER_ID, LOGIN_TIME,LAST_TIME, LOGIN_IP)
+		VALUES ( #{userId}, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, #{loginIp} )
+	</insert>
+
+    <update id="notLogoutLogUpdate" parameterType="com.qp.lms.login.model.LoginVO">
+		UPDATE 	USER_LOGIN
+		SET		LOGOUT_TIME = LAST_TIME
+		WHERE 	USER_ID = #{userId}
+		AND		LOGIN_TIME > DATE_ADD(CURRENT_TIMESTAMP,INTERVAL -1 DAY)
+		AND 	LOGOUT_TIME IS NULL
+	</update>
+
+    <update id="logoutLogUpdate" parameterType="com.qp.lms.login.model.LoginVO">
+		UPDATE 	USER_LOGIN
+		SET		LOGOUT_TIME = CURRENT_TIMESTAMP
+		WHERE 	USER_ID = #{userId}
+		AND		LOGIN_TIME > DATE_ADD(CURRENT_TIMESTAMP,INTERVAL -1 DAY)
+		AND 	LOGOUT_TIME IS NULL
+	</update>
+
+    <update id="lastLogUpdate" parameterType="com.qp.lms.login.model.LoginVO">
+		UPDATE 	USER_LOGIN
+		SET		LAST_TIME = CURRENT_TIMESTAMP
+		WHERE 	USER_ID = #{userId}
+		AND		LOGIN_TIME > DATE_ADD(CURRENT_TIMESTAMP,INTERVAL -1 DAY)
+		AND 	LOGOUT_TIME IS NULL
+	</update>
+
 </mapper>

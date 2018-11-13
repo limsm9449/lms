@@ -255,6 +255,7 @@ html{
 .answer_paper{
     float: right;
     box-sizing:border-box;
+    width:100%;
     border: solid 2px #555;
     margin-top: 10px;
 }
@@ -408,14 +409,22 @@ html{
     width:15%;
     min-height:36px;
 }
+.report_box.manage li div.result_area{
+    width:85%;
+}
 .report_box li .result_area{
     padding: 10px;
     width: 620px;
 }
-.report_box.manage li input[type='text'],
-.report_box.manage .view textarea{
+.report_box.manage li input[type='text']{
     width:85%;
 }
+.report_box.manage .view textarea{
+    box-sizing:border-box;
+    width:100%;
+    border:none;
+}
+
 .report_box.manage .half input[type='text']{
     width:70%;
 }

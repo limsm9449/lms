@@ -57,24 +57,28 @@ public class AxBoardNoticeService {
 		}
 		
 		List<HashMap<String, Object>> updList = (List<HashMap<String, Object>>)paramMap.get("modified");
-		for ( int i = 0; i < updList.size(); i++ ) {
-			HashMap<String, Object> row = (HashMap<String, Object>)updList.get(i);
-			row.put("SESSION_USER_ID", SessionUtil.getSessionUserId());
-
-			sqlSession.update("axBoard.axBoardNoticeMainUpdate", row);
-		}
-
-		List<HashMap<String, Object>> delList = (List<HashMap<String, Object>>)paramMap.get("deleted");
-		for ( int i = 0; i < delList.size(); i++ ) {
-			sqlSession.delete("axBoard.axBoardNoticeDelete", delList.get(i));
-			
-			if ( "Y".equals(delList.get(i).get("IMG1")) ) {
-				File f = new File(commSvr.getSetting("NOTICE_IMG_FOLDER") + "//" + delList.get(i).get("SEQ") + "_img1.jpg");
-				f.delete();
+		if ( updList != null ) {
+			for ( int i = 0; i < updList.size(); i++ ) {
+				HashMap<String, Object> row = (HashMap<String, Object>)updList.get(i);
+				row.put("SESSION_USER_ID", SessionUtil.getSessionUserId());
+	
+				sqlSession.update("axBoard.axBoardNoticeMainUpdate", row);
 			}
-			if ( "Y".equals(delList.get(i).get("IMG2")) ) {
-				File f = new File(commSvr.getSetting("NOTICE_IMG_FOLDER") + "//" + delList.get(i).get("SEQ") + "_img2.jpg");
-				f.delete();
+		}
+		
+		List<HashMap<String, Object>> delList = (List<HashMap<String, Object>>)paramMap.get("deleted");
+		if ( delList != null ) {
+			for ( int i = 0; i < delList.size(); i++ ) {
+				sqlSession.delete("axBoard.axBoardNoticeDelete", delList.get(i));
+				
+				if ( "Y".equals(delList.get(i).get("IMG1")) ) {
+					File f = new File(commSvr.getSetting("NOTICE_IMG_FOLDER") + "//" + delList.get(i).get("SEQ") + "_img1.jpg");
+					f.delete();
+				}
+				if ( "Y".equals(delList.get(i).get("IMG2")) ) {
+					File f = new File(commSvr.getSetting("NOTICE_IMG_FOLDER") + "//" + delList.get(i).get("SEQ") + "_img2.jpg");
+					f.delete();
+				}
 			}
 		}
 

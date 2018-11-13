@@ -37,7 +37,9 @@ public class CommonVO implements Serializable{
 	private String isViewTitle;	//타이블 보여줄지 여부
 
 	private String prevParams;
+	private String loginIp;
 
+	
 	// 삭제하면 안됨.-------------------------------------------------
 	public int getPageNum() {
 		return ( pageNum == 0 ? 1 : pageNum );
@@ -192,6 +194,12 @@ public class CommonVO implements Serializable{
 	}
 	public void setPassword(String password) {
 		this.password = password;
+	}
+	public String getLoginIp() {
+		return loginIp;
+	}
+	public void setLoginIp(String loginIp) {
+		this.loginIp = loginIp;
 	}
 
 	

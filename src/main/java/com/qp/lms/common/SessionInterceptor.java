@@ -93,7 +93,12 @@ public class SessionInterceptor extends HandlerInterceptorAdapter {
 			        	commSvr.requestLog(SessionUtil.getSessionUserId(), url, reqParam, request.getRemoteAddr());
 			        }
 	    		}
-	    		
+
+	    		//마지막 접속 로그를 남긴다.
+			    if ( (SessionVO)SessionUtil.getSession() != null) {
+		        	commSvr.lastLog(SessionUtil.getSessionUserId());
+		        }
+
 		    	//인기과정
 	   	 		if ( SessionUtil.getFavorityCourseList() == null ) {
 	   	 			SessionUtil.setAttribute("favorityCourseList", commSvr.getFavorityCourseList());

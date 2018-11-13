@@ -51,6 +51,8 @@ public class LoginController {
      */
     @RequestMapping(value = "/loginCheck", method = RequestMethod.POST)
     public String loginCheck(@ModelAttribute LoginVO loginVO, Model model,HttpServletRequest request) throws Exception {
+    	loginVO.setLoginIp(request.getRemoteAddr());
+    	
     	LoginSet set = new LoginSet();
     	set.setCondiVO(loginVO);
     	
@@ -169,14 +171,20 @@ public class LoginController {
     @RequestMapping(value = "/logout", method = RequestMethod.POST)
     public String logout(Model model) throws Exception {
     	try {
+    		LoginVO loginVO = new LoginVO();
+    		loginVO.setUserId(SessionUtil.getSessionUserId());
+    		
+    		
+        	LoginSet set = new LoginSet();
+        	set.setCondiVO(loginVO);
+        	
+        	set = service.logout(set);
+
         	SessionUtil.removeAttribute("session");
 
        	 	//카트 정보 삭제
     		SessionUtil.setAttribute("cart", null);
     		SessionUtil.setAttribute("tempCart", null);
-
-        	CommonSet set = new CommonSet();
-	   		set.setRtnMode(Constant.mode.OK.name());
 
 	    	model.addAttribute("json", CommUtil.getJsonObject(set.getRtnMode(),""));
     	} catch ( Exception e ) {

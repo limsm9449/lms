@@ -365,6 +365,17 @@ header{
 
 
 
+@media all and (max-width:1100px){
+    .filter_box div{
+      float:none;
+      width:100%;
+    }
+    .filter_box div p{
+      min-width:12%;
+    }
+}
+
+
 
 
 

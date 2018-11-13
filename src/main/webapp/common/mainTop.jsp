@@ -57,8 +57,8 @@
             <div class='menu_wrap'>
                 <div class='menu_layout pc' onmouseover='sub_show()'>
                     <div class='mobile_btn'>
-                        <button>
-                            <span></span><span></span><span></span>
+                        <button onclick='sub_show_hide_pc(this)'>
+                            <span class='first'></span><span class='middle'></span><span class='last'></span>
                         </button>
                     </div>
                     <ul class='menu'>
@@ -75,7 +75,7 @@
                             <a href="javascript:" onclick="page.goPage('/main/service', '');">고객지원</a>
                         </li>
                     </ul>
-                    <div class='menu_tutor'>
+                    <div class='menu_tutor' onclick='error_msg(event)'>
                     	<a href='#'>
                             <span>
                                 <img src='/resources/homepage/img/channel_ic.png' alt=''>
@@ -85,43 +85,50 @@
                     </div>
                 </div>
                 <div class='menu_dropdown_wrapper' id='menu_dropdown_pc'>
-                    <div class='menu_dropdown_wrap'>
-                        <div class='menu_dropdown clear_fix'>
-                            <ul class='menu_sub'>
+                    <div class='menu_dropdown_wrap clear_fix'>
+                        <ul class='menu_sub'>
+                        	<li class='menu_title'><a href="javascript:" onclick="page.goPage('/main/courseList', '');">전체과정</a></li>
 <c:forEach var="row" items="${courseCategoryList}" varStatus="idx">
-                                <li><a href="javascript:" onclick="page.goPage('/main/courseList', 'categorys=${row.code}');">${row.codeName}</a></li>
+                            <li><a href="javascript:" onclick="page.goPage('/main/courseList', 'categorys=${row.code}');">${row.codeName}</a></li>
 </c:forEach>
-                            </ul>
-                            <span class='menu_sub_line'></span>
-                            <ul class='menu_sub classroom'>
-                                <li><a href="javascript:" onclick="page.goPage('/normalUser/attendCourseList');">수강과정</a></li>
-                                <li><a href="javascript:" onclick="page.goPage('/normalUser/waitingCourseList');">수강대기과정</a></li>
-                                <li><a href="javascript:" onclick="page.goPage('/normalUser/cancelCourseList');">수강취소과정</a></li>
-                                <li><a href="javascript:" onclick="page.goPage('/normalUser/myCourseList');">수강완료과정</a></li>
-                                <li><a href="javascript:" onclick="page.goPage('/main/cart');">장바구니</a></li>
-                                <li><a href="javascript:" onclick="page.goPage('/member/userMemberU');">회원정보수정</a></li>
-                                <li><a href="javascript:" onclick="page.goPage('/member/memberChangePassword');">비밀번호변경</a></li>
-                                <li><a href="javascript:" onclick="page.goPage('/counsel/userCounselList');">상담내역</a></li>
-                                <li><a href="javascript:" onclick="page.goPage('/member/memberRetired');">회원탈퇴</a></li>
-                            </ul> 
-                            <span class='menu_sub_line'></span>
-                            <ul class='menu_sub'>
-                                <li><a href="javascript:" onclick="page.goNsJsp('register_method'); return false;">수강신청방법</a></li>
-                                <li><a href='javascript:' onclick="page.goNsJsp('study_method'); return false;">학습방법</a></li>
-                                <li><a href='javascript:' onclick="page.goNsJsp('study_manage'); return false;">학습관리</a></li>
-                                <li><a href="javascript:" onclick="page.goPage('/main/tutorial', 'shap=quick_to');">학습지원프로그램</a></li>
-                            </ul>
-                            <span class='menu_sub_line'></span>
-                            <ul class='menu_sub'>
-                                <li><a href="javascript:" onclick="page.goPage('/main/noticeList');">공지사항</a></li>
-								<li><a href="javascript:" onclick="page.goPage('/main/faqList');">FAQ</a></li>
-								<li><a href="javascript:" onclick="page.goPage('/main/eventList');">Event</a></li>
-								<li><a href="javascript:" onclick="page.goPage('/main/mailQuestion');">1:1 메일문의</a></li>
-								<li><a href="javascript:" onclick="page.goPage('/guest/bankInfo');">입금계좌안내</a></li>
-                                <li><a href="javascript:" onclick="page.goPage('/main/service', 'shap=screen_remoteService');">원격지원</a></li>
-                                <li><a href="javascript:" onclick="page.goNsJsp('map'); return false;">찾아오시는길</a></li>
-                            </ul>
-                        </div>
+                        </ul>
+                        <ul class='menu_sub classroom'>
+                        	<li class='menu_title'><a href="javascript:" onclick="page.goPage('/main/myClassroom', '');">나의강의실</a></li>
+                            <li><a href="javascript:" onclick="page.goPage('/normalUser/attendCourseList');">수강과정</a></li>
+                            <li><a href="javascript:" onclick="page.goPage('/normalUser/waitingCourseList');">수강대기과정</a></li>
+                            <li><a href="javascript:" onclick="page.goPage('/normalUser/cancelCourseList');">수강취소과정</a></li>
+                            <li><a href="javascript:" onclick="page.goPage('/normalUser/myCourseList');">수강완료과정</a></li>
+                            <li><a href="javascript:" onclick="page.goPage('/main/cart');">장바구니</a></li>
+                            <li><a href="javascript:" onclick="page.goPage('/member/userMemberU');">회원정보수정</a></li>
+                            <li><a href="javascript:" onclick="page.goPage('/member/memberChangePassword');">비밀번호변경</a></li>
+                            <li><a href="javascript:" onclick="page.goPage('/counsel/userCounselList');">상담내역</a></li>
+                            <li><a href="javascript:" onclick="page.goPage('/member/memberRetired');">회원탈퇴</a></li>
+                        </ul> 
+                        <ul class='menu_sub'>
+	                        <li class='menu_title'><a href="javascript:" onclick="page.goPage('/main/tutorial', '');">교육안내</a></li>
+                            <li><a href="javascript:" onclick="page.goNsJsp('register_method'); return false;">수강신청방법</a></li>
+                            <li><a href='javascript:' onclick="page.goNsJsp('study_method'); return false;">학습방법</a></li>
+                            <li><a href='javascript:' onclick="page.goNsJsp('study_manage'); return false;">학습관리</a></li>
+                            <li><a href="javascript:" onclick="page.goPage('/main/tutorial', 'shap=quick_to');">학습지원프로그램</a></li>
+                        </ul>
+                        <ul class='menu_sub'>
+                        	<li class='menu_title'><a href="javascript:" onclick="page.goPage('/main/service', '');">고객지원</a></li>
+                            <li><a href="javascript:" onclick="page.goPage('/main/noticeList');">공지사항</a></li>
+							<li><a href="javascript:" onclick="page.goPage('/main/faqList');">FAQ</a></li>
+							<li><a href="javascript:" onclick="page.goPage('/main/eventList');">Event</a></li>
+							<li><a href="javascript:" onclick="page.goPage('/main/mailQuestion');">1:1 메일문의</a></li>
+							<li><a href="javascript:" onclick="page.goPage('/guest/bankInfo');">입금계좌안내</a></li>
+                            <li><a href="javascript:" onclick="page.goPage('/main/service', 'shap=screen_remoteService');">원격지원</a></li>
+                            <li><a href="javascript:" onclick="page.goNsJsp('map'); return false;">찾아오시는길</a></li>
+                        </ul>
+                        <ul class='menu_sub'>
+                            <li class='menu_title'><a href=''>기타 서비스</a></li>
+                            <li><a href='http://www.qpeople.co.kr/page1_1.html' target='_blank'>회사소개</a></li>
+                            <li><a href='/guest/join.do'>서비스이용약관</a></li>
+                            <li><a href='/guest/join.do'>개인정보취급방침</a></li>
+                            <li><a href="#" onclick="page.goNsJsp('company_learning'); return false;">기업교육문의</a></li>
+                            <li><a href="#" onclick="page.goNsJsp('tutor_support'); return false;">튜터지원</a></li>
+                        </ul>
                     </div>
                 </div>
             </div>
@@ -243,6 +250,5 @@
             </div>
         </header>
         <!-- MOBILE HEADER END -->
-        
 
-        
+</script>

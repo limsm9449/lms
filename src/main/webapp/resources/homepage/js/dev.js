@@ -25,12 +25,19 @@ var dropdown_area_pc = document.getElementById('menu_dropdown_pc');
 var dropdown_area_mobile = document.getElementById('menu_dropdown_mobile');
 
 // PC menu dropdown
-function sub_show() {
-    dropdown_area_pc.style.display = 'block';
+var menu_click_pc = false;
+function sub_show_hide_pc(btn) {
+    if (dropdown_area_pc && menu_click_pc) {
+        dropdown_area_pc.style.display = 'none';
+        btn.className = '';
+        menu_click_pc = false;
+    } else if (dropdown_area_pc) {
+        dropdown_area_pc.style.display = 'block';
+        btn.className = 'active';
+        menu_click_pc = true;
+    }
 }
-function sub_hide() {
-    dropdown_area_pc.style.display = 'none';
-}
+// MOBILE menu on/off
 var menu_click = false;
 function sub_show_hide() {
     if (dropdown_area_mobile && menu_click) {

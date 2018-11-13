@@ -20,6 +20,7 @@ import com.qp.lms.common.model.CommSet;
 import com.qp.lms.common.model.CommVO;
 import com.qp.lms.common.model.LogVO;
 import com.qp.lms.course.model.CourseVO;
+import com.qp.lms.login.model.LoginVO;
 import com.qp.lms.member.model.MemberVO;
 
 @Service
@@ -306,5 +307,14 @@ public class CommService {
 
     public List<CourseVO> getCourseCategoryList() throws Exception {
     	return  sqlSession.selectList("main.categoryList"); 
-    } 
+    }
+    
+    @Transactional(propagation=Propagation.REQUIRED, rollbackFor={Throwable.class})
+    public void lastLog(String userId) throws Exception {
+    	LoginVO vo = new LoginVO();
+    	vo.setUserId(userId);
+    	
+       	sqlSession.update("login.lastLogUpdate",vo);
+    }
+
 }

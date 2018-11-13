@@ -21,7 +21,7 @@
                     <a href="#" onclick="page.goNsJsp('tutor_support'); return false;">튜터 지원</a>
                 </li>
                 <li class='last_right'>
-                    <a href='#'>사이트맵</a>
+                    <a href="#" onclick="page.goNsJsp('sitemap'); return false;">사이트맵</a>
                 </li>
                 
             </ul>

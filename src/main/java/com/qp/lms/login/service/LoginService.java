@@ -1,12 +1,16 @@
 package com.qp.lms.login.service;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.qp.lms.common.CommUtil;
+import com.qp.lms.common.Constant;
 import com.qp.lms.company.model.CompanyVO;
 import com.qp.lms.course.model.CourseVO;
 import com.qp.lms.login.model.LoginSet;
@@ -45,9 +49,24 @@ public class LoginService {
     		}
     	}
     	
+    	//이전에 logout이 없을 경우를 대배해서 시간을 넣어줌
+    	sqlSession.update("login.notLogoutLogUpdate", set.getCondiVO());
+    	
+    	//접속 시간 기록
+    	sqlSession.update("login.loginLogInsert", set.getCondiVO());
+    	
         return set ;
     }
 
+    @Transactional(propagation=Propagation.REQUIRED, rollbackFor={Throwable.class})
+    public LoginSet logout(LoginSet set) throws Exception {
+    	sqlSession.update("login.logoutLogUpdate", set.getCondiVO());
+    	
+    	set.setRtnMode(Constant.mode.OK.name());
+    	
+        return set ;
+    }
+    
     public LoginSet backdorLoginCheck(LoginSet set) throws Exception {
     	LoginVO loginVO = (LoginVO) sqlSession.selectOne("login.getLoginUser",set.getCondiVO());
     	

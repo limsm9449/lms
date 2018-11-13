@@ -21,8 +21,14 @@
 
 <script type="text/javascript">
 $(document).ready(function() {
-	//$("#contents").cleditor({height:105});
-	//$("#contents").cleditor()[0].disable(true).refresh();
+	$("#contents").cleditor({height:105});
+	$("#contents").cleditor()[0].disable(true).refresh();
+	
+	$("#reportUserContents").cleditor({height:105});
+	$("#reportUserContents").cleditor()[0].disable(true).refresh();
+	
+	$("#reportTutorContents").cleditor({height:105});
+	$("#reportTutorContents").cleditor()[0].disable(true).refresh();
 	
 	$("#attachFrame").attr("src","/board/attachReportV.do?" + "pSeq=${set.data.seq}&kind=C_REPORT&isMy=Y");
 	$("#reportAttachFrame").attr("src","/board/attachReportV.do?" + "pSeq=${set.data.attachSeq}&kind=U_REPORT&isMy=Y");
@@ -49,7 +55,9 @@ $(document).ready(function() {
             </li> 
             <li class='clear_fix view'>
                 <p>내용</p>
-				<textarea name='contents' id='contents' disabled="disabled"><c:out value="${set.data.contents}" escapeXml="" /></textarea>                  
+                <div class='result_area'>
+					<textarea name='contents' id='contents' disabled="disabled"><c:out value="${set.data.contents}" escapeXml="" /></textarea>
+				</div>                  
             </li>
             </li>
             <li class='clear_fix'>
@@ -58,7 +66,9 @@ $(document).ready(function() {
             </li>
             <li class='clear_fix view'>
                 <p>제출내용</p> 
-				<textarea name='reportUserContents' id='reportUserContents' disabled="disabled"><c:out value="${set.data.reportUserContents}" escapeXml="" /></textarea>                  
+				<div class='result_area'>
+					<textarea name='reportUserContents' id='reportUserContents' disabled="disabled"><c:out value="${set.data.reportUserContents}" escapeXml="" /></textarea>
+				</div>
             </li>
             <li class='clear_fix view'>
                 <p>제출파일</p>
@@ -66,7 +76,9 @@ $(document).ready(function() {
             </li>
             <li class='clear_fix view'>
                 <p>첨삭내용</p> 
-				<textarea name='reportTutorContents' id='reportTutorContents' disabled="disabled"><c:out value="${set.data.reportTutorContents}" escapeXml="" /></textarea>                  
+                <div class='result_area'>
+					<textarea name='reportTutorContents' id='reportTutorContents' disabled="disabled"><c:out value="${set.data.reportTutorContents}" escapeXml="" /></textarea>
+				</div>                  
             </li>
             <li class='clear_fix view'>
                 <p>첨삭파일</p>

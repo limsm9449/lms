@@ -780,6 +780,7 @@ header{
 .register_compose_table tr .register_compose_lecture{
     max-width:400px;
     text-align:left;
+    padding-left:10px;
 }
 .register_compose_lecture p{
     white-space: nowrap;

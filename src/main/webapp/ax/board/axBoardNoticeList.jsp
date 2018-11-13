@@ -137,6 +137,7 @@ $(document.body).ready(function () {
 
 function fn_save() {
 	var fieldParams = {
+		COLOR : { colName : "배경색", length : 6 }
    	};
    	if ( gfn_validationCheck(grid, fieldParams) ) {
        	mask.open();

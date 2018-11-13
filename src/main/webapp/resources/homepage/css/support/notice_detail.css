@@ -326,6 +326,9 @@ header{
 .contents_wrap_box.popup{
     width:98%;
 }
+.contents_wrap.qna .contents_wrap_box{
+    min-height:250px;
+}
 
 /* QUICK MENU */
 .quick_menu_wrap{

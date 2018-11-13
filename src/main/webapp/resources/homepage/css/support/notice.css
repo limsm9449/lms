@@ -593,6 +593,17 @@ table th.notice_col3:hover{
 }
 
 
+/* SITE MAP */
+.menu_dropdown_wrap.con{
+    display:block;
+    /* display:flex; */
+    padding-bottom:200px;
+}
+.menu_sub li a{
+    text-align:center;
+}
+
+
 /* FOOTER */
 .footer_wrap{
     text-align:center;
@@ -837,6 +848,17 @@ table th.notice_col3:hover{
         font-size:14px;
     }
     table tr .notice_col3{
+        border-right:0;
+    }
+
+
+
+    /* SITE MAP */
+    .menu_dropdown_wrap .menu_sub{
+        width:50%;
+        border-left:0;
+    }
+    .menu_dropdown_wrap > ul:last-child{
         border-right:0;
     }
 

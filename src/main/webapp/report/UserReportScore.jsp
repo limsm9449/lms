@@ -73,7 +73,9 @@ function lfn_btn(pKind, pParam) {
             </li> 
             <li class='clear_fix view'>
                 <p>내용</p>
-				<textarea name='contents' id='contents' disabled="disabled"><c:out value="${set.data.contents}" escapeXml="" /></textarea>                  
+				<div class='result_area'>
+					<textarea name='contents' id='contents' disabled="disabled"><c:out value="${set.data.contents}" escapeXml="" /></textarea>
+				</div>                  
             </li>
             </li>
             <li class='clear_fix'>
@@ -82,7 +84,9 @@ function lfn_btn(pKind, pParam) {
             </li>
             <li class='clear_fix view'>
                 <p>제출내용</p> 
-				<textarea name='reportUserContents' id='reportUserContents' disabled="disabled"><c:out value="${set.data.reportUserContents}" escapeXml="" /></textarea>                  
+				<div class='result_area'>
+					<textarea name='reportUserContents' id='reportUserContents' disabled="disabled"><c:out value="${set.data.reportUserContents}" escapeXml="" /></textarea>
+				</div>                  
             </li>
             <li class='clear_fix view'>
                 <p>제출파일</p>
@@ -90,7 +94,9 @@ function lfn_btn(pKind, pParam) {
             </li>
             <li class='clear_fix view'>
                 <p>첨삭내용</p> 
-				<textarea name='reportTutorContents' id='reportTutorContents'><c:out value="${set.data.reportTutorContents}" escapeXml="" /></textarea>                  
+				<div class='result_area'>
+					<textarea name='reportTutorContents' id='reportTutorContents'><c:out value="${set.data.reportTutorContents}" escapeXml="" /></textarea>
+				</div>                  
             </li>
             <li class='clear_fix view'>
                 <p>첨삭파일</p>

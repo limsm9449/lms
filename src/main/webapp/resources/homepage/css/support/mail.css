@@ -878,7 +878,7 @@ header{
         padding: 8px 2%;
     }
     .wrap .footer_wrap .foot_link_box .foot_link_pc.last_right{
-        display:none;
+        /* display:none; */
     }
 
 

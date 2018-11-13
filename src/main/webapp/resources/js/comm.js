@@ -760,9 +760,21 @@ function gfn_validationCheck( gridObj, fieldParams ) {
 					return false;
 				}
 			} 
-			if ( fieldInfo.length && fieldValue.length != fieldInfo.length ) {
+			if ( fieldInfo.length > 0 && fieldInfo.length && fieldValue.length != fieldInfo.length ) {
 				mask.open();
 				dialog.alert( { msg : (modified[i].__index + 1) + "라인의 " + fieldInfo.colName + "은(는) " + fieldInfo.length + "자리를 입력해야 합니다." }, function () { mask.close(); } );
+				
+				return false;
+			}
+			if ( fieldInfo.length > 0 && fieldInfo.minLength && fieldValue.minLength > fieldInfo.length ) {
+				mask.open();
+				dialog.alert( { msg : (modified[i].__index + 1) + "라인의 " + fieldInfo.colName + "은(는) " + fieldValue.minLength + "자리 이상을 입력해야 합니다." }, function () { mask.close(); } );
+				
+				return false;
+			}
+			if ( fieldInfo.length > 0 && fieldInfo.maxLength && fieldValue.maxLength < fieldInfo.length ) {
+				mask.open();
+				dialog.alert( { msg : (modified[i].__index + 1) + "라인의 " + fieldInfo.colName + "은(는) " + fieldValue.maxLength + "자리 이하를 입력해야 합니다." }, function () { mask.close(); } );
 				
 				return false;
 			}

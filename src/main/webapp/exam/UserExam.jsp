@@ -181,7 +181,7 @@ function lfn_validate() {
                     	<input type='hidden' name='jAnswers_${idx.index + 1}' id='jAnswers_${idx.index + 1}'>
                     	
                         <p>${row.question}</p>
-                        <ul class='answers_box'>
+                        <ul class='answer_box'>
                             <li class='clear_fix'>
                                 <input type='radio' name='answers_${idx.index + 1}' id='answers_${idx.index + 1}' value='1'>
                                 <p>
