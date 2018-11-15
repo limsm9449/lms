@@ -16,8 +16,8 @@
                     </a>
                 </div>
                 <div class='head_con search_box'>
-                    <input type="text">
-                    <button>
+                    <input type="text" id="courseName" name="courseName" value="${set.condiVO.courseName}">
+                    <button onclick="f_submitSelf('/main/courseList');">
                         <img src='/resources/homepage/img/search_ic.png' alt=' '>
                     </button>
                 </div>
@@ -55,7 +55,7 @@
                 </div>
             </div>
             <div class='menu_wrap'>
-                <div class='menu_layout pc' onmouseover='sub_show()'>
+                <div class='menu_layout pc'>
                     <div class='mobile_btn'>
                         <button onclick='sub_show_hide_pc(this)'>
                             <span class='first'></span><span class='middle'></span><span class='last'></span>
@@ -75,12 +75,12 @@
                             <a href="javascript:" onclick="page.goPage('/main/service', '');">고객지원</a>
                         </li>
                     </ul>
-                    <div class='menu_tutor' onclick='error_msg(event)'>
+                    <div class='menu_tutor'>
                     	<a href='#'>
                             <span>
                                 <img src='/resources/homepage/img/channel_ic.png' alt=''>
                             </span>
-                            <a href='#' onclick="alert('작업중입니다.'); return false;">강사소개</a>
+                            <a href='http://www.qlearning.co.kr/qstar/qstar_apply.html' target='_blank' class='tutor_text'>스타강사<span></span>프로젝트</a>
                         </a>
                     </div>
                 </div>

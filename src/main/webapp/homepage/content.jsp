@@ -1,6 +1,15 @@
 <%@ page contentType="text/html;charset=utf-8"%>
+<%@ page import="com.qp.lms.common.SessionUtil"%>
+<%@ page import="java.util.List"%>
+<%@ page import="java.util.HashMap"%>
+
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+
+
 
 <!DOCTYPE html>
 <html lang='ko' data-useragent="Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; Trident/6.0)">
@@ -22,6 +31,96 @@
     
 </head>
 
+<script type="text/javascript">
+
+var courseInfo = {};
+$(document).ready(function(){
+	<c:forEach var="row" items="${popularCourseList}" varStatus="idx">
+		change_main_img("best", ${idx.index + 1}, "/cImage/contents/${row.COURSE_CODE}/popular1.jpg", "/cImage/contents/${row.COURSE_CODE}/popular2.jpg", "#${row.COLOR}");
+		courseInfo["popular${idx.index + 1}"] = ${row.COURSE_ID};
+	</c:forEach>	
+	<c:forEach var="row" items="${eventList}" varStatus="idx">
+		change_main_img("event", ${idx.index + 1}, "/cImage/event/${row.SEQ}_img1.jpg", "/cImage/event/${row.SEQ}_img2.jpg", "#${row.COLOR}");
+		courseInfo["event${idx.index + 1}"] = ${row.SEQ};
+	</c:forEach>	
+	<c:forEach var="row" items="${noticeList}" varStatus="idx">
+		change_main_img("notice", ${idx.index + 1}, "/cImage/notice/${row.SEQ}_img1.jpg", "/cImage/notice/${row.SEQ}_img2.jpg", "#${row.COLOR}");
+		courseInfo["notice${idx.index + 1}"] = ${row.SEQ};
+	</c:forEach>	
+	<c:forEach var="row" items="${newCourseList}" varStatus="idx">
+		change_img("process", 1, ${idx.index + 1}, "/cImage/contents/${row.COURSE_CODE}/popular1.jpg", "/cImage/contents/${row.COURSE_CODE}/popular2.jpg", "#${row.COLOR}");
+		courseInfo["new${idx.index + 1}"] = ${row.COURSE_ID};
+	</c:forEach>	
+});
+
+var size = {
+    width: window.innerWidth || document.body.clientWidth,
+    height: window.innerHeight || document.body.clientHeight
+}
+
+function courseClick(kind) {
+	gfn_goPage('/main/mainCourseData','courseId=' + courseInfo[kind]);
+}
+
+function eventClick(kind) {
+	gfn_goPage('/main/eventV','seq=' + courseInfo[kind]);
+}
+
+function noticeClick(kind) {
+	gfn_goPage('/main/noticeV','seq=' + courseInfo[kind]);
+}
+
+// 메인배너 이미지 변경 함수
+function change_main_img(category, number, file_name, file_name_m, back_color){
+    var change_target, text;
+    
+    switch(category){
+        case 'best' :
+            change_target = document.querySelector('#tab1 .slide_' + number);
+            break;
+        case 'event' :
+            change_target = document.querySelector('#tab2 .slide_' + number);
+            break;
+        default :
+            change_target = document.querySelector('#tab3 .slide_' + number);
+            break;
+    }
+    
+    if (size){
+        if((size.width <= 420) || ((size.height <= 420) && (size.width > size.height))) {
+            // mobile
+            text = back_color + ' url(' + file_name_m + ') 50% 0 / contain no-repeat';
+        }else{
+            // pc
+            text = back_color + ' url(' + file_name + ') 50% 0 / contain no-repeat';
+        }
+    }
+    change_target.style.background = text;
+}
+
+// 이벤트 함수
+function change_img(category, order, number, file_name, file_name_m, back_color){
+    var change_target = document.querySelector('.' + category + order + '_slide_wrap .slide_box.slide_' + number + '.automation');
+    var change_target_m = document.querySelector('.' + category + order + '_slide_wrap .slide_box.slide_' + number + '.automation .' + category + order);
+    var text = back_color + ' url(' + file_name + ') 50% 0 / contain no-repeat';
+    var text_m = back_color + ' url(' + file_name_m + ') 50% 0 / cover no-repeat';
+    change_target.style.background = text;
+    change_target_m.style.background = text_m;
+
+    // pc / mobile 스타일 적용
+    if (size){
+        if((size.width <= 420) || ((size.height <= 420) && (size.width > size.height))) {
+            // mobile
+            change_target.style.background = 'none';
+        }else{
+            // pc
+            change_target_m.style.background = 'none';
+        }
+    }
+}
+
+</script>
+
 <body>
 <form name="frm" id="frm" method="post">
 <frameset rows='*'>
@@ -42,9 +141,8 @@
                     <div class='visual_box'>
                         <div class='slide clear_fix'>
                             <div class='slider_text_box'>
-                                <img src='/resources/homepage/img/visual_text.png' class='pc' alt=' '>
                             </div>
-                            <button onclick="gfn_goPage('/main/mainCourseData','courseId=21');">상세보기1</button>
+                            <button onclick="courseClick('popular1');">상세보기1</button>
                         </div>
                     </div>
                 </li>
@@ -52,9 +150,8 @@
                     <div class='visual_box'>
                         <div class='slide clear_fix'>
                             <div class='slider_text_box left'>
-                                <img src='/resources/homepage/img/visual2_text.png' class='pc' alt=' '>
                             </div>
-                            <button class='right_bottom' onclick="gfn_goPage('/main/mainCourseData','courseId=22');">상세보기2</button>
+                            <button class='right_bottom' onclick="courseClick('popular2');">상세보기2</button>
                         </div>
                     </div>
                 </li>
@@ -63,7 +160,7 @@
                         <div class='slide clear_fix'>
                             <div class='slider_text_box'>
                             </div>
-                            <button class='right_bottom_nonText' onclick="gfn_goPage('/main/mainCourseData','courseId=23');">상세보기3</button>
+                            <button class='right_bottom_nonText' onclick="courseClick('popular3');">상세보기3</button>
                         </div>
                     </div>
                 </li>
@@ -73,9 +170,8 @@
                     <div class='visual_box'>
                         <div class='slide clear_fix'>
                             <div class='slider_text_box'>
-                                <img src='/resources/homepage/img/visual_text.png' class='pc' alt=' '>
                             </div>
-                            <button>이벤트1</button>
+                            <button onclick="eventClick('event1');">이벤트1</button>
                         </div>
                     </div>
                 </li>
@@ -83,9 +179,8 @@
                     <div class='visual_box'>
                         <div class='slide clear_fix'>
                             <div class='slider_text_box left'>
-                                <img src='/resources/homepage/img/visual2_text.png' class='pc' alt=' '>
                             </div>
-                            <button class='right_bottom'>이벤트2</button>
+                            <button class='right_bottom' onclick="eventClick('event2');">이벤트2</button>
                         </div>
                     </div>
                 </li>
@@ -94,7 +189,7 @@
                         <div class='slide clear_fix'>
                             <div class='slider_text_box'>
                             </div>
-                            <button class='right_bottom_nonText'>이벤트3</button>
+                            <button class='right_bottom_nonText' onclick="eventClick('event3');">이벤트3</button>
                         </div>
                     </div>
                 </li>
@@ -104,9 +199,8 @@
                     <div class='visual_box'>
                         <div class='slide clear_fix'>
                             <div class='slider_text_box'>
-                                <img src='/resources/homepage/img/visual_text.png' class='pc' alt=' '>
                             </div>
-                            <button>공지사항1</button>
+                            <button onclick="noticeClick('notice1');">공지사항1</button>
                         </div>
                     </div>
                 </li>
@@ -114,9 +208,8 @@
                     <div class='visual_box'>
                         <div class='slide clear_fix'>
                             <div class='slider_text_box left'>
-                                <img src='/resources/homepage/img/visual2_text.png' class='pc' alt=' '>
                             </div>
-                            <button class='right_bottom'>공지사항2</button>
+                            <button class='right_bottom' onclick="noticeClick('notice2');">공지사항2</button>
                         </div>
                     </div>
                 </li>
@@ -125,7 +218,7 @@
                         <div class='slide clear_fix'>
                             <div class='slider_text_box'>
                             </div>
-                            <button class='right_bottom_nonText'>공지사항3</button>
+                            <button class='right_bottom_nonText' onclick="noticeClick('notice3');">공지사항3</button>
                         </div>
                     </div>
                 </li>
@@ -140,110 +233,57 @@
             <!-- VISUAL END -->
 
             <!-- NEW PROCESS -->
-            <div class='process_wrap lectures_wrap'>
+            <div class='process_wrap lectures_wrap automation'>
                 <p>
                     <strong>신규</strong> <span>교육</span>과정
                 </p>
                 <p class='pc'>큐러닝의 신규 교육과정을 만나보세요</p>
+
+                <!-- 신규과정 1 -->
                 <div class='slider_wrap process1_slide_wrap'>
-                    <div class='slide_box slide_1'>
+                    <div class='slide_box slide_1 automation'>
                         <div class='process_box process1'>
                             <div class='process clear_fix'>
-                                <p class='process_title'>
-                                    김정구 교수의
-                                    <span>
-                                        새로운 <strong>미래기회 <span></span>창조 및 선점전략</strong>
-                                    </span>
-                                </p>
-                                <p class='process_text'>
-                                    패러다임이 급변하는 사회, 최고의 위기라고도 할 수 있는 향후 10년. 위기와 역경을 기회로 만들어 당신을 도약시킬 수 있는 미래창조 비결을
-                                    제시합니다.
-                                </p>
-                                <a href='#' onclick="gfn_goPage('/main/mainCourseData','courseId=21');">바로가기1</a>
+                                <a href='#' onclick="courseClick('new1');">바로가기1</a>
                             </div>
                         </div>
                     </div>
-                    <div class='slide_box slide_2'>
+                    <div class='slide_box slide_2 automation'>
                         <div class='process_box process1'>
                             <div class='process clear_fix'>
-                                <p class='process_title'>
-                                    김정구 교수의
-                                    <span>
-                                        새로운 <strong>미래기회 <span></span>창조 및 선점전략</strong>
-                                    </span>
-                                </p>
-                                <p class='process_text'>
-                                    패러다임이 급변하는 사회, 최고의 위기라고도 할 수 있는 향후 10년. 위기와 역경을 기회로 만들어 당신을 도약시킬 수 있는 미래창조 비결을
-                                    제시합니다.
-                                </p>
-                                <a href='#' onclick="gfn_goPage('/main/mainCourseData','courseId=21');">바로가기2</a>
+                                <a href='#' onclick="courseClick('new2');">바로가기2</a>
                             </div>
                         </div>
                     </div>
-                    <div class='slide_box slide_3'>
+                    <div class='slide_box slide_3 automation'>
                         <div class='process_box process1'>
                             <div class='process clear_fix'>
-                                <p class='process_title'>
-                                    김정구 교수의
-                                    <span>
-                                        새로운 <strong>미래기회 <span></span>창조 및 선점전략</strong>
-                                    </span>
-                                </p>
-                                <p class='process_text'>
-                                    패러다임이 급변하는 사회, 최고의 위기라고도 할 수 있는 향후 10년. 위기와 역경을 기회로 만들어 당신을 도약시킬 수 있는 미래창조 비결을
-                                    제시합니다.
-                                </p>
-                                <a href='#' onclick="gfn_goPage('/main/mainCourseData','courseId=21');">바로가기3</a>
+                                <a href='#' onclick="courseClick('new3');">바로가기3</a>
                             </div>
                         </div>
                     </div>
                 </div>
+
+                <!-- 신규과정 2 -->
                 <div class='slider_wrap process2_slide_wrap'>
-                    <div class='slide_box slide_1'>
+                    <div class='slide_box slide_1 automation'>
                         <div class='process_box process2'>
                             <div class='process'>
-                                <p class='process_title'>
-                                    <span>
-                                        윤코치의 <strong>보고서 작성법</strong>
-                                    </span>
-                                </p>
-                                <p class='process_text'>
-                                    퇴짜맞는 보고서, 형식적인 보고서는 더이상 없다!<br>
-                                    상대방의 마음을 한번에 잡을 수 있는 설득력있는 보고서 작성법의 결정판!
-                                </p>
-                                <a href='#' onclick="gfn_goPage('/main/mainCourseData','courseId=19');">바로가기1</a>
+                                <a href='#' onclick="courseClick('new4');">바로가기1</a>
                             </div>
                         </div>
                     </div>
-                    <div class='slide_box slide_2'>
+                    <div class='slide_box slide_2 automation'>
                         <div class='process_box process2'>
                             <div class='process'>
-                                <p class='process_title'>
-                                    <span>
-                                        윤코치의 <strong>보고서 작성법</strong>
-                                    </span>
-                                </p>
-                                <p class='process_text'>
-                                    퇴짜맞는 보고서, 형식적인 보고서는 더이상 없다!<br>
-                                    상대방의 마음을 한번에 잡을 수 있는 설득력있는 보고서 작성법의 결정판!
-                                </p>
-                                <a href='#' onclick="gfn_goPage('/main/mainCourseData','courseId=19');">바로가기2</a>
+                                <a href='#' onclick="courseClick('new5');">바로가기2</a>
                             </div>
                         </div>
                     </div>
-                    <div class='slide_box slide_3'>
+                    <div class='slide_box slide_3 automation'>
                         <div class='process_box process2'>
                             <div class='process'>
-                                <p class='process_title'>
-                                    <span>
-                                        윤코치의 <strong>보고서 작성법</strong>
-                                    </span>
-                                </p>
-                                <p class='process_text'>
-                                    퇴짜맞는 보고서, 형식적인 보고서는 더이상 없다!<br>
-                                    상대방의 마음을 한번에 잡을 수 있는 설득력있는 보고서 작성법의 결정판!
-                                </p>
-                                <a href='#' onclick="gfn_goPage('/main/mainCourseData','courseId=19');">바로가기3</a>
+                                <a href='#' onclick="courseClick('new6');">바로가기3</a>
                             </div>
                         </div>
                     </div>
@@ -253,53 +293,20 @@
 
             <!-- PROCESS RECOMMEND -->
             <div class='recommend_wrap lectures_wrap'>
+                <!-- change_main_img(category, number, file_name, file_name_m, back_color) -->
                 <p>
                     <strong>추천</strong> <span>교육</span>과정
                 </p>
                 <p class='pc'>큐매니저가 추천하는 특별한 교육과정을 만나보세요</p>
+                
                 <ul class='clear_fix'>
-                    <li class='recommend recommend1 clear_fix'>
-                        <a href='#' onclick="gfn_goPage('/main/mainCourseData','courseId=19');" class='recommend_title white'>
-                            <p class='lecture_title'>
-                                윤코치의
-                                <strong class='bot'>보고서 작성법</strong>
-                            </p>
-                            <p>한 장의 종이로 상사의<br>마음을 움직인다!</p>
-                        </a>
-                        <p class='recommend_text' onclick="gfn_goPage('/main/mainCourseData','courseId=19');">
-                            <strong>[스마트러닝] <span>윤코치의 보고서 작성법</span></strong>
-                            효율적 보고서 작성을 통해 업무 관련 <span></span>커뮤니케이션과 의사결정의 토대를 구축하고 <span></span>업무 성과를 향상시킬 수 있다.
-                        </p>
-                        <a class='lecture_more' href='#' onclick="gfn_goPage('/main/mainCourseData','courseId=19');">상세보기</a>
+<c:forEach var="row" items="${recommendCourseList}" varStatus="idx">
+                    <li class='recommend automation2 clear_fix<c:if test="${idx.index + 1 eq fn:length(recommendCourseList)}"> last_right</c:if>'>  
+                        <img src='/cImage/contents/${row.COURSE_CODE}/recommend1.jpg' alt=' '>
+                        <img class='mobile' src='/cImage/contents/${row.COURSE_CODE}/recommend2.jpg' alt=' '>
+                        <a class='lecture_more' href='#' onclick="gfn_goPage('/main/mainCourseData','courseId=${row.COURSE_ID}');">상세보기</a>
                     </li>
-                    <li class='recommend recommend2 clear_fix'>
-                        <a href='#' onclick="gfn_goPage('/main/mainCourseData','courseId=22');" class='recommend_title white'>
-                            <p class='lecture_title'>
-                                <strong>토끼와 거북이</strong>의
-                                <strong class='bot'>재테크 비법</strong>
-                            </p>
-                            <p>당신만을 위한 재테크 전략을 <span></span>지금 만나보세요</p>
-                        </a>
-                        <p class='recommend_text' onclick="gfn_goPage('/main/mainCourseData','courseId=22');">
-                            <strong>[스마트러닝] <span>토끼와 거북의의 재테크 비법</span></strong>
-                            당신만을 위한 재테크 전략을 <span></span>지금 만나보세요
-                        </p>
-                        <a class='lecture_more' href='#' onclick="gfn_goPage('/main/mainCourseData','courseId=22');">상세보기</a>
-                    </li>
-                    <li class='recommend recommend3 clear_fix last_right'>
-                        <a href='#' onclick="gfn_goPage('/main/mainCourseData','courseId=23');" class='recommend_title white'>
-                            <p class='lecture_title'>
-                                <strong>시원하게 뚫어</strong>주는
-                                <strong class='bot'>비즈니스 스킬</strong>
-                            </p>
-                            <p>바쁜 직장인을 위한 실제적이고<br>유익한 비즈니스 스킬</p>
-                        </a>
-                        <p class='recommend_text' onclick="gfn_goPage('/main/mainCourseData','courseId=23');">
-                            <strong>[스마트러닝] <span>시원하게 뚫어 주는 비즈니스 스킬</span></strong>
-                            업무에 대한 답답한 마음을 실제적인 <span></span>비즈니스 스킬을 통해 시원하게 <span></span>해결해 주는 솔루션
-                        </p>
-                        <a class='lecture_more' href='#' onclick="gfn_goPage('/main/mainCourseData','courseId=23');">상세보기</a>
-                    </li>
+</c:forEach>	
                 </ul>
             </div>
             <!-- PROCESS RECOMMEND END -->
@@ -367,7 +374,8 @@
         
     </div>
 </frameset>
-</form>    
+</form>
+
     <script src='/resources/homepage/js/dev.js?timestamp=<%=timestamp%>'></script>
 </body>
 

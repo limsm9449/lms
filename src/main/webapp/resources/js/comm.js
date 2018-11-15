@@ -1182,3 +1182,7 @@ function gfn_goScreenPosition(objId) {
 	window.scroll(0, $("#" + objId).offset().top);
 }
 
+function gfn_timestamp() {
+	return new Date().getTime();
+}
+

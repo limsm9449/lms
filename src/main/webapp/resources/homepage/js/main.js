@@ -20,6 +20,8 @@ if (!document.getElementsByClassName) {
 var doc = document.documentElement;
 doc.setAttribute('data-useragent', navigator.userAgent);
 
+
+
 var dropdown_area_pc = document.getElementById('menu_dropdown_pc');
 var dropdown_area_mobile = document.getElementById('menu_dropdown_mobile');
 

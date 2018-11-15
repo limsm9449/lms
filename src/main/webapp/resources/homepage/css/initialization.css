@@ -267,10 +267,20 @@ button.active .middle{
 
 
 .menu_layout .menu_tutor span{
-    padding:0 2px 0 14px;
+    padding:0 6px 0 14px;
 }
 .menu_layout .menu_tutor a{
-    padding:18px 0 14px;
+    font-weight:500;
+    padding: 14px 0 10px;
+    line-height: 120%;
+}
+.menu_layout .menu_tutor .tutor_text {
+    font-size: 15px;
+    padding: 12px 0;
+}
+.menu_tutor .tutor_text span{
+    display:block;
+    float:none;
 }
 
 

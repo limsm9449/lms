@@ -38,6 +38,7 @@ public class CommonVO implements Serializable{
 
 	private String prevParams;
 	private String loginIp;
+	private String courseName;
 
 	
 	// 삭제하면 안됨.-------------------------------------------------
@@ -200,6 +201,12 @@ public class CommonVO implements Serializable{
 	}
 	public void setLoginIp(String loginIp) {
 		this.loginIp = loginIp;
+	}
+	public String getCourseName() {
+		return courseName;
+	}
+	public void setCourseName(String courseName) {
+		this.courseName = courseName;
 	}
 
 	

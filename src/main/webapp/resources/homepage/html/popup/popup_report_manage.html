@@ -5,7 +5,7 @@
     <meta charset='utf-8'>
     <meta name='viewport' content='width=device-width, initial-scale=1.0'>
     <meta http-equiv='X-UA-Compatible' content='ie=edge'>
-    <title>과정리포트 채점결과</title>
+    <title>과정리포트 첨삭관리</title>
 
     <link href='https://fonts.googleapis.com/css?family=Nanum+Gothic' rel='stylesheet'>
 
@@ -15,6 +15,11 @@
 
     <link rel='stylesheet' href='../../css/initialization.css'>
     <link rel='stylesheet' href='../../css/popup/popup_common.css'>
+    <style>
+        html{
+            overflow-y:hidden;
+        }
+    </style>
 </head>
 
 <body>
@@ -28,50 +33,46 @@
         <ul class='report_box manage clear_fix'>
             <li class='clear_fix'>
                 <p>과정명</p>
-                <p class='result_area'></p>
+                <input type='text'>
             </li>
             <li class='clear_fix half'>
-                <p>이름(아이디)</p>
-                <p class='mobile'></p>
-                <!-- <input type='text'> -->
+                <p class='long'>이름<span>(아이디)</span></p>
+                <input type='text'>
             </li>
             <li class='clear_fix half left'>
                 <p>회사명</p>
-                <p></p>
-                <!-- <input type='text'> -->
+                <input type='text'>
             </li>
             <li class='clear_fix half'>
                 <p>제목</p>
-                <p></p>
-                <!-- <div></div> -->
+                <input type='text'>
             </li>
             <li class='clear_fix half left'>
                 <p>유형</p>
-                <p></p>
-                <!-- <input type='text'> -->
+                <input type='text'>
             </li>
             <li class='clear_fix view'>
                 <p>내용</p>
-                <div class='result_area'></div>
-                <!-- <textarea name='' id=''></textarea> -->
+                <div class='result_area'>
+                    <textarea name='' id=''></textarea>
+                </div>
             </li>
             <li class='clear_fix view'>
                 <p>출제파일</p>
                 <div class='report_files'>
-                    <img src='../../img/file_img.png' alt=' '>
-                    <p>filename.pptxddddddddddddddddddddddddddddd</p>
+                    <iframe src='../etc/iframe_file_view.html' frameborder='0'></iframe>
                 </div>
             </li>
             <li class='clear_fix view'>
                 <p>제출내용</p>
-                <div class='result_area'></div>
-                <!-- <textarea name='' id=''></textarea> -->
+                <div class='result_area'>
+                    <textarea name='' id=''></textarea>
+                </div>
             </li>
             <li class='clear_fix view'>
                 <p>제출파일</p>
                 <div class='report_files'>
-                    <img src='../../img/file_img.png' alt=' '>
-                    <p>filename.pptx</p>
+                    <iframe src='../etc/iframe_file_view.html' frameborder='0'></iframe>
                 </div>
             </li>
             <li class='clear_fix view'>
@@ -83,8 +84,7 @@
             <li class='clear_fix view'>
                 <p>첨삭파일</p>
                 <div class='btn_area'>
-                    <input type='file' defaultValue='파일 선택'>
-                    <button>삭제</button>
+                    <iframe src='../etc/iframe_file_view.html' frameborder='0'></iframe>
                 </div>
             </li>
             <li class='clear_fix'>

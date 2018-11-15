@@ -100,6 +100,15 @@ function fn_makeGrid() {
 	            width : 50,
 	            align : "right"
 	        },{
+	        	key : "MAIN_OPEN_YN", 
+	        	label : "메인 오픈 여부", 
+	            width : 120,
+	        	align : "center", 
+	        	editor : { type : "checkbox", config : {height: 17, trueValue: "Y", falseValue: "N"} } ,
+				styleClass: function () {
+                    return "grid-cell-edit";
+                } 
+	        },{
               	key : undefined, 
               	label: "인기과정", 
               	columns: [	        

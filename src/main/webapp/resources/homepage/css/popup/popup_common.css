@@ -401,6 +401,9 @@ html{
 .report_box.manage .half p {
     width: 30%;
 }
+.report_box.manage .half .long{
+    font-size:14px;
+}
 
 
 
@@ -440,7 +443,7 @@ html{
     border:none;
 }
 .report_box.manage .view .report_files{
-    width:130px;
+    width:85%;
     padding:10px;
 }
 .report_box.manage .view .btn_area {
@@ -561,6 +564,22 @@ html{
 
 
 /* --- Media Query --- */
+@media all and (max-width:600px){
+    .report_box.manage .half .long{
+        font-size:12px;
+    }
+}
+@media all and (max-width:500px){
+    .report_box li p{
+        font-size:14px;
+    }
+    .report_box.manage .half .long{
+        font-size:14px;
+    }
+    .report_box.manage .half .long span{
+        display:none;
+    }
+}
 @media all and (max-width:420px){
     .popup{
         width:100%;
@@ -616,9 +635,11 @@ html{
         width:25%;
     }
     .report_box.manage li input[type='text'],
-    .report_box.manage .view textarea,
+    .report_box.manage .view > textarea,
     .report_box.manage .half input[type='text'],
-    .report_box.manage .view .btn_area{
+    .report_box.manage .view .btn_area,
+    .report_box.manage li div.result_area,
+    .report_box.manage .view .report_files{
         width:75%;
     }
     .question_answer.survey textarea {

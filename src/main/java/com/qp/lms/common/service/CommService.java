@@ -317,4 +317,24 @@ public class CommService {
        	sqlSession.update("login.lastLogUpdate",vo);
     }
 
+    public List<HashMap> getPopularCourseList() throws Exception {
+    	return sqlSession.selectList("comm.getPopularCourse"); 
+    }
+
+    public List<HashMap> getRecommendCourseList() throws Exception {
+    	return sqlSession.selectList("comm.getRecommendCourse"); 
+    } 
+
+    public List<HashMap> getNewCourseList() throws Exception {
+    	return sqlSession.selectList("comm.getNewCourse"); 
+    } 
+
+    public List<HashMap> getEventList() throws Exception {
+    	return sqlSession.selectList("comm.getEvent"); 
+    } 
+
+    public List<HashMap> getNoticeList() throws Exception {
+    	return sqlSession.selectList("comm.getNotice"); 
+    } 
+
 }

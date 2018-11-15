@@ -10,84 +10,154 @@
     	 WHERE OPTION_KEY = #{OPTION_KEY}
     </select>
 
-
-
-
-<select id="ddTeacher" resultType="Code">
-SELECT USER_ID DD_KEY,
-       USER_NAME DD_VALUE
-  FROM USER
- WHERE TEACHER_YN = 'Y'
- ORDER BY 2
-</select>
-
-<select id="categoryPathForCourseCode" parameterType="String" resultType="Comm">
-SELECT CONCAT(C1.CODE_NAME,' > ',C2.CODE_NAME,' > ',C3.CODE_NAME) CATEGORY_NAME
-  FROM CATEGORY C3 LEFT OUTER JOIN CATEGORY C2 ON C3.PARENT_CODE = C2.CODE
-                  LEFT OUTER JOIN CATEGORY C1 ON C2.PARENT_CODE = C1.CODE
- WHERE C3.DEPTH = 3	
-   AND C3.CODE = (SELECT CODE FROM COURSE_CODE WHERE COURSE_CODE = #{id}) 
-</select>
-
-<select id="ddTutor" resultType="Code">
-SELECT USER_ID DD_KEY
-       ,USER_NAME DD_VALUE
-  FROM USER
- WHERE TUTOR_YN = 'Y'
- ORDER BY 2 	
-</select>
-
-<select id="getDdCourseCode" parameterType="String" resultType="Code">
-SELECT COURSE_CODE DD_KEY
-       ,COURSE_NAME DD_VALUE
-  FROM COURSE_CODE
- WHERE CODE = #{id}
- ORDER BY 2 	
-</select>
-
-<select id="getDdCourseCodeForUse" parameterType="String" resultType="Code">
-SELECT COURSE_CODE DD_KEY
-       ,COURSE_NAME DD_VALUE
-  FROM COURSE_CODE
- WHERE CODE = #{id}
-   AND USE_YN = 'Y'
- ORDER BY 2 	
-</select>
-
-<select id="getDdCode" parameterType="String" resultType="Code">
-SELECT DD_KEY
-	   ,DD_VALUE
-  FROM CODE
- WHERE DD_MAIN = #{id} 
- ORDER BY ORD 	
-</select>
-
-
-<select id="ddCompany" resultType="Code">
-SELECT COMP_CD DD_KEY
-       ,COMP_NAME DD_VALUE
-  FROM COMPANY
- ORDER BY 2 	
-</select>
-
-<select id="userAdminCnt" parameterType="String" resultType="Comm">
-SELECT COUNT(*) CNT
-  FROM USER
- WHERE USER_ID = #{id}
-   AND ADMIN_YN = 'Y'
-</select>
-
-<select id="courseStatus" parameterType="String" resultType="Comm">
-<![CDATA[
-SELECT IF(CURDATE() < G_FROM_DATE,'G_BEFORE',
-         IF(CURDATE() BETWEEN G_FROM_DATE AND G_TO_DATE,'G_ING',
-           IF(CURDATE() < C_FROM_DATE,'P_BEFORE',
-             IF(CURDATE() BETWEEN C_FROM_DATE AND C_TO_DATE,'P_ING',
-               IF(CURDATE() > C_TO_DATE,IF(STATUS IS NULL,'COMPLETE',STATUS),''))))) STATUS
-  FROM COURSE
- WHERE COURSE_ID = #{id}  
-]]> 
-</select>
+    <select id="getPopularCourse" parameterType="hashmap" resultType="hashmap">
+		SELECT 	A.COURSE_ID
+				,A.COURSE_CODE
+				,B.POPULAR_IMG1 IMG1
+				,B.POPULAR_IMG2 IMG2
+		        ,B.POPULAR_COLOR COLOR
+		FROM	COURSE A
+					LEFT OUTER JOIN COURSE_MASTER B ON B.COURSE_CODE = A.COURSE_CODE
+		            LEFT OUTER JOIN COURSE_CODE C ON C.COURSE_CODE = A.COURSE_CODE
+		WHERE 	OPEN_YN = 'Y'
+		AND		CLOSE_YN = 'N'
+		AND		POPULAR_YN = 'Y'
+		AND 	B.MAIN_OPEN_YN = 'Y'
+		ORDER 	BY C.COURSE_NAME
+		LIMIT 	3
+    </select>
+    
+    <select id="getRecommendCourse" parameterType="hashmap" resultType="hashmap">
+		SELECT 	A.COURSE_ID
+				,A.COURSE_CODE
+				,B.RECOMMEND_IMG1 IMG1
+				,B.RECOMMEND_IMG2 IMG2
+		        ,B.RECOMMEND_COLOR COLOR
+		FROM	COURSE A
+					LEFT OUTER JOIN COURSE_MASTER B ON B.COURSE_CODE = A.COURSE_CODE
+		            LEFT OUTER JOIN COURSE_CODE C ON C.COURSE_CODE = A.COURSE_CODE
+		WHERE 	OPEN_YN = 'Y'
+		AND		CLOSE_YN = 'N'
+		AND		RECOMMEND_COURSE_YN = 'Y'
+		AND 	B.MAIN_OPEN_YN = 'Y'
+		ORDER 	BY C.COURSE_NAME
+		LIMIT 	3
+    </select>
+    
+    <select id="getNewCourse" parameterType="hashmap" resultType="hashmap">
+		SELECT 	A.COURSE_ID
+				,A.COURSE_CODE
+				,B.NEW_IMG1 IMG1
+				,B.NEW_IMG2 IMG2
+		        ,B.NEW_COLOR COLOR
+		FROM	COURSE A
+					LEFT OUTER JOIN COURSE_MASTER B ON B.COURSE_CODE = A.COURSE_CODE
+		            LEFT OUTER JOIN COURSE_CODE C ON C.COURSE_CODE = A.COURSE_CODE
+		WHERE 	OPEN_YN = 'Y'
+		AND		CLOSE_YN = 'N'
+		AND		NEW_COURSE_YN = 'Y'
+		AND 	B.MAIN_OPEN_YN = 'Y'
+		ORDER 	BY C.COURSE_NAME
+		LIMIT 	6
+    </select> 
+    
+    <select id="getEvent" parameterType="hashmap" resultType="hashmap">
+		SELECT 	SEQ
+				,IMG1
+				,IMG2
+				,COLOR
+		FROM	BOARD_EVENT
+		WHERE 	MAIN_YN = 'Y'
+		ORDER 	BY SEQ
+		LIMIT 	3
+    </select>      
+    
+    <select id="getNotice" parameterType="hashmap" resultType="hashmap">
+		SELECT 	SEQ
+				,IMG1
+				,IMG2
+				,COLOR
+		FROM	BOARD_NOTICE
+		WHERE 	MAIN_YN = 'Y'
+		ORDER 	BY SEQ
+		LIMIT 	3
+    </select> 
+	
+	<select id="ddTeacher" resultType="Code">
+	SELECT USER_ID DD_KEY,
+	       USER_NAME DD_VALUE
+	  FROM USER
+	 WHERE TEACHER_YN = 'Y'
+	 ORDER BY 2
+	</select>
+	
+	<select id="categoryPathForCourseCode" parameterType="String" resultType="Comm">
+	SELECT CONCAT(C1.CODE_NAME,' > ',C2.CODE_NAME,' > ',C3.CODE_NAME) CATEGORY_NAME
+	  FROM CATEGORY C3 LEFT OUTER JOIN CATEGORY C2 ON C3.PARENT_CODE = C2.CODE
+	                  LEFT OUTER JOIN CATEGORY C1 ON C2.PARENT_CODE = C1.CODE
+	 WHERE C3.DEPTH = 3	
+	   AND C3.CODE = (SELECT CODE FROM COURSE_CODE WHERE COURSE_CODE = #{id}) 
+	</select>
+	
+	<select id="ddTutor" resultType="Code">
+	SELECT USER_ID DD_KEY
+	       ,USER_NAME DD_VALUE
+	  FROM USER
+	 WHERE TUTOR_YN = 'Y'
+	 ORDER BY 2 	
+	</select>
+	
+	<select id="getDdCourseCode" parameterType="String" resultType="Code">
+	SELECT COURSE_CODE DD_KEY
+	       ,COURSE_NAME DD_VALUE
+	  FROM COURSE_CODE
+	 WHERE CODE = #{id}
+	 ORDER BY 2 	
+	</select>
+	
+	<select id="getDdCourseCodeForUse" parameterType="String" resultType="Code">
+	SELECT COURSE_CODE DD_KEY
+	       ,COURSE_NAME DD_VALUE
+	  FROM COURSE_CODE
+	 WHERE CODE = #{id}
+	   AND USE_YN = 'Y'
+	 ORDER BY 2 	
+	</select>
+	
+	<select id="getDdCode" parameterType="String" resultType="Code">
+	SELECT DD_KEY
+		   ,DD_VALUE
+	  FROM CODE
+	 WHERE DD_MAIN = #{id} 
+	 ORDER BY ORD 	
+	</select>
+	
+	
+	<select id="ddCompany" resultType="Code">
+	SELECT COMP_CD DD_KEY
+	       ,COMP_NAME DD_VALUE
+	  FROM COMPANY
+	 ORDER BY 2 	
+	</select>
+	
+	<select id="userAdminCnt" parameterType="String" resultType="Comm">
+	SELECT COUNT(*) CNT
+	  FROM USER
+	 WHERE USER_ID = #{id}
+	   AND ADMIN_YN = 'Y'
+	</select>
+	
+	<select id="courseStatus" parameterType="String" resultType="Comm">
+	<![CDATA[
+	SELECT IF(CURDATE() < G_FROM_DATE,'G_BEFORE',
+	         IF(CURDATE() BETWEEN G_FROM_DATE AND G_TO_DATE,'G_ING',
+	           IF(CURDATE() < C_FROM_DATE,'P_BEFORE',
+	             IF(CURDATE() BETWEEN C_FROM_DATE AND C_TO_DATE,'P_ING',
+	               IF(CURDATE() > C_TO_DATE,IF(STATUS IS NULL,'COMPLETE',STATUS),''))))) STATUS
+	  FROM COURSE
+	 WHERE COURSE_ID = #{id}  
+	]]> 
+	</select>
 
 	<select id="courseEditInfo" parameterType="Comm" resultType="Comm">
 	<![CDATA[

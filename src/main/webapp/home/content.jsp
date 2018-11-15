@@ -18,8 +18,5 @@
 </script> 
 
 <body>
-
-content
-
 </body>
 </html>

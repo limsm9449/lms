@@ -80,22 +80,22 @@ function fn_search() {
 function fn_callbackAjax(data, id) {
 	if ( id == "search" ) {
 		if ( data.list[0].POPULAR_IMG1 == "Y" ) {
-			$('#popular1').attr("src", "/cImage/contents/" + params.COURSE_CODE + "/popular1.jpg");
+			$('#popular1').attr("src", "/cImage/contents/" + params.COURSE_CODE + "/popular1.jpg" + "?timestamp=" + gfn_timestamp());
 		}
 		if ( data.list[0].POPULAR_IMG2 == "Y" ) {
-			$('#popular2').attr("src", "/cImage/contents/" + params.COURSE_CODE + "/popular2.jpg");
+			$('#popular2').attr("src", "/cImage/contents/" + params.COURSE_CODE + "/popular2.jpg" + "?timestamp=" + gfn_timestamp());
 		}
 		if ( data.list[0].NEW_IMG1 == "Y" ) {
-			$('#new1').attr("src", "/cImage/contents/" + params.COURSE_CODE + "/new1.jpg");
+			$('#new1').attr("src", "/cImage/contents/" + params.COURSE_CODE + "/new1.jpg" + "?timestamp=" + gfn_timestamp());
 		}
 		if ( data.list[0].NEW_IMG2 == "Y" ) {
-			$('#new2').attr("src", "/cImage/contents/" + params.COURSE_CODE + "/new2.jpg");
+			$('#new2').attr("src", "/cImage/contents/" + params.COURSE_CODE + "/new2.jpg" + "?timestamp=" + gfn_timestamp());
 		}
 		if ( data.list[0].RECOMMEND_IMG1 == "Y" ) {
-			$('#recommend1').attr("src", "/cImage/contents/" + params.COURSE_CODE + "/recommend1.jpg");
+			$('#recommend1').attr("src", "/cImage/contents/" + params.COURSE_CODE + "/recommend1.jpg" + "?timestamp=" + gfn_timestamp());
 		}
 		if ( data.list[0].RECOMMEND_IMG2 == "Y" ) {
-			$('#recommend2').attr("src", "/cImage/contents/" + params.COURSE_CODE + "/recommend2.jpg");
+			$('#recommend2').attr("src", "/cImage/contents/" + params.COURSE_CODE + "/recommend2.jpg" + "?timestamp=" + gfn_timestamp());
 		}
 		//mask.close();
 	} else if ( id == "save" ){
@@ -106,7 +106,7 @@ function fn_callbackAjax(data, id) {
 			dialog.alert( { msg : "업로드시 문제가 발생했습니다. (" + data.RtnMode + ")" }, function () { mask.close(); } );
 		} else {
 			mask.open();
-			dialog.alert( { msg : "업로드 되었습니다. 등록된 이미지를 다른 이미지로 변경시 바로 바뀌지 않습니다. f5를 눌러 주시면 업로드 이미지를 볼 수 있습니다." }, function () { mask.close();	fn_search(); } );
+			dialog.alert( { msg : "업로드 되었습니다." }, function () { mask.close();	fn_search(); } );
 		}
 		
 		isSave = true;

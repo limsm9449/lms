@@ -74,10 +74,10 @@ function fn_search() {
 function fn_callbackAjax(data, id) {
 	if ( id == "search" ) {
 		if ( data.list[0].IMG1 == "Y" ) {
-			$('#img1').attr("src", "/cImage/event/" + params.SEQ + "_img1.jpg");
+			$('#img1').attr("src", "/cImage/event/" + params.SEQ + "_img1.jpg" + "?timestamp=" + gfn_timestamp());
 		}
 		if ( data.list[0].IMG2 == "Y" ) {
-			$('#img2').attr("src", "/cImage/event/" + params.SEQ + "_img2.jpg");
+			$('#img2').attr("src", "/cImage/event/" + params.SEQ + "_img2.jpg" + "?timestamp=" + gfn_timestamp());
 		}
 	} else if ( id == "save" ){
 		mask.close();
@@ -87,7 +87,7 @@ function fn_callbackAjax(data, id) {
 			dialog.alert( { msg : "업로드시 문제가 발생했습니다. (" + data.RtnMode + ")" }, function () { mask.close(); } );
 		} else {
 			mask.open();
-			dialog.alert( { msg : "업로드 되었습니다. 등록된 이미지를 다른 이미지로 변경시 바로 바뀌지 않습니다. f5를 눌러 주시면 업로드 이미지를 볼 수 있습니다." }, function () { mask.close();	fn_search(); } );
+			dialog.alert( { msg : "업로드 되었습니다." }, function () { mask.close();	fn_search(); } );
 		}
 		
 		isSave = true;

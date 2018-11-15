@@ -458,6 +458,16 @@ header{
 .register_method_tab button:last-child{
     margin-right:0;
 }
+.register_method_pc.finish{
+    width:inherit;
+    min-height:600px;
+}
+.register_method_pc.finish .step_name{
+    padding-bottom:10px;
+}
+.register_method_pc.finish .step_note{
+    padding-left:3%;
+}
 .register_method_pc,
 .register_method_mobile{
     width: 90%;
@@ -757,7 +767,8 @@ header{
         display:block;
     }
     .register_method_pc,
-    .register_method_mobile{
+    .register_method_mobile,
+    .register_method_pc.finish{
         width:100%;
     }
     .pc_list_item > span,
@@ -765,12 +776,31 @@ header{
         width:100%;
         padding:20px 0;
     }
-    .step_note{
+    .step_note,
+    .register_method_pc.finish .step_note{
         padding-left:0;
     }
     .step_note.half {
         width: 100%;
         padding:0 0 20px;
+    }
+
+
+    /* 수료안내 */
+    .register_method_pc.finish{
+        min-height:900px;
+    }
+    .register_method_pc.finish .step_note p{
+        letter-spacing: -1px;
+        padding-left:0;
+    }
+    .register_method_pc.finish .step_name p{
+        display:block;
+        letter-spacing:-1px;
+        padding:6px 0 ;
+    }
+    .register_method_pc.finish .step_name .num{
+        padding:6px 2px 3px 2px;
     }
 
 
@@ -787,7 +817,8 @@ header{
         display:none;
     }
 }
-@media all and (max-width:360px){
-}
-@media all and (max-width:320px){
+@media all and (max-width:380px){
+    .register_method_pc.finish{
+        min-height:1000px;
+    }
 }

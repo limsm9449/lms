@@ -95,7 +95,7 @@ $(document).ready(function() {
 	                                </p>
 	                            </button>
 							</a>
-							<a href='javascript:' onclick="page.goNsJsp('study_method'); return false;">	                            
+							<a href='javascript:' onclick="page.goNsJsp('finish_guidance'); return false;">	                            
 	                            <button class='tutorial_btn last_right'>
 	                                <div><img src='/resources/homepage/img/guidance/ic_4.png' alt=' '></div>
 	                                <p class='tutorial_btn_title'>수료안내</p>

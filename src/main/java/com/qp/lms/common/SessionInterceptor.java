@@ -103,7 +103,35 @@ public class SessionInterceptor extends HandlerInterceptorAdapter {
 	   	 		if ( SessionUtil.getFavorityCourseList() == null ) {
 	   	 			SessionUtil.setAttribute("favorityCourseList", commSvr.getFavorityCourseList());
 	   	 		}
-	   	 		
+
+	   	 	
+	   	 		if ( SessionUtil.getAttribute("courseImgFolder") == null ) {
+	   	 			SessionUtil.setAttribute("courseImgFolder", commSvr.getSetting("COURSE_IMG_FOLDER"));
+	   	 		}
+	   	 		//베스트(인기)과정
+	   	 		if ( SessionUtil.getAttribute("popularCourseList") == null ) {
+	   	 			SessionUtil.setAttribute("popularCourseList", commSvr.getPopularCourseList());
+	   	 		}
+	   	 		//추천과정
+	   	 		if ( SessionUtil.getAttribute("recommendCourseList") == null ) {
+	   	 			SessionUtil.setAttribute("recommendCourseList", commSvr.getRecommendCourseList());
+	   	 		}
+	   	 		//신규과정
+	   	 		if ( SessionUtil.getAttribute("newCourseList") == null ) {
+	   	 			SessionUtil.setAttribute("newCourseList", commSvr.getNewCourseList());
+	   	 		}
+	   	 		//신규 이벤트
+	   	 		if ( SessionUtil.getAttribute("eventList") == null ) {
+	   	 			SessionUtil.setAttribute("eventList", commSvr.getEventList());
+	   	 		}
+	   	 		//주요공지사항
+	   	 		if ( SessionUtil.getAttribute("noticeList") == null ) {
+	   	 			SessionUtil.setAttribute("noticeList", commSvr.getNoticeList());
+	   	 		}
+
+
+	   	 
+	   	 
 	   	 		//과정 카테고리
 		   	 	if ( SessionUtil.getCourseCategoryList() == null ) {
 	   	 			SessionUtil.setAttribute("courseCategoryList", commSvr.getCourseCategoryList());

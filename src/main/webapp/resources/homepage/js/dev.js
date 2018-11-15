@@ -82,13 +82,14 @@ function size_check() {
         width: window.innerWidth || document.body.clientWidth,
         height: window.innerHeight || document.body.clientHeight
     }
-    var text = document.getElementById('width_text');
-    if (text) {
-        text.innerHTML = size.width;
-        return size;
+    if (size){
+        if((size.width <= 420) || ((size.height <= 420) && (size.width > size.height))) {
+            window.alert('device - mobile');
+        }else{
+            window.alert('device - pc');
+        }
     }
 }
-size_check();
 
 // visual tab area handler
 var visual_tabs = document.getElementsByClassName('tabs');

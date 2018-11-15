@@ -5,7 +5,7 @@
     <meta charset='utf-8'>
     <meta name='viewport' content='width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1'>
     <meta http-equiv='X-UA-Compatible' content='ie=edge'>
-    <title>Q learning - 관리자 - 입금관리 - 카드 입금 관리</title>
+    <title>Q learning - 관리자 - 계정 관리 - 사요자 관리</title>
 
     <script src='../../js/jquery_3.3.1.js'></script>
 
@@ -65,20 +65,20 @@
                 <li>
                     <button onclick='location.href = "./admin_grade.html"'><span></span>성적 관리</button>
                 </li>
-                <li class='on'>
+                <li>
                     <button onclick='admin_sub_open(event)'>
                         <span></span>
                         입금 관리
                     </button>
                     <ul class='sub' id='sub3'>
                         <li><a href='./admin_deposit_bank.html'>은행 입금 관리</a></li>
-                        <li><a href='./admin_deposit_card.html' class='on'>카드 입금 관리</a></li>
+                        <li><a href='./admin_deposit_card.html'>카드 입금 관리</a></li>
                     </ul>
                 </li>
                 <li>
                     <button onclick='location.href = "./admin_calculation.html"'><span></span>정산 관리</button>
                 </li>
-                <li>
+                <li class='on'>
                     <button onclick='location.href = "./admin_income.html"'><span></span>수입 관리</button>
                 </li>
                 <li>
@@ -131,7 +131,7 @@
         <div class='right'>
             <div class='contents_wrap'>
                 <div class='content_top'>
-                    <h1>카드 입금 관리</h1>
+                    <h1>수입 관리</h1>
                     <div class='filter_box clear_fix'>
                         <div>
                             <p>카테고리</p>
@@ -169,29 +169,16 @@
                         </div>
                     </div>
                     <div class='filter_box clear_fix'>
-                        <div>
-                            <p>신청상태</p>
-                            <select name='' id=''>
-                                <option value='전체'>전체</option>
-                                <option value='선택1'>선택1</option>
-                                <option value='선택2'>선택2</option>
-                            </select>
-                        </div>
                         <div class='more'>
                             <p>일자</p>
                             <input type='text' name='' id='' value='2018-10-16' disabled>
                             <span>~</span>
                             <input type='text' name='' id='' value='2018-10-26' disabled>
                         </div>
-                        <div>
-                            <p>신청자</p>
-                            <input type='text' name='' id=''>
-                        </div>
                     </div>
                 </div>
                 <div class='content_btn_box clear_fix'>
                     <button onclick='admin_popup_open("1", true)'>검색</button>
-                    <button onclick='admin_popup_open("27", true)'>환불</button>
                     <button onclick='admin_popup_open("6", true)'>엑셀</button>
                 </div>
                 <div class='grid_area'>
