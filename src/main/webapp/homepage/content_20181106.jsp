@@ -30,7 +30,7 @@
        	<!-- HEAD END -->
 
         <!-- CONTENTS -->
-        <div class='contents_wrap' onmouseover='sub_hide()'>
+        <div class='contents_wrap' >
             <!-- QUICK MENU -->
             <%@ include file="../common/mainQuickMenu.jsp" %>
 

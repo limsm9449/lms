@@ -289,6 +289,23 @@
 		AND		EXAM_KIND = #{EXAM_KIND}
 		AND		SEQ = #{SEQ}
     </update>
+    
+    <delete id="axUserScoreExamDelete" parameterType="hashmap">
+    	DELETE 	FROM USER_EXAM
+		WHERE 	COURSE_ID = #{COURSE_ID}
+		AND		USER_ID = #{USER_ID}
+		AND		EXAM_KIND = #{EXAM_KIND}
+    </delete>
+
+	<update id="axUserScoreExamInitialize" parameterType="hashmap">
+    	UPDATE 	COURSE_EVAL
+    	SET 	EXAM_TOTAL = 0
+    			,EXAM_YN = 'N'
+    			,E_FROM_DATE = NULL
+				,E_TO_DATE = NULL
+    	 WHERE 	COURSE_ID = #{COURSE_ID}
+    	 AND    USER_ID = #{USER_ID}
+    </update>
 
 	<update id="axUserScoreExamUpdateExamTypeTotal" parameterType="hashmap">
     	UPDATE 	COURSE_EVAL

@@ -119,6 +119,7 @@ $(document.body).ready(function () {
    		  	}
    		);
     } else {
+    	$("#retryExam").hide();
     	grid = gfn_makeAx5Grid("first-grid",
    			[ 	{
    		            key : "WEEK",
@@ -221,6 +222,9 @@ $(document.body).ready(function () {
 	        case "search":
 	            fn_search();
 	            break;
+            case "retryExam" :
+            	fn_retryExam();
+                break;
             case "save" :
             	fn_save();
                 break;
@@ -249,6 +253,29 @@ function fn_search() {
 	fn_params();
 	
 	gfn_callAjax("/score/axUserScoreExamList.do", params, fn_callbackAjax, "search");
+}
+
+function fn_retryExam() {
+   	mask.open();
+   	confirmDialog.confirm(
+   		{
+           	title: "Confirm",
+           	msg: '시험을 재응시 하도록 초기화 하시겠습니까?'
+       	}, 
+       	function(){
+         	if ( this.key == "ok" ) {
+         		var saveParams = {
+         			COURSE_ID : params.COURSE_ID,	
+         			USER_ID : params.USER_ID,	
+         			EXAM_KIND : params.EXAM_KIND	
+         		};
+         		
+         		gfn_callAjax("/score/axUserScoreExamRetry.do", $.extend(saveParams, gfn_getSaveData(grid)), fn_callbackAjax, "retry");
+           	} else {
+           		mask.close();
+           	}
+       	}
+   	);
 }
 
 function fn_save() {
@@ -293,6 +320,18 @@ function fn_callbackAjax(data, id) {
 		}
 		
 		isSave = true;
+	} else if ( id == "retry" ){
+		mask.close();
+
+		if ( data.RtnMode && data.RtnMode != "OK" ) {
+			mask.open();
+			dialog.alert( { msg : "저장시 문제가 발생했습니다. (" + data.RtnMode + ")" }, function () { mask.close(); } );
+		} else {
+			mask.open();
+			dialog.alert( { msg : "재응시 하도록 초기화 했습니다." }, function () { mask.close();	fn_search(); } );
+		}
+		
+		isSave = true;
 	}
 }
 
@@ -314,6 +353,7 @@ function fn_gridEvent(event, obj) {
 <div style="height:10px"></div>
 
 <div>
+    <button class="btn btn-default" data-grid-control="retryExam" id="retryExam">재시험</button>
     <button class="btn btn-default" data-grid-control="save">저장</button>
     <button class="btn btn-default" data-grid-control="close">닫기</button>
 </div>

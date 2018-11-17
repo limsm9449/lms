@@ -19,6 +19,9 @@
         url('../../font/NanumSquareEB.eot') format('embedded-opentype');
 }
 
+html{
+    overflow-y:hidden !important;
+}
 
 /* CONTENTS */
 .contents_wrap_box{

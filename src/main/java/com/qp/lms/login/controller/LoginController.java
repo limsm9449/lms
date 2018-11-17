@@ -16,8 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.qp.lms.ax.common.service.AxCommService;
 import com.qp.lms.common.CommUtil;
-import com.qp.lms.common.CommonSet;
-import com.qp.lms.common.Constant;
+import com.qp.lms.common.LoginManager;
 import com.qp.lms.common.SessionUtil;
 import com.qp.lms.common.SessionVO;
 import com.qp.lms.common.service.CommService;
@@ -74,6 +73,12 @@ public class LoginController {
    	 				("TUTOR".equals(auth) && !"Y".equals(CommUtil.getString(set.getData().getTutorYn()))) ) {
    	 			set.setIsNotAuth("Y");
    	 		} else {
+	   	 		LoginManager loginManager = LoginManager.getInstance();
+	   	 		if ( loginManager.isUsing(set.getData().getUserId()) ) {
+	   	 			//기존의 접속(세션)을 끊는다.
+	   	 			loginManager.removeSession(set.getData().getUserId());
+	   	 		}
+
 	   	 		SessionVO sess = new SessionVO();
 	   	 		sess.setUserId(set.getData().getUserId());
 	   	 		sess.setUserName(set.getData().getUserName());
@@ -104,9 +109,12 @@ public class LoginController {
  	 			//sess.setCompCd(set.getCondiVO().getCompCd());
 
 	   	 		SessionUtil.setAttribute("session", sess);
+	   	         
+   	 			//새로운 세션을 등록한다. setSession함수를 수행하면 valueBound()함수가 호출된다.
+   	 			loginManager.setSession(request.getSession(), set.getData().getUserId());
    	 		}
    	 		
-   	 		// session 종료시 다시 로긴후 돌아갈 곳을 찾기 위해서 사용
+   	 		//session 종료시 다시 로긴후 돌아갈 곳을 찾기 위해서 사용
    	 		SessionUtil.setAttribute("loginAuth", auth);
    	 	}
    	 	

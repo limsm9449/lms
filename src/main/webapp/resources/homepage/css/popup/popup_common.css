@@ -22,12 +22,11 @@
 html body{
     background:#fff;
 }
-html, body{
-    overflow-y:scroll;
+html{
+    overflow-y:hidden !important;
 }
 html{
     height:100%;
-    overflow-y:scroll;
 }
 
 /* 팝업 공통 */
@@ -317,6 +316,9 @@ html{
     text-align: center;
     padding: 10px 0;
 }
+.report_box li p.file{
+    height:170px;
+}
 .report_box li > p + p{
     min-height:36px;
     border-left:solid 1px #ddd;
@@ -401,6 +403,10 @@ html{
 .report_box.manage .half p {
     width: 30%;
 }
+.report_box.manage .half .result_area{
+    float:left;
+    width:70%;
+}
 .report_box.manage .half .long{
     font-size:14px;
 }
@@ -411,9 +417,15 @@ html{
 .report_box.manage li p{
     width:15%;
     min-height:36px;
+    border-right:solid 1px #ccc;
+}
+.view div{
+    border-left:none;
 }
 .report_box.manage li div.result_area{
-    width:85%;
+    float: left;
+    width: 85%;
+    min-height: 36px;
 }
 .report_box li .result_area{
     padding: 10px;

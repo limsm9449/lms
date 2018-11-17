@@ -63,7 +63,7 @@ function lfn_btn(pKind, pParam) {
         <!-- HEAD END -->
 
         <!-- CONTENTS -->
-        <div class='contents_wrap qna' onmouseover='sub_hide()'>
+        <div class='contents_wrap qna'>
             <div class='contents_wrap_box'>
                 <!-- QUICK MENU -->
                 <%@ include file="../common/mainQuickMenu.jsp" %>

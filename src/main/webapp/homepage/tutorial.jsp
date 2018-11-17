@@ -39,7 +39,7 @@ $(document).ready(function() {
             <!-- HEAD END -->
 
             <!-- CONTENTS -->
-            <div class='contents_wrap tutorial' onmouseover='sub_hide()'>
+            <div class='contents_wrap tutorial' >
                 <div class='contents_wrap_box'>
                     <!-- QUICK MENU -->
                     <%@ include file="../common/mainQuickMenu.jsp" %>

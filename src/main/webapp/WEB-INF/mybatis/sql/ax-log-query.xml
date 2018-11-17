@@ -16,10 +16,33 @@
 			  AND UPPER(A.USER_ID) LIKE CONCAT('%',UPPER(#{SEARCH_STR}),'%') 
 			</if>
 			<if test="CB_SEARCHKIND == 'USER_NAME'">
-			  AND UPPER(A.USER_NAME) LIKE CONCAT('%',UPPER(#{SEARCH_STR}),'%') 
+			  AND UPPER(U1.USER_NAME) LIKE CONCAT('%',UPPER(#{SEARCH_STR}),'%') 
 			</if>
+		</if>			 
+		<if test="SEARCH_STR2 != null and SEARCH_STR2 != ''">
+		  AND A.URL LIKE CONCAT('%',#{SEARCH_STR2},'%') 
 		</if>			 
 		ORDER BY A.CREATE_DATE DESC
 	</select>
-        
+
+	<select id="axLoginLogList" resultType="hashmap">
+		SELECT 	A.SEQ
+				,A.USER_ID
+				,DATE_FORMAT(A.LOGIN_TIME, '%y.%m.%d %H:%i') LOGIN_TIME_STR
+				,DATE_FORMAT(IFNULL(A.LOGOUT_TIME, A.LAST_TIME), '%y.%m.%d %H:%i') LOGOUT_TIME_STR
+				,A.LOGIN_IP
+				,U1.USER_NAME
+		FROM 	USER_LOGIN A
+                    LEFT OUTER JOIN USER U1 ON A.USER_ID = U1.USER_ID
+	 	WHERE 	DATE_FORMAT(A.LOGIN_TIME, '%Y-%m-%d') BETWEEN #{FROM_DT} AND #{TO_DT}		
+		<if test="SEARCH_STR != null and SEARCH_STR != ''">
+			<if test="CB_SEARCHKIND == 'USER_ID'">
+			  AND UPPER(A.USER_ID) LIKE CONCAT('%',UPPER(#{SEARCH_STR}),'%') 
+			</if>
+			<if test="CB_SEARCHKIND == 'USER_NAME'">
+			  AND UPPER(U1.USER_NAME) LIKE CONCAT('%',UPPER(#{SEARCH_STR}),'%') 
+			</if>
+		</if>			 
+		ORDER BY A.LOGIN_TIME DESC
+	</select>        
 </mapper>

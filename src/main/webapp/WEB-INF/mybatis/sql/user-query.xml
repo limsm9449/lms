@@ -61,6 +61,7 @@
 				,DATE_FORMAT(B.SCORE_DATE, '%y.%m.%d %H:%i') SCORE_DATE
                 ,IFNULL(B.TOTAL_CNT, 0) TOTAL_CNT 
                 ,IFNULL(B.ANSWER_CNT, 0) ANSWER_CNT
+                ,(SELECT EXAM_YN FROM COURSE_EVAL WHERE COURSE_ID = #{courseId} AND USER_ID = #{userId}) EXAM_YN
 		FROM 	(
 					SELECT 	DISTINCT 0 WEEK_TO
 					FROM	COURSE_EXAM_TYPE_STANDARD
@@ -85,6 +86,7 @@
 				,DATE_FORMAT(B.SCORE_DATE, '%y.%m.%d %H:%i') SCORE_DATE
                 ,IFNULL(B.TOTAL_CNT, 0) TOTAL_CNT 
                 ,IFNULL(B.ANSWER_CNT, 0) ANSWER_CNT
+                ,'N' EXAM_YN
 		FROM 	(
 					SELECT 	DISTINCT WEEK_TO
 					FROM	COURSE_EXAM_TYPE_STANDARD

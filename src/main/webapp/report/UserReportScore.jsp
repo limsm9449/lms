@@ -21,9 +21,15 @@
 
 <script type="text/javascript">
 $(document).ready(function() {
-	//$("#contents").cleditor({height:105});
-	//$("#contents").cleditor()[0].disable(true).refresh();
-	
+	$("#contents").cleditor({height:105});
+	$("#contents").cleditor()[0].disable(true).refresh();
+
+	$("#reportUserContents").cleditor({height:105});
+	$("#reportUserContents").cleditor()[0].disable(true).refresh();
+
+	$("#reportTutorContents").cleditor({height:105});
+	$("#reportTutorContents").cleditor()[0].refresh();
+
 	$("#attachFrame").attr("src","/board/attachReportV.do?" + "pSeq=${set.data.seq}&kind=C_REPORT&isMy=Y");
 	$("#reportAttachFrame").attr("src","/board/attachReportV.do?" + "pSeq=${set.data.attachSeq}&kind=U_REPORT&isMy=Y");
 	$("#reportAttachFrame2").attr("src","/board/attachU.do?" + "pSeq=${set.data.attachSeq}&kind=T_REPORT");
@@ -74,7 +80,7 @@ function lfn_btn(pKind, pParam) {
             <li class='clear_fix view'>
                 <p>내용</p>
 				<div class='result_area'>
-					<textarea name='contents' id='contents' disabled="disabled"><c:out value="${set.data.contents}" escapeXml="" /></textarea>
+					<textarea name='contents' id='contents'><c:out value="${set.data.contents}" escapeXml="" /></textarea>
 				</div>                  
             </li>
             </li>
@@ -85,7 +91,7 @@ function lfn_btn(pKind, pParam) {
             <li class='clear_fix view'>
                 <p>제출내용</p> 
 				<div class='result_area'>
-					<textarea name='reportUserContents' id='reportUserContents' disabled="disabled"><c:out value="${set.data.reportUserContents}" escapeXml="" /></textarea>
+					<textarea name='reportUserContents' id='reportUserContents'><c:out value="${set.data.reportUserContents}" escapeXml="" /></textarea>
 				</div>                  
             </li>
             <li class='clear_fix view'>

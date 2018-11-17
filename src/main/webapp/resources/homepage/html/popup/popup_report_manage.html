@@ -15,11 +15,6 @@
 
     <link rel='stylesheet' href='../../css/initialization.css'>
     <link rel='stylesheet' href='../../css/popup/popup_common.css'>
-    <style>
-        html{
-            overflow-y:hidden;
-        }
-    </style>
 </head>
 
 <body>
@@ -33,44 +28,40 @@
         <ul class='report_box manage clear_fix'>
             <li class='clear_fix'>
                 <p>과정명</p>
-                <input type='text'>
+                <div class='result_area'></div>
             </li>
             <li class='clear_fix half'>
                 <p class='long'>이름<span>(아이디)</span></p>
-                <input type='text'>
+                <div class='result_area'></div>
             </li>
             <li class='clear_fix half left'>
                 <p>회사명</p>
-                <input type='text'>
+                <div class='result_area'></div>
             </li>
             <li class='clear_fix half'>
                 <p>제목</p>
-                <input type='text'>
+                <div class='result_area'></div>
             </li>
             <li class='clear_fix half left'>
                 <p>유형</p>
-                <input type='text'>
+                <div class='result_area'></div>
             </li>
             <li class='clear_fix view'>
                 <p>내용</p>
-                <div class='result_area'>
-                    <textarea name='' id=''></textarea>
-                </div>
+                <div class='result_area'></div>
             </li>
             <li class='clear_fix view'>
-                <p>출제파일</p>
+                <p class='file'>출제파일</p>
                 <div class='report_files'>
                     <iframe src='../etc/iframe_file_view.html' frameborder='0'></iframe>
                 </div>
             </li>
             <li class='clear_fix view'>
                 <p>제출내용</p>
-                <div class='result_area'>
-                    <textarea name='' id=''></textarea>
-                </div>
+                <div class='result_area'></div>
             </li>
             <li class='clear_fix view'>
-                <p>제출파일</p>
+                <p class='file'>제출파일</p>
                 <div class='report_files'>
                     <iframe src='../etc/iframe_file_view.html' frameborder='0'></iframe>
                 </div>
@@ -78,11 +69,11 @@
             <li class='clear_fix view'>
                 <p>첨삭내용</p>
                 <div class='result_area'>
-                    <textarea name='' id=''></textarea>
+                    <!-- <textarea name='' id=''></textarea> -->
                 </div>
             </li>
             <li class='clear_fix view'>
-                <p>첨삭파일</p>
+                <p class='file'>첨삭파일</p>
                 <div class='btn_area'>
                     <iframe src='../etc/iframe_file_view.html' frameborder='0'></iframe>
                 </div>

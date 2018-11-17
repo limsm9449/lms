@@ -9,7 +9,7 @@
 
         <!-- PC HEADER -->
         <header class='head_pc'>
-            <div class="head_wrap pc clear_fix" onmouseover='sub_hide()'>
+            <div class="head_wrap pc clear_fix">
                 <div class='head_con logo_box'>
                     <a href="javascript:" onclick="page.goHome();">
                         <img src='/resources/homepage/img/logo.png' alt=' '>

@@ -22,8 +22,40 @@
 </head>
 
 <script type="text/javascript">
+var isSave = false;
+
 $(document).ready(function() {
 	CountDownTimer("${set.startTime}");
+	
+	$(window).on('beforeunload', function(event){
+		if ( isSave == false ) {
+			return "페이지를 닫을 경우 다시 시험을 보실 수 없습니다.";
+		}
+	});
+	
+	$(window).on('unload', function(){
+        if ( isSave == false ) {
+        	alert("a");
+        	lfn_save();
+        	lfn_removeCookie();
+        } else {
+        	alert("b");
+        }
+	});
+	
+	// F5, ctrl + F5, ctrl + r 새로고침 막기
+    $(document).keydown(function (e) {
+    	if (e.which === 116) {
+        	if (typeof event == "object") {
+                event.keyCode = 0;
+            }
+            return false;
+        } else if (e.which === 82 && e.ctrlKey) {
+            return false;
+        }
+    });
+	
+    lfn_getCookie();
 });
 
 var timer;
@@ -52,6 +84,11 @@ function showRemaining() {
 		clearInterval(timer);
 		document.getElementById("time").innerHTML = '시험종료';
 		
+		alert("시험시간이 종료되었습니다.");
+		
+		lfn_save();
+		lfn_removeCookie();
+		
 		return;
 	} else{
 		var days = Math.floor(distance / _day);
@@ -69,25 +106,34 @@ function lfn_btn(pKind, pParam) {
 			return false;
 		
 		if ( confirm("시험은 한번만 저장하실 수 있습니다.\n저장하시겠습니까?") == true ) {
-			$.ajax({
-				type :"POST",
-				url : context +"/exam/userExamIns.do",
-				dataType :"json",
-				data : $("#frm").serialize(),
-				success : function(json){
-					if ( json.rtnMode == "INSERT_OK") {
-						alert("정상적으로 저장이 되었습니다.");
-						opener.location.reload();
-						window.close();
-					}
-				},
-				error : function(e) {
-					alert("<spring:message code="lms.msg.systemError" text="-" />");
-				}
-			})
+			lfn_save();
+			lfn_removeCookie();
 		}
 	}
 }
+
+function lfn_save() {
+	$.ajax({
+		type :"POST",
+		async : false,
+		url : context +"/exam/userExamIns.do",
+		dataType :"json",
+		data : $("#frm").serialize(),
+		success : function(json){
+			if ( json.rtnMode == "INSERT_OK") {
+				alert("정상적으로 저장이 되었습니다.");
+				
+				isSave = true;
+				
+				opener.location.reload();
+				window.close();
+			}
+		},
+		error : function(e) {
+			alert("<spring:message code="lms.msg.systemError" text="-" />");
+		}
+	})
+} 
 
 function lfn_validate() {
 	//Validation 검사
@@ -112,6 +158,40 @@ function lfn_validate() {
 	}
 		
 	return true;
+}
+
+function lfn_answerChange() {
+	types = $("[id=types]");
+	answers = $("[id=answers]");
+	for ( i = 0; i < types.length; i++ ) {
+		if ( types[i].value == "G") {
+			$.cookie(cookieName + '${set.condiVO.courseId}_' + i, $("input[name=answers_" + (i + 1) + "]:checked").val(), { expires: 1 });
+		} else {
+			$.cookie(cookieName + '${set.condiVO.courseId}_' + i, $("#jAnswers_" + (i + 1)).val(), { expires: 1 });
+		}
+	}
+}
+
+function lfn_removeCookie() {
+	alert("A");
+	types = $("[id=types]");
+	for ( i = 0; i < types.length; i++ ) {
+		$.removeCookie(cookieName + '${set.condiVO.courseId}_' + i);
+	}
+}
+
+function lfn_getCookie() {
+	types = $("[id=types]");
+	answers = $("[id=answers]");
+	for ( i = 0; i < types.length; i++ ) {
+		if ( $.cookie(cookieName + '${set.condiVO.courseId}_' + i) != undefined ) {
+			if ( types[i].value == "G") {
+				$("input:radio[name='answers_" + (i + 1) + "']:radio[value='" + $.cookie(cookieName + '${set.condiVO.courseId}_' + i) + "']").attr("checked",true);
+			} else {
+				$("#jAnswers_" + (i + 1)).val($.cookie(cookieName + '${set.condiVO.courseId}_' + i));
+			}
+		}
+	}
 }
 
 </script>
@@ -183,25 +263,25 @@ function lfn_validate() {
                         <p>${row.question}</p>
                         <ul class='answer_box'>
                             <li class='clear_fix'>
-                                <input type='radio' name='answers_${idx.index + 1}' id='answers_${idx.index + 1}' value='1'>
+                                <input type='radio' name='answers_${idx.index + 1}' id='answers_${idx.index + 1}' value='1' onchange="lfn_answerChange()">
                                 <p>
             						${row.qa1}
                                 </p>
                             </li>
                             <li class='clear_fix'>
-                                <input type='radio' name='answers_${idx.index + 1}' id='answers_${idx.index + 1}' value='2'>
+                                <input type='radio' name='answers_${idx.index + 1}' id='answers_${idx.index + 1}' value='2' onchange="lfn_answerChange()">
                                 <p>
                                     ${row.qa2}
                                 </p>
                             </li>
                             <li class='clear_fix'>
-                                <input type='radio' name='answers_${idx.index + 1}' id='answers_${idx.index + 1}' value='3'>
+                                <input type='radio' name='answers_${idx.index + 1}' id='answers_${idx.index + 1}' value='3' onchange="lfn_answerChange()">
                                 <p>
                                     ${row.qa3}
                                 </p>
                             </li>
                             <li class='clear_fix last_bottom'>
-                                <input type='radio' name='answers_${idx.index + 1}' id='answers_${idx.index + 1}' value='4'>
+                                <input type='radio' name='answers_${idx.index + 1}' id='answers_${idx.index + 1}' value='4' onchange="lfn_answerChange()">
                                 <p>
                                     ${row.qa4}
                                 </p>
@@ -222,7 +302,7 @@ function lfn_validate() {
                        	<input type='radio' name='answers_${idx.index + 1}' id='answers_${idx.index + 1}' style="display:none;">
 
                         <p>${row.question}</p>
-                        <input type='text' name='jAnswers_${idx.index + 1}' id='jAnswers_${idx.index + 1}'>
+                        <input type='text' name='jAnswers_${idx.index + 1}' id='jAnswers_${idx.index + 1}' onchange="lfn_answerChange()">
                     </div>
                 </div>
             </li>

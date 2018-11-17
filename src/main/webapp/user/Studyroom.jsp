@@ -30,7 +30,6 @@ var flag = "NOTICE";
 
 $(document).ready(function(){
 });
-
 </script>
 
 <body>
@@ -224,7 +223,13 @@ $(document).ready(function(){
                             <td>${row.submitDate}</td>
                             <td class='line_4 esti_btn mobile'>
 	<c:choose>
-		<c:when test="${row.answerCnt eq '0'}">
+		<c:when test="${idx.index eq 0 && row.examYn eq 'N'}">
+                                <button onclick="Popup.showExam('${set.courseInfo.courseId}', '${row.week}');">응시하기</button> 
+		</c:when>
+		<c:when test="${idx.index eq 0 && row.examYn eq 'Y'}">
+                                <button onclick="Popup.showExamResult('${set.courseInfo.courseId}', '${row.week}');">완료</button>
+		</c:when>
+		<c:when test="${row.totalCnt eq '0'}">
                                 <button onclick="Popup.showExam('${set.courseInfo.courseId}', '${row.week}');">응시하기</button>
 		</c:when>
 		<c:otherwise>

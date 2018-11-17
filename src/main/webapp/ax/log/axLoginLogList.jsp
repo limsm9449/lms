@@ -46,7 +46,7 @@ $(document.body).ready(function () {
 	            fn_search();
 	            break;
             case "export":
-                grid.exportExcel("로그관리.xls");
+                grid.exportExcel("로그인로그관리.xls");
                 break;
         }
     });
@@ -65,18 +65,18 @@ function fn_makeGrid() {
 	            width : 80,
 	            align : "left"
 	        },{
-	            key : "URL",
-	            label : "Url",
-	            width : 180,
+	            key : "LOGIN_TIME_STR",
+	            label : "로그인 시간",
+	            width : 120,
 	            align : "left"
 	        },{
-	            key : "PARAMETER",
-	            label : "파라미터", 
-	            width : 400,
+	            key : "LOGOUT_TIME_STR",
+	            label : "로그아웃 시간", 
+	            width : 120,
 	            align : "left"
 	        },{
-	            key : "CREATE_DATE_STR",
-	            label : "접속시간", 
+	            key : "LOGIN_IP",
+	            label : "접속IP", 
 	            width : 120,
 	            align : "center"
 	        }	], 
@@ -95,7 +95,6 @@ function fn_params() {
 	params.TO_DT = $("#TO_DT").val();	
 	params.CB_SEARCHKIND = $("#CB_SEARCHKIND option:selected").val();
 	params.SEARCH_STR = $("#SEARCH_STR").val();
-	params.SEARCH_STR2 = $("#SEARCH_STR2").val();
 }
 
 function fn_search() {
@@ -103,7 +102,7 @@ function fn_search() {
 	
 	fn_params();
 	
-	gfn_callAjax("/log/axLogList.do", params, fn_callbackAjax, "search");
+	gfn_callAjax("/log/axLoginLogList.do", params, fn_callbackAjax, "search");
 }
 
 function fn_callbackAjax(data, id) {
@@ -127,7 +126,7 @@ function fn_gridEvent(event, obj) {
 
 <form id="frm" name="frm" method="post">
 
-<h2>접속 로그 관리</h2>
+<h2>로그인 로그 관리</h2>
 <div style="height:10px"></div>
 
 <div class="form-inline">
@@ -144,10 +143,6 @@ function fn_gridEvent(event, obj) {
 			<option value="USER_NAME">사용자명</option>
 		</select>
 		<input class="form-control" type="text" id="SEARCH_STR" name="SEARCH_STR" value=""/>
-  	</div>
-  	<div class="form-group">
-    	<label for="CB_SEARCHKIND">Url</label>
-		<input class="form-control" type="text" id="SEARCH_STR2" name="SEARCH_STR2" value=""/>
   	</div>
 </div>
 <div style="height:10px"></div>

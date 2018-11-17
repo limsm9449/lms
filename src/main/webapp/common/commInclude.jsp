@@ -23,9 +23,6 @@
 <script type="text/javascript" src="/resources/js/category.js"></script>
 <script type="text/javascript" src="/resources/js/utils.js?timestamp=<%=timestamp%>"></script>
 
-<link rel="stylesheet" type="text/css" media="all" href="/resources/css/admin/base.css" />
-<link rel="stylesheet" type="text/css" media="all" href="/resources/css/admin/common.css" />
-
 <%-- datepicker --%>
 <script type="text/javascript" src="/resources/jquery-ui-1.12.1.custom/jquery-ui.js"></script> 
 <link type="text/css" href="/resources/jquery-ui-1.12.1.custom/jquery-ui.min.css" rel="stylesheet" />

@@ -120,6 +120,19 @@ public class AxScoreController {
         return hm;
     }
 
+    @RequestMapping(value = "/score/axUserScoreExamRetry", method = RequestMethod.POST, consumes = "application/json" )
+    public @ResponseBody HashMap<String,Object> axUserScoreExamRetry(@RequestBody HashMap<String, Object> paramMap, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    	HashMap<String, Object> hm = new HashMap<String, Object>();
+
+    	try {
+    		hm = svr.axUserScoreExamRetry(paramMap);
+    	} catch ( Exception e ) {
+    		e.printStackTrace();
+    	}
+
+        return hm;
+    }
+
     @RequestMapping(value = "/score/axUserScoreQuestList", method = RequestMethod.POST, consumes = "application/json" )
     public @ResponseBody HashMap<String,Object> axUserScoreQuestList(@RequestBody HashMap<String, Object> paramMap, HttpServletRequest request, HttpServletResponse response) throws Exception {
     	HashMap<String, Object> hm = new HashMap<String, Object>();

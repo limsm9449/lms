@@ -19,6 +19,10 @@
         url('../../font/NanumSquareEB.eot') format('embedded-opentype');
 }
 
+html{
+    overflow-y:hidden !important;
+}
+
 /* IF IE 10 */
 
 html[data-useragent*='MSIE 10.0'] .head_mobile{

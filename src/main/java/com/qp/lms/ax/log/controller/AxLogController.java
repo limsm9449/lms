@@ -42,6 +42,19 @@ public class AxLogController {
 
         return hm;
     }
-    
+
+    @RequestMapping(value = "/log/axLoginLogList", method = RequestMethod.POST, consumes = "application/json" )
+    public @ResponseBody HashMap<String,Object> axLoginLogList(@RequestBody HashMap<String, Object> paramMap, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    	HashMap<String, Object> hm = new HashMap<String, Object>();
+
+    	try {
+    		hm = svr.axLoginLogList(paramMap);
+    	} catch ( Exception e ) {
+    		e.printStackTrace();
+    	}
+
+        return hm;
+    }
+
 
 }

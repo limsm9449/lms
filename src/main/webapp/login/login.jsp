@@ -32,6 +32,13 @@
 <script type="text/javascript">
 
 $(document).ready(function() {
+	if ( $.cookie(cookieName + 'login') == "Y" ) {
+		$("input:checkbox[id='cb_continue']").prop("checked", true);
+
+		$("#userId").val($.cookie(cookieName + 'userId'));
+		$("#password").val($.cookie(cookieName + 'password'));
+	}
+	
 	$("#userId").focus(); 
 });
 
@@ -51,6 +58,16 @@ function lfn_login() {
 		alert("<spring:message code="lms.msg.inputPassword" text="-" />");
 		$("#password").focus();
 		return;
+	}
+
+	if ( $("input:checkbox[id='cb_continue']").is(":checked") ) {
+		$.cookie(cookieName + 'login', "Y");
+		$.cookie(cookieName + 'userId', $("#userId").val(), { expires: 7 });
+		$.cookie(cookieName + 'password', $("#password").val(), { expires: 7 });
+	} else {
+		$.cookie(cookieName + 'login', "N");
+		$.removeCookie(cookieName + 'userId');
+		$.removeCookie(cookieName + 'password');
 	}
 	
 	document.frm.target = "tranFrame";	
@@ -87,7 +104,7 @@ function lfn_page() {
 			<!-- HEAD END -->
 
 			<!-- CONTENTS -->
-			<div class='contents_wrap_box' onmouseover='sub_hide()'>
+			<div class='contents_wrap_box'>
 				<!-- QUICK MENU -->
 				<%@ include file="../common/mainQuickMenu.jsp"%>
 
@@ -123,7 +140,7 @@ function lfn_page() {
 						<button class='signin_complete_btn' onclick="lfn_login()">로그인</button>
 						<div>
 							<div class='signin_sub_control left clear_fix'>
-								<input type='checkbox' name='' id=''>
+								<input type='checkbox' name='cb_continue' id='cb_continue'>
 								<p>로그인 상태유지</p>
 							</div>
 							<div class='signin_sub_control right clear_fix'>
@@ -140,7 +157,7 @@ function lfn_page() {
 						<button class='facebook' onclick="alert('작업중입니다.');">페이스북
 							아이디로 로그인</button>
 					</div>
-					<div class='signin_bg_box'>
+					<div class='signin_bg_box'> 
 						<img src='/resources/homepage/img/util/login_bg.png' alt=''>
 					</div>
 				</div>

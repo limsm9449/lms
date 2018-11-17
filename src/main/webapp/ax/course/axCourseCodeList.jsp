@@ -12,35 +12,11 @@
     <title>Q learning - 관리자 - 과정관리 - 과정코드관리</title>
 
 	<%@ include file="../../common/commMainInclude.jsp" %>
-	
-	<link rel="stylesheet" type="text/css" href="/resources/ax5ui/dist/ax5mask.css"/>
-	<link rel="stylesheet" type="text/css" href="/resources/ax5ui/dist/ax5calendar.css"/>
-	<link rel="stylesheet" type="text/css" href="/resources/ax5ui/dist/ax5picker.css"/>
-	<link rel="stylesheet" type="text/css" href="/resources/ax5ui/dist/ax5select.css"/>
-	<link rel="stylesheet" type="text/css" href="/resources/ax5ui/dist/ax5grid.css"/>
-	<link rel="stylesheet" type="text/css" href="/resources/ax5ui/dist/ax5dialog.css"/>
-	<link rel="stylesheet" type="text/css" href="/resources/ax5ui/dist/ax5toast.css"/>
-	<link rel="stylesheet" type="text/css" href="/resources/ax5ui/dist/ax5combobox.css"/>
-	<link rel="stylesheet" type="text/css" href="/resources/ax5ui/dist/ax5layout.css"/>
-	<script src="/resources/ax5ui/dist/ax5core.js"></script>
-	<script src="/resources/ax5ui/dist/ax5mask.js"></script>
-	<script src="/resources/ax5ui/dist/ax5formatter.min.js"></script>
-	<script src="/resources/ax5ui/dist/ax5calendar.min.js"></script>
-	<script src="/resources/ax5ui/dist/ax5picker.min.js"></script>
-	<script src="/resources/ax5ui/dist/ax5select.js"></script>
-	<script src="/resources/ax5ui/dist/ax5grid.js"></script>
-	<script src="/resources/ax5ui/dist/ax5dialog.js"></script>
-	<script src="/resources/ax5ui/dist/ax5toast.js"></script>
-	<script src="/resources/ax5ui/dist/ax5combobox.js"></script>
-	<script src="/resources/ax5ui/dist/ax5layout.js"></script>
-
 
     <link href='https://fonts.googleapis.com/css?family=Nanum+Gothic' rel='stylesheet'>
     <link rel='stylesheet' href='/resources/homepage/css/initialization.css'>
     <link rel='stylesheet' href='/resources/homepage/css/etc/admin.css'>
     
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
-	<script type="text/javascript" src="/resources/multiselect/js/bootstrap-multiselect.js"></script>
     
 </head>
 
@@ -297,7 +273,7 @@ function fn_hidePopupDiv(popupDivId) {
 	
 	if ( $("#INS_CB_LEVEL1 option:selected").val() == "" || $("#INS_CB_LEVEL2 option:selected").val() == "" || $("#INS_CB_LEVEL3 option:selected").val() == "" ) {
 		mask.open();
-		dialog.alert( { msg : "대/중/소분류를 선택하셔야 합니다." }, function () { mask.close(); } );
+		dialog.alert( { msg : "대/중/소분류를 선택하셔야 합니다." }, function () { mask.close(); gfn_showPopupDiv("categoryDiv"); } );
 	} else {
 		$.ajax({
 			url : context + "/common/axMaxCourseCode.do",
@@ -482,27 +458,31 @@ function fn_cbChange(id) {
             <div class='grid_area' style="overflow-x: hidden;" id="grid-parent">
 			    <div data-ax5grid="first-grid" ></div>
 			</div>
+
+            <div class='admin_popup type1 div' id="categoryDiv" style="width:400px; height:250px;">
+                <div>
+                    <div class='category_box clear_fix'>
+                        <p>대분류</p>
+                        <select id="INS_CB_LEVEL1" onchange="fn_cbChange('INS_CB_LEVEL1')"></select>
+                    </div>
+                    <div class='category_box clear_fix'>
+                        <p>중분류</p>
+                        <select id="INS_CB_LEVEL2" onchange="fn_cbChange('INS_CB_LEVEL2')"></select>
+                    </div>
+                    <div class='category_box clear_fix'>
+                        <p>소분류</p>
+                        <select id="INS_CB_LEVEL3"></select>
+                    </div>
+                </div>
+                <div class='admin_popup_btn'>
+                    <button onclick="fn_hidePopupDiv('categoryDiv')">확인</button>
+                    <button onclick="gfn_hidePopupDiv('categoryDiv');">닫기</button>
+                </div>
+            </div>			
         </div>
     </div>
     
 <div class="mask"></div>
-<div class="popupDiv" id="categoryDiv" style="width:300px; height:200px;">
-	대분류
-	<select id="INS_CB_LEVEL1" onchange="fn_cbChange('INS_CB_LEVEL1')">
-	</select>
-	<br></br>
-	중분류
-	<select id="INS_CB_LEVEL2" onchange="fn_cbChange('INS_CB_LEVEL2')">
-	</select>
-	<br></br>
-	소분류
-	<select id="INS_CB_LEVEL3">
-	</select>
-	
-	<div style="height:30px"></div>
-	<input type="button" href="#" value="확인" onclick="fn_hidePopupDiv('categoryDiv')"/>
-    <input type="button" href="#" value="닫기" onclick="gfn_hidePopupDiv('categoryDiv');"/>
-</div>    
 </frameset>
 
 </form>

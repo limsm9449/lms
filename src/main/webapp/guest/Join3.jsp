@@ -145,7 +145,7 @@ function lfn_validate() {
         <!-- HEAD END -->
 
         <!-- CONTENTS -->
-        <div class='contents_wrap_box' onmouseover='sub_hide()'>
+        <div class='contents_wrap_box' >
             <!-- QUICK MENU -->
             <%@ include file="../common/mainQuickMenu.jsp" %>
 

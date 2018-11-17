@@ -1,3 +1,5 @@
+var cookieName = "qlearning_";
+
 var resourceUrl = "/resources/homepage";
 
 /* 게시판 내용의 사이즈 */

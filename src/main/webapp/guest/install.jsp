@@ -89,7 +89,7 @@ function lfn_install() {
 			<!-- HEAD END -->
 
 			<!-- CONTENTS -->
-			<div class='contents_wrap_box' onmouseover='sub_hide()'>
+			<div class='contents_wrap_box' >
 				<div class='util_wrap signin'>
 					<h1>
 						<span>Welcome</span> 큐러닝에 오신 것을 환영합니다.

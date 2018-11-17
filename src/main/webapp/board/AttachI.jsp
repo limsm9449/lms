@@ -17,6 +17,11 @@
 	
     <link rel='stylesheet' href='/resources/homepage/css/initialization.css'>
     <link rel='stylesheet' href='/resources/homepage/css/etc/iframe_file_view.css'>
+    <style>
+        html{
+            overflow-y : hidden;
+        }
+    </style>    
 </head>
 
 <script type="text/javascript">

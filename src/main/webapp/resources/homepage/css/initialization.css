@@ -126,6 +126,9 @@ html, body{
     height:100%;
     overflow-y:scroll;
 }
+body{
+    overflow-y:scroll;
+}
 input{
     margin:0;
 }
@@ -169,6 +172,7 @@ iframe{
 	width:100%;
 }
 
+.contents_wrap_box.popup{}
 .iframe_contents{
 	min-height: 300px;
 }

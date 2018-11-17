@@ -19,7 +19,7 @@
         <!-- HEAD -->
         <div id='width_text'></div>
         <header>
-            <div class="head_wrap pc clear_fix" onmouseover='sub_hide()'>
+            <div class="head_wrap pc clear_fix" >
                 <div class='head_con logo_box'>
                     <img src='/resources/homepage/img/logo.png' alt=' '>
                 </div>
@@ -133,7 +133,7 @@
         <!-- HEAD END -->
 
         <!-- CONTENTS -->
-        <div class='contents_wrap' onmouseover='sub_hide()'>
+        <div class='contents_wrap' >
             <div class='slider_wrap'>
                 <div class='slide_box slide_1'>
                     <div class='visual_box'>

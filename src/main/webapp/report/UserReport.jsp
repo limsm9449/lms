@@ -79,9 +79,11 @@ function lfn_btn(pKind, pParam) {
 				</div>                  
             </li>
             </li>
-            <li class='clear_fix'>
-                <p>출제파일</p>
-                <iframe id="attachFrame" name="attachFrame" style="width:675px;height:100px"></iframe>
+            <li class='clear_fix view'>
+                <p class="file">출제파일</p>
+                <div class='report_files'>
+                	<iframe id="attachFrame" name="attachFrame" style="width:675px;height:100px"></iframe>
+                </div>
             </li>
             <li class='clear_fix view'>
                 <p>제출내용</p> 
@@ -90,8 +92,10 @@ function lfn_btn(pKind, pParam) {
 				</div>                  
             </li>
             <li class='clear_fix view'>
-                <p>제출파일</p>
-                <iframe id="reportAttachFrame" name="reportAttachFrame" style="width:675px;height:100px"></iframe>
+                <p class="file">제출파일</p>
+                <div class='report_files'>
+                	<iframe id="reportAttachFrame" name="reportAttachFrame" style="width:675px;height:100px"></iframe>
+                </div>
             </li>
         </ul>
         <div class='btn_submit'>

@@ -88,6 +88,7 @@ public class AxScoreService {
 	public HashMap<String, Object> axUserScoreExamList(HashMap<String, Object> paramMap) throws Exception {
 		HashMap<String, Object> hm = new HashMap<String, Object>();
 		
+		/*
 		int cnt = sqlSession.selectOne("axScore.axUserScoreExamCount", paramMap);
 		if ( cnt == 0 ) {
 	    	List<HashMap<String, Object>> standardList = sqlSession.selectList("axScore.axUserScoreExamStandard", paramMap);
@@ -96,6 +97,7 @@ public class AxScoreService {
 				sqlSession.insert("axScore.axUserScoreExamInsert", standardList.get(i));
 			}
 		}
+		*/
 		
     	List<HashMap<String, Object>> list = sqlSession.selectList("axScore.axUserScoreExamList", paramMap);
     	hm.put("list", list);
@@ -115,6 +117,27 @@ public class AxScoreService {
 
 			sqlSession.update("axScore.axUserScoreExamUpdate", row);
 		}
+		//시험 타입별 합계
+		sqlSession.update("axScore.axUserScoreExamUpdateExamTypeTotal", paramMap);
+		//시험합계(비율)
+		sqlSession.update("axScore.axUserScoreUpdateExamTotal", paramMap);
+		//전체합계(비율)
+		sqlSession.update("axScore.axUserScoreUpdateTotal", paramMap);
+		//이수여부
+		sqlSession.update("axScore.axUserScoreUpdateComplete", paramMap);
+
+		hm.put("RtnMode", Constant.mode.OK.name());
+        
+    	return hm;
+    }
+	
+	@Transactional(propagation=Propagation.REQUIRED, rollbackFor={Throwable.class})
+	public HashMap<String, Object> axUserScoreExamRetry(HashMap<String, Object> paramMap) throws Exception {
+		HashMap<String, Object> hm = new HashMap<String, Object>();
+		
+		sqlSession.delete("axScore.axUserScoreExamDelete", paramMap);
+		sqlSession.update("axScore.axUserScoreExamInitialize", paramMap);
+		
 		//시험 타입별 합계
 		sqlSession.update("axScore.axUserScoreExamUpdateExamTypeTotal", paramMap);
 		//시험합계(비율)

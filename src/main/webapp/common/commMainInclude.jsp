@@ -17,6 +17,7 @@
 <script type="text/javascript" src="/resources/js/commPopup.js?timestamp=<%=timestamp%>"></script>
 <script type="text/javascript" src="/resources/js/paging.js?timestamp=<%=timestamp%>"></script>
 <script type="text/javascript" src="/resources/js/category.js"></script>
+<script type="text/javascript" src="/resources/js/jquery.cookie.js?timestamp=<%=timestamp%>"></script>
 
 <%-- datepicker --%>
 <script type="text/javascript" src="/resources/jquery-ui-1.12.1.custom/jquery-ui.js"></script> 
@@ -25,6 +26,32 @@
 <%-- CLEditor --%>
 <link rel="stylesheet" type="text/css" href="/resources/CLEditor/jquery.cleditor.css" />
 <script type="text/javascript" src="/resources/CLEditor/jquery.cleditor.min.js"></script>
+
+
+<link rel="stylesheet" type="text/css" href="/resources/ax5ui/dist/ax5mask.css"/>
+<link rel="stylesheet" type="text/css" href="/resources/ax5ui/dist/ax5calendar.css"/>
+<link rel="stylesheet" type="text/css" href="/resources/ax5ui/dist/ax5picker.css"/>
+<link rel="stylesheet" type="text/css" href="/resources/ax5ui/dist/ax5select.css"/>
+<link rel="stylesheet" type="text/css" href="/resources/ax5ui/dist/ax5grid.css"/>
+<link rel="stylesheet" type="text/css" href="/resources/ax5ui/dist/ax5dialog.css"/>
+<link rel="stylesheet" type="text/css" href="/resources/ax5ui/dist/ax5toast.css"/>
+<link rel="stylesheet" type="text/css" href="/resources/ax5ui/dist/ax5combobox.css"/>
+<link rel="stylesheet" type="text/css" href="/resources/ax5ui/dist/ax5layout.css"/>
+<script src="/resources/ax5ui/dist/ax5core.js"></script>
+<script src="/resources/ax5ui/dist/ax5mask.js"></script>
+<script src="/resources/ax5ui/dist/ax5formatter.min.js"></script>
+<script src="/resources/ax5ui/dist/ax5calendar.min.js"></script>
+<script src="/resources/ax5ui/dist/ax5picker.min.js"></script>
+<script src="/resources/ax5ui/dist/ax5select.js"></script>
+<script src="/resources/ax5ui/dist/ax5grid.js"></script>
+<script src="/resources/ax5ui/dist/ax5dialog.js"></script>
+<script src="/resources/ax5ui/dist/ax5toast.js"></script>
+<script src="/resources/ax5ui/dist/ax5combobox.js"></script>
+<script src="/resources/ax5ui/dist/ax5layout.js"></script>
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/resources/multiselect/js/bootstrap-multiselect.js"></script>
+
 
 <script type="text/javascript">
 var contents = "<%=request.getContextPath()%>/cContents/";

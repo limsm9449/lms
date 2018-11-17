@@ -40,7 +40,7 @@ $(document).ready(function(){
        	<!-- HEAD END -->
 
         <!-- CONTENTS -->
-        <div class='contents_wrap process' onmouseover='sub_hide()'>
+        <div class='contents_wrap process' >
             <div class='contents_wrap_box'>
                 <!-- QUICK MENU -->
             	<%@ include file="../common/mainQuickMenu.jsp" %>

@@ -1,9 +1,5 @@
 <%@ include file="../common/commInclude.jsp" %>
 
-<link rel="stylesheet" type="text/css" media="all" href="/resources/css/admin/admin.css" />
-
-<link rel="stylesheet" type="text/css" href="/resources/bootstrap/css/bootstrap.min.css"/>
-
 <link rel="stylesheet" type="text/css" href="/resources/ax5ui/dist/ax5mask.css"/>
 <link rel="stylesheet" type="text/css" href="/resources/ax5ui/dist/ax5calendar.css"/>
 <link rel="stylesheet" type="text/css" href="/resources/ax5ui/dist/ax5picker.css"/>

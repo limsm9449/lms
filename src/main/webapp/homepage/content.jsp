@@ -131,7 +131,7 @@ function change_img(category, order, number, file_name, file_name_m, back_color)
        	<!-- HEAD END -->
 
         <!-- CONTENTS -->
-        <div class='contents_wrap' onmouseover='sub_hide()'>
+        <div class='contents_wrap' >
             <!-- QUICK MENU -->
             <%@ include file="../common/mainQuickMenu.jsp" %>
 
