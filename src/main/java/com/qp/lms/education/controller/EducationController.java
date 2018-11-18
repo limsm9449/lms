@@ -147,7 +147,7 @@ public class EducationController {
 	    	
 	    	set = svr.updPage(set);
 	    	
-	    	model.addAttribute("json", CommUtil.getJsonObject(set.getRtnMode(),""));
+	    	model.addAttribute("json", CommUtil.getJsonObject(set.getRtnMode(),set.getRtnData()));
     	} catch ( Exception e ) {
     		e.printStackTrace();
     	}

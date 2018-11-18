@@ -35,11 +35,11 @@ $(document).ready(function() {
 	
 	$(window).on('unload', function(){
         if ( isSave == false ) {
-        	alert("a");
+        	//alert("a");
         	lfn_save();
         	lfn_removeCookie();
         } else {
-        	alert("b");
+        	//alert("b");
         }
 	});
 	
@@ -173,7 +173,7 @@ function lfn_answerChange() {
 }
 
 function lfn_removeCookie() {
-	alert("A");
+	//alert("A");
 	types = $("[id=types]");
 	for ( i = 0; i < types.length; i++ ) {
 		$.removeCookie(cookieName + '${set.condiVO.courseId}_' + i);

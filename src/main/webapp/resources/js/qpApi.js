@@ -250,7 +250,12 @@ var QP_API = {
 					    week : currentWeek,
 					    page : currentPage},
 				success : function(json){
-					console.log("updPage success");
+					if ( json.rtnMode == "DAY_OVER" ) {
+						alert("하루에 학습 할 수 있는 차수는 " + json.rtnMessage + "차수 입니다. 내일 다시 학습을 해주세요.");
+						window.close();
+					} else {
+						console.log("updPage success");
+					}
 				}
 			});
 		}

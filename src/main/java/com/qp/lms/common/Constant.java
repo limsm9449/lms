@@ -13,7 +13,8 @@ public class Constant {
 		ERROR,
 		UPLOAD_OK,
 		DUPLICATION,
-		RETIRED
+		RETIRED,
+		DAY_OVER
 	};
 	
 	/** 첨부할 종류 */

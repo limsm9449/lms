@@ -102,6 +102,14 @@
 		  ORDER BY A.WEEK
     </select>
 
+    <select id="getWeekCountPerDay" parameterType="Evaluation" resultType="Evaluation">
+		SELECT COUNT(DISTINCT WEEK) CNT
+		  FROM COURSE_WEEK_PAGE
+ 		 WHERE COURSE_ID = #{courseId}
+		   AND USER_ID = #{userId}
+		   AND STUDY_START > CURRENT_DATE()
+    </select>	
+
 	<!-- 페이지 데이타를 가져온다. -->
     <select id="weekPageKey" parameterType="Evaluation" resultType="Evaluation">
 		SELECT COURSE_ID,

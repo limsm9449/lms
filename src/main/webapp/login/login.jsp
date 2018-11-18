@@ -32,6 +32,10 @@
 <script type="text/javascript">
 
 $(document).ready(function() {
+	if ( opener ) {
+		window.close();
+	}
+	
 	if ( $.cookie(cookieName + 'login') == "Y" ) {
 		$("input:checkbox[id='cb_continue']").prop("checked", true);
 

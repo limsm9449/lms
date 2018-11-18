@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.qp.lms.common.CommUtil;
 import com.qp.lms.common.Constant;
 import com.qp.lms.common.SessionUtil;
+import com.qp.lms.common.service.DdService;
 import com.qp.lms.course.model.CourseResourceVO;
 import com.qp.lms.course.model.CourseVO;
 import com.qp.lms.education.model.EducationSet;
@@ -22,6 +23,8 @@ public class EducationService {
 	@Autowired
 	private SqlSession sqlSession;
 
+	@Autowired
+	private DdService ddService;
 	
     public EducationSet eduHome(EducationSet set) throws Exception {
     	set.getCondiVO().setUserId(SessionUtil.getSessionUserId());
@@ -83,16 +86,23 @@ public class EducationService {
     public EvaluationSet updPage(EvaluationSet set) throws Exception {
     	set.getCondiVO().setUserId(SessionUtil.getSessionUserId());
     	
-    	EvaluationVO eval = (EvaluationVO)sqlSession.selectOne("education.weekPageKey",set.getCondiVO());
-    	if ( eval == null ) {
-    		sqlSession.insert("education.insWeekPage",set.getCondiVO());
+    	int weekCountPerDay = Integer.parseInt((String)ddService.getSettingData(CommUtil.getParamsHashMap("OPTION_KEY=MAX_WEEK_PER_DAY")).get("OPTION_VALUE"));
+    	EvaluationVO weekCount = (EvaluationVO)sqlSession.selectOne("education.getWeekCountPerDay",set.getCondiVO());
+    	if ( weekCount.getCnt() > weekCountPerDay) {
+	    	set.setRtnMode(Constant.mode.DAY_OVER.name());
+	    	set.setRtnData(weekCountPerDay + "");
+    	} else {
+	    	EvaluationVO eval = (EvaluationVO)sqlSession.selectOne("education.weekPageKey",set.getCondiVO());
+	    	if ( eval == null ) {
+	    		sqlSession.insert("education.insWeekPage",set.getCondiVO());
+	    	}
+	    	sqlSession.insert("education.updWeekKey",set.getCondiVO());
+	    	sqlSession.insert("education.updEvalKeyForProgress",set.getCondiVO());
+	    	sqlSession.insert("education.updEvalKeyForTotal",set.getCondiVO());
+	    	sqlSession.insert("education.updEvalKeyForLastEducation",set.getCondiVO());
+	    	
+	    	set.setRtnMode(Constant.mode.UPDATE_OK.name());
     	}
-    	sqlSession.insert("education.updWeekKey",set.getCondiVO());
-    	sqlSession.insert("education.updEvalKeyForProgress",set.getCondiVO());
-    	sqlSession.insert("education.updEvalKeyForTotal",set.getCondiVO());
-    	sqlSession.insert("education.updEvalKeyForLastEducation",set.getCondiVO());
-    	
-    	set.setRtnMode(Constant.mode.UPDATE_OK.name());
     	
         return set ;
     }
