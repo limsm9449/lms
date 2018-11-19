@@ -30,4 +30,13 @@ public class AxLogService {
     	return hm;
     }
     
+	public HashMap<String, Object> axLoginMonthLogList(HashMap<String, Object> paramMap) throws Exception {
+		HashMap<String, Object> hm = new HashMap<String, Object>();
+		
+    	List<HashMap<String, Object>> list = sqlSession.selectList("axLog.axLoginMonthLogList", paramMap);
+    	hm.put("list", list);
+        
+    	return hm;
+    }
+    
 }

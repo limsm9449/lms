@@ -82,8 +82,7 @@ function fn_makeGrid() {
 	        }	], 
 	  	null,
 	  	{
-	  		showRowSelector : true,
-	  		multipleSelect: true
+			showRowSelector : false, 
 	  	}
 	);
 	
@@ -126,7 +125,7 @@ function fn_gridEvent(event, obj) {
 
 <form id="frm" name="frm" method="post">
 
-<h2>로그인 로그 관리</h2>
+<h2>로그인 로그</h2>
 <div style="height:10px"></div>
 
 <div class="form-inline">

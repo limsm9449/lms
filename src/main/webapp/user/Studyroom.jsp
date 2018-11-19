@@ -152,11 +152,11 @@ $(document).ready(function(){
 </c:forEach>                    
                 </ul>
             </div>
-            <div class='study_btn_area pc clear_fix' style="display:none;">
-                <button>학습/수료<span></span>기준</button>
-                <button>학습<span></span>가이드</button>
-                <button>동영상<span></span>설정</button>
-                <button>환경<span></span>설정</button>
+            <div class='study_btn_area pc clear_fix'>
+                <button onclick='open_popup("popup_standard", true)'>학습/수료<span></span>기준</button>
+                <button onclick='open_popup("popup_guide", true)'>학습<span></span>가이드</button>
+                <button onclick='open_popup("popup_video_setting", true)'>동영상<span></span>설정</button>
+                <button onclick='open_popup("popup_preference", true)'>환경<span></span>설정</button>
                 <button onclick="Popup.showUserBoard('QNA','${set.courseInfo.courseId}'); return false;" class='last_right'>학습<span></span>질문답변</button>
             </div>
             <div class='study_remote_support_btn'>

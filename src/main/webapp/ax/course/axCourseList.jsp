@@ -244,6 +244,17 @@ function fn_makeGrid() {
 	                return checkThousand(this.item.COURSE_COST);
 	           	}
 	        },{
+	            key : "STUDY_MAX_WEEK",
+	            label : "학습 차시 제한",
+	            width : 120, 
+	            align : "right",
+	            editor : { 
+	            	type : "number"
+				},
+				styleClass: function () {
+                    return "grid-cell-edit";
+                }
+	        },{
               	key : undefined, 
               	label: "점수 비율", 
               	columns: [	        
@@ -581,7 +592,8 @@ function fn_hidePopupDiv(popupDivId, mode) {
 				MOBILE_YN : gfn_findValueInList(dd.CourseCode, "value", $("#INS_CB_COURSE_CODE option:selected").val(), "MOBILE_YN"),
 				RECOMMEND_COURSE_YN : "N",
 				NEW_COURSE_YN : "N",
-				CATEGORY_MAIN_YN : "N"
+				CATEGORY_MAIN_YN : "N",
+				STUDY_MAX_WEEK : gfn_findValueInList(dd.CourseCode, "value", $("#INS_CB_COURSE_CODE option:selected").val(), "STUDY_MAX_WEEK")
 			}, "last", {focus: "END"});
 	} else if ( popupDivId == "examTypeDiv" ) {
 		if ( mode == "delete" ) {
@@ -644,7 +656,8 @@ function fn_hidePopupDiv(popupDivId, mode) {
 					MOBILE_YN : row[0].MOBILE_YN,
 					RECOMMEND_COURSE_YN : "N",
 					NEW_COURSE_YN : "N",
-					CATEGORY_MAIN_YN : "N"
+					CATEGORY_MAIN_YN : "N",
+					STUDY_MAX_WEEK : row[0].STUDY_MAX_WEEK
 				}, "last", {focus: "END"});
 			
 			grid.repaint();

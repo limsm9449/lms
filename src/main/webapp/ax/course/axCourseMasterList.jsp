@@ -214,6 +214,17 @@ function fn_makeGrid() {
 	                return checkThousand(this.item.COURSE_COST);
 	           	}
 	        },{
+	            key : "STUDY_MAX_WEEK",
+	            label : "학습 차시 제한",
+	            width : 120, 
+	            align : "right",
+	            editor : { 
+	            	type : "number"
+				},
+				styleClass: function () {
+                    return "grid-cell-edit";
+                }
+	        },{
 	        	key : "MOBILE_YN", 
 	        	label : "모바일", 
 	            width : 60, 
@@ -512,7 +523,8 @@ function fn_hidePopupDiv(popupDivId) {
 			REPORT_COST : 0,
 			EVAL_COST : 0,
 			DATA_COST : 0,
-			ANSWER_COST : 0
+			ANSWER_COST : 0,
+			STUDY_MAX_WEEK : 0
 		}, "last", {focus: "END"});
 }
 

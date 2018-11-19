@@ -1,0 +1,40 @@
+@charset "utf-8";
+
+html,body{
+    overflow-y:scroll;
+}
+
+.wrap .head_mobile{
+    height:unset;
+}
+.wrap .head_mobile.on{
+    height:100%;
+}
+.wrap .head_mobile .mobile_dropwdown_wrap{
+    height:unset;
+}
+.wrap .head_mobile.on .mobile_dropwdown_wrap{
+    height:100%;
+}
+
+/* html body{
+    background:#000;
+}
+html body .learning_wrap{
+    background:yellow;
+} */
+
+
+body .learnig_wrap button{
+    margin-right:1.45%;
+}
+
+html .process_category_box div input, .process_support_fund div input{
+    border:0;
+}
+
+@media all and (max-width:420px){
+    .study_estimation_table_line .esti_btn button{
+        padding:0;
+    }
+}

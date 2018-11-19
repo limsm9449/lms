@@ -36,7 +36,27 @@ html[data-useragent*='MSIE 10.0'] .head_mobile.on .mobile_dropwdown_wrap{
 }
 
 /* HEADER */
-
+.menu_over_2depth{
+    display:none;
+    position:absolute;
+    width:230px;
+    padding:10px 0 20px;
+    background:#fff;
+    border-top:solid 1px #eee;
+    border-bottom:solid 1px #eee;
+}
+.menu_over_2depth li{
+    border: solid 1px #eee;
+    border-bottom: 0;
+    border-top: 0;
+}
+.menu_over_2depth li a{
+    font-size: 16px;
+    text-align: center;
+    display: block;
+    letter-spacing:-1px;
+    padding: 12px 0;
+}
 #width_text{
     display:none;
     position: absolute;
@@ -150,11 +170,11 @@ header{
 .menu{
     width:82%;
 }
-.menu li{
+.menu > li{
     width: 25%;
     float: left;
 }
-.menu li a{
+.menu > li > a{
 	display: block;
 	font-family:'NanumSquare';
     font-size: 20px;

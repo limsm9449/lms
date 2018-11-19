@@ -21,15 +21,6 @@
 
 <script type="text/javascript">
 $(document).ready(function() {
-	$("#contents").cleditor({height:105});
-	$("#contents").cleditor()[0].disable(true).refresh();
-	
-	$("#reportUserContents").cleditor({height:105});
-	$("#reportUserContents").cleditor()[0].disable(true).refresh();
-	
-	$("#reportTutorContents").cleditor({height:105});
-	$("#reportTutorContents").cleditor()[0].disable(true).refresh();
-	
 	$("#attachFrame").attr("src","/board/attachReportV.do?" + "pSeq=${set.data.seq}&kind=C_REPORT&isMy=Y");
 	$("#reportAttachFrame").attr("src","/board/attachReportV.do?" + "pSeq=${set.data.attachSeq}&kind=U_REPORT&isMy=Y");
 	$("#reportAttachFrame2").attr("src","/board/attachReportV.do?" + "pSeq=${set.data.attachSeq}&kind=T_REPORT&isMy=Y");
@@ -51,42 +42,52 @@ $(document).ready(function() {
         <ul class='report_box manage clear_fix'>
             <li class='clear_fix'>
                 <p>제목</p>
-                <input type='text' value="<c:out value="${set.data.title}" escapeXml="" />" disabled="disabled">
+                <div class='result_area'>
+                	<c:out value="${set.data.title}" escapeXml="" />
+                </div>
             </li> 
             <li class='clear_fix view'>
                 <p>내용</p>
                 <div class='result_area'>
-					<textarea name='contents' id='contents' disabled="disabled"><c:out value="${set.data.contents}" escapeXml="" /></textarea>
+					<c:out value="${set.data.contents}" escapeXml="" />
 				</div>                  
             </li>
             </li>
-            <li class='clear_fix'>
+            <li class='clear_fix view'>
                 <p>출제파일</p>
-                <iframe id="attachFrame" name="attachFrame" style="width:675px;height:100px"></iframe>
+                <div class='report_files'>
+                	<iframe id="attachFrame" name="attachFrame"></iframe>
+                </div>
             </li>
             <li class='clear_fix view'>
                 <p>제출내용</p> 
 				<div class='result_area'>
-					<textarea name='reportUserContents' id='reportUserContents' disabled="disabled"><c:out value="${set.data.reportUserContents}" escapeXml="" /></textarea>
+					<c:out value="${set.data.reportUserContents}" escapeXml="" />
 				</div>
             </li>
             <li class='clear_fix view'>
                 <p>제출파일</p>
-                <iframe id="reportAttachFrame" name="reportAttachFrame" style="width:675px;height:100px"></iframe>
+                <div class='report_files'>
+                	<iframe id="reportAttachFrame" name="reportAttachFrame"></iframe>
+                </div>
             </li>
             <li class='clear_fix view'>
                 <p>첨삭내용</p> 
                 <div class='result_area'>
-					<textarea name='reportTutorContents' id='reportTutorContents' disabled="disabled"><c:out value="${set.data.reportTutorContents}" escapeXml="" /></textarea>
+					<c:out value="${set.data.reportTutorContents}" escapeXml="" />
 				</div>                  
             </li>
             <li class='clear_fix view'>
                 <p>첨삭파일</p>
-                <iframe id="reportAttachFrame2" name="reportAttachFrame2" style="width:675px;height:100px"></iframe>
+                <div class='report_files'>
+                	<iframe id="reportAttachFrame2" name="reportAttachFrame2"></iframe> 
+                </div>
             </li>
             <li class='clear_fix'>
                 <p>점수</p>
-                <p class='result_area'>${set.data.report} 점</p>
+                <div class='result_area'>
+                	${set.data.report} 점
+                </div>
             </li>
         </ul>
         <div class='btn_submit'>

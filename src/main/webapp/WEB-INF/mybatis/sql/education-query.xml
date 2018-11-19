@@ -102,6 +102,12 @@
 		  ORDER BY A.WEEK
     </select>
 
+    <select id="getStudyMaxWeek" parameterType="Evaluation" resultType="Evaluation">
+		SELECT STUDY_MAX_WEEK CNT
+		  FROM COURSE
+ 		 WHERE COURSE_ID = #{courseId}
+    </select>	
+
     <select id="getWeekCountPerDay" parameterType="Evaluation" resultType="Evaluation">
 		SELECT COUNT(DISTINCT WEEK) CNT
 		  FROM COURSE_WEEK_PAGE

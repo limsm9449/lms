@@ -1,6 +1,7 @@
 package com.qp.lms.ax.common.service;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 
@@ -86,6 +87,21 @@ public class AxCommService {
 						
 				int fromYear = Integer.parseInt((String)from.get("text")); 
 				int toYear = Integer.parseInt((String)to.get("text")); 
+				for ( int m = fromYear; m <= toYear; m++ ) {
+					HashMap<String, Object> row = new HashMap<String, Object>();
+					row.put("value", m);
+					row.put("text", m);
+					list.add(row);
+				}
+				hm.put(ddKinds[i], list);
+			} else if ( "Year2".equals(ddKinds[i]) ) {
+				paramMap.put("OPTION_KEY", "FROM_YEAR");
+				HashMap<String, Object> from = sqlSession.selectOne("axComm.axDdSetting", paramMap);
+				
+				List<HashMap<String, Object>> list = new ArrayList<HashMap<String, Object>>();
+						
+				int fromYear = Integer.parseInt((String)from.get("text")); 
+				int toYear = Calendar.getInstance().get(Calendar.YEAR); 
 				for ( int m = fromYear; m <= toYear; m++ ) {
 					HashMap<String, Object> row = new HashMap<String, Object>();
 					row.put("value", m);

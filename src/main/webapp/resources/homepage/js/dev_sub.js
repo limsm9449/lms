@@ -644,3 +644,32 @@ function error_msg(e){
     e.preventDefault();
     window.alert('작업중입니다.');
 }
+
+
+
+// 전체과정 과정 보기 형식(리스트형/이미지형)
+function view_type(elem, type){
+    var other_btn, target_box, other_box;
+
+    switch(type){
+        case 'list':
+            other_btn = document.querySelector('.process_filter_item.image p');
+            target_box = document.querySelector('.process_search_result.list');
+            other_box = document.querySelector('.process_search_result.image');
+            break;
+        case 'image':
+            other_btn = document.querySelector('.process_filter_item.list p');
+            target_box = document.querySelector('.process_search_result.image');
+            other_box = document.querySelector('.process_search_result.list');
+            break;
+        default :
+            other_btn = document.querySelector('.process_filter_item.image p');
+            other_box = document.querySelector('.process_search_result.image');
+            return;
+    }
+
+    elem.className = 'on';
+    other_btn.className = '';
+    target_box.style.display = 'block';
+    other_box.style.display = 'none';
+}

@@ -133,6 +133,7 @@ var pageObj = {
 	axCodeList :			{	page : "/ax/setting/axCodeList"	},
 	axLogList :				{	page : "/ax/log/axLogList"	},
 	axLoginLogList :		{	page : "/ax/log/axLoginLogList"	},
+	axLoginMonthLogList :	{	page : "/ax/log/axLoginMonthLogList"	},
 	axCourseCodeListCm : 	{	page : "/ax/contentsManager/axCourseCodeList"	},
 	axCourseListCm :		{	page : "/ax/contentsManager/axCourseList"	},
 	axIncomeListCm :		{	page : "/ax/contentsManager/axIncomeList"	},
@@ -242,8 +243,9 @@ function gfn_openMenu(pageId, params) {
 			      	</li>
 	          		<li><a href="#" class="mainMenu linker" onclick="gfn_menu(this)"><span>로그 관리</span></a>
 			            <ul style="display:none" class="subMenuUl">
-			              	<li><a href="#" class="subMenu linker" onclick="gfn_openMenu('axLoginLogList'); gfn_subMenu(this);"><span>로그인 로그 관리</span></a></li>
-			              	<li><a href="#" class="subMenu linker" onclick="gfn_openMenu('axLogList'); gfn_subMenu(this)"><span>접속 로그 관리</span></a></li>
+			              	<li><a href="#" class="subMenu linker" onclick="gfn_openMenu('axLoginMonthLogList'); gfn_subMenu(this);"><span>월별 로그인 로그</span></a></li>
+			              	<li><a href="#" class="subMenu linker" onclick="gfn_openMenu('axLoginLogList'); gfn_subMenu(this);"><span>로그인 로그</span></a></li>
+			              	<li><a href="#" class="subMenu linker" onclick="gfn_openMenu('axLogList'); gfn_subMenu(this)"><span>접속 로그</span></a></li>
 			         	</ul>
 			      	</li>
 

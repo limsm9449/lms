@@ -86,11 +86,11 @@ public class EducationService {
     public EvaluationSet updPage(EvaluationSet set) throws Exception {
     	set.getCondiVO().setUserId(SessionUtil.getSessionUserId());
     	
-    	int weekCountPerDay = Integer.parseInt((String)ddService.getSettingData(CommUtil.getParamsHashMap("OPTION_KEY=MAX_WEEK_PER_DAY")).get("OPTION_VALUE"));
+    	EvaluationVO studyMaxWeek = (EvaluationVO)sqlSession.selectOne("education.getStudyMaxWeek",set.getCondiVO());
     	EvaluationVO weekCount = (EvaluationVO)sqlSession.selectOne("education.getWeekCountPerDay",set.getCondiVO());
-    	if ( weekCount.getCnt() > weekCountPerDay) {
+    	if ( studyMaxWeek.getCnt() > 0 && weekCount.getCnt() > studyMaxWeek.getCnt()) {
 	    	set.setRtnMode(Constant.mode.DAY_OVER.name());
-	    	set.setRtnData(weekCountPerDay + "");
+	    	set.setRtnData(studyMaxWeek.getCnt() + "");
     	} else {
 	    	EvaluationVO eval = (EvaluationVO)sqlSession.selectOne("education.weekPageKey",set.getCondiVO());
 	    	if ( eval == null ) {

@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang='ko'>
+
+<head>
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+    <title>온라인 시험 결과</title>
+
+    <link href='https://fonts.googleapis.com/css?family=Nanum+Gothic' rel='stylesheet'>
+
+    <!--[if IE]>
+        <link rel='stylesheet' href='../../css/main_compatibility.css'>
+    <![endif]-->
+
+    <link rel='stylesheet' href='../../css/initialization.css'>
+    <link rel='stylesheet' href='../../css/popup/popup_common.css'>
+</head>
+
+<body>
+    <!-- 시험 결과 POPUP -->
+    <div id='popup_exam_result' class='popup'>
+        <div class='popup_fix'>
+            <p class='popup_title'>
+                시험보기
+                <span>과정을 수료하기 위한 최종 과정평가입니다.</span>
+            </p>
+            <div class='popup_score_box clear_fix'>
+                <div class='popup_score clear_fix'>
+                    <p class='score_text'>최종평가<br>시험결과</p>
+                    <p class='score_value'>점수 : <span>80</span>점 입니다.</p>
+                </div>
+                <ul class='popup_info_list score clear_fix'>
+                    <li>
+                        응시자:
+                        <span>csycsy</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <ul class='popup_question'>
+            <li class='question_list_box'>
+                <div>
+                    <div class='marking blue'>O</div>
+                    <div class='question_num'>
+                        Q.
+                        <span>100</span>
+                    </div>
+                    <div class='question_answer explanation'>
+                        <p>다음 중 문서 작성 시 필요한 시스템 사고에 대한 설명으로 잘못된 내용은?</p>
+                        <ul class='answer_box explanation'>
+                            <li class='clear_fix'>
+                                <input type='radio' name='question_1' value='1'>
+                                <p>
+                                    우선 자기가 쓰고자 하는 문서의 형식이 무엇인지 명확히 선택하고, 각 문서 고유의 구체적이면서 개별적인 목적을 파악해야 한다.
+                                </p>
+                            </li>
+                            <li class='clear_fix'>
+                                <input type='radio' name='question_1' value='2'>
+                                <p>
+                                    문서 전체의 형식, 흐름, 이미지를 한눈에 파악할 수 있어야 한다. 전부를 읽어보지 않으면 전체를 파악할 수 없는 문서는 설득력이 부족하다.
+                                </p>
+                            </li>
+                            <li class='clear_fix'>
+                                <input type='radio' name='question_1' value='3'>
+                                <p>
+                                    아주 자그마한 부분의 실수는 괜찮다. 오자, 탈자, 숫자나 고유명사의 잘못된 표기는 글 전체에 영향력이 크지 않다.
+                                </p>
+                            </li>
+                            <li class='clear_fix last_bottom'>
+                                <input type='radio' name='question_1' value='4'>
+                                <p>
+                                    아이디어는 좋은데 문서작성이 서툴러서 성과로 연결시키는 것이 어려운 경우가 많다.
+                                </p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class='answer_paper'>
+                    <div class='first_bottom'>
+                        <p>정답</p>
+                        <p id='answer_num'>3</p>
+                    </div>
+                    <div>
+                        <p>해설</p>
+                        <p id='answer_sheet'>부분의 실수가 전체로 이어진다. 오자, 탈자, 숫자나 고유명사의 잘못된 표기는 글 전체에 나쁜 영향을 준다.</p>
+                    </div>
+                </div>
+            </li>
+            <li class='question_list_box'>
+                <div>
+                    <div class='marking blue'>O</div>
+                    <div class='question_num'>
+                        Q.
+                        <span>3</span>
+                    </div>
+                    <div class='question_answer explanation'>
+                        <p>다음 중 중간보고가 필요한 경우가 아닌 것은?</p>
+                        <ul class='answer_box explanation'>
+                            <li class='clear_fix'>
+                                <input type='radio' name='question_1' value='1'>
+                                <p>
+                                    상사의 의중을 여쭤보고 싶은 경우
+                                </p>
+                            </li>
+                            <li class='clear_fix'>
+                                <input type='radio' name='question_1' value='2'>
+                                <p>
+                                    오랜 기간이 필요한 일의 경우
+                                </p>
+                            </li>
+                            <li class='clear_fix'>
+                                <input type='radio' name='question_1' value='3'>
+                                <p>
+                                    일이 끝날 전망이 선 경우
+                                </p>
+                            </li>
+                            <li class='clear_fix last_bottom'>
+                                <input type='radio' name='question_1' value='4'>
+                                <p>
+                                    상황이 같더라도 철저하게 확인하는 경우
+                                </p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class='answer_paper'>
+                    <div class='first_bottom'>
+                        <p>정답</p>
+                        <p id='answer_num'>4</p>
+                    </div>
+                    <div>
+                        <p>해설</p>
+                        <p id='answer_sheet'>상황이 바뀌었을 때 중간보고를 해야 한다. 상황이 같은데 철저하게 확인할 필요는 없다. </p>
+                    </div>
+                </div>
+            </li>
+            <li class='question_list_box'>
+                <div>
+                    <div class='marking red'>X</div>
+                    <div class='question_num'>
+                        Q.
+                        <span>12</span>
+                    </div>
+                    <div class='question_answer explanation'>
+                        <p>다음 중 포토샵 CS6에 추가된 새로운 기능이 아닌 것은?</p>
+                        <input type='text'>
+                    </div>
+                </div>
+                <div class='answer_paper'>
+                    <div class='first_bottom'>
+                        <p>정답</p>
+                        <p id='answer_num'>정답</p>
+                    </div>
+                    <div>
+                        <p>해설</p>
+                        <p id='answer_sheet'>상대방의 의견을 10%만 수용하는 것은 듣는 척에 해당한다. 무시(Ignore)는 상대방의 의견을 0%, 즉 전혀 수용하지 않으며,
+                            자신의 의견만 100% 고집하는 경우이다.
+                        </p>
+                    </div>
+                </div>
+            </li>
+        </ul>
+        <div class='btn_submit'>
+            <button>제출하기</button>
+        </div>
+    </div>
+    <!-- 시험 결과 POPUP END-->
+</body>
+
+</html>

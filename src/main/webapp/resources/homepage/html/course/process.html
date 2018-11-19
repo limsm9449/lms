@@ -511,10 +511,10 @@
                                     <p class='non_image'>정렬</p>
                                 </li>
                                 <li class='process_filter_item list'>
-                                    <p>리스트</p>
+                                    <p class='on' onclick='view_type(this, "list")'>리스트</p>
                                 </li>
                                 <li class='process_filter_item image'>
-                                    <p>이미지</p>
+                                    <p onclick='view_type(this, "image")'>이미지</p>
                                 </li>
                             </ul>
                         </div>
@@ -522,7 +522,7 @@
                     <!-- Filter Area END -->
 
                     <!-- Search Result Area -->
-                    <div class='process_search_result'>
+                    <div class='process_search_result list'>
                         <div class='clear_fix'>
                             <div class='process_result_checkbox'>
                                 <input type='checkbox' name='' id=''>
@@ -690,6 +690,283 @@
                                     <button>맛보기</button>
                                     <button onclick='location.href = "../classroom/basket_step1.html"'>장바구니</button>
                                     <button class='process_result_admission' onclick='register_class()'>수강신청</button>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class='process_search_result image'>
+                        <ul class='process_list_wrap clear_fix'>
+                            <li>
+                                <a href=''><img src='../../img/course/process_1.jpg' alt=' '></a>
+                                <div class='process_text_box'>
+                                    <div class='process_info_box'>
+                                        <div>
+                                            <p>일반</p>
+                                            <p>모바일</p>
+                                        </div>
+                                        <p class='process_title'>
+                                            [스마트러닝] 김정구 교수의 미래창조경영 위기와 역경을 기회로
+                                        </p>
+                                    </div>
+                                    <div class='process_btn_area clear_fix'>
+                                        <button onclick='location.href = "../popup/popup_learning.html"'>맛보기</button>
+                                        <button onclick='register_class(" ")' class='admission'>수강신청</button>
+                                    </div>
+                                    <div class='process_score_box clear_fix'>
+                                        <div class='process_score_image clear_fix'>
+                                            <span><img src='../../img/course/star_active.png' alt=' '></span>
+                                            <span><img src='../../img/course/star_active.png' alt=' '></span>
+                                            <span><img src='../../img/course/star_active.png' alt=' '></span>
+                                            <span><img src='../../img/course/star_active.png' alt=' '></span>
+                                            <span><img src='../../img/course/star_inactive.png' alt=' '></span>
+                                        </div>
+                                        <p class='process_score_text'>
+                                            평점 : <span id='process_score_num'>4.5</span> / 후기 : <span id='process_review_num'>2</span>건
+                                        </p>
+                                    </div>
+                                    <div class='process_payment_box clear_fix'>
+                                        <p>교육비</p>
+                                        <p class='process_payment'>50,000원</p>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <a href=''><img src='../../img/course/process_2.jpg' alt=' '></a>
+                                <div class='process_text_box'>
+                                    <div class='process_info_box'>
+                                        <div>
+                                            <p>일반</p>
+                                            <p>모바일</p>
+                                        </div>
+                                        <p class='process_title'>
+                                            [스마트러닝] 김정구 교수의 미래창조경영 위기와 역경을 기회로
+                                        </p>
+                                    </div>
+                                    <div class='process_btn_area clear_fix'>
+                                        <button onclick='location.href = "../popup/popup_learning.html"'>맛보기</button>
+                                        <button onclick='register_class(" ")' class='admission'>수강신청</button>
+                                    </div>
+                                    <div class='process_score_box clear_fix'>
+                                        <div class='process_score_image clear_fix'>
+                                            <span><img src='../../img/course/star_active.png' alt=' '></span>
+                                            <span><img src='../../img/course/star_active.png' alt=' '></span>
+                                            <span><img src='../../img/course/star_active.png' alt=' '></span>
+                                            <span><img src='../../img/course/star_active.png' alt=' '></span>
+                                            <span><img src='../../img/course/star_inactive.png' alt=' '></span>
+                                        </div>
+                                        <p class='process_score_text'>
+                                            평점 : <span id='process_score_num'>4.5</span> / 후기 : <span id='process_review_num'>2</span>건
+                                        </p>
+                                    </div>
+                                    <div class='process_payment_box clear_fix'>
+                                        <p>교육비</p>
+                                        <p class='process_payment'>50,000원</p>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <a href=''><img src='../../img/course/process_3.jpg' alt=' '></a>
+                                <div class='process_text_box'>
+                                    <div class='process_info_box'>
+                                        <div>
+                                            <p>일반</p>
+                                            <p>모바일</p>
+                                        </div>
+                                        <p class='process_title'>
+                                            [스마트러닝] 김정구 교수의 미래창조경영 위기와 역경을 기회로
+                                        </p>
+                                    </div>
+                                    <div class='process_btn_area clear_fix'>
+                                        <button onclick='location.href = "../popup/popup_learning.html"'>맛보기</button>
+                                        <button onclick='register_class(" ")' class='admission'>수강신청</button>
+                                    </div>
+                                    <div class='process_score_box clear_fix'>
+                                        <div class='process_score_image clear_fix'>
+                                            <span><img src='../../img/course/star_active.png' alt=' '></span>
+                                            <span><img src='../../img/course/star_active.png' alt=' '></span>
+                                            <span><img src='../../img/course/star_active.png' alt=' '></span>
+                                            <span><img src='../../img/course/star_active.png' alt=' '></span>
+                                            <span><img src='../../img/course/star_inactive.png' alt=' '></span>
+                                        </div>
+                                        <p class='process_score_text clear_fix'>
+                                            평점 : <span id='process_score_num'>4.5</span> / 후기 : <span id='process_review_num'>2</span>건
+                                        </p>
+                                    </div>
+                                    <div class='process_payment_box clear_fix'>
+                                        <p>교육비</p>
+                                        <p class='process_payment'>50,000원</p>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class='last_right'>
+                                <a href=''><img src='../../img/course/process_3.jpg' alt=' '></a>
+                                <div class='process_text_box'>
+                                    <div class='process_info_box'>
+                                        <div>
+                                            <p>일반</p>
+                                            <p>모바일</p>
+                                        </div>
+                                        <p class='process_title'>
+                                            [스마트러닝] 김정구 교수의 미래창조경영 위기와 역경을 기회로
+                                        </p>
+                                    </div>
+                                    <div class='process_btn_area clear_fix'>
+                                        <button onclick='location.href = "../popup/popup_learning.html"'>맛보기</button>
+                                        <button onclick='register_class(" ")' class='admission'>수강신청</button>
+                                    </div>
+                                    <div class='process_score_box clear_fix'>
+                                        <div class='process_score_image clear_fix'>
+                                            <span><img src='../../img/course/star_active.png' alt=' '></span>
+                                            <span><img src='../../img/course/star_active.png' alt=' '></span>
+                                            <span><img src='../../img/course/star_active.png' alt=' '></span>
+                                            <span><img src='../../img/course/star_active.png' alt=' '></span>
+                                            <span><img src='../../img/course/star_inactive.png' alt=' '></span>
+                                        </div>
+                                        <p class='process_score_text clear_fix'>
+                                            평점 : <span id='process_score_num'>4.5</span> / 후기 : <span id='process_review_num'>2</span>건
+                                        </p>
+                                    </div>
+                                    <div class='process_payment_box clear_fix'>
+                                        <p>교육비</p>
+                                        <p class='process_payment'>50,000원</p>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <a href=''><img src='../../img/course/process_1.jpg' alt=' '></a>
+                                <div class='process_text_box'>
+                                    <div class='process_info_box'>
+                                        <div>
+                                            <p>일반</p>
+                                            <p>모바일</p>
+                                        </div>
+                                        <p class='process_title'>
+                                            [스마트러닝] 김정구 교수의 미래창조경영 위기와 역경을 기회로
+                                        </p>
+                                    </div>
+                                    <div class='process_btn_area clear_fix'>
+                                        <button onclick='location.href = "../popup/popup_learning.html"'>맛보기</button>
+                                        <button onclick='register_class(" ")' class='admission'>수강신청</button>
+                                    </div>
+                                    <div class='process_score_box clear_fix'>
+                                        <div class='process_score_image clear_fix'>
+                                            <span><img src='../../img/course/star_active.png' alt=' '></span>
+                                            <span><img src='../../img/course/star_active.png' alt=' '></span>
+                                            <span><img src='../../img/course/star_active.png' alt=' '></span>
+                                            <span><img src='../../img/course/star_active.png' alt=' '></span>
+                                            <span><img src='../../img/course/star_inactive.png' alt=' '></span>
+                                        </div>
+                                        <p class='process_score_text'>
+                                            평점 : <span id='process_score_num'>4.5</span> / 후기 : <span id='process_review_num'>2</span>건
+                                        </p>
+                                    </div>
+                                    <div class='process_payment_box clear_fix'>
+                                        <p>교육비</p>
+                                        <p class='process_payment'>50,000원</p>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <a href=''><img src='../../img/course/process_2.jpg' alt=' '></a>
+                                <div class='process_text_box'>
+                                    <div class='process_info_box'>
+                                        <div>
+                                            <p>일반</p>
+                                            <p>모바일</p>
+                                        </div>
+                                        <p class='process_title'>
+                                            [스마트러닝] 김정구 교수의 미래창조경영 위기와 역경을 기회로
+                                        </p>
+                                    </div>
+                                    <div class='process_btn_area clear_fix'>
+                                        <button onclick='location.href = "../popup/popup_learning.html"'>맛보기</button>
+                                        <button onclick='register_class(" ")' class='admission'>수강신청</button>
+                                    </div>
+                                    <div class='process_score_box clear_fix'>
+                                        <div class='process_score_image clear_fix'>
+                                            <span><img src='../../img/course/star_active.png' alt=' '></span>
+                                            <span><img src='../../img/course/star_active.png' alt=' '></span>
+                                            <span><img src='../../img/course/star_active.png' alt=' '></span>
+                                            <span><img src='../../img/course/star_active.png' alt=' '></span>
+                                            <span><img src='../../img/course/star_inactive.png' alt=' '></span>
+                                        </div>
+                                        <p class='process_score_text'>
+                                            평점 : <span id='process_score_num'>4.5</span> / 후기 : <span id='process_review_num'>2</span>건
+                                        </p>
+                                    </div>
+                                    <div class='process_payment_box clear_fix'>
+                                        <p>교육비</p>
+                                        <p class='process_payment'>50,000원</p>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <a href=''><img src='../../img/course/process_3.jpg' alt=' '></a>
+                                <div class='process_text_box'>
+                                    <div class='process_info_box'>
+                                        <div>
+                                            <p>일반</p>
+                                            <p>모바일</p>
+                                        </div>
+                                        <p class='process_title'>
+                                            [스마트러닝] 김정구 교수의 미래창조경영 위기와 역경을 기회로
+                                        </p>
+                                    </div>
+                                    <div class='process_btn_area clear_fix'>
+                                        <button onclick='location.href = "../popup/popup_learning.html"'>맛보기</button>
+                                        <button onclick='register_class(" ")' class='admission'>수강신청</button>
+                                    </div>
+                                    <div class='process_score_box clear_fix'>
+                                        <div class='process_score_image clear_fix'>
+                                            <span><img src='../../img/course/star_active.png' alt=' '></span>
+                                            <span><img src='../../img/course/star_active.png' alt=' '></span>
+                                            <span><img src='../../img/course/star_active.png' alt=' '></span>
+                                            <span><img src='../../img/course/star_active.png' alt=' '></span>
+                                            <span><img src='../../img/course/star_inactive.png' alt=' '></span>
+                                        </div>
+                                        <p class='process_score_text clear_fix'>
+                                            평점 : <span id='process_score_num'>4.5</span> / 후기 : <span id='process_review_num'>2</span>건
+                                        </p>
+                                    </div>
+                                    <div class='process_payment_box clear_fix'>
+                                        <p>교육비</p>
+                                        <p class='process_payment'>50,000원</p>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class='last_right'>
+                                <a href=''><img src='../../img/course/process_3.jpg' alt=' '></a>
+                                <div class='process_text_box'>
+                                    <div class='process_info_box'>
+                                        <div>
+                                            <p>일반</p>
+                                            <p>모바일</p>
+                                        </div>
+                                        <p class='process_title'>
+                                            [스마트러닝] 김정구 교수의 미래창조경영 위기와 역경을 기회로
+                                        </p>
+                                    </div>
+                                    <div class='process_btn_area clear_fix'>
+                                        <button onclick='location.href = "../popup/popup_learning.html"'>맛보기</button>
+                                        <button onclick='register_class(" ")' class='admission'>수강신청</button>
+                                    </div>
+                                    <div class='process_score_box clear_fix'>
+                                        <div class='process_score_image clear_fix'>
+                                            <span><img src='../../img/course/star_active.png' alt=' '></span>
+                                            <span><img src='../../img/course/star_active.png' alt=' '></span>
+                                            <span><img src='../../img/course/star_active.png' alt=' '></span>
+                                            <span><img src='../../img/course/star_active.png' alt=' '></span>
+                                            <span><img src='../../img/course/star_inactive.png' alt=' '></span>
+                                        </div>
+                                        <p class='process_score_text clear_fix'>
+                                            평점 : <span id='process_score_num'>4.5</span> / 후기 : <span id='process_review_num'>2</span>건
+                                        </p>
+                                    </div>
+                                    <div class='process_payment_box clear_fix'>
+                                        <p>교육비</p>
+                                        <p class='process_payment'>50,000원</p>
+                                    </div>
                                 </div>
                             </li>
                         </ul>

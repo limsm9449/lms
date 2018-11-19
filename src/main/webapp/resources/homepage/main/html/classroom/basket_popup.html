@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang='ko'>
+
+<head>
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1'>
+    <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+    <title>Q learning - 나의강의실 - 장바구니 - 상품결제결과</title>
+
+    <script src='../../js/jquery_3.3.1.js'></script>
+
+    <link href='https://fonts.googleapis.com/css?family=Nanum+Gothic' rel='stylesheet'>
+    <link rel='stylesheet' href='../../css/initialization.css'>
+    <link rel='stylesheet' href='../../css/classroom/basket.css'>
+
+    <style>
+        html{
+            overflow-y:hidden;
+        }
+    </style>
+</head>
+
+<body style='background:#fff'>
+<frameset rows='*'>
+    <div class='wrap'>
+        <!-- CONTENTS -->
+        <div class='contents_wrap process'>
+            <div class='contents_wrap_box popup'>
+                <div class='basket_completed_popup'>
+                    <div class='title clear_fix'>
+                        <p>상품결제 결과</p>
+                        <button onclick='basket_popup_close()'>X</button>
+                    </div>
+                    <div class='basket_popup_contents'>
+                        <div class='popup_info clear_fix'>
+                            <p class='type'>구매자 이름</p>
+                            <p>OOO</p>
+                            <p class='type'>상품정보</p>
+                            <p>윤코치의 보고서 작성법 윤코치의 보고서 작성법</p>
+                            <p class='type'>결제금액</p>
+                            <p>50,000</p>
+                            <p class='type'>구매자 이메일</p>
+                            <p>qpeople@naver.com</p>
+                            <p class='type'>주문번호</p>
+                            <p>201810263245</p>
+                        </div>
+                        <p>* 추가 상세 결제요청 파라미터는 메뉴얼을 참조하시기 바랍니다.</p>
+                        <button onclick='basket_popup_close()'>인증요청</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <!-- CONTENTS END -->
+    </div>
+</frameset>
+<script src='../../js/dev_sub.js'></script>
+
+</body>
+</html>

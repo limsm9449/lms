@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang='ko'>
+
+<head>
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+    <title>설문</title>
+
+    <link href='https://fonts.googleapis.com/css?family=Nanum+Gothic' rel='stylesheet'>
+
+    <!--[if IE]>
+        <link rel='stylesheet' href='../../css/main_compatibility.css'>
+    <![endif]-->
+
+    <link rel='stylesheet' href='../../css/initialization.css'>
+    <link rel='stylesheet' href='../../css/popup/popup_common.css'>
+</head>
+
+<body>
+    <!-- 설문 POPUP -->
+    <div id='popup_survey' class='popup'>
+        <div class='popup_fix'>
+            <p class='popup_title'>
+                설문 제목
+            </p>
+            <div class='popup_info_box'>
+                <div class='popup_info'>
+                    설문 목적, 내용 설명 공간
+                </div>
+                <ul class='popup_info_list'>
+                    <li>
+                        설문자:
+                        <span>csycsy</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <ul class='popup_question survey'>
+            <li class='question_list_box'>
+                <div>
+                    <div class='question_num'>
+                        Q.
+                        <span>1</span>
+                    </div>
+                    <div class='question_answer'>
+                        <p>귀하가 당사와 거래한 기간은 얼마나 됩니까?</p>
+                        <ul class='answer_box'>
+                            <li class='clear_fix'>
+                                <input type='radio' name='question_1' value='1'>
+                                <p>
+                                    1년 미만
+                                </p>
+                            </li>
+                            <li class='clear_fix'>
+                                <input type='radio' name='question_1' value='2'>
+                                <p>
+                                    1~2년
+                                </p>
+                            </li>
+                            <li class='clear_fix'>
+                                <input type='radio' name='question_1' value='3'>
+                                <p>
+                                    2~3년
+                                </p>
+                            </li>
+                            <li class='clear_fix last_bottom'>
+                                <input type='radio' name='question_1' value='4'>
+                                <p>
+                                    4~5년
+                                </p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </li>
+            <li class='question_list_box'>
+                <div>
+                    <div class='question_num'>
+                        Q.
+                        <span>2</span>
+                    </div>
+                    <div class='question_answer'>
+                        <p>다음 중 비논리적 보고서의 설명으로 거리가 먼 것은?</p>
+                        <ul class='answer_box'>
+                            <li class='clear_fix'>
+                                <input type='checkbox' name='question_1' value='1'>
+                                <p>
+                                    말하고자 하는 의미가 불분명한 보고서
+                                </p>
+                            </li>
+                            <li class='clear_fix'>
+                                <input type='checkbox' name='question_1' value='2'>
+                                <p>
+                                    내용은 많은데 정리가 안되어 있는 보고서
+                                </p>
+                            </li>
+                            <li class='clear_fix'>
+                                <input type='checkbox' name='question_1' value='3'>
+                                <p>
+                                    보고서의 내용을 뒷받침해 줄 수 있는 자료들이 없는 보고서
+                                </p>
+                            </li>
+                            <li class='clear_fix last_bottom'>
+                                <input type='checkbox' name='question_1' value='4'>
+                                <p>
+                                    내용의 핵심을 파악하지 못하고 있는 보고서
+                                </p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </li>
+            <li class='question_list_box'>
+                <div>
+                    <div class='question_num'>
+                        Q.
+                        <span>3</span>
+                    </div>
+                    <div class='question_answer'>
+                        <p>귀사의 직원은 몇 명입니까?</p>
+                        <ul class='answer_box'>
+                            <li class='clear_fix'>
+                                <input type='radio' name='question_1' value='1'>
+                                <p>
+                                    10명 미만
+                                </p>
+                            </li>
+                            <li class='clear_fix'>
+                                <input type='radio' name='question_1' value='2'>
+                                <p>
+                                    10~50명
+                                </p>
+                            </li>
+                            <li class='clear_fix'>
+                                <input type='radio' name='question_1' value='3'>
+                                <p>
+                                    50~100명
+                                </p>
+                            </li>
+                            <li class='clear_fix last_bottom'>
+                                <input type='radio' name='question_1' value='4'>
+                                <p>
+                                    100명 이상
+                                </p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </li>
+            <li class='question_list_box'>
+                <div>
+                    <div class='question_num'>
+                        Q.
+                        <span>4</span>
+                    </div>
+                    <div class='question_answer'>
+                        <p>다음 중 포토샵 CS6에 추가된 새로운 기능이 아닌 것은?</p>
+                        <input type='text'>
+                    </div>
+                </div>
+            </li>
+            <li class='question_list_box'>
+                <div>
+                    <div class='question_num'>
+                        Q.
+                        <span>5</span>
+                    </div>
+                    <div class='question_answer survey'>
+                        <p>기타 의견</p>
+                        <textarea name='survey_etc_area' id='survey_etc'></textarea>
+                    </div>
+                </div>
+            </li>
+        </ul>
+        <div class='btn_submit'>
+            <button>제출하기</button>
+        </div>
+    </div>
+    <!-- 설문 POPUP END-->
+</body>
+
+</html>
