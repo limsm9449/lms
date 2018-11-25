@@ -38,7 +38,7 @@ $(document.body).ready(function () {
         theme: "danger"
     });
 
-    gfn_callAjax("/common/axDd.do", { DD_KIND : "ApprovalStatus,PaymentKind,Bank,CategoryLevel1,Year"}, fn_callbackAjax, "dd", { async : false });
+    gfn_callAjax("/common/axDd.do", { DD_KIND : "ApprovalStatus,PaymentKind,Bank,CategoryLevel1,Year,CompanyKind,Company,Company1,Company2"}, fn_callbackAjax, "dd", { async : false });
     
     $('[data-grid-control]').click(function () {
         switch (this.getAttribute("data-grid-control")) {
@@ -329,6 +329,24 @@ function fn_makeGrid() {
 	            align : "right"
 
 	        },{
+	        	key : "COMP_CD", 
+	        	label : "회사", 
+	            width : 100,
+	        	align : "center", 
+	        	editor: {
+	                type : "select", 
+	                config : {
+	                    columnKeys: { optionValue: "value", optionText: "text" },
+	                    options: dd.Company
+	                },
+	            	disabled : function () {
+	                    return true;
+	                }
+	        	},
+	            formatter : function () {
+	                return gfn_getValueInList(dd.Company, "value",  this.item.COMP_CD, "text");
+	           	}
+	        },{
               	key : undefined, 
               	label: "환불", 
               	columns: [	 
@@ -418,6 +436,8 @@ function fn_params() {
 	params.YEAR = $("#CB_YEAR option:selected").val();	
 	params.chasu = $("#chasu").val();	
 	params.courseName = $("#courseName").val();	
+	params.COMPANY = $("#CB_COMPANY option:selected").val();	
+	params.COMPANY2 = $("#CB_COMPANY2 option:selected").val();	
 }
 
 function fn_search() {
@@ -460,6 +480,7 @@ function fn_callbackAjax(data, id) {
 		dd = $.extend({}, data);
 
 		
+		gfn_cbRefresh("CB_COMPANY", data.CompanyKind, true);
 		gfn_cbRefresh("CB_SEARCH_STATUS", data.ApprovalStatus, true);
 		gfn_cbRefresh("CB_LEVEL1", data.CategoryLevel1, true);
 		gfn_cbRefresh("CB_YEAR", data.Year, true);
@@ -489,6 +510,14 @@ function fn_cbChange(id) {
 	    gfn_callAjax("/common/axDd.do", { DD_KIND : "CategoryLevel2", LEVEL1_CODE : $("#CB_LEVEL1 option:selected").val()}, fn_callbackAjax, "CB_LEVEL1", { async : false });
 	} else  if ( id == "CB_LEVEL2" ) {
 	    gfn_callAjax("/common/axDd.do", { DD_KIND : "CategoryLevel3", LEVEL2_CODE : $("#CB_LEVEL2 option:selected").val()}, fn_callbackAjax, "CB_LEVEL2", { async : false });
+	} else if ( id == "CB_COMPANY" ) {
+		if ( $("#CB_COMPANY").val() == "B2B" ) {
+			gfn_cbRefresh("CB_COMPANY2", dd.Company1, true);
+		} else if ( $("#CB_COMPANY").val() == "C2C" ) {
+			gfn_cbRefresh("CB_COMPANY2", dd.Company2, true);
+		} else {
+			gfn_cbRefresh("CB_COMPANY2", null, true);
+		}
 	}
 }
 
@@ -579,7 +608,16 @@ function fn_hidePopupDiv(popupDivId) {
   	</div>
   	<div class="form-group">
     	<label for="courseName">&nbsp;신청자</label>
-    	<input type="text" class="form-control" id="USER" name="USER">
+    	<input type="text" class="form-control" id="USER" name="USER" style="width:100px;">
+  	</div>
+  	<div class="form-group">
+    	<label for="CB_COMPANY">&nbsp;회사 구분</label>
+		<select class="form-control" id="CB_COMPANY" onchange="fn_cbChange('CB_COMPANY')">
+			<option value="">전체</option>
+		</select>
+		<select class="form-control" id="CB_COMPANY2">
+			<option value="">전체</option>
+		</select>
   	</div>
 </div>
 

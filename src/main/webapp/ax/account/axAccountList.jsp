@@ -36,7 +36,7 @@ $(document.body).ready(function () {
         theme: "danger"
     });
 
-    gfn_callAjax("/common/axDd.do", { DD_KIND : "Company,Job,Sex,ZipcodeUrl" }, fn_callbackAjax, "dd", { async : false });
+    gfn_callAjax("/common/axDd.do", { DD_KIND : "CompanyKind,Company,Company1,Company2,Job,Sex,ZipcodeUrl" }, fn_callbackAjax, "dd", { async : false });
     
     $('[data-grid-control]').click(function () {
         switch (this.getAttribute("data-grid-control")) {
@@ -470,6 +470,8 @@ function fn_params() {
 	params.CB_SEARCHKIND = $("#CB_SEARCHKIND option:selected").val();	
 	params.SEARCH_STR = $("#SEARCH_STR").val();	
 	params.CB_USERKIND = $("#CB_USERKIND option:selected").val();	
+	params.COMPANY = $("#CB_COMPANY option:selected").val();	
+	params.COMPANY2 = $("#CB_COMPANY2 option:selected").val();	
 }
 
 function fn_search() {
@@ -557,6 +559,8 @@ function fn_callbackAjax(data, id) {
 
 		dd.Company = [{value : "", text : ""}].concat(dd.Company);
 		
+		gfn_cbRefresh("CB_COMPANY", data.CompanyKind, true);
+		
 		fn_makeGrid();
 		
 		if ( openParams ) {
@@ -575,6 +579,17 @@ function fn_gridEvent(event, obj) {
 	}
 }
 
+function fn_cbChange(id) {
+	if ( id == "CB_COMPANY" ) {
+		if ( $("#CB_COMPANY").val() == "B2B" ) {
+			gfn_cbRefresh("CB_COMPANY2", dd.Company1, true);
+		} else if ( $("#CB_COMPANY").val() == "C2C" ) {
+			gfn_cbRefresh("CB_COMPANY2", dd.Company2, true);
+		} else {
+			gfn_cbRefresh("CB_COMPANY2", null, true);
+		}
+	}
+}
 
 </script>
 
@@ -601,17 +616,24 @@ function fn_gridEvent(event, obj) {
     	<label for="CB_USERKIND">&nbsp;사용자 유형</label>
 		<select class="form-control" id="CB_USERKIND" name="CB_USERKIND">
 			<option value="" selected>전체</option>
-			<option value="ADMIN">Admin</option>
-			<option value="SITE_MANAGER">사이트 관리자</option>
-			<option value="CONTENTS_MANAGER">컨텐츠 관리자</option>
-			<option value="TEACHER">강사</option>
-			<option value="TUTOR">튜터</option>
-			<option value="USER">사용자</option>
-			<option value="B2C">일반사용자</option>
-			<option value="B2B">회사사용자</option>
-			<option value="C2C">회사(C2C)사용자</option>
+			<option value="MANAGER">관리자</option>
+			<option value="ADMIN"> - Admin</option>
+			<option value="SITE_MANAGER"> - 사이트 관리자</option>
+			<option value="CONTENTS_MANAGER"> - 컨텐츠 관리자</option>
+			<option value="TEACHER"> - 강사</option>
+			<option value="TUTOR"> - 튜터</option>
+			<option value="USER">일반사용자</option>
 		</select>
   	</div>  
+  	<div class="form-group">
+    	<label for="CB_COMPANY">&nbsp;회사 구분</label>
+		<select class="form-control" id="CB_COMPANY" onchange="fn_cbChange('CB_COMPANY')">
+			<option value="">전체</option>
+		</select>
+		<select class="form-control" id="CB_COMPANY2">
+			<option value="">전체</option>
+		</select>
+  	</div>
 </div>
 <div style="height:10px"></div>
 
