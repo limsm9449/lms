@@ -40,6 +40,8 @@ public class CounselController {
     @RequestMapping(value = "/counsel/userCounselList")
     public String userCounselList(@ModelAttribute CounselVO vo, Model model) throws Exception {
     	try {
+    		vo.setCompCd((String)SessionUtil.getAttribute("compCd"));
+    		
 	    	CounselSet set = new CounselSet();
 	    	set.setCondiVO(vo);
 	    	
@@ -108,6 +110,7 @@ public class CounselController {
      * @return
      * @throws Exception
      */
+    /*
     @RequestMapping(value = "/counsel/userCounselU")
     public String userCounselU(@ModelAttribute CounselVO vo, Model model) throws Exception {
     	try {
@@ -123,6 +126,7 @@ public class CounselController {
 
         return "/counsel/UserCounselU";
     }
+    */
 
     /**
      *  상담 리스트
@@ -131,6 +135,7 @@ public class CounselController {
      * @return
      * @throws Exception
      */
+    /*
     @RequestMapping(value = "/counsel/counselList")
     public String counselList(@ModelAttribute CounselVO vo, Model model) throws Exception {
     	try {
@@ -154,6 +159,7 @@ public class CounselController {
      * @return
      * @throws Exception
      */
+    /*
     @RequestMapping(value = "/counsel/counselV")
     public String counselV(@ModelAttribute CounselVO vo, Model model) throws Exception {
     	try {
@@ -169,6 +175,7 @@ public class CounselController {
 
         return "/counsel/CounselV";
     }
+    */
     
     /**
      *  상담 답변 화면
@@ -177,7 +184,7 @@ public class CounselController {
      * @return
      * @throws Exception
      */
-    @RequestMapping(value = "/counsel/counselAnswer")
+    /*@RequestMapping(value = "/counsel/counselAnswer")
     public String counselAnswer(@ModelAttribute CounselVO vo, Model model) throws Exception {
     	try {
 	    	CounselSet set = new CounselSet();
@@ -191,7 +198,7 @@ public class CounselController {
     	}
 
         return "/counsel/CounselAnswer";
-    }
+    }*/
     
 
     
@@ -277,7 +284,7 @@ public class CounselController {
      * @return
      * @throws Exception
      */
-    @RequestMapping(value = "/counsel/counselAnswerUpd", method = RequestMethod.POST)
+    /*@RequestMapping(value = "/counsel/counselAnswerUpd", method = RequestMethod.POST)
     public String counselAnswerUpd(@ModelAttribute CounselVO vo, Model model) throws Exception {
     	try {
 	    	CounselSet set = new CounselSet();
@@ -292,7 +299,7 @@ public class CounselController {
 
         return "/common/json";
     }
-
+*/
 
     
 }

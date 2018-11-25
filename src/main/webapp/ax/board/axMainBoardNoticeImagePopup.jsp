@@ -57,27 +57,29 @@ $(document.body).ready(function () {
     });
     
     $("#seq").val(gfn_getUrlParams("SEQ"));
+    $("#compCd").val(gfn_getUrlParams("COMP_CD"));
     
     fn_search();
 });
 
 function fn_params() {
 	params.SEQ = gfn_getUrlParams("SEQ");	
+	params.COMP_CD = gfn_getUrlParams("COMP_CD");	
 }
 
 function fn_search() {
 	fn_params();
 	
-	gfn_callAjax("/board/axBoardEventImageList.do", params, fn_callbackAjax, "search");
+	gfn_callAjax("/board/axMainBoardNoticeImageList.do", params, fn_callbackAjax, "search");
 }
 
 function fn_callbackAjax(data, id) {
 	if ( id == "search" ) {
 		if ( data.list[0].IMG1 == "Y" ) {
-			$('#img1').attr("src", "/cImage/event/" + params.SEQ + "_img1.jpg" + "?timestamp=" + gfn_timestamp());
+			$('#img1').attr("src", "/cImage/notice/" + params.COMP_CD + "/" + params.SEQ + "_img1.jpg" + "?timestamp=" + gfn_timestamp());
 		}
 		if ( data.list[0].IMG2 == "Y" ) {
-			$('#img2').attr("src", "/cImage/event/" + params.SEQ + "_img2.jpg" + "?timestamp=" + gfn_timestamp());
+			$('#img2').attr("src", "/cImage/notice/" + params.COMP_CD + "/" + params.SEQ + "_img2.jpg" + "?timestamp=" + gfn_timestamp());
 		}
 	} else if ( id == "save" ){
 		mask.close();
@@ -107,7 +109,7 @@ function fn_upload(pParam) {
 	
 	$("#kind").val(pParam.kind);
 
-	document.frm.action = context + "/board/axBoardEventImageUpload.do";
+	document.frm.action = context + "/board/axMainBoardNoticeImageUpload.do";
 	document.frm.target = "tranFrameS";
 	document.frm.method = "POST";	
 	document.frm.submit();
@@ -129,6 +131,7 @@ function isExtention(fileName, compExt) {
 <form id="frm" name="frm" action="" method="post" enctype="multipart/form-data">
 <input id="kind" name="kind" type="hidden" value=""/>
 <input id="seq" name="seq" type="hidden" value=""/>
+<input id="compCd" name="compCd" type="hidden" value=""/>
 
 <h2>이미지 관리</h2>
 <div style="height:10px"></div>
@@ -140,7 +143,7 @@ function isExtention(fileName, compExt) {
 <div style="height:10px"></div>
 
 <div data-ax5layout="ax1" data-config='{layout:"tab-panel"}' style="height:515px;">
-    <div data-tab-panel='{label: "이벤트 이미지", "active": "true"}' style="background: #ccc;">
+    <div data-tab-panel='{label: "공지 이미지", "active": "true"}' style="background: #ccc;">
         <div style="padding: 10px;">
             <div class="img_box">
            		<img id="img1" src="/cImage/blank.jpg" style="width:249px;height:156px;"/>

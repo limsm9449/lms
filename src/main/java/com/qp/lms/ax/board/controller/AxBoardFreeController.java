@@ -41,7 +41,7 @@ public class AxBoardFreeController {
     }
 
     @RequestMapping(value = "/board/axBoardFreeOne", method = RequestMethod.POST, consumes = "application/json" )
-    public @ResponseBody HashMap<String,Object> axBoardReporOne(@RequestBody HashMap<String, Object> paramMap, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public @ResponseBody HashMap<String,Object> axBoardFreeOne(@RequestBody HashMap<String, Object> paramMap, HttpServletRequest request, HttpServletResponse response) throws Exception {
     	HashMap<String, Object> hm = new HashMap<String, Object>();
 
     	try {

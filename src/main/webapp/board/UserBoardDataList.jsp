@@ -69,9 +69,9 @@ function lfn_btn(pKind, pParam) {
                     </h1>
                     <div class='top_text_box clear_fix'>
                         <span><img src='/resources/homepage/img/support/notice_bg.jpg' alt=' '></span>
-                        <p class='top_title'>NEWS & NOTICE!</p>
+                        <p class='top_title'>Reference Room</p>
                         <p>
-                            큐러닝의 소식과 공지사항을 알려드립니다. <span></span>항상 유익하고 풍성한 소식 놓치지 말고 확인하세요.
+                            유익한 자료를 제공합니다. <span></span>필요한 자료들을 찾아보고 활용하세요.
                         </p>
                     </div>
                 </div>

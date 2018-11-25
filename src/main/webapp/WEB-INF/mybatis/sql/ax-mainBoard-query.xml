@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="axMainBoard">
+
+   	<select id="axMainBoardNoticeList" resultType="hashmap">
+		SELECT 	A.SEQ,
+		       	A.COMP_CD,
+		       	TITLE,
+		       	VIEW_CNT,
+		       	DATE_FORMAT(IFNULL(A.UPDATE_DATE,A.CREATE_DATE), '%y.%m.%d %H:%i') CREATE_DATE,
+		       	MAIN_YN, IMG1, IMG2, COLOR, B.COMP_NAME
+		FROM 	MAIN_BOARD_NOTICE A
+					LEFT OUTER JOIN COMPANY B ON B.COMP_CD = A.COMP_CD 
+		WHERE 	1 = 1
+		<if test="COMPANY != null and COMPANY == 'B2C'">
+			AND 	IFNULL(A.COMP_CD,'B2C') = 'B2C'
+		</if>
+		<if test="COMPANY != null and COMPANY == 'B2B'">
+			AND 	IFNULL(A.COMP_CD,'B2C') != 'B2C'
+			AND 	IFNULL(B.C2C_YN,'N') = 'N'
+		</if>
+		<if test="COMPANY != null and COMPANY == 'C2C'">
+			AND 	IFNULL(A.COMP_CD,'B2C') != 'B2C'
+			AND 	IFNULL(B.C2C_YN,'N') = 'Y'
+		</if>
+		<if test="COMPANY2 != null and COMPANY2 != ''">
+			AND 	IFNULL(A.COMP_CD,'B2C') = #{COMPANY2}
+		</if>		
+		<if test="SEARCH_STR != null and SEARCH_STR != ''">
+			AND UPPER(A.TITLE) LIKE CONCAT('%',UPPER(#{SEARCH_STR}),'%')
+		</if>
+		ORDER 	BY IFNULL(A.UPDATE_DATE,A.CREATE_DATE) DESC
+	</select>
+
+	<select id="axMainBoardNoticeOne" resultType="hashmap">
+		SELECT 	SEQ,
+		       	COMP_CD,
+		       	TITLE,
+		       	CONTENTS,
+		       	MAIN_YN, IMG1, IMG2, COLOR
+		FROM 	MAIN_BOARD_NOTICE
+		WHERE 	SEQ = #{SEQ}
+	</select>
+	
+	<insert id="axMainBoardNoticeInsert" parameterType="hashmap">
+		INSERT INTO MAIN_BOARD_NOTICE (COMP_CD,TITLE,CONTENTS,VIEW_CNT,CREATE_DATE)
+		VALUES (#{COMP_CD},#{TITLE},#{CONTENTS},0,CURRENT_TIMESTAMP)
+    </insert>	
+    
+    <update id="axMainBoardNoticeUpdate" parameterType="hashmap">
+		UPDATE MAIN_BOARD_NOTICE
+		   SET TITLE = #{TITLE},
+		       CONTENTS = #{CONTENTS},
+		       UPDATE_DATE = CURRENT_TIMESTAMP
+		 WHERE SEQ = #{SEQ}
+    </update>	
+
+    <update id="axMainBoardNoticeMainUpdate" parameterType="hashmap">
+		UPDATE MAIN_BOARD_NOTICE
+		   SET MAIN_YN = #{MAIN_YN},
+		       COLOR = #{COLOR},
+		       UPDATE_DATE = CURRENT_TIMESTAMP
+		 WHERE SEQ = #{SEQ}
+    </update>	
+
+    <update id="axMainBoardNoticeImageUpdate" parameterType="hashmap">
+		UPDATE MAIN_BOARD_NOTICE
+		   SET UPDATE_DATE = CURRENT_TIMESTAMP
+		   <if test="kind != null and kind == 'img1'"> ,IMG1 = 'Y'</if>
+		   <if test="kind != null and kind == 'img2'"> ,IMG2 = 'Y'</if>
+		 WHERE SEQ = #{SEQ}
+    </update>	
+
+    <delete id="axMainBoardNoticeDelete" parameterType="hashmap">
+		DELETE FROM MAIN_BOARD_NOTICE
+		 WHERE SEQ = #{SEQ}
+    </delete>
+
+   	<select id="axMainBoardEventList" resultType="hashmap">
+		SELECT 	A.SEQ,
+		       	A.COMP_CD,
+		       	TITLE,
+		       	VIEW_CNT,
+		       	DATE_FORMAT(IFNULL(A.UPDATE_DATE,A.CREATE_DATE), '%y.%m.%d %H:%i') CREATE_DATE,
+		       	MAIN_YN, IMG1, IMG2, COLOR, B.COMP_NAME
+		FROM 	MAIN_BOARD_EVENT A
+					LEFT OUTER JOIN COMPANY B ON B.COMP_CD = A.COMP_CD 
+		WHERE 	1 = 1
+		<if test="COMPANY != null and COMPANY == 'B2C'">
+			AND 	IFNULL(A.COMP_CD,'B2C') = 'B2C'
+		</if>
+		<if test="COMPANY != null and COMPANY == 'B2B'">
+			AND 	IFNULL(A.COMP_CD,'B2C') != 'B2C'
+			AND 	IFNULL(B.C2C_YN,'N') = 'N'
+		</if>
+		<if test="COMPANY != null and COMPANY == 'C2C'">
+			AND 	IFNULL(A.COMP_CD,'B2C') != 'B2C'
+			AND 	IFNULL(B.C2C_YN,'N') = 'Y'
+		</if>
+		<if test="COMPANY2 != null and COMPANY2 != ''">
+			AND 	IFNULL(A.COMP_CD,'B2C') = #{COMPANY2}
+		</if>	
+		<if test="SEARCH_STR != null and SEARCH_STR != ''">
+			WHERE UPPER(TITLE) LIKE CONCAT('%',UPPER(#{SEARCH_STR}),'%')
+		</if>
+		ORDER 	BY IFNULL(A.UPDATE_DATE,A.CREATE_DATE) DESC
+	</select>
+
+	<select id="axMainBoardEventOne" resultType="hashmap">
+		SELECT 	SEQ,
+				COMP_CD,
+		       	TITLE,
+		       	CONTENTS,
+		       	VIEW_CNT,
+		       	MAIN_YN, IMG1, IMG2, COLOR
+		FROM 	MAIN_BOARD_EVENT
+		WHERE 	SEQ = #{SEQ}
+	</select>
+	
+	<insert id="axMainBoardEventInsert" parameterType="hashmap">
+		INSERT INTO MAIN_BOARD_EVENT (COMP_CD,TITLE,CONTENTS,VIEW_CNT,CREATE_DATE)
+		VALUES (#{COMP_CD},#{TITLE},#{CONTENTS},0,CURRENT_TIMESTAMP)
+    </insert>	
+    
+    <update id="axMainBoardEventUpdate" parameterType="hashmap">
+		UPDATE MAIN_BOARD_EVENT
+		   SET TITLE = #{TITLE},
+		       CONTENTS = #{CONTENTS},
+		       UPDATE_DATE = CURRENT_TIMESTAMP
+		 WHERE SEQ = #{SEQ}
+    </update>	
+
+    <update id="axMainBoardEventMainUpdate" parameterType="hashmap">
+		UPDATE MAIN_BOARD_EVENT
+		   SET MAIN_YN = #{MAIN_YN},
+		       COLOR = #{COLOR},
+		       UPDATE_DATE = CURRENT_TIMESTAMP
+		 WHERE SEQ = #{SEQ}
+    </update>	
+
+    <update id="axMainBoardEventImageUpdate" parameterType="hashmap">
+		UPDATE MAIN_BOARD_EVENT
+		   SET UPDATE_DATE = CURRENT_TIMESTAMP
+		   <if test="kind != null and kind == 'img1'"> ,IMG1 = 'Y'</if>
+		   <if test="kind != null and kind == 'img2'"> ,IMG2 = 'Y'</if>
+		 WHERE SEQ = #{SEQ}
+    </update>	
+
+    <delete id="axMainBoardEventDelete" parameterType="hashmap">
+		DELETE FROM MAIN_BOARD_EVENT
+		 WHERE SEQ = #{SEQ}
+    </delete>
+    
+</mapper>

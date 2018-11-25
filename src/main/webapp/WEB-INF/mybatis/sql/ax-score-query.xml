@@ -63,6 +63,7 @@
 	                     	WHERE	STATUS = 'A'
 	                     	GROUP 	BY COURSE_ID ) E ON E.COURSE_ID = A.COURSE_ID   
 						LEFT OUTER JOIN COURSE_EXAM_TYPE F ON F.SEQ = A.COURSE_EXAM_TYPE_ID
+						LEFT OUTER JOIN COMPANY G ON G.COMP_CD = A.COMP_CD 
 		WHERE 	1 = 1
 		AND		A.OPEN_YN = 'Y'
 <if test="LEVEL1_CODE != null and LEVEL1_CODE != ''"> AND CAT.C1_CODE = #{LEVEL1_CODE}</if>
@@ -73,6 +74,14 @@
 </if>
 <if test="COMPANY != null and COMPANY == 'B2B'">
 		AND 	IFNULL(A.COMP_CD,'B2C') != 'B2C'
+		AND 	IFNULL(G.C2C_YN,'N') = 'N'
+</if>
+<if test="COMPANY != null and COMPANY == 'C2C'">
+		AND 	IFNULL(A.COMP_CD,'B2C') != 'B2C'
+		AND 	IFNULL(G.C2C_YN,'N') = 'Y'
+</if>
+<if test="COMPANY2 != null and COMPANY2 != ''">
+		AND 	IFNULL(A.COMP_CD,'B2C') = #{COMPANY2}
 </if>
 <if test="CLOSE != null and CLOSE != ''">
 		AND 	IFNULL(A.CLOSE_YN,'N') = #{CLOSE} 

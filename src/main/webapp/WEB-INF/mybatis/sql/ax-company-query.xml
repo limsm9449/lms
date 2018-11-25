@@ -17,7 +17,7 @@
                         GROUP 	BY COMP_CD ) B ON B.COMP_CD = A.COMP_CD
                     LEFT OUTER JOIN USER U1 ON A.CREATE_USER = U1.USER_ID
 	  	            LEFT OUTER JOIN USER U2 ON A.UPDATE_USER = U2.USER_ID                 
-	 	WHERE 	1 = 1
+		WHERE	C2C_YN = 'N'	  	            	
 		<if test="SEARCH_STR != null and SEARCH_STR != ''">
 		  AND ( UPPER(A.COMP_CD) LIKE CONCAT('%',UPPER(#{SEARCH_STR}),'%') OR UPPER(A.COMP_NAME) LIKE CONCAT('%',UPPER(#{SEARCH_STR}),'%') )
 		</if>			 
@@ -27,10 +27,10 @@
 	<insert id="axCompanyInsert" parameterType="hashmap">
 		INSERT INTO COMPANY(COMP_CD, COMP_NAME, SUB_DOMAIN, ADDR, ZIPCODE, 
 						COMP_TEL, FAX,  BUSINESS_NO, OWNER_NAME, LOGIN_IMG, GNB_IMG, 
-    	                CREATE_DATE, CREATE_USER)
+    	                CREATE_DATE, CREATE_USER, C2C_YN, MOBILE)
     	VALUES (#{COMP_CD}, #{COMP_NAME}, #{SUB_DOMAIN}, #{ADDR}, #{ZIPCODE}, 
-    			#{COMP_TEL}, #{FAX}, #{BUSINESS_NO}, #{OWNER_NAME}, 'Y', 'Y',
-    	        CURRENT_TIMESTAMP, #{SESSION_USER_ID})
+    			#{COMP_TEL}, #{FAX}, #{BUSINESS_NO}, #{OWNER_NAME}, 'N', 'N',
+    	        CURRENT_TIMESTAMP, #{SESSION_USER_ID}, #{C2C_YN}, #{MOBILE})
 	</insert>  
 	
 	<update id="axCompanyUpdate" parameterType="hashmap">
@@ -45,6 +45,7 @@
 				,OWNER_NAME = #{OWNER_NAME}
 				,LOGIN_IMG = #{LOGIN_IMG}
 				,GNB_IMG = #{GNB_IMG}
+				,MOBILE = #{MOBILE}
     	       	,UPDATE_DATE = CURRENT_TIMESTAMP
     	       	,UPDATE_USER = #{SESSION_USER_ID}
     	 WHERE 	COMP_CD = #{COMP_CD}
@@ -75,5 +76,30 @@
 		   <if test="kind != null and kind == 'GNB'"> ,GNB_IMG = 'Y'</if>
     	 WHERE 	COMP_CD = #{COMP_CD}
 	</update>    
-        
+
+	<select id="axCompanyC2cList" resultType="hashmap">
+		SELECT 	A.*
+				,DATE_FORMAT(IFNULL(A.UPDATE_DATE, A.CREATE_DATE), '%y.%m.%d %H:%i') LAST_UPDATE_DATE
+				,IFNULL(U2.USER_NAME, U1.USER_NAME) LAST_UPDATE_USER
+				,'N' NEW_FLAG
+				,'' USER_ID
+		FROM 	COMPANY A
+                    LEFT OUTER JOIN USER U1 ON A.CREATE_USER = U1.USER_ID
+	  	            LEFT OUTER JOIN USER U2 ON A.UPDATE_USER = U2.USER_ID                 
+		WHERE	C2C_YN = 'Y'	  	            	
+		<if test="SEARCH_STR != null and SEARCH_STR != ''">
+		  AND ( UPPER(A.COMP_CD) LIKE CONCAT('%',UPPER(#{SEARCH_STR}),'%') OR UPPER(A.COMP_NAME) LIKE CONCAT('%',UPPER(#{SEARCH_STR}),'%') )
+		</if>			 
+		ORDER BY COMP_NAME
+	</select>
+	
+	<update id="axC2cUserUpdate" parameterType="hashmap">
+		UPDATE 	USER
+    	   SET 	COMP_CD = #{COMP_CD}
+				,SITE_MANAGER_YN = 'Y'
+    	       	,UPDATE_DATE = CURRENT_TIMESTAMP
+    	       	,UPDATE_USER = #{SESSION_USER_ID}
+    	 WHERE 	USER_ID = #{USER_ID}
+	</update>    
+	
 </mapper>

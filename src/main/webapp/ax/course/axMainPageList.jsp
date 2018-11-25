@@ -33,13 +33,30 @@ $(document.body).ready(function () {
         theme: "danger"
     });
 
-    gfn_callAjax("/common/axDd.do", { DD_KIND : "MainpageKind" }, fn_callbackAjax, "dd", { async : false });
+    gfn_callAjax("/common/axDd.do", { DD_KIND : "CompanyKind,Company,Company1,Company2,MainpageKind" }, fn_callbackAjax, "dd", { async : false });
     
     $('[data-grid-control]').click(function () {
         switch (this.getAttribute("data-grid-control")) {
 	        case "search":
 	            fn_search();
 	            break;
+            case "add":
+            	Popup.showCourse();
+
+		    	break;
+            case "delete":
+            	var row = grid.getList("selected");
+            	if ( row.length == 0 ) {
+            		mask.open();
+            		dialog.alert( { msg : "과정을 선택하셔야 합니다." }, function () { mask.close();	} );
+            		return;
+            	}
+               	grid.deleteRow("selected");
+            	
+                break;
+            case "reset":
+            	fn_search();
+                break;	            
             case "save" :
             	fn_save();
                 break;
@@ -50,7 +67,8 @@ $(document.body).ready(function () {
             		dialog.alert( { msg : "과정을 선택하셔야 합니다." }, function () { mask.close();	} );
             	} else {
             		var urlParams = "page=/ax/course/axMainPageImagePopup";
-            		urlParams += "&COURSE_CODE=" + row[0]["COURSE_CODE"];
+            		urlParams += "&COMP_CD=" + row[0]["COMP_CD"];
+            		urlParams += "&COURSE_ID=" + row[0]["COURSE_ID"];
             		
             		f_popup('/common/axOpenPage', {displayName:'axMainPageImagePopup',option:'width=900,height=650', urlParams:urlParams});
             	}
@@ -58,8 +76,6 @@ $(document.body).ready(function () {
                 break;
         }
     });
-    
-	fn_makeGrid();
 });
 
 function fn_makeGrid() {
@@ -69,6 +85,24 @@ function fn_makeGrid() {
 	            label : "ID",
 	            width : 40,
 	            align : "right"
+	        },{
+	        	key : "COMP_CD", 
+	        	label : "회사", 
+	            width : 100,
+	        	align : "center", 
+	        	editor: {
+	                type : "select", 
+	                config : {
+	                    columnKeys: { optionValue: "value", optionText: "text" },
+	                    options: dd.Company
+	                },
+	            	disabled : function () {
+	                    return true;
+	                }
+	        	},
+	            formatter : function () {
+	                return gfn_getValueInList(dd.Company, "value",  this.item.COMP_CD, "text");
+	           	}
 	        },{
 	            key : "CATEGORY_NAME",
 	            label : "카테고리",
@@ -100,8 +134,37 @@ function fn_makeGrid() {
 	            width : 50,
 	            align : "right"
 	        },{
+	        	key : "OPEN_YN", 
+	        	label : "오픈 강의", 
+	            width : 80,
+	        	align : "center", 
+	        	editor : { type : "checkbox", config : {height: 17, trueValue: "Y", falseValue: "N"},
+	            	disabled : function () {
+	                    return true;
+	                }
+	        	}
+	        },{
+	        	key : "CLOSE_YN", 
+	        	label : "종료 강의", 
+	            width : 80,
+	        	align : "center", 
+	        	editor : { type : "checkbox", config : {height: 17, trueValue: "Y", falseValue: "N"},
+	            	disabled : function () {
+	                    return true;
+	                }
+	        	}
+	        },{
 	        	key : "MAIN_OPEN_YN", 
-	        	label : "메인 오픈 여부", 
+	        	label : "메인 오픈", 
+	            width : 80,
+	        	align : "center", 
+	        	editor : { type : "checkbox", config : {height: 17, trueValue: "Y", falseValue: "N"} } ,
+				styleClass: function () {
+                    return "grid-cell-edit";
+                } 
+	        },{
+	        	key : "CATEGORY_MAIN_YN", 
+	        	label : "카테고리별 메인", 
 	            width : 120,
 	        	align : "center", 
 	        	editor : { type : "checkbox", config : {height: 17, trueValue: "Y", falseValue: "N"} } ,
@@ -140,6 +203,15 @@ function fn_makeGrid() {
 						styleClass: function () {
 		                    return "grid-cell-edit";
 		                } 
+			        },{
+			        	key : "POPULAR_ORD", 
+			        	label : "순번", 
+			            width : 60,
+			        	align : "center", 
+			        	editor : { type : "number" } ,
+						styleClass: function () {
+		                    return "grid-cell-edit";
+		                } 
 			        }
 		        ]
 	        },{
@@ -147,7 +219,7 @@ function fn_makeGrid() {
               	label: "추천과정", 
               	columns: [	        
               		{
-        	        	key : "RECOMMEND_COURSE_YN", 
+        	        	key : "RECOMMEND_YN", 
         	        	label : "추천과정", 
         	            width : 80,
         	        	align : "center", 
@@ -174,6 +246,15 @@ function fn_makeGrid() {
 						styleClass: function () {
 		                    return "grid-cell-edit";
 		                } 
+			        },{
+			        	key : "RECOMMEND_ORD", 
+			        	label : "순번", 
+			            width : 60,
+			        	align : "center", 
+			        	editor : { type : "number" } ,
+						styleClass: function () {
+		                    return "grid-cell-edit";
+		                } 
 			        }
 		        ]
 	        },{
@@ -181,7 +262,7 @@ function fn_makeGrid() {
               	label: "신규과정", 
               	columns: [	        
               		{
-        	        	key : "NEW_COURSE_YN", 
+        	        	key : "NEW_YN", 
         	        	label : "신규과정", 
         	            width : 80,
         	        	align : "center", 
@@ -208,6 +289,15 @@ function fn_makeGrid() {
 						styleClass: function () {
 		                    return "grid-cell-edit";
 		                } 
+			        },{
+			        	key : "NEW_ORD", 
+			        	label : "순번", 
+			            width : 60,
+			        	align : "center", 
+			        	editor : { type : "number" } ,
+						styleClass: function () {
+		                    return "grid-cell-edit";
+		                } 
 			        }
 		        ]
 	        }	], 
@@ -221,7 +311,9 @@ function fn_makeGrid() {
 }
 
 function fn_params() {
-	params.CB_KIND = $("#CB_KIND option:selected").val();	
+	params.COMPANY = $("#CB_COMPANY option:selected").val();	
+	params.COMPANY2 = $("#CB_COMPANY2 option:selected").val();	
+	params.KIND = $("#CB_KIND option:selected").val();	
 }
 
 function fn_search() {
@@ -262,12 +354,32 @@ function fn_callbackAjax(data, id) {
 	} else if ( id == "dd" ){
 		dd = $.extend({}, data);
 		
+		gfn_cbRefresh("CB_COMPANY", data.CompanyKind, true);
 		gfn_cbRefresh("CB_KIND", data.MainpageKind, true);
+		
+		fn_makeGrid();
 	} else if ( id == "save" ){
 		mask.close();
 
 		mask.open();
 		dialog.alert( { msg : "저장 되었습니다." }, function () { mask.close();	fn_search(); } );
+	} else if ( id == "courseSearch" ){
+		grid.addRow(
+			{
+				NEW_FLAG : "Y", 
+				COURSE_ID : data.COURSE_ID, 
+				COMP_CD : data.COMP_CD, 
+				CATEGORY_NAME : data.CATEGORY_NAME,
+				COURSE_NAME : data.COURSE_NAME,
+				COURSE_CODE : data.COURSE_CODE,
+				YEAR : data.YEAR,
+				MONTH : data.MONTH,
+				CHASU : data.CHASU,
+				MAIN_OPEN_YN : "N",
+				POPULAR_YN : "N",
+				RECOMMEND_YN : "N",
+				NEW_YN : "N"
+			}, "last", {focus: "END"});
 	}
 }
 
@@ -275,11 +387,17 @@ function fn_gridEvent(event, obj) {
 	if ( event == "Click" ) {
 		obj.self.select(obj.dindex);
 	} else if ( event == "DataChanged" ) {
-		if ( obj.key == "REPORT_RATE" ||
-				obj.key == "EXAM_RATE" ||
-				obj.key == "DISCUSSION_RATE" ||
-				obj.key == "PROGRESS_RATE" ) {
-			grid.repaint();
+	}
+}
+
+function fn_cbChange(id) {
+	if ( id == "CB_COMPANY" ) {
+		if ( $("#CB_COMPANY").val() == "B2B" ) {
+			gfn_cbRefresh("CB_COMPANY2", dd.Company1, true);
+		} else if ( $("#CB_COMPANY").val() == "C2C" ) {
+			gfn_cbRefresh("CB_COMPANY2", dd.Company2, true);
+		} else {
+			gfn_cbRefresh("CB_COMPANY2", null, true);
 		}
 	}
 }
@@ -293,6 +411,15 @@ function fn_gridEvent(event, obj) {
 
 <form id="frm" name="frm" method="post" class="form-inline">
   	<div class="form-group">
+    	<label for="CB_COMPANY">&nbsp;회사 구분</label>
+		<select class="form-control" id="CB_COMPANY" onchange="fn_cbChange('CB_COMPANY')">
+			<option value="">전체</option>
+		</select>
+		<select class="form-control" id="CB_COMPANY2">
+			<option value="">전체</option>
+		</select>
+  	</div>
+  	<div class="form-group">
     	<label for="CB_KIND">과정종류</label>
 		<select class="form-control" id="CB_KIND">
 			<option value="">전체</option>
@@ -303,6 +430,9 @@ function fn_gridEvent(event, obj) {
 
 <div>
     <button class="btn btn-default" data-grid-control="search">검색</button>
+    <button class="btn btn-default" data-grid-control="add">추가</button>
+    <button class="btn btn-default" data-grid-control="delete">삭제</button>
+    <button class="btn btn-default" data-grid-control="reset">초기화</button>
     <button class="btn btn-default" data-grid-control="save">저장</button>
     <button class="btn btn-default" data-grid-control="editImage">이미지 편집</button>
 </div>

@@ -18,15 +18,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
+import com.qp.lms.ax.common.service.AxCommService;
 import com.qp.lms.common.service.CommService;
 
 public class SessionInterceptor extends HandlerInterceptorAdapter {
 	private static final Logger logger = LoggerFactory.getLogger(SessionInterceptor.class);
 
-
     @Autowired
     private CommService commSvr;
-    
+
+    @Autowired
+    private AxCommService axCommService;
+
 	/*
 	 * .do 호출시 선처리 작업
 	 */
@@ -94,49 +97,10 @@ public class SessionInterceptor extends HandlerInterceptorAdapter {
 			        }
 	    		}
 
-	    		//마지막 접속 로그를 남긴다.
-			    if ( (SessionVO)SessionUtil.getSession() != null) {
-		        	commSvr.lastLog(SessionUtil.getSessionUserId());
-		        }
-
-		    	//인기과정
-	   	 		if ( SessionUtil.getFavorityCourseList() == null ) {
-	   	 			SessionUtil.setAttribute("favorityCourseList", commSvr.getFavorityCourseList());
-	   	 		}
-
-	   	 	
-	   	 		if ( SessionUtil.getAttribute("courseImgFolder") == null ) {
-	   	 			SessionUtil.setAttribute("courseImgFolder", commSvr.getSetting("COURSE_IMG_FOLDER"));
-	   	 		}
-	   	 		//베스트(인기)과정
-	   	 		if ( SessionUtil.getAttribute("popularCourseList") == null ) {
-	   	 			SessionUtil.setAttribute("popularCourseList", commSvr.getPopularCourseList());
-	   	 		}
-	   	 		//추천과정
-	   	 		if ( SessionUtil.getAttribute("recommendCourseList") == null ) {
-	   	 			SessionUtil.setAttribute("recommendCourseList", commSvr.getRecommendCourseList());
-	   	 		}
-	   	 		//신규과정
-	   	 		if ( SessionUtil.getAttribute("newCourseList") == null ) {
-	   	 			SessionUtil.setAttribute("newCourseList", commSvr.getNewCourseList());
-	   	 		}
-	   	 		//신규 이벤트
-	   	 		if ( SessionUtil.getAttribute("eventList") == null ) {
-	   	 			SessionUtil.setAttribute("eventList", commSvr.getEventList());
-	   	 		}
-	   	 		//주요공지사항
-	   	 		if ( SessionUtil.getAttribute("noticeList") == null ) {
-	   	 			SessionUtil.setAttribute("noticeList", commSvr.getNoticeList());
-	   	 		}
-
-
-	   	 
-	   	 
-	   	 		//과정 카테고리
-		   	 	if ( SessionUtil.getCourseCategoryList() == null ) {
-	   	 			SessionUtil.setAttribute("courseCategoryList", commSvr.getCourseCategoryList());
-	   	 		}
-		   	 	
+	    		String[] domains = request.getServerName().split("[.]");
+	        	String compCd = axCommService.axCompCdFromSubDomain(domains[0]);
+	        	SessionUtil.setAttribute("compCd", compCd);
+	        	
 	   	 		// 시스템에서 사용할 설정값을 가져와 Session에 넣어둔다.
 	   	 		if ( SessionUtil.getAttribute("properties") == null ) {
 			    	FileInputStream fis = new FileInputStream(request.getRealPath("//WEB-INF//lms.properties"));
@@ -145,6 +109,37 @@ public class SessionInterceptor extends HandlerInterceptorAdapter {
 			    	SessionUtil.setAttribute("properties",prop.clone());
 	   	 		}
 	
+	    		//마지막 접속 로그를 남긴다.
+			    if ( (SessionVO)SessionUtil.getSession() != null) {
+		        	commSvr.lastLog(SessionUtil.getSessionUserId());
+		        }
+
+	   	 		//베스트(인기)과정
+	   	 		if ( SessionUtil.getAttribute("popularCourseList") == null ) {
+	   	 			SessionUtil.setAttribute("popularCourseList", commSvr.getPopularCourseList(compCd));
+	   	 		}
+	   	 		//추천과정
+	   	 		if ( SessionUtil.getAttribute("recommendCourseList") == null ) {
+	   	 			SessionUtil.setAttribute("recommendCourseList", commSvr.getRecommendCourseList(compCd));
+	   	 		}
+	   	 		//신규과정
+	   	 		if ( SessionUtil.getAttribute("newCourseList") == null ) {
+	   	 			SessionUtil.setAttribute("newCourseList", commSvr.getNewCourseList(compCd));
+	   	 		}
+	   	 		//신규 이벤트
+	   	 		if ( SessionUtil.getAttribute("eventList") == null ) {
+	   	 			SessionUtil.setAttribute("eventList", commSvr.getEventList(compCd));
+	   	 		}
+	   	 		//주요공지사항
+	   	 		if ( SessionUtil.getAttribute("noticeList") == null ) {
+	   	 			SessionUtil.setAttribute("noticeList", commSvr.getNoticeList(compCd));
+	   	 		}
+
+	   	 		//과정 카테고리
+		   	 	if ( SessionUtil.getCourseCategoryList() == null ) {
+	   	 			SessionUtil.setAttribute("courseCategoryList", commSvr.getCourseCategoryList());
+	   	 		}
+		   	 	
 		    	if ( url.equals("/") || 
 		    			url.equals("/lms") || 
 		    			CommUtil.isMatchUrl(urls, url) || 

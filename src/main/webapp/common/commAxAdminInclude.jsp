@@ -21,4 +21,6 @@
 <script src="/resources/ax5ui/dist/ax5combobox.js"></script>
 <script src="/resources/ax5ui/dist/ax5layout.js"></script>
 
-
+<script type="text/javascript">
+	isReload = false;
+</script>

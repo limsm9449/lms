@@ -42,6 +42,13 @@ public class AxCommService {
 		    	hm.put(ddKinds[i], sqlSession.selectList("axComm.axDdExamCourseCode", paramMap));
 			} else if ( "Company".equals(ddKinds[i]) ) {
 		    	hm.put(ddKinds[i], sqlSession.selectList("axComm.axDdCompany", paramMap));
+			} else if ( "Company1".equals(ddKinds[i]) ) {
+		    	hm.put(ddKinds[i], sqlSession.selectList("axComm.axDdCompany1", paramMap));
+			} else if ( "Company2".equals(ddKinds[i]) ) {
+		    	hm.put(ddKinds[i], sqlSession.selectList("axComm.axDdCompany2", paramMap));
+			} else if ( "CompanyKind".equals(ddKinds[i]) ) {
+				paramMap.put("DD_MAIN", "COMPANY_KIND");
+		    	hm.put(ddKinds[i], sqlSession.selectList("axComm.axDdCode", paramMap));
 			} else if ( "ExamType".equals(ddKinds[i]) ) {
 		    	hm.put(ddKinds[i], sqlSession.selectList("axComm.axDdExamType", paramMap));
 			} else if ( "ReportCourseCode".equals(ddKinds[i]) ) {
@@ -141,6 +148,24 @@ public class AxCommService {
     	String compCd = sqlSession.selectOne("axComm.axCompCdFromSubDomain", params);
     	
         return ( compCd == null ? "B2C" : compCd );
+    }
+    
+	public HashMap<String, Object> axUserSearchList(HashMap<String, Object> paramMap) throws Exception {
+		HashMap<String, Object> hm = new HashMap<String, Object>();
+		
+    	List<HashMap<String, Object>> list = sqlSession.selectList("axComm.axUserSearchList", paramMap);
+    	hm.put("list", list);
+        
+    	return hm;
+    }
+    
+	public HashMap<String, Object> axCourseSearchList(HashMap<String, Object> paramMap) throws Exception {
+		HashMap<String, Object> hm = new HashMap<String, Object>();
+		
+    	List<HashMap<String, Object>> list = sqlSession.selectList("axComm.axCourseSearchList", paramMap);
+    	hm.put("list", list);
+        
+    	return hm;
     }
 
 }

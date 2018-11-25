@@ -203,4 +203,10 @@ public class SessionUtil {
 		 
 		 return sess.getCompCd();
 	}
+
+	public static String getC2cYn() throws Exception  {
+		 SessionVO sess = (SessionVO)RequestContextHolder.getRequestAttributes().getAttribute("session", RequestAttributes.SCOPE_SESSION);
+		 
+		 return sess.getC2cYn();
+	}
 }

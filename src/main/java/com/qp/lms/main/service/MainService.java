@@ -34,18 +34,6 @@ public class MainService {
 	private DdService ddService;
 
 	public MainSet mainCourseList(MainSet set) throws Exception {
-		/*
-    	//쿼리에서 가져올 갯수 지정
-    	set.getCondiVO().setLimitUnit(Constant.unitForMain);
-
-    	List<CourseVO> courseList = sqlSession.selectList("main.mainCourseList",set.getCondiVO());
-    	set.setCourseList(courseList);
-        
-    	//페이징 처리 변수 세팅
-    	set.setTotalCount(((CourseVO)sqlSession.selectOne("main.mainCourseTotal",set.getCondiVO())).getCnt());
-    	set.setPageUnit(Constant.unitForMain);
-    	*/
-
 		//공지사항
 		set.getCondiVO().setCnt(5);
     	List<BoardVO> noticeList = sqlSession.selectList("main.noticeList", set.getCondiVO());
@@ -209,12 +197,13 @@ public class MainService {
     	board.setCourseId("0");
     	board.setPageNum(set.getCondiVO().getPageNum());
     	board.setLimitUnit(Constant.unitForBoard);
+    	board.setCompCd(set.getCondiVO().getCompCd());
     	
-    	List<BoardVO> list = sqlSession.selectList("boardNotice.boardNoticeList",board);
+    	List<BoardVO> list = sqlSession.selectList("mainBoardNotice.mainBoardNoticeList",board);
     	set.setBoardNoticeList(list);
     	
     	//페이징 처리 변수 세팅
-    	set.setTotalCount(((BoardVO)sqlSession.selectOne("boardNotice.boardNoticeTotal",board)).getCnt());
+    	set.setTotalCount(((BoardVO)sqlSession.selectOne("mainBoardNotice.mainBoardNoticeTotal",board)).getCnt());
     	set.setPageUnit(Constant.unitForBoard);
     	
         return set ;
@@ -224,12 +213,11 @@ public class MainService {
     	// 상세조회
     	BoardVO board = new BoardVO();
     	board.setSeq(set.getCondiVO().getSeq());
-    	board.setCourseId("0");
 
     	//조회수를 증가 시킨다.
-    	sqlSession.update("boardNotice.boardNoticeViewCntUpd",board);
+    	sqlSession.update("mainBoardNotice.mainBoardNoticeViewCntUpd",board);
     	
-    	set.setBoardNotice((BoardVO) sqlSession.selectOne("boardNotice.boardNoticeData",board));
+    	set.setBoardNotice((BoardVO) sqlSession.selectOne("mainBoardNotice.mainBoardNoticeData",board));
     	
         return set ;
     }
@@ -275,12 +263,13 @@ public class MainService {
     	board.setFindString(set.getCondiVO().getFindString());
     	board.setPageNum(set.getCondiVO().getPageNum());
     	board.setLimitUnit(Constant.unitForBoard);
+    	board.setCompCd(set.getCondiVO().getCompCd());
     	
-    	List<BoardVO> list = sqlSession.selectList("boardEvent.boardEventList",board);
+    	List<BoardVO> list = sqlSession.selectList("mainBoardEvent.mainBoardEventList",board);
     	set.setBoardNoticeList(list);
     	
     	//페이징 처리 변수 세팅
-    	set.setTotalCount(((BoardVO)sqlSession.selectOne("boardEvent.boardEventTotal",board)).getCnt());
+    	set.setTotalCount(((BoardVO)sqlSession.selectOne("mainBoardEvent.mainBoardEventTotal",board)).getCnt());
     	set.setPageUnit(Constant.unitForBoard);
     	
         return set ;
@@ -292,9 +281,9 @@ public class MainService {
     	board.setSeq(set.getCondiVO().getSeq());
 
     	//조회수를 증가 시킨다.
-    	sqlSession.update("boardEvent.boardEventViewCntUpd",board);
+    	sqlSession.update("mainBoardEvent.mainBoardEventViewCntUpd",board);
     	
-    	set.setBoardNotice((BoardVO) sqlSession.selectOne("boardEvent.boardEventData",board));
+    	set.setBoardNotice((BoardVO) sqlSession.selectOne("mainBoardEvent.mainBoardEventData",board));
     	
         return set ;
     }

@@ -656,6 +656,9 @@ header{
 .process_filter_item.image p{
     background:url('../../img/course/ic_image.png') 94% 50% no-repeat;
 }
+.process_filter_item .on{
+    border:solid 1px #274d8e;
+}
 
 .process_search_result > div{
     width:100%;
@@ -784,6 +787,22 @@ header{
     margin-bottom:0;
 }
 
+
+/* PROCESS RESULT IMAGE */
+.process_search_result.image{
+    display:none;
+}
+.process_search_result.image .process_list_wrap li{
+    width:23.5%;
+    margin-bottom:10px;
+    border-top:solid 1px #ddd;
+}
+.process_search_result.image .process_btn_area button {
+    width: 48.5%;
+}
+
+
+/* PAGER */
 
 .pager_box{
     text-align:center;
@@ -1221,6 +1240,16 @@ header{
         width:50%;
         text-align:center;
         padding:0 0 0 6px;
+    }
+
+    .process_search_result.image .process_list_wrap li{
+        width:100%;
+    }
+
+    .process_filter div ul .process_filter_item.range,
+    .process_filter div ul .process_filter_item.list,
+    .process_filter div ul .process_filter_item.image{
+        display:none;
     }
 
     .pager_prev,

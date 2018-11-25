@@ -57,10 +57,15 @@
 		   AND IFNULL(A.ADMIN_YN,'N') = 'N' AND IFNULL(A.SITE_MANAGER_YN,'N') = 'N' AND IFNULL(A.CONTENTS_MANAGER_YN,'N') = 'N' AND IFNULL(A.TEACHER_YN,'N') = 'N' AND IFNULL(A.TUTOR_YN,'N') = 'N'
 		</if>			 
 		<if test="CB_USERKIND != null and CB_USERKIND == 'B2C'">
-		   AND IFNULL(A.COMP_CD,'') = 'B2C'
+		   AND IFNULL(A.COMP_CD,'B2C') = 'B2C'
 		</if>			 
-		<if test="CB_USERKIND != null and CB_USERKIND == 'COMPANY'">
-		   AND ( IFNULL(A.COMP_CD,'') != '' AND IFNULL(A.COMP_CD,'') != 'B2C' )
+		<if test="CB_USERKIND != null and CB_USERKIND == 'B2B'">
+		   AND IFNULL(A.COMP_CD,'B2C') != 'B2C'
+		   AND IFNULL(C.C2C_YN,'N') = 'N'
+		</if>			 
+		<if test="CB_USERKIND != null and CB_USERKIND == 'C2C'">
+		   AND IFNULL(A.COMP_CD,'B2C') != 'B2C'
+		   AND IFNULL(C.C2C_YN,'N') = 'Y'
 		</if>			 
 	    <if test="SESSION_AUTH == 'SITE_MANAGER'"> 
 	 	  AND A.COMP_CD = (SELECT COMP_CD FROM USER WHERE USER_ID = #{SESSION_USER_ID})

@@ -62,7 +62,7 @@ function fn_makeGrid() {
 	    }
 	];
 	
-	for ( var i = 1 ; i <= new Date(parseInt($("#CB_YEAR").val()), parseInt($("#CB_MONTH").val()) + 1, "").getDate(); i++ ) {
+	for ( var i = 1 ; i <= new Date(parseInt($("#CB_YEAR").val()), parseInt($("#CB_MONTH").val()), 0).getDate(); i++ ) {
 		columns.push(
 			{
 		        key : (i < 10 ? "DAY_0" + i : "DAY_" + i),
@@ -71,6 +71,10 @@ function fn_makeGrid() {
 		        align : "right"
 		    }
 		);
+	}
+	
+	if ( grid ) {
+		grid.destroy();
 	}
 	
 	grid = gfn_makeAx5Grid("first-grid", columns, 
@@ -91,6 +95,7 @@ function fn_params() {
 
 function fn_search() {
 	//mask.open();
+	fn_makeGrid();
 	
 	fn_params();
 	

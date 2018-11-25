@@ -19,6 +19,7 @@ public class LoginVO extends CommonVO{
 	private String email;
 	private String mobile;
 	private String compName;
+	private String c2cYn;
 	
 	//2104.6.20 추가
 	private String certificationYn;
@@ -115,6 +116,12 @@ public class LoginVO extends CommonVO{
 	}
 	public void setCompName(String compName) {
 		this.compName = compName;
+	}
+	public String getC2cYn() {
+		return c2cYn;
+	}
+	public void setC2cYn(String c2cYn) {
+		this.c2cYn = c2cYn;
 	}
 	
 	

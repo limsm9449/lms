@@ -9,6 +9,8 @@ var course_contents_length = 10000;
 /* 타이틀 사이즈 */
 var board_title_length = 200;
 
+var isReload = true;
+
 $(document).ready(function() {
 	//자동 submit 방지
 	var forms = document.forms;
@@ -41,23 +43,11 @@ $(document).ready(function() {
 	}
 	
 	//10분 마다 페이지 reload...
-	setInterval(function() {
-			location.reload();
-			/*
-			$.ajax({
-				url : context + "/sessionContinue.do",
-				type : "POST",
-				async : true,
-				dataType :"json",
-				contentType : "application/json; charset=UTF-8",
-				data : JSON.stringify({}),
-				success : function(data){
-				},
-				error : function(e) {
-					alert(resource.msg.systemError);
-				}
-			});
-			*/
+	setInterval(
+		function() {
+			if ( isReload ) {
+				location.reload();
+			}
 		}, 1000 * 60 * 10);
 });
 
@@ -898,7 +888,8 @@ function gfn_makeAx5Grid(gridId, columns, datas, options) {
             	if ( $.isFunction(fn_gridEvent) ) {
             		fn_gridEvent("DataChanged", this);
     			}
-            }
+            },
+            mergeCells : gfn_defined(tOptions.mergeCells, [])
         },
         columns : columns
     });
@@ -977,11 +968,14 @@ function gfn_cbRefresh(id, options, isAll) {
 	if ( isAll ) {
 		$("#" + id).append("<option value=''>전체</option>")
 	}
-	for ( var i = 0; i < options.length; i++ ) {
-		$("#" + id).append("<option value='" + options[i].value + "'>" + options[i].text + "</option>")
+	
+	if ( options ) {
+		for ( var i = 0; i < options.length; i++ ) {
+			$("#" + id).append("<option value='" + options[i].value + "'>" + options[i].text + "</option>")
+		}
+	
+		$("#" + id + "option:eq(0)").attr("selected", "selected");
 	}
-
-	$("#" + id + "option:eq(0)").attr("selected", "selected");
 }
 
 function gfn_mcbRefresh(id, options, isAll, _params) {
@@ -992,13 +986,16 @@ function gfn_mcbRefresh(id, options, isAll, _params) {
 	if ( isAll ) {
 		$("#" + id).append("<option value=''>전체</option>")
 	}
-	for ( var i = 0; i < options.length; i++ ) {
-		if ( params.except == undefined || params.except == "" || ("," + params.except + ",").indexOf("," + options[i].value + ",") < 0 ) {
-			$("#" + id).append("<option value='" + options[i].value + "'>" + options[i].text + "</option>")
-		}
-	}
 
-	$("#" + id + "option:eq(0)").attr("selected", "selected");
+	if ( options ) {
+		for ( var i = 0; i < options.length; i++ ) {
+			if ( params.except == undefined || params.except == "" || ("," + params.except + ",").indexOf("," + options[i].value + ",") < 0 ) {
+				$("#" + id).append("<option value='" + options[i].value + "'>" + options[i].text + "</option>")
+			}
+		}
+	
+		$("#" + id + "option:eq(0)").attr("selected", "selected");
+	}
 	
 	$('#' + id).multiselect('rebuild');
 }

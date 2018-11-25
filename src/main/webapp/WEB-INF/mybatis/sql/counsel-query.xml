@@ -57,7 +57,7 @@
 		 WHERE SEQ = #{seq}
     </select>	
 
-    <select id="counselAnswerData" parameterType="Counsel" resultType="Counsel">
+<!--     <select id="counselAnswerData" parameterType="Counsel" resultType="Counsel">
 		SELECT SEQ,
 		       B.DD_VALUE CATEGORY_NAME, 
 		       TITLE,
@@ -67,7 +67,7 @@
 		  FROM COUNSEL A LEFT OUTER JOIN CODE B ON A.CATEGORY = B.DD_KEY AND B.DD_MAIN = 'FAQ'
 		 WHERE SEQ = #{seq}
     </select>	
-
+ -->
     <select id="userCounselIns" parameterType="Counsel">
 		INSERT INTO COUNSEL (CATEGORY,TITLE,CONTENTS,USER_ID,CREATE_DATE)
 		VALUES (#{category},#{title},#{contents},#{userId},CURRENT_TIMESTAMP)
@@ -87,13 +87,13 @@
 		 WHERE SEQ = #{seq}
     </select>	
 
-    <select id="counselAnswerUpd" parameterType="Counsel">
+<!--     <select id="counselAnswerUpd" parameterType="Counsel">
 		UPDATE COUNSEL
 		   SET ANSWER = #{answer},
 		       UPDATE_DATE = CURRENT_TIMESTAMP
 		 WHERE SEQ = #{seq}
     </select>	
-
+ -->
 
         
 </mapper>

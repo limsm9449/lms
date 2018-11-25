@@ -365,7 +365,7 @@ html{
     border-bottom:none;
     resize: none;
 }
-.view div{
+.view > div{
     min-height: 100px;
     float: left;
     width: 480px;
@@ -443,7 +443,7 @@ html{
 .report_box.manage .half input[type='text']{
     width:70%;
 }
-.report_box.manage .view div{
+.report_box.manage > .view div{
     width:460px;
 }
 .report_box.manage input[type='file']{
@@ -480,6 +480,187 @@ html{
     margin:10px auto;
 }
 
+
+
+/* 학습/수료 기준 */
+#popup_standard .popup_info_box{
+    padding:20px;
+}
+#popup_standard .popup_info{
+    float:none;
+    width:100%;
+    font-family:'NanumSquareB';
+    font-size:20px;
+    padding-bottom:10px;
+}
+#popup_standard .popup_info_box p{
+    line-height:130%;
+}
+#popup_standard .popup_info_box p span{
+    display:block;
+}
+.popup_content{
+    margin: 20px;
+}
+.popup_content div{
+    padding-bottom: 20px;
+}
+.popup_content div p{
+    font-size: 16px;
+    line-height: 150%;
+}
+.popup_content div .note_title{
+    font-family: 'NanumSquare';
+    font-size: 16px;
+    font-weight: 600;
+    color: #39107b;
+}
+.popup_content div .note_title span{
+    display:block;
+}
+.popup_content div .box{
+    background: #eee;
+    box-sizing: border-box;
+    border: solid 1px #ccc;
+    padding: 20px;
+    margin: 10px 0;
+}
+.popup_content div .box li{
+    position: relative;
+    line-height: 150%;
+    font-size: 15px;
+    text-indent:10px;
+}
+.popup_content div .box li:before{
+    display:block;
+    content:'';
+    position:absolute;
+    top:10px;
+    left:0;
+    width:2px;
+    height:2px;
+    background:#555;
+}
+.popup_content div .box li span{
+    font-weight:600;
+}
+
+
+
+/* 학습 가이드 */
+.popup_content.guide div .box li{
+    text-indent:0;
+}
+.popup_content.guide div .box li:before{
+    display:none;
+}
+
+
+
+/* 동영상 설정 */
+#popup_standard .popup_info_box.video_set p span{
+    font-weight:500;
+}
+.popup_content.set img{
+    display:block;
+    width:100%;
+    /* max-width:500px; */
+    margin:0 auto;
+}
+.preference_tab.video_set button{
+    width:23%;
+}
+.popup_content.set.type2,
+.popup_content.set.type3,
+.popup_content.set.type4{
+    display:none;
+}
+.popup_content.set p{
+    font-size: 16px;
+    padding: 4px 0;
+    line-height: 180%;
+}
+.popup_content.set p span{
+    font-weight: 600;
+}
+.popup_content.set .info{
+    font-weight: 500;
+    color: #0072c2;
+    padding: 20px 0;
+    line-height: 120%;
+}
+.popup_content.set .info:before{
+    display: inline-block;
+    content: '';
+    width: 12px;
+    height: 12px;
+    background: #0072c2;
+    margin-right: 4px;
+}
+.popup_content.set img{
+    display: block;
+    width: 60%;
+    margin: 20px auto;
+}
+.popup_content.set .big{
+    width: 100%;
+}
+
+
+
+/* 환경 설정 */
+.preference_tab{
+    text-align: center;
+    margin: 20px;
+}
+.preference_tab button{
+    box-sizing: border-box;
+    width: 30%;
+    margin: 0;
+    padding: 10px 0;
+    font-size: 16px;
+    font-weight: 500;
+    color: #555;
+    border: solid 1px #eee;
+    background: #eee;
+}
+.preference_tab button.on,
+.preference_tab button:hover{
+    color:#fff;
+    background:#0072c2;
+}
+.popup_content.preference.privacy_more{
+    display:none;
+}
+.popup_content.preference p{
+    position:relative;
+    font-size:16px;
+    line-height:150%;
+    padding-left:24px;
+}
+.popup_content.preference p span{
+    display: inline-block;
+    position:absolute;
+    top:2px;
+    left:0;
+    width: 20px;
+    height: 20px;
+    background: #333;
+    color: #fff;
+    text-align: center;
+    line-height: 120%;
+}
+
+.popup_content.preference img{
+    display:block;
+    box-sizing:border-box;
+    width:100%;
+    margin:30px auto 80px;
+    /* border:solid 1px #ddd; */
+}
+.popup_content.preference img.small{
+    width:60%;
+}
 
 
 
@@ -693,6 +874,9 @@ html{
         padding:0 10px 20px;
     }
 
+    .popup_content.preference p{
+        font-size:14px;
+    }
 }
 @media all and (max-width:390px){
     .report_box li p{

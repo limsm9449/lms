@@ -23,7 +23,6 @@
 </head>
 
 <script type="text/javascript">
-
 function lfn_btn(pKind, pParam) {
 	if ( pKind == "application" ) {
 		<c:choose>
@@ -34,7 +33,7 @@ function lfn_btn(pKind, pParam) {
 			<c:when test="${set.condiVO.isLogin eq 'Y' && set.courseData.subCnt ne 0}">
 				alert("신청한 과정입니다.");
 			</c:when>
-			<c:when test="${set.condiVO.compCd ne 'B2C'}">
+			<c:when test="${set.condiVO.compCd ne 'B2C' && set.condiVO.c2cYn eq 'N'}">
 				if ( confirm("과정을 신청하시겠습니까?") == true ) {
 					$.ajax({
 						type :"POST",
@@ -43,12 +42,12 @@ function lfn_btn(pKind, pParam) {
 						data : "courseId=${set.courseData.courseId}",
 						success : function(json){
 							if ( json.rtnMode == "OK") {
-								if ( confirm("과정이 신청되었습니다.") == true )
-									page.goPage('/normalUser/attendCourseList');
-								else
-									lfn_btn("refresh");
+								alert("과정이 신청되었습니다.");
+								page.goPage('/main/myClassroom', '');
 							} else if ( json.rtnMode == "NO_SESSION") {
 								top.location = "/login.do?preUrl=/main/courseList.do";		
+							} else {
+								alert("<spring:message code="lms.msg.systemError" text="-" />");
 							}
 						},
 						error : function(e) {

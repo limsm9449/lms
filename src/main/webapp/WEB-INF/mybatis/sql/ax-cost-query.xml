@@ -171,6 +171,7 @@
 				,A.YEAR
 				,A.MONTH
 				,A.CHASU CHASU
+               	,A.COMP_CD
 		        ,IF(C.COURSE_ID IS NULL,'N','Y') EXIST_COST
 		        ,IFNULL(C.CP_COST_RATE, D.CP_COST_RATE) CP_COST_RATE
 		        ,IFNULL(C.TEACHER_COST_RATE, D.TEACHER_COST_RATE) TEACHER_COST_RATE
@@ -222,7 +223,8 @@
                      			SUM(COURSE_COST) COST
                      	FROM	COURSE_REGISTER
                      	WHERE	STATUS = 'A'
-                     	GROUP 	BY COURSE_ID ) G ON G.COURSE_ID = A.COURSE_ID        
+                     	GROUP 	BY COURSE_ID ) G ON G.COURSE_ID = A.COURSE_ID
+                    LEFT OUTER JOIN COMPANY H ON H.COMP_CD = A.COMP_CD          
 					LEFT OUTER JOIN USER U1 ON A.CREATE_USER = U1.USER_ID
 					LEFT OUTER JOIN USER U2 ON A.UPDATE_USER = U2.USER_ID                 
 		WHERE	OPEN_YN = 'Y'
@@ -238,7 +240,21 @@
 </if>
 <if test="courseName != null and courseName != ''"> 
 		AND ( UPPER(S.COURSE_CODE) LIKE CONCAT('%',UPPER(#{courseName}),'%') OR UPPER(B.COURSE_NAME) LIKE CONCAT('%',UPPER(#{courseName}),'%') )
-</if>		      
+</if>		 
+<if test="COMPANY != null and COMPANY == 'B2C'">
+		AND 	IFNULL(A.COMP_CD,'B2C') = 'B2C'
+</if>
+<if test="COMPANY != null and COMPANY == 'B2B'">
+		AND 	IFNULL(A.COMP_CD,'B2C') != 'B2C'
+		AND 	IFNULL(H.C2C_YN,'N') = 'N'
+</if>
+<if test="COMPANY != null and COMPANY == 'C2C'">
+		AND 	IFNULL(A.COMP_CD,'B2C') != 'B2C'
+		AND 	IFNULL(H.C2C_YN,'N') = 'Y'
+</if>
+<if test="COMPANY2 != null and COMPANY2 != ''">
+		AND 	IFNULL(A.COMP_CD,'B2C') = #{COMPANY2}
+</if>
 		ORDER 	BY CAT.CATEGORY_NAME, B.COURSE_NAME, A.YEAR, A.MONTH, A.CHASU	
 	</select>
 	
@@ -588,6 +604,7 @@
 				,A.YEAR
 				,A.MONTH
 				,A.CHASU CHASU
+				,A.COMP_CD
 				,E.CNT USER_CNT
 				,U1.USER_NAME
 				,F.COST
@@ -618,6 +635,7 @@
                    		<if test="AUTH == 'TEACHER'"> WHERE KIND = 'TEACHER'</if>
                    		<if test="AUTH == 'TUTOR'"> WHERE KIND = 'TUTOR' AND USER_ID = #{USER_ID}</if>
                    		) F ON F.COURSE_ID = A.COURSE_ID
+                    LEFT OUTER JOIN COMPANY G ON G.COMP_CD = A.COMP_CD  
 					LEFT OUTER JOIN USER U1 ON F.USER_ID = U1.USER_ID
 		WHERE	OPEN_YN = 'Y'
 		AND		CLOSE_YN = 'Y'
@@ -634,7 +652,21 @@
 </if>
 <if test="courseName != null and courseName != ''"> 
 		AND ( UPPER(B.COURSE_CODE) LIKE CONCAT('%',UPPER(#{courseName}),'%') OR UPPER(B.COURSE_NAME) LIKE CONCAT('%',UPPER(#{courseName}),'%') )
-</if>		      
+</if>
+<if test="COMPANY != null and COMPANY == 'B2C'">
+		AND 	IFNULL(A.COMP_CD,'B2C') = 'B2C'
+</if>
+<if test="COMPANY != null and COMPANY == 'B2B'">
+		AND 	IFNULL(A.COMP_CD,'B2C') != 'B2C'
+		AND 	IFNULL(G.C2C_YN,'N') = 'N'
+</if>
+<if test="COMPANY != null and COMPANY == 'C2C'">
+		AND 	IFNULL(A.COMP_CD,'B2C') != 'B2C'
+		AND 	IFNULL(G.C2C_YN,'N') = 'Y'
+</if>
+<if test="COMPANY2 != null and COMPANY2 != ''">
+		AND 	IFNULL(A.COMP_CD,'B2C') = #{COMPANY2}
+</if>
 		ORDER 	BY CAT.CATEGORY_NAME, B.COURSE_NAME, A.YEAR, A.MONTH, A.CHASU	
 	</select>
 	   

@@ -96,6 +96,7 @@ public class LoginController {
 	   	 			sess.setCompCd("B2C");
 	   	 		} else {
 	   	 			sess.setCompCd(set.getData().getCompCd());
+	   	 			sess.setC2cYn(set.getData().getC2cYn());
 	   	 		}
 
 	   	 		sess.setAuth(auth);

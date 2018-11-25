@@ -181,15 +181,10 @@ $(document.body).ready(function () {
 function fn_makeGrid() {
 	grid = gfn_makeAx5Grid("first-grid",
 		[ 	{
-	            key : "COURSE_ID",
-	            label : "ID",
-	            width : 40,
-	            align : "right"
-	        },{
 	            key : "APPROVAL_ID",
 	            label : "결재ID",
 	            width : 100,
-	            align : "left"
+	            align : "center"
 	        },{
 	            key : "USER_ID",
 	            label : "신청자 ID",
@@ -303,6 +298,11 @@ function fn_makeGrid() {
 	            width : 150,
 	            align : "left"
 	        },{
+	            key : "COURSE_ID",
+	            label : "ID",
+	            width : 40,
+	            align : "right"
+	        },{
 	            key : "COURSE_NAME",
 	            label : "과정명",
 	            width : 150,
@@ -399,7 +399,8 @@ function fn_makeGrid() {
 	  	{
 	  		showRowSelector : true,
 	  		multipleSelect: true,
-	  		frozenColumnIndex : 7
+	  		frozenColumnIndex : 5,
+	  		mergeCells : ["APPROVAL_ID"]
 	  	}
 	);
 	
@@ -568,7 +569,7 @@ function fn_hidePopupDiv(popupDivId) {
 <div class="form-inline">
   	<div class="form-group">
     	<label for="CB_SEARCH_STATUS">&nbsp;신청상태</label>
-		<select id="CB_SEARCH_STATUS">
+		<select class="form-control" id="CB_SEARCH_STATUS">
 		</select>
   	</div>
   	<div class="form-group">

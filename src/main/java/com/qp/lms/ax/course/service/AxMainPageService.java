@@ -44,8 +44,16 @@ public class AxMainPageService {
 			HashMap<String, Object> row = (HashMap<String, Object>)updList.get(i);
 			row.put("SESSION_USER_ID", SessionUtil.getSessionUserId());
 
-			sqlSession.update("axMainPage.axMainPageCourseUpdate", row);
-			sqlSession.update("axMainPage.axMainPageCourseMasterUpdate", row);
+			if ( "Y".equals((String)row.get("NEW_FLAG")) ) {
+				sqlSession.insert("axMainPage.axMainPageInsert", row);
+			} else {
+				sqlSession.update("axMainPage.axMainPageUpdate", row);
+			}
+		}
+
+		List<HashMap<String, Object>> delList = (List<HashMap<String, Object>>)paramMap.get("deleted");
+		for ( int i = 0; i < delList.size(); i++ ) {
+			sqlSession.delete("axMainPage.axMainPageDelete", delList.get(i));
 		}
 
 		hm.put("RtnMode", Constant.mode.OK.name());

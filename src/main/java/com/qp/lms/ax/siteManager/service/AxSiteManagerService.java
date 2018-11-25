@@ -74,34 +74,39 @@ public class AxSiteManagerService {
 		
 		paramMap.put("userId", SessionUtil.getSessionUserId());
 		
-		//튜터를 구한다.
-		int courseUserCnt = sqlSession.selectOne("axPg.axCourseUserCnt", paramMap);
-		List<HashMap<String, Object>> tutorList = sqlSession.selectList("axPg.axCourseTutors", paramMap);
-		for ( int m = 0; m < tutorList.size(); m++ ) {
-			if ( CommUtil.getIntValue(tutorList.get(m).get("FROM_CNT")) <= courseUserCnt + m && CommUtil.getIntValue(tutorList.get(m).get("TO_CNT")) >= courseUserCnt + m ) {
-				paramMap.put("tutorId", tutorList.get(m).get("TUTOR_ID"));
-				break;
+		String[] courseIds = ((String)paramMap.get("courseId")).split(",");
+		for ( int i = 0 ; i < courseIds.length; i++ ) {
+			paramMap.put("courseId", courseIds[i]);
+			
+			//튜터를 구한다.
+			int courseUserCnt = sqlSession.selectOne("axPg.axCourseUserCnt", paramMap);
+			List<HashMap<String, Object>> tutorList = sqlSession.selectList("axPg.axCourseTutors", paramMap);
+			for ( int m = 0; m < tutorList.size(); m++ ) {
+				if ( CommUtil.getIntValue(tutorList.get(m).get("FROM_CNT")) <= courseUserCnt + m && CommUtil.getIntValue(tutorList.get(m).get("TO_CNT")) >= courseUserCnt + m ) {
+					paramMap.put("tutorId", tutorList.get(m).get("TUTOR_ID"));
+					break;
+				}
 			}
+			
+			//레포트를 구한다.
+			String courseReportYn = sqlSession.selectOne("axPg.axCourseReportExist", paramMap);
+			if ( "Y".equals(courseReportYn) ) {
+				paramMap.put("reportSeq", sqlSession.selectOne("axPg.axCourseRandomReport", paramMap));
+			}
+			
+			//반려된 케이스가 있으면 삭제를 해준다.
+			sqlSession.delete("axPg.axRejectCourseRegisterDel", paramMap);
+			sqlSession.delete("axPg.axRejectCourseEvalDel", paramMap);
+			sqlSession.delete("axPg.axRejectCourseWeekDel", paramMap);
+	
+			paramMap.put("approvalId", "NULL");
+			paramMap.put("paymentKind", "CARD");
+			paramMap.put("SESSION_USER_ID", SessionUtil.getSessionUserId());
+			
+	    	sqlSession.update("axPg.axCourseRegisterInsert",paramMap);
+	    	sqlSession.insert("axPg.axCourseEvalInsert",paramMap);
+	    	sqlSession.insert("axPg.axCourseWeekInsert",paramMap);
 		}
-		
-		//레포트를 구한다.
-		String courseReportYn = sqlSession.selectOne("axPg.axCourseReportExist", paramMap);
-		if ( "Y".equals(courseReportYn) ) {
-			paramMap.put("reportSeq", sqlSession.selectOne("axPg.axCourseRandomReport", paramMap));
-		}
-		
-		//반려된 케이스가 있으면 삭제를 해준다.
-		sqlSession.delete("axPg.axRejectCourseRegisterDel", paramMap);
-		sqlSession.delete("axPg.axRejectCourseEvalDel", paramMap);
-		sqlSession.delete("axPg.axRejectCourseWeekDel", paramMap);
-
-		paramMap.put("approvalId", "NULL");
-		paramMap.put("paymentKind", "CARD");
-		paramMap.put("SESSION_USER_ID", SessionUtil.getSessionUserId());
-		
-    	sqlSession.update("axPg.axCourseRegisterInsert",paramMap);
-    	sqlSession.insert("axPg.axCourseEvalInsert",paramMap);
-    	sqlSession.insert("axPg.axCourseWeekInsert",paramMap);
 		
 		hm.put("RtnMode", Constant.mode.OK.name());
 		

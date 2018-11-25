@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mainBoardNotice">
+
+	<sql id="mainBoardNoticeQuery">
+		SELECT 	SEQ,
+		       	TITLE,
+		       	VIEW_CNT,
+		       	DATE_FORMAT(IFNULL(UPDATE_DATE,CREATE_DATE), '%y.%m.%d %H:%i') CREATE_DATE,
+		       	IF(DATE_FORMAT(CREATE_DATE, '%y.%m.%d') = DATE_FORMAT(SYSDATE(), '%y.%m.%d'),'Y','N') IS_NEW,
+	       		@ROWNUM := @ROWNUM + 1 ROWNUM
+		FROM 	MAIN_BOARD_NOTICE,
+	       			(SELECT @ROWNUM := 0) NUM
+		WHERE	COMP_CD = #{compCd}	       		
+		   <if test="findString != null and findString != ''"> AND TITLE LIKE CONCAT('%',#{findString},'%')</if> 
+		ORDER 	BY SEQ DESC
+	</sql>
+	<select id="mainBoardNoticeList" parameterType="Board" resultType="Board">
+		SELECT 	DATA.* 
+		FROM 	(
+					<include refid="mainBoardNoticeQuery" />
+				) DATA 
+		LIMIT #{limitStart},#{limitUnit}
+	</select>	        
+	<select id="mainBoardNoticeTotal" parameterType="Board" resultType="Board">
+		SELECT 	COUNT(*) CNT
+		FROM	(
+			<include refid="mainBoardNoticeQuery" />
+				) DATA
+	</select>
+
+    <select id="mainBoardNoticeData" parameterType="Board" resultType="Board">
+		SELECT SEQ,
+		       TITLE,
+		       CONTENTS,
+		       VIEW_CNT,
+		       DATE_FORMAT(IFNULL(UPDATE_DATE,CREATE_DATE), '%y.%m.%d %H:%i') CREATE_DATE
+		  FROM MAIN_BOARD_NOTICE
+		 WHERE SEQ = #{seq}
+    </select>	
+
+	<!-- 조회수 증가 -->
+    <select id="mainBoardNoticeViewCntUpd" parameterType="Board">
+		UPDATE MAIN_BOARD_NOTICE
+		   SET VIEW_CNT = VIEW_CNT + 1
+		 WHERE SEQ = #{seq}
+    </select>	
+
+        
+</mapper>

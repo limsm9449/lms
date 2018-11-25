@@ -134,6 +134,26 @@
 		 ORDER BY 1, 2 	
 	</select>
 	
+	<select id="axDdCompany1" resultType="hashmap">
+		SELECT 	COMP_CD value
+		        ,COMP_NAME text
+		        ,TUTOR_ID
+		FROM  	COMPANY
+		WHERE	COMP_CD != 'B2C'
+		AND		C2C_YN = 'N'
+	 	ORDER 	BY 1 	
+	</select>
+	
+	<select id="axDdCompany2" resultType="hashmap">
+		SELECT 	COMP_CD value
+		        ,COMP_NAME text
+		        ,TUTOR_ID
+		FROM  	COMPANY
+		WHERE	COMP_CD != 'B2C'
+		AND		C2C_YN = 'Y'
+	 	ORDER 	BY 1 	
+	</select>
+	
 	<select id="axDdExamType" resultType="hashmap">
 		SELECT 	SEQ value
 		        ,TYPE_NAME text
@@ -252,4 +272,67 @@
     	  FROM COMPANY
     	 WHERE SUB_DOMAIN = #{SUB_DOMAIN}
     </select>
+
+	<select id="axUserSearchList" parameterType="hashmap" resultType="hashmap">
+		SELECT 	*
+		FROM 	USER
+		WHERE 	1 = 1
+		<if test="SEARCH_STR != null and SEARCH_STR != ''">
+			AND ( UPPER(USER_ID) LIKE CONCAT('%',UPPER(#{SEARCH_STR}),'%') OR UPPER(USER_NAME) LIKE CONCAT('%',UPPER(#{SEARCH_STR}),'%') )
+		</if>			 
+		ORDER 	BY USER_NAME  
+	</select>
+
+	<select id="axCourseSearchList" parameterType="hashmap" resultType="hashmap">
+	    SELECT 	C.CATEGORY_NAME
+	           	,A.COURSE_ID
+		       	,A.COURSE_CODE
+		       	,B.COURSE_NAME
+               	,A.YEAR
+				,A.MONTH
+		       	,IFNULL(A.CHASU, 0) CHASU
+               	,A.COMP_CD
+		       	,A.TUTOR_ID
+		       	,A.COURSE_COST
+		       	,A.C_PERIOD
+               	,A.REPORT_RATE
+				,A.EXAM_RATE
+				,A.DISCUSSION_RATE
+				,A.PROGRESS_RATE
+                ,IFNULL(A.TERM_YN,'N') TERM_YN
+                ,IFNULL(A.TERM_PERIOD_FROM, '') TERM_PERIOD_FROM
+                ,IFNULL(A.TERM_PERIOD_TO, '') TERM_PERIOD_TO
+                ,IFNULL(A.STUDY_PERIOD_FROM, '') STUDY_PERIOD_FROM
+                ,IFNULL(A.STUDY_PERIOD_TO, '') STUDY_PERIOD_TO
+		  FROM COURSE A LEFT OUTER JOIN COURSE_CODE B ON A.COURSE_CODE = B.COURSE_CODE
+		                LEFT OUTER JOIN (
+							   SELECT C3.CODE C3_CODE, C2.CODE C2_CODE, C1.CODE C1_CODE,
+									  CONCAT(C1.CODE_NAME,' > ',C2.CODE_NAME,' > ',C3.CODE_NAME) CATEGORY_NAME
+								 FROM CATEGORY C3 LEFT OUTER JOIN CATEGORY C2 ON C3.PARENT_CODE = C2.CODE
+									      LEFT OUTER JOIN CATEGORY C1 ON C2.PARENT_CODE = C1.CODE
+							    WHERE C3.DEPTH = 3) C ON B.CODE = C.C3_CODE
+						LEFT OUTER JOIN COURSE_EXAM_TYPE F ON F.SEQ = A.COURSE_EXAM_TYPE_ID
+		  	            LEFT OUTER JOIN COMPANY I ON I.COMP_CD = A.COMP_CD  
+		WHERE 	IFNULL(A.OPEN_YN,'N') IN ('Y')
+		AND 	IFNULL(A.CLOSE_YN,'N') IN ('N')
+<if test="COMPANY != null and COMPANY == 'B2C'">
+		AND 	IFNULL(A.COMP_CD,'B2C') = 'B2C'
+</if>
+<if test="COMPANY != null and COMPANY == 'B2B'">
+		AND 	IFNULL(A.COMP_CD,'B2C') != 'B2C'
+		AND 	IFNULL(I.C2C_YN,'N') = 'N'
+</if>
+<if test="COMPANY != null and COMPANY == 'C2C'">
+		AND 	IFNULL(A.COMP_CD,'B2C') != 'B2C'
+		AND 	IFNULL(I.C2C_YN,'N') = 'Y'
+</if>
+<if test="COMPANY2 != null and COMPANY2 != ''">
+		AND 	IFNULL(A.COMP_CD,'B2C') = #{COMPANY2}
+</if>
+<if test="SEARCH_STR != null and SEARCH_STR != ''">
+		AND ( UPPER(A.COURSE_CODE) LIKE CONCAT('%',UPPER(#{SEARCH_STR}),'%') OR UPPER(B.COURSE_NAME) LIKE CONCAT('%',UPPER(#{SEARCH_STR}),'%') )
+</if>	
+	 ORDER BY C.CATEGORY_NAME,B.COURSE_NAME,A.YEAR,A.MONTH,A.CHASU 
+	</select>
+    
 </mapper>

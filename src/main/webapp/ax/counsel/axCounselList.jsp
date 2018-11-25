@@ -68,6 +68,11 @@ function fn_ddAfter() {
 	            width : 700,
 	            align : "left"
 	        },{
+	            key : "USER_NAME",
+	            label : "사용자",
+	            width : 80,
+	            align : "center"
+	        },{
 	            key : "CREATE_DATE",
 	            label : "등록일자",
 	            width : 120,

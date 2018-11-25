@@ -24,15 +24,18 @@ var isSave = false;
 
 var MODE = gfn_getUrlParams("MODE");
 var SEQ = gfn_getUrlParams("SEQ");
-var KIND = gfn_getUrlParams("KIND");
 
 $(document.body).ready(function () {
     $("#CONTENTS").cleditor({height:290});
     $("#CONTENTS").cleditor()[0].refresh();
 
+	gfn_callAjax("/common/axDd.do", { DD_KIND : "Company" }, fn_callbackAjax, "dd", { async : false });
+    
     if ( MODE == "INSERT" ) {
-    } else if ( MODE == "UPDATE" ) {
+   	} else {
     	fn_search();
+    	
+    	$("#CB_COMPANY").attr("disabled", true);
    	}
 }); 
 
@@ -40,10 +43,10 @@ function fn_params() {
 	params.SEQ = SEQ;
 }
 
-function fn_search() {
+function fn_search() { 
 	fn_params();
 	
-	gfn_callAjax("/board/axBoardEventOne.do", params, fn_callbackAjax, "search");
+	gfn_callAjax("/board/axMainBoardEventOne.do", params, fn_callbackAjax, "search");
 }
 
 function fn_callbackAjax(data, id) {
@@ -54,7 +57,8 @@ function fn_callbackAjax(data, id) {
 	}
 	
 	if ( id == "search" ) {
-		$('#TITLE').val(data.row.TITLE);
+		$('#CB_COMPANY').val(data.row.COMP_CD);
+		$('#TITLE').val(data.row.TITLE); 
 		
 		$('#CONTENTS').val(data.row.CONTENTS);
 		
@@ -75,11 +79,18 @@ function fn_callbackAjax(data, id) {
 		}
 		
 		isSave = true;
+	} else if ( id == "dd" ){
+		dd = $.extend({}, data);
+		
+		gfn_cbRefresh("CB_COMPANY", data.Company, true);
 	}
 }
 
-
 function fn_save() {
+	if ( $("#CB_COMPANY").val() == "" ) {
+		alert("회사를 선택하셔야 합니다.");
+		return;
+	}
 	if ( $("#TITLE").val() == "" ) {
 		alert("제목을 입력하셔야 합니다.");
 		return;
@@ -101,9 +112,10 @@ function fn_save() {
          				TITLE : $('#TITLE').val(),
          				CONTENTS : $('#CONTENTS').val(),
          				MODE : MODE,
-         				SEQ : SEQ
+         				SEQ : SEQ,
+         				COMP_CD : $('#CB_COMPANY').val()
          		};
-         		gfn_callAjax("/board/axBoardEventSave.do", saveParams, fn_callbackAjax, "save");
+         		gfn_callAjax("/board/axMainBoardEventSave.do", saveParams, fn_callbackAjax, "save");
            	} else {
            		mask.close();
            	}
@@ -126,6 +138,14 @@ function fn_close() {
 <h2>이벤트 게시물</h2>
 
 <form class="form-horizontal">
+  	<div class="form-group">
+    	<label for="TITLE" class="col-sm-2 control-label">회사</label>
+    	<div class="col-sm-10">
+      		<select class="form-control" id="CB_COMPANY">
+				<option value="">전체</option>
+			</select>
+    	</div>
+  	</div>
   	<div class="form-group">
     	<label for="TITLE" class="col-sm-2 control-label">제목</label>
     	<div class="col-sm-10">

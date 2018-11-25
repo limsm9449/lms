@@ -17,7 +17,9 @@ public class SessionVO {
 	private String email;
 	private String mobile;
 	private String compName;
+	private String c2cYn;
 	private String downloadAuth;				/** 튜터, 어드민, 강사는 첨부 다운로드 권한이 있다. */
+	
 	
 	//2014.8.3
 	private List<CourseVO> favorityCourseList;
@@ -126,6 +128,12 @@ public class SessionVO {
 	}
 	public void setCompName(String compName) {
 		this.compName = compName;
+	}
+	public String getC2cYn() {
+		return c2cYn;
+	}
+	public void setC2cYn(String c2cYn) {
+		this.c2cYn = c2cYn;
 	}
 	
 		

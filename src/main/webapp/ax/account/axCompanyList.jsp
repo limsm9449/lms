@@ -40,7 +40,7 @@ $(document.body).ready(function () {
 	            fn_search();
 	            break;
             case "add":
-            	grid.addRow({NEW_FLAG : "Y", COMP_CD : "******", COMP_NAME : "회사명을 입력하세요."}, "last", {focus: "END"});
+            	grid.addRow({NEW_FLAG : "Y", COMP_CD : "******", COMP_NAME : "회사명을 입력하세요.", C2C_YN : "N"}, "last", {focus: "END"});
 
 		    	break;
             case "delete":
@@ -87,6 +87,20 @@ $(document.body).ready(function () {
             case "zipcodeUrl":
            		window.open(dd.ZipcodeUrl[0].text, "zipcode","width=900,height=650");
                 break;
+            case "employee":
+            	var row = grid.getList("selected");
+            	if ( row.length == 0 ) {
+            		mask.open();
+            		dialog.alert( { msg : "회사를 선택하셔야 합니다." }, function () { mask.close();	} );
+            	} else {
+	        		parent.document.getElementById("left").contentWindow.gfn_openMenu("axAccountList", { 
+	        				COMP_CD : row[0].COMP_CD,
+	        				CB_USERKIND : "B2C"
+		    			}
+		    		);
+            	}
+        		
+                break;
         }
     });
 });
@@ -125,7 +139,7 @@ function fn_makeGrid() {
 	        },{
 	            key : "BUSINESS_NO",
 	            label : "사업자등록번호",
-	            width : 100,
+	            width : 130,
 	            align : "left",
 	            editor : { 
 	            	type : "text"
@@ -170,6 +184,17 @@ function fn_makeGrid() {
 	            key : "ADDR",
 	            label : "주소",
 	            width : 200,
+	            align : "left",
+	            editor : { 
+	            	type : "text"
+				},
+				styleClass: function () {
+                    return "grid-cell-edit";
+                }
+	        },{
+	            key : "MOBILE",
+	            label : "핸드폰",
+	            width : 100,
 	            align : "left",
 	            editor : { 
 	            	type : "text"
@@ -318,7 +343,7 @@ function fn_gridEvent(event, obj) {
 
 <div class="form-inline">
   	<div class="form-group">
-    	<label for="CB_SEARCHKIND">회사 코드 및 회사명</label>
+    	<label for="CB_SEARCHKIND">검색어</label>
 		<input class="form-control" type="text" class="search_input" id="SEARCH_STR" name="SEARCH_STR" value="" />
   	</div>
 </div>
@@ -333,6 +358,7 @@ function fn_gridEvent(event, obj) {
     <button class="btn btn-default" data-grid-control="export">엑셀</button>
     <button class="btn btn-default" data-grid-control="editImage">이미지 관리</button>
     <button class="btn btn-default" data-grid-control="zipcodeUrl">주소검색</button>
+    <button class="btn btn-default" data-grid-control="employee">직원검색</button>
 </div> 
 
 <div style="height:10px"></div>

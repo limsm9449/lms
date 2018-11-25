@@ -409,6 +409,28 @@ var Popup = {
 		} else {
 			Popup.showPopup(context + "/user/studyroom.do?courseId=" + pCourseId, 1185, 810, "studyroom");
 		}
+	},
+	
+	showUser : function(pParams) {
+   		var urlParams = "page=/ax/common/axUserSearchPopup";
+   		
+   		var params = pParams || {};
+   		if ( params.kind ) {
+   			urlParams += "&kind=" + params.kind;
+   		}
+   		
+   		f_popup('/common/axOpenPage', {displayName:'userPopup',option:'width=900,height=700', urlParams:urlParams});
+	},
+	
+	showCourse : function(pParams) {
+   		var urlParams = "page=/ax/common/axCourseSearchPopup";
+   		
+   		var params = pParams || {};
+   		if ( params.kind ) {
+   			urlParams += "&kind=" + params.kind;
+   		}
+   		
+   		f_popup('/common/axOpenPage', {displayName:'coursePopup',option:'width=1300,height=700', urlParams:urlParams});
 	}
 
 

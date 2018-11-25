@@ -317,6 +317,7 @@
                             GROUP 	BY COURSE_ID ) D ON D.COURSE_ID = A.COURSE_ID
 		WHERE 	A.OPEN_YN = 'Y'
 		AND		A.CLOSE_YN = 'N'
+		AND		A.COMP_CD = #{compCd}
 		AND		( IFNULL(A.TERM_YN,'N') = 'N' OR ( A.TERM_YN = 'Y' AND DATE_FORMAT(CURDATE(),'%Y-%m-%d') BETWEEN A.TERM_PERIOD_FROM AND A.TERM_PERIOD_TO ) )
 		<if test="categorys != null"> 
 			AND C.C1_CODE IN
@@ -355,7 +356,8 @@
 		SELECT  SEQ
 				,TITLE
 				,DATE_FORMAT(IFNULL(UPDATE_DATE,CREATE_DATE), '%y.%m.%d') CREATE_DATE
-		FROM	BOARD_NOTICE
+		FROM	MAIN_BOARD_NOTICE
+		WHERE	COMP_CD = #{compCd}
 		ORDER 	BY SEQ DESC
 		LIMIT 	#{cnt}
 	</select>	        
@@ -364,7 +366,8 @@
 		SELECT  SEQ
 				,TITLE
 				,DATE_FORMAT(IFNULL(UPDATE_DATE,CREATE_DATE), '%y.%m.%d') CREATE_DATE
-		FROM	BOARD_EVENT
+		FROM	MAIN_BOARD_EVENT
+		WHERE	COMP_CD = #{compCd}
 		ORDER 	BY SEQ DESC
 		LIMIT 	#{cnt}
 	</select>	        
@@ -524,9 +527,13 @@
 									,COUNT(*) GRADE_CNT
                             FROM 	POSTSCRIPT
                             GROUP 	BY COURSE_ID ) D ON D.COURSE_ID = A.COURSE_ID
+						JOIN (
+							SELECT 	*
+							FROM	MAIN_PAGE
+							WHERE 	COMP_CD = #{compCd}
+							AND		IFNULL(CATEGORY_MAIN_YN,'N') = 'Y' ) E ON E.COURSE_ID = A.COURSE_ID                            
 		WHERE 	A.OPEN_YN = 'Y'
 		AND		A.CLOSE_YN = 'N'
-		AND		A.CATEGORY_MAIN_YN = 'Y'
 		AND		( IFNULL(A.TERM_YN,'N') = 'N' OR ( A.TERM_YN = 'Y' AND DATE_FORMAT(CURDATE(),'%Y-%m-%d') BETWEEN A.TERM_PERIOD_FROM AND A.TERM_PERIOD_TO ) )
 		ORDER 	BY B.COURSE_NAME
 		LIMIT 	3

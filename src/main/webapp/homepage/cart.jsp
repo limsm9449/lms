@@ -29,14 +29,44 @@ function lfn_btn(pKind, pParam) {
 			alert("신청할 과정이 없습니다.");
 			return false;
 		}
-		if ( confirm("해당 과정으로 결재하시겠습니까?") == true ) {
-			var cb = $('input:checkbox[name="chk"]:checked');
-			var courseIds = "";
-			for ( var i = 0; i < cb.length; i++ ) {
-				courseIds += (courseIds == "" ? "" : ",") + cb[i].value;
-			}
-			gfn_goPage("/paymentGateway/cartPay", "courseId=" + courseIds); 
-		}
+		<c:choose>
+			<c:when test="${set.condiVO.compCd ne 'B2C' && set.condiVO.c2cYn eq 'N'}">
+				if ( confirm("과정을 신청하시겠습니까?") == true ) {
+					var cb = $('input:checkbox[name="chk"]:checked');
+					var courseIds = "";
+					for ( var i = 0; i < cb.length; i++ ) {
+						courseIds += (courseIds == "" ? "" : ",") + cb[i].value;
+					}
+					$.ajax({
+						type :"POST",
+						url : context + "/siteManager/axUserCourseRegister.do",
+						dataType :"json",
+						data : "courseId=" + courseIds,
+						success : function(json){
+							if ( json.rtnMode == "OK") {
+								alert("과정이 신청되었습니다.");
+								page.goPage('/main/myClassroom', '');
+							} else {
+								alert("<spring:message code="lms.msg.systemError" text="-" />");
+							}
+						},
+						error : function(e) {
+							alert("<spring:message code="lms.msg.systemError" text="-" />");
+						}
+					})
+				}
+			</c:when>
+			<c:otherwise>
+				if ( confirm("해당 과정으로 결재하시겠습니까?") == true ) {
+					var cb = $('input:checkbox[name="chk"]:checked');
+					var courseIds = "";
+					for ( var i = 0; i < cb.length; i++ ) {
+						courseIds += (courseIds == "" ? "" : ",") + cb[i].value;
+					}
+					gfn_goPage("/paymentGateway/cartPay", "courseId=" + courseIds); 
+				}
+			</c:otherwise>
+		</c:choose>		
 	} else if ( pKind == "cartDel" ) {
 		if ( confirm("장바구니에서 삭제 하시겠습니까?") == true ) {
 			gfn_goPage("/main/cartDel","cartCourseId=" + pParam.courseId);

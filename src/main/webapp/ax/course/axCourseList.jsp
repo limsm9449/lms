@@ -35,7 +35,7 @@ $(document.body).ready(function () {
 
     $('#MCB_COMPANY').multiselect(multiselectOptions);
     
-    gfn_callAjax("/common/axDd.do", { DD_KIND : "CategoryLevel1,Tutor,Company,OpenKind,Year" }, fn_callbackAjax, "dd", { async : false });
+    gfn_callAjax("/common/axDd.do", { DD_KIND : "CategoryLevel1,Tutor,CompanyKind,Company,Company1,Company2,OpenKind,Year" }, fn_callbackAjax, "dd", { async : false });
     
     $('[data-grid-control]').click(function () {
         switch (this.getAttribute("data-grid-control")) {
@@ -476,42 +476,6 @@ function fn_makeGrid() {
                     return "grid-cell-edit";
                 } 
 	        },{
-	        	key : "POPULAR_YN", 
-	        	label : "인기 과정", 
-	            width : 80,
-	        	align : "center", 
-	        	editor : { type : "checkbox", config : {height: 17, trueValue: "Y", falseValue: "N"} } ,
-				styleClass: function () {
-                    return "grid-cell-edit";
-                } 
-	        },{
-	        	key : "RECOMMEND_COURSE_YN", 
-	        	label : "추천과정", 
-	            width : 80,
-	        	align : "center", 
-	        	editor : { type : "checkbox", config : {height: 17, trueValue: "Y", falseValue: "N"} } ,
-				styleClass: function () {
-                    return "grid-cell-edit";
-                } 
-	        },{
-	        	key : "NEW_COURSE_YN", 
-	        	label : "신규과정", 
-	            width : 80,
-	        	align : "center", 
-	        	editor : { type : "checkbox", config : {height: 17, trueValue: "Y", falseValue: "N"} } ,
-				styleClass: function () {
-                    return "grid-cell-edit";
-                } 
-	        },{
-	        	key : "CATEGORY_MAIN_YN", 
-	        	label : "카테고리별 메인 과정", 
-	            width : 150,
-	        	align : "center", 
-	        	editor : { type : "checkbox", config : {height: 17, trueValue: "Y", falseValue: "N"} } ,
-				styleClass: function () {
-                    return "grid-cell-edit";
-                } 
-	        },{
 	        	key : "CLOSE_YN", 
 	        	label : "강의 종료", 
 	            width : 80,
@@ -533,8 +497,8 @@ function fn_makeGrid() {
 	        }	], 
 	  	null,
 	  	{
-	  		showRowSelector : false,
-	  		frozenColumnIndex : 5
+	  		showRowSelector : false
+	  		,frozenColumnIndex : 7
 	  	}
 	);
 	
@@ -587,12 +551,8 @@ function fn_hidePopupDiv(popupDivId, mode) {
 				STUDY_PERIOD_FROM : "",
 				STUDY_PERIOD_TO : "",
 				C_PERIOD : 30,
-				POPULAR_YN : "N",
 				CLOSE_YN : "N",
 				MOBILE_YN : gfn_findValueInList(dd.CourseCode, "value", $("#INS_CB_COURSE_CODE option:selected").val(), "MOBILE_YN"),
-				RECOMMEND_COURSE_YN : "N",
-				NEW_COURSE_YN : "N",
-				CATEGORY_MAIN_YN : "N",
 				STUDY_MAX_WEEK : gfn_findValueInList(dd.CourseCode, "value", $("#INS_CB_COURSE_CODE option:selected").val(), "STUDY_MAX_WEEK")
 			}, "last", {focus: "END"});
 	} else if ( popupDivId == "examTypeDiv" ) {
@@ -651,12 +611,8 @@ function fn_hidePopupDiv(popupDivId, mode) {
 					STUDY_PERIOD_FROM : row[0].STUDY_PERIOD_FROM,
 					STUDY_PERIOD_TO : row[0].STUDY_PERIOD_TO,
 					C_PERIOD : row[0].C_PERIOD,
-					POPULAR_YN : "N",
 					CLOSE_YN : "N",
 					MOBILE_YN : row[0].MOBILE_YN,
-					RECOMMEND_COURSE_YN : "N",
-					NEW_COURSE_YN : "N",
-					CATEGORY_MAIN_YN : "N",
 					STUDY_MAX_WEEK : row[0].STUDY_MAX_WEEK
 				}, "last", {focus: "END"});
 			
@@ -672,6 +628,7 @@ function fn_params() {
 	params.LEVEL2_CODE = $("#CB_LEVEL2 option:selected").val();	
 	params.LEVEL3_CODE = $("#CB_LEVEL3 option:selected").val();	
 	params.COMPANY = $("#CB_COMPANY option:selected").val();	
+	params.COMPANY2 = $("#CB_COMPANY2 option:selected").val();	
 	params.OPEN_KIND = $("#CB_OPEN_KIND option:selected").val();	
 	params.YEAR = $("#CB_YEAR option:selected").val();	
 	params.chasu = $("#chasu").val();	
@@ -748,6 +705,7 @@ function fn_callbackAjax(data, id) {
 	} else if ( id == "dd" ){
 		dd = $.extend({}, data);
 		
+		gfn_cbRefresh("CB_COMPANY", data.CompanyKind, true);
 		gfn_cbRefresh("CB_LEVEL1", data.CategoryLevel1, true);
 		gfn_cbRefresh("INS_CB_LEVEL1", data.CategoryLevel1, true);
 
@@ -812,6 +770,14 @@ function fn_cbChange(id) {
 	    gfn_callAjax("/common/axDd.do", { DD_KIND : "CategoryLevel3", LEVEL2_CODE : $("#INS_CB_LEVEL2 option:selected").val()}, fn_callbackAjax, "INS_CB_LEVEL2", { async : false });
 	} else  if ( id == "INS_CB_LEVEL3" ) {
 	    gfn_callAjax("/common/axDd.do", { DD_KIND : "CourseCode", LEVEL3_CODE : $("#INS_CB_LEVEL3 option:selected").val()}, fn_callbackAjax, "INS_CB_COURSE_CODE", { async : false });
+	} else  if ( id == "CB_COMPANY" ) {
+		if ( $("#CB_COMPANY").val() == "B2B" ) {
+			gfn_cbRefresh("CB_COMPANY2", dd.Company1, true);
+		} else if ( $("#CB_COMPANY").val() == "C2C" ) {
+			gfn_cbRefresh("CB_COMPANY2", dd.Company2, true);
+		} else {
+			gfn_cbRefresh("CB_COMPANY2", null, true);
+		}
 	}
 }
 
@@ -839,24 +805,7 @@ function fn_cbChange(id) {
 	  	</div>
 	  	<div class="form-group">
 	    	<label for="courseName">&nbsp;과정명</label>
-	    	<input type="text" class="form-control" id="courseName" name="courseName">
-	  	</div>
-	</div>
-	<div style="height:10px"></div>
-	<div class="form-inline">
-	  	<div class="form-group">
-	    	<label for="CB_COMPANY">&nbsp;회사 구분</label>
-			<select class="form-control" id="CB_COMPANY">
-				<option value="">전체</option>
-				<option value="B2C">일반사용자</option>
-				<option value="B2B">회사</option>
-			</select>
-	  	</div>
-	  	<div class="form-group">
-	    	<label for="CB_OPEN_KIND">&nbsp;오픈구분</label>
-			<select class="form-control" id="CB_OPEN_KIND">
-				<option value="">전체</option>
-			</select>
+	    	<input type="text" class="form-control" id="courseName" name="courseName" style="width:120px;">
 	  	</div>
 	  	<div class="form-group">
 	    	<label for="CB_YEAR">&nbsp;년도</label>
@@ -866,7 +815,28 @@ function fn_cbChange(id) {
 	  	</div>
 	  	<div class="form-group">
 	    	<label for="chasu">&nbsp;차수</label>
-	    	<input type="text" class="form-control" id="chasu" name="chasu">
+	    	<input type="text" class="form-control" id="chasu" name="chasu" style="width:60px;"> 
+	  	</div>
+	</div>
+	<div style="height:10px"></div>
+	<div class="form-inline">
+	  	<div class="form-group">
+	    	<label for="CB_COMPANY">&nbsp;회사 구분</label>
+			<select class="form-control" id="CB_COMPANY" onchange="fn_cbChange('CB_COMPANY')">
+				<option value="">전체</option>
+				<option value="B2C">일반사용자</option>
+				<option value="B2B">회사</option>
+				<option value="C2C">회사(C2C)</option>
+			</select>
+			<select class="form-control" id="CB_COMPANY2">
+				<option value="">전체</option>
+			</select>
+	  	</div>
+	  	<div class="form-group">
+	    	<label for="CB_OPEN_KIND">&nbsp;오픈구분</label>
+			<select class="form-control" id="CB_OPEN_KIND">
+				<option value="">전체</option>
+			</select>
 	  	</div>
 	</div>
 </form>

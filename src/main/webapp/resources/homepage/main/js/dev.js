@@ -266,3 +266,21 @@ function error_msg(e){
     e.preventDefault();
     window.alert('작업중입니다.');
 }
+
+
+
+// pc header 2depth 메뉴 표시
+function dropdown_part(item){
+    if(!menu_click_pc){
+        var menu = item.querySelector('.menu_over_2depth');
+        menu.style.display = 'block';
+    }
+}
+
+
+
+// pc header 2depth 메뉴 숨김
+function dropdown_part_out(item){
+    var menu = item.querySelector('.menu_over_2depth');
+    menu.style.display = 'none';
+}

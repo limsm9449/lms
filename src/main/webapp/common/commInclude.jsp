@@ -19,7 +19,7 @@
 <script type="text/javascript" src="/resources/js/jquery.autoheight.js"></script>
 <script type="text/javascript" src="/resources/js/paging.js"></script>
 <script type="text/javascript" src="/resources/js/comm.js?timestamp=<%=timestamp%>"></script>
-<script type="text/javascript" src="/resources/js/commPopup.js"></script>
+<script type="text/javascript" src="/resources/js/commPopup.js?timestamp=<%=timestamp%>"></script>
 <script type="text/javascript" src="/resources/js/category.js"></script>
 <script type="text/javascript" src="/resources/js/utils.js?timestamp=<%=timestamp%>"></script>
 

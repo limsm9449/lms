@@ -23,7 +23,11 @@ var grid = null;
 var params = {};
 var dd = {};
 
+var openParams = null;
 $(document.body).ready(function () {
+	openParams = parent.document.getElementById("left").contentWindow.pageParam["axAccountList"];
+	console.log(openParams);
+	
 	$( window ).resize( function() {
 		gfn_gridResize("grid-parent", grid);
 	} );
@@ -554,7 +558,14 @@ function fn_callbackAjax(data, id) {
 		dd.Company = [{value : "", text : ""}].concat(dd.Company);
 		
 		fn_makeGrid();
-		//fn_search();
+		
+		if ( openParams ) {
+			if ( openParams.COMP_CD ) {
+				$("#CB_SEARCHKIND").val("COMPANY");
+				$("#SEARCH_STR").val(openParams.COMP_CD);
+				fn_search();
+			}
+		}
 	}
 }
 
@@ -597,7 +608,8 @@ function fn_gridEvent(event, obj) {
 			<option value="TUTOR">튜터</option>
 			<option value="USER">사용자</option>
 			<option value="B2C">일반사용자</option>
-			<option value="COMPANY">회사사용자</option>
+			<option value="B2B">회사사용자</option>
+			<option value="C2C">회사(C2C)사용자</option>
 		</select>
   	</div>  
 </div>

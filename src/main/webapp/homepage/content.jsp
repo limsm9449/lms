@@ -36,7 +36,7 @@
 var courseInfo = {};
 $(document).ready(function(){
 	<c:forEach var="row" items="${popularCourseList}" varStatus="idx">
-		change_main_img("best", ${idx.index + 1}, "/cImage/contents/${row.COURSE_CODE}/popular1.jpg", "/cImage/contents/${row.COURSE_CODE}/popular2.jpg", "#${row.COLOR}");
+		change_main_img("best", ${idx.index + 1}, "/cImage/main/${row.COMP_CD}/${row.COURSE_ID}_popular1.jpg", "/cImage/main/${row.COMP_CD}/${row.COURSE_ID}_popular2.jpg", "#${row.COLOR}");
 		courseInfo["popular${idx.index + 1}"] = ${row.COURSE_ID};
 	</c:forEach>	
 	<c:forEach var="row" items="${eventList}" varStatus="idx">
@@ -48,7 +48,7 @@ $(document).ready(function(){
 		courseInfo["notice${idx.index + 1}"] = ${row.SEQ};
 	</c:forEach>	
 	<c:forEach var="row" items="${newCourseList}" varStatus="idx">
-		change_img("process", 1, ${idx.index + 1}, "/cImage/contents/${row.COURSE_CODE}/popular1.jpg", "/cImage/contents/${row.COURSE_CODE}/popular2.jpg", "#${row.COLOR}");
+		change_img("process", 1, ${idx.index + 1}, "/cImage/main/${row.COMP_CD}/${row.COURSE_ID}_new1.jpg", "/cImage/main/${row.COMP_CD}/${row.COURSE_ID}_new2.jpg", "#${row.COLOR}");
 		courseInfo["new${idx.index + 1}"] = ${row.COURSE_ID};
 	</c:forEach>	
 });
@@ -302,8 +302,8 @@ function change_img(category, order, number, file_name, file_name_m, back_color)
                 <ul class='clear_fix'>
 <c:forEach var="row" items="${recommendCourseList}" varStatus="idx">
                     <li class='recommend automation2 clear_fix<c:if test="${idx.index + 1 eq fn:length(recommendCourseList)}"> last_right</c:if>'>  
-                        <img src='/cImage/contents/${row.COURSE_CODE}/recommend1.jpg' alt=' '>
-                        <img class='mobile' src='/cImage/contents/${row.COURSE_CODE}/recommend2.jpg' alt=' '>
+                        <img src='/cImage/main/${row.COMP_CD}/${row.COURSE_ID}_recommend1.jpg' alt=' '>
+                        <img class='mobile' src='/cImage/main/${row.COMP_CD}/${row.COURSE_ID}_recommend2.jpg' alt=' '>
                         <a class='lecture_more' href='#' onclick="gfn_goPage('/main/mainCourseData','courseId=${row.COURSE_ID}');">상세보기</a>
                     </li>
 </c:forEach>	

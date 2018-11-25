@@ -52,6 +52,10 @@ public class AxCompanyService {
 
 			if ( "Y".equals((String)row.get("NEW_FLAG")) ) {
 				sqlSession.insert("axCompany.axCompanyInsert", row);
+				
+				if ( "Y".equals((String)row.get("C2C_YN")) ) {
+					sqlSession.update("axCompany.axC2cUserUpdate", row);
+				}
 			} else {
 				sqlSession.update("axCompany.axCompanyUpdate", row);
 			}
@@ -86,6 +90,15 @@ public class AxCompanyService {
 
 		hm.put("RtnMode", Constant.mode.OK.name());
 		
+    	return hm;
+    }
+	
+	public HashMap<String, Object> axCompanyC2cList(HashMap<String, Object> paramMap) throws Exception {
+		HashMap<String, Object> hm = new HashMap<String, Object>();
+		
+    	List<HashMap<String, Object>> list = sqlSession.selectList("axCompany.axCompanyC2cList", paramMap);
+    	hm.put("list", list);
+        
     	return hm;
     }
 	

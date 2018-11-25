@@ -5,7 +5,7 @@
     <meta charset='utf-8'>
     <meta name='viewport' content='width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1'>
     <meta http-equiv='X-UA-Compatible' content='ie=edge'>
-    <title>Q learning - 관리자 - 계정 관리 - 사요자 관리</title>
+    <title>Q learning - 관리자 - 계정 관리 - 사용자 관리</title>
 
     <script src='../../js/jquery_3.3.1.js'></script>
 
@@ -78,16 +78,16 @@
                 <li>
                     <button onclick='location.href = "./admin_calculation.html"'><span></span>정산 관리</button>
                 </li>
-                <li class='on'>
+                <li>
                     <button onclick='location.href = "./admin_income.html"'><span></span>수입 관리</button>
                 </li>
-                <li>
+                <li class='on'>
                     <button onclick='admin_sub_open(event)'>
                         <span></span>
                         계정 관리
                     </button>
                     <ul class='sub' id='sub4'>
-                        <li><a href='./admin_account_user.html'>사용자 관리</a></li>
+                        <li><a class='on' href='./admin_account_user.html'>사용자 관리</a></li>
                         <li><a href='./admin_account_company.html'>회사 관리</a></li>
                         <li><a href='./admin_account_point.html'>포인트 관리</a></li>
                     </ul>
@@ -109,10 +109,24 @@
                     </ul>
                 </li>
                 <li>
-                    <button onclick='location.href = "./admin_counsel.html"'><span></span>상담내역</button>
+                    <button onclick='admin_sub_open(event)'>
+                        <span></span>
+                        문의 관리
+                    </button>
+                    <ul class='sub' id='sub6'>
+                        <li><a href='./admin_counsel.html'>상담내역</a></li>
+                        <li><a href='./admin_support.html'>기업교육/튜터지원 문의</a></li>
+                    </ul>
                 </li>
                 <li>
-                    <button onclick='location.href = "./admin_log.html"'><span></span>로그 관리</button>
+                    <button onclick='admin_sub_open(event)'>
+                        <span></span>
+                        로그 관리
+                    </button>
+                    <ul class='sub' id='sub7'>
+                        <li><a href='./admin_login_log.html'>로그인 로그 관리</a></li>
+                        <li><a href='./admin_access_log.html'>접속 로그 관리</a></li>
+                    </ul>
                 </li>
                 <li>
                     <button onclick='admin_sub_open(event)'>
@@ -131,55 +145,39 @@
         <div class='right'>
             <div class='contents_wrap'>
                 <div class='content_top'>
-                    <h1>수입 관리</h1>
+                    <h1>사용자 관리</h1>
                     <div class='filter_box clear_fix'>
                         <div>
-                            <p>카테고리</p>
+                            <p>검색 유형</p>
                             <select name='' id=''>
                                 <option value='전체'>전체</option>
                                 <option value='선택1'>선택1</option>
                                 <option value='선택2'>선택2</option>
                             </select>
-                            <select name='' id=''>
-                                <option value='전체'>전체</option>
-                                <option value='선택1'>선택1</option>
-                                <option value='선택2'>선택2</option>
-                            </select>
-                            <select name='' id=''>
-                                <option value='전체'>전체</option>
-                                <option value='선택1'>선택1</option>
-                                <option value='선택2'>선택2</option>
-                            </select>
-                        </div>
-                        <div>
-                            <p>연도</p>
-                            <select name='' id=''>
-                                <option value='전체'>전체</option>
-                                <option value='선택1'>선택1</option>
-                                <option value='선택2'>선택2</option>
-                            </select>
-                        </div>
-                        <div>
-                            <p>차수</p>
                             <input type='text' name='' id=''>
                         </div>
                         <div>
-                            <p>과정명</p>
-                            <input type='text' name='' id=''>
-                        </div>
-                    </div>
-                    <div class='filter_box clear_fix'>
-                        <div class='more'>
-                            <p>일자</p>
-                            <input type='text' name='' id='' value='2018-10-16' disabled>
-                            <span>~</span>
-                            <input type='text' name='' id='' value='2018-10-26' disabled>
+                            <p>사용자 유형</p>
+                            <select name='' id=''>
+                                <option value='전체'>전체</option>
+                                <option value='선택1'>선택1</option>
+                                <option value='선택2'>선택2</option>
+                            </select>
                         </div>
                     </div>
                 </div>
                 <div class='content_btn_box clear_fix'>
                     <button onclick='admin_popup_open("1", true)'>검색</button>
+                    <button onclick='admin_popup_open("2", true)'>추가</button>
+                    <button onclick='admin_popup_open("3", true)'>삭제</button>
+                    <button onclick='admin_popup_open("4", true)'>초기화</button>
+                    <button onclick='admin_popup_open("5", true)'>저장</button>
                     <button onclick='admin_popup_open("6", true)'>엑셀</button>
+                    <button onclick='admin_popup_open("31", true)'>패스워드 초기화</button>
+                    <button onclick='admin_popup_open("32", true)'>인증메일 재발송</button>
+                    <button onclick='admin_popup_open("33", true)'>이미지 관리</button>
+                    <button onclick='admin_popup_open("34", true)'>경력</button>
+                    <button onclick='admin_popup_open("35", true)'>주소검색</button>
                 </div>
                 <div class='grid_area'>
                     <p>데이터</p>

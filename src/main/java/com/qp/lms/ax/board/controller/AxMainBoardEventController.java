@@ -23,22 +23,22 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
-import com.qp.lms.ax.board.service.AxBoardEventService;
+import com.qp.lms.ax.board.service.AxMainBoardEventService;
 import com.qp.lms.common.Constant;
 import com.qp.lms.common.service.CommService;
 
 @Controller
-public class AxBoardEventController {
+public class AxMainBoardEventController {
 
-	private static final Logger logger = LoggerFactory.getLogger(AxBoardEventController.class);
+	private static final Logger logger = LoggerFactory.getLogger(AxMainBoardEventController.class);
 
     @Autowired
-    private AxBoardEventService svr;
+    private AxMainBoardEventService svr;
     
     @Autowired
     private CommService commSvr;
     
-    @RequestMapping(value = "/board/axBoardEventList", method = RequestMethod.POST, consumes = "application/json" )
+    @RequestMapping(value = "/board/axMainBoardEventList", method = RequestMethod.POST, consumes = "application/json" )
     public @ResponseBody HashMap<String,Object> axBoardEventList(@RequestBody HashMap<String, Object> paramMap, HttpServletRequest request, HttpServletResponse response) throws Exception {
     	HashMap<String, Object> hm = new HashMap<String, Object>();
 
@@ -51,8 +51,8 @@ public class AxBoardEventController {
         return hm;
     }
 
-    @RequestMapping(value = "/board/axBoardEventOne", method = RequestMethod.POST, consumes = "application/json" )
-    public @ResponseBody HashMap<String,Object> axBoardReporOne(@RequestBody HashMap<String, Object> paramMap, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    @RequestMapping(value = "/board/axMainBoardEventOne", method = RequestMethod.POST, consumes = "application/json" )
+    public @ResponseBody HashMap<String,Object> axMainBoardEventOne(@RequestBody HashMap<String, Object> paramMap, HttpServletRequest request, HttpServletResponse response) throws Exception {
     	HashMap<String, Object> hm = new HashMap<String, Object>();
 
     	try {
@@ -64,7 +64,7 @@ public class AxBoardEventController {
         return hm;
     }
 
-    @RequestMapping(value = "/board/axBoardEventSave", method = RequestMethod.POST, consumes = "application/json" )
+    @RequestMapping(value = "/board/axMainBoardEventSave", method = RequestMethod.POST, consumes = "application/json" )
     public @ResponseBody HashMap<String,Object> axBoardEventSave(@RequestBody HashMap<String, Object> paramMap, HttpServletRequest request, HttpServletResponse response) throws Exception {
     	HashMap<String, Object> hm = new HashMap<String, Object>();
     	
@@ -78,7 +78,7 @@ public class AxBoardEventController {
         return hm;
     }
 
-    @RequestMapping(value = "/board/axBoardEventImageList", method = RequestMethod.POST, consumes = "application/json" )
+    @RequestMapping(value = "/board/axMainBoardEventImageList", method = RequestMethod.POST, consumes = "application/json" )
     public @ResponseBody HashMap<String,Object> axBoardEventImageList(@RequestBody HashMap<String, Object> paramMap, HttpServletRequest request, HttpServletResponse response) throws Exception {
     	HashMap<String, Object> hm = new HashMap<String, Object>();
 
@@ -91,14 +91,18 @@ public class AxBoardEventController {
         return hm;
     }
     
-    @RequestMapping(value = "/board/axBoardEventImageUpload", method = RequestMethod.POST)
-    public String axBoardEventImageUpload(@RequestParam("kind") String kind, @RequestParam("seq") String seq, MultipartHttpServletRequest request, Model model) throws Exception {
+    @RequestMapping(value = "/board/axMainBoardEventImageUpload", method = RequestMethod.POST)
+    public String axBoardEventImageUpload(@RequestParam("kind") String kind, @RequestParam("seq") String seq, @RequestParam("compCd") String compCd, MultipartHttpServletRequest request, Model model) throws Exception {
     	HashMap<String, Object> hm = new HashMap<String, Object>();
 
     	try {
 	    	String folder = commSvr.getSetting("EVENT_IMG_FOLDER");
 	    	
 	    	File attachDir = new File(folder);
+	    	if ( !attachDir.exists() )
+	    		attachDir.mkdir();
+
+	    	attachDir = new File(folder + "//" + compCd);
 	    	if ( !attachDir.exists() )
 	    		attachDir.mkdir();
 	    	
@@ -119,6 +123,7 @@ public class AxBoardEventController {
 	        HashMap<String, Object> paramMap = new HashMap<String, Object>();
 	        paramMap.put("kind", kind);
 	        paramMap.put("SEQ", seq);
+	        paramMap.put("COMP_CD", compCd);
 	        
 	        hm = svr.axBoardEventImageUpload(paramMap);
 	        
@@ -129,7 +134,7 @@ public class AxBoardEventController {
 
     	model.addAttribute("set", hm );
 
-        return "/ax/board/axBoardEventImagePopupRtn";
+        return "/ax/board/axMainBoardEventImagePopupRtn";
     }
 	    
 

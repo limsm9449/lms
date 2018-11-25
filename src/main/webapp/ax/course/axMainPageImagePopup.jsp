@@ -56,17 +56,15 @@ $(document.body).ready(function () {
         }
     });
     
-    $("#courseCode").val(gfn_getUrlParams("COURSE_CODE"));
+    $("#compCd").val(gfn_getUrlParams("COMP_CD"));
+    $("#courseId").val(gfn_getUrlParams("COURSE_ID"));
 
     fn_search();
-    
-    if ( gfn_getUrlParams("IS_VIEW") == "Y" ) {
-    	$("div.file_btn_group").hide();
-	}
 });
 
 function fn_params() {
-	params.COURSE_CODE = gfn_getUrlParams("COURSE_CODE");	
+	params.COMP_CD = gfn_getUrlParams("COMP_CD");	
+	params.COURSE_ID = gfn_getUrlParams("COURSE_ID");	
 }
 
 function fn_search() {
@@ -80,22 +78,22 @@ function fn_search() {
 function fn_callbackAjax(data, id) {
 	if ( id == "search" ) {
 		if ( data.list[0].POPULAR_IMG1 == "Y" ) {
-			$('#popular1').attr("src", "/cImage/contents/" + params.COURSE_CODE + "/popular1.jpg" + "?timestamp=" + gfn_timestamp());
+			$('#popular1').attr("src", "/cImage/main/" + params.COMP_CD + "/" + params.COURSE_ID + "_popular1.jpg" + "?timestamp=" + gfn_timestamp());
 		}
 		if ( data.list[0].POPULAR_IMG2 == "Y" ) {
-			$('#popular2').attr("src", "/cImage/contents/" + params.COURSE_CODE + "/popular2.jpg" + "?timestamp=" + gfn_timestamp());
+			$('#popular2').attr("src", "/cImage/main/" + params.COMP_CD + "/" + params.COURSE_ID + "_popular2.jpg" + "?timestamp=" + gfn_timestamp());
 		}
 		if ( data.list[0].NEW_IMG1 == "Y" ) {
-			$('#new1').attr("src", "/cImage/contents/" + params.COURSE_CODE + "/new1.jpg" + "?timestamp=" + gfn_timestamp());
+			$('#new1').attr("src", "/cImage/main/" + params.COMP_CD + "/" + params.COURSE_ID + "_new1.jpg" + "?timestamp=" + gfn_timestamp());
 		}
 		if ( data.list[0].NEW_IMG2 == "Y" ) {
-			$('#new2').attr("src", "/cImage/contents/" + params.COURSE_CODE + "/new2.jpg" + "?timestamp=" + gfn_timestamp());
+			$('#new2').attr("src", "/cImage/main/" + params.COMP_CD + "/" + params.COURSE_ID + "_new2.jpg" + "?timestamp=" + gfn_timestamp());
 		}
 		if ( data.list[0].RECOMMEND_IMG1 == "Y" ) {
-			$('#recommend1').attr("src", "/cImage/contents/" + params.COURSE_CODE + "/recommend1.jpg" + "?timestamp=" + gfn_timestamp());
+			$('#recommend1').attr("src", "/cImage/main/" + params.COMP_CD + "/" + params.COURSE_ID + "_recommend1.jpg" + "?timestamp=" + gfn_timestamp());
 		}
 		if ( data.list[0].RECOMMEND_IMG2 == "Y" ) {
-			$('#recommend2').attr("src", "/cImage/contents/" + params.COURSE_CODE + "/recommend2.jpg" + "?timestamp=" + gfn_timestamp());
+			$('#recommend2').attr("src", "/cImage/main/" + params.COMP_CD + "/" + params.COURSE_ID + "_recommend2.jpg" + "?timestamp=" + gfn_timestamp());
 		}
 		//mask.close();
 	} else if ( id == "save" ){
@@ -163,7 +161,8 @@ function isExtention(fileName, compExt) {
 
 <form id="frm" name="frm" action="" method="post" enctype="multipart/form-data">
 <input id="kind" name="kind" type="hidden" value=""/>
-<input id="courseCode" name="courseCode" type="hidden" value=""/>
+<input id="compCd" name="compCd" type="hidden" value=""/>
+<input id="courseId" name="courseId" type="hidden" value=""/>
 
 <h2>이미지 관리</h2>
 <div style="height:10px"></div>

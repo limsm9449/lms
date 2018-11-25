@@ -76,40 +76,10 @@ $(document.body).ready(function () {
 function fn_makeGrid() {
 	grid = gfn_makeAx5Grid("first-grid",
 		[ 	{
-	            key : "COURSE_ID",
-	            label : "ID",
-	            width : 40,
-	            align : "right"
-	        },{
-	            key : "CATEGORY_NAME",
-	            label : "카테고리",
-	            width : 150,
-	            align : "left"
-	        },{
-	            key : "COURSE_NAME",
-	            label : "과정명",
-	            width : 150,
-	            align : "left"
-	        },{
-	            key : "COURSE_CODE",
-	            label : "과정코드",
-	            width : 90,
-	            align : "left"
-	        },{
-	            key : "YEAR", 
-	            label : "년",
-	            width : 50,
+	            key : "APPROVAL_ID",
+	            label : "결재ID",
+	            width : 120,
 	            align : "center"
-	        },{
-	            key : "MONTH",
-	            label : "월",
-	            width : 50,
-	            align : "center"
-	        },{
-	            key : "CHASU",
-	            label : "차수",
-	            width : 50,
-	            align : "right"
 	        },{
 	            key : "REQUEST_DATE",
 	            label : "신청일자",
@@ -143,6 +113,11 @@ function fn_makeGrid() {
 	            formatter : function () {
 	                return gfn_getValueInList(dd.ApprovalCardStatus, "value",  this.item.STATUS, "text");
 	           	}
+	        },{
+	        	key : "REFUND_DATE",
+	            label : "환불 일자",
+	            width : 120,
+	            align : "center"
 	        },{
               	key : undefined, 
               	label: "결재", 
@@ -197,10 +172,40 @@ function fn_makeGrid() {
 			        }
 			  	]
 	        },{
-	        	key : "REFUND_DATE",
-	            label : "환불 일자",
-	            width : 120,
+	            key : "CATEGORY_NAME",
+	            label : "카테고리",
+	            width : 150,
+	            align : "left"
+	        },{
+	            key : "COURSE_ID",
+	            label : "ID",
+	            width : 40,
+	            align : "right"
+	        },{
+	            key : "COURSE_NAME",
+	            label : "과정명",
+	            width : 150,
+	            align : "left"
+	        },{
+	            key : "COURSE_CODE",
+	            label : "과정코드",
+	            width : 90,
+	            align : "left"
+	        },{
+	            key : "YEAR", 
+	            label : "년",
+	            width : 50,
 	            align : "center"
+	        },{
+	            key : "MONTH",
+	            label : "월",
+	            width : 50,
+	            align : "center"
+	        },{
+	            key : "CHASU",
+	            label : "차수",
+	            width : 50,
+	            align : "right"
 	        },{
 	            key : "LAST_UPDATE_USER",
 	            label : "수정자",
@@ -216,7 +221,8 @@ function fn_makeGrid() {
 	  	{
 	  		showRowSelector : false,
 	  		multipleSelect: false,
-	  		frozenColumnIndex : 7
+	  		frozenColumnIndex : 5,
+	  		mergeCells : ["APPROVAL_ID"]
 	  	}
 	);
 	
@@ -326,7 +332,7 @@ function fn_cbChange(id) {
 <div class="form-inline">
   	<div class="form-group">
     	<label for="CB_SEARCH_STATUS">&nbsp;신청상태</label>
-		<select id="CB_SEARCH_STATUS">
+		<select class="form-control" id="CB_SEARCH_STATUS">
 		</select>
   	</div>
   	<div class="form-group">

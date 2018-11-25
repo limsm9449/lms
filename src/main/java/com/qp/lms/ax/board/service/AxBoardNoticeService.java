@@ -1,8 +1,6 @@
 package com.qp.lms.ax.board.service;
 
-import java.io.File;
 import java.util.HashMap;
-import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,15 +10,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.qp.lms.common.Constant;
 import com.qp.lms.common.SessionUtil;
-import com.qp.lms.common.service.CommService;
 
 @Service
 public class AxBoardNoticeService {
 	@Autowired
 	private SqlSession sqlSession;
-    
-    @Autowired
-    private CommService commSvr;
 	
 	public HashMap<String, Object> axBoardNoticeList(HashMap<String, Object> paramMap) throws Exception {
 		HashMap<String, Object> hm = new HashMap<String, Object>();
@@ -54,55 +48,9 @@ public class AxBoardNoticeService {
 			sqlSession.update("axBoard.axBoardNoticeUpdate", paramMap);
 		} else if ( "VIEW".equals(mode) ) {
 			sqlSession.update("axBoard.axBoardNoticeViewCntUpd", paramMap);
+		} else if ( "DELETE".equals(mode) ) {
+			sqlSession.delete("axBoard.axBoardNoticeDelete", paramMap);
 		}
-		
-		List<HashMap<String, Object>> updList = (List<HashMap<String, Object>>)paramMap.get("modified");
-		if ( updList != null ) {
-			for ( int i = 0; i < updList.size(); i++ ) {
-				HashMap<String, Object> row = (HashMap<String, Object>)updList.get(i);
-				row.put("SESSION_USER_ID", SessionUtil.getSessionUserId());
-	
-				sqlSession.update("axBoard.axBoardNoticeMainUpdate", row);
-			}
-		}
-		
-		List<HashMap<String, Object>> delList = (List<HashMap<String, Object>>)paramMap.get("deleted");
-		if ( delList != null ) {
-			for ( int i = 0; i < delList.size(); i++ ) {
-				sqlSession.delete("axBoard.axBoardNoticeDelete", delList.get(i));
-				
-				if ( "Y".equals(delList.get(i).get("IMG1")) ) {
-					File f = new File(commSvr.getSetting("NOTICE_IMG_FOLDER") + "//" + delList.get(i).get("SEQ") + "_img1.jpg");
-					f.delete();
-				}
-				if ( "Y".equals(delList.get(i).get("IMG2")) ) {
-					File f = new File(commSvr.getSetting("NOTICE_IMG_FOLDER") + "//" + delList.get(i).get("SEQ") + "_img2.jpg");
-					f.delete();
-				}
-			}
-		}
-
-		hm.put("RtnMode", Constant.mode.OK.name());
-		
-    	return hm;
-    }
-
-	public HashMap<String, Object> axBoardNoticeImageList(HashMap<String, Object> paramMap) throws Exception {
-		HashMap<String, Object> hm = new HashMap<String, Object>();
-		
-    	List<HashMap<String, Object>> list = sqlSession.selectList("axBoard.axBoardNoticeOne", paramMap);
-    	hm.put("list", list);
-        
-    	return hm;
-    }
-	
-	@Transactional(propagation=Propagation.REQUIRED, rollbackFor={Throwable.class})
-    public HashMap<String, Object>  axBoardNoticeImageUpload(HashMap<String, Object> paramMap) throws Exception {
-		HashMap<String, Object> hm = new HashMap<String, Object>();
-		
-		paramMap.put("SESSION_USER_ID", SessionUtil.getSessionUserId());
-		
-		sqlSession.update("axBoard.axBoardNoticeImageUpdate", paramMap);
 
 		hm.put("RtnMode", Constant.mode.OK.name());
 		

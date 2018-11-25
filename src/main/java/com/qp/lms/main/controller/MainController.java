@@ -94,6 +94,8 @@ public class MainController {
     @RequestMapping(value = "/main/content")
     public String content(@ModelAttribute MainVO vo, Model model) throws Exception {
     	try {
+    		vo.setCompCd((String)SessionUtil.getAttribute("compCd"));
+    		
     		MainSet set = new MainSet();
     		set.setCondiVO(vo);
     		
@@ -130,6 +132,7 @@ public class MainController {
     			set.getCondiVO().setIsLogin("Y");
     			set.getCondiVO().setUserId(SessionUtil.getSessionUserId());
     			set.getCondiVO().setCompCd(SessionUtil.getCompCd());
+    			set.getCondiVO().setC2cYn(SessionUtil.getC2cYn());
     		}
     		
 			set = svr.mainCourseData(set);
@@ -159,6 +162,8 @@ public class MainController {
     			return "/login/beforeLogin";
     		} else {
     			set.getCondiVO().setUserId(SessionUtil.getSessionUserId());
+    			set.getCondiVO().setCompCd(SessionUtil.getCompCd());
+    			set.getCondiVO().setC2cYn(SessionUtil.getC2cYn());
 
 				//과정 ID 생성
 				String courseId = "";
@@ -333,208 +338,6 @@ public class MainController {
     }
 
     /**
-     * cart에서 수강신청
-     * @param vo
-     * @param model
-     * @return
-     * @throws Exception
-     */
-    /*@RequestMapping(value = "/main/cartApplication")
-    public String cartApplication(HttpServletRequest request, @ModelAttribute MainVO vo, Model model) throws Exception {
-    	try {
-    		MainSet set = new MainSet();
-    		set.setCondiVO(vo);
-
-    		set.getCondiVO().setUserId(SessionUtil.getSessionUserId());
-
-   			//과정 ID 생성
-			HashMap cart = (HashMap)SessionUtil.getAttribute("cart");
-			String courseId = "";
-			Collection col = cart.keySet();
-			Iterator iter = col.iterator();
-			while ( iter.hasNext() ) {
-				courseId += ( "".equals(courseId) ? "" : "," ) + iter.next();
-			}
-			set.getCondiVO().setCourseId(courseId);
-			
-			set = svr.application(set);
-	    	
-	        model.addAttribute("set", set );
-
-	        request.setAttribute("serverMode", commSvr.getSetting("SERVER_MODE"));
-	    	request.setAttribute("g_conf_home_dir", commSvr.getSetting("g_conf_home_dir"));
-	    	request.setAttribute("g_conf_key_dir", commSvr.getSetting("g_conf_key_dir"));
-	    	request.setAttribute("g_conf_log_dir", commSvr.getSetting("g_conf_log_dir"));
-	    	request.setAttribute("g_conf_gw_url", commSvr.getSetting("g_conf_gw_url"));
-	    	request.setAttribute("g_conf_js_url", commSvr.getSetting("g_conf_js_url"));
-	    	request.setAttribute("g_conf_server", commSvr.getSetting("g_conf_server"));
-	    	request.setAttribute("g_conf_site_cd", commSvr.getSetting("g_conf_site_cd"));
-	    	request.setAttribute("g_conf_site_key", commSvr.getSetting("g_conf_site_key"));
-	    	request.setAttribute("g_conf_site_name", commSvr.getSetting("g_conf_site_name"));
-    	} catch ( Exception e ) {
-    		e.printStackTrace();
-    	}
-
-    	return "/homepage/application";
-    }*/
-
-    /**
-     * 결재 요청...
-     * @param vo
-     * @param model
-     * @return
-     * @throws Exception
-     */
-    /*@RequestMapping(value = "/main/ppAxHub")
-    public String ppAxHub(HttpServletRequest request, @ModelAttribute MainVO vo, Model model) throws Exception {
-		MainSet set = new MainSet();
-    	try {
-    		set.setCondiVO(vo);
-    		
-	        model.addAttribute("set", set );
-    	} catch ( Exception e ) {
-    		e.printStackTrace();
-    	}
-
-    	String serverMode = commSvr.getSetting("SERVER_MODE");
-    	request.setAttribute("serverMode", serverMode);
-
-    	request.setAttribute("g_conf_home_dir", commSvr.getSetting("g_conf_home_dir"));
-    	request.setAttribute("g_conf_key_dir", commSvr.getSetting("g_conf_key_dir"));
-    	request.setAttribute("g_conf_log_dir", commSvr.getSetting("g_conf_log_dir"));
-    	request.setAttribute("g_conf_gw_url", commSvr.getSetting("g_conf_gw_url"));
-    	request.setAttribute("g_conf_js_url", commSvr.getSetting("g_conf_js_url"));
-    	request.setAttribute("g_conf_server", commSvr.getSetting("g_conf_server"));
-    	request.setAttribute("g_conf_site_cd", commSvr.getSetting("g_conf_site_cd"));
-    	request.setAttribute("g_conf_site_key", commSvr.getSetting("g_conf_site_key"));
-    	request.setAttribute("g_conf_site_name", commSvr.getSetting("g_conf_site_name"));
-    	
-    	if ( "REAL".equals(serverMode) ) {
-    		return "/homepage/pp_ax_hub_linux";
-    	} else {
-    		return "/homepage/pp_ax_hub_win";
-    	}
-    }*/
-
-    /**
-     * 카드등 결재 완료후 처리
-     * @param vo
-     * @param model
-     * @return
-     * @throws Exception
-     */
-    /*@RequestMapping(value = "/main/result")
-    public String result(MainVO vo) throws Exception {
-    	try {
-    		MainSet set = new MainSet();
-    		set.setCondiVO(vo);
-
-    		//cart 삭제
-    		SessionUtil.setAttribute("cart", null);
-    		SessionUtil.setAttribute("tempCart", null);
-    	} catch ( Exception e ) {
-    		e.printStackTrace();
-    	}
-    	
-    	return "/homepage/result";
-    }*/
-
-    /**
-     * 수강신청
-     * @param vo
-     * @param model
-     * @return
-     * @throws Exception
-     */
-    /*@RequestMapping(value = "/main/application")
-    public String application(@ModelAttribute MainVO vo, HttpServletRequest request, Model model) throws Exception {
-    	try {
-    		MainSet set = new MainSet();
-    		set.setCondiVO(vo);
-
-			//Session에 cart 추가
-    		HashMap cart = new HashMap();
-			if ( !cart.containsKey(vo.getCourseId()) ) {
-				cart.put(vo.getCourseId(),vo.getCartWeeks());
-				SessionUtil.setAttribute("tempCart", cart);
-			}
-
-    		if ( (SessionVO)SessionUtil.getSession() == null ) {
-    			return "/login/beforeLogin";
-    		} else {
-        		set.getCondiVO().setUserId(SessionUtil.getSessionUserId());
-
-				set = svr.application(set);
-		    	
-		        model.addAttribute("set", set );
-
-		    	request.setAttribute("serverMode", commSvr.getSetting("SERVER_MODE"));
-		    	request.setAttribute("g_conf_home_dir", commSvr.getSetting("g_conf_home_dir"));
-		    	request.setAttribute("g_conf_key_dir", commSvr.getSetting("g_conf_key_dir"));
-		    	request.setAttribute("g_conf_log_dir", commSvr.getSetting("g_conf_log_dir"));
-		    	request.setAttribute("g_conf_gw_url", commSvr.getSetting("g_conf_gw_url"));
-		    	request.setAttribute("g_conf_js_url", commSvr.getSetting("g_conf_js_url"));
-		    	request.setAttribute("g_conf_server", commSvr.getSetting("g_conf_server"));
-		    	request.setAttribute("g_conf_site_cd", commSvr.getSetting("g_conf_site_cd"));
-		    	request.setAttribute("g_conf_site_key", commSvr.getSetting("g_conf_site_key"));
-		    	request.setAttribute("g_conf_site_name", commSvr.getSetting("g_conf_site_name"));
-    		}
-    	} catch ( Exception e ) {
-    		e.printStackTrace();
-    	}
-
-    	return "/homepage/application";
-    }*/
-
-    /**
-     * 결재팝업
-     * @param vo
-     * @param model
-     * @return
-     * @throws Exception
-     */
-    /*@RequestMapping(value = "/main/approvalP")
-    public String approvalP(@ModelAttribute MainVO vo, Model model) throws Exception {
-    	try {
-    		MainSet set = new MainSet();
-    		set.setCondiVO(vo);
-
-	        model.addAttribute("set", set );
-    	} catch ( Exception e ) {
-    		e.printStackTrace();
-    	}
-
-    	return "/homepage/approvalP";
-    }*/
-
-    /**
-     * 결재
-     * @param vo
-     * @param model
-     * @return
-     * @throws Exception
-     */
-    /*@RequestMapping(value = "/main/approval")
-    public String approval(@ModelAttribute MainVO vo, Model model) throws Exception {
-    	try {
-    		MainSet set = new MainSet();
-    		set.setCondiVO(vo);
-
-    		set = svr.approval(set);
-    		
-    		//cart 삭제
-    		SessionUtil.setAttribute("cart", null);
-    		SessionUtil.setAttribute("tempCart", null);
-    		
-	    	model.addAttribute("json", CommUtil.getJsonObject(set.getRtnMode(),""));
-    	} catch ( Exception e ) {
-    		e.printStackTrace();
-    	}
-
-        return "/common/json";
-    }*/
-
-    /**
      * 1:1 메일문의
      * @param vo
      * @param model
@@ -561,6 +364,8 @@ public class MainController {
     @RequestMapping(value = "/main/courseList")
     public String courseList(@ModelAttribute MainVO vo, Model model, HttpServletRequest request) throws Exception {
     	try {
+    		vo.setCompCd((String)SessionUtil.getAttribute("compCd"));
+    		
     		MainSet set = new MainSet();
     		set.setCondiVO(vo);
     		
@@ -620,6 +425,8 @@ public class MainController {
     @RequestMapping(value = "/main/service")
     public String service(@ModelAttribute MainVO vo, Model model) throws Exception {
     	try {
+    		vo.setCompCd((String)SessionUtil.getAttribute("compCd"));
+    		
     		MainSet set = new MainSet();
     		set.setCondiVO(vo);
 
@@ -636,10 +443,10 @@ public class MainController {
     @RequestMapping(value = "/main/noticeList")
     public String noticeList(@ModelAttribute MainVO vo,Model model) throws Exception {
     	try {
+    		vo.setCompCd((String)SessionUtil.getAttribute("compCd"));
+    		
     		MainSet set = new MainSet();
 	    	set.setCondiVO(vo);
-	    	
-	    	//set.getCondiVO().setUserId(SessionUtil.getSessionUserId());
 	    	
 	    	set = svr.noticeList(set);
 	    	
@@ -658,8 +465,6 @@ public class MainController {
     		MainSet set = new MainSet();
 	    	set.setCondiVO(vo);
 	    	
-	    	//set.getCondiVO().setUserId(SessionUtil.getSessionUserId());
-	    	
 	    	set = svr.noticeV(set);
 	    	
 	        model.addAttribute("set", set ); 
@@ -675,8 +480,6 @@ public class MainController {
     	try {
     		MainSet set = new MainSet();
 	    	set.setCondiVO(vo);
-	    	
-	    	//set.getCondiVO().setUserId(SessionUtil.getSessionUserId());
 	    	
 	    	set = svr.faqList(set);
 	    	
@@ -694,8 +497,6 @@ public class MainController {
     		MainSet set = new MainSet();
 	    	set.setCondiVO(vo);
 	    	
-	    	//set.getCondiVO().setUserId(SessionUtil.getSessionUserId());
-	    	
 	    	set = svr.faqV(set);
 	    	
 	        model.addAttribute("set", set ); 
@@ -709,10 +510,10 @@ public class MainController {
     @RequestMapping(value = "/main/eventList")
     public String eventList(@ModelAttribute MainVO vo,Model model) throws Exception {
     	try {
+    		vo.setCompCd((String)SessionUtil.getAttribute("compCd"));
+    		
     		MainSet set = new MainSet();
 	    	set.setCondiVO(vo);
-	    	
-	    	//set.getCondiVO().setUserId(SessionUtil.getSessionUserId());
 	    	
 	    	set = svr.eventList(set);
 	    	
@@ -729,8 +530,6 @@ public class MainController {
     	try {
     		MainSet set = new MainSet();
 	    	set.setCondiVO(vo);
-	    	
-	    	//set.getCondiVO().setUserId(SessionUtil.getSessionUserId());
 	    	
 	    	set = svr.eventV(set);
 	    	

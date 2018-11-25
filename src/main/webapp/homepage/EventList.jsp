@@ -76,9 +76,9 @@ function lfn_btn(pKind, pParam) {
                         </h1>
                         <div class='top_text_box clear_fix'>
                             <span><img src='/resources/homepage/img/support/notice_bg.jpg' alt=' '></span>
-                            <p class='top_title'>Event</p>
+                            <p class='top_title'>EVENT</p>
                             <p>
-                                큐러닝의 Event를 알려드립니다. <span></span>항상 유익하고 풍성한 소식 놓치지 말고 확인하세요.
+                                큐러닝의 Event를 알려드립니다. <span></span>큐러닝만의 특별한 이벤트를 놓치지 말고 확인하세요.
                             </p>
                         </div>
                     </div>

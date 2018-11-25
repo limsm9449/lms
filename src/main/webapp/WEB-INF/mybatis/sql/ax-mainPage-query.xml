@@ -5,86 +5,98 @@
 <mapper namespace="axMainPage">
 		
 	<select id="axMainPageList" parameterType="hashmap" resultType="hashmap">
-	    SELECT 	C.CATEGORY_NAME
-	           	,A.COURSE_ID
+	    SELECT 	M.*
 		       	,A.COURSE_CODE
 		       	,B.COURSE_NAME
                	,A.YEAR
 				,A.MONTH
 		       	,IFNULL(A.CHASU, 0) CHASU
-                ,A.POPULAR_YN
-				,IFNULL(A.RECOMMEND_COURSE_YN, 'N') RECOMMEND_COURSE_YN
-				,IFNULL(A.NEW_COURSE_YN, 'N') NEW_COURSE_YN
-				,IFNULL(A.CATEGORY_MAIN_YN, 'N') CATEGORY_MAIN_YN
-				,D.POPULAR_IMG1
-				,D.POPULAR_IMG2
-				,D.POPULAR_COLOR
-				,D.NEW_IMG1
-				,D.NEW_IMG2
-				,D.NEW_COLOR
-				,D.RECOMMEND_IMG1
-				,D.RECOMMEND_IMG2
-				,D.RECOMMEND_COLOR
-				,D.MAIN_OPEN_YN
-		  FROM COURSE A LEFT OUTER JOIN COURSE_CODE B ON A.COURSE_CODE = B.COURSE_CODE
-		                LEFT OUTER JOIN (
-							   SELECT C3.CODE C3_CODE, C2.CODE C2_CODE, C1.CODE C1_CODE,
-									  CONCAT(C1.CODE_NAME,' > ',C2.CODE_NAME,' > ',C3.CODE_NAME) CATEGORY_NAME
-								 FROM CATEGORY C3 LEFT OUTER JOIN CATEGORY C2 ON C3.PARENT_CODE = C2.CODE
-									      LEFT OUTER JOIN CATEGORY C1 ON C2.PARENT_CODE = C1.CODE
-							    WHERE C3.DEPTH = 3) C ON B.CODE = C.C3_CODE
-						LEFT OUTER JOIN COURSE_MASTER D ON D.COURSE_CODE = A.COURSE_CODE
+                ,C.CATEGORY_NAME
+                ,IFNULL(A.OPEN_YN,'N') OPEN_YN
+                ,IFNULL(A.CLOSE_YN,'N') CLOSE_YN
+		FROM 	MAIN_PAGE M
+					LEFT OUTER JOIN COURSE A ON A.COURSE_ID = M.COURSE_ID
+					LEFT OUTER JOIN COURSE_CODE B ON A.COURSE_CODE = B.COURSE_CODE
+	                LEFT OUTER JOIN (
+						   SELECT C3.CODE C3_CODE, C2.CODE C2_CODE, C1.CODE C1_CODE,
+								  CONCAT(C1.CODE_NAME,' > ',C2.CODE_NAME,' > ',C3.CODE_NAME) CATEGORY_NAME
+							 FROM CATEGORY C3 LEFT OUTER JOIN CATEGORY C2 ON C3.PARENT_CODE = C2.CODE
+								      LEFT OUTER JOIN CATEGORY C1 ON C2.PARENT_CODE = C1.CODE
+						    WHERE C3.DEPTH = 3) C ON B.CODE = C.C3_CODE
+					LEFT OUTER JOIN COURSE_MASTER D ON D.COURSE_CODE = A.COURSE_CODE
+					LEFT OUTER JOIN COMPANY E ON E.COMP_CD = A.COMP_CD  
 		WHERE 	1 = 1
-		AND 	IFNULL(A.OPEN_YN,'N') IN ('Y')
-		AND 	IFNULL(A.CLOSE_YN,'N') IN ('N')
+<if test="COMPANY != null and COMPANY == 'B2C'">
+		AND 	IFNULL(A.COMP_CD,'B2C') = 'B2C'
+</if>
+<if test="COMPANY != null and COMPANY == 'B2B'">
+		AND 	IFNULL(A.COMP_CD,'B2C') != 'B2C'
+		AND 	IFNULL(E.C2C_YN,'N') = 'N'
+</if>
+<if test="COMPANY != null and COMPANY == 'C2C'">
+		AND 	IFNULL(A.COMP_CD,'B2C') != 'B2C'
+		AND 	IFNULL(E.C2C_YN,'N') = 'Y'
+</if>
+<if test="COMPANY2 != null and COMPANY2 != ''">
+		AND 	IFNULL(A.COMP_CD,'B2C') = #{COMPANY2}
+</if>
 <choose>
-    <when test="CB_KIND != null and CB_KIND == 'POPULAR'">
-		AND		IFNULL(A.POPULAR_YN,'N') IN ('Y')
+    <when test="KIND != null and KIND == 'POPULAR'">
+		AND		IFNULL(M.POPULAR_YN,'N') IN ('Y')
     </when>
-    <when test="CB_KIND != null and CB_KIND == 'RECOMMEND'">
-		AND		IFNULL(A.RECOMMEND_COURSE_YN,'N') IN ('Y')
+    <when test="KIND != null and KIND == 'RECOMMEND'">
+		AND		IFNULL(M.RECOMMEND_YN,'N') IN ('Y')
     </when>
-    <when test="CB_KIND != null and CB_KIND == 'NEW'">
-		AND		IFNULL(A.NEW_COURSE_YN,'N') IN ('Y')
+    <when test="KIND != null and KIND == 'NEW'">
+		AND		IFNULL(A.NEW_YN,'N') IN ('Y')
     </when>
     <otherwise>
-		AND 	( IFNULL(A.POPULAR_YN,'N') IN ('Y') OR
-					IFNULL(A.RECOMMEND_COURSE_YN,'N') IN ('Y') OR
-					IFNULL(A.NEW_COURSE_YN,'N') IN ('Y') )
     </otherwise>
 </choose>
-	 ORDER BY C.CATEGORY_NAME,B.COURSE_NAME,A.YEAR,A.MONTH,A.CHASU 
+	 ORDER BY E.COMP_NAME, C.CATEGORY_NAME,B.COURSE_NAME,A.YEAR,A.MONTH,A.CHASU 
 	</select>
 
-	<update id="axMainPageCourseUpdate" parameterType="hashmap">
-		UPDATE 	COURSE
-		   SET 	POPULAR_YN = #{POPULAR_YN} 
-		   		,RECOMMEND_COURSE_YN = #{RECOMMEND_COURSE_YN} 
-		   		,NEW_COURSE_YN = #{NEW_COURSE_YN} 
-		       	,UPDATE_DATE = CURRENT_TIMESTAMP
-		       	,UPDATE_USER = #{SESSION_USER_ID}
-		 WHERE 	COURSE_ID = #{COURSE_ID}
-	</update>    
+	<insert id="axMainPageInsert" parameterType="hashmap">
+		INSERT INTO	MAIN_PAGE (COMP_CD, COURSE_ID, 
+					RECOMMEND_YN, RECOMMEND_ORD, RECOMMEND_COLOR, 
+					NEW_YN, NEW_ORD, NEW_COLOR, 
+					POPULAR_YN, POPULAR_ORD, POPULAR_COLOR, 
+					MAIN_OPEN_YN, CATEGORY_MAIN_YN, CREATE_USER, CREATE_DATE )
+		VALUES ( #{COMP_CD}, #{COURSE_ID}, 
+					#{RECOMMEND_YN}, #{RECOMMEND_ORD}, #{RECOMMEND_COLOR}, 
+					#{NEW_YN}, #{NEW_ORD}, #{NEW_COLOR}, 
+					#{POPULAR_YN}, #{POPULAR_ORD}, #{POPULAR_COLOR}, 
+					#{MAIN_OPEN_YN}, #{CATEGORY_MAIN_YN}, #{SESSION_USER_ID}, CURRENT_TIMESTAMP )					
+	</insert>    
 
-	<update id="axMainPageCourseMasterUpdate" parameterType="hashmap">
-		UPDATE 	COURSE_MASTER
-		   SET 	POPULAR_COLOR = #{POPULAR_COLOR} 
+	<update id="axMainPageUpdate" parameterType="hashmap">
+		UPDATE 	MAIN_PAGE
+		   SET 	POPULAR_YN = #{POPULAR_YN}
+		   		,POPULAR_COLOR = #{POPULAR_COLOR} 
+		   		,POPULAR_ORD = #{POPULAR_ORD} 
+		   		,NEW_YN = #{NEW_YN} 
 		   		,NEW_COLOR = #{NEW_COLOR} 
+		   		,NEW_ORD = #{NEW_ORD} 
+		   		,RECOMMEND_YN = #{RECOMMEND_YN} 
 		   		,RECOMMEND_COLOR = #{RECOMMEND_COLOR}
+		   		,RECOMMEND_ORD = #{RECOMMEND_ORD}
 		   		,MAIN_OPEN_YN = #{MAIN_OPEN_YN} 
+		   		,CATEGORY_MAIN_YN = #{CATEGORY_MAIN_YN} 
 		       	,UPDATE_DATE = CURRENT_TIMESTAMP
 		       	,UPDATE_USER = #{SESSION_USER_ID}
-		 WHERE 	COURSE_CODE = #{COURSE_CODE}
+		WHERE 	COMP_CD = #{COMP_CD}
+		AND		COURSE_ID = #{COURSE_ID}
 	</update>    
 
 	<select id="axMainPageImageList" parameterType="hashmap" resultType="hashmap">
 		SELECT 	POPULAR_IMG1, POPULAR_IMG2, NEW_IMG1, NEW_IMG2, RECOMMEND_IMG1, RECOMMEND_IMG2
-		  FROM 	COURSE_MASTER  
-		 WHERE 	COURSE_CODE = #{COURSE_CODE}
+		FROM 	MAIN_PAGE  
+		WHERE 	COMP_CD = #{COMP_CD}
+		AND		COURSE_ID = #{COURSE_ID}
 	</select>
 	
 	<update id="axMainPageImageUpdate" parameterType="hashmap">
-		UPDATE 	COURSE_MASTER
+		UPDATE 	MAIN_PAGE
 		   SET 	UPDATE_DATE = CURRENT_TIMESTAMP
 		   		,UPDATE_USER = #{SESSION_USER_ID}
 		   <if test="kind != null and kind == 'popular1'"> ,POPULAR_IMG1 = 'Y'</if>
@@ -93,7 +105,8 @@
 		   <if test="kind != null and kind == 'new1'"> ,NEW_IMG2 = 'Y'</if>
 		   <if test="kind != null and kind == 'recommend1'"> ,RECOMMEND_IMG1 = 'Y'</if>
 		   <if test="kind != null and kind == 'recommend2'"> ,RECOMMEND_IMG2 = 'Y'</if>
-		 WHERE COURSE_CODE = #{COURSE_CODE} 
+		WHERE 	COMP_CD = #{COMP_CD}
+		AND		COURSE_ID = #{COURSE_ID}
 	</update>
 
 </mapper>

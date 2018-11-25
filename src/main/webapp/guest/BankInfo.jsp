@@ -59,7 +59,7 @@
                             <span><img src='/resources/homepage/img/support/notice_bg.jpg' alt=' '></span>
                             <p class='top_title'><strong>큐러닝</strong>으로 입금 가능한 <strong>계좌번호</strong>입니다.</p>
                             <p>
-                                큐러닝의 소식과 공지사항을 알려드립니다. <span></span>항상 유익하고 풍성한 소식 놓치지 말고 확인하세요.
+                                큐러닝의 입금계좌를 알려드립니다.
                             </p>
                         </div>
                     </div>

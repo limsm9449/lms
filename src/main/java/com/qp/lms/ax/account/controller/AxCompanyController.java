@@ -126,6 +126,18 @@ public class AxCompanyController {
         return "/ax/common/axReturnPage";
     }
 	    
+    @RequestMapping(value = "/account/axCompanyC2cList", method = RequestMethod.POST, consumes = "application/json" )
+    public @ResponseBody HashMap<String,Object> axCompanyC2cList(@RequestBody HashMap<String, Object> paramMap, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    	HashMap<String, Object> hm = new HashMap<String, Object>();
+
+    	try {
+    		hm = svr.axCompanyC2cList(paramMap);
+    	} catch ( Exception e ) {
+    		e.printStackTrace();
+    	}
+
+        return hm;
+    }
 	    
 	    
 	    

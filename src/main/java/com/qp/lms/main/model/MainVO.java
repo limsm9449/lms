@@ -36,6 +36,7 @@ public class MainVO extends CommonVO {
 	private String courseName;
 	
 	private String compCd;
+	private String c2cYn;
 	private String[] categorys;
 	
 	private String seq;
@@ -289,6 +290,12 @@ public class MainVO extends CommonVO {
 	}
 	public void setTitle(String title) {
 		this.title = title;
+	}
+	public String getC2cYn() {
+		return c2cYn;
+	}
+	public void setC2cYn(String c2cYn) {
+		this.c2cYn = c2cYn;
 	}
 	
 	

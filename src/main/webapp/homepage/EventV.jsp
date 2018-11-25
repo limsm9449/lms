@@ -55,8 +55,15 @@
                             </div>
                         </div>
                         <h1>
-                            Event</span>
+                            Eve<span>nt</span>
                         </h1>
+                        <div class='top_text_box clear_fix'>
+                            <span><img src='/resources/homepage/img/support/notice_bg.jpg' alt=' '></span>
+                            <p class='top_title'>EVENT</p>
+                            <p>
+                                큐러닝의 이벤트를 알려드립니다. <span></span>항상 유익하고 풍성한 소식 놓치지 말고 확인하세요.
+                            </p>
+                        </div>
                     </div>
                     <!-- Top END -->
 

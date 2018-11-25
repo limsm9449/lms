@@ -82,17 +82,17 @@ public class AxMainPageController {
     }
     
     @RequestMapping(value = "/mainPage/axMainPageImageUpload", method = RequestMethod.POST)
-    public String axCourseMasterImageUpload(@RequestParam("kind") String kind, @RequestParam("courseCode") String courseCode, MultipartHttpServletRequest request, Model model) throws Exception {
+    public String axCourseMasterImageUpload(@RequestParam("kind") String kind, @RequestParam("compCd") String compCd, @RequestParam("courseId") String courseId, MultipartHttpServletRequest request, Model model) throws Exception {
     	HashMap<String, Object> hm = new HashMap<String, Object>();
 
     	try {
-	    	String folder = commSvr.getSetting("COURSE_IMG_FOLDER");
+	    	String folder = commSvr.getSetting("MAIN_IMG_FOLDER");
 	    	
 	    	File attachDir = new File(folder);
 	    	if ( !attachDir.exists() )
 	    		attachDir.mkdir();
 	    	
-	    	attachDir = new File(folder + "//" + courseCode);
+	    	attachDir = new File(folder + "//" + compCd);
 	    	if ( !attachDir.exists() )
 	    		attachDir.mkdir();
 	    	
@@ -100,7 +100,7 @@ public class AxMainPageController {
 	    	Map<String, MultipartFile> files = request.getFileMap();
 	        CommonsMultipartFile cmf = null;
 	        
-	        String fileName = kind + ".jpg";
+	        String fileName = courseId + "_" + kind + ".jpg";
         	cmf = (CommonsMultipartFile) files.get(kind + "File");
 	        
 	        System.out.println("Image Directory : " + attachDir + "/" + fileName);
@@ -112,7 +112,8 @@ public class AxMainPageController {
 	        //파일 정보를 DB에 저장
 	        HashMap<String, Object> paramMap = new HashMap<String, Object>();
 	        paramMap.put("kind", kind);
-	        paramMap.put("COURSE_CODE", courseCode);
+	        paramMap.put("COMP_CD", compCd);
+	        paramMap.put("COURSE_ID", courseId);
 	        
 	        hm = svr.axMainPageImageUpload(paramMap);
 	        
