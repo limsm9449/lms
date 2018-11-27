@@ -199,15 +199,19 @@ function fn_gridEvent(event, obj) {
 <h2>설문지 그룹 관리</h2>
 <div style="height:10px"></div>
 
-<div>
-	설문지 그룹명
-	<input type="text" class="search_input" id="groupName" name="groupName" value="" />
-	사용여부
-	<select id="useYn">
-		<option value="">전체</option>
-		<option value="Y">Y</option>
-		<option value="N">N</option>
-	</select>
+<div class="form-inline">
+  	<div class="form-group">
+    	<label for="groupName">&nbsp;설문지 그룹명</label>
+		<input class="form-control" type="text" class="search_input" id="groupName" name="groupName" value="" />
+  	</div>	
+  	<div class="form-group"> 
+    	<label for="useYn">&nbsp;사용여부</label>
+		<select class="form-control" id="useYn">
+			<option value="">전체</option>
+			<option value="Y">Y</option>
+			<option value="N">N</option>
+		</select>
+  	</div>	
 </div>
 
 <div style="height:10px"></div>

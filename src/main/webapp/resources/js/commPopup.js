@@ -431,7 +431,49 @@ var Popup = {
    		}
    		
    		f_popup('/common/axOpenPage', {displayName:'coursePopup',option:'width=1300,height=700', urlParams:urlParams});
+	},
+	
+	showCourseCode : function(pParams) {
+   		var urlParams = "page=/ax/common/axCourseCodePopup";
+   		
+   		var params = pParams || {};
+   		if ( params.ddKind ) {
+   			urlParams += "&ddKind=" + params.ddKind;
+   		}
+   		
+   		f_popup('/common/axOpenPage', {displayName:'courseCodePopup',option:'width=300,height=450', urlParams:urlParams});
+	},
+	
+	showCategory : function(pParams) {
+   		var urlParams = "page=/ax/common/axCategoryPopup";
+   		
+   		var params = pParams || {};
+
+   		f_popup('/common/axOpenPage', {displayName:'CategoryPopup',option:'width=300,height=380', urlParams:urlParams});
+	},
+	
+	showExamType : function(pParams) {
+   		var urlParams = "page=/ax/common/axExamTypePopup";
+   		
+   		var params = pParams || {};
+   		if ( params.COURSE_CODE ) {
+   			urlParams += "&COURSE_CODE=" + params.COURSE_CODE;
+   		}
+   		
+   		f_popup('/common/axOpenPage', {displayName:'ExamTypePopup',option:'width=300,height=270', urlParams:urlParams});
+	},
+	
+	showMcbCompany : function(pParams) {
+   		var urlParams = "page=/ax/common/axMcbCompanyPopup";
+   		
+   		var params = pParams || {};
+   		if ( params.COURSE_CODE ) {
+   			urlParams += "&COURSE_CODE=" + params.COURSE_CODE;
+   		}
+   		
+   		f_popup('/common/axOpenPage', {displayName:'ExamTypePopup',option:'width=300,height=300', urlParams:urlParams});
 	}
+
 
 
 }

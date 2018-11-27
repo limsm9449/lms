@@ -85,28 +85,28 @@ function fn_callbackAjax(data, id) {
 			$('#swfImg').attr("src", "/cImage/swf.jpg");
 		}
 		if ( data.list[0].B_IMG == "Y" ) {
-			$('#bImg').attr("src", "/cImage/contents/" + params.COURSE_CODE + "/bImg.jpg");
+			$('#bImg').attr("src", "/cImage/contents/" + params.COURSE_CODE + "/bImg.jpg" + "?timestamp=" + gfn_timestamp());
 		}
 		if ( data.list[0].C_IMG == "Y" ) {
-			$('#cImg').attr("src", "/cImage/contents/" + params.COURSE_CODE + "/cImg.jpg");
+			$('#cImg').attr("src", "/cImage/contents/" + params.COURSE_CODE + "/cImg.jpg" + "?timestamp=" + gfn_timestamp());
 		}
 		if ( data.list[0].M_IMG1 == "Y" ) {
-			$('#mImg1').attr("src", "/cImage/contents/" + params.COURSE_CODE + "/mImg1.jpg");
+			$('#mImg1').attr("src", "/cImage/contents/" + params.COURSE_CODE + "/mImg1.jpg" + "?timestamp=" + gfn_timestamp());
 		}
 		if ( data.list[0].M_IMG2 == "Y" ) {
-			$('#mImg2').attr("src", "/cImage/contents/" + params.COURSE_CODE + "/mImg2.jpg");
+			$('#mImg2').attr("src", "/cImage/contents/" + params.COURSE_CODE + "/mImg2.jpg" + "?timestamp=" + gfn_timestamp());
 		}
 		if ( data.list[0].M_IMG3 == "Y" ) {
-			$('#mImg3').attr("src", "/cImage/contents/" + params.COURSE_CODE + "/mImg3.jpg");
+			$('#mImg3').attr("src", "/cImage/contents/" + params.COURSE_CODE + "/mImg3.jpg" + "?timestamp=" + gfn_timestamp());
 		}
 		if ( data.list[0].S_IMG1 == "Y" ) {
-			$('#sImg1').attr("src", "/cImage/contents/" + params.COURSE_CODE + "/sImg1.jpg");
+			$('#sImg1').attr("src", "/cImage/contents/" + params.COURSE_CODE + "/sImg1.jpg" + "?timestamp=" + gfn_timestamp());
 		}
 		if ( data.list[0].S_IMG2 == "Y" ) {
-			$('#sImg2').attr("src", "/cImage/contents/" + params.COURSE_CODE + "/sImg2.jpg");
+			$('#sImg2').attr("src", "/cImage/contents/" + params.COURSE_CODE + "/sImg2.jpg" + "?timestamp=" + gfn_timestamp());
 		}
 		if ( data.list[0].S_IMG3 == "Y" ) {
-			$('#sImg3').attr("src", "/cImage/contents/" + params.COURSE_CODE + "/sImg3.jpg");
+			$('#sImg3').attr("src", "/cImage/contents/" + params.COURSE_CODE + "/sImg3.jpg" + "?timestamp=" + gfn_timestamp());
 		}
 		//mask.close();
 	} else if ( id == "save" ){
@@ -117,7 +117,7 @@ function fn_callbackAjax(data, id) {
 			dialog.alert( { msg : "업로드시 문제가 발생했습니다. (" + data.RtnMode + ")" }, function () { mask.close(); } );
 		} else {
 			mask.open();
-			dialog.alert( { msg : "업로드 되었습니다. 등록된 이미지를 다른 이미지로 변경시 바로 바뀌지 않습니다. f5를 눌러 주시면 업로드 이미지를 볼 수 있습니다." }, function () { mask.close();	fn_search(); } );
+			dialog.alert( { msg : "업로드 되었습니다." }, function () { mask.close();	fn_search(); } );
 		}
 		
 		isSave = true;

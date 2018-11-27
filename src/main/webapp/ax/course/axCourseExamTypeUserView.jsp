@@ -1,94 +1,106 @@
 <%@ page contentType="text/html;charset=utf-8"%>
-
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
-<%@ taglib prefix="FCK" uri="http://java.fckeditor.net" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
+<!DOCTYPE html>
+<html lang='ko'>
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="ko" xml:lang="ko">
 <head>
-<title>
-</title>
+    <meta charset='utf-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>온라인 시험</title>
 
-<%@ include file="../../common/commAdminInclude.jsp" %>
+	<%@ include file="../../common/commMainInclude.jsp" %>
+	
+    <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic" rel="stylesheet">
 
+    <link rel='stylesheet' href='/resources/homepage/css/initialization.css'>
+    <link rel='stylesheet' href='/resources/homepage/css/popup/popup_common.css'>
 </head>
 
-<script type="text/javascript">
-
-
-</script>
-
-
 <body>
-
-<form id="frm" name="frm" action="" method="post">
-	
-<div id="popup_wrap">
-  	<div class="pop_header">
-    	<h3 class="title">시험</h3>
-    	<p class="closeBtn" onClick="window.close();">Close</p>
-  	</div>
-  	<div class="pop_content">
-		<%-- 테이블 --%>
-   		<table summary="">
-			<caption></caption>
-			<thead>
-			  	<tr class="guide">
- 						<th width="50"></th>
- 						<th></th>
-						</tr>
-				<tr>
-					<th>순번</th>
-					<th class="no_line">질문</th>
-				</tr>
-			</thead>
-			<tbody>
-				<c:forEach var="row" items="${list}" varStatus="idx">
-		            <tr <c:if test="${idx.count%2 eq 1}"> class="alt"</c:if>>
-		              	<td class="center"><c:out value="${idx.count}" escapeXml="" /></td>
-		              	<td class="no_line subject">
-		              		<p class="quest"><c:out value="${row.QUESTION}" escapeXml="" /></p>
-		              		<c:if test="${row.TYPE eq 'G'}">
-			              		<ul class="exam">
-			              			<li><input type="radio" id="answers${idx.index}" name="answers${idx.index}" value="1"/><c:out value="${row.QA1}" escapeXml="" /></li>
-			              			<li><input type="radio" id="answers${idx.index}" name="answers${idx.index}" value="2"/><c:out value="${row.QA2}" escapeXml="" /></li>
-			              			<li><input type="radio" id="answers${idx.index}" name="answers${idx.index}" value="3"/><c:out value="${row.QA3}" escapeXml="" /></li>
-			              			<li><input type="radio" id="answers${idx.index}" name="answers${idx.index}" value="4"/><c:out value="${row.QA4}" escapeXml="" /></li>
-				              	</ul>
-		              			<textarea id="memos${idx.index}" name="memos${idx.index}" class="polltext" style="display:none"></textarea>
-		              		</c:if>
-		              		<c:if test="${row.TYPE eq 'M'}">
-			              		<ul class="exam">
-			              			<li><input type="checkbox" id="answers${idx.index}" name="answers${idx.index}" value="1"/><c:out value="${row.QA1}" escapeXml="" /></li>
-			              			<li><input type="checkbox" id="answers${idx.index}" name="answers${idx.index}" value="2"/><c:out value="${row.QA2}" escapeXml="" /></li>
-			              			<li><input type="checkbox" id="answers${idx.index}" name="answers${idx.index}" value="3"/><c:out value="${row.QA3}" escapeXml="" /></li>
-			              			<li><input type="checkbox" id="answers${idx.index}" name="answers${idx.index}" value="4"/><c:out value="${row.QA4}" escapeXml="" /></li>
-				              	</ul>
-		              			<textarea id="memos${idx.index}" name="memos${idx.index}" class="polltext" style="display:none"></textarea>
-		              		</c:if>
-		              		<c:if test="${row.TYPE eq 'J'}">
-		              			<textarea id="memos${idx.index}" name="memos${idx.index}" class="polltext"></textarea>
-		              			<input type="radio" id="answers${idx.index}" name="answers${idx.index}" value="1" style="display:none"/>
-		              			<input type="radio" id="answers${idx.index}" name="answers${idx.index}" value="2" style="display:none"/>
-		              			<input type="radio" id="answers${idx.index}" name="answers${idx.index}" value="3" style="display:none"/>
-		              			<input type="radio" id="answers${idx.index}" name="answers${idx.index}" value="4" style="display:none"/>
-		              		</c:if>
-		              	</td>
-		            </tr>
-				</c:forEach>
-			</tbody>
-		</table>
-	</div>
-	
-</div>
-
-</form>
-
+    <!-- 시험 결과 POPUP -->
+    <div id='popup_exam_result' class='popup'>
+        <div class='popup_fix'>
+            <p class='popup_title'>
+                시험
+            </p>
+        </div>
+        <ul class='popup_question'>
+<c:forEach var="row" items="${list}" varStatus="idx">           
+	<c:if test="${row.TYPE eq 'G'}">
+            <li class='question_list_box'>
+                <div>
+    	<c:if test="${row.ANSWER_YN eq 'Y'}">
+                    <div class='marking blue'>O</div>
+		</c:if>                    
+    	<c:if test="${row.ANSWER_YN eq 'N'}">
+                    <div class='marking red'>X</div>
+		</c:if>                    
+                    <div class='question_num'>
+                        Q.
+                        <span>${idx.index + 1}</span>
+                    </div>
+                    <div class='question_answer explanation'>
+                        <p>${row.QUESTION}</p>
+                        <ul class='answer_box explanation'>
+                            <li class='clear_fix'>
+                                <input type='radio' name='answers_${idx.index + 1}' value='1'>
+                                <p>
+                                    ${row.QA1}
+                                </p>
+                            </li>
+                            <li class='clear_fix'>
+                                <input type='radio' name='answers_${idx.index + 1}' value='2'>
+                                <p>
+                                    ${row.QA2}
+                                </p>
+                            </li>
+                            <li class='clear_fix'>
+                                <input type='radio' name='answers_${idx.index + 1}' value='3'>
+                                <p>
+                                   ${row.QA3}
+                                </p>
+                            </li>
+                            <li class='clear_fix last_bottom'>
+                                <input type='radio' name='answers_${idx.index + 1}' value='4'>
+                                <p>
+                                    ${row.QA4}
+                                </p> 
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </li>
+	</c:if>            
+	<c:if test="${row.TYPE eq 'J'}">
+            <li class='question_list_box'>
+                <div>
+    	<c:if test="${row.ANSWER_YN eq 'Y'}">
+                    <div class='marking blue'>O</div>
+		</c:if>                    
+    	<c:if test="${row.ANSWER_YN eq 'N'}">
+                    <div class='marking red'>X</div>
+		</c:if>  
+                    <div class='question_num'>
+                        Q.
+                        <span>${idx.index + 1}</span>
+                    </div>
+                    <div class='question_answer explanation'>
+                        <p>${row.QUESTION}</p>
+                        <input type='text' value="" >
+                    </div>
+                </div>
+            </li>	
+	</c:if>
+</c:forEach>
+        </ul>
+        <div class='btn_submit'>
+            <button onclick="javascript:window.close()">닫기</button>
+        </div>
+    </div>
+    <!-- 시험 결과 POPUP END-->
 </body>
+
 </html>
-
-

@@ -61,6 +61,7 @@ public class AxScoreService {
 	@Transactional(propagation=Propagation.REQUIRED, rollbackFor={Throwable.class})
 	public HashMap<String, Object> axUserScoreWeekList(HashMap<String, Object> paramMap) throws Exception {
 		HashMap<String, Object> hm = new HashMap<String, Object>();
+	
 		
 		int cnt = sqlSession.selectOne("axScore.axUserScoreWeekCount", paramMap);
 		if ( cnt == 0 ) {
@@ -72,17 +73,6 @@ public class AxScoreService {
         
     	return hm;
     }
-	
-	/*
-	public HashMap<String, Object> axUserScoreReportList(HashMap<String, Object> paramMap) throws Exception {
-		HashMap<String, Object> hm = new HashMap<String, Object>();
-		
-    	List<HashMap<String, Object>> list = sqlSession.selectList("axScore.axUserScoreReportList", paramMap);
-    	hm.put("list", list);
-        
-    	return hm;
-    }
-    */
 	
 	@Transactional(propagation=Propagation.REQUIRED, rollbackFor={Throwable.class})
 	public HashMap<String, Object> axUserScoreExamList(HashMap<String, Object> paramMap) throws Exception {
@@ -156,10 +146,12 @@ public class AxScoreService {
 	public HashMap<String, Object> axUserScoreQuestList(HashMap<String, Object> paramMap) throws Exception {
 		HashMap<String, Object> hm = new HashMap<String, Object>();
 		
+		/*
 		int cnt = sqlSession.selectOne("axScore.axUserScoreQuestCount", paramMap);
 		if ( cnt == 0 ) {
 			sqlSession.insert("axScore.axUserScoreQuestInsert", paramMap);
 		}
+		*/
 		
     	List<HashMap<String, Object>> list = sqlSession.selectList("axScore.axUserScoreQuestList", paramMap);
     	hm.put("list", list);

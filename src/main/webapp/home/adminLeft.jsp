@@ -6,7 +6,13 @@
 <head>
 </head>
 
-<%@ include file="../common/commMenuInclude.jsp" %>
+<%@ include file="../../common/commAxAdminInclude.jsp" %>
+
+<link rel="stylesheet" type="text/css" media="all" href="/resources/css/admin/left.css" />
+
+<script type="text/javascript">
+	isReload = false;
+</script>
 
 <script type="text/javascript">
 
@@ -177,7 +183,15 @@ function gfn_openMenu(pageId, params) {
     	<div id="side">
       		<!-- left header -->
       		<div id="side_header">
-	      		<h1 class="logo"><img src="/resources/images/admin/common/logo.png" alt="Q Learning" /></h1>
+<c:choose>
+	<c:when test="${session.compCd eq 'B2C'}">
+			      		<h1 class="logo"><img src="/resources/images/admin/common/logo.png" alt="Q Learning" /></h1>
+	</c:when>
+	<c:otherwise>
+			      		<h1 class="logo"><img src="/cImage/company/${session.compCd}_gnb.jpg" alt="${session.compName}" /></h1>
+	</c:otherwise>
+</c:choose>      		
+	      		
 	      		<p class="logmsg f-small">${set.loginVO.userName}님이 로그인하셨습니다.</p>
 	      		<div class="log_btn">
 	        		<a href="#" onclick="gfn_openMenu('axAccountUser'); "><img src="/resources/images/admin/common/btn_mem_info.png" /></a>

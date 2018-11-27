@@ -7,9 +7,13 @@
 <title>QLearning LCMS</title>
 <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
 
-<%@ include file="../common/commAdminInclude.jsp" %>
+<%@ include file="../../common/commAxAdminInclude.jsp" %>
 
 <link rel="stylesheet" type="text/css" media="all" href="<c:url value="/resources/css/admin/frame.css"/>" />
+
+<script type="text/javascript">
+	isReload = false;
+</script>
 
 <script type="text/javascript">
 var gCondition = {

@@ -172,6 +172,8 @@
 				,C.QA2
 				,C.QA3
 				,C.QA4
+                ,C.ANSWER
+                ,C.ANSWER_DESC
 		FROM	USER_EXAM A
 					JOIN COURSE_EXAM C ON C.COURSE_CODE = #{COURSE_CODE} AND C.SEQ = A.SEQ
 		WHERE 	A.COURSE_ID = 0

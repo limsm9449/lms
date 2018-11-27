@@ -10,7 +10,7 @@
 <title>
 </title>
 
-<%@ include file="../../common/commMainInclude.jsp" %>
+<%@ include file="../../common/commAxAdminInclude.jsp" %>
 
 </head>
 

@@ -12,7 +12,14 @@
             <div class="head_wrap pc clear_fix">
                 <div class='head_con logo_box'>
                     <a href="javascript:" onclick="page.goHome();">
+<c:choose>
+	<c:when test="${compCd eq 'B2C'}">
                         <img src='/resources/homepage/img/logo.png' alt=' '>
+	</c:when>
+	<c:otherwise>
+                        <img src='/cImage/company/${compCd}_gnb.jpg' alt=' '>
+	</c:otherwise>
+</c:choose>                    
                     </a>
                 </div>
                 <div class='head_con search_box'>
@@ -41,7 +48,14 @@
                 </div>
                 <div class='head_con logo_box'>
                     <a href="javascript:" onclick="page.goHome();">
+<c:choose>
+	<c:when test="${compCd eq 'B2C'}">
                         <img src='/resources/homepage/img/logo.png' alt=' '>
+	</c:when>
+	<c:otherwise>
+                        <img src='/cImage/company/${compCd}_gnb.jpg' alt=' '>
+	</c:otherwise>
+</c:choose>                    
                     </a>
                 </div>
                 <div class='head_con util_box'>

@@ -43,12 +43,7 @@ $(document.body).ready(function () {
 	            fn_search();
 	            break;
             case "add":
-		    	gfn_cbRemove("INS_CB_COURSE_CODE");
-		    	gfn_cbRemove("INS_CB_LEVEL3");
-		    	gfn_cbRemove("INS_CB_LEVEL2");
-		    	$("#INS_CB_LEVEL1").val("");
-		    	
-		    	gfn_showPopupDiv("insDiv");
+            	Popup.showCourseCode({ ddKind : "CourseCode" });
 
 		    	break;
             case "copy":
@@ -59,10 +54,12 @@ $(document.body).ready(function () {
             		return;
             	}
             	
-            	$('#MCB_COMPANY').multiselect('deselectAll', false);
-            	$('#MCB_COMPANY').multiselect('rebuild');
+            	Popup.showMcbCompany();
             	
-		    	gfn_showPopupDiv("companyDiv");
+            	//$('#MCB_COMPANY').multiselect('deselectAll', false);
+            	//$('#MCB_COMPANY').multiselect('rebuild');
+            	
+		    	//gfn_showPopupDiv("companyDiv");
 
 		    	break;
             case "delete":
@@ -505,122 +502,90 @@ function fn_makeGrid() {
 	$(window).trigger("resize");
 }
 
-function fn_hidePopupDiv(popupDivId, mode) {
-	if ( popupDivId == "insDiv" ) {
-		if ( $("#INS_CB_LEVEL1 option:selected").val() == "" || $("#INS_CB_LEVEL2 option:selected").val() == "" || $("#INS_CB_LEVEL3 option:selected").val() == "" ) {
-			gfn_hidePopupDiv(popupDivId);
-			
-			mask.open();
-			dialog.alert( { msg : "대/중/소분류를 선택하셔야 합니다." }, function () { mask.close(); gfn_showPopupDiv(popupDivId); } );
-			return;
-		} 
-	
-		if ( $("#INS_CB_COURSE_CODE option:selected").val() == "" ) {
-			gfn_hidePopupDiv(popupDivId);
+function fn_courseCodeSelect(data) {
+	grid.addRow( 
+		{
+			NEW_FLAG : "Y", 
+			CATEGORY_NAME : data.CB_LEVEL1_NAME + " > " + data.CB_LEVEL2_NAME + " > " + data.CB_LEVEL3_NAME,  
+			CODE : data.CB_LEVEL3_CODE, 
+			COURSE_CODE : data.CB_COURSE_CODE, 
+			COURSE_NAME : data.CB_COURSE_NAME,
+			COMP_CD : 'B2C',
+			TUTOR_ID : data.TUTOR_ID,
+			TUTOR_CNT : 0,
+			COURSE_COST : data.COURSE_COST,
+			REPORT_RATE : data.REPORT_RATE,
+			EXAM_RATE : data.EXAM_RATE,
+			DISCUSSION_RATE : data.DISCUSSION_RATE,
+			PROGRESS_RATE : data.PROGRESS_RATE,
+			COURSE_EXAM_TYPE_NAME : "",
+			REPORT_FAIL : 0,
+			EXAM_FAIL : 0,
+			DISCUSSION_FAIL : 0,
+			PROGRESS_FAIL : 0,
+			TOTAL_FAIL : 0,
+			OPEN_YN : "N",
+			TERM_YN : "N",
+			TERM_PERIOD_FROM : "",
+			TERM_PERIOD_TO : "",
+			STUDY_PERIOD_FROM : "",
+			STUDY_PERIOD_TO : "",
+			C_PERIOD : 30,
+			CLOSE_YN : "N",
+			MOBILE_YN : data.MOBILE_YN,
+			STUDY_MAX_WEEK : data.STUDY_MAX_WEEK
+		}, "last", {focus: "END"}
+	);
+}
 
-			mask.open();
-			dialog.alert( { msg : "과정을 선택하셔야 합니다." }, function () { mask.close(); gfn_showPopupDiv(popupDivId); } );
-			return;
-		} 
-	
+function fn_examTypeSelect(data, flag) {
+	if ( flag == "OK" ) {
+		var row = grid.getList("selected");
+		grid.setValue(row[0].__index, "COURSE_EXAM_TYPE_ID", data.CB_EXAM_TYPE);
+		grid.setValue(row[0].__index, "COURSE_EXAM_TYPE_NAME", data.CB_EXAM_TYPE_NAME);
+	} else if ( flag == "DELETE" ) {
+		var row = grid.getList("selected");
+		grid.setValue(row[0].__index, "COURSE_EXAM_TYPE_ID", "");
+		grid.setValue(row[0].__index, "COURSE_EXAM_TYPE_NAME", "");
+	}
+}
+
+function fn_mcbCompanySelect(data) {
+	var row = grid.getList("selected");
+	for ( var i = 0; i < data.companys.length; i++ ) {
 		grid.addRow( 
 			{
 				NEW_FLAG : "Y", 
-				CATEGORY_NAME : $("#INS_CB_LEVEL1 option:selected").text() + " > " + $("#INS_CB_LEVEL2 option:selected").text() + " > " + $("#INS_CB_LEVEL3 option:selected").text(), 
-				CODE : $("#INS_CB_LEVEL3 option:selected").val(), 
-				COURSE_CODE : $("#INS_CB_COURSE_CODE option:selected").val(), 
-				COURSE_NAME : $("#INS_CB_COURSE_CODE option:selected").text(),
-				COMP_CD : 'B2C',
-				TUTOR_ID : gfn_findValueInList(dd.CourseCode, "value", $("#INS_CB_COURSE_CODE option:selected").val(), "TUTOR_ID"),
-				TUTOR_CNT : 0,
-				COURSE_COST : gfn_findValueInList(dd.CourseCode, "value", $("#INS_CB_COURSE_CODE option:selected").val(), "COURSE_COST"),
-				REPORT_RATE : gfn_findValueInList(dd.CourseCode, "value", $("#INS_CB_COURSE_CODE option:selected").val(), "REPORT_RATE"),
-				EXAM_RATE : gfn_findValueInList(dd.CourseCode, "value", $("#INS_CB_COURSE_CODE option:selected").val(), "EXAM_RATE"),
-				DISCUSSION_RATE : gfn_findValueInList(dd.CourseCode, "value", $("#INS_CB_COURSE_CODE option:selected").val(), "DISCUSSION_RATE"),
-				PROGRESS_RATE : gfn_findValueInList(dd.CourseCode, "value", $("#INS_CB_COURSE_CODE option:selected").val(), "PROGRESS_RATE"),
-				COURSE_EXAM_TYPE_NAME : "",
-				REPORT_FAIL : 0,
-				EXAM_FAIL : 0,
-				DISCUSSION_FAIL : 0,
-				PROGRESS_FAIL : 0,
-				TOTAL_FAIL : 0,
-				OPEN_YN : "N",
-				TERM_YN : "N",
-				TERM_PERIOD_FROM : "",
-				TERM_PERIOD_TO : "",
-				STUDY_PERIOD_FROM : "",
-				STUDY_PERIOD_TO : "",
-				C_PERIOD : 30,
+				CATEGORY_NAME : row[0].CATEGORY_NAME, 
+				CODE : row[0].CODE, 
+				COURSE_CODE : row[0].COURSE_CODE, 
+				COURSE_NAME : row[0].COURSE_NAME, 
+				COMP_CD : data.companys[i],
+				TUTOR_ID : row[0].TUTOR_ID,
+				COURSE_COST : row[0].COURSE_COST,
+				REPORT_RATE : row[0].REPORT_RATE,
+				EXAM_RATE : row[0].EXAM_RATE,
+				DISCUSSION_RATE : row[0].DISCUSSION_RATE,
+				PROGRESS_RATE : row[0].PROGRESS_RATE,
+				REPORT_FAIL : row[0].REPORT_FAIL,
+				EXAM_FAIL : row[0].EXAM_FAIL,
+				COURSE_EXAM_TYPE_NAME : row[0].COURSE_EXAM_TYPE_NAME,
+				DISCUSSION_FAIL : row[0].DISCUSSION_FAIL,
+				PROGRESS_FAIL : row[0].PROGRESS_FAIL,
+				TOTAL_FAIL : row[0].TOTAL_FAIL,
+				TERM_YN : row[0].TERM_YN,
+				TERM_PERIOD_FROM : row[0].TERM_PERIOD_FROM,
+				TERM_PERIOD_TO : row[0].TERM_PERIOD_TO,
+				STUDY_PERIOD_FROM : row[0].STUDY_PERIOD_FROM,
+				STUDY_PERIOD_TO : row[0].STUDY_PERIOD_TO,
+				C_PERIOD : row[0].C_PERIOD,
 				CLOSE_YN : "N",
-				MOBILE_YN : gfn_findValueInList(dd.CourseCode, "value", $("#INS_CB_COURSE_CODE option:selected").val(), "MOBILE_YN"),
-				STUDY_MAX_WEEK : gfn_findValueInList(dd.CourseCode, "value", $("#INS_CB_COURSE_CODE option:selected").val(), "STUDY_MAX_WEEK")
+				MOBILE_YN : row[0].MOBILE_YN,
+				STUDY_MAX_WEEK : row[0].STUDY_MAX_WEEK
 			}, "last", {focus: "END"});
-	} else if ( popupDivId == "examTypeDiv" ) {
-		if ( mode == "delete" ) {
-			var row = grid.getList("selected");
-			grid.setValue(row[0].__index, "COURSE_EXAM_TYPE_ID", '');
-			grid.setValue(row[0].__index, "COURSE_EXAM_TYPE_NAME", '');
-		} else {
-			if ( $("#CB_EXAM_TYPE option:selected").val() == "" ) {
-				gfn_hidePopupDiv(popupDivId);
-				
-				mask.open();
-				dialog.alert( { msg : "시험 유형을 선택하셔야 합니다." }, function () { mask.close(); gfn_showPopupDiv(popupDivId); } );
-				return;
-			} 
-	
-			var row = grid.getList("selected");
-			grid.setValue(row[0].__index, "COURSE_EXAM_TYPE_ID", $("#CB_EXAM_TYPE option:selected").val());
-			grid.setValue(row[0].__index, "COURSE_EXAM_TYPE_NAME", $("#CB_EXAM_TYPE option:selected").text());
-		}
-	} else if ( popupDivId == "companyDiv" ) {
-		var companys = $("#MCB_COMPANY").val();
-		if ( companys.length == 0 ) {
-			gfn_hidePopupDiv(popupDivId);
-			
-			mask.open();
-			dialog.alert( { msg : " 회사를 선택하셔야 합니다." }, function () { mask.close(); gfn_showPopupDiv(popupDivId); } );
-			return;
-		} 
-
-		var row = grid.getList("selected");
-		for ( var i = 0; i < companys.length; i++ ) {
-			grid.addRow( 
-				{
-					NEW_FLAG : "Y", 
-					CATEGORY_NAME : row[0].CATEGORY_NAME, 
-					CODE : row[0].CODE, 
-					COURSE_CODE : row[0].COURSE_CODE, 
-					COURSE_NAME : row[0].COURSE_NAME, 
-					COMP_CD : companys[i],
-					TUTOR_ID : row[0].TUTOR_ID,
-					COURSE_COST : row[0].COURSE_COST,
-					REPORT_RATE : row[0].REPORT_RATE,
-					EXAM_RATE : row[0].EXAM_RATE,
-					DISCUSSION_RATE : row[0].DISCUSSION_RATE,
-					PROGRESS_RATE : row[0].PROGRESS_RATE,
-					REPORT_FAIL : row[0].REPORT_FAIL,
-					EXAM_FAIL : row[0].EXAM_FAIL,
-					COURSE_EXAM_TYPE_NAME : row[0].COURSE_EXAM_TYPE_NAME,
-					DISCUSSION_FAIL : row[0].DISCUSSION_FAIL,
-					PROGRESS_FAIL : row[0].PROGRESS_FAIL,
-					TOTAL_FAIL : row[0].TOTAL_FAIL,
-					TERM_YN : row[0].TERM_YN,
-					TERM_PERIOD_FROM : row[0].TERM_PERIOD_FROM,
-					TERM_PERIOD_TO : row[0].TERM_PERIOD_TO,
-					STUDY_PERIOD_FROM : row[0].STUDY_PERIOD_FROM,
-					STUDY_PERIOD_TO : row[0].STUDY_PERIOD_TO,
-					C_PERIOD : row[0].C_PERIOD,
-					CLOSE_YN : "N",
-					MOBILE_YN : row[0].MOBILE_YN,
-					STUDY_MAX_WEEK : row[0].STUDY_MAX_WEEK
-				}, "last", {focus: "END"});
-			
-			grid.repaint();
-		}
+		
+		grid.repaint();
 	}
-
-	gfn_hidePopupDiv(popupDivId);
 }
 
 function fn_params() {
@@ -707,30 +672,16 @@ function fn_callbackAjax(data, id) {
 		
 		gfn_cbRefresh("CB_COMPANY", data.CompanyKind, true);
 		gfn_cbRefresh("CB_LEVEL1", data.CategoryLevel1, true);
-		gfn_cbRefresh("INS_CB_LEVEL1", data.CategoryLevel1, true);
 
 		gfn_cbRefresh("CB_OPEN_KIND", data.OpenKind, true);
 		$("#CB_OPEN_KIND").val("NOT_CLOSE");
 		gfn_cbRefresh("CB_YEAR", data.Year, true);
 
 		fn_makeGrid();
-		//fn_search();
-		
-		gfn_mcbRefresh("MCB_COMPANY", data.Company, false);
-		$('#MCB_COMPANY').multiselect('rebuild');
 	} else if ( id == "CB_LEVEL1" ){
 		gfn_cbRefresh("CB_LEVEL2", data.CategoryLevel2, true);
 	} else if ( id == "CB_LEVEL2" ){
 		gfn_cbRefresh("CB_LEVEL3", data.CategoryLevel3, true);
-	} else if ( id == "INS_CB_LEVEL1" ){
-		gfn_cbRefresh("INS_CB_LEVEL2", data.CategoryLevel2, true);
-	} else if ( id == "INS_CB_LEVEL2" ){
-		gfn_cbRefresh("INS_CB_LEVEL3", data.CategoryLevel3, true);
-	} else if ( id == "INS_CB_COURSE_CODE" ){
-		dd.CourseCode = data.CourseCode;
-		gfn_cbRefresh("INS_CB_COURSE_CODE", data.CourseCode, true);
-	} else if ( id == "ExamType" ){
-		gfn_cbRefresh("CB_EXAM_TYPE", data.ExamType, true);
 	} else if ( id == "save" ){
 		mask.close();
 
@@ -744,9 +695,7 @@ function fn_gridEvent(event, obj) {
 		obj.self.select(obj.dindex);
 	} else if ( event == "DBLClick" ) {
 		if ( obj.column.key == "COURSE_EXAM_TYPE_NAME" ) {
-	    	gfn_showPopupDiv("examTypeDiv");
-			
-	    	gfn_callAjax("/common/axDd.do", { DD_KIND : "ExamType", COURSE_CODE : obj.item.COURSE_CODE }, fn_callbackAjax, "ExamType", { async : false });
+	    	Popup.showExamType( { COURSE_CODE : obj.item.COURSE_CODE } );
 		}
 	} else if ( event == "DataChanged" ) {
 		if ( obj.key == "COURSE_EXAM_TYPE_NAME" ||
@@ -764,12 +713,6 @@ function fn_cbChange(id) {
 	    gfn_callAjax("/common/axDd.do", { DD_KIND : "CategoryLevel2", LEVEL1_CODE : $("#CB_LEVEL1 option:selected").val()}, fn_callbackAjax, "CB_LEVEL1", { async : false });
 	} else  if ( id == "CB_LEVEL2" ) {
 	    gfn_callAjax("/common/axDd.do", { DD_KIND : "CategoryLevel3", LEVEL2_CODE : $("#CB_LEVEL2 option:selected").val()}, fn_callbackAjax, "CB_LEVEL2", { async : false });
-	} else  if ( id == "INS_CB_LEVEL1" ) {
-	    gfn_callAjax("/common/axDd.do", { DD_KIND : "CategoryLevel2", LEVEL1_CODE : $("#INS_CB_LEVEL1 option:selected").val()}, fn_callbackAjax, "INS_CB_LEVEL1", { async : false });
-	} else  if ( id == "INS_CB_LEVEL2" ) {
-	    gfn_callAjax("/common/axDd.do", { DD_KIND : "CategoryLevel3", LEVEL2_CODE : $("#INS_CB_LEVEL2 option:selected").val()}, fn_callbackAjax, "INS_CB_LEVEL2", { async : false });
-	} else  if ( id == "INS_CB_LEVEL3" ) {
-	    gfn_callAjax("/common/axDd.do", { DD_KIND : "CourseCode", LEVEL3_CODE : $("#INS_CB_LEVEL3 option:selected").val()}, fn_callbackAjax, "INS_CB_COURSE_CODE", { async : false });
 	} else  if ( id == "CB_COMPANY" ) {
 		if ( $("#CB_COMPANY").val() == "B2B" ) {
 			gfn_cbRefresh("CB_COMPANY2", dd.Company1, true);
@@ -824,9 +767,6 @@ function fn_cbChange(id) {
 	    	<label for="CB_COMPANY">&nbsp;회사 구분</label>
 			<select class="form-control" id="CB_COMPANY" onchange="fn_cbChange('CB_COMPANY')">
 				<option value="">전체</option>
-				<option value="B2C">일반사용자</option>
-				<option value="B2B">회사</option>
-				<option value="C2C">회사(C2C)</option>
 			</select>
 			<select class="form-control" id="CB_COMPANY2">
 				<option value="">전체</option>
@@ -865,50 +805,6 @@ function fn_cbChange(id) {
 </div>
 
 <div class="mask"></div>
-<div class="popupDiv" id="insDiv" style="width:300px; height:200px;">
-	대분류
-	<select id="INS_CB_LEVEL1" onchange="fn_cbChange('INS_CB_LEVEL1')">
-	</select>
-	<br></br>
-	중분류
-	<select id="INS_CB_LEVEL2" onchange="fn_cbChange('INS_CB_LEVEL2')">
-	</select>
-	<br></br>
-	소분류
-	<select id="INS_CB_LEVEL3" onchange="fn_cbChange('INS_CB_LEVEL3')">
-	</select>
-	<br></br>
-	과정명
-	<select id="INS_CB_COURSE_CODE">
-	</select>
-	
-	<div style="height:30px"></div>
-	<input type="button" href="#" value="확인" onclick="fn_hidePopupDiv('insDiv')"/>
-    <input type="button" href="#" value="닫기" onclick="gfn_hidePopupDiv('insDiv');"/>
-</div>
-	
-<div class="popupDiv" id="examTypeDiv" style="width:200px; height:100px;">
-	시험 유형
-	<select id="CB_EXAM_TYPE">
-	</select>
-	<div style="height:30px"></div>
-	<input type="button" href="#" value="삭제" onclick="fn_hidePopupDiv('examTypeDiv', 'delete')"/>
-	<input type="button" href="#" value="확인" onclick="fn_hidePopupDiv('examTypeDiv')"/>
-    <input type="button" href="#" value="닫기" onclick="gfn_hidePopupDiv('examTypeDiv');"/>
-</div>
-
-<div class="popupDiv" id="companyDiv" style="width:300px; height:200px;">
-	복사할 회사 선택
-	<div class="btn-group">
-	<select id="MCB_COMPANY" multiple="multiple">
-		<option>a</option>
-		<option>b</option>
-		<option>c</option>
-	</select>
-	<div style="height:30px"></div>
-	<input type="button" href="#" value="복사" onclick="fn_hidePopupDiv('companyDiv')"/>
-    <input type="button" href="#" value="닫기" onclick="gfn_hidePopupDiv('companyDiv');"/>
-</div>
 
 
 </body>

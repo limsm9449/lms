@@ -41,12 +41,7 @@ $(document.body).ready(function () {
 	            fn_search();
 	            break;
             case "add":
-		    	gfn_cbRemove("INS_CB_COURSE_CODE");
-		    	gfn_cbRemove("INS_CB_LEVEL3");
-		    	gfn_cbRemove("INS_CB_LEVEL2");
-		    	$("#INS_CB_LEVEL1").val("");
-		    	
-		    	gfn_showPopupDiv("insDiv");
+            	Popup.showCourseCode({ ddKind : "ExamCourseCode" });
 
 		    	break;
             case "delete":
@@ -266,29 +261,15 @@ function fn_makeGrid() {
 	$(window).trigger("resize");
 }
 
-function fn_hidePopupDiv(popupDivId) {
-	gfn_hidePopupDiv(popupDivId);
-	
-	if ( $("#INS_CB_LEVEL1 option:selected").val() == "" || $("#INS_CB_LEVEL2 option:selected").val() == "" || $("#INS_CB_LEVEL3 option:selected").val() == "" ) {
-		mask.open();
-		dialog.alert( { msg : "대/중/소분류를 선택하셔야 합니다." }, function () { mask.close(); } );
-		return;
-	} 
-
-	if ( $("#INS_CB_COURSE_CODE option:selected").val() == "" ) {
-		mask.open();
-		dialog.alert( { msg : "과정을 선택하셔야 합니다." }, function () { mask.close(); } );
-		return;
-	} 
-
+function fn_courseCodeSelect(data) {
 	grid.addRow( 
 		{
 			NEW_FLAG : "Y", 
-			CATEGORY_NAME : $("#INS_CB_LEVEL1 option:selected").text() + " > " + $("#INS_CB_LEVEL2 option:selected").text() + " > " + $("#INS_CB_LEVEL3 option:selected").text(), 
-			COURSE_CODE : $("#INS_CB_COURSE_CODE option:selected").val(), 
-			COURSE_NAME : $("#INS_CB_COURSE_CODE option:selected").text(),
-			QUESTION_ALL_CNT : gfn_getValueInList(dd.ExamCourseCode, "value",  $("#INS_CB_COURSE_CODE option:selected").val(), "QUESTION_CNT"),
-			TYPE_NAME : $("#INS_CB_COURSE_CODE option:selected").text() + " 유형", 
+			CATEGORY_NAME : data.CB_LEVEL1_NAME + " > " + data.CB_LEVEL2_NAME + " > " + data.CB_LEVEL3_NAME,  
+			COURSE_CODE : data.CB_COURSE_CODE, 
+			COURSE_NAME : data.CB_COURSE_NAME,
+			QUESTION_ALL_CNT : data.QUESTION_CNT,
+			TYPE_NAME : data.CB_COURSE_CODE + " 유형", 
 			QUESTION_CNT : 0,
 			STANDARD_CNT : 0,
 			STANDARD_QUESTION_CNT : 0,
@@ -354,7 +335,6 @@ function fn_callbackAjax(data, id) {
 		dd = $.extend({}, data);
 		
 		gfn_cbRefresh("CB_LEVEL1", data.CategoryLevel1, true);
-		gfn_cbRefresh("INS_CB_LEVEL1", data.CategoryLevel1, true);
 		
 		fn_makeGrid();
 		//fn_search();
@@ -362,14 +342,6 @@ function fn_callbackAjax(data, id) {
 		gfn_cbRefresh("CB_LEVEL2", data.CategoryLevel2, true);
 	} else if ( id == "CB_LEVEL2" ){
 		gfn_cbRefresh("CB_LEVEL3", data.CategoryLevel3, true);
-	} else if ( id == "INS_CB_LEVEL1" ){
-		gfn_cbRefresh("INS_CB_LEVEL2", data.CategoryLevel2, true);
-	} else if ( id == "INS_CB_LEVEL2" ){
-		gfn_cbRefresh("INS_CB_LEVEL3", data.CategoryLevel3, true);
-	} else if ( id == "INS_CB_COURSE_CODE" ){
-		gfn_cbRefresh("INS_CB_COURSE_CODE", data.ExamCourseCode, true);
-		
-		dd.ExamCourseCode = data.ExamCourseCode;
 	} else if ( id == "save" ){
 		mask.close();
 
@@ -389,12 +361,6 @@ function fn_cbChange(id) {
 	    gfn_callAjax("/common/axDd.do", { DD_KIND : "CategoryLevel2", LEVEL1_CODE : $("#CB_LEVEL1 option:selected").val()}, fn_callbackAjax, "CB_LEVEL1", { async : false });
 	} else  if ( id == "CB_LEVEL2" ) {
 	    gfn_callAjax("/common/axDd.do", { DD_KIND : "CategoryLevel3", LEVEL2_CODE : $("#CB_LEVEL2 option:selected").val()}, fn_callbackAjax, "CB_LEVEL2", { async : false });
-	} else  if ( id == "INS_CB_LEVEL1" ) {
-	    gfn_callAjax("/common/axDd.do", { DD_KIND : "CategoryLevel2", LEVEL1_CODE : $("#INS_CB_LEVEL1 option:selected").val()}, fn_callbackAjax, "INS_CB_LEVEL1", { async : false });
-	} else  if ( id == "INS_CB_LEVEL2" ) {
-	    gfn_callAjax("/common/axDd.do", { DD_KIND : "CategoryLevel3", LEVEL2_CODE : $("#INS_CB_LEVEL2 option:selected").val()}, fn_callbackAjax, "INS_CB_LEVEL2", { async : false });
-	} else  if ( id == "INS_CB_LEVEL3" ) {
-	    gfn_callAjax("/common/axDd.do", { DD_KIND : "ExamCourseCode", LEVEL3_CODE : $("#INS_CB_LEVEL3 option:selected").val()}, fn_callbackAjax, "INS_CB_COURSE_CODE", { async : false });
 	}
 }
 
@@ -447,27 +413,6 @@ function fn_cbChange(id) {
 </div>
 
 <div class="mask"></div>
-<div class="popupDiv" id="insDiv" style="width:300px; height:200px;">
-	대분류
-	<select id="INS_CB_LEVEL1" onchange="fn_cbChange('INS_CB_LEVEL1')">
-	</select>
-	<br></br>
-	중분류
-	<select id="INS_CB_LEVEL2" onchange="fn_cbChange('INS_CB_LEVEL2')">
-	</select>
-	<br></br>
-	소분류
-	<select id="INS_CB_LEVEL3" onchange="fn_cbChange('INS_CB_LEVEL3')">
-	</select>
-	<br></br>
-	과정명
-	<select id="INS_CB_COURSE_CODE">
-	</select>
-	
-	<div style="height:30px"></div>
-	<input type="button" href="#" value="확인" onclick="fn_hidePopupDiv('insDiv')"/>
-    <input type="button" href="#" value="닫기" onclick="gfn_hidePopupDiv('insDiv');"/>
-</div>
 	
 
 </body>

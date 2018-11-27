@@ -79,10 +79,10 @@ function fn_callbackAjax(data, id) {
 	//console.log("fn_callbackAjax : " + id);
 	if ( id == "search" ) {
 		if ( data.row.LOGIN_IMG == "Y" ) {
-			$('#loginImg').attr("src", "/cImage/company/" + data.row.COMP_CD + "_login.jpg");
+			$('#loginImg').attr("src", "/cImage/company/" + data.row.COMP_CD + "_login.jpg" + "?timestamp=" + gfn_timestamp());
 		}
 		if ( data.row.GNB_IMG == "Y" ) {
-			$('#gnbImg').attr("src", "/cImage/company/" + data.row.COMP_CD + "_gnb.jpg");
+			$('#gnbImg').attr("src", "/cImage/company/" + data.row.COMP_CD + "_gnb.jpg" + "?timestamp=" + gfn_timestamp());
 		}
 		//mask.close();
 	} else if ( id == "save" ){
@@ -93,7 +93,7 @@ function fn_callbackAjax(data, id) {
 			dialog.alert( { msg : "업로드시 문제가 발생했습니다. (" + data.RtnMode + ")" }, function () { mask.close(); } );
 		} else {
 			mask.open();
-			dialog.alert( { msg : "업로드 되었습니다. 등록된 이미지를 다른 이미지로 변경시 바로 바뀌지 않습니다. f5를 눌러 주시면 업로드 이미지를 볼 수 있습니다." }, function () { mask.close();	fn_search(); } );
+			dialog.alert( { msg : "업로드 되었습니다." }, function () { mask.close();	fn_search(); } );
 		}
 		
 		isSave = true;

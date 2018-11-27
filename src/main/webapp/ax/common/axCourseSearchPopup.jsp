@@ -294,7 +294,7 @@ function fn_close() {
 </div>
 
 </form>
-	
+<div class="mask"></div>	
 
 </body>
 </html>

@@ -1,23 +1,17 @@
 <%@ page contentType="text/html;charset=utf-8"%>
+
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ko" xml:lang="ko">
 <head>
-    <meta charset='utf-8'>
-    <meta name='viewport' content='width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1'>
-    <meta http-equiv='X-UA-Compatible' content='ie=edge'>
-    <title>Q learning - 관리자 - 과정관리 - 과정코드관리</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+<title>
+</title>
 
-	<%@ include file="../../common/commMainInclude.jsp" %>
+<%@ include file="../../common/commAxAdminInclude.jsp" %>
 
-    <link href='https://fonts.googleapis.com/css?family=Nanum+Gothic' rel='stylesheet'>
-    <link rel='stylesheet' href='/resources/homepage/css/initialization.css'>
-    <link rel='stylesheet' href='/resources/homepage/css/etc/admin.css'>
-    
-    
 </head>
 
 <script type="text/javascript">
@@ -32,9 +26,7 @@ var dd;
 
 $(document.body).ready(function () {
 	$( window ).resize( function() {
-		//gfn_gridResize("grid-parent", grid);
-		$("#" + "grid-parent").height($(window).height() - $("#" + "grid-parent").position().top - 20);
-		grid.setHeight($(window).height() - $("#" + "grid-parent").position().top - 20);
+		gfn_gridResize("grid-parent", grid);
 	} );
 	
     confirmDialog.setConfig({
@@ -55,13 +47,9 @@ $(document.body).ready(function () {
             		dialog.alert( { msg : "신규로 추가된 과정코드가 잇습니다. 저장후에 다시 추가를 해주세요." }, function () { mask.close();	} );
             		return;
             	}
-            	
-		    	gfn_cbRemove("INS_CB_LEVEL3");
-		    	gfn_cbRemove("INS_CB_LEVEL2");
-		    	$("#INS_CB_LEVEL1").val("");
-		    	
-		    	gfn_showPopupDiv("categoryDiv");
 
+		    	Popup.showCategory();
+		    	
 		    	break;
             case "delete":
             	var row = grid.getList("selected");
@@ -268,54 +256,6 @@ function fn_makeGrid() {
 	$(window).trigger("resize");
 }
 
-function fn_hidePopupDiv(popupDivId) {
-	gfn_hidePopupDiv(popupDivId);
-	
-	if ( $("#INS_CB_LEVEL1 option:selected").val() == "" || $("#INS_CB_LEVEL2 option:selected").val() == "" || $("#INS_CB_LEVEL3 option:selected").val() == "" ) {
-		mask.open();
-		dialog.alert( { msg : "대/중/소분류를 선택하셔야 합니다." }, function () { mask.close(); gfn_showPopupDiv("categoryDiv"); } );
-	} else {
-		$.ajax({
-			url : context + "/common/axMaxCourseCode.do",
-			type : "POST",
-			async : false,
-			dataType :"json",
-			contentType : "application/json; charset=UTF-8",
-			data : JSON.stringify(params || {}),
-			success : function(data){
-				var maxSeq = data.list[0].YYYYMMDD;
-				if ( data.list[0].MAX_SEQ < 10 ) {
-					maxSeq += "00" + ( data.list[0].MAX_SEQ + 1 );
-				} else if ( data.list[0].MAX_SEQ < 100 ) {
-					maxSeq += "0" + ( data.list[0].MAX_SEQ + 1 );
-				} else {
-					maxSeq += ( data.list[0].MAX_SEQ + 1 );
-				}
-				grid.addRow( 
-					{
-						NEW_FLAG : "Y", 
-						CATEGORY_NAME : $("#INS_CB_LEVEL1 option:selected").text() + " > " + $("#INS_CB_LEVEL2 option:selected").text() + " > " + $("#INS_CB_LEVEL3 option:selected").text(), 
-						CODE : $("#INS_CB_LEVEL3 option:selected").val(), 
-						COURSE_CODE : maxSeq, 
-						COURSE_NAME : "과정명을 입력하세요",
-						H_PX : 1000, 
-						V_PX : 900,
-						DIRECTORY : maxSeq,
-						POINT : 0,
-						USE_YN : "Y", 
-					}, "last", {focus: "END"});
-
-				if ( $.isFunction(callback) ) {
-					callback(data, id);
-				}
-			},
-			error : function(e) {
-				alert(resource.msg.systemError);
-			}
-		});
-	}
-}
-
 function fn_params() {
 	params.LEVEL1_CODE = $("#CB_LEVEL1 option:selected").val();	
 	params.LEVEL2_CODE = $("#CB_LEVEL2 option:selected").val();	
@@ -372,7 +312,7 @@ function fn_callbackAjax(data, id) {
 		gfn_cbRefresh("INS_CB_LEVEL1", data.CategoryLevel1, true);
 		
 		fn_makeGrid();
-		//fn_search();
+		fn_search();
 	} else if ( id == "CB_LEVEL1" ){
 		gfn_cbRefresh("CB_LEVEL2", data.CategoryLevel2, true);
 	} else if ( id == "CB_LEVEL2" ){
@@ -387,6 +327,43 @@ function fn_callbackAjax(data, id) {
 		mask.open();
 		dialog.alert( { msg : "저장 되었습니다." }, function () { mask.close();	fn_search(); } );
 	}
+}
+
+function fn_categorySelect(data) {
+	$.ajax({
+		url : context + "/common/axMaxCourseCode.do",
+		type : "POST",
+		async : false,
+		dataType :"json",
+		contentType : "application/json; charset=UTF-8",
+		data : JSON.stringify(params || {}),
+		success : function(jData){
+			var maxSeq = jData.list[0].YYYYMMDD;
+			if ( jData.list[0].MAX_SEQ < 10 ) {
+				maxSeq += "00" + ( jData.list[0].MAX_SEQ + 1 );
+			} else if ( jData.list[0].MAX_SEQ < 100 ) {
+				maxSeq += "0" + ( jData.list[0].MAX_SEQ + 1 );
+			} else {
+				maxSeq += ( jData.list[0].MAX_SEQ + 1 );
+			}
+			grid.addRow( 
+				{
+					NEW_FLAG : "Y", 
+					CATEGORY_NAME : data.CB_LEVEL1_NAME + " > " + data.CB_LEVEL2_NAME + " > " + data.CB_LEVEL3_NAME, 
+					CODE : data.CB_LEVEL3_CODE, 
+					COURSE_CODE : maxSeq, 
+					COURSE_NAME : "과정명을 입력하세요",
+					H_PX : 1000, 
+					V_PX : 900,
+					DIRECTORY : maxSeq,
+					POINT : 0,
+					USE_YN : "Y", 
+				}, "last", {focus: "END"});
+		},
+		error : function(e) {
+			alert(resource.msg.systemError);
+		}
+	});
 }
 
 function fn_gridEvent(event, obj) {
@@ -410,84 +387,59 @@ function fn_cbChange(id) {
 
 </script>
 
-<body style='background:#fff'>
+<body style="padding : 10px">
+
+
+<h2>과정 코드 관리</h2>
+<div style="height:10px"></div>
 
 <form id="frm" name="frm" method="post" class="form-inline">
-
-<frameset rows='*'>
-    <div class='wrap clear_fix'>
-        <div class='contents_wrap'>
-            <div class='content_top'>
-                <h1>과정 코드 관리</h1>
-                <div class='filter_box clear_fix'>
-                    <div>
-                        <p>카테고리</p>
-                        <select name='CB_LEVEL1' id="CB_LEVEL1" onchange="fn_cbChange('CB_LEVEL1')">
-                            <option value=''>전체</option>
-                        </select>
-                        <select name='CB_LEVEL2' id="CB_LEVEL2" onchange="fn_cbChange('CB_LEVEL2')">
-                            <option value=''>전체</option>
-                        </select>
-                        <select name='CB_LEVEL3' id="CB_LEVEL3">
-                            <option value=''>전체</option>
-                        </select>
-                    </div>
-                    <div>
-                        <p>과정명</p>
-                        <input type='text' name='courseName' id='courseName'>
-                    </div>
-                    <div>
-                        <p>사용여부</p>
-                        <select name='useYn' id="useYn">
-                            <option value=''>전체</option>
-							<option value="Y">Y</option>
-							<option value="N">N</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-            <div class='content_btn_box clear_fix'>
-			    <button class="btn btn-default" data-grid-control="search">검색</button>
-			    <button class="btn btn-default" data-grid-control="add">추가</button>
-			    <button class="btn btn-default" data-grid-control="delete">삭제</button>
-			    <button class="btn btn-default" data-grid-control="reset">초기화</button>
-			    <button class="btn btn-default" data-grid-control="save">저장</button>
-			    <button class="btn btn-default" data-grid-control="export">엑셀</button>
-			    <button class="btn btn-default" data-grid-control="editDetail">주차 편집</button>                
-            </div>
-            <div class='grid_area' style="overflow-x: hidden;" id="grid-parent">
-			    <div data-ax5grid="first-grid" ></div>
-			</div>
-
-            <div class='admin_popup type1 div' id="categoryDiv" style="width:400px; height:250px;">
-                <div>
-                    <div class='category_box clear_fix'>
-                        <p>대분류</p>
-                        <select id="INS_CB_LEVEL1" onchange="fn_cbChange('INS_CB_LEVEL1')"></select>
-                    </div>
-                    <div class='category_box clear_fix'>
-                        <p>중분류</p>
-                        <select id="INS_CB_LEVEL2" onchange="fn_cbChange('INS_CB_LEVEL2')"></select>
-                    </div>
-                    <div class='category_box clear_fix'>
-                        <p>소분류</p>
-                        <select id="INS_CB_LEVEL3"></select>
-                    </div>
-                </div>
-                <div class='admin_popup_btn'>
-                    <button onclick="fn_hidePopupDiv('categoryDiv')">확인</button>
-                    <button onclick="gfn_hidePopupDiv('categoryDiv');">닫기</button>
-                </div>
-            </div>			
-        </div>
-    </div>
-    
-<div class="mask"></div>
-</frameset>
-
+  	<div class="form-group">
+    	<label for="CB_LEVEL1">카테고리</label>
+		<select class="form-control" id="CB_LEVEL1" onchange="fn_cbChange('CB_LEVEL1')">
+			<option value="">전체</option>
+		</select>
+		<select class="form-control" id="CB_LEVEL2" onchange="fn_cbChange('CB_LEVEL2')">
+			<option value="">전체</option>
+		</select>
+		<select class="form-control" id="CB_LEVEL3">
+			<option value="">전체</option>
+		</select>
+  	</div>
+  	<div class="form-group">
+    	<label for="courseName">&nbsp;과정명</label>
+    	<input type="text" class="form-control" id="courseName" name="courseName">
+  	</div>
+  	<div class="form-group">
+    	<label for="useYn">&nbsp;사용여부</label>
+    	<select class="form-control" id="useYn">
+			<option value="">전체</option>
+			<option value="Y">Y</option>
+			<option value="N">N</option>
+		</select>
+  	</div>
 </form>
+<div style="height:10px"></div>
 
-<script src='/resources/homepage/js/dev_sub.js'></script>
+<div>
+    <button class="btn btn-default" data-grid-control="search">검색</button>
+    <button class="btn btn-default" data-grid-control="add">추가</button>
+    <button class="btn btn-default" data-grid-control="delete">삭제</button>
+    <button class="btn btn-default" data-grid-control="reset">초기화</button>
+    <button class="btn btn-default" data-grid-control="save">저장</button>
+    <button class="btn btn-default" data-grid-control="export">엑셀</button>
+    <button class="btn btn-default" data-grid-control="editDetail">주차 편집</button>
+</div>
+<div style="height:10px"></div>
+
+
+<div style="position: relative;height:400px;" id="grid-parent">
+    <div data-ax5grid="first-grid" style="height: 100%;"></div>
+</div>
+
+
+<div class="mask"></div>
+
 </body>
 </html>
 
