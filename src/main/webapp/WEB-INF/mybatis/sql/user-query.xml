@@ -46,7 +46,8 @@
 							,IFNULL(E.DISCUSSION, 0) DISCUSSION
 							,IFNULL(E.PROGRESS, 0) PROGRESS
 							,IFNULL(E.TOTAL, 0) TOTAL 
-							,E.POSTSCRIPT_YN
+							,IFNULL(E.POSTSCRIPT_YN, 'N') POSTSCRIPT_YN
+							,IFNULL(E.QUEST_YN, 'N') QUEST_YN
 					  FROM COURSE A LEFT JOIN COURSE_CODE AS B ON (A.COURSE_CODE = B.COURSE_CODE )
 									LEFT JOIN USER AS C ON (B.TEACHER_ID = C.USER_ID)
 									JOIN COURSE_REGISTER D ON D.COURSE_ID = A.COURSE_ID AND D.USER_ID = #{userId}
@@ -165,4 +166,10 @@
 	  	FROM 	COURSE
 		WHERE 	COURSE_ID = #{courseId}	
     </select>
+
+	<insert id="courseAttendanceLogInsert" parameterType="User">
+		INSERT 	INTO COURSE_ATTENDANCE ( COURSE_ID, USER_ID, ATTENDANCE_DATE )
+		VALUES	( #{courseId}, #{userId}, CURRENT_TIMESTAMP )
+    </insert>
+    
 </mapper>

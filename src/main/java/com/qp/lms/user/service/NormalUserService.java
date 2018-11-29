@@ -32,13 +32,6 @@ public class NormalUserService {
         return set ;
     }
 
-    public UserSet userCourseV(UserSet set) throws Exception {
-    	set.getCondiVO().setUserId(SessionUtil.getSessionUserId());
-    	set.setCourseInfo((CourseVO) sqlSession.selectOne("normalUser.courseData",set.getCondiVO()));
-    	
-        return set ;
-    }
-
     public UserSet waitingCourseList(UserSet set) throws Exception {
     	set.getCondiVO().setUserId(SessionUtil.getSessionUserId());
     	List<CourseVO> list = sqlSession.selectList("normalUser.waitingCourseList",set.getCondiVO());
@@ -63,22 +56,14 @@ public class NormalUserService {
         return set ;
     }
 
-    public UserSet myCourseV(UserSet set) throws Exception {
+    public UserSet interestCourseList(UserSet set) throws Exception {
     	set.getCondiVO().setUserId(SessionUtil.getSessionUserId());
-    	set.setCourseInfo((CourseVO) sqlSession.selectOne("normalUser.courseData",set.getCondiVO()));
-    	
-    	//점수 데이타도 가져와야 한다.
-    	EvaluationVO vo = new EvaluationVO();
-    	vo.setCourseId(set.getCondiVO().getCourseId());
-    	vo.setUserId(set.getCondiVO().getUserId());
-    	set.setEvaluation((EvaluationVO) sqlSession.selectOne("evaluation.courseEvalData",vo));
-    	
-    	List<EvaluationVO> list = sqlSession.selectList("evaluation.courseWeekList",vo);
-    	set.setWeek(list);
+    	List<CourseVO> list = sqlSession.selectList("normalUser.interestCourseList",set.getCondiVO());
+    	set.setCourse(list);
     	
         return set ;
     }
-
+    
     @Transactional(propagation=Propagation.REQUIRED, rollbackFor={Throwable.class})
     public UserSet courseRegCancel(UserSet set) throws Exception {
    		sqlSession.update("normalUser.courseRegCancel",set.getCondiVO());

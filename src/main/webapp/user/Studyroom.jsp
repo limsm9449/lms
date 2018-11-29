@@ -271,9 +271,17 @@ $(document).ready(function(){
              	<a href='#' onclick="javascript:Popup.showPostscript('${set.courseInfo.courseId}'); return false;">학습후기</a>
 	</c:otherwise>
 </c:choose>                 
-                
                 <span></span>
                 <a href='#' onclick="javascript:Popup.showUserBoard('QNA','${set.courseInfo.courseId}'); return false;">학습 질문답변</a>
+                <span></span>
+<c:choose>
+	<c:when test="${set.courseInfo.questYn eq 'Y'}">
+             	<a href='#' onclick="javascript:Popup.showQuestResult('${set.courseInfo.courseId}'); return false;">설문확인</a>
+	</c:when>
+	<c:otherwise>
+             	<a href='#' onclick="javascript:Popup.showQuest('${set.courseInfo.courseId}'); return false;">설문응시</a>
+	</c:otherwise>
+</c:choose>                 
             </div>
         </div>
     </div>

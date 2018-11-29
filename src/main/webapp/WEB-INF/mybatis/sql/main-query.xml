@@ -84,6 +84,10 @@
                 ,IFNULL(F.GRADE_CNT, 0) GRADE_CNT
                 ,A.COURSE_COST
                 ,A.TOTAL_FAIL
+                ,CASE WHEN (	SELECT 	COUNT(*)
+			                	FROM	USER_INTEREST_COURSE
+			                	WHERE	USER_ID = #{userId}
+			                	AND		COURSE_ID = A.COURSE_ID ) > 0 THEN 'Y' ELSE 'N' END INTEREST_COURSE_YN
 		  FROM COURSE A 
 			          LEFT OUTER JOIN COURSE_CODE B ON A.COURSE_CODE = B.COURSE_CODE
 		              LEFT OUTER JOIN COURSE_MASTER C ON A.COURSE_CODE = C.COURSE_CODE
@@ -544,9 +548,15 @@
 		VALUES ( 'COMPANY', #{userId}, #{userName}, #{mobile}, #{tel}, #{email}, #{companyName}, #{title}, #{contents}, CURRENT_TIMESTAMP ) 
 	</insert>	        
 
-	<insert id="tutorInquiryInsert" parameterType="Main">
-		INSERT INTO USER_INQUIRY ( KIND, USER_ID, USER_NAME, MOBILE, TEL, EMAIL, ABOUT_ME, MOTIVE, CREATE_DATE )
-		VALUES ( 'TUTOR', #{userId}, #{userName}, #{mobile}, #{tel}, #{email}, #{aboutMe}, #{motive}, CURRENT_TIMESTAMP ) 
+	<insert id="interestCourseInsert" parameterType="Main">
+		INSERT INTO USER_INTEREST_COURSE ( USER_ID, COURSE_ID )
+		VALUES ( #{userId}, #{courseId} ) 
+	</insert>	        
+
+	<insert id="interestCourseDelete" parameterType="Main">
+		DELETE 	FROM USER_INTEREST_COURSE
+		WHERE	USER_ID = #{userId}
+		AND		COURSE_ID = #{courseId}
 	</insert>	        
 	
 </mapper>

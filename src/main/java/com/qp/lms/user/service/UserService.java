@@ -39,6 +39,7 @@ public class UserService {
     	List<CourseVO> courseExamList = sqlSession.selectList("user.courseExamList",set.getCondiVO());
     	set.setExam(courseExamList);
 
+    	sqlSession.insert("user.courseAttendanceLogInsert", set.getCondiVO());
     	
     	BoardVO board = new BoardVO();
     	board.setCourseId(set.getCondiVO().getCourseId());

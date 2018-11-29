@@ -47,6 +47,8 @@ public class MainService {
     }
 	
 	public MainSet mainCourseData(MainSet set) throws Exception {
+		set.getCondiVO().setUserId(SessionUtil.getSessionUserId());
+		
     	set.setCourseData((CourseVO)sqlSession.selectOne("main.courseData",set.getCondiVO()));
     	
     	List<CourseResourceVO> courseResourceList = sqlSession.selectList("main.courseResourceData",set.getCondiVO());
@@ -327,6 +329,28 @@ public class MainService {
     	sqlSession.insert("attach.attachFromAttachTempIns",attach);
     	sqlSession.delete("attach.attachTempForUserDel",attach);
 
+    	set.setRtnMode(Constant.mode.OK.name());
+
+    	return set;
+    }
+    
+    @Transactional(propagation=Propagation.REQUIRED, rollbackFor={Throwable.class})
+    public MainSet interestAdd(MainSet set) throws Exception {
+    	set.getCondiVO().setUserId(SessionUtil.getSessionUserId());
+    	
+    	sqlSession.insert("main.interestCourseInsert", set.getCondiVO());
+    	
+    	set.setRtnMode(Constant.mode.OK.name());
+
+    	return set;
+    }
+    
+    @Transactional(propagation=Propagation.REQUIRED, rollbackFor={Throwable.class})
+    public MainSet interestDelete(MainSet set) throws Exception {
+    	set.getCondiVO().setUserId(SessionUtil.getSessionUserId());
+    	
+    	sqlSession.delete("main.interestCourseDelete", set.getCondiVO());
+    	
     	set.setRtnMode(Constant.mode.OK.name());
 
     	return set;

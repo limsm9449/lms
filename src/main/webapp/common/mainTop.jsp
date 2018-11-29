@@ -112,6 +112,7 @@
                             <li><a href="javascript:" onclick="page.goPage('/normalUser/waitingCourseList');">수강대기과정</a></li>
                             <li><a href="javascript:" onclick="page.goPage('/normalUser/cancelCourseList');">수강취소과정</a></li>
                             <li><a href="javascript:" onclick="page.goPage('/normalUser/myCourseList');">수강완료과정</a></li>
+                            <li><a href="javascript:" onclick="page.goPage('/normalUser/interestCourseList');">관심과정</a></li>
                             <li><a href="javascript:" onclick="page.goPage('/main/cart');">장바구니</a></li>
                             <li><a href="javascript:" onclick="page.goPage('/member/userMemberU');">회원정보수정</a></li>
                             <li><a href="javascript:" onclick="page.goPage('/member/memberChangePassword');">비밀번호변경</a></li>

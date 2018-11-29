@@ -113,6 +113,7 @@
     	       TUTOR_YN = #{TUTOR_YN},
     	       BANK = #{BANK},
     	       ACC_NUM = #{ACC_NUM},
+    	       CERTIFICATION_YN = #{CERTIFICATION_YN},
     	       UPDATE_DATE = CURRENT_TIMESTAMP,
     	       UPDATE_USER = #{SESSION_USER_ID}
     	 WHERE USER_ID = #{USER_ID} 

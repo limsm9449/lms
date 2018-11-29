@@ -347,7 +347,11 @@ function fn_makeGrid() {
 	        	key : "CERTIFICATION_YN", 
 	        	label : "인증 여부", 
 	            width : 90,
-	        	align : "center"
+	        	align : "center", 
+	        	editor : { type : "checkbox", config : {height: 17, trueValue: "Y", falseValue: "N"} },
+				styleClass: function () {
+                    return "grid-cell-edit";
+                }
 	        },{
 	            key : "BANK",
 	            label : "환불은행",

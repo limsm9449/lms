@@ -122,6 +122,42 @@ function lfn_btn(pKind, pParam) {
 		</c:choose>
 	} else if ( pKind == "refresh" ) {
 		f_submitSelf("/main/mainCourseData",$("#frm").serialize());
+	} else if ( pKind == "interestAdd" ) {
+		if ( confirm("관심과정으로 등록하시겠습니까?") == true ) {
+			$.ajax({
+				type :"POST",
+				url : context + "/main/interestAdd.do",
+				dataType :"json",
+				data : "courseId=${set.courseData.courseId}",
+				success : function(json){
+					if ( json.rtnMode == "OK") {
+						alert("관심과정으로 등록 되었습니다.");
+						page.goPage('/normalUser/interestCourseList', '');
+					}
+				},
+				error : function(e) {
+					alert("<spring:message code="lms.msg.systemError" text="-" />");
+				}
+			})
+		}
+	} else if ( pKind == "interestDelete" ) {
+		if ( confirm("관심과정으로 취소하시겠습니까?") == true ) {
+			$.ajax({
+				type :"POST",
+				url : context + "/main/interestDelete.do",
+				dataType :"json",
+				data : "courseId=${set.courseData.courseId}",
+				success : function(json){
+					if ( json.rtnMode == "OK") {
+						alert("관심과정이 취소 되었습니다.");
+						window.location.reload();
+					}
+				},
+				error : function(e) {
+					alert("<spring:message code="lms.msg.systemError" text="-" />");
+				}
+			})
+		}
 	}
 
 }
@@ -251,8 +287,20 @@ function lfn_btn(pKind, pParam) {
                         <div class='register_btn_area clear_fix'>
                             <button onclick="javascript:Popup.showSampleCourse('${set.courseData.courseId}','${set.courseData.hPx + 100}','${set.courseData.vPx + 100}'); return false;">맛보기</button>
                             <button onclick="javascript:lfn_btn('cart'); return false;">장바구니</button>
+<c:choose>
+	<c:when test="${set.condiVO.isLogin eq 'N'}">
                             <button class='last_right' onclick="javascript:lfn_btn('application'); return false;">수강신청</button>
-                        </div>
+	</c:when>
+	<c:when test="${set.courseData.interestCourseYn eq 'N'}">
+                            <button onclick="javascript:lfn_btn('application'); return false;">수강신청</button>
+                            <button class='last_right' onclick="javascript:lfn_btn('interestAdd'); return false;">관심과정추가</button>
+	</c:when>
+	<c:otherwise>
+                            <button onclick="javascript:lfn_btn('application'); return false;">수강신청</button>
+                            <button class='last_right' onclick="javascript:lfn_btn('interestDelete'); return false;">관심과정취소 </button> 
+	</c:otherwise>
+</c:choose>                            
+                        </div> 
                     </div>
                 </div>
                 <div class='register_tab_contents_wrap'>

@@ -672,4 +672,36 @@ public class MainController {
 
     	return "/board/AttachT";
     }
+    
+    @RequestMapping(value = "/main/interestAdd")
+    public String interestAdd(@ModelAttribute MainVO vo, Model model) throws Exception {
+    	try {
+    		MainSet set = new MainSet();
+    		set.setCondiVO(vo);
+
+			set = svr.interestAdd(set);
+	    	
+	        model.addAttribute("json", CommUtil.getJsonObject(set.getRtnMode(),""));
+    	} catch ( Exception e ) {
+    		e.printStackTrace();
+    	}
+
+    	return "/common/json";
+    }
+    
+    @RequestMapping(value = "/main/interestDelete")
+    public String interestDelete(@ModelAttribute MainVO vo, Model model) throws Exception {
+    	try {
+    		MainSet set = new MainSet();
+    		set.setCondiVO(vo);
+
+			set = svr.interestDelete(set);
+	    	
+	        model.addAttribute("json", CommUtil.getJsonObject(set.getRtnMode(),""));
+    	} catch ( Exception e ) {
+    		e.printStackTrace();
+    	}
+
+    	return "/common/json";
+    }
 }

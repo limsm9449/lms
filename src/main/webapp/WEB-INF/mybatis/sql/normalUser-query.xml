@@ -161,9 +161,20 @@
 	]]> 
     </select>
 
-
-
-
+	<select id="interestCourseList" parameterType="User" resultType="Course">
+		SELECT 	CC.COURSE_NAME,
+		       	C.COURSE_ID,
+		       	C.C_PERIOD,
+		       	C.COURSE_COST
+		       	,C.TERM_YN
+		       	,IFNULL(C.STUDY_PERIOD_FROM, '') STUDY_PERIOD_FROM
+                ,IFNULL(C.STUDY_PERIOD_TO, '') STUDY_PERIOD_TO
+		FROM 	USER_INTEREST_COURSE UIC
+		           JOIN COURSE C ON C.COURSE_ID = UIC.COURSE_ID		 
+		           JOIN COURSE_CODE CC ON CC.COURSE_CODE = C.COURSE_CODE
+		WHERE 	UIC.USER_ID = #{userId}
+		ORDER 	BY CC.COURSE_NAME
+    </select>
 
 	<select id="courseData" parameterType="User" resultType="Course">
 	<![CDATA[ 

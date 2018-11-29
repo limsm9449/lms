@@ -19,7 +19,7 @@ import com.qp.lms.quest.service.UserQuestService;
 @Controller
 public class UserQuestController {
 
-	private static final Logger logger = LoggerFactory.getLogger(QuestController.class);
+	private static final Logger logger = LoggerFactory.getLogger(UserQuestController.class);
 
     @Autowired
     private UserQuestService svr;
