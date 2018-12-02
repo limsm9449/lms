@@ -23,9 +23,14 @@ var params = {}
 var dd = {};
 
 var kind = gfn_getUrlParams("kind");
+var COMPANY2 = gfn_getUrlParams("COMPANY2");
 
 $(document.body).ready(function () {
 	gfn_callAjax("/common/axDd.do", { DD_KIND : "CompanyKind,Company,Company1,Company2" }, fn_callbackAjax, "dd", { async : false });
+	
+	if ( COMPANY2 != "" ) {
+		$("#div1").hide();''
+	}
 }); 
 
 function fn_makeGrid() {
@@ -194,9 +199,14 @@ function fn_makeGrid() {
 
 function fn_params() {
 	params.kind = kind;
-	params.COMPANY = $("#CB_COMPANY option:selected").val();	
-	params.COMPANY2 = $("#CB_COMPANY2 option:selected").val();	
-	params.SEARCH_STR = $("#SEARCH_STR").val();	
+	params.SEARCH_STR = $("#SEARCH_STR").val();
+	
+	if ( COMPANY2 != "" ) {
+		params.COMPANY2 = COMPANY2;	
+	} else {
+		params.COMPANY = $("#CB_COMPANY option:selected").val();	
+		params.COMPANY2 = $("#CB_COMPANY2 option:selected").val();	
+	}
 }
 
 function fn_search() {
@@ -265,7 +275,7 @@ function fn_close() {
 <div style="height:10px"></div>
 
 <div class="form-inline">
-  	<div class="form-group">
+  	<div class="form-group" id="div1">
     	<label for="CB_COMPANY">&nbsp;회사 구분</label>
 		<select class="form-control" id="CB_COMPANY" onchange="fn_cbChange('CB_COMPANY')">
 			<option value="">전체</option>

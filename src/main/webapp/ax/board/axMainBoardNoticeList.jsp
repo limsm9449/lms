@@ -31,8 +31,6 @@ $(document.body).ready(function () {
         theme: "danger"
     });
     
-    $("#CONTENTS").cleditor({height:305});
-    
     gfn_callAjax("/common/axDd.do", { DD_KIND : "CompanyKind,Company,Company1,Company2" }, fn_callbackAjax, "dd", { async : false });
     
     $('[data-grid-control]').click(function () {

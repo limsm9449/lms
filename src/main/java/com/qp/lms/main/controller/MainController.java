@@ -374,7 +374,6 @@ public class MainController {
     		else {
     			set.getCondiVO().setIsLogin("Y");
     			set.getCondiVO().setUserId(SessionUtil.getSessionUserId());
-    			set.getCondiVO().setCompCd(SessionUtil.getCompCd());
     		}
 
 			// 메인 페이지에 나올 과정 리스트

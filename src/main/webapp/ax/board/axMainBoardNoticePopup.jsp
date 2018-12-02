@@ -24,6 +24,7 @@ var isSave = false;
 
 var MODE = gfn_getUrlParams("MODE");
 var SEQ = gfn_getUrlParams("SEQ");
+var COMP_CD = gfn_getUrlParams("COMP_CD");
 
 $(document.body).ready(function () {
     $("#CONTENTS").cleditor({height:290});
@@ -83,6 +84,11 @@ function fn_callbackAjax(data, id) {
 		dd = $.extend({}, data);
 		
 		gfn_cbRefresh("CB_COMPANY", data.Company, true);
+		
+	    if ( MODE == "INSERT" && COMP_CD != "" ) {
+	    	$("#CB_COMPANY").val(COMP_CD);
+	    	$("#CB_COMPANY").attr("disabled", true);
+	    }
 	}
 }
 

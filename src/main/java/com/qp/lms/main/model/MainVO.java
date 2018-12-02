@@ -53,7 +53,11 @@ public class MainVO extends CommonVO {
 	private String companyName;
 	private String attachUserId;
 	private String title;
-	
+	private String orderKind;
+	private String workerCardYn;
+	private String supportEmployerYn;
+	private String normalCourseYn;
+
 	public String getC1Code() {
 		return c1Code;
 	}
@@ -296,6 +300,30 @@ public class MainVO extends CommonVO {
 	}
 	public void setC2cYn(String c2cYn) {
 		this.c2cYn = c2cYn;
+	}
+	public String getOrderKind() {
+		return orderKind;
+	}
+	public void setOrderKind(String orderKind) {
+		this.orderKind = orderKind;
+	}
+	public String getWorkerCardYn() {
+		return workerCardYn;
+	}
+	public void setWorkerCardYn(String workerCardYn) {
+		this.workerCardYn = workerCardYn;
+	}
+	public String getSupportEmployerYn() {
+		return supportEmployerYn;
+	}
+	public void setSupportEmployerYn(String supportEmployerYn) {
+		this.supportEmployerYn = supportEmployerYn;
+	}
+	public String getNormalCourseYn() {
+		return normalCourseYn;
+	}
+	public void setNormalCourseYn(String normalCourseYn) {
+		this.normalCourseYn = normalCourseYn;
 	}
 	
 	

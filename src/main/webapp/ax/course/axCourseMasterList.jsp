@@ -230,6 +230,39 @@ function fn_makeGrid() {
                 }
 	        },{
               	key : undefined, 
+              	label: "교육비지원", 
+              	columns: [	        
+			        {
+			            key : "WORKER_CARD_YN",
+			            label : "근로자카드",
+			            width : 90,
+			            align : "center", 
+			        	editor : { type : "checkbox", config : {height: 17, trueValue: "Y", falseValue: "N"} },
+						styleClass: function () {
+		                    return "grid-cell-edit";
+		                }
+			        },{
+			            key : "SUPPORT_EMPLOYER_YN",
+			            label : "사업주지원", 
+			            width : 90,
+			            align : "center", 
+			        	editor : { type : "checkbox", config : {height: 17, trueValue: "Y", falseValue: "N"} },
+						styleClass: function () {
+		                    return "grid-cell-edit";
+		                }
+			        },{
+			            key : "NORMAL_COURSE_YN",
+			            label : "일반과정",
+			            width : 70,
+			            align : "center", 
+			        	editor : { type : "checkbox", config : {height: 17, trueValue: "Y", falseValue: "N"} },
+						styleClass: function () {
+		                    return "grid-cell-edit";
+		                }
+			        }
+		        ]
+	        },{
+              	key : undefined, 
               	label: "학습내용", 
               	columns: [	        
 			        {
@@ -505,7 +538,11 @@ function fn_courseCodeSelect(data) {
 			EVAL_COST : 0,
 			DATA_COST : 0,
 			ANSWER_COST : 0,
-			STUDY_MAX_WEEK : 0
+			STUDY_MAX_WEEK : 0,
+			WORKER_CARD_YN : 'N',
+			SUPPORT_EMPLOYER_YN : 'N',
+			NORMAL_COURSE_YN : 'Y'
+
 		}, "last", {focus: "END"}
 	);
 }

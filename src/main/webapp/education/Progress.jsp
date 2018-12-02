@@ -61,6 +61,21 @@
                     </table>
                 </div>
 
+                <div class='lecture_detail_table_box score'>
+                    <table>
+                        <tr>
+                            <th class='col_1'>학습기간</th>
+                            <th class='col_2'>최초학습일</th>
+                            <th class='col_3'>최종학습일</th>
+                        </tr>
+                        <tr>
+                            <td class="col_1">${set.evaluation.cFromDate} ~ ${set.evaluation.cToDate} (${set.evaluation.cPeriod} 일)</td>
+							<td class="col_2">${set.evaluation.studyStart}</td>
+							<td class="col_3">${set.evaluation.studyEnd}</td>
+                        </tr>
+                    </table>
+                </div>
+
                 <div class='lecture_detail_table_box contents'>
                     <table>
                         <tr>

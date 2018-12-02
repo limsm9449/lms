@@ -46,7 +46,9 @@ public class UserSet extends CommonSet {
 	private List<CodeVO> ddCategory1Depth;		// 카테고리 대분류
 	private List<CodeVO> ddCategory2Depth;		// 카테고리 중분류
 	private List<CodeVO> ddCategory3Depth;		// 카테고리 소분류	
-	
+
+	private List<EvaluationVO> attendanceDays;
+
 	public UserVO getCondiVO() {
 		return condiVO;
 	}
@@ -196,6 +198,12 @@ public class UserSet extends CommonSet {
 	}
 	public void setExam(List<CourseVO> exam) {
 		this.exam = exam;
+	}
+	public List<EvaluationVO> getAttendanceDays() {
+		return attendanceDays;
+	}
+	public void setAttendanceDays(List<EvaluationVO> attendanceDays) {
+		this.attendanceDays = attendanceDays;
 	}
 
 

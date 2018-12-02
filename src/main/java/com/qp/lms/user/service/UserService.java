@@ -54,8 +54,17 @@ public class UserService {
 
         return set ;
     }
+    
+    public UserSet courseAttendanceV(UserSet set) throws Exception {
+    	set.getCondiVO().setUserId(SessionUtil.getSessionUserId());
+    	
+    	List<EvaluationVO> attendanceDays = sqlSession.selectList("user.courseAttendanceDaysList",set.getCondiVO());
+    	set.setAttendanceDays(attendanceDays);
 
-    public UserSet studyroomDataList(UserSet set) throws Exception {
+        return set ;
+    }
+
+    /*public UserSet studyroomDataList(UserSet set) throws Exception {
     	//강좌 상세 조회
     	set.getCondiVO().setUserId(SessionUtil.getSessionUserId());
     	set.setCourseInfo((CourseVO) sqlSession.selectOne("user.courseData",set.getCondiVO()));
@@ -314,7 +323,7 @@ public class UserService {
     	set.setRtnMode(Constant.mode.DELETE_OK.name());
     	
     	return set;
-    }
+    }*/
 
 
     /*
@@ -344,13 +353,10 @@ public class UserService {
     }
     */
 
-
 	public UserSet checkMyCourse(UserSet set) throws Exception {
     	set.getCondiVO().setUserId(SessionUtil.getSessionUserId());
     	set.setCourseInfo((CourseVO) sqlSession.selectOne("user.checkMyCourse",set.getCondiVO()));
     	
         return set ;
     }
-    
-
 }

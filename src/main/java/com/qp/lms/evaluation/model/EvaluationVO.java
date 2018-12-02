@@ -54,7 +54,10 @@ public class EvaluationVO extends CommonVO {
 	private String searchStr;
 	private String searchKind;
 	private String weekTime;
-	
+	private String cFromDate;
+	private String cToDate;
+	private String cPeriod;
+
 	public static long getSerialVersionUID() {
 		return serialVersionUID;
 	}
@@ -312,6 +315,24 @@ public class EvaluationVO extends CommonVO {
 	}
 	public void setWeekTime(String weekTime) {
 		this.weekTime = weekTime;
+	}
+	public String getcFromDate() {
+		return cFromDate;
+	}
+	public void setcFromDate(String cFromDate) {
+		this.cFromDate = cFromDate;
+	}
+	public String getcToDate() {
+		return cToDate;
+	}
+	public void setcToDate(String cToDate) {
+		this.cToDate = cToDate;
+	}
+	public String getcPeriod() {
+		return cPeriod;
+	}
+	public void setcPeriod(String cPeriod) {
+		this.cPeriod = cPeriod;
 	}
 	
 

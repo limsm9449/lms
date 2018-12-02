@@ -31,18 +31,17 @@ $(document.body).ready(function () {
         theme: "danger"
     });
     
-    gfn_callAjax("/common/axDd.do", { DD_KIND : "CompanyKind,Company,Company1,Company2" }, fn_callbackAjax, "dd", { async : false });
-    
     $('[data-grid-control]').click(function () {
         switch (this.getAttribute("data-grid-control")) {
 	        case "search":
 	            fn_search();
-	            break;
+	            break; 
 		    case "add":
-           		var urlParams = "page=/ax/board/axMainBoardEventPopup";
+           		var urlParams = "page=/ax/board/axMainBoardNoticePopup";
            		urlParams += "&MODE=INSERT&SEQ=";
+        		urlParams += "&COMP_CD=" + $("#CB_COMPANY2").val();
            		
-           		f_popup('/common/axOpenPage', {displayName:'boardEventPopup',option:'width=900,height=560', urlParams:urlParams});
+           		f_popup('/common/axOpenPage', {displayName:'boardNoticePopup',option:'width=900,height=560', urlParams:urlParams});
 
 		    	break;
 		    case "delete":
@@ -53,14 +52,14 @@ $(document.body).ready(function () {
             		return;
             	}
 
-               	grid.deleteRow("selected");
-               	
+            	grid.deleteRow("selected");
+            	
 		    	break;
+            case "export":
+                grid.exportExcel("레포트 게시판.xls");
+                break;
             case "save" :
             	fn_save();
-                break;
-            case "export":
-                grid.exportExcel("이벤트 게시판.xls");
                 break;
             case "editImage":
             	var row = grid.getList("selected");
@@ -68,41 +67,23 @@ $(document.body).ready(function () {
             		mask.open();
             		dialog.alert( { msg : "과정을 선택하셔야 합니다." }, function () { mask.close();	} );
             	} else {
-            		var urlParams = "page=/ax/board/axMainBoardEventImagePopup";
+            		var urlParams = "page=/ax/board/axMainBoardNoticeImagePopup";
             		urlParams += "&SEQ=" + row[0]["SEQ"];
             		urlParams += "&COMP_CD=" + row[0]["COMP_CD"];
             		
-            		f_popup('/common/axOpenPage', {displayName:'axBoardEventImagePopup',option:'width=900,height=650', urlParams:urlParams});
+            		f_popup('/common/axOpenPage', {displayName:'axMainBoardNoticeImagePopup',option:'width=900,height=650', urlParams:urlParams});
             	}
             		
                 break;
         }
     });
     
-    //fn_search();
+	fn_makeGrid();
 });
 
 function fn_makeGrid() {
 	grid = gfn_makeAx5Grid("first-grid",
 		[ 	{
-	        	key : "COMP_CD", 
-	        	label : "회사", 
-	            width : 100,
-	        	align : "center", 
-	        	editor: {
-	                type : "select", 
-	                config : {
-	                    columnKeys: { optionValue: "value", optionText: "text" },
-	                    options: dd.Company
-	                },
-	            	disabled : function () {
-	                    return true;
-	                }
-	        	},
-	            formatter : function () {
-	                return gfn_getValueInList(dd.Company, "value",  this.item.COMP_CD, "text");
-	           	}
-	        },{
 	            key : "TITLE",
 	            label : "제목",
 	            width : 400,
@@ -117,10 +98,10 @@ function fn_makeGrid() {
 	        	label : "조회수", 
 	            width : 70,
 	        	align : "right"
-	        },{ 
+	        },{
 	        	key : "MAIN_YN", 
-	        	label : "메인이벤트", 
-	            width : 100, 
+	        	label : "메인공지", 
+	            width : 100,
 	        	align : "center", 
 	        	editor : { type : "checkbox", config : {height: 17, trueValue: "Y", falseValue: "N"} } ,
 				styleClass: function () {
@@ -146,7 +127,7 @@ function fn_makeGrid() {
                     return "grid-cell-edit";
                 } 
 	        }
-	   	], 
+		], 
 	  	null,
 	  	{
 	  		showRowSelector : false
@@ -155,6 +136,7 @@ function fn_makeGrid() {
 	
 	$(window).trigger("resize");
 }
+
 function fn_save() {
 	var fieldParams = {
 		COLOR : { colName : "배경색", length : 6 }
@@ -168,7 +150,7 @@ function fn_save() {
            	}, 
            	function(){
              	if ( this.key == "ok" ) {
-             		gfn_callAjax("/board/axMainBoardEventSave.do", gfn_getSaveData(grid), fn_callbackAjax, "save");
+             		gfn_callAjax("/board/axMainBoardNoticeSave.do", gfn_getSaveData(grid), fn_callbackAjax, "save"); 
                	} else {
                		mask.close();
                	}
@@ -179,14 +161,13 @@ function fn_save() {
 
 function fn_params() {
 	params.SEARCH_STR = $("#SEARCH_STR").val();
-	params.COMPANY = $("#CB_COMPANY option:selected").val();	
-	params.COMPANY2 = $("#CB_COMPANY2 option:selected").val();	
+	params.COMPANY2 = $("#CB_COMPANY2").val();	
 }
 
 function fn_search() {
 	fn_params();
 	
-	gfn_callAjax("/board/axMainBoardEventList.do", params, fn_callbackAjax, "search");
+	gfn_callAjax("/board/axMainBoardNoticeList.do", params, fn_callbackAjax, "search");
 }
 
 function fn_callbackAjax(data, id) {
@@ -198,22 +179,11 @@ function fn_callbackAjax(data, id) {
 	
 	if ( id == "search" ) {
 		grid.setData(data.list);
-	} else if ( id == "delete" ) {
-		mask.close();
-
-		mask.open();
-		dialog.alert( { msg : "삭제 되었습니다." }, function () { mask.close();	fn_search(); } );
 	} else if ( id == "save" ){
 		mask.close();
 
 		mask.open();
 		dialog.alert( { msg : "저장 되었습니다." }, function () { mask.close();	fn_search(); } );
-	} else if ( id == "dd" ){
-		dd = $.extend({}, data);
-		
-		gfn_cbRefresh("CB_COMPANY", data.CompanyKind, true);
-		
-		fn_makeGrid();
 	}
 }
 
@@ -223,44 +193,25 @@ function fn_gridEvent(event, obj) {
 	} else if ( event == "DBLClick" ) {
 		var mode = "UPDATE";
 		
-   		var urlParams = "page=/ax/board/axMainBoardEventPopup";
+   		var urlParams = "page=/ax/board/axMainBoardNoticePopup";
    		urlParams += "&MODE=" + mode + "&SEQ=" + obj.item["SEQ"];
    		
-   		f_popup('/common/axOpenPage', {displayName:'boardEventPopup',option:'width=900,height=560', urlParams:urlParams});
+   		f_popup('/common/axOpenPage', {displayName:'boardNoticePopup',option:'width=900,height=560', urlParams:urlParams});
 	} else if ( event == "DataChanged" ) {
 	}
 }
 
-function fn_cbChange(id) {
-	if ( id == "CB_COMPANY" ) {
-		if ( $("#CB_COMPANY").val() == "B2B" ) {
-			gfn_cbRefresh("CB_COMPANY2", dd.Company1, true);
-		} else if ( $("#CB_COMPANY").val() == "C2C" ) {
-			gfn_cbRefresh("CB_COMPANY2", dd.Company2, true);
-		} else {
-			gfn_cbRefresh("CB_COMPANY2", null, true);
-		}
-	}
-}
 </script>
 
 <body style="padding : 10px">
 
 <form id="frm" name="frm" method="post">
+	<input type="hidden" id="CB_COMPANY2" name="CB_COMPANY2" value="${session.compCd}" />
 
-<h2>이벤트</h2>
+<h2>공지사항</h2>
 <div style="height:10px"></div>
 
 <div class="form-inline">
-  	<div class="form-group">
-    	<label for="CB_COMPANY">&nbsp;회사 구분</label>
-		<select class="form-control" id="CB_COMPANY" onchange="fn_cbChange('CB_COMPANY')">
-			<option value="">전체</option>
-		</select>
-		<select class="form-control" id="CB_COMPANY2">
-			<option value="">전체</option>
-		</select>
-  	</div>
   	<div class="form-group">
     	<label for="CB_SEARCHKIND">통합검색</label>
 		<input class="form-control" type="text" class="search_input" id="SEARCH_STR" name="SEARCH_STR" value="" />
@@ -271,7 +222,7 @@ function fn_cbChange(id) {
 <div>
     <button class="btn btn-default" data-grid-control="search">검색</button>
     <button class="btn btn-default" data-grid-control="add">추가</button>
-    <button class="btn btn-default" data-grid-control="delete">삭제</button>
+    <button class="btn btn-default" data-grid-control="delete">삭제</button>    
     <button class="btn btn-default" data-grid-control="save">저장</button>
     <button class="btn btn-default" data-grid-control="export">엑셀</button>
     <button class="btn btn-default" data-grid-control="editImage">이미지 편집</button>

@@ -35,7 +35,7 @@ $(document.body).ready(function () {
 
     $('#MCB_COMPANY').multiselect(multiselectOptions);
     
-    gfn_callAjax("/common/axDd.do", { DD_KIND : "CategoryLevel1,Tutor,CompanyKind,Company,Company1,Company2,OpenKind,Year" }, fn_callbackAjax, "dd", { async : false });
+    gfn_callAjax("/common/axDd.do", { DD_KIND : "CategoryLevel1,Tutor,CompanyKind,Company,Company1,Company2,OpenKind,Year,QuestProgressRatio,AgainStudyDay" }, fn_callbackAjax, "dd", { async : false });
     
     $('[data-grid-control]').click(function () {
         switch (this.getAttribute("data-grid-control")) {
@@ -251,6 +251,67 @@ function fn_makeGrid() {
 				styleClass: function () {
                     return "grid-cell-edit";
                 }
+	        },{
+	            key : "QUEST_PROGRESS_RATIO",
+	            label : "설문작성 진도율",
+	            width : 130,
+	            align : "right",
+	            editor : { 
+	            	type : "number"
+				},
+				styleClass: function () {
+                    return "grid-cell-edit";
+                },
+	            formatter : function () {
+	                return checkThousand(this.item.QUEST_PROGRESS_RATIO);
+	           	}
+	        },{
+	            key : "AGAIN_STUDY_DAY",
+	            label : "재학습 일수",
+	            width : 110,
+	            align : "right",
+	            editor : { 
+	            	type : "number"
+				},
+				styleClass: function () {
+                    return "grid-cell-edit";
+                },
+	            formatter : function () {
+	                return checkThousand(this.item.AGAIN_STUDY_DAY);
+	           	}
+	        },{
+              	key : undefined, 
+              	label: "교육비지원", 
+              	columns: [	        
+			        {
+			            key : "WORKER_CARD_YN",
+			            label : "근로자카드",
+			            width : 90,
+			            align : "center", 
+			        	editor : { type : "checkbox", config : {height: 17, trueValue: "Y", falseValue: "N"} },
+						styleClass: function () {
+		                    return "grid-cell-edit";
+		                }
+			        },{
+			            key : "SUPPORT_EMPLOYER_YN",
+			            label : "사업주지원",
+			            width : 90,
+			            align : "center", 
+			        	editor : { type : "checkbox", config : {height: 17, trueValue: "Y", falseValue: "N"} },
+						styleClass: function () {
+		                    return "grid-cell-edit";
+		                }
+			        },{
+			            key : "NORMAL_COURSE_YN",
+			            label : "일반과정",
+			            width : 70,
+			            align : "center", 
+			        	editor : { type : "checkbox", config : {height: 17, trueValue: "Y", falseValue: "N"} },
+						styleClass: function () {
+		                    return "grid-cell-edit";
+		                }
+			        }
+		        ]
 	        },{
               	key : undefined, 
               	label: "점수 비율", 
@@ -533,7 +594,12 @@ function fn_courseCodeSelect(data) {
 			C_PERIOD : 30,
 			CLOSE_YN : "N",
 			MOBILE_YN : data.MOBILE_YN,
-			STUDY_MAX_WEEK : data.STUDY_MAX_WEEK
+			STUDY_MAX_WEEK : data.STUDY_MAX_WEEK,
+			QUEST_PROGRESS_RATIO : dd.QuestProgressRatio[0].text,
+			AGAIN_STUDY_DAY : dd.AgainStudyDay[0].text,
+			WORKER_CARD_YN : data.WORKER_CARD_YN, 
+			SUPPORT_EMPLOYER_YN : data.SUPPORT_EMPLOYER_YN, 
+			NORMAL_COURSE_YN : data.NORMAL_COURSE_YN
 		}, "last", {focus: "END"}
 	);
 }
@@ -581,7 +647,12 @@ function fn_mcbCompanySelect(data) {
 				C_PERIOD : row[0].C_PERIOD,
 				CLOSE_YN : "N",
 				MOBILE_YN : row[0].MOBILE_YN,
-				STUDY_MAX_WEEK : row[0].STUDY_MAX_WEEK
+				STUDY_MAX_WEEK : row[0].STUDY_MAX_WEEK,
+				QUEST_PROGRESS_RATIO : row[0].QUEST_PROGRESS_RATIO,
+				AGAIN_STUDY_DAY : row[0].AGAIN_STUDY_DAY,
+				WORKER_CARD_YN : row[0].WORKER_CARD_YN,
+				SUPPORT_EMPLOYER_YN : row[0].SUPPORT_EMPLOYER_YN,
+				NORMAL_COURSE_YN : row[0].NORMAL_COURSE_YN
 			}, "last", {focus: "END"});
 		
 		grid.repaint();

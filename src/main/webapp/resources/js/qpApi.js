@@ -75,6 +75,11 @@ var QP_API = {
 			}
 			
 			console.log("currentWeek : " + currentWeek);
+
+			//차시가 변경이 되면 설문기능 반영을 위해서 강의창을 refresh 한다.
+			if ( isNext == true ) {
+				opener.location.reload();
+			}
 			
 			if ( isNext == false && isSample == false) {
 				$.ajax({

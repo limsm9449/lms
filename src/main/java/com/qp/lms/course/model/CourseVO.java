@@ -189,7 +189,13 @@ public class CourseVO extends CommonVO {
     private String approvalCnt;
     private String directory;
     private String interestCourseYn;
-
+    private String attendanceCnt;
+    private String pageCnt;
+    private String studyDay;
+    private String studyStart;
+    private String studyEnd;
+    private String questProgressRatio;
+    private String settingQuestProgressRatio;
     
 	public String getPeriodProgress() {
 		return periodProgress;
@@ -1367,6 +1373,62 @@ public class CourseVO extends CommonVO {
 
 	public void setInterestCourseYn(String interestCourseYn) {
 		this.interestCourseYn = interestCourseYn;
+	}
+
+	public String getAttendanceCnt() {
+		return attendanceCnt;
+	}
+
+	public void setAttendanceCnt(String attendanceCnt) {
+		this.attendanceCnt = attendanceCnt;
+	}
+
+	public String getPageCnt() {
+		return pageCnt;
+	}
+
+	public void setPageCnt(String pageCnt) {
+		this.pageCnt = pageCnt;
+	}
+
+	public String getStudyDay() {
+		return studyDay;
+	}
+
+	public void setStudyDay(String studyDay) {
+		this.studyDay = studyDay;
+	}
+
+	public String getStudyStart() {
+		return studyStart;
+	}
+
+	public void setStudyStart(String studyStart) {
+		this.studyStart = studyStart;
+	}
+
+	public String getStudyEnd() {
+		return studyEnd;
+	}
+
+	public void setStudyEnd(String studyEnd) {
+		this.studyEnd = studyEnd;
+	}
+
+	public String getQuestProgressRatio() {
+		return questProgressRatio;
+	}
+
+	public void setQuestProgressRatio(String questProgressRatio) {
+		this.questProgressRatio = questProgressRatio;
+	}
+
+	public String getSettingQuestProgressRatio() {
+		return settingQuestProgressRatio;
+	}
+
+	public void setSettingQuestProgressRatio(String settingQuestProgressRatio) {
+		this.settingQuestProgressRatio = settingQuestProgressRatio;
 	}
 
 

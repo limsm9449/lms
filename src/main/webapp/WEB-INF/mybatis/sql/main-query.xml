@@ -319,6 +319,11 @@
 									,COUNT(*) GRADE_CNT
                             FROM 	POSTSCRIPT
                             GROUP 	BY COURSE_ID ) D ON D.COURSE_ID = A.COURSE_ID
+						LEFT OUTER JOIN (
+							SELECT	COURSE_CODE
+									,COUNT(*) CNT
+                            FROM 	COURSE
+                            GROUP 	BY COURSE_CODE ) E ON E.COURSE_CODE = A.COURSE_CODE
 		WHERE 	A.OPEN_YN = 'Y'
 		AND		A.CLOSE_YN = 'N'
 		AND		A.COMP_CD = #{compCd}
@@ -331,7 +336,19 @@
 			  </foreach>
 		</if>
 		<if test="courseName != null and courseName != ''"> AND B.COURSE_NAME LIKE CONCAT('%',#{courseName},'%')</if>
-		ORDER BY B.COURSE_NAME
+		<if test="workerCardYn == 'Y'.toString() || supportEmployerYn == 'Y'.toString() || normalCourseYn == 'Y'.toString()">
+			AND ( 1 = 2 
+					<if test="workerCardYn == 'Y'.toString()"> OR	A.WORKER_CARD_YN = 'Y'</if>
+					<if test="supportEmployerYn == 'Y'.toString()"> OR	A.SUPPORT_EMPLOYER_YN = 'Y'</if>
+					<if test="normalCourseYn == 'Y'.toString()"> OR	A.NORMAL_COURSE_YN = 'Y'</if>
+				)
+		</if>
+		<if test="orderKind == 'Popularity'">
+			ORDER BY E.CNT, B.COURSE_NAME
+		</if>
+		<if test="orderKind == 'Recommendation'">
+			ORDER BY IFNULL(D.GRADE, 0), IFNULL(D.GRADE_CNT, 0), B.COURSE_NAME
+		</if>
 	</sql>
 	<select id="courseList" parameterType="Main" resultType="Course">
 		SELECT 	DATA.* 

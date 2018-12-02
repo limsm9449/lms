@@ -126,6 +126,12 @@ public class AxCommService {
 			} else if ( "MainpageKind".equals(ddKinds[i]) ) {
 				paramMap.put("DD_MAIN", "MAINPAGE_KIND");
 		    	hm.put(ddKinds[i], sqlSession.selectList("axComm.axDdCode", paramMap));
+			} else if ( "QuestProgressRatio".equals(ddKinds[i]) ) {
+				paramMap.put("OPTION_KEY", "QUEST_PROGRESS_RATIO");
+		    	hm.put(ddKinds[i], sqlSession.selectList("axComm.axDdSetting", paramMap));
+			} else if ( "AgainStudyDay".equals(ddKinds[i]) ) {
+				paramMap.put("OPTION_KEY", "AGAIN_STUDY_DAY");
+		    	hm.put(ddKinds[i], sqlSession.selectList("axComm.axDdSetting", paramMap));
 			}
 		}
 		

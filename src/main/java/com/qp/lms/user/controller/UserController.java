@@ -60,7 +60,31 @@ public class UserController {
         return "/user/Studyroom";
     }
 
-    @RequestMapping(value = "/user/studyroomDataList")
+    @RequestMapping(value = "/goPage")
+    public String goPage(@ModelAttribute UserVO vo,Model model) throws Exception {
+
+        return "/homepage/" + vo.getPageUrl();
+    }
+    
+    @RequestMapping(value = "/user/courseAttendanceV")
+    public String courseAttendanceV(@ModelAttribute UserVO vo,Model model) throws Exception {
+    	try {
+	    	UserSet set = new UserSet();
+	    	set.setCondiVO(vo);
+	    	
+	    	set.getCondiVO().setUserId(SessionUtil.getSessionUserId());
+	    	
+	    	set = svr.courseAttendanceV(set);
+	    	
+	        model.addAttribute("set", set ); 
+    	} catch ( Exception e ) {
+    		e.printStackTrace();
+    	}
+
+        return "/user/courseAttendanceV";
+    }
+
+    /*@RequestMapping(value = "/user/studyroomDataList")
     public String studyroomDataList(@ModelAttribute UserVO vo,Model model) throws Exception {
     	try {
 	    	UserSet set = new UserSet();
@@ -291,7 +315,7 @@ public class UserController {
 
     	return "/common/json";
     }
-
+*/
 
 
     /**
@@ -333,12 +357,6 @@ public class UserController {
     }
     */
 
-    @RequestMapping(value = "/goPage")
-    public String goPage(@ModelAttribute UserVO vo,Model model) throws Exception {
-
-        return "/homepage/" + vo.getPageUrl();
-    }
-    
     @RequestMapping(value = "/user/checkMyCourse")
     public String checkMyCourse(@ModelAttribute UserVO vo,Model model) throws Exception {
     	try {
@@ -360,7 +378,6 @@ public class UserController {
 
     	return "/common/json";
     }
-
     
 
 	    

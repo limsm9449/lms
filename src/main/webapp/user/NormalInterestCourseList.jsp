@@ -44,13 +44,18 @@ function lfn_btn(pKind, pParam) {
 				alert("<spring:message code="lms.msg.systemError" text="-" />");
 			}
 		})
+	} else if ( pKind == "view" ) {
+		$("#courseId").val(pParam.courseId);
+		
+		gfn_goPage("/main/mainCourseData",$("#frm").serialize());
 	}
 }
 
 </script>
 
 <body>
-<form name="frm" method="post">
+<form name="frm" id="frm" method="post">
+	<input type='hidden' id='courseId' name='courseId'>
 
 <frameset rows='*'>
     <div class='wrap'>
@@ -105,7 +110,7 @@ function lfn_btn(pKind, pParam) {
 </c:if>	                    
 <c:forEach var="row" items="${set.course}" varStatus="idx">
                     <tr>
-                        <td class='col_1'>${row.courseName}</td>
+                        <td class='col_1'><a href='javascript:' onclick="javascript:lfn_btn('view',{courseId:'${row.courseId}'}); return false;">${row.courseName}</a></td>
 	<c:if test="${row.termYn eq 'Y'}">
 	          	       <td class='col_2'>${row.studyPeriodFrom} ~ ${row.studyPeriodTo}</td>
 	</c:if>	                    

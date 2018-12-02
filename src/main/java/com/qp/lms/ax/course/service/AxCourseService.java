@@ -52,12 +52,14 @@ public class AxCourseService {
 
 				//과정 Master 내용 복사
 				HashMap<String, Object> courseMaster = sqlSession.selectOne("axCourse.axCourseMasterContents", row);
-				row.put("LEARING_GOAL", courseMaster.get("LEARING_GOAL"));
-				row.put("LEARING_CONTENT", courseMaster.get("LEARING_CONTENT"));
-				row.put("EVAL_METHOD", courseMaster.get("EVAL_METHOD"));
-				row.put("LEARING_TARGET", courseMaster.get("LEARING_TARGET"));
-				row.put("LEARING_COST", courseMaster.get("LEARING_COST"));
-
+				if ( courseMaster != null ) {
+					row.put("LEARING_GOAL", courseMaster.get("LEARING_GOAL"));
+					row.put("LEARING_CONTENT", courseMaster.get("LEARING_CONTENT"));
+					row.put("EVAL_METHOD", courseMaster.get("EVAL_METHOD"));
+					row.put("LEARING_TARGET", courseMaster.get("LEARING_TARGET"));
+					row.put("LEARING_COST", courseMaster.get("LEARING_COST"));
+				}
+	
 				sqlSession.insert("axCourse.axCourseInsert", row);
 			} else {
 				sqlSession.update("axCourse.axCourseUpdate", row);

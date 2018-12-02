@@ -274,14 +274,19 @@ $(document).ready(function(){
                 <span></span>
                 <a href='#' onclick="javascript:Popup.showUserBoard('QNA','${set.courseInfo.courseId}'); return false;">학습 질문답변</a>
                 <span></span>
-<c:choose>
-	<c:when test="${set.courseInfo.questYn eq 'Y'}">
-             	<a href='#' onclick="javascript:Popup.showQuestResult('${set.courseInfo.courseId}'); return false;">설문확인</a>
-	</c:when>
-	<c:otherwise>
-             	<a href='#' onclick="javascript:Popup.showQuest('${set.courseInfo.courseId}'); return false;">설문응시</a>
-	</c:otherwise>
-</c:choose>                 
+<c:if test="${set.courseInfo.questProgressRatio ge set.courseInfo.settingQuestProgressRatio}">                            
+	<c:choose>
+		<c:when test="${set.courseInfo.questYn eq 'Y'}">
+	             	<a href='#' onclick="javascript:Popup.showQuestResult('${set.courseInfo.courseId}'); return false;">설문확인</a>
+	                <span></span>
+		</c:when>
+		<c:otherwise>
+	             	<a href='#' onclick="javascript:Popup.showQuest('${set.courseInfo.courseId}'); return false;">설문응시</a>
+	                <span></span>
+		</c:otherwise>
+	</c:choose>
+</c:if>
+                <a href='#' onclick="javascript:Popup.showCourseAttendance('${set.courseInfo.courseId}'); return false;">출석 현황</a>
             </div>
         </div>
     </div>

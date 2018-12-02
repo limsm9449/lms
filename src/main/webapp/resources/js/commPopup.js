@@ -410,7 +410,11 @@ var Popup = {
 			Popup.showPopup(context + "/user/studyroom.do?courseId=" + pCourseId, 1185, 810, "studyroom");
 		}
 	},
-	
+
+	showCourseAttendance : function(pCourseId) {
+		Popup.showPopup(context + "/user/courseAttendanceV.do?courseId=" + pCourseId,900,800);
+	},
+
 	showUser : function(pParams) {
    		var urlParams = "page=/ax/common/axUserSearchPopup";
    		
@@ -422,12 +426,15 @@ var Popup = {
    		f_popup('/common/axOpenPage', {displayName:'userPopup',option:'width=900,height=700', urlParams:urlParams});
 	},
 	
-	showCourse : function(pParams) {
+	showCourseSearch : function(pParams) {
    		var urlParams = "page=/ax/common/axCourseSearchPopup";
    		
    		var params = pParams || {};
    		if ( params.kind ) {
    			urlParams += "&kind=" + params.kind;
+   		}
+   		if ( params.COMPANY2 ) {
+   			urlParams += "&COMPANY2=" + params.COMPANY2;
    		}
    		
    		f_popup('/common/axOpenPage', {displayName:'coursePopup',option:'width=1300,height=700', urlParams:urlParams});

@@ -31,8 +31,6 @@ $(document.body).ready(function () {
         theme: "danger"
     });
     
-    gfn_callAjax("/common/axDd.do", { DD_KIND : "CompanyKind,Company,Company1,Company2" }, fn_callbackAjax, "dd", { async : false });
-    
     $('[data-grid-control]').click(function () {
         switch (this.getAttribute("data-grid-control")) {
 	        case "search":
@@ -41,6 +39,7 @@ $(document.body).ready(function () {
 		    case "add":
            		var urlParams = "page=/ax/board/axMainBoardEventPopup";
            		urlParams += "&MODE=INSERT&SEQ=";
+        		urlParams += "&COMP_CD=" + $("#CB_COMPANY2").val();
            		
            		f_popup('/common/axOpenPage', {displayName:'boardEventPopup',option:'width=900,height=560', urlParams:urlParams});
 
@@ -79,30 +78,12 @@ $(document.body).ready(function () {
         }
     });
     
-    //fn_search();
+	fn_makeGrid();
 });
 
 function fn_makeGrid() {
 	grid = gfn_makeAx5Grid("first-grid",
 		[ 	{
-	        	key : "COMP_CD", 
-	        	label : "회사", 
-	            width : 100,
-	        	align : "center", 
-	        	editor: {
-	                type : "select", 
-	                config : {
-	                    columnKeys: { optionValue: "value", optionText: "text" },
-	                    options: dd.Company
-	                },
-	            	disabled : function () {
-	                    return true;
-	                }
-	        	},
-	            formatter : function () {
-	                return gfn_getValueInList(dd.Company, "value",  this.item.COMP_CD, "text");
-	           	}
-	        },{
 	            key : "TITLE",
 	            label : "제목",
 	            width : 400,
@@ -179,8 +160,7 @@ function fn_save() {
 
 function fn_params() {
 	params.SEARCH_STR = $("#SEARCH_STR").val();
-	params.COMPANY = $("#CB_COMPANY option:selected").val();	
-	params.COMPANY2 = $("#CB_COMPANY2 option:selected").val();	
+	params.COMPANY2 = $("#CB_COMPANY2").val();	
 }
 
 function fn_search() {
@@ -208,12 +188,6 @@ function fn_callbackAjax(data, id) {
 
 		mask.open();
 		dialog.alert( { msg : "저장 되었습니다." }, function () { mask.close();	fn_search(); } );
-	} else if ( id == "dd" ){
-		dd = $.extend({}, data);
-		
-		gfn_cbRefresh("CB_COMPANY", data.CompanyKind, true);
-		
-		fn_makeGrid();
 	}
 }
 
@@ -231,36 +205,17 @@ function fn_gridEvent(event, obj) {
 	}
 }
 
-function fn_cbChange(id) {
-	if ( id == "CB_COMPANY" ) {
-		if ( $("#CB_COMPANY").val() == "B2B" ) {
-			gfn_cbRefresh("CB_COMPANY2", dd.Company1, true);
-		} else if ( $("#CB_COMPANY").val() == "C2C" ) {
-			gfn_cbRefresh("CB_COMPANY2", dd.Company2, true);
-		} else {
-			gfn_cbRefresh("CB_COMPANY2", null, true);
-		}
-	}
-}
 </script>
 
 <body style="padding : 10px">
 
 <form id="frm" name="frm" method="post">
+	<input type="hidden" id="CB_COMPANY2" name="CB_COMPANY2" value="${session.compCd}" />
 
 <h2>이벤트</h2>
 <div style="height:10px"></div>
 
 <div class="form-inline">
-  	<div class="form-group">
-    	<label for="CB_COMPANY">&nbsp;회사 구분</label>
-		<select class="form-control" id="CB_COMPANY" onchange="fn_cbChange('CB_COMPANY')">
-			<option value="">전체</option>
-		</select>
-		<select class="form-control" id="CB_COMPANY2">
-			<option value="">전체</option>
-		</select>
-  	</div>
   	<div class="form-group">
     	<label for="CB_SEARCHKIND">통합검색</label>
 		<input class="form-control" type="text" class="search_input" id="SEARCH_STR" name="SEARCH_STR" value="" />

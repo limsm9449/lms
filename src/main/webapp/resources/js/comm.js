@@ -1019,7 +1019,7 @@ function gfn_getUrlParams(key) {
 	if ( key ) {
 		return rtn[key];
 	} else {
-		return rtn;
+		return "";
 	}
 }
 

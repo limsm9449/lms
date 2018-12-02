@@ -33,7 +33,7 @@ $(document.body).ready(function () {
         theme: "danger"
     });
 
-    gfn_callAjax("/common/axDd.do", { DD_KIND : "CompanyKind,Company,Company1,Company2,MainpageKind" }, fn_callbackAjax, "dd", { async : false });
+    gfn_callAjax("/common/axDd.do", { DD_KIND : "Company,MainpageKind" }, fn_callbackAjax, "dd", { async : false });
     
     $('[data-grid-control]').click(function () {
         switch (this.getAttribute("data-grid-control")) {
@@ -41,7 +41,7 @@ $(document.body).ready(function () {
 	            fn_search();
 	            break;
             case "add":
-            	Popup.showCourseSearch();
+            	Popup.showCourseSearch( { COMPANY2 : $("#CB_COMPANY2").val() } );
 
 		    	break;
             case "delete":
@@ -311,8 +311,7 @@ function fn_makeGrid() {
 }
 
 function fn_params() {
-	params.COMPANY = $("#CB_COMPANY option:selected").val();	
-	params.COMPANY2 = $("#CB_COMPANY2 option:selected").val();	
+	params.COMPANY2 = $("#CB_COMPANY2").val();	
 	params.KIND = $("#CB_KIND option:selected").val();	
 }
 
@@ -354,7 +353,6 @@ function fn_callbackAjax(data, id) {
 	} else if ( id == "dd" ){
 		dd = $.extend({}, data);
 		
-		gfn_cbRefresh("CB_COMPANY", data.CompanyKind, true);
 		gfn_cbRefresh("CB_KIND", data.MainpageKind, true);
 		
 		fn_makeGrid();
@@ -390,18 +388,6 @@ function fn_gridEvent(event, obj) {
 	}
 }
 
-function fn_cbChange(id) {
-	if ( id == "CB_COMPANY" ) {
-		if ( $("#CB_COMPANY").val() == "B2B" ) {
-			gfn_cbRefresh("CB_COMPANY2", dd.Company1, true);
-		} else if ( $("#CB_COMPANY").val() == "C2C" ) {
-			gfn_cbRefresh("CB_COMPANY2", dd.Company2, true);
-		} else {
-			gfn_cbRefresh("CB_COMPANY2", null, true);
-		}
-	}
-}
-
 </script>
 
 <body style="padding : 10px">
@@ -410,15 +396,8 @@ function fn_cbChange(id) {
 <div style="height:10px"></div>
 
 <form id="frm" name="frm" method="post" class="form-inline">
-  	<div class="form-group">
-    	<label for="CB_COMPANY">&nbsp;회사 구분</label>
-		<select class="form-control" id="CB_COMPANY" onchange="fn_cbChange('CB_COMPANY')">
-			<option value="">전체</option>
-		</select>
-		<select class="form-control" id="CB_COMPANY2">
-			<option value="">전체</option>
-		</select>
-  	</div>
+	<input type="hidden" id="CB_COMPANY2" name="CB_COMPANY2" value="${session.compCd}" />
+	
   	<div class="form-group">
     	<label for="CB_KIND">과정종류</label>
 		<select class="form-control" id="CB_KIND">

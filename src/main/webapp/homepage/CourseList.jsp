@@ -187,11 +187,11 @@ function lfn_btn(pKind, pParam) {
 	                    <p>교육비지원과정</p>
 	                    <div>
 	                        <div class='process_support clear_fix'>
-	                            <input type='checkbox' id='process_supportType_employee' name='process_supportType_1'>
+	                            <input type='checkbox' id='workerCardYn' name='workerCardYn' value="Y" <c:if test="${set.condiVO.workerCardYn eq 'Y'}">checked</c:if>>
 	                            <p>근로자카드</p>
-	                            <input type='checkbox' id='process_supportType_employer' name='process_supportType_2'>
+	                            <input type='checkbox' id='supportEmployerYn' name='supportEmployerYn' value="Y" <c:if test="${set.condiVO.supportEmployerYn eq 'Y'}">checked</c:if>>
 	                            <p>사업주지원</p>
-	                            <input type='checkbox' id='process_supportType_normal' name='process_supportType_3'>
+	                            <input type='checkbox' id='normalCourseYn' name='normalCourseYn' value="Y" <c:if test="${set.condiVO.normalCourseYn eq 'Y'}">checked</c:if>>
 	                            <p>일반과정</p>
 	                        </div>
 	                    </div>
@@ -208,16 +208,16 @@ function lfn_btn(pKind, pParam) {
 	                <div>
 	                    <ul class='clear_fix'>
 	                        <li class='process_filter_item select1'>
-	                            <select name='' id=''>
-	                                <option value=''>인기강의순</option>
-	                                <option value=''>추천강의순</option>
+	                            <select name='orderKind' id='orderKind' onchange="lfn_btn('search');">
+	                                <option value='Popularity' <c:if test="${set.condiVO.orderKind eq null || set.condiVO.orderKind eq 'Popularity'}">selected</c:if>>인기강의순</option>
+	                                <option value='Recommendation' <c:if test="${set.condiVO.orderKind eq 'Recommendation'}">selected</c:if>>추천강의순</option>
 	                            </select>
 	                        </li>
 	                        <li class='process_filter_item select2'>
-	                            <select name='limitUnit' id='limitUnit'>
-	                                <option value='10'>10개씩</option>
-	                                <option value='15'>15개씩</option>
-	                                <option value='30'>30개씩</option>
+	                            <select name='limitUnit' id='limitUnit' onchange="$('pageNum').val(1);">
+	                                <option value='10' <c:if test="${set.condiVO.limitUnit eq '10'}">selected</c:if>>10개씩</option>
+	                                <option value='15' <c:if test="${set.condiVO.limitUnit eq '15'}">selected</c:if>>15개씩</option>
+	                                <option value='30' <c:if test="${set.condiVO.limitUnit eq '30'}">selected</c:if>>30개씩</option>
 	                            </select>
 	                        </li>
 	                        <input type='hidden' id='pageNum' name='pageNum' value="${set.condiVO.pageNum}">
