@@ -110,7 +110,6 @@ public class CounselController {
      * @return
      * @throws Exception
      */
-    /*
     @RequestMapping(value = "/counsel/userCounselU")
     public String userCounselU(@ModelAttribute CounselVO vo, Model model) throws Exception {
     	try {
@@ -126,7 +125,6 @@ public class CounselController {
 
         return "/counsel/UserCounselU";
     }
-    */
 
     /**
      *  상담 리스트

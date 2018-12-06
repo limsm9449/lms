@@ -47,7 +47,8 @@ public class SessionInterceptor extends HandlerInterceptorAdapter {
 				"/companyLogin.do",
 				"/cms",
 				"/postscript/postscriptList.do",
-				"/postscript/postscriptV.do"
+				"/postscript/postscriptV.do",
+				"/errorNotUseCompany.do"
 	    	};
 	    	
 	    	// Session이 있을 수도 있고 없을 수도 있는 URL
@@ -97,9 +98,18 @@ public class SessionInterceptor extends HandlerInterceptorAdapter {
 			        }
 	    		}
 
+	    		//sub 도메인으로 회사 접속여부 체크
 	    		String[] domains = request.getServerName().split("[.]");
 	        	String compCd = axCommService.axCompCdFromSubDomain(domains[0]);
 	        	SessionUtil.setAttribute("compCd", compCd);
+	        	String compType = axCommService.axCompTypeFromSubDomain(domains[0]);
+	        	SessionUtil.setAttribute("compType", compType);
+	        	
+	        	if ( !url.equals("/errorNotUseCompany.do") && !"B2C".equals(compType) && "N".equals(axCommService.axCompUseYnFromSubDomain(domains[0])) ) {
+	        		System.out.println("not use company ================================== ");
+		        	response.sendRedirect("/errorNotUseCompany.do");
+		        	return false;
+	        	}
 	        	
 	   	 		// 시스템에서 사용할 설정값을 가져와 Session에 넣어둔다.
 	   	 		if ( SessionUtil.getAttribute("properties") == null ) {

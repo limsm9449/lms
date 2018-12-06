@@ -20,6 +20,7 @@ public class CounselService {
 	private SqlSession sqlSession;
 	
     public CounselSet userCounselList(CounselSet set) throws Exception {
+		set.getCondiVO().setCompType((String)SessionUtil.getAttribute("compType"));
     	List<CounselVO> list = sqlSession.selectList("counsel.userCounselList",set.getCondiVO());
     	set.setList(list);
     	
@@ -42,7 +43,8 @@ public class CounselService {
     
     public CounselSet userCounselN(CounselSet set) throws Exception {
     	//category
-    	List<CodeVO> list = sqlSession.selectList("comm.getDdCodeKeyDdMain","FAQ");
+    	String compType = (String)SessionUtil.getAttribute("compType");
+    	List<CodeVO> list = sqlSession.selectList("comm.getDdCodeKeyDdMain","FAQ_" + compType);
     	set.setDdCategory(list);
 
     	return set;
@@ -52,7 +54,8 @@ public class CounselService {
     	set.setData((CounselVO) sqlSession.selectOne("counsel.userCounselData",set.getCondiVO()));
     	
     	//category
-    	List<CodeVO> list = sqlSession.selectList("comm.getDdCodeKeyDdMain","FAQ");
+    	String compType = (String)SessionUtil.getAttribute("compType");
+    	List<CodeVO> list = sqlSession.selectList("comm.getDdCodeKeyDdMain","FAQ_" + compType);
     	set.setDdCategory(list);
 
     	return set;
@@ -72,7 +75,8 @@ public class CounselService {
     	set.setData((CounselVO) sqlSession.selectOne("counsel.userCounselData",set.getCondiVO()));
 
     	//category
-    	List<CodeVO> list = sqlSession.selectList("comm.getDdCodeKeyDdMain","FAQ");
+    	String compType = (String)SessionUtil.getAttribute("compType");
+    	List<CodeVO> list = sqlSession.selectList("comm.getDdCodeKeyDdMain","FAQ_" + compType);
     	set.setDdCategory(list);
     	
     	return set;

@@ -1,18 +1,26 @@
-<%--
-	강좌관리에서 보여주는 강좌 팝업
---%>
 <%@ page contentType="text/html;charset=utf-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
-<html>
+<!DOCTYPE html>
+<html lang='ko'>
+
 <head>
-	<title>강의 미리보기</title>
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+    <title>강의 컨텐츠 미리보기</title>
+
+	<%@ include file="../common/commMainInclude.jsp" %>
+
+    <link href='https://fonts.googleapis.com/css?family=Nanum+Gothic' rel='stylesheet'>
+
+    <link rel='stylesheet' href='/resources/homepage/css/initialization.css'>
+    <link rel='stylesheet' href='/resources/homepage/css/popup/popup_learning.css'>
+
 </head>
 
-<%@ include file="../common/commAdminInclude.jsp" %>
-
-<script type="text/javascript" src="/resources/js/qpApi.js"></script>
+<script type="text/javascript" src="/resources/js/qpApi.js?timestamp=<%=timestamp%>"></script>
 
 <script type="text/javascript">
 var gCondition = {

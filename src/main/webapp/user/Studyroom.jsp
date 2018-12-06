@@ -274,7 +274,7 @@ $(document).ready(function(){
                 <span></span>
                 <a href='#' onclick="javascript:Popup.showUserBoard('QNA','${set.courseInfo.courseId}'); return false;">학습 질문답변</a>
                 <span></span>
-<c:if test="${set.courseInfo.questProgressRatio ge set.courseInfo.settingQuestProgressRatio}">                            
+<c:if test="${set.courseInfo.progress ge set.courseInfo.questProgressRatio}">                            
 	<c:choose>
 		<c:when test="${set.courseInfo.questYn eq 'Y'}">
 	             	<a href='#' onclick="javascript:Popup.showQuestResult('${set.courseInfo.courseId}'); return false;">설문확인</a>

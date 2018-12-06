@@ -186,7 +186,7 @@
 		UPDATE USER
     	   SET CAREER = #{CAREER},
     	       UPDATE_DATE = CURRENT_TIMESTAMP,
-    	       UPDATE_USER = #{USER_ID}
+    	       UPDATE_USER = #{SESSION_USER_ID}
     	 WHERE USER_ID = #{USER_ID} 
 	</update>    
 	    

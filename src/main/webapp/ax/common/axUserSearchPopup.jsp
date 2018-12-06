@@ -23,6 +23,7 @@ var params = {}
 var dd = {};
 
 var kind = gfn_getUrlParams("kind");
+var isTeacher = gfn_getUrlParams("isTeacher");
 
 $(document.body).ready(function () {
 	gfn_callAjax("/common/axDd.do", { DD_KIND : "Company,Sex" }, fn_callbackAjax, "dd", { async : false });
@@ -175,6 +176,7 @@ function fn_makeGrid() {
 
 function fn_params() {
 	params.kind = kind;
+	params.isTeacher = isTeacher;
 	params.SEARCH_STR = $("#SEARCH_STR").val();	
 }
 

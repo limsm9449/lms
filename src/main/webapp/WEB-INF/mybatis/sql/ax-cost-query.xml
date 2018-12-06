@@ -59,6 +59,9 @@
 <if test="YEAR != null and YEAR != ''">
 		AND		C.YEAR = #{YEAR}
 </if>
+<if test="MONTH != null and MONTH != ''">
+		AND		C.MONTH = #{MONTH}
+</if>
 <if test="chasu != null and chasu != ''">
 		AND		C.CHASU = #{chasu}
 </if>
@@ -166,6 +169,9 @@
 <if test="YEAR != null and YEAR != ''">
 		AND		C.YEAR = #{YEAR}
 </if>
+<if test="MONTH != null and MONTH != ''">
+		AND		C.MONTH = #{MONTH}
+</if>
 <if test="chasu != null and chasu != ''">
 		AND		C.CHASU = #{chasu}
 </if>
@@ -259,16 +265,18 @@
                     LEFT OUTER JOIN COMPANY H ON H.COMP_CD = A.COMP_CD          
 					LEFT OUTER JOIN USER U1 ON A.CREATE_USER = U1.USER_ID
 					LEFT OUTER JOIN USER U2 ON A.UPDATE_USER = U2.USER_ID                 
-		WHERE	OPEN_YN = 'Y'
-		AND		CLOSE_YN = 'Y'
+		WHERE	CLOSE_YN = 'Y'
 		   <if test="LEVEL1_CODE != null and LEVEL1_CODE != ''"> AND CAT.C1_CODE = #{LEVEL1_CODE}</if>
 		   <if test="LEVEL2_CODE != null and LEVEL2_CODE != ''"> AND CAT.C2_CODE = #{LEVEL2_CODE}</if>
 		   <if test="LEVEL3_CODE != null and LEVEL3_CODE != ''"> AND CAT.C3_CODE = #{LEVEL3_CODE}</if>
 <if test="YEAR != null and YEAR != ''">
 		AND		A.YEAR = #{YEAR}
 </if>
+<if test="MONTH != null and MONTH != ''">
+		AND		A.MONTH = #{MONTH}
+</if>
 <if test="chasu != null and chasu != ''">
-		AND		S.CHASU = #{chasu}
+		AND		A.CHASU = #{chasu}
 </if>
 <if test="courseName != null and courseName != ''"> 
 		AND ( UPPER(S.COURSE_CODE) LIKE CONCAT('%',UPPER(#{courseName}),'%') OR UPPER(B.COURSE_NAME) LIKE CONCAT('%',UPPER(#{courseName}),'%') )
@@ -610,14 +618,16 @@
                      	FROM	COURSE_REGISTER
                      	WHERE	STATUS = 'A'
                      	GROUP 	BY COURSE_ID ) E ON E.COURSE_ID = A.COURSE_ID
-		WHERE	OPEN_YN = 'Y'
-		AND		CLOSE_YN = 'Y'
+		WHERE	CLOSE_YN = 'Y'
 		AND     DATE_FORMAT(A.UPDATE_DATE, '%Y-%m-%d') BETWEEN #{FROM_DT} AND #{TO_DT}	
 		   <if test="LEVEL1_CODE != null and LEVEL1_CODE != ''"> AND CAT.C1_CODE = #{LEVEL1_CODE}</if>
 		   <if test="LEVEL2_CODE != null and LEVEL2_CODE != ''"> AND CAT.C2_CODE = #{LEVEL2_CODE}</if>
 		   <if test="LEVEL3_CODE != null and LEVEL3_CODE != ''"> AND CAT.C3_CODE = #{LEVEL3_CODE}</if>
 <if test="YEAR != null and YEAR != ''">
 		AND		A.YEAR = #{YEAR}
+</if>
+<if test="MONTH != null and MONTH != ''">
+		AND		A.MONTH = #{MONTH}
 </if>
 <if test="chasu != null and chasu != ''">
 		AND		A.CHASU = #{chasu}
@@ -669,8 +679,7 @@
                    		) F ON F.COURSE_ID = A.COURSE_ID
                     LEFT OUTER JOIN COMPANY G ON G.COMP_CD = A.COMP_CD  
 					LEFT OUTER JOIN USER U1 ON F.USER_ID = U1.USER_ID
-		WHERE	OPEN_YN = 'Y'
-		AND		CLOSE_YN = 'Y'
+		WHERE	CLOSE_YN = 'Y'
 		AND		IFNULL(F.PAYMENT_DATE,'') != ''
 		AND     F.PAYMENT_DATE BETWEEN #{FROM_DT} AND #{TO_DT}	
 		   <if test="LEVEL1_CODE != null and LEVEL1_CODE != ''"> AND CAT.C1_CODE = #{LEVEL1_CODE}</if>
@@ -678,6 +687,9 @@
 		   <if test="LEVEL3_CODE != null and LEVEL3_CODE != ''"> AND CAT.C3_CODE = #{LEVEL3_CODE}</if>
 <if test="YEAR != null and YEAR != ''">
 		AND		A.YEAR = #{YEAR}
+</if>
+<if test="MONTH != null and MONTH != ''">
+		AND		A.MONTH = #{MONTH}
 </if>
 <if test="chasu != null and chasu != ''">
 		AND		A.CHASU = #{chasu}

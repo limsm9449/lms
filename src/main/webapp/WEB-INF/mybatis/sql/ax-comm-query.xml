@@ -134,6 +134,15 @@
 		        ,TUTOR_ID
 		  FROM  COMPANY
 		 WHERE	COMP_CD != 'B2C'
+		   AND	C2C_YN = 'N'
+		 UNION 	ALL
+		SELECT 	3 ORD
+				,COMP_CD value
+		        ,COMP_NAME text
+		        ,TUTOR_ID
+		  FROM  COMPANY
+		 WHERE	COMP_CD != 'B2C'
+		   AND	C2C_YN = 'Y'
 		 ORDER BY 1, 2 	
 	</select>
 	
@@ -270,8 +279,8 @@
 		   AND P_SEQ = #{P_SEQ}
     </delete>		    
     
-    <select id="axCompCdFromSubDomain" resultType="String">
-    	SELECT COMP_CD
+    <select id="axCompCdFromSubDomain" resultType="hashmap">
+    	SELECT COMP_CD, C2C_YN, IFNULL(USE_YN,'Y') USE_YN
     	  FROM COMPANY
     	 WHERE SUB_DOMAIN = #{SUB_DOMAIN}
     </select>
@@ -282,6 +291,10 @@
 		WHERE 	1 = 1
 		<if test="SEARCH_STR != null and SEARCH_STR != ''">
 			AND ( UPPER(USER_ID) LIKE CONCAT('%',UPPER(#{SEARCH_STR}),'%') OR UPPER(USER_NAME) LIKE CONCAT('%',UPPER(#{SEARCH_STR}),'%') )
+		</if>			 
+		<if test="kind == 'C2C_ADD_USER'">
+			AND TEACHER_YN = 'Y'
+			AND USER_ID NOT IN ( SELECT C2C_USER_ID FROM COMPANY WHERE C2C_YN = 'Y' AND C2C_USER_ID IS NOT NULL) 
 		</if>			 
 		ORDER 	BY USER_NAME  
 	</select>
@@ -336,6 +349,14 @@
 		AND ( UPPER(A.COURSE_CODE) LIKE CONCAT('%',UPPER(#{SEARCH_STR}),'%') OR UPPER(B.COURSE_NAME) LIKE CONCAT('%',UPPER(#{SEARCH_STR}),'%') )
 </if>	
 	 ORDER BY C.CATEGORY_NAME,B.COURSE_NAME,A.YEAR,A.MONTH,A.CHASU 
+	</select>
+    
+    <select id="axDdAllFaqCategory" resultType="hashmap">
+		SELECT DD_KEY value,
+		       DD_VALUE text
+		  FROM CODE 
+		 WHERE DD_MAIN IN ('FAQ_B2C','FAQ_B2B','FAQ_C2C')
+		 ORDER BY DD_KEY
 	</select>
     
 </mapper>

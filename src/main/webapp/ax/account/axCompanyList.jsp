@@ -40,7 +40,7 @@ $(document.body).ready(function () {
 	            fn_search();
 	            break;
             case "add":
-            	grid.addRow({NEW_FLAG : "Y", COMP_CD : "******", COMP_NAME : "회사명을 입력하세요.", C2C_YN : "N"}, "last", {focus: "END"});
+            	grid.addRow({NEW_FLAG : "Y", COMP_CD : "******", COMP_NAME : "회사명을 입력하세요.", C2C_YN : "N", USE_YN : "Y"}, "last", {focus: "END"});
 
 		    	break;
             case "delete":
@@ -221,6 +221,15 @@ function fn_makeGrid() {
 	            editor : { 
 	            	type : "text"
 				},
+				styleClass: function () {
+                    return "grid-cell-edit";
+                }
+	        },{
+	        	key : "USE_YN", 
+	        	label : "사용 여부", 
+	            width : 80,
+	        	align : "center", 
+	        	editor : { type : "checkbox", config : {height: 17, trueValue: "Y", falseValue: "N"} },
 				styleClass: function () {
                     return "grid-cell-edit";
                 }

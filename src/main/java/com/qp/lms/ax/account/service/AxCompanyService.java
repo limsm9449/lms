@@ -52,10 +52,6 @@ public class AxCompanyService {
 
 			if ( "Y".equals((String)row.get("NEW_FLAG")) ) {
 				sqlSession.insert("axCompany.axCompanyInsert", row);
-				
-				if ( "Y".equals((String)row.get("C2C_YN")) ) {
-					sqlSession.update("axCompany.axC2cUserUpdate", row);
-				}
 			} else {
 				sqlSession.update("axCompany.axCompanyUpdate", row);
 			}

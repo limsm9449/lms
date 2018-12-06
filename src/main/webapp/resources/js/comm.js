@@ -9,8 +9,6 @@ var course_contents_length = 10000;
 /* 타이틀 사이즈 */
 var board_title_length = 200;
 
-var isReload = true;
-
 $(document).ready(function() {
 	//자동 submit 방지
 	var forms = document.forms;
@@ -41,14 +39,6 @@ $(document).ready(function() {
 			};
 		$.datepicker.setDefaults($.datepicker.regional['ko']);
 	}
-	
-	//10분 마다 페이지 reload...
-	setInterval(
-		function() {
-			if ( isReload ) {
-				location.reload();
-			}
-		}, 1000 * 60 * 10);
 });
 
 /** 
@@ -1197,3 +1187,13 @@ function gfn_timestamp() {
 	return new Date().getTime();
 }
 
+//10분 마다 페이지 reload...
+var isReload = true;
+function gfn_refresh() {
+	setInterval(
+		function() {
+			if ( isReload ) {
+				location.reload();
+			}
+		}, 1000 * 60 * 10);
+}

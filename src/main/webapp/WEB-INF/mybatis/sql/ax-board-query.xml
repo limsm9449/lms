@@ -157,12 +157,24 @@
 
 	<select id="axBoardFaqList" resultType="hashmap">
 		SELECT 	A.SEQ,
+				SUBSTR(B.DD_MAIN,5,3) COMP_KIND,
 		       	CATEGORY,
 		       	TITLE,
 		       	VIEW_CNT,
 		       	DATE_FORMAT(IFNULL(A.UPDATE_DATE,A.CREATE_DATE), '%y.%m.%d %H:%i') CREATE_DATE
 		FROM 	BOARD_FAQ A
+					LEFT OUTER JOIN (
+							SELECT 	* 
+							FROM 	CODE
+							WHERE 	DD_MAIN IN ('FAQ_B2C','FAQ_B2B','FAQ_C2C')
+						) B ON B.DD_KEY = A.CATEGORY 
 		WHERE 	1 = 1
+		<if test="CB_COMPANY != null and CB_COMPANY != ''">
+			AND SUBSTR(B.DD_MAIN,5,3) = #{CB_COMPANY}
+		</if>
+		<if test="CATEGORY != null and CATEGORY != ''">
+			AND CATEGORY = #{CATEGORY}
+		</if>
 		<if test="SEARCH_STR != null and SEARCH_STR != ''">
 			AND UPPER(A.TITLE) LIKE CONCAT('%',UPPER(#{SEARCH_STR}),'%')
 		</if>

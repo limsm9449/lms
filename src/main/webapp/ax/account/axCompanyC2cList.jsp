@@ -32,7 +32,7 @@ $(document.body).ready(function () {
         theme: "danger"
     });
 
-    gfn_callAjax("/common/axDd.do", { DD_KIND : "ZipcodeUrl" }, fn_callbackAjax, "dd", { async : false });
+    gfn_callAjax("/common/axDd.do", { DD_KIND : "ZipcodeUrl,Teacher" }, fn_callbackAjax, "dd", { async : false });
     
     $('[data-grid-control]').click(function () {
         switch (this.getAttribute("data-grid-control")) {
@@ -40,7 +40,7 @@ $(document.body).ready(function () {
 	            fn_search();
 	            break;
             case "add":
-            	Popup.showUser();
+            	Popup.showUserSearch( { kind : "C2C_ADD_USER" } );
 
 		    	break;
             case "delete":
@@ -148,13 +148,20 @@ function fn_makeGrid() {
                     return "grid-cell-edit";
                 }
 	        },{
-	            key : "OWNER_NAME",
+	            key : "C2C_USER_ID",
 	            label : "대표자명",
-	            width : 100,
-	            align : "left",
-	            editor : { 
-	            	type : "text"
-				},
+	            width : 110,
+	            align : "center", 
+	        	editor: {
+                    type : "select", 
+                    config : {
+                        columnKeys: { optionValue: "value", optionText: "text" },
+                        options: dd.Teacher
+                    }
+	        	},
+	            formatter : function () {
+	                return gfn_getValueInList(dd.Teacher, "value",  this.item.C2C_USER_ID, "text");
+	           	},
 				styleClass: function () {
                     return "grid-cell-edit";
                 }
@@ -225,6 +232,15 @@ function fn_makeGrid() {
                     return "grid-cell-edit";
                 }
 			},{
+	        	key : "USE_YN", 
+	        	label : "사용 여부", 
+	            width : 80,
+	        	align : "center", 
+	        	editor : { type : "checkbox", config : {height: 17, trueValue: "Y", falseValue: "N"} },
+				styleClass: function () {
+                    return "grid-cell-edit";
+                }
+	        },{
 	        	key : "LOGIN_IMG", 
 	        	label : "로그인화면 이미지", 
 	            width : 140,
@@ -271,7 +287,7 @@ function fn_save() {
 		COMP_CD : { mendatory : true, colName : "회사코드" },
 		COMP_NAME : { mendatory : true, colName : "회사명" },
 		BUSINESS_NO : { mendatory : true, colName : "사업자등록번호" },
-		OWNER_NAME : { mendatory : true, colName : "대표자명" },
+		C2C_USER_ID : { mendatory : true, colName : "대표자명" },
 		SUB_DOMAIN : { mendatory : true, colName : "도메인명" }
    	};
     
@@ -320,7 +336,7 @@ function fn_callbackAjax(data, id) {
 				NEW_FLAG : "Y", 
 				COMP_CD : data.USER_ID, 
 				COMP_NAME : data.USER_NAME, 
-				OWNER_NAME : data.USER_NAME,
+				C2C_USER_ID : data.USER_ID,
 				ZIPCODE : data.HOME_ZIPCODE,
 				ADDR : data.HOME_ADDR,
 				COMP_TEL : data.HOME_TEL,
@@ -329,7 +345,8 @@ function fn_callbackAjax(data, id) {
 				GNB_IMG : "N",
 				SUB_DOMAIN : data.USER_ID, 
 				USER_ID : data.USER_ID, 
-				C2C_YN : "Y"
+				C2C_YN : "Y",
+				USE_YN : "Y"
 			}, "last", {focus: "END"});
 	}
 }

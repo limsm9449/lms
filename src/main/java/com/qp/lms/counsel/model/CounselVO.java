@@ -14,6 +14,7 @@ public class CounselVO extends CommonVO {
 	private String answer;
 	private String viewCnt;
 	private String findString;
+	private String compType;
 	
 	//2014.8.3
 	private String userName;
@@ -80,6 +81,12 @@ public class CounselVO extends CommonVO {
 	}
 	public void setUserName(String userName) {
 		this.userName = userName;
+	}
+	public String getCompType() {
+		return compType;
+	}
+	public void setCompType(String compType) {
+		this.compType = compType;
 	}
 	
 	

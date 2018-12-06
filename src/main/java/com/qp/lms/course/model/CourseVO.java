@@ -195,7 +195,6 @@ public class CourseVO extends CommonVO {
     private String studyStart;
     private String studyEnd;
     private String questProgressRatio;
-    private String settingQuestProgressRatio;
     
 	public String getPeriodProgress() {
 		return periodProgress;
@@ -1421,14 +1420,6 @@ public class CourseVO extends CommonVO {
 
 	public void setQuestProgressRatio(String questProgressRatio) {
 		this.questProgressRatio = questProgressRatio;
-	}
-
-	public String getSettingQuestProgressRatio() {
-		return settingQuestProgressRatio;
-	}
-
-	public void setSettingQuestProgressRatio(String settingQuestProgressRatio) {
-		this.settingQuestProgressRatio = settingQuestProgressRatio;
 	}
 
 

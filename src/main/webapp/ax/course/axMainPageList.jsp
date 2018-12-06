@@ -65,6 +65,9 @@ $(document.body).ready(function () {
             	if ( row.length == 0 ) {
             		mask.open();
             		dialog.alert( { msg : "과정을 선택하셔야 합니다." }, function () { mask.close();	} );
+            	} else if ( row[0]["NEW_FLAG"] == "Y" ) {
+            		mask.open();
+            		dialog.alert( { msg : "신규로 추가한 경우는 저장후에 이미지를 편집하셔야 합니다." }, function () { mask.close();	} );
             	} else {
             		var urlParams = "page=/ax/course/axMainPageImagePopup";
             		urlParams += "&COMP_CD=" + row[0]["COMP_CD"];
@@ -378,7 +381,8 @@ function fn_callbackAjax(data, id) {
 				MAIN_OPEN_YN : "N",
 				POPULAR_YN : "N",
 				RECOMMEND_YN : "N",
-				NEW_YN : "N"
+				NEW_YN : "N",
+				NEW_FLAG : "Y"
 			}, "last", {focus: "END"});
 	}
 }

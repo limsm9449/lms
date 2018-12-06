@@ -65,7 +65,6 @@
 						LEFT OUTER JOIN COURSE_EXAM_TYPE F ON F.SEQ = A.COURSE_EXAM_TYPE_ID
 						LEFT OUTER JOIN COMPANY G ON G.COMP_CD = A.COMP_CD 
 		WHERE 	1 = 1
-		AND		A.OPEN_YN = 'Y'
 <if test="LEVEL1_CODE != null and LEVEL1_CODE != ''"> AND CAT.C1_CODE = #{LEVEL1_CODE}</if>
 <if test="LEVEL2_CODE != null and LEVEL2_CODE != ''"> AND CAT.C2_CODE = #{LEVEL2_CODE}</if>
 <if test="LEVEL3_CODE != null and LEVEL3_CODE != ''"> AND CAT.C3_CODE = #{LEVEL3_CODE}</if>
@@ -88,6 +87,9 @@
 </if>
 <if test="YEAR != null and YEAR != ''">
 		AND		A.YEAR = #{YEAR}
+</if>
+<if test="MONTH != null and MONTH != ''">
+		AND		A.MONTH = #{MONTH}
 </if>
 <if test="chasu != null and chasu != ''">
 		AND		A.CHASU = #{chasu}

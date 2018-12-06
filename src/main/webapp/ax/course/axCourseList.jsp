@@ -666,7 +666,9 @@ function fn_params() {
 	params.COMPANY = $("#CB_COMPANY option:selected").val();	
 	params.COMPANY2 = $("#CB_COMPANY2 option:selected").val();	
 	params.OPEN_KIND = $("#CB_OPEN_KIND option:selected").val();	
+	params.MONTH = $("#CB_MONTH option:selected").val();	
 	params.YEAR = $("#CB_YEAR option:selected").val();	
+	params.MONTH = $("#CB_MONTH option:selected").val();	
 	params.chasu = $("#chasu").val();	
 	params.courseName = $("#courseName").val();	
 }
@@ -825,6 +827,20 @@ function fn_cbChange(id) {
 	    	<label for="CB_YEAR">&nbsp;년도</label>
 			<select class="form-control" id="CB_YEAR">
 				<option value="">전체</option>
+			</select>
+	  	</div>
+	  	<div class="form-group">
+	    	<label for="CB_MONTH">&nbsp;월</label>
+			<select class="form-control" id="CB_MONTH">
+				<option value="">전체</option>
+<c:forEach var="i" begin="1" end="12" step="1" varStatus ="status">
+	<c:if test="${i < 10}">
+                <option value="0${i}">${i}</option>
+	</c:if>     
+	<c:if test="${i >= 10}">
+                <option value="${i}">${i}</option>
+	</c:if>     
+</c:forEach>    
 			</select>
 	  	</div>
 	  	<div class="form-group">

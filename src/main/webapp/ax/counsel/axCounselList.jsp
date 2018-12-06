@@ -39,12 +39,30 @@ $(document.body).ready(function () {
         }
     });
     
-    gfn_callAjax("/common/axDd.do", { DD_KIND : "FaqCategory" }, fn_callbackAjax, "dd", { async : false });
+    gfn_callAjax("/common/axDd.do", { DD_KIND : "CompanyKind,B2CFaqCategory,B2BFaqCategory,C2CFaqCategory,AllFaqCategory" }, fn_callbackAjax, "dd", { async : false });
 });
 
 function fn_ddAfter() {
 	grid = gfn_makeAx5Grid("first-grid",
 		[ 	{
+	        	key : "COMP_KIND", 
+	        	label : "회사 구분", 
+	            width : 100,
+	        	align : "center", 
+	        	editor: {
+	                type : "select", 
+	                config : {
+	                    columnKeys: { optionValue: "value", optionText: "text" },
+	                    options: dd.CompanyKind
+	                },
+	            	disabled : function () {
+	                    return true;
+	                }
+	        	},
+	            formatter : function () {
+	                return gfn_getValueInList(dd.CompanyKind, "value",  this.item.COMP_KIND, "text");
+	           	}
+	        },{
 	            key : "CATEGORY",
 	            label : "카테고리",
 	            width : 120,
@@ -53,14 +71,14 @@ function fn_ddAfter() {
                     type : "select", 
                     config : {
                         columnKeys: { optionValue: "value", optionText: "text" },
-                        options: dd.FaqCategory
+                        options: dd.AllFaqCategory
                     },
 	            	disabled : function () {
                         return true;
                     }
 	        	},
 	            formatter : function () {
-	                return gfn_getValueInList(dd.FaqCategory, "value",  this.item.CATEGORY, "text");
+	                return gfn_getValueInList(dd.AllFaqCategory, "value",  this.item.CATEGORY, "text");
 	           	}
 	        },{
 	            key : "TITLE",
@@ -95,6 +113,7 @@ function fn_ddAfter() {
 }
 
 function fn_params() {
+	params.CB_COMPANY = $("#CB_COMPANY option:selected").val();	
 	params.CATEGORY = $("#CB_CATEGORY option:selected").val();	
 	params.SEARCH_STR = $("#SEARCH_STR").val();
 }
@@ -117,7 +136,7 @@ function fn_callbackAjax(data, id) {
 	} else if ( id == "dd" ){
 		dd = $.extend({}, data);
 		
-		gfn_cbRefresh("CB_CATEGORY", data.FaqCategory, true);
+		gfn_cbRefresh("CB_COMPANY", data.CompanyKind, true);
 		
 		fn_ddAfter();
 	}
@@ -138,6 +157,18 @@ function fn_gridEvent(event, obj) {
 	}
 }
 
+function fn_cbChange(id) {
+	if ( id == "CB_COMPANY" ) {
+		if ( $("#CB_COMPANY").val() == "B2B" ) {
+			gfn_cbRefresh("CB_CATEGORY", dd.B2BFaqCategory, true);
+		} else if ( $("#CB_COMPANY").val() == "C2C" ) {
+			gfn_cbRefresh("CB_CATEGORY", dd.C2CFaqCategory, true);
+		} else {
+			gfn_cbRefresh("CB_CATEGORY", dd.B2CFaqCategory, true);
+		}
+	}
+}
+
 </script>
 
 <body style="padding : 10px">
@@ -148,6 +179,12 @@ function fn_gridEvent(event, obj) {
 <div style="height:10px"></div>
 
 <div class="form-inline">
+  	<div class="form-group">
+    	<label for="CB_COMPANY">&nbsp;회사 구분</label>
+		<select class="form-control" id="CB_COMPANY" onchange="fn_cbChange('CB_COMPANY')">
+			<option value="">전체</option>
+		</select>
+  	</div>
   	<div class="form-group">
     	<label for="CB_CATEGORY">카테고리</label>
 		<select class="form-control" id="CB_CATEGORY">

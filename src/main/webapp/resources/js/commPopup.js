@@ -284,7 +284,11 @@ var Popup = {
 						pHeight = window.innerHeight || document.body.clientHeight
 						Popup.showPopup(context + "/guest/eduSampleHomeMobile.do?courseId=" + pCourseId,pWidth,pHeight);
 					} else {
-						Popup.showPopup(context + "/guest/eduSampleHome.do?courseId=" + pCourseId,screen.availWidth - 50,screen.availHeight - 90);
+						if ( gfn_deviceCheck() == "MOBILE" ) {
+							alert("해당과정은 모바일에서 보실 수 없습니다.");
+						} else {
+							Popup.showPopup(context + "/guest/eduSampleHome.do?courseId=" + pCourseId,screen.availWidth - 50,screen.availHeight - 90);
+						}
 					}
 				},
 				error : function(e) {
@@ -297,7 +301,7 @@ var Popup = {
 	},
 
 	/**
-	 * 미리보기 (관리자용)
+	 * 관리자용 강좌 미리보기
 	 * @param pUserId
 	 * @param pWidth
 	 * @param pHeight
@@ -307,7 +311,7 @@ var Popup = {
 	},
 
 	/**
- 	 * 컨텐츠 미리보기
+ 	 * 과정코드별 컨텐츠 미리보기
 	 * @param pCourseCode
 	 * @param pJucha
 	 * @param pWidth
@@ -376,7 +380,7 @@ var Popup = {
 	/**
 	 * 사용자 조회
 	 */
-	showUserSearch : function(kind) {
+	showUserSearch1 : function(kind) {
 		if ( kind != undefined )
 			Popup.showPopup(context + "/common/userSearchList.do",700,520,"userSearch");
 		else
@@ -399,7 +403,11 @@ var Popup = {
 						pHeight = window.innerHeight || document.body.clientHeight
 						Popup.showPopup(context + "/user/studyroom.do?courseId=" + pCourseId, pWidth, pHeight, "studyroom");
 					} else {
-						Popup.showPopup(context + "/user/studyroom.do?courseId=" + pCourseId, 1185, 810, "studyroom");
+						if ( gfn_deviceCheck() == "MOBILE" ) {
+							alert("해당과정은 모바일에서 보실 수 없습니다.");
+						} else {
+							Popup.showPopup(context + "/user/studyroom.do?courseId=" + pCourseId, 1185, 810, "studyroom");
+						}
 					}
 				},
 				error : function(e) {
@@ -415,13 +423,8 @@ var Popup = {
 		Popup.showPopup(context + "/user/courseAttendanceV.do?courseId=" + pCourseId,900,800);
 	},
 
-	showUser : function(pParams) {
-   		var urlParams = "page=/ax/common/axUserSearchPopup";
-   		
-   		var params = pParams || {};
-   		if ( params.kind ) {
-   			urlParams += "&kind=" + params.kind;
-   		}
+	showUserSearch : function(pParams) {
+   		var urlParams = $.param(pParams || {}) + "&page=/ax/common/axUserSearchPopup";
    		
    		f_popup('/common/axOpenPage', {displayName:'userPopup',option:'width=900,height=700', urlParams:urlParams});
 	},

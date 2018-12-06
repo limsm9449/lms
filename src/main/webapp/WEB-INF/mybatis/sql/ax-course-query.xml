@@ -108,6 +108,9 @@
 <if test="YEAR != null and YEAR != ''">
 		AND		A.YEAR = #{YEAR}
 </if>
+<if test="MONTH != null and MONTH != ''">
+		AND		A.MONTH = #{MONTH}
+</if>
 <if test="chasu != null and chasu != ''">
 		AND		A.CHASU = #{chasu}
 </if>

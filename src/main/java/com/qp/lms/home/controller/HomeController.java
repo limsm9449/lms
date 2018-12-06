@@ -47,6 +47,12 @@ public class HomeController {
 
         return "goIndex";
     }
+    
+    @RequestMapping(value = "/errorNotUseCompany")
+    public String errorNotUseCompany(Model model) {
+
+        return "errorNotUseCompany";
+    }
 
     @RequestMapping(value = "/cms")
     public String cms(Model model) {

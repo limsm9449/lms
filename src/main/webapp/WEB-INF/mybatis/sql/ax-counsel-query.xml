@@ -6,13 +6,26 @@
 
 	<select id="axCounselList" parameterType="hashmap" resultType="hashmap">
 		SELECT SEQ,
+		       SUBSTR(C.DD_MAIN,5,3) COMP_KIND,
 		       CATEGORY,
 		       TITLE,
 		       IF(LENGTH(IFNULL(ANSWER,''))=0,'N','Y') ANSWER_YN,
 		       DATE_FORMAT(IFNULL(A.UPDATE_DATE,A.CREATE_DATE), '%y.%m.%d %H:%i') CREATE_DATE,
 		       B.USER_NAME
 		  FROM COUNSEL A LEFT OUTER JOIN USER B ON A.USER_ID = B.USER_ID
-		   <if test="SEARCH_STR != null and SEARCH_STR != ''"> WHERE TITLE LIKE CONCAT('%',#{SEARCH_STR},'%')</if> 
+		  			LEFT OUTER JOIN (
+							SELECT 	* 
+							FROM 	CODE
+							WHERE 	DD_MAIN IN ('FAQ_B2C','FAQ_B2B','FAQ_C2C')
+						) C ON C.DD_KEY = A.CATEGORY 
+		WHERE 	1 = 1
+			<if test="CB_COMPANY != null and CB_COMPANY != ''">
+				AND SUBSTR(C.DD_MAIN,5,3) = #{CB_COMPANY}
+			</if>
+			<if test="CATEGORY != null and CATEGORY != ''">
+				AND CATEGORY = #{CATEGORY}
+			</if>
+		   	<if test="SEARCH_STR != null and SEARCH_STR != ''"> AND TITLE LIKE CONCAT('%',#{SEARCH_STR},'%')</if> 
 		 ORDER BY SEQ
 	</select>	
 	

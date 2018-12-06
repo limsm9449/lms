@@ -9,6 +9,8 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.qp.lms.common.CommUtil;
+
 @Service
 public class AxCommService {
 	@Autowired
@@ -75,9 +77,17 @@ public class AxCommService {
 		    	hm.put(ddKinds[i], sqlSession.selectList("axComm.axDdBank", paramMap));
 			} else if ( "CourseReport".equals(ddKinds[i]) ) {
 		    	hm.put(ddKinds[i], sqlSession.selectList("axComm.axDdCourseReport", paramMap));
-			} else if ( "FaqCategory".equals(ddKinds[i]) ) {
-				paramMap.put("DD_MAIN", "FAQ");
+			} else if ( "B2CFaqCategory".equals(ddKinds[i]) ) {
+				paramMap.put("DD_MAIN", "FAQ_B2C");
 		    	hm.put(ddKinds[i], sqlSession.selectList("axComm.axDdCode", paramMap));
+			} else if ( "B2BFaqCategory".equals(ddKinds[i]) ) {
+				paramMap.put("DD_MAIN", "FAQ_B2B");
+		    	hm.put(ddKinds[i], sqlSession.selectList("axComm.axDdCode", paramMap));
+			} else if ( "C2CFaqCategory".equals(ddKinds[i]) ) {
+				paramMap.put("DD_MAIN", "FAQ_C2C");
+		    	hm.put(ddKinds[i], sqlSession.selectList("axComm.axDdCode", paramMap));
+			} else if ( "AllFaqCategory".equals(ddKinds[i]) ) {
+				hm.put(ddKinds[i], sqlSession.selectList("axComm.axDdAllFaqCategory", paramMap));
 			} else if ( "ZipcodeUrl".equals(ddKinds[i]) ) {
 				paramMap.put("OPTION_KEY", "ZIPCODE_URL");
 		    	hm.put(ddKinds[i], sqlSession.selectList("axComm.axDdSetting", paramMap));
@@ -151,9 +161,36 @@ public class AxCommService {
     	HashMap<String, Object> params = new HashMap<String, Object>();
     	params.put("SUB_DOMAIN", subDomain);
     	
-    	String compCd = sqlSession.selectOne("axComm.axCompCdFromSubDomain", params);
+    	HashMap<String, Object> row = sqlSession.selectOne("axComm.axCompCdFromSubDomain", params);
     	
-        return ( compCd == null ? "B2C" : compCd );
+        return ( row == null ? "B2C" : (String)row.get("COMP_CD") );
+    }
+    
+    public String axCompTypeFromSubDomain(String subDomain) throws Exception {
+    	HashMap<String, Object> params = new HashMap<String, Object>();
+    	params.put("SUB_DOMAIN", subDomain);
+    	
+    	HashMap<String, Object> row = sqlSession.selectOne("axComm.axCompCdFromSubDomain", params);
+    	
+    	String compType = "";
+    	if ( row == null ) {
+    		compType = "B2C";
+    	} else if ( CommUtil.isEqual((String)row.get("C2C_YN"), "Y") ) {
+    		compType = "C2C";
+    	} else {
+    		compType = "B2B";
+    	}
+    	
+        return compType;
+    }
+    
+    public String axCompUseYnFromSubDomain(String subDomain) throws Exception {
+    	HashMap<String, Object> params = new HashMap<String, Object>();
+    	params.put("SUB_DOMAIN", subDomain);
+    	
+    	HashMap<String, Object> row = sqlSession.selectOne("axComm.axCompCdFromSubDomain", params);
+    	
+        return ( row == null ? "N" : (String)row.get("USE_YN") );
     }
     
 	public HashMap<String, Object> axUserSearchList(HashMap<String, Object> paramMap) throws Exception {

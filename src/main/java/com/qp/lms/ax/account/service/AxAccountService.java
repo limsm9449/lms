@@ -213,7 +213,12 @@ public class AxAccountService {
 	public HashMap<String, Object> axAccountUserOne(HashMap<String, Object> paramMap) throws Exception {
 		HashMap<String, Object> hm = new HashMap<String, Object>();
 		
-		paramMap.put("USER_ID", SessionUtil.getSessionUserId());
+		if ( CommUtil.isEqual((String)paramMap.get("USER_ID"), "") ) {
+			paramMap.put("USER_ID", SessionUtil.getSessionUserId());
+		} else {
+			paramMap.put("USER_ID", (String)paramMap.get("USER_ID"));
+		}
+		
     	HashMap<String, Object> row = sqlSession.selectOne("axAccount.axAccountUserOne", paramMap);
     	hm.put("row", row);
         
@@ -236,7 +241,13 @@ public class AxAccountService {
     public HashMap<String, Object>  axAccountUserCareerSave(HashMap<String, Object> paramMap) throws Exception {
 		HashMap<String, Object> hm = new HashMap<String, Object>();
 		
-		paramMap.put("USER_ID", SessionUtil.getSessionUserId());
+		if ( CommUtil.isEqual((String)paramMap.get("USER_ID"), "") ) {
+			paramMap.put("USER_ID", SessionUtil.getSessionUserId());
+		} else {
+			paramMap.put("USER_ID", (String)paramMap.get("USER_ID"));
+		}
+		paramMap.put("SESSION_USER_ID", SessionUtil.getSessionUserId());
+		
 		sqlSession.update("axAccount.axAccountUserCareerUpdate", paramMap);
 
 		hm.put("RtnMode", Constant.mode.OK.name());

@@ -92,8 +92,11 @@
 <if test="YEAR != null and YEAR != ''">
 		AND		B.YEAR = #{YEAR}
 </if>
+<if test="MONTH != null and MONTH != ''">
+		AND		A.MONTH = #{MONTH}
+</if>
 <if test="chasu != null and chasu != ''">
-		AND		B.CHASU = #{chasu}
+		AND		A.CHASU = #{chasu}
 </if>
 <if test="courseName != null and courseName != ''"> 
 		AND ( UPPER(C.COURSE_CODE) LIKE CONCAT('%',UPPER(#{courseName}),'%') OR UPPER(C.COURSE_NAME) LIKE CONCAT('%',UPPER(#{courseName}),'%') )

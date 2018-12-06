@@ -128,6 +128,11 @@ $(document.body).ready(function () {
             	}
             		
                 break;
+            case "contentsView":
+            	var row = grid.getList("selected");
+            	Popup.showViewContents(row[0]["COURSE_CODE"], "", row[0]["H_PX"], row[0]["V_PX"]);
+
+            	break;
         }
     });
 });
@@ -682,6 +687,7 @@ function fn_cbChange(id) {
     <button class="btn btn-default" data-grid-control="editContent">학습내용 편집</button>
     <button class="btn btn-default" data-grid-control="editImage">이미지 편집</button>
     <button class="btn btn-default" data-grid-control="editWeekCost">차시별 비용</button>
+    <button class="btn btn-default" data-grid-control="contentsView">컨텐츠 미리보기</button>
 </div>
 
 <div style="height:10px"></div>

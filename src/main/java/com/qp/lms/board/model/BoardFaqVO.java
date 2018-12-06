@@ -13,6 +13,7 @@ public class BoardFaqVO extends CommonVO{
 	private String viewCnt;
 	
 	private String findString;
+	private String compType;
 	
 	//2014.7.30
 	private String isNew;
@@ -67,6 +68,12 @@ public class BoardFaqVO extends CommonVO{
 	}
 	public void setIsNew(String isNew) {
 		this.isNew = isNew;
+	}
+	public String getCompType() {
+		return compType;
+	}
+	public void setCompType(String compType) {
+		this.compType = compType;
 	}
 		
 	

@@ -343,6 +343,7 @@ function fn_params() {
 	params.LEVEL3_CODE = $("#CB_LEVEL3 option:selected").val();	
 	params.OPEN_KIND = $("#CB_OPEN_KIND option:selected").val();	
 	params.YEAR = $("#CB_YEAR option:selected").val();	
+	params.MONTH = $("#CB_MONTH option:selected").val();	
 	params.chasu = $("#chasu").val();	
 	params.courseName = $("#courseName").val();	
 }
@@ -443,8 +444,22 @@ function fn_cbChange(id) {
 		</select>
   	</div>
   	<div class="form-group">
+    	<label for="CB_MONTH">&nbsp;월</label>
+		<select class="form-control" id="CB_MONTH">
+			<option value="">전체</option>
+<c:forEach var="i" begin="1" end="12" step="1" varStatus ="status">
+<c:if test="${i < 10}">
+               <option value="0${i}">${i}</option>
+</c:if>     
+<c:if test="${i >= 10}">
+               <option value="${i}">${i}</option>
+</c:if>     
+</c:forEach>    
+		</select>
+  	</div>
+  	<div class="form-group">
     	<label for="chasu">&nbsp;차수</label>
-    	<input type="text" class="form-control" id="chasu" name="chasu">
+    	<input type="text" class="form-control" id="chasu" name="chasu" style="width:60px;">
   	</div>
 </div>
 <div style="height:10px"></div>

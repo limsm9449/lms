@@ -57,6 +57,7 @@ public class MainVO extends CommonVO {
 	private String workerCardYn;
 	private String supportEmployerYn;
 	private String normalCourseYn;
+	private String compType;
 
 	public String getC1Code() {
 		return c1Code;
@@ -324,6 +325,12 @@ public class MainVO extends CommonVO {
 	}
 	public void setNormalCourseYn(String normalCourseYn) {
 		this.normalCourseYn = normalCourseYn;
+	}
+	public String getCompType() {
+		return compType;
+	}
+	public void setCompType(String compType) {
+		this.compType = compType;
 	}
 	
 	

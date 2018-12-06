@@ -39,7 +39,8 @@ public class MainService {
     	List<BoardVO> noticeList = sqlSession.selectList("main.noticeList", set.getCondiVO());
 		set.setNoticeList(noticeList);
 
-		//공지사항
+		//faq
+		set.getCondiVO().setCompType((String)SessionUtil.getAttribute("compType"));
     	List<BoardVO> faqList = sqlSession.selectList("main.faqList", set.getCondiVO());
 		set.setFaqList(faqList);
 
@@ -172,11 +173,15 @@ public class MainService {
 	public MainSet service(MainSet set) throws Exception {
 		set.getCondiVO().setUserId(SessionUtil.getSessionUserId());
 
-		List<CodeVO> ddList = sqlSession.selectList("comm.getDdCodeKeyDdMain","FAQ");
+		String compType = (String)SessionUtil.getAttribute("compType");
+		List<CodeVO> ddList = sqlSession.selectList("comm.getDdCodeKeyDdMain","FAQ_" + compType);
     	set.setDdCategory(ddList);
     	
 		//Faq 카테고리별 5개
-    	List<BoardFaqVO> boardFaqlist = sqlSession.selectList("boardFaq.boardFaqCategory5List", null);
+    	BoardFaqVO board = new BoardFaqVO();
+    	board.setCompType(compType);
+    	
+    	List<BoardFaqVO> boardFaqlist = sqlSession.selectList("boardFaq.boardFaqCategory5List", board);
     	set.setBoardFaqList(boardFaqlist);
 
     	set.getCondiVO().setCnt(4);
@@ -226,7 +231,8 @@ public class MainService {
     
     public MainSet faqList(MainSet set) throws Exception {
     	//category
-    	List<CodeVO> ddList = sqlSession.selectList("comm.getDdCodeKeyDdMain","FAQ");
+    	String compType = (String)SessionUtil.getAttribute("compType");
+    	List<CodeVO> ddList = sqlSession.selectList("comm.getDdCodeKeyDdMain","FAQ_" + compType);
     	set.setDdCategory(ddList);
 
     	// 리스트 조회
@@ -235,6 +241,7 @@ public class MainService {
     	board.setCategory(set.getCondiVO().getCategory());
     	board.setPageNum(set.getCondiVO().getPageNum());
     	board.setLimitUnit(Constant.unitForBoard);
+    	board.setCompType(compType);
 
     	List<BoardFaqVO> list = sqlSession.selectList("boardFaq.boardFaqList",board);
     	set.setBoardFaqList(list);
@@ -250,7 +257,8 @@ public class MainService {
     	// 상세조회
     	BoardFaqVO board = new BoardFaqVO();
     	board.setSeq(set.getCondiVO().getSeq());
-
+    	board.setCompType((String)SessionUtil.getAttribute("compType"));
+    	
     	//조회수를 증가 시킨다.
     	sqlSession.update("boardFaq.boardFaqViewCntUpd",board);
     	
