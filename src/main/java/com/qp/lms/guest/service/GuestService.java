@@ -9,17 +9,13 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.qp.lms.board.model.BoardFaqVO;
-import com.qp.lms.common.Constant;
-import com.qp.lms.common.SessionUtil;
 import com.qp.lms.course.model.CourseCodeVO;
 import com.qp.lms.course.model.CourseVO;
-import com.qp.lms.evaluation.model.EvaluationVO;
-import com.qp.lms.exam.model.ExamSet;
-import com.qp.lms.exam.model.ExamVO;
 import com.qp.lms.guest.model.BankVO;
 import com.qp.lms.guest.model.GuestSet;
+import com.qp.lms.main.model.MainSet;
+import com.qp.lms.main.model.MainVO;
 import com.qp.lms.member.model.MemberSet;
-import com.qp.lms.user.model.UserSet;
 
 @Service
 public class GuestService {
@@ -75,4 +71,16 @@ public class GuestService {
 		
     	return set;
     }
+	
+
+    public MainSet isExistCompAuth(MainSet set) throws Exception {
+    	MainVO vo = (MainVO)sqlSession.selectOne("main.isExistCompAuth",set.getCondiVO());
+
+    	if ( vo.getCnt() == 1 )
+    		set.setRtnMode("EXIST");
+    	else
+    		set.setRtnMode("NOT_EXIST");
+    	
+    	return set;
+    } 
 }

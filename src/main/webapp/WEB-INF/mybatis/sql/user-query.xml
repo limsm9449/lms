@@ -161,11 +161,16 @@
 	</select>
 
 	<select id="checkMyCourse" parameterType="User" resultType="Course">
-		SELECT 	COURSE_ID
-			   	,MOBILE_YN
+		SELECT 	A.COURSE_ID
+			   	,A.MOBILE_YN
 			   	,(SELECT COUNT(*) FROM COURSE_REGISTER WHERE COURSE_ID = #{courseId} AND USER_ID = #{userId}) CNT
-	  	FROM 	COURSE
-		WHERE 	COURSE_ID = #{courseId}	
+                ,B.RESPONSIVE_CONTENTS_YN
+                ,C.H_PX
+                ,C.V_PX
+	  	FROM 	COURSE A
+	  				LEFT OUTER JOIN COURSE_MASTER B ON B.COURSE_CODE = A.COURSE_CODE
+					LEFT OUTER JOIN COURSE_CODE C ON C.COURSE_CODE = A.COURSE_CODE
+		WHERE 	A.COURSE_ID = #{courseId}	
     </select>
 
 	<insert id="courseAttendanceLogInsert" parameterType="User">

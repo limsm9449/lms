@@ -45,6 +45,35 @@ public class LoginController {
         return "login/login";
     } 
 
+    @RequestMapping(value = "/dupLoginCheck", method = RequestMethod.POST)
+    public String dupLoginCheck(@ModelAttribute LoginVO loginVO, Model model,HttpServletRequest request) throws Exception {
+    	loginVO.setLoginIp(request.getRemoteAddr());
+
+    	LoginSet set = new LoginSet();
+    	set.setCondiVO(loginVO);
+    	
+    	LoginManager loginManager = LoginManager.getInstance();
+ 		if ( loginManager.isUsing(loginVO.getUserId()) ) {
+ 			set.setIsLogin("Y");
+ 		} else {
+ 			set.setIsLogin("N");
+ 		}
+
+   	 	model.addAttribute("set", set );
+   	 	
+    	return "/login/loginTran";
+    }
+
+    @RequestMapping(value = "/loginConfirm", method = RequestMethod.GET)
+    public String loginConfirm(@ModelAttribute LoginVO loginVO, Model model) {
+    	LoginSet set = new LoginSet();
+    	set.setCondiVO(loginVO);
+    	
+    	model.addAttribute("set", set );
+    	
+        return "/login/loginConfirm";
+    } 
+
     /*
      * Log In 처리
      */
@@ -183,6 +212,8 @@ public class LoginController {
     		LoginVO loginVO = new LoginVO();
     		loginVO.setUserId(SessionUtil.getSessionUserId());
     		
+    		LoginManager loginManager = LoginManager.getInstance();
+    		loginManager.removeSession(loginVO.getUserId());
     		
         	LoginSet set = new LoginSet();
         	set.setCondiVO(loginVO);

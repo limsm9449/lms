@@ -122,6 +122,24 @@ function fn_makeGrid() {
 	            width : 90,
 	            align : "left"
 	        },{
+	        	key : "COURSE_COMP_CD", 
+	        	label : "과정 회사", 
+	            width : 100,
+	        	align : "center", 
+	        	editor: {
+	                type : "select", 
+	                config : {
+	                    columnKeys: { optionValue: "value", optionText: "text" },
+	                    options: dd.Company
+	                },
+	            	disabled : function () {
+	                    return true;
+	                }
+	        	},
+	            formatter : function () {
+	                return gfn_getValueInList(dd.Company, "value",  this.item.COURSE_COMP_CD, "text");
+	           	}
+	        },{
 	            key : "YEAR", 
 	            label : "년",
 	            width : 50,
@@ -371,7 +389,7 @@ function fn_callbackAjax(data, id) {
 			{
 				NEW_FLAG : "Y", 
 				COURSE_ID : data.COURSE_ID, 
-				COMP_CD : data.COMP_CD, 
+				COMP_CD : data.TARGET_COMP_CD, 
 				CATEGORY_NAME : data.CATEGORY_NAME,
 				COURSE_NAME : data.COURSE_NAME,
 				COURSE_CODE : data.COURSE_CODE,

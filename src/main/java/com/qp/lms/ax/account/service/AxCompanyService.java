@@ -98,7 +98,41 @@ public class AxCompanyService {
     	return hm;
     }
 	
+	public HashMap<String, Object> axCompanyAuthList(HashMap<String, Object> paramMap) throws Exception {
+		HashMap<String, Object> hm = new HashMap<String, Object>();
+		
+    	List<HashMap<String, Object>> list = sqlSession.selectList("axCompany.axCompanyAuthList", paramMap);
+    	hm.put("list", list);
+        
+    	return hm;
+    }
 	
+	@Transactional(propagation=Propagation.REQUIRED, rollbackFor={Throwable.class})
+    public HashMap<String, Object>  axCompanyAuthSave(HashMap<String, Object> paramMap) throws Exception {
+		HashMap<String, Object> hm = new HashMap<String, Object>();
+		
+		List<HashMap<String, Object>> updList = (List<HashMap<String, Object>>)paramMap.get("modified");
+
+		for ( int i = 0; i < updList.size(); i++ ) {
+			HashMap<String, Object> row = (HashMap<String, Object>)updList.get(i);
+			row.put("SESSION_USER_ID", SessionUtil.getSessionUserId());
+
+			if ( "Y".equals((String)row.get("NEW_FLAG")) ) {
+				sqlSession.insert("axCompany.axCompanyAuthInsert", row);
+			} else {
+				sqlSession.update("axCompany.axCompanyAuthUpdate", row);
+			}
+		}
+
+		List<HashMap<String, Object>> delList = (List<HashMap<String, Object>>)paramMap.get("deleted");
+		for ( int i = 0; i < delList.size(); i++ ) {
+			sqlSession.delete("axCompany.axCompanyAuthDelete", delList.get(i));
+		}
+
+		hm.put("RtnMode", Constant.mode.OK.name());
+		
+    	return hm;
+    }
     
     
     

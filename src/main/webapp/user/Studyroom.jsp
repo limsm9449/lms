@@ -29,6 +29,9 @@
 var flag = "NOTICE";
 
 $(document).ready(function(){
+	gfn_refresh();
+	
+	opener.gfn_refresh();
 });
 </script>
 

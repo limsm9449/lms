@@ -28,16 +28,15 @@ $(document).ready(function() {
 	CountDownTimer("${set.startTime}");
 	
 	$(window).on('beforeunload', function(event){
-		if ( isSave == false ) {
-			return "페이지를 닫을 경우 다시 시험을 보실 수 없습니다.";
+		if ( isSave == false && "${set.condiVO.examKind}" == "TOTAL" ) {
+			return "최종 학습평가는 시험 시간이 1시간 입니다. 1시간안에 다시 접속해서 시험을 보시기 바랍니다.";
 		}
 	});
 	
 	$(window).on('unload', function(){
         if ( isSave == false ) {
         	//alert("a");
-        	lfn_save();
-        	lfn_removeCookie();
+        	lfn_answerChange();
         } else {
         	//alert("b");
         }
@@ -55,7 +54,7 @@ $(document).ready(function() {
         }
     });
 	
-    lfn_getCookie();
+    lfn_getTempAnswer();
 });
 
 var timer;
@@ -87,7 +86,6 @@ function showRemaining() {
 		alert("시험시간이 종료되었습니다.");
 		
 		lfn_save();
-		lfn_removeCookie();
 		
 		return;
 	} else{
@@ -106,8 +104,8 @@ function lfn_btn(pKind, pParam) {
 			return false;
 		
 		if ( confirm("시험은 한번만 저장하실 수 있습니다.\n저장하시겠습니까?") == true ) {
+			$("#examKind").val("${set.condiVO.examKind}");
 			lfn_save();
-			lfn_removeCookie();
 		}
 	}
 }
@@ -165,6 +163,48 @@ function lfn_answerChange() {
 	answers = $("[id=answers]");
 	for ( i = 0; i < types.length; i++ ) {
 		if ( types[i].value == "G") {
+			if ( $("input[name=answers_" + (i + 1) + "]:checked").length != 0 ) {
+				answers[i].value = $("input[name=answers_" + (i + 1) + "]:checked").val();
+			}
+		} else {
+			answers[i].value = $("#jAnswers_" + (i + 1)).val();
+		}
+	}
+	
+	$.ajax({
+		type :"POST",
+		async : false,
+		url : context +"/exam/userExamIns.do",
+		dataType :"json",
+		data : $("#frm").serialize(),
+		success : function(json){
+			if ( json.rtnMode == "INSERT_OK") {
+				console.log("임시저장");
+			}
+		},
+		error : function(e) {
+			alert("<spring:message code="lms.msg.systemError" text="-" />");
+		}
+	})
+}
+
+function lfn_getTempAnswer() {
+	<c:forEach var="row" items="${set.tempList}" varStatus="idx">   
+		<c:if test="${row.type eq 'G'}">
+			$("input:radio[name='answers_${idx.index + 1}']:radio[value='${row.answer}']").attr("checked",true);
+		</c:if>
+		<c:if test="${row.type eq 'J'}">
+			$("#jAnswers_${idx.index + 1}").val("${row.answer}");
+		</c:if>
+	</c:forEach>	
+}
+
+/*
+function lfn_answerChange() {
+	types = $("[id=types]");
+	answers = $("[id=answers]");
+	for ( i = 0; i < types.length; i++ ) {
+		if ( types[i].value == "G") {
 			$.cookie(cookieName + '${set.condiVO.courseId}_' + i, $("input[name=answers_" + (i + 1) + "]:checked").val(), { expires: 1 });
 		} else {
 			$.cookie(cookieName + '${set.condiVO.courseId}_' + i, $("#jAnswers_" + (i + 1)).val(), { expires: 1 });
@@ -173,7 +213,6 @@ function lfn_answerChange() {
 }
 
 function lfn_removeCookie() {
-	//alert("A");
 	types = $("[id=types]");
 	for ( i = 0; i < types.length; i++ ) {
 		$.removeCookie(cookieName + '${set.condiVO.courseId}_' + i);
@@ -193,12 +232,14 @@ function lfn_getCookie() {
 		}
 	}
 }
-
+*/
 </script>
 
 <body>
 <form id="frm" name="frm" action="" method="post">
 	<input type="hidden" id="courseId" name="courseId" value="${set.condiVO.courseId}"/>
+	<input type="hidden" id="week" name="week" value="${set.condiVO.week}"/>
+	<input type="hidden" id="examKind" name="examKind" value=""/>
 	 
     <!-- 시험 응시 POPUP -->
     <div id='popup_exam' class='popup'>

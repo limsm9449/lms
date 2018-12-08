@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.net.URLEncoder;
 import java.util.Arrays;
 import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Properties;
@@ -39,16 +40,17 @@ public class SessionInterceptor extends HandlerInterceptorAdapter {
 	
 	    	// 기본적으로 제외 되어야 할 URL
 	    	String[] urls = {
-				"/login.do",
+	    		"/login.do",
+    			"/dupLoginCheck.do",
+    			"/loginConfirm.do",
+				"/loginCheck.do",
 				"/sessionContinue.do",
-	    		"/loginCheck.do",
 	    		"/backdorLoginCheck.do",
 				"/manageLogin.do",
 				"/companyLogin.do",
 				"/cms",
 				"/postscript/postscriptList.do",
-				"/postscript/postscriptV.do",
-				"/errorNotUseCompany.do"
+				"/postscript/postscriptV.do"
 	    	};
 	    	
 	    	// Session이 있을 수도 있고 없을 수도 있는 URL
@@ -99,15 +101,24 @@ public class SessionInterceptor extends HandlerInterceptorAdapter {
 	    		}
 
 	    		//sub 도메인으로 회사 접속여부 체크
-	    		String[] domains = request.getServerName().split("[.]");
-	        	String compCd = axCommService.axCompCdFromSubDomain(domains[0]);
-	        	SessionUtil.setAttribute("compCd", compCd);
-	        	String compType = axCommService.axCompTypeFromSubDomain(domains[0]);
-	        	SessionUtil.setAttribute("compType", compType);
+	        	String compCd = "";
+	        	String compType = "";
+	        	String compName = "";
+	        	String compUseYn = "";
 	        	
-	        	if ( !url.equals("/errorNotUseCompany.do") && !"B2C".equals(compType) && "N".equals(axCommService.axCompUseYnFromSubDomain(domains[0])) ) {
+	        	String[] domains = request.getServerName().split("[.]");
+	        	HashMap<String, Object> compInfo = axCommService.axCompInfoFromSubDomain(domains[0]);
+        		compCd = (String)compInfo.get("COMP_CD");
+        		compType = (String)compInfo.get("COMP_TYPE");
+        		compName = (String)compInfo.get("COMP_NAME");
+        		compUseYn = (String)compInfo.get("USE_YN");
+	        	SessionUtil.setAttribute("compCd", compCd);
+	        	SessionUtil.setAttribute("compType", compType);
+	        	SessionUtil.setAttribute("compName", compName);
+	        	
+	        	if ( !url.equals("/main/errorNotUseCompany.do") && !"B2C".equals(compType) && "N".equals(compUseYn) ) {
 	        		System.out.println("not use company ================================== ");
-		        	response.sendRedirect("/errorNotUseCompany.do");
+		        	response.sendRedirect("/main/errorNotUseCompany.do");
 		        	return false;
 	        	}
 	        	

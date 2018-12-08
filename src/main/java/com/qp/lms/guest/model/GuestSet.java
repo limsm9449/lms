@@ -16,6 +16,8 @@ public class GuestSet {
 	
 	private List<BankVO> bankList;
 	
+	private String rtnMode;
+	
 	public GuestVO getCondiVO() {
 		return condiVO;
 	}
@@ -45,6 +47,12 @@ public class GuestSet {
 	}
 	public void setBankList(List<BankVO> bankList) {
 		this.bankList = bankList;
+	}
+	public String getRtnMode() {
+		return rtnMode;
+	}
+	public void setRtnMode(String rtnMode) {
+		this.rtnMode = rtnMode;
 	}
 
 

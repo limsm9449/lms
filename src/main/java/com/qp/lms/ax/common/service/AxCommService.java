@@ -193,6 +193,33 @@ public class AxCommService {
         return ( row == null ? "N" : (String)row.get("USE_YN") );
     }
     
+    public HashMap<String, Object> axCompInfoFromSubDomain(String subDomain) throws Exception {
+    	HashMap<String, Object> params = new HashMap<String, Object>();
+    	params.put("SUB_DOMAIN", subDomain);
+    	
+    	HashMap<String, Object> compInfo = new HashMap<String, Object>();
+
+    	HashMap<String, Object> row = sqlSession.selectOne("axComm.axCompCdFromSubDomain", params);
+   		if ( row == null ) {
+   			compInfo.put("COMP_CD", "B2C");
+   			compInfo.put("COMP_TYPE", "B2C");
+   			compInfo.put("USE_YN", "N");
+   			compInfo.put("COMP_NAME", "");
+    	} else if ( CommUtil.isEqual((String)row.get("C2C_YN"), "Y") ) {
+   			compInfo.put("COMP_CD", (String)row.get("COMP_CD"));
+    		compInfo.put("COMP_TYPE", "C2C");
+   			compInfo.put("USE_YN", (String)row.get("USE_YN"));
+   			compInfo.put("COMP_NAME", (String)row.get("COMP_NAME"));
+    	} else {
+   			compInfo.put("COMP_CD", (String)row.get("COMP_CD"));
+    		compInfo.put("COMP_TYPE", "B2B");
+   			compInfo.put("USE_YN", (String)row.get("USE_YN"));
+   			compInfo.put("COMP_NAME", (String)row.get("COMP_NAME"));
+    	}
+    	
+        return compInfo;
+    }
+    
 	public HashMap<String, Object> axUserSearchList(HashMap<String, Object> paramMap) throws Exception {
 		HashMap<String, Object> hm = new HashMap<String, Object>();
 		

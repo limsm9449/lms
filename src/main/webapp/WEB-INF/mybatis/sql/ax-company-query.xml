@@ -7,6 +7,7 @@
 	<select id="axCompanyList" resultType="hashmap">
 		SELECT 	A.*
 				,IFNULL(B.CNT, 0) EMPLOYEE_CNT
+				,IFNULL(C.CNT, 0) AUTH_CNT
 				,DATE_FORMAT(IFNULL(A.UPDATE_DATE, A.CREATE_DATE), '%y.%m.%d %H:%i') LAST_UPDATE_DATE
 				,IFNULL(U2.USER_NAME, U1.USER_NAME) LAST_UPDATE_USER
 				,'N' NEW_FLAG
@@ -15,8 +16,13 @@
 						SELECT 	COMP_CD, COUNT(*) CNT
                         FROM 	USER
                         GROUP 	BY COMP_CD ) B ON B.COMP_CD = A.COMP_CD
+	  	            LEFT OUTER JOIN (
+	  	            	SELECT 	COMP_CD
+	  	            			,COUNT(*) CNT
+	  	            	FROM 	COMPANY_AUTH
+	  	            	GROUP	BY COMP_CD ) C ON C.COMP_CD = A.COMP_CD             
                     LEFT OUTER JOIN USER U1 ON A.CREATE_USER = U1.USER_ID
-	  	            LEFT OUTER JOIN USER U2 ON A.UPDATE_USER = U2.USER_ID                 
+	  	            LEFT OUTER JOIN USER U2 ON A.UPDATE_USER = U2.USER_ID    
 		WHERE	C2C_YN = 'N'	  	            	
 		<if test="SEARCH_STR != null and SEARCH_STR != ''">
 		  AND ( UPPER(A.COMP_CD) LIKE CONCAT('%',UPPER(#{SEARCH_STR}),'%') OR UPPER(A.COMP_NAME) LIKE CONCAT('%',UPPER(#{SEARCH_STR}),'%') )
@@ -96,5 +102,41 @@
 		</if>			 
 		ORDER BY COMP_NAME
 	</select>
+
+	<select id="axCompanyAuthList" resultType="hashmap">
+		SELECT 	A.SEQ
+				,A.COMP_CD
+				,A.AUTH_KEY
+				,A.INFO1
+				,A.INFO2
+				,A.INFO3
+				,DATE_FORMAT(IFNULL(A.UPDATE_DATE, A.CREATE_DATE), '%y.%m.%d %H:%i') LAST_UPDATE_DATE
+				,IFNULL(U2.USER_NAME, U1.USER_NAME) LAST_UPDATE_USER
+				,'N' NEW_FLAG
+		FROM 	COMPANY_AUTH A                 
+                    LEFT OUTER JOIN USER U1 ON A.CREATE_USER = U1.USER_ID
+	  	            LEFT OUTER JOIN USER U2 ON A.UPDATE_USER = U2.USER_ID                 
+		WHERE	A.COMP_CD = #{COMP_CD}	            	
+		ORDER 	BY A.AUTH_KEY
+	</select>
 	
+	<insert id="axCompanyAuthInsert" parameterType="hashmap">
+		INSERT INTO COMPANY_AUTH(COMP_CD, AUTH_KEY, INFO1, INFO2, INFO3, CREATE_DATE, CREATE_USER)
+    	VALUES (#{COMP_CD}, #{AUTH_KEY}, #{INFO1}, #{INFO2}, #{INFO3}, CURRENT_TIMESTAMP, #{SESSION_USER_ID})
+	</insert>  
+	
+	<update id="axCompanyAuthUpdate" parameterType="hashmap">
+		UPDATE 	COMPANY_AUTH
+    	   SET 	INFO1 = #{INFO1}
+				,INFO2 = #{INFO2}
+				,INFO3 = #{INFO3}
+    	       	,UPDATE_DATE = CURRENT_TIMESTAMP
+    	       	,UPDATE_USER = #{SESSION_USER_ID}
+    	WHERE 	SEQ = #{SEQ}
+	</update>    
+	
+	<delete id="axCompanyAuthDelete" parameterType="hashmap">
+		DELETE 	FROM COMPANY_AUTH
+    	WHERE 	SEQ = #{SEQ}
+	</delete>  	
 </mapper>

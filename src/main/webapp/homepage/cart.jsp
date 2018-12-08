@@ -30,7 +30,7 @@ function lfn_btn(pKind, pParam) {
 			return false;
 		}
 		<c:choose>
-			<c:when test="${set.condiVO.compCd ne 'B2C' && set.condiVO.c2cYn eq 'N'}">
+			<c:when test="${set.condiVO.compType eq 'B2B'}">
 				if ( confirm("과정을 신청하시겠습니까?") == true ) {
 					var cb = $('input:checkbox[name="chk"]:checked');
 					var courseIds = "";

@@ -62,6 +62,20 @@
 		AND 	A.EXAM_KIND = #{examKind}
 		AND		A.WEEK = #{week}
 	</select>
+
+	<select id="userExamTempList" parameterType="Exam" resultType="Exam">
+		SELECT 	A.EXAM_KIND,
+	       		A.WEEK,
+	       		A.SEQ,
+	       		A.ANSWER,
+	       		B.TYPE
+	  	FROM 	USER_EXAM  A 
+					JOIN COURSE_EXAM B ON B.SEQ = A.SEQ AND B.COURSE_CODE = (SELECT COURSE_CODE FROM COURSE WHERE COURSE_ID = #{courseId})
+		WHERE 	A.COURSE_ID = #{courseId}
+		AND		A.USER_ID = #{userId}
+		AND 	A.EXAM_KIND = 'TEMP'
+		AND		A.WEEK = #{week}
+	</select>
 	
 	<update id="userExamUpd" parameterType="Exam">
 		UPDATE 	USER_EXAM
@@ -140,6 +154,27 @@
 		WHERE 	COURSE_ID = #{courseId}
 		AND		USER_ID = #{userId}
 	</select>
+
+	<delete id="userExamTempDelete" parameterType="Exam">
+		DELETE FROM USER_EXAM
+		WHERE 	COURSE_ID = #{courseId}
+		AND		USER_ID = #{userId}
+		AND 	EXAM_KIND = 'TEMP'
+		AND 	WEEK = #{week}
+	</delete>	
+
+	<insert id="userExamTempInsert" parameterType="Exam">
+		INSERT 	INTO USER_EXAM( COURSE_ID, USER_ID, EXAM_KIND, WEEK, SEQ, ANSWER, ANSWER_YN, CREATE_USER, CREATE_DATE )
+		VALUES ( #{courseId}, #{userId}, #{examKind}, #{week}, #{seq}, #{answer}, 'N', #{userId}, CURRENT_TIMESTAMP )
+	</insert>  	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	<!-- 강좌별 설문지 통계 -->

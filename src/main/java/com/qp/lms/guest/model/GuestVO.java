@@ -7,25 +7,37 @@ public class GuestVO extends CommonVO {
 
 	private String courseCode;
 	private String courseId;
+	private String compCd;
+	private String authKey;
 
-	
 	
 	public String getCourseCode() {
 		return courseCode;
 	}
-
 	public void setCourseCode(String courseCode) {
 		this.courseCode = courseCode;
 	}
-
 	public String getCourseId() {
 		return courseId;
 	}
-
 	public void setCourseId(String courseId) {
 		this.courseId = courseId;
 	}
-	
+	public String getCompCd() {
+		return compCd;
+	}
+	public void setCompCd(String compCd) {
+		this.compCd = compCd;
+	}
+	public String getAuthKey() {
+		return authKey;
+	}
+	public void setAuthKey(String authKey) {
+		this.authKey = authKey;
+	}
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
 	
 	
 	

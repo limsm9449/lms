@@ -134,7 +134,7 @@ var page = {
 	},
 
 	goPage : function(urlPage, urlParam) {
-		window.location = urlPage + ".do" + (urlParam != undefined ? "?" + urlParam + "&timestamp=" + timestamp : "");
+		window.location = urlPage + ".do" + (urlParam != undefined ? "?" + urlParam + "&timestamp=" + gfn_timestamp() : "");
 	},
 
 	goJsp : function(jspPage) {
@@ -319,7 +319,7 @@ function f_submit(pDoUrl,pParam,pForm) {
 	//파라미터 처리
 	var params = "";
 	if ( pParam != undefined && pParam.urlParams != undefined )
-		params = "?" + escape(encodeURIComponent(pParam.urlParams));
+		params = "?" + escape(encodeURIComponent(pParam.urlParams)) + "&timestamp=" + gfn_timestamp();
 
 	//submit할 iframe을 구한다.
 	var iframe = "";
@@ -1006,7 +1006,7 @@ function gfn_getUrlParams(key) {
 		}
 	}
 	
-	if ( key ) {
+	if ( rtn[key] ) {
 		return rtn[key];
 	} else {
 		return "";

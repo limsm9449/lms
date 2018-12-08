@@ -367,11 +367,7 @@ public class UserController {
 	    	
 	    	set = svr.checkMyCourse(set);
 	    	
-	    	HashMap hm = new HashMap();
-	    	hm.put("mobileYn", set.getCourseInfo().getMobileYn());
-	    	hm.put("cnt", set.getCourseInfo().getCnt());
-	    	
-	    	model.addAttribute("json", JSONObject.fromObject(hm));
+	    	model.addAttribute("json", JSONObject.fromObject(set.getCourseInfo()));
     	} catch ( Exception e ) {
     		e.printStackTrace();
     	}

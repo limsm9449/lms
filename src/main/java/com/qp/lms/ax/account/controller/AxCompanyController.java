@@ -139,7 +139,32 @@ public class AxCompanyController {
         return hm;
     }
 	    
-	    
+    @RequestMapping(value = "/account/axCompanyAuthList", method = RequestMethod.POST, consumes = "application/json" )
+    public @ResponseBody HashMap<String,Object> axCompanyAuthList(@RequestBody HashMap<String, Object> paramMap, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    	HashMap<String, Object> hm = new HashMap<String, Object>();
+
+    	try {
+    		hm = svr.axCompanyAuthList(paramMap);
+    	} catch ( Exception e ) {
+    		e.printStackTrace();
+    	}
+
+        return hm;
+    }
+    
+    @RequestMapping(value = "/account/axCompanyAuthSave", method = RequestMethod.POST, consumes = "application/json" )
+    public @ResponseBody HashMap<String,Object> axCompanyAuthSave(@RequestBody HashMap<String, Object> paramMap, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    	HashMap<String, Object> hm = new HashMap<String, Object>();
+    	
+		try {
+    		hm = svr.axCompanyAuthSave(paramMap);
+    	} catch ( Exception e ) {
+    		e.printStackTrace();
+    		hm.put("RtnMode", Constant.mode.ERROR.name());
+    	}
+
+        return hm;
+    }    
 	    
 
 }

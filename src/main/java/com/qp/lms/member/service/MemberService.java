@@ -386,6 +386,5 @@ public class MemberService {
 		
     	return set;
     }
-
-    
+   
 }

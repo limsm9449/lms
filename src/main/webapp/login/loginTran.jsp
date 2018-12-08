@@ -31,6 +31,11 @@ $(document).ready(
 			parent.$("#userId").focus();
 		} else if ( "${set.isNotCertification}" == "Y" ) {
 			alert("메일로 발송된 인증키로 인증확인을 하셔야 합니다.");
+		} else if ( "${set.isLogin}" == "Y" ) {
+			parent.lfn_page('loginConfirm');
+		} else if ( "${set.isLogin}" == "N" ) {
+			parent.document.frm.action = "loginCheck.do";	
+			parent.lfn_login();
 		} else {
 			parent.lfn_page();
 		}

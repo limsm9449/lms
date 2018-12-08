@@ -78,11 +78,21 @@ function lfn_login() {
 	document.frm.submit();
 }
 
-function lfn_page(kind) {
-	if ( kind == "loginConfirm" ) {
-		page.goPage("/loginConfirm", "userId=" + $("#userId").val() + "&password=" + $("#password").val());
-	} else {
+function lfn_page() {
+	if ( "<%=request.getParameter("preUrl")%>" == "null")
 		page.goHome();
+	else {
+		if ( "<%=request.getParameter("loginAuth")%>" == "ADMIN_A" || "<%=request.getParameter("loginAuth")%>" == "ADMIN_C" || "<%=request.getParameter("loginAuth")%>" == "ADMIN_M") {
+			page.goAdminHome("<%=request.getParameter("preUrl")%>");
+		} else if ( "<%=request.getParameter("loginAuth")%>" == "TEACHER") {
+			page.goTeacherHome("<%=request.getParameter("preUrl")%>");
+		} else if ( "<%=request.getParameter("loginAuth")%>" == "C_TUTOR") {
+			page.goCompManagerHome("<%=request.getParameter("preUrl")%>");
+		} else if ( "<%=request.getParameter("loginAuth")%>" == "TUTOR") {
+			page.goTutorHome("<%=request.getParameter("preUrl")%>");
+		} else {
+			window.location = "<%=request.getParameter("preUrl")%>";
+		}
 	}
 }
 
@@ -90,7 +100,7 @@ function lfn_page(kind) {
 
 <body>
 <frameset rows='*'>
-	<form name="frm" action="dupLoginCheck.do" method="post">
+	<form name="frm" action="loginCheck.do" method="post">
 
 		<div class="wrap">
 			<!-- HEAD -->
@@ -127,29 +137,13 @@ function lfn_page(kind) {
 					<h1>
 						<span>Welcome</span> 큐러닝에 오신 것을 환영합니다.
 					</h1>
-					<p>로그인을 위하여 아래 아이디와 비밀번호를 입력하여 주십시오.</p>
+					<p>귀하는 동시접속을 시도하셨습니다.</p>
+					<p>기존 접속을 끊고 접속하시겠습니까?</p>
 					<div class='signin_main_control clear_fix'>
-						<input type='text' name='userId' id='userId' placeholder='아이디'>
-						<input type='password' name='password' id='password' placeholder='비밀번호' onkeydown="lfn_passwordEnter()">
-						<button class='signin_complete_btn' onclick="lfn_login()">로그인</button>
-						<div>
-							<div class='signin_sub_control left clear_fix'>
-								<input type='checkbox' name='cb_continue' id='cb_continue'>
-								<p>로그인 상태유지</p>
-							</div>
-							<div class='signin_sub_control right clear_fix'>
-								<a href='#' onclick="page.goPage('/guest/join');">회원가입</a> <a
-									href="#" onclick="window.location='/ns/searchUserIdV.do'">아이디찾기</a>
-								<a href="#" onclick="window.location='/ns/searchPasswordV.do'"
-									class='last_left'>비밀번호찾기</a>
-							</div>
-						</div>
-					</div>
-					<div class='signin_option_box clear_fix'>
-						<button class='naver' onclick="alert('작업중입니다.');">네이버
-							아이디로 로그인</button>
-						<button class='facebook' onclick="alert('작업중입니다.');">페이스북
-							아이디로 로그인</button>
+						<input type='hidden' name='userId' id='userId' value="${set.condiVO.userId}">
+						<input type='hidden' name='password' id='password' value="${set.condiVO.password}">
+						<button class='signin_complete_btn' onclick="lfn_login()">예</button>
+						<button class='signin_complete_btn' onclick="page.goHome();">아니요</button>
 					</div>
 					<div class='signin_bg_box'> 
 						<img src='/resources/homepage/img/util/login_bg.png' alt=''>

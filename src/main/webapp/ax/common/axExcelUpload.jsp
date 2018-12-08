@@ -31,9 +31,11 @@ $(document.body).ready(function () {
 	} else if ( screen == "Exam" ) {
 		$("#columns").val("TYPE,QUESTION,QA1,QA2,QA3,QA4,ANSWER,ANSWER_DESC,WEEK,LEVEL,USE_YN");
 	} else if ( screen == "CourseResource" ) {
-		$("#columns").val("WEEK,TITLE,DIRECTORY,PAGE_CNT,PREVIEW_PAGE,WEEK_TIME");
+		$("#columns").val("WEEK,TITLE,DIRECTORY,PAGE_CNT,WEEK_TIME,PREVIEW_PAGE");
 	} else if ( screen == "CompanyUser" ) {
 		$("#columns").val("USER_ID,USER_NAME,EMAIL,SEX,BIRTH_DAY,HOME_ZIPCODE,HOME_ADDR,HOME_TEL,MOBILE,PWD");
+	} else if ( screen == "CompanyAuth" ) {
+		$("#columns").val("AUTH_KEY,INFO1,INFO2,INFO3");
 	}
 });
 
@@ -103,7 +105,7 @@ function lfn_tran(data) {
 					isNotValid = true;
 					rowMsg += " , 난이도 오류[상/중/하] -> " + data.list[i].LEVEL;
 				} 
-				if ( parseInt(data.list[i].WEEK.replace("주차", "").replace(" ", "")) >= weekCnt ) {
+				if ( parseInt(data.list[i].WEEK.replace("주차", "").replace(" ", "")) > weekCnt ) {
 					isNotValid = true;
 					rowMsg += " , 주차 오류[1 ~ " + weekCnt + "] -> " + data.list[i].WEEK;
 				}
@@ -202,6 +204,7 @@ function lfn_tran(data) {
 				fn_fileInit();
 				return;
 			}
+		} else if ( screen == "CompanyAuth" ) {
 		}
 
 		opener.fn_callbackAjax(data, "excelUploadList");

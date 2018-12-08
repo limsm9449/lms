@@ -58,6 +58,9 @@ public class MainVO extends CommonVO {
 	private String supportEmployerYn;
 	private String normalCourseYn;
 	private String compType;
+	private String authKey;
+	private String viewType;
+	private String viewTypeChg;
 
 	public String getC1Code() {
 		return c1Code;
@@ -331,6 +334,24 @@ public class MainVO extends CommonVO {
 	}
 	public void setCompType(String compType) {
 		this.compType = compType;
+	}
+	public String getAuthKey() {
+		return authKey;
+	}
+	public void setAuthKey(String authKey) {
+		this.authKey = authKey;
+	}
+	public String getViewType() {
+		return viewType;
+	}
+	public void setViewType(String viewType) {
+		this.viewType = viewType;
+	}
+	public String getViewTypeChg() {
+		return viewTypeChg;
+	}
+	public void setViewTypeChg(String viewTypeChg) {
+		this.viewTypeChg = viewTypeChg;
 	}
 	
 	

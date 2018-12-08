@@ -11,7 +11,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.qp.lms.board.model.BoardFaqSet;
 import com.qp.lms.board.model.BoardFaqVO;
@@ -20,7 +19,6 @@ import com.qp.lms.board.model.BoardVO;
 import com.qp.lms.board.service.BoardFaqService;
 import com.qp.lms.board.service.BoardNoticeService;
 import com.qp.lms.common.CommUtil;
-import com.qp.lms.common.SessionUtil;
 import com.qp.lms.common.service.DdService;
 import com.qp.lms.education.model.EducationSet;
 import com.qp.lms.education.model.EducationVO;
@@ -28,11 +26,11 @@ import com.qp.lms.education.service.EducationService;
 import com.qp.lms.guest.model.GuestSet;
 import com.qp.lms.guest.model.GuestVO;
 import com.qp.lms.guest.service.GuestService;
+import com.qp.lms.main.model.MainSet;
+import com.qp.lms.main.model.MainVO;
 import com.qp.lms.member.model.MemberSet;
 import com.qp.lms.member.model.MemberVO;
 import com.qp.lms.member.service.MemberService;
-import com.qp.lms.user.model.UserSet;
-import com.qp.lms.user.model.UserVO;
 
 import net.sf.json.JSONObject;
 
@@ -463,6 +461,22 @@ public class GuestController {
     	model.addAttribute("json", JSONObject.fromObject(hm));
 
     	return "/common/json";
+    }
+
+    @RequestMapping(value = "/guest/isExistCompAuth")
+    public String isExistCompAuth(@ModelAttribute MainVO vo, Model model) throws Exception {
+    	try {
+    		MainSet set = new MainSet();
+	    	set.setCondiVO(vo);
+	    	
+	    	set = svr.isExistCompAuth(set);
+
+	    	model.addAttribute("json", CommUtil.getJsonObject(set.getRtnMode(),""));
+    	} catch ( Exception e ) {
+    		e.printStackTrace();
+    	}
+    	
+        return "/common/json";
     }
 
 }

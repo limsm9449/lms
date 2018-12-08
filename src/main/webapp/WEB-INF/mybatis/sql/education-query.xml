@@ -84,7 +84,9 @@
     <select id="courseCodeData" parameterType="Education" resultType="Course">
 		SELECT COURSE_NAME,
 		       DIRECTORY,
-		       (SELECT COUNT(*) FROM COURSE_RESOURCE WHERE COURSE_CODE = A.COURSE_CODE) TOTAL_WEEK
+		       (SELECT COUNT(*) FROM COURSE_RESOURCE WHERE COURSE_CODE = A.COURSE_CODE) TOTAL_WEEK,
+		       H_PX,
+		       V_PX
 		  FROM COURSE_CODE A 
 		 WHERE COURSE_CODE = #{courseCode}
     </select>    

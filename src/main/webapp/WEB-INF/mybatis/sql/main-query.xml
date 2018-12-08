@@ -301,7 +301,7 @@
 					 WHEN IFNULL(D.GRADE, 0) > 4.5 THEN 'star_active'
                      ELSE 'star_inactive' END GRADE5,
                 IFNULL(D.GRADE_CNT, 0) GRADE_CNT,
-                IFNULL(A.MOBILE_YN, 'N') MOBILE_YN
+                CASE WHEN IFNULL(A.MOBILE_YN, 'N') = 'Y' OR IFNULL(F.RESPONSIVE_CONTENTS_YN, 'N') = 'Y' THEN 'Y' ELSE 'N' END MOBILE_YN
 		FROM 	COURSE A 
 						LEFT OUTER JOIN COURSE_CODE B ON A.COURSE_CODE = B.COURSE_CODE
 						LEFT OUTER JOIN (
@@ -324,6 +324,7 @@
 									,COUNT(*) CNT
                             FROM 	COURSE
                             GROUP 	BY COURSE_CODE ) E ON E.COURSE_CODE = A.COURSE_CODE
+                      	LEFT OUTER JOIN COURSE_MASTER F ON F.COURSE_CODE = A.COURSE_CODE
 		WHERE 	A.OPEN_YN = 'Y'
 		AND		A.CLOSE_YN = 'N'
 		AND		A.COMP_CD = #{compCd}
@@ -576,5 +577,12 @@
 		WHERE	USER_ID = #{userId}
 		AND		COURSE_ID = #{courseId}
 	</insert>	        
+	
+	<select id="isExistCompAuth" parameterType="Main" resultType="Main">
+		SELECT 	COUNT(*) CNT
+		FROM 	COMPANY_AUTH
+		WHERE 	COMP_CD = #{compCd}
+		AND		AUTH_KEY = #{authKey}
+    </select>	
 	
 </mapper>

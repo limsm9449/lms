@@ -386,7 +386,7 @@ function fn_gridEvent(event, obj) {
     <button class="btn btn-default" data-grid-control="export">엑셀</button>
     <button class="btn btn-default" data-grid-control="editImage">이미지 관리</button>
     <button class="btn btn-default" data-grid-control="zipcodeUrl">주소검색</button>
-    <button class="btn btn-default" data-grid-control="employee">직원검색</button>
+    <button class="btn btn-default" data-grid-control="employee">강사 상세정보</button>
 </div> 
 
 <div style="height:10px"></div>

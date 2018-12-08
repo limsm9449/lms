@@ -101,6 +101,23 @@ $(document.body).ready(function () {
             	}
         		
                 break;
+            case "auth":
+            	var row = grid.getList("selected");
+            	if ( row.length == 0 ) {
+            		mask.open();
+            		dialog.alert( { msg : "회사를 선택하셔야 합니다." }, function () { mask.close();	} );
+            	} else if ( row[0]["NEW_FLAG"] == "N" ) {
+            		var urlParams = "page=/ax/account/axCompanyAuthPopupList";
+            		urlParams += "&COMP_CD=" + row[0]["COMP_CD"];
+            		
+            		f_popup('/common/axOpenPage', {displayName:'companyAuthPopup',option:'width=850,height=820', urlParams:urlParams});
+            	} else {
+            		mask.open();
+            		dialog.alert( { msg : "신규로 추가한 경우는 저장후에 인증키 등록을 하셔야 합니다." }, function () { mask.close();	} );
+            	}
+            		
+                break;
+                
         }
     });
 });
@@ -169,6 +186,11 @@ function fn_makeGrid() {
 				styleClass: function () {
                     return "grid-cell-edit";
                 }
+	        },{
+	            key : "AUTH_CNT",
+	            label : "등록 인증키",
+	            width : 100,
+	            align : "right"
 	        },{
 	            key : "ZIPCODE",
 	            label : "우편번호",
@@ -368,6 +390,7 @@ function fn_gridEvent(event, obj) {
     <button class="btn btn-default" data-grid-control="editImage">이미지 관리</button>
     <button class="btn btn-default" data-grid-control="zipcodeUrl">주소검색</button>
     <button class="btn btn-default" data-grid-control="employee">직원검색</button>
+    <button class="btn btn-default" data-grid-control="auth">인증키 등록</button>
 </div> 
 
 <div style="height:10px"></div>

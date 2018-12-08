@@ -13,6 +13,7 @@ public class ExamSet extends CommonSet {
 	private ExamVO condiVO;			
 	private ExamVO data;			
 	private List<ExamVO> list;
+	private List<ExamVO> tempList;
 
 	private List<ExamVO> userList;
 	private List<ExamVO> userDetailList;		
@@ -83,6 +84,12 @@ public class ExamSet extends CommonSet {
 	}
 	public void setStartTime(String startTime) {
 		this.startTime = startTime;
+	}
+	public List<ExamVO> getTempList() {
+		return tempList;
+	}
+	public void setTempList(List<ExamVO> tempList) {
+		this.tempList = tempList;
 	}
 
 	

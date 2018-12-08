@@ -96,6 +96,30 @@ function lfn_btn(pKind, pParam) {
 				alert("<spring:message code="lms.msg.systemError" text="-" />");
 			}
 		})
+	} else if ( pKind =="isExistCompAuth" ) {
+		if ( formValid.check("authKey",{isNecess:true,msg:"회사 인증키를 입력하세요.",minLeng:1,maxLeng:40}) == false ) return false;
+
+		btnUnbind("checkBtn2");
+		$.ajax({
+			type :"POST",
+			url : context + preUrl + "isExistCompAuth.do",
+			dataType :"json",
+			data : $("#frm").serialize(),
+			success : function(json){
+				if ( json.rtnMode == "EXIST") {
+					alert("등록된 인증키 입니다.");
+					$("#authKeyCheck").val("Y");
+				} else {
+					alert("등록된 인증키가 아닙니다.");
+					$("#authKey").focus();
+				}
+				
+				btnBind("checkBtn2");
+			},
+			error : function(e) {
+				alert("<spring:message code="lms.msg.systemError" text="-" />");
+			}
+		})
 	}
 }
 
@@ -122,11 +146,17 @@ function lfn_validate() {
 	if ( formValid.check("homeZipcode",{isNecess:true,msg:"우편번호를 입력하세요.",maxLeng:50}) == false ) return false;
 	if ( formValid.check("homeAddr",{isNecess:true,msg:"주소를 입력하세요.",maxLeng:50}) == false ) return false;
 	if ( $("#userIdCheck").val() != "Y" ) {
-		alert("회원 아이디 검색을 하셔야 합니다.");
+		alert("회원 아이디를 확인하셔야 합니다.");
 		$("#userId").focus();
 		return false;
 	}
-	
+
+	if ( $("#authKeyCheck").length == 1 && $("#authKeyCheck").val() != "Y" ) {
+		alert("회사 인증키를 확인하셔야 합니다.");
+		$("#authKey").focus();
+		return false;
+	}
+
 	return true;
 }
 
@@ -135,6 +165,7 @@ function lfn_validate() {
 <body>
 
 <form id="frm" name="frm" method="post">
+	<input type="hidden" id="compCd" name="compCd" value="${compCd}">
 	<input type="hidden" id="sex" name="sex">
 	<input type="hidden" id="birthDay" name="birthDay">
 	
@@ -247,6 +278,18 @@ function lfn_validate() {
 	                  	<input type="hidden" name="userIdCheck" id="userIdCheck" />
                         <button id="checkBtn" onClick="lfn_btn('isExistUserId'); return false;">중복확인</button>
                     </div>
+<c:if test="${compType eq 'B2B'}">                    
+                    <div class='certification_name clear_fix'>
+                        <p>회사명</p>
+                        <input type="text" name="compName" id="compName" value="${compName}" readonly="readonly"/>
+                    </div>
+                    <div class='certification_name type_id clear_fix'>
+                        <p>회사 인증키</p>
+                        <input type='text' name="authKey" id="authKey" onchange="$('#authKeyCheck').val('N');" placeholder='회사 인증키를 입력해주세요'>
+	                  	<input type="hidden" name="#authKeyCheck" id="#authKeyCheck" />
+                        <button id="checkBtn2" onClick="lfn_btn('isExistCompAuth'); return false;">인증키 확인</button>
+                    </div>
+</c:if>
                     <div class='info_input_phone clear_fix'>
                         <p>휴대폰 번호</p>
                         <select name='agency' id='agency'>

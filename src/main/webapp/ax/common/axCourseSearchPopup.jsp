@@ -29,7 +29,7 @@ $(document.body).ready(function () {
 	gfn_callAjax("/common/axDd.do", { DD_KIND : "CompanyKind,Company,Company1,Company2" }, fn_callbackAjax, "dd", { async : false });
 	
 	if ( COMPANY2 != "" ) {
-		$("#div1").hide();''
+		$("#div1").hide();
 	}
 }); 
 
@@ -88,6 +88,24 @@ function fn_makeGrid() {
 	            formatter : function () {
 	                return gfn_getValueInList(dd.Company, "value",  this.item.COMP_CD, "text");
 	           	}
+	        },{
+	        	key : "TARGET_COMP_CD", 
+	        	label : "등록할 회사", 
+	            width : 110,
+	        	align : "center", 
+	        	editor: {
+                    type : "select", 
+                    config : {
+                        columnKeys: { optionValue: "value", optionText: "text" },
+                        options: dd.Company
+                    }
+	        	},
+	            formatter : function () {
+	                return gfn_getValueInList(dd.Company, "value",  this.item.TARGET_COMP_CD, "text");
+	           	},
+				styleClass: function () {
+                    return "grid-cell-edit";
+                }
 	        },{
 	            key : "COURSE_COST",
 	            label : "과정비용",

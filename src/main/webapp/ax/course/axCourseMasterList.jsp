@@ -225,6 +225,15 @@ function fn_makeGrid() {
                     return "grid-cell-edit";
                 }
 	        },{
+	        	key : "RESPONSIVE_CONTENTS_YN", 
+	        	label : "반응형 컨텐츠", 
+	            width : 110, 
+	        	align : "center", 
+	        	editor : { type : "checkbox", config : {height: 17, trueValue: "Y", falseValue: "N"} },
+				styleClass: function () {
+                    return "grid-cell-edit";
+                } 
+	        },{
 	        	key : "MOBILE_YN", 
 	        	label : "모바일", 
 	            width : 60, 

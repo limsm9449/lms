@@ -313,11 +313,11 @@
     	INSERT INTO USER(USER_ID, USER_NAME, EMAIL, USER_PASSWORD, 
     	                 HOME_ZIPCODE, HOME_ADDR, MOBILE, 
     	                 SEX,BIRTH_DAY,
-    	                 CERTIFICATION_YN,CERTIFICATION_KEY,CREATE_DATE)
+    	                 CERTIFICATION_YN,CERTIFICATION_KEY,CREATE_DATE, COMP_CD)
 	    VALUES (	#{userId},#{userName},#{email},PASSWORD(#{userPassword}),
 	    	        #{homeZipcode},#{homeAddr},#{mobile},
 	    	        #{sex},#{birthDay},
-	    	        #{certificationYn},#{certificationKey},CURRENT_TIMESTAMP
+	    	        #{certificationYn},#{certificationKey},CURRENT_TIMESTAMP, #{compCd}
     	        )
     </select>
 

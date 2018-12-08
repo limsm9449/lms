@@ -58,7 +58,12 @@ public class MainController {
     @Autowired
     private AttachService attachSvr;
 
-    
+    @RequestMapping(value = "/main/errorNotUseCompany")
+    public String errorNotUseCompany(Model model) {
+
+        return "/homepage/errorNotUseCompany";
+    }
+
     /**
      * Main Top
      * @param vo
@@ -131,8 +136,7 @@ public class MainController {
     		else {
     			set.getCondiVO().setIsLogin("Y");
     			set.getCondiVO().setUserId(SessionUtil.getSessionUserId());
-    			set.getCondiVO().setCompCd(SessionUtil.getCompCd());
-    			set.getCondiVO().setC2cYn(SessionUtil.getC2cYn());
+    			set.getCondiVO().setCompType((String)SessionUtil.getAttribute("compType"));
     		}
     		
 			set = svr.mainCourseData(set);
@@ -162,8 +166,7 @@ public class MainController {
     			return "/login/beforeLogin";
     		} else {
     			set.getCondiVO().setUserId(SessionUtil.getSessionUserId());
-    			set.getCondiVO().setCompCd(SessionUtil.getCompCd());
-    			set.getCondiVO().setC2cYn(SessionUtil.getC2cYn());
+    			set.getCondiVO().setCompType((String)SessionUtil.getAttribute("compType"));
 
 				//과정 ID 생성
 				String courseId = "";

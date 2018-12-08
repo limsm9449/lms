@@ -127,7 +127,20 @@ public class MainService {
     }
 
 	public MainSet courseList(MainSet set) throws Exception {
+		if ( "Y".equals(set.getCondiVO().getViewTypeChg()) ) {
+			if ( "LIST".equals(set.getCondiVO().getViewType()) ) {
+				set.getCondiVO().setLimitUnit(10);
+			} else {
+				set.getCondiVO().setLimitUnit(12);
+			}
+		}
+		
     	List<CourseVO> courseList = sqlSession.selectList("main.courseList", set.getCondiVO());
+    	if ( "IMAGE".equals(set.getCondiVO().getViewType()) && courseList.size() % 4 != 0 ) {
+	    	for ( int i = courseList.size() % 4 + 1; i <= 4; i++ ) {
+	    		courseList.add(new CourseVO());	
+	    	}
+    	}
 		set.setCourseList(courseList);
 		
 		int totalCnt = sqlSession.selectOne("main.courseListTotal", set.getCondiVO());

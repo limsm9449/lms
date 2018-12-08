@@ -195,30 +195,34 @@ var Popup = {
 	 * @param pHeight
 	 */
 	showUserCourse : function(pCourseId,pWidth,pHeight) {
-		if ( gfn_deviceCheck() == "MOBILE" ) {
-			$.ajax({
-				type :"POST",
-				url : context + "/user/checkMyCourse.do",
-				dataType :"json",
-				data : "courseId=" + pCourseId,
-				success : function(json){
-					if ( json.cnt == 0 ) {
-						alert("내가 등록한 과정이 아닙니다.");
-					} else if ( json.mobileYn == "Y" ) {
+		$.ajax({
+			type :"POST",
+			url : context + "/user/checkMyCourse.do",
+			dataType :"json",
+			data : "courseId=" + pCourseId,
+			success : function(json){
+				if ( json.cnt == 0 ) {
+					alert("내가 등록한 과정이 아닙니다.");
+				} else if ( json.mobileYn == "Y" ) {
+					pWidth = window.innerWidth || document.body.clientWidth;
+					pHeight = window.innerHeight || document.body.clientHeight
+					Popup.showPopup(context + "/education/eduHomeMobile.do?courseId=" + pCourseId + "&week=", pWidth, pHeight, "eduHome");
+				} else if ( json.responsiveContentsYn == "Y" ) {
+					if ( gfn_deviceCheck() == "MOBILE" ) {
 						pWidth = window.innerWidth || document.body.clientWidth;
 						pHeight = window.innerHeight || document.body.clientHeight
-						Popup.showPopup(context + "/education/eduHomeMobile.do?courseId=" + pCourseId, pWidth, pHeight, "eduHome");
+						Popup.showPopup(context + "/education/eduHome.do?courseId=" + pCourseId + "&week=", pWidth, pHeight, "eduHome");
 					} else {
-						Popup.showPopup(context + "/education/eduHome.do?courseId=" + pCourseId, 1185, 810, "eduHome");
+						Popup.showPopup(context + "/education/eduHome.do?courseId=" + pCourseId + "&week=", pWidth, pHeight, "eduHome");
 					}
-				},
-				error : function(e) {
-					alert("시스템 오류 발생하였습니다. 관리자에게 문의하세요.");
+				} else {
+					alert("해당과정은 모바일에서 보실 수 없습니다.");
 				}
-			})	
-		} else {
-			Popup.showPopup(context + "/education/eduHome.do?courseId=" + pCourseId + "&week=",pWidth,pHeight, "eduHome");
-		}
+			},
+			error : function(e) {
+				alert("시스템 오류 발생하였습니다. 관리자에게 문의하세요.");
+			}
+		})	
 	},
 
 	/**
@@ -389,34 +393,28 @@ var Popup = {
 	},
 
 	showStudyroom : function(pCourseId) {
-		if ( gfn_deviceCheck() == "MOBILE" ) {
-			$.ajax({
-				type :"POST",
-				url : context + "/user/checkMyCourse.do",
-				dataType :"json",
-				data : "courseId=" + pCourseId,
-				success : function(json){
-					if ( json.cnt == 0 ) {
-						alert("내가 등록한 과정이 아닙니다.");
-					} else if ( json.mobileYn == "Y" ) {
-						pWidth = window.innerWidth || document.body.clientWidth;
-						pHeight = window.innerHeight || document.body.clientHeight
-						Popup.showPopup(context + "/user/studyroom.do?courseId=" + pCourseId, pWidth, pHeight, "studyroom");
-					} else {
-						if ( gfn_deviceCheck() == "MOBILE" ) {
-							alert("해당과정은 모바일에서 보실 수 없습니다.");
-						} else {
-							Popup.showPopup(context + "/user/studyroom.do?courseId=" + pCourseId, 1185, 810, "studyroom");
-						}
-					}
-				},
-				error : function(e) {
-					alert("시스템 오류 발생하였습니다. 관리자에게 문의하세요.");
+		$.ajax({
+			type :"POST",
+			url : context + "/user/checkMyCourse.do",
+			dataType :"json",
+			data : "courseId=" + pCourseId,
+			success : function(json){
+				console.log(json);
+				
+				if ( json.cnt == 0 ) {
+					alert("내가 등록한 과정이 아닙니다.");
+				} else if ( gfn_deviceCheck() == "MOBILE" ) {
+					pWidth = window.innerWidth || document.body.clientWidth;
+					pHeight = window.innerHeight || document.body.clientHeight
+					Popup.showPopup(context + "/user/studyroom.do?courseId=" + pCourseId, pWidth, pHeight, "studyroom");
+				} else {
+					Popup.showPopup(context + "/user/studyroom.do?courseId=" + pCourseId, json.hPx, json.vPx, "studyroom");
 				}
-			})	
-		} else {
-			Popup.showPopup(context + "/user/studyroom.do?courseId=" + pCourseId, 1185, 810, "studyroom");
-		}
+			},
+			error : function(e) {
+				alert("시스템 오류 발생하였습니다. 관리자에게 문의하세요.");
+			}
+		})	
 	},
 
 	showCourseAttendance : function(pCourseId) {
@@ -430,15 +428,7 @@ var Popup = {
 	},
 	
 	showCourseSearch : function(pParams) {
-   		var urlParams = "page=/ax/common/axCourseSearchPopup";
-   		
-   		var params = pParams || {};
-   		if ( params.kind ) {
-   			urlParams += "&kind=" + params.kind;
-   		}
-   		if ( params.COMPANY2 ) {
-   			urlParams += "&COMPANY2=" + params.COMPANY2;
-   		}
+		var urlParams = $.param(pParams || {}) + "&page=/ax/common/axCourseSearchPopup";
    		
    		f_popup('/common/axOpenPage', {displayName:'coursePopup',option:'width=1300,height=700', urlParams:urlParams});
 	},
