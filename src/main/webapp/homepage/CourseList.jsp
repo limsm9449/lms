@@ -75,6 +75,14 @@ function lfn_btn(pKind, pParam) {
 	}
 }
 
+function lfn_viewTypeChg(kind) {
+	$('#viewType').val(kind); 
+	$('#viewTypeChg').val('Y'); 
+	$('#pageNum').val(1); 
+	
+	lfn_btn('search');
+}
+
 </script>
 
 <body>
@@ -159,6 +167,8 @@ function lfn_btn(pKind, pParam) {
 
 <form name="frm" id="frm" method="post">
 	<input type='hidden' id='courseId' name='courseId'>
+	<input type='hidden' id='viewType' name='viewType'>
+	<input type='hidden' id='viewTypeChg' name='viewTypeChg' value="N">
 
 	            <!-- Search Area -->
 	            <div class='process_search clear_fix'>
@@ -208,36 +218,55 @@ function lfn_btn(pKind, pParam) {
 	                <div>
 	                    <ul class='clear_fix'>
 	                        <li class='process_filter_item select1'>
-	                            <select name='orderKind' id='orderKind' onchange="lfn_btn('search');">
+	                            <select name='orderKind' id='orderKind'>
 	                                <option value='Popularity' <c:if test="${set.condiVO.orderKind eq null || set.condiVO.orderKind eq 'Popularity'}">selected</c:if>>인기강의순</option>
 	                                <option value='Recommendation' <c:if test="${set.condiVO.orderKind eq 'Recommendation'}">selected</c:if>>추천강의순</option>
 	                            </select>
 	                        </li>
 	                        <li class='process_filter_item select2'>
 	                            <select name='limitUnit' id='limitUnit' onchange="$('pageNum').val(1);">
+<c:choose>
+	<c:when test = "${set.condiVO.viewType eq null || set.condiVO.viewType eq 'LIST'}">
 	                                <option value='10' <c:if test="${set.condiVO.limitUnit eq '10'}">selected</c:if>>10개씩</option>
-	                                <option value='15' <c:if test="${set.condiVO.limitUnit eq '15'}">selected</c:if>>15개씩</option>
+	                                <option value='20' <c:if test="${set.condiVO.limitUnit eq '20'}">selected</c:if>>20개씩</option>
 	                                <option value='30' <c:if test="${set.condiVO.limitUnit eq '30'}">selected</c:if>>30개씩</option>
+   	</c:when>
+   	<c:otherwise>
+	                                <option value='12' <c:if test="${set.condiVO.limitUnit eq '12'}">selected</c:if>>12개씩</option>
+	                                <option value='24' <c:if test="${set.condiVO.limitUnit eq '24'}">selected</c:if>>24개씩</option>
+	                                <option value='36' <c:if test="${set.condiVO.limitUnit eq '36'}">selected</c:if>>26개씩</option>
+   	</c:otherwise>
+</c:choose>    
 	                            </select>
 	                        </li>
-	                        <input type='hidden' id='pageNum' name='pageNum' value="${set.condiVO.pageNum}">
-	                        <li class='process_filter_item range'>
-	                            <p class='non_image'>정렬</p>
-	                        </li>
+<c:choose>
+	<c:when test = "${set.condiVO.viewType eq null || set.condiVO.viewType eq 'LIST'}">
 	                        <li class='process_filter_item list'>
-	                            <p>리스트</p>
+	                            <p class='on' onclick="lfn_viewTypeChg('LIST')">리스트</p>
 	                        </li>
 	                        <li class='process_filter_item image'>
-	                            <p>이미지</p>
+	                            <p onclick="lfn_viewTypeChg('IMAGE');">이미지</p>
 	                        </li>
+   	</c:when>
+   	<c:otherwise>
+	                        <li class='process_filter_item list'>
+	                            <p onclick="lfn_viewTypeChg('LIST')">리스트</p>
+	                        </li>
+	                        <li class='process_filter_item image'>
+	                            <p class='on' onclick="lfn_viewTypeChg('IMAGE');">이미지</p>
+	                        </li>
+   	</c:otherwise>
+</c:choose>    
 	                    </ul>
 	                </div>
 	            </div>
 	            <!-- Filter Area END -->
 </form>
-	
+
+<c:choose>
+	<c:when test = "${set.condiVO.viewType eq null || set.condiVO.viewType eq 'LIST'}">
 	            <!-- Search Result Area -->
-	            <div class='process_search_result'>
+	            <div class='process_search_result'> 
 	                <div class='clear_fix'>
 	                    <div class='process_result_checkbox'>
 	                        <input type='checkbox' name='' id=''>
@@ -247,7 +276,7 @@ function lfn_btn(pKind, pParam) {
 	                    <p class='process_result_btn'>수강신청</p>
 	                </div>
 	                <ul class='process_result_list'>
-<c:forEach var="row" items="${set.courseList}" varStatus="idx">
+		<c:forEach var="row" items="${set.courseList}" varStatus="idx">
 	                    <li class='clear_fix'>
 	                        <div class='process_result_checkbox con'>
 	                            <input type='checkbox' name='' id=''>
@@ -259,9 +288,9 @@ function lfn_btn(pKind, pParam) {
 	                            <div class='process_result_text'>
 	                                <div class='process_result_text_top clear_fix'>
 	                                    <p>일반</p>
-	<c:if test="${row.mobileYn eq 'Y'}">     	                                    
+			<c:if test="${row.mobileYn eq 'Y'}">     	                                    
 	                                    <p class='process_result_mobile'>모바일</p>
-	</c:if>	                                    
+			</c:if>	                                    
 	                                </div>
 	                                <p><a href="javascript:" onclick="lfn_btn('view',{courseId:'${row.courseId}'}); return false;">${row.courseName}</a></p>
 	                                <div class='process_result_text_bottom clear_fix'>
@@ -290,10 +319,64 @@ function lfn_btn(pKind, pParam) {
 	                            <button onclick="javascript:lfn_btn('view',{courseId:'${row.courseId}'}); return false;" class='process_result_admission'>수강신청</button>
 	                        </div>
 	                    </li>
-</c:forEach>
+		</c:forEach>
 	                </ul>
 	            </div>
 	            <!-- Search Result Area END -->
+   	</c:when>
+   	<c:otherwise>
+               	<div class='process_search_result'>
+                    <ul class='process_list_wrap clear_fix'>
+		<c:forEach var="row" items="${set.courseList}" varStatus="idx">
+                        <li <c:if test="${idx.index % 4 eq 3}">  class='last_right'</c:if>>
+			<c:choose>
+				<c:when test = "${row.courseId ne null}">
+                            <a href=''><img src='/cImage/contents/${row.courseCode}/sImg1.jpg' alt=' '></a>
+                            <div class='process_text_box'>
+                                <div class='process_info_box'>
+                                    <div>
+                                        <p>일반</p>
+					<c:if test="${row.mobileYn eq 'Y'}">     	                                    
+                                        <p>모바일</p>
+					</c:if>                                     
+                                    </div>
+                                    <p class='process_title'>
+                                        <a href="javascript:" onclick="lfn_btn('view',{courseId:'${row.courseId}'}); return false;">${row.courseName}</a>
+                                    </p>
+                                </div>
+                                <div class='process_btn_area clear_fix'>
+                                    <button onclick="javascript:Popup.showSampleCourse('${row.courseId}','${row.hPx + 100}','${row.vPx + 100}'); return false;">맛보기</button>
+                                    <button onclick="javascript:lfn_btn('view',{courseId:'${row.courseId}'}); return false;" class='admission'>수강신청</button>
+                                </div>
+                                <div class='process_score_box clear_fix'>
+                                    <div class='process_score_image clear_fix' onclick="Popup.showPostscriptList('${row.courseId}')">
+                                        <span><img src='/resources/homepage/img/process/${row.grade1}.png' alt=''></span>
+		                                <span><img src='/resources/homepage/img/process/${row.grade2}.png' alt=''></span>
+		                                <span><img src='/resources/homepage/img/process/${row.grade3}.png' alt=''></span>
+		                                <span><img src='/resources/homepage/img/process/${row.grade4}.png' alt=''></span>
+		                                <span><img src='/resources/homepage/img/process/${row.grade5}.png' alt=''></span>
+                                    </div>
+                                    <p class='process_score_text'>
+                                        평점 : <span id='process_score_num'>${row.grade}</span> / 후기 : <span id='process_review_num'>${row.gradeCnt}</span>건
+                                    </p>
+                                </div>
+                                <div class='process_payment_box clear_fix'>
+                                    <p>교육비</p>
+                                    <p class='process_payment'><fmt:formatNumber value="${row.courseCost}" type="number"/> 원</p>
+                                </div>
+                            </div>
+			   	</c:when>
+			   	<c:otherwise>
+			   				<!-- 강좌가 없음 -->	
+			   	</c:otherwise>
+			</c:choose>    
+                        </li>
+		</c:forEach>                        
+                   	</ul>
+                </div>
+                <!-- Search Result Area END -->
+   	</c:otherwise>
+</c:choose>    
 	
 	            <!-- Pager Area -->
 	            <input type='hidden' id='pageNum' name='pageNum' value="${set.condiVO.pageNum}">

@@ -115,11 +115,15 @@ public class SessionInterceptor extends HandlerInterceptorAdapter {
 	        	SessionUtil.setAttribute("compCd", compCd);
 	        	SessionUtil.setAttribute("compType", compType);
 	        	SessionUtil.setAttribute("compName", compName);
-	        	
-	        	if ( !url.equals("/main/errorNotUseCompany.do") && !"B2C".equals(compType) && "N".equals(compUseYn) ) {
-	        		System.out.println("not use company ================================== ");
-		        	response.sendRedirect("/main/errorNotUseCompany.do");
-		        	return false;
+
+	        	//회사 도메인 이면..
+	        	if ( !url.equals("/main/errorNotUseCompany.do") ) {
+		        	if ( ( domains.length > 3 && !"www".equals(domains[0].toLowerCase()) && "B2C".equals(compType) ) ||
+			        	( !"B2C".equals(compType) && "N".equals(compUseYn) ) ) {
+			        		System.out.println("not use company ================================== ");
+				        	response.sendRedirect("/main/errorNotUseCompany.do");
+				        	return false;
+		        	}
 	        	}
 	        	
 	   	 		// 시스템에서 사용할 설정값을 가져와 Session에 넣어둔다.
