@@ -138,6 +138,7 @@ function lfn_page() {
 						<span>Welcome</span> 큐러닝에 오신 것을 환영합니다.
 					</h1>
 					<p>귀하는 동시접속을 시도하셨습니다.</p>
+					<p>최종 로그인 시간 : ${loginTime}</p>
 					<p>기존 접속을 끊고 접속하시겠습니까?</p>
 					<div class='signin_main_control clear_fix'>
 						<input type='hidden' name='userId' id='userId' value="${set.condiVO.userId}">

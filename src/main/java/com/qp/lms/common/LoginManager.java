@@ -1,7 +1,14 @@
 package com.qp.lms.common; 
 
-import java.util.*;
-import javax.servlet.http.*;
+import java.text.SimpleDateFormat;
+import java.util.Collection;
+import java.util.Date;
+import java.util.Enumeration;
+import java.util.Hashtable;
+
+import javax.servlet.http.HttpSession;
+import javax.servlet.http.HttpSessionBindingEvent;
+import javax.servlet.http.HttpSessionBindingListener;
 /*
 * session이 끊어졌을때를 처리하기 위해 사용
 * static메소드에서는 static만사용 하므로static으로 선언한다.
@@ -12,6 +19,7 @@ public class LoginManager implements HttpSessionBindingListener{
     
     //로그인한 접속자를 담기위한 해시테이블
     private static Hashtable loginUsers = new Hashtable();
+    private static Hashtable loginTimes = new Hashtable();
     
     /*
      * 싱글톤 패턴 사용
@@ -102,8 +110,16 @@ public class LoginManager implements HttpSessionBindingListener{
         //이순간에 Session Binding이벤트가 일어나는 시점
         //name값으로 userId, value값으로 자기자신(HttpSessionBindingListener를 구현하는 Object)
         session.setAttribute(userId, this);//login에 자기자신을 집어넣는다.
+
+        //시간 기록
+        Date today = new Date();
+        SimpleDateFormat dateTime = new SimpleDateFormat("yyyy/MM/dd hh:mm:ss");
+        loginTimes.put(userId, dateTime.format(today));
     }
      
+    public String getLoginTime(String userId) {
+    	return (String)loginTimes.get(userId);
+    }
      
     /*
       * 입력받은 세션Object로 아이디를 리턴한다.

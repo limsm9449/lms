@@ -85,6 +85,7 @@ function showRemaining() {
 		
 		alert("시험시간이 종료되었습니다.");
 		
+		$("#examKind").val("${set.condiVO.examKind}");
 		lfn_save();
 		
 		return;

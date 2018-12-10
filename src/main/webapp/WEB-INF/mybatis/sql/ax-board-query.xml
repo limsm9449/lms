@@ -182,12 +182,18 @@
 	</select>
 
 	<select id="axBoardFaqOne" resultType="hashmap">
-		SELECT 	SEQ,
-		       	CATEGORY,
-		       	TITLE,
-		       	CONTENTS
-		FROM 	BOARD_FAQ
-		WHERE 	SEQ = #{SEQ}
+		SELECT 	A.SEQ,
+				SUBSTR(B.DD_MAIN,5,3) COMP_KIND,
+		       	A.CATEGORY,
+		       	A.TITLE,
+		       	A.CONTENTS
+		FROM 	BOARD_FAQ A
+					LEFT OUTER JOIN (
+							SELECT 	* 
+							FROM 	CODE
+							WHERE 	DD_MAIN IN ('FAQ_B2C','FAQ_B2B','FAQ_C2C')
+						) B ON B.DD_KEY = A.CATEGORY 
+		WHERE 	A.SEQ = #{SEQ}
 	</select>
 	
 	<insert id="axBoardFaqInsert" parameterType="hashmap">

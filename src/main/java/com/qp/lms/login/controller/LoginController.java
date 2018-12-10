@@ -71,6 +71,9 @@ public class LoginController {
     	
     	model.addAttribute("set", set );
     	
+    	LoginManager loginManager = LoginManager.getInstance();
+    	model.addAttribute("loginTime", loginManager.getLoginTime(loginVO.getUserId()));
+    	
         return "/login/loginConfirm";
     } 
 

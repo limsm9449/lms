@@ -35,13 +35,17 @@
 	</select>
 
 	<select id="axMainBoardNoticeOne" resultType="hashmap">
-		SELECT 	SEQ,
-		       	COMP_CD,
-		       	TITLE,
-		       	CONTENTS,
-		       	MAIN_YN, IMG1, IMG2, COLOR
-		FROM 	MAIN_BOARD_NOTICE
-		WHERE 	SEQ = #{SEQ}
+		SELECT 	A.SEQ,
+		       	A.COMP_CD,
+                CASE WHEN A.COMP_CD = 'B2C' THEN 'B2C'
+				     WHEN B.C2C_YN = 'N' THEN 'B2B'
+                     ELSE 'C2C' END COMP_KIND,
+		       	A.TITLE,
+		       	A.CONTENTS,
+		       	A.MAIN_YN, A.IMG1, A.IMG2, A.COLOR
+		FROM 	MAIN_BOARD_NOTICE A
+					LEFT OUTER JOIN COMPANY B ON B.COMP_CD = A.COMP_CD
+		WHERE 	A.SEQ = #{SEQ}
 	</select>
 	
 	<insert id="axMainBoardNoticeInsert" parameterType="hashmap">
@@ -109,14 +113,18 @@
 	</select>
 
 	<select id="axMainBoardEventOne" resultType="hashmap">
-		SELECT 	SEQ,
-				COMP_CD,
-		       	TITLE,
-		       	CONTENTS,
-		       	VIEW_CNT,
-		       	MAIN_YN, IMG1, IMG2, COLOR
-		FROM 	MAIN_BOARD_EVENT
-		WHERE 	SEQ = #{SEQ}
+		SELECT 	A.SEQ,
+				A.COMP_CD,
+                CASE WHEN A.COMP_CD = 'B2C' THEN 'B2C'
+				     WHEN B.C2C_YN = 'N' THEN 'B2B'
+                     ELSE 'C2C' END COMP_KIND,
+		       	A.TITLE,
+		       	A.CONTENTS,
+		       	A.VIEW_CNT,
+		       	A.MAIN_YN, A.IMG1, A.IMG2, A.COLOR
+		FROM 	MAIN_BOARD_EVENT A
+					LEFT OUTER JOIN COMPANY B ON B.COMP_CD = A.COMP_CD
+		WHERE 	A.SEQ = #{SEQ}
 	</select>
 	
 	<insert id="axMainBoardEventInsert" parameterType="hashmap">

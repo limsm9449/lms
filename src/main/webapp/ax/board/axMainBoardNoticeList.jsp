@@ -40,9 +40,9 @@ $(document.body).ready(function () {
 	            break; 
 		    case "add":
            		var urlParams = "page=/ax/board/axMainBoardNoticePopup";
-           		urlParams += "&MODE=INSERT&SEQ=&COURSE_ID=0";
+           		urlParams += "&MODE=INSERT&SEQ=";
            		
-           		f_popup('/common/axOpenPage', {displayName:'boardNoticePopup',option:'width=900,height=560', urlParams:urlParams});
+           		f_popup('/common/axOpenPage', {displayName:'boardNoticePopup',option:'width=900,height=620', urlParams:urlParams});
 
 		    	break;
 		    case "delete":
@@ -220,9 +220,9 @@ function fn_gridEvent(event, obj) {
 		var mode = "UPDATE";
 		
    		var urlParams = "page=/ax/board/axMainBoardNoticePopup";
-   		urlParams += "&MODE=" + mode + "&SEQ=" + obj.item["SEQ"] + "&COURSE_ID=0";
+   		urlParams += "&MODE=" + mode + "&SEQ=" + obj.item["SEQ"];
    		
-   		f_popup('/common/axOpenPage', {displayName:'boardNoticePopup',option:'width=900,height=560', urlParams:urlParams});
+   		f_popup('/common/axOpenPage', {displayName:'boardNoticePopup',option:'width=900,height=620', urlParams:urlParams});
 	} else if ( event == "DataChanged" ) {
 	}
 }

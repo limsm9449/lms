@@ -130,7 +130,7 @@
 		  			LEFT OUTER JOIN (
 		  				SELECT	COURSE_ID
 		  						,USER_ID
-		  						,DATE_FORMAT(MAX(STUDY_START), '%y.%m.%d %H:%i') STUDY_START
+		  						,DATE_FORMAT(MIN(STUDY_START), '%y.%m.%d %H:%i') STUDY_START
 		  						,DATE_FORMAT(MAX(STUDY_END), '%y.%m.%d %H:%i') STUDY_END
 		  				FROM	COURSE_WEEK
 		  				WHERE	COURSE_ID = #{courseId}

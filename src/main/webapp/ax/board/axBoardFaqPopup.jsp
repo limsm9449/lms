@@ -21,6 +21,7 @@ var dialog = new ax5.ui.dialog( { title: '<i class="axi axi-ion-alert"></i> Aler
 var grid = null;
 var params = {}
 var isSave = false;
+var dd = {}
 
 var MODE = gfn_getUrlParams("MODE");
 var SEQ = gfn_getUrlParams("SEQ");
@@ -29,26 +30,16 @@ $(document.body).ready(function () {
     $("#CONTENTS").cleditor({height:305});
     $("#CONTENTS").cleditor()[0].refresh();
 
-    gfn_callAjax("/common/axDd.do", { DD_KIND : "FaqCategory" }, fn_callbackAjax, "dd", { async : false });
+    gfn_callAjax("/common/axDd.do", { DD_KIND : "CompanyKind,B2CFaqCategory,B2BFaqCategory,C2CFaqCategory" }, fn_callbackAjax, "dd", { async : false });
 }); 
 
 function fn_ddAfter() {
     if ( MODE == "INSERT" ) {
-    } else if ( MODE == "UPDATE" ) {
-    	fn_search();
    	} else {
     	fn_search();
     	
+    	$("#CB_COMPANY").attr("disabled", true);
     	$("#CB_CATEGORY").attr("disabled", true);
-    	$("#TITLE").attr("readonly", true);
-    	$("#btn_save").hide();
-    	
-   		//조회수 증가
-   		var saveParams = {
- 				MODE : "VIEW",
- 				SEQ : SEQ
- 		};
- 		gfn_callAjax("/board/axBoardFaqSave.do", saveParams, fn_callbackAjax, "-");
    	}
 }
 
@@ -70,18 +61,18 @@ function fn_callbackAjax(data, id) {
 	}
 	
 	if ( id == "search" ) {
+		$('#CB_COMPANY').val(data.row.COMP_KIND);
+		fn_cbChange("CB_COMPANY");
+					
 		$('#CB_CATEGORY').val(data.row.CATEGORY);
 		$('#TITLE').val(data.row.TITLE);
 		
 		$('#CONTENTS').val(data.row.CONTENTS);
-		
-		if ( MODE == "UPDATE" ) {
-			$("#CONTENTS").cleditor()[0].refresh();
-		} else {
-			$("#CONTENTS").cleditor()[0].disable(true).refresh();
-		}
+		$("#CONTENTS").cleditor()[0].refresh();
 	} else if ( id == "dd" ){
-		gfn_cbRefresh("CB_CATEGORY", data.FaqCategory, true);
+		dd = $.extend({}, data);
+		
+		gfn_cbRefresh("CB_COMPANY", data.CompanyKind, true);
 		
 		fn_ddAfter();
 	} else if ( id == "save" ){
@@ -145,6 +136,20 @@ function fn_close() {
 	window.close();
 }
 
+function fn_cbChange(id) {
+	if ( id == "CB_COMPANY" ) {
+		if ( $("#CB_COMPANY").val() == "B2B" ) {
+			gfn_cbRefresh("CB_CATEGORY", dd.B2BFaqCategory, true);
+		} else if ( $("#CB_COMPANY").val() == "C2C" ) {
+			gfn_cbRefresh("CB_CATEGORY", dd.C2CFaqCategory, true);
+		} else if ( $("#CB_COMPANY").val() == "B2C" ) {
+			gfn_cbRefresh("CB_CATEGORY", dd.B2CFaqCategory, true);
+		} else {
+			gfn_cbRefresh("CB_CATEGORY", null, true);
+		}
+	}
+}
+
 </script>
 
 <body style="padding : 10px">
@@ -152,6 +157,14 @@ function fn_close() {
 <h2>FAQ 게시물</h2>
 
 <form class="form-horizontal">
+  	<div class="form-group">
+    	<label for="CB_COMPANY" class="col-sm-2 control-label">회사구분</label>
+    	<div class="col-sm-10">
+    		<select id="CB_COMPANY" class="form-control" onchange="fn_cbChange('CB_COMPANY')">
+				<option value="">전체</option>
+			</select>
+    	</div>
+  	</div>
   	<div class="form-group">
     	<label for="TITLE" class="col-sm-2 control-label">카테고리</label>
     	<div class="col-sm-10">

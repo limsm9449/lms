@@ -38,7 +38,7 @@ $(document.body).ready(function () {
 		    case "add":
            		var urlParams = "page=/ax/board/axBoardFaqPopup";
            		urlParams += "&MODE=INSERT&SEQ=";
-           		f_popup('/common/axOpenPage', {displayName:'boardFaqPopup',option:'width=900,height=560', urlParams:urlParams});
+           		f_popup('/common/axOpenPage', {displayName:'boardFaqPopup',option:'width=900,height=620', urlParams:urlParams});
 
 		    	break;
 		    case "delete":
@@ -188,9 +188,9 @@ function fn_gridEvent(event, obj) {
 		var mode = "UPDATE";
 		
    		var urlParams = "page=/ax/board/axBoardFaqPopup";
-   		urlParams += "&MODE=" + mode + "&SEQ=" + obj.item["SEQ"] + "&COURSE_ID=0";
+   		urlParams += "&MODE=" + mode + "&SEQ=" + obj.item["SEQ"] + "&COMP_KIND=" + obj.item["COMP_KIND"];
    		
-   		f_popup('/common/axOpenPage', {displayName:'boardFaqPopup',option:'width=900,height=560', urlParams:urlParams});
+   		f_popup('/common/axOpenPage', {displayName:'boardFaqPopup',option:'width=900,height=620', urlParams:urlParams});
    		
 	} else if ( event == "DataChanged" ) {
 	}
@@ -202,8 +202,10 @@ function fn_cbChange(id) {
 			gfn_cbRefresh("CB_CATEGORY", dd.B2BFaqCategory, true);
 		} else if ( $("#CB_COMPANY").val() == "C2C" ) {
 			gfn_cbRefresh("CB_CATEGORY", dd.C2CFaqCategory, true);
-		} else {
+		} else if ( $("#CB_COMPANY").val() == "B2C" ) {
 			gfn_cbRefresh("CB_CATEGORY", dd.B2CFaqCategory, true);
+		} else {
+			gfn_cbRefresh("CB_CATEGORY", null, true);
 		}
 	}
 }

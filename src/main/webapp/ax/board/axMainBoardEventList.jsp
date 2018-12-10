@@ -42,7 +42,7 @@ $(document.body).ready(function () {
            		var urlParams = "page=/ax/board/axMainBoardEventPopup";
            		urlParams += "&MODE=INSERT&SEQ=";
            		
-           		f_popup('/common/axOpenPage', {displayName:'boardEventPopup',option:'width=900,height=560', urlParams:urlParams});
+           		f_popup('/common/axOpenPage', {displayName:'boardEventPopup',option:'width=900,height=620', urlParams:urlParams});
 
 		    	break;
 		    case "delete":
@@ -226,7 +226,7 @@ function fn_gridEvent(event, obj) {
    		var urlParams = "page=/ax/board/axMainBoardEventPopup";
    		urlParams += "&MODE=" + mode + "&SEQ=" + obj.item["SEQ"];
    		
-   		f_popup('/common/axOpenPage', {displayName:'boardEventPopup',option:'width=900,height=560', urlParams:urlParams});
+   		f_popup('/common/axOpenPage', {displayName:'boardEventPopup',option:'width=900,height=620', urlParams:urlParams});
 	} else if ( event == "DataChanged" ) {
 	}
 }
