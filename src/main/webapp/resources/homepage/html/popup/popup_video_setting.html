@@ -18,26 +18,146 @@
 </head>
 
 <body>
-    <!-- 설문 POPUP -->
+    <!-- 동영상 설정 POPUP -->
     <div id='popup_standard' class='popup'>
         <div class='popup_fix'>
             <p class='popup_title'>
                 동영상 설정
                 <span>동영상 설정 안내입니다.</span>
             </p>
-            <div class='popup_info_box'>
+            <div class='popup_info_box video_set'>
                 <p>
-                    Windows Media Player 오류시 조치 방법입니다.
+                    사용중인 WMP 버전에 맞는 환경설정을 통해 동영상 재생 문제를 해결할 수 있습니다.<br>
+                    <span>큐러닝은 Windows Media Player 9 버전 이상에서 최적화 되어 있습니다.</span><br>
+                    본인의 Windows Media Player 버전 확인 방법은 상단의 메뉴 중 [도움말] > Windows Media Player 정보에서 확인 가능합니다.<br>
+                    ※ 상단의 메뉴 모음이 보이지 않는 경우, 키보드 좌측 하단의 Alt 키를 눌러 주세요.
                 </p>
             </div>
         </div>
-        <div class='popup_content set'>
+        <div class='preference_tab video_set'>
+            <button onclick='browser_set(this, "v9")'>WMP9</button>
+            <button onclick='browser_set(this, "v10")'>WMP10</button>
+            <button onclick='browser_set(this, "v11")'>WMP11</button>
+            <button class='on' onclick='browser_set(this, "v12")'>WMP12</button>
+        </div>
+        <div class='popup_content set type1'>
+            <p class='info'>공통 조치사항</p>
+            <p><span>Step 1.</span> Windows > 시작 > 실행 클릭 (단축키 : 윈도우키 + R)</p>
+            <p><span>Step 2.</span> "regsvr32 wmnetmgr.dll" 을 입력하고 [확인] 을 클릭합니다.</p>
             <img src='../../img/etc/video_set_1.jpg' alt=' '>
+            <p><span>Step 3.</span> "...성공했습니다." 메세지가 나오면 [확인] 을 클릭합니다.</p>
             <img src='../../img/etc/video_set_2.jpg' alt=' '>
-            <img src='../../img/etc/video_set_3.jpg' alt=' '>
+            <p class='info'>Windows Media Player12 상세 설정 안내</p>
+            <p><span>Step 1.</span></p>
+            <p>①번 Windows Media Player의 [도구] 클릭<br> ②번 [옵션] 클릭<br> ※ 상단의 메뉴 모음이 보이지 않는 경우, 키보드 좌측 하단의 Alt 키를 눌러 주세요. </p>
+            <img class='big' src='../../img/etc/video_set_3.jpg' alt=' '>
+            <p><span>Step 2.</span></p>
+            <p>①번 [플레이어] 탭 클릭<br> ②번 '인터넷에 연결(다른 명령 무시)' 체크</p>
+            <img src='../../img/etc/video_set_4.jpg' alt=' '>
+            <p><span>Step 3.</span></p>
+            <p>①번 [네트워크] 탭 클릭 <br>②번 'RTSP/UDP' 체크 해제, 'RTSP/TCP', 'RTSP/HTTP' 에 체크 <br>③번 '플레이어에서 멀티캐스트 스트림 수신 허용' 에 체크 </p>
+            <img src='../../img/etc/video_set_5.jpg' alt=' '>
+            <p>④번 [구성] 버튼을 클릭</p>
+            <img src='../../img/etc/video_set_6.jpg' alt=' '>
+            <p>⑤번 '프록시 서버 사용 안 함' 에 체크</p>
+            <img src='../../img/etc/video_set_7.jpg' alt=' '>
+            <p><span>Step 4.</span></p>
+            <p>①번 [성능] 탭 클릭 <br>②번 'WMP 파일용 DirectX 비디오 가속 켜기' 의 체크 해제 </p>
+            <img src='../../img/etc/video_set_8.jpg' alt=' '>
+            <p><span>Step 5.</span></p>
+            <p>①번 Windows > 시작 > 기본프로그램 클릭 <br>②번 Windows Media Player 클릭 <br>③번 '이 프로그램을 기본 프로그램으로 설정' 클릭 후 [확인] 버튼 클릭</p>
+            <img class='big' src='../../img/etc/video_set_9.jpg' alt=' '>
+            <p>④번 '이 프로그램에 대한 기본값 선택' 클릭 <br>⑤번 '모두선택' 체크 후 [저장] 버튼 클릭</p>
+            <img src='../../img/etc/video_set_10.jpg' alt=' '>
+        </div>
+        <div class='popup_content set type2'>
+            <p class='info'>공통 조치사항</p>
+            <p><span>Step 1.</span> Windows > 시작 > 실행 클릭 (단축키 : 윈도우키 + R)</p>
+            <p><span>Step 2.</span> "regsvr32 wmnetmgr.dll" 을 입력하고 [확인] 을 클릭합니다.</p>
+            <img src='../../img/etc/video_set_1.jpg' alt=' '>
+            <p><span>Step 3.</span> "...성공했습니다." 메세지가 나오면 [확인] 을 클릭합니다.</p>
+            <img src='../../img/etc/video_set_2.jpg' alt=' '>
+            <p class='info'>Windows Media Player11 상세 설정 안내</p>
+            <p><span>Step 1.</span></p>
+            <p>①번 Windows Media Player의 [도구] 클릭<br> ②번 [옵션] 클릭<br> ※ 상단의 메뉴 모음이 보이지 않는 경우, 키보드 좌측 하단의 Alt 키를 눌러 주세요. </p>
+            <img class='big' src='../../img/etc/video_set_3_1.jpg' alt=' '>
+            <p><span>Step 2.</span></p>
+            <p>①번 [플레이어] 탭 클릭<br> ②번 '인터넷에 연결(다른 명령 무시)' 체크</p>
+            <img src='../../img/etc/video_set_4_1.jpg' alt=' '>
+            <p><span>Step 3.</span></p>
+            <p>①번 [네트워크] 탭 클릭 <br>②번 'RTSP/UDP' 체크 해제, 'RTSP/TCP', 'RTSP/HTTP' 에 체크 <br>③번 '플레이어에서 멀티캐스트 스트림 수신 허용' 에 체크 </p>
+            <img src='../../img/etc/video_set_5_1.jpg' alt=' '>
+            <p>④번 [구성] 버튼을 클릭</p>
+            <img src='../../img/etc/video_set_6_1.jpg' alt=' '>
+            <p>⑤번 '프록시 서버 사용 안 함' 에 체크</p>
+            <img src='../../img/etc/video_set_7_1.jpg' alt=' '>
+            <p><span>Step 4.</span></p>
+            <p>①번 [파일형식] 탭 클릭 <br>②번 [모두선택] 버튼 클릭</p>
+            <img src='../../img/etc/video_set_8_1.jpg' alt=' '>
+            <p><span>Step 5.</span></p>
+            <p>①번 [성능] 탭 클릭 <br>②번 비디오 가속의 바를 '최대'에서 '없음' 으로 이동 </p>
+            <img src='../../img/etc/video_set_9_1.jpg' alt=' '>
+        </div>
+        <div class='popup_content set type3'>
+            <p class='info'>공통 조치사항</p>
+            <p><span>Step 1.</span> Windows > 시작 > 실행 클릭 (단축키 : 윈도우키 + R)</p>
+            <p><span>Step 2.</span> "regsvr32 wmnetmgr.dll" 을 입력하고 [확인] 을 클릭합니다.</p>
+            <img src='../../img/etc/video_set_1.jpg' alt=' '>
+            <p><span>Step 3.</span> "...성공했습니다." 메세지가 나오면 [확인] 을 클릭합니다.</p>
+            <img src='../../img/etc/video_set_2.jpg' alt=' '>
+            <p class='info'>Windows Media Player10 상세 설정 안내</p>
+            <p><span>Step 1.</span></p>
+            <p>①번 Windows Media Player의 [도구] 클릭<br> ②번 [옵션] 클릭<br> ※ 상단의 메뉴 모음이 보이지 않는 경우, 키보드 좌측 하단의 Alt 키를 눌러 주세요. </p>
+            <img class='big' src='../../img/etc/video_set_3_1.jpg' alt=' '>
+            <p><span>Step 2.</span></p>
+            <p>①번 [플레이어] 탭 클릭<br> ②번 '인터넷에 연결(다른 명령 무시)' 체크</p>
+            <img src='../../img/etc/video_set_4_0.jpg' alt=' '>
+            <p><span>Step 3.</span></p>
+            <p>①번 [네트워크] 탭 클릭 <br>②번 '멀티케스트', TCP', 'HTTP' 에 체크, 'UDP' 체크 해제</p>
+            <img src='../../img/etc/video_set_5_0.jpg' alt=' '>
+            <p>④번 [구성] 버튼을 클릭</p>
+            <img src='../../img/etc/video_set_6_0.jpg' alt=' '>
+            <p>⑤번 '프록시 서버 사용 안 함' 에 체크</p>
+            <img src='../../img/etc/video_set_7_1.jpg' alt=' '>
+            <p><span>Step 4.</span></p>
+            <p>①번 [성능] 탭 클릭 <br>②번 'WMP 파일용 DirectX 비디오 가속 켜기' 의 체크 해제 </p>
+            <img src='../../img/etc/video_set_8_1.jpg' alt=' '>
+            <p><span>Step 5.</span></p>
+            <p>①번 [성능] 탭 클릭 <br>②번 비디오 가속의 바를 '최대'에서 '없음' 으로 이동 </p>
+            <img src='../../img/etc/video_set_9_0.jpg' alt=' '>
+        </div>
+        <div class='popup_content set type4'>
+            <p class='info'>공통 조치사항</p>
+            <p><span>Step 1.</span> Windows > 시작 > 실행 클릭 (단축키 : 윈도우키 + R)</p>
+            <p><span>Step 2.</span> "regsvr32 wmnetmgr.dll" 을 입력하고 [확인] 을 클릭합니다.</p>
+            <img src='../../img/etc/video_set_1.jpg' alt=' '>
+            <p><span>Step 3.</span> "...성공했습니다." 메세지가 나오면 [확인] 을 클릭합니다.</p>
+            <img src='../../img/etc/video_set_2.jpg' alt=' '>
+            <p class='info'>Windows Media Player9 상세 설정 안내</p>
+            <p><span>Step 1.</span></p>
+            <p>①번 Windows Media Player의 [도구] 클릭<br> ②번 [옵션] 클릭<br> ※ 상단의 메뉴 모음이 보이지 않는 경우, 키보드 좌측 하단의 Alt 키를 눌러 주세요. </p>
+            <img class='big' src='../../img/etc/video_set_3_1.jpg' alt=' '>
+            <p><span>Step 2.</span></p>
+            <p>①번 [플레이어] 탭 클릭<br> ②번 '인터넷에 연결(다른 명령 무시)' 체크</p>
+            <img src='../../img/etc/video_set_4_9.jpg' alt=' '>
+            <p><span>Step 3.</span></p>
+            <p>①번 [네트워크] 탭 클릭 <br>②번 '멀티케스트', TCP', 'HTTP' 에 체크, 'UDP' 체크 해제 </p>
+            <img src='../../img/etc/video_set_5_9.jpg' alt=' '>
+            <p>④번 [구성] 버튼을 클릭</p>
+            <img src='../../img/etc/video_set_6_9.jpg' alt=' '>
+            <p>⑤번 '프록시 서버 사용 안 함' 에 체크</p>
+            <img src='../../img/etc/video_set_7_1.jpg' alt=' '>
+            <p><span>Step 4.</span></p>
+            <p>①번 [성능] 탭 클릭 <br>②번 'WMP 파일용 DirectX 비디오 가속 켜기' 의 체크 해제</p>
+            <img src='../../img/etc/video_set_8_9.jpg' alt=' '>
+            <p><span>Step 5.</span></p>
+            <p>①번 [성능] 탭 클릭 <br>②번 비디오 가속의 바를 '최대'에서 '없음' 으로 이동 </p>
+            <img src='../../img/etc/video_set_9_9.jpg' alt=' '>
         </div>
     </div>
     <!-- 설문 POPUP END-->
+
+    <script src='../../js/sub.js'></script>
 </body>
 
 </html>

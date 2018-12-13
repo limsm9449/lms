@@ -271,8 +271,10 @@ function error_msg(e){
 
 // pc header 2depth 메뉴 표시
 function dropdown_part(item){
-    var menu = item.querySelector('.menu_over_2depth');
-    menu.style.display = 'block';
+    if(!menu_click_pc){
+        var menu = item.querySelector('.menu_over_2depth');
+        menu.style.display = 'block';
+    }
 }
 
 

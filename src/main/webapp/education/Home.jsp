@@ -96,7 +96,6 @@ $(document).ready(function() {
             <button onclick="javascript:Popup.showReport('${set.condiVO.courseId}'); return false;">과정리포트 제출</button>
 </c:if>	
 <c:if test="${set.data.isReport eq 'Y' && set.data.reportYn eq 'Y'}">
-            <button onclick="javascript:Popup.showReport('${set.condiVO.courseId}'); return false;">과정리포트 제출</button>
             <button onclick="javascript:Popup.showReportResult('${set.condiVO.courseId}'); return false;">과정리포트 채점결과</button>
 </c:if>	   		
         </div>

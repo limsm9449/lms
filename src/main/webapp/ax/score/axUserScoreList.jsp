@@ -204,6 +204,22 @@ function fn_makeGrid() {
 	            align : "left"
 	        },{
               	key : undefined, 
+              	label: "학습기간", 
+              	columns: [
+              		{
+			            key : "C_FROM_DATE",
+			            label : "학습시작",
+			            width : 80,
+			            align : "center"
+              		},{
+			            key : "C_TO_DATE",
+			            label : "학습종료",
+			            width : 80,
+			            align : "center"
+              		}
+             	]
+	        },{
+              	key : undefined, 
               	label: "시험", 
               	columns: [
               		{
@@ -357,14 +373,19 @@ function fn_makeGrid() {
                     config : {
                         columnKeys: { optionValue: "value", optionText: "text" },
                         options: dd.CourseReport
-                    }
+                    }, 
+	            	disabled : function () {
+                        return ( ax5.util.number(this.item.REPORT_RATE) > 0 ? false : true );
+                    } 
 	        	},
 	            formatter : function () {
 	                return gfn_getValueInList(dd.CourseReport, "value",  this.item.REPORT_SEQ, "text");
 	           	},
 				styleClass: function () {
-                    return "grid-cell-edit";
+                    return ( ax5.util.number(this.item.REPORT_RATE) > 0 ? "grid-cell-edit": "" );
+                    
                 }
+	           	
 	        },{
 	            key : "REPORT_YN",
 	            label : "레포트 제출 여부",

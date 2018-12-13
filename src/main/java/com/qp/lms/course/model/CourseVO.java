@@ -196,7 +196,8 @@ public class CourseVO extends CommonVO {
     private String studyEnd;
     private String questProgressRatio;
     private String responsiveContentsYn;
-
+    private String againStudyDay;
+    
     public String getPeriodProgress() {
 		return periodProgress;
 	}
@@ -1430,6 +1431,15 @@ public class CourseVO extends CommonVO {
 	public void setResponsiveContentsYn(String responsiveContentsYn) {
 		this.responsiveContentsYn = responsiveContentsYn;
 	}
+
+	public String getAgainStudyDay() {
+		return againStudyDay;
+	}
+
+	public void setAgainStudyDay(String againStudyDay) {
+		this.againStudyDay = againStudyDay;
+	}
+
 
 
 

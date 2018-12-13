@@ -1246,6 +1246,12 @@ header{
         width:100%;
     }
 
+    .process_filter div ul .process_filter_item.range,
+    .process_filter div ul .process_filter_item.list,
+    .process_filter div ul .process_filter_item.image{
+        display:none;
+    }
+
     .pager_prev,
     .pager_next{
         width:50px;

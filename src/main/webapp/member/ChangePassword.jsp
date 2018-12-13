@@ -110,7 +110,7 @@ function lfn_validate() {
                         <p>나의강의실</p>
                         <span>
                             <img src='/resources/homepage/img/course/arr_right.jpg' alt=' '>
-                        </span>
+                        </span> 
                         <p>비밀번호 변경</p>
                     </div>
                 </div>

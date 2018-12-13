@@ -156,25 +156,12 @@ public class CommService {
      * @throws Exception
      */
     public String isBoardInsYn(String courseId,String userId) throws Exception {
-    	String editYn = "N";
+		CommVO condiVO = new CommVO();
+		condiVO.setCourseId(courseId);
+		condiVO.setUserId(userId);
+    	CommVO comm = sqlSession.selectOne("comm.courseEditInfo", condiVO);
     	
-    	if ( SessionUtil.isAdmin() || SessionUtil.isTeacher() || SessionUtil.isTutor() ) {
-    		editYn = "Y";
-    	} else {
-	    	if ( "0".equals(courseId) ) {
-	    		editYn = "Y";
-	    	} else { 
-	    		CommVO condiVO =  new CommVO();
-	    		condiVO.setCourseId(courseId);
-	    		condiVO.setUserId(userId);
-		    	CommVO comm = sqlSession.selectOne("comm.courseEditInfo", condiVO);
-		    	
-		    	if ( "N".equals(comm.getCompleteYn()) && "Y".equals(comm.getIsPeriod()) ) {
-		    		editYn = "Y";
-		    	}
-		    		
-	    	}
-    	}
+    	String editYn = comm.getIsPeriod();
 
     	return editYn;
     }
@@ -187,24 +174,12 @@ public class CommService {
      * @throws Exception
      */
     public String isBoardUpdYn(String courseId,String userId) throws Exception {
-    	String editYn = "N";
+    	CommVO condiVO = new CommVO();
+		condiVO.setCourseId(courseId);
+		condiVO.setUserId(userId);
+    	CommVO comm = sqlSession.selectOne("comm.courseEditInfo", condiVO);
     	
-    	if ( SessionUtil.isAdmin() ) {
-    		editYn = "Y";
-    	} else {
-	    	if ( "0".equals(courseId) ) {
-	    		editYn = "Y";
-	    	} else { 
-	    		CommVO condiVO =  new CommVO();
-	    		condiVO.setCourseId(courseId);
-	    		condiVO.setUserId(userId);
-		    	CommVO comm = sqlSession.selectOne("comm.courseEditInfo", condiVO);
-		    	
-		    	if ( "N".equals(comm.getCompleteYn()) && "Y".equals(comm.getIsPeriod()) ) {
-		    		editYn = "Y";
-		    	}
-	    	}
-    	}
+    	String editYn = comm.getIsPeriod();
     	
     	return editYn;
     }

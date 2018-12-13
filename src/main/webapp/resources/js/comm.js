@@ -450,7 +450,7 @@ function f_popup(pDoUrl,pParam) {
 	if ( pParam != undefined && pParam.option != undefined )
 		option = pParam.option;
 
-	option += ",resizable=0";
+	option += ",resizable=0"; 
 	
 	//POST로 넘긴다.
 	window.open("",displayName,option);

@@ -142,6 +142,42 @@ function fn_makeGrid() {
 	                return gfn_getValueInList(dd.Company, "value",  this.item.COMP_CD, "text");
 	           	}
 	        },{
+	        	key : undefined, 
+              	label: "학습기간", 
+              	columns: [	        
+              		{
+        	        	key : "TERM_YN", 
+        	        	label : "가입기간", 
+        	            width : 80,
+        	        	align : "center", 
+        	        	editor : { 
+        	        		type : "checkbox", 
+        	        		config : {height: 17, trueValue: "Y", falseValue: "N"}, 
+			            	disabled : function () {
+		                        return true;
+		                    }  
+        	        	}
+			        },{
+			            key : "STUDY_PERIOD_FROM",
+			            label : "학습 시작일",
+			            width : 100,
+			            align : "center"
+			        },{
+			            key : "STUDY_PERIOD_TO",
+			            label : "학습 종료일",
+			            width : 100,
+			            align : "center"
+			        },{
+			            key : "C_PERIOD",
+			            label : "교육일수",
+			            width : 80,
+			            align : "right",
+			            formatter : function () {
+			                return this.item.C_PERIOD + " 일";
+			           	}
+			        }
+	        	]
+	        },{
               	key : undefined, 
               	label: "진도", 
               	columns: [	        
@@ -228,8 +264,10 @@ function fn_callbackAjax(data, id) {
 		
 		gfn_cbRefresh("CB_COMPANY", data.CompanyKind, true);
 		gfn_cbRefresh("CB_LEVEL1", data.CategoryLevel1, true);
-		gfn_cbRefresh("CB_YEAR", data.Year, true);
 		
+		gfn_cbRefresh("CB_YEAR", data.Year, true);
+		$("#CB_YEAR").val(new Date().getFullYear());		
+
 		fn_makeGrid();
 		//fn_search();
 	} else if ( id == "CB_LEVEL1" ){

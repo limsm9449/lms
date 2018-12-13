@@ -203,8 +203,10 @@ function fn_callbackAjax(data, id) {
 		dd = $.extend({}, data);
 		
 		gfn_cbRefresh("CB_LEVEL1", data.CategoryLevel1, true);
+
 		gfn_cbRefresh("CB_YEAR", data.Year, true);
-		
+		$("#CB_YEAR").val(new Date().getFullYear());		
+
 		fn_makeGrid();
 		//fn_search();
 	} else if ( id == "CB_LEVEL1" ){

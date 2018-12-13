@@ -14,7 +14,7 @@
     <meta http-equiv='X-UA-Compatible' content='ie=edge'>
     <title>Q learning - 나의강의실 - 회원정보수정</title>
 
-    <%@ include file="../common/commMainInclude.jsp" %>
+    <%@ include file="../common/commMainInclude.jsp" %> 
 
     <link href='https://fonts.googleapis.com/css?family=Nanum+Gothic' rel='stylesheet'>
 

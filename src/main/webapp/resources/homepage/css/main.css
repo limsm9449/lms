@@ -614,8 +614,8 @@ header{
 .recommend.automation2 .lecture_more{
     position:absolute;
     bottom:0;
-    left:0;
-    right:0;
+    left:28%;
+    width:100%;
 }
 
 
@@ -1403,6 +1403,12 @@ header{
         height:270px !important;
     }
 
+    .recommend.automation2 .lecture_more{
+        left:24%;
+        width:50%;
+        max-width:initial;
+    }
+
     /* AUTOMATION SAMPLE 2 */
     .recommend.automation2{
         width:30%;
@@ -1433,6 +1439,11 @@ header{
     }
     .recommend_wrap ul:before{
         height:260px;
+    }
+
+    /* AUTOMATION */
+    .recommend.automation2 .lecture_more{
+        font-size:14px;
     }
 }
 @media all and (max-width:420px){

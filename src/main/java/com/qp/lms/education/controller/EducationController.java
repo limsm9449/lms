@@ -79,6 +79,38 @@ public class EducationController {
         return "/education/HomeMobile";
     }
 
+    @RequestMapping(value = "/education/eduReviewHome")
+    public String eduReviewHome(@ModelAttribute EducationVO vo, Model model) throws Exception {
+    	try {
+	    	EducationSet set = new EducationSet();
+	    	set.setCondiVO(vo);
+	    	
+	    	set = svr.eduHome(set);
+	
+	    	model.addAttribute("set", set );
+    	} catch ( Exception e ) {
+    		e.printStackTrace();
+    	}
+
+        return "/education/ReviewHome";
+    }
+
+    @RequestMapping(value = "/education/eduReviewHomeMobile")
+    public String eduReviewHomeMobile(@ModelAttribute EducationVO vo, Model model) throws Exception {
+    	try {
+	    	EducationSet set = new EducationSet();
+	    	set.setCondiVO(vo);
+	    	
+	    	set = svr.eduHome(set);
+	
+	    	model.addAttribute("set", set );
+    	} catch ( Exception e ) {
+    		e.printStackTrace();
+    	}
+
+        return "/education/ReviewHomeMobile";
+    }
+
     /*
      * 점수...
      */

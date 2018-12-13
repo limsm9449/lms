@@ -92,7 +92,7 @@ function lfn_btn(pKind, pParam) {
 </c:if>	                    
 <c:forEach var="row" items="${set.course}" varStatus="idx">
                     <tr>
-                        <td class='col_1'><a href='./study.html' target='_blank' class='user_lecture_list_subject'>${row.courseName}</a></td>
+                        <td class='col_1'><a href='#' class='user_lecture_list_subject' onclick="javascript:Popup.showStudyroom('${row.courseId}');">${row.courseName}</a></td>
                         <td class='col_2'>${row.progress} %</td>
 	<c:if test="${row.isStudy eq 'Y'}">                            
                         <td class='col_3'>학습중</td>
@@ -108,7 +108,7 @@ function lfn_btn(pKind, pParam) {
 	</c:if>	                    
                         <td class='col_5'>D-${row.remainDay}</td>
 	<c:if test="${row.isStudy eq 'Y'}">                            
-                        <td class='col_6'><button onclick="javascript:Popup.showUserCourse('${row.courseId}','${row.hPx + 100}','${row.vPx + 100}'); lfn_btn('view',{courseId:'${row.courseId}'});">학습시작</button></td>
+                        <td class='col_6'><button onclick="javascript:Popup.showStudyroom('${row.courseId}');">학습시작</button></td>
 	</c:if>                            
 	<c:if test="${row.isStudy eq 'N'}">                            
                         <td class='col_6'><button>학습대기중</button></td>

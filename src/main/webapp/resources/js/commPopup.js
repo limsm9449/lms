@@ -216,7 +216,11 @@ var Popup = {
 						Popup.showPopup(context + "/education/eduHome.do?courseId=" + pCourseId + "&week=", pWidth, pHeight, "eduHome");
 					}
 				} else {
-					alert("해당과정은 모바일에서 보실 수 없습니다.");
+					if ( gfn_deviceCheck() == "MOBILE" ) {
+						alert("해당과정은 모바일에서 보실 수 없습니다.");
+					} else {
+						Popup.showPopup(context + "/education/eduHome.do?courseId=" + pCourseId + "&week=", pWidth, pHeight, "eduHome");
+					}
 				}
 			},
 			error : function(e) {
@@ -246,8 +250,20 @@ var Popup = {
 						pWidth = window.innerWidth || document.body.clientWidth;
 						pHeight = window.innerHeight || document.body.clientHeight
 						Popup.showPopup(context + "/education/eduHomeMobile.do?courseId=" + pCourseId + "&week=" + pWeek, pWidth, pHeight, "eduHome");
+					} else if ( json.responsiveContentsYn == "Y" ) {
+						if ( gfn_deviceCheck() == "MOBILE" ) {
+							pWidth = window.innerWidth || document.body.clientWidth;
+							pHeight = window.innerHeight || document.body.clientHeight
+							Popup.showPopup(context + "/education/eduHome.do?courseId=" + pCourseId + "&week=" + pWeek, pWidth, pHeight, "eduHome");
+						} else {
+							Popup.showPopup(context + "/education/eduHome.do?courseId=" + pCourseId + "&week=" + pWeek, pWidth, pHeight, "eduHome");
+						}
 					} else {
-						Popup.showPopup(context + "/education/eduHome.do?courseId=" + pCourseId + "&week=" + pWeek, 1185, 810, "eduHome");
+						if ( gfn_deviceCheck() == "MOBILE" ) {
+							alert("해당과정은 모바일에서 보실 수 없습니다.");
+						} else {
+							Popup.showPopup(context + "/education/eduHome.do?courseId=" + pCourseId + "&week=" + pWeek, pWidth, pHeight, "eduHome");
+						}
 					}
 				},
 				error : function(e) {
@@ -266,7 +282,38 @@ var Popup = {
 	 * @param pHeight
 	 */
 	showReviewCourse : function(pCourseId,pWidth,pHeight) {
-		Popup.showPopup(context + "/education/eduHome.do?courseId=" + pCourseId + "&isPopup=Y",pWidth,pHeight);
+		$.ajax({
+			type :"POST",
+			url : context + "/user/checkMyCourse.do",
+			dataType :"json",
+			data : "courseId=" + pCourseId,
+			success : function(json){
+				if ( json.cnt == 0 ) {
+					alert("내가 등록한 과정이 아닙니다.");
+				} else if ( json.mobileYn == "Y" ) {
+					pWidth = window.innerWidth || document.body.clientWidth;
+					pHeight = window.innerHeight || document.body.clientHeight
+					Popup.showPopup(context + "/education/eduReviewHomeMobile.do?courseId=" + pCourseId + "&week=", pWidth, pHeight, "eduHome");
+				} else if ( json.responsiveContentsYn == "Y" ) {
+					if ( gfn_deviceCheck() == "MOBILE" ) {
+						pWidth = window.innerWidth || document.body.clientWidth;
+						pHeight = window.innerHeight || document.body.clientHeight
+						Popup.showPopup(context + "/education/eduReviewHome.do?courseId=" + pCourseId + "&week=", pWidth, pHeight, "eduHome");
+					} else {
+						Popup.showPopup(context + "/education/eduReviewHome.do?courseId=" + pCourseId + "&week=", pWidth, pHeight, "eduHome");
+					}
+				} else {
+					if ( gfn_deviceCheck() == "MOBILE" ) {
+						alert("해당과정은 모바일에서 보실 수 없습니다.");
+					} else {
+						Popup.showPopup(context + "/education/eduReviewHome.do?courseId=" + pCourseId + "&week=", pWidth, pHeight, "eduHome");
+					}
+				}
+			},
+			error : function(e) {
+				alert("시스템 오류 발생하였습니다. 관리자에게 문의하세요.");
+			}
+		})	
 	},
 	
 	/**
@@ -406,9 +453,9 @@ var Popup = {
 				} else if ( gfn_deviceCheck() == "MOBILE" ) {
 					pWidth = window.innerWidth || document.body.clientWidth;
 					pHeight = window.innerHeight || document.body.clientHeight
-					Popup.showPopup(context + "/user/studyroom.do?courseId=" + pCourseId, pWidth, pHeight, "studyroom");
+					Popup.showPopup(context + "/user/studyroom.do?courseId=" + pCourseId + "&timestamp=" + gfn_timestamp(), pWidth, pHeight, "studyroom");
 				} else {
-					Popup.showPopup(context + "/user/studyroom.do?courseId=" + pCourseId, json.hPx, json.vPx, "studyroom");
+					Popup.showPopup(context + "/user/studyroom.do?courseId=" + pCourseId + "&timestamp=" + gfn_timestamp(), json.hPx, json.vPx, "studyroom");
 				}
 			},
 			error : function(e) {
@@ -434,44 +481,31 @@ var Popup = {
 	},
 	
 	showCourseCode : function(pParams) {
-   		var urlParams = "page=/ax/common/axCourseCodePopup";
-   		
-   		var params = pParams || {};
-   		if ( params.ddKind ) {
-   			urlParams += "&ddKind=" + params.ddKind;
-   		}
+		var urlParams = $.param(pParams || {}) + "&page=/ax/common/axCourseCodePopup";
    		
    		f_popup('/common/axOpenPage', {displayName:'courseCodePopup',option:'width=300,height=450', urlParams:urlParams});
 	},
 	
 	showCategory : function(pParams) {
-   		var urlParams = "page=/ax/common/axCategoryPopup";
-   		
-   		var params = pParams || {};
+		var urlParams = $.param(pParams || {}) + "&page=/ax/common/axCategoryPopup";
 
    		f_popup('/common/axOpenPage', {displayName:'CategoryPopup',option:'width=300,height=380', urlParams:urlParams});
 	},
 	
 	showExamType : function(pParams) {
-   		var urlParams = "page=/ax/common/axExamTypePopup";
-   		
-   		var params = pParams || {};
-   		if ( params.COURSE_CODE ) {
-   			urlParams += "&COURSE_CODE=" + params.COURSE_CODE;
-   		}
+		var urlParams = $.param(pParams || {}) +  "&page=/ax/common/axExamTypePopup";
    		
    		f_popup('/common/axOpenPage', {displayName:'ExamTypePopup',option:'width=300,height=270', urlParams:urlParams});
 	},
 	
 	showMcbCompany : function(pParams) {
-   		var urlParams = "page=/ax/common/axMcbCompanyPopup";
-   		
-   		var params = pParams || {};
-   		if ( params.COURSE_CODE ) {
-   			urlParams += "&COURSE_CODE=" + params.COURSE_CODE;
-   		}
+		var urlParams = $.param(pParams || {}) + "&page=/ax/common/axMcbCompanyPopup";
    		
    		f_popup('/common/axOpenPage', {displayName:'ExamTypePopup',option:'width=300,height=300', urlParams:urlParams});
+	},
+	
+	showPagePopup : function(page, width, height) {
+   		f_popup('/common/axOpenPage', {displayName:'ExamTypePopup',option:"width=" + (width || 750) + ",height=" + (height || 840), urlParams:"page=" + page});
 	}
 
 

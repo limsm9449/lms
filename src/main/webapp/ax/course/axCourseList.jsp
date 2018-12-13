@@ -379,7 +379,7 @@ function fn_makeGrid() {
 	            width : 150,
 	        	align : "left", 
 				styleClass: function () {
-                    return "grid-cell-edit2";
+                    return ( ax5.util.number(this.item.EXAM_RATE) > 0 ? "grid-cell-edit2": "" );
                 } 
 	        },{
               	key : undefined, 
@@ -444,7 +444,7 @@ function fn_makeGrid() {
 		        ]
 	        },{
               	key : undefined, 
-              	label: "기간", 
+              	label: "학습기간", 
               	columns: [	        
               		{
         	        	key : "TERM_YN", 
@@ -525,23 +525,38 @@ function fn_makeGrid() {
                     return "grid-cell-edit";
                 } 
 	        },{
-	        	key : "OPEN_YN", 
-	        	label : "오픈", 
-	            width : 90,
-	        	align : "center", 
-	        	editor : { type : "checkbox", config : {height: 17, trueValue: "Y", falseValue: "N"} } ,
-				styleClass: function () {
-                    return "grid-cell-edit";
-                } 
-	        },{
-	        	key : "CLOSE_YN", 
-	        	label : "강의 종료", 
-	            width : 80,
-	        	align : "center", 
-	        	editor : { type : "checkbox", config : {height: 17, trueValue: "Y", falseValue: "N"} } ,
-				styleClass: function () {
-                    return "grid-cell-edit";
-                } 
+              	key : undefined, 
+              	label: "오픈/종료", 
+              	columns: [	        
+			        {
+			        	key : "OPEN_YN", 
+			        	label : "오픈", 
+			            width : 70,
+			        	align : "center", 
+			        	editor : { type : "checkbox", config : {height: 17, trueValue: "Y", falseValue: "N"} } ,
+						styleClass: function () {
+		                    return "grid-cell-edit";
+		                } 
+			        },{
+			        	key : "OPEN_CLOSE_YN", 
+			        	label : "오픈 종료", 
+			            width : 80,
+			        	align : "center", 
+			        	editor : { type : "checkbox", config : {height: 17, trueValue: "Y", falseValue: "N"} } ,
+						styleClass: function () {
+		                    return "grid-cell-edit";
+		                } 
+			        },{
+			        	key : "CLOSE_YN", 
+			        	label : "강의 종료", 
+			            width : 80,
+			        	align : "center", 
+			        	editor : { type : "checkbox", config : {height: 17, trueValue: "Y", falseValue: "N"} } ,
+						styleClass: function () {
+		                    return "grid-cell-edit";
+		                }
+			        }
+			   	]
 	        },{
 	            key : "LAST_UPDATE_USER",
 	            label : "수정자",
@@ -599,7 +614,8 @@ function fn_courseCodeSelect(data) {
 			AGAIN_STUDY_DAY : dd.AgainStudyDay[0].text,
 			WORKER_CARD_YN : data.WORKER_CARD_YN, 
 			SUPPORT_EMPLOYER_YN : data.SUPPORT_EMPLOYER_YN, 
-			NORMAL_COURSE_YN : data.NORMAL_COURSE_YN
+			NORMAL_COURSE_YN : data.NORMAL_COURSE_YN,
+			OPEN_CLOSE_YN : "N"
 		}, "last", {focus: "END"}
 	);
 }
@@ -652,7 +668,8 @@ function fn_mcbCompanySelect(data) {
 				AGAIN_STUDY_DAY : row[0].AGAIN_STUDY_DAY,
 				WORKER_CARD_YN : row[0].WORKER_CARD_YN,
 				SUPPORT_EMPLOYER_YN : row[0].SUPPORT_EMPLOYER_YN,
-				NORMAL_COURSE_YN : row[0].NORMAL_COURSE_YN
+				NORMAL_COURSE_YN : row[0].NORMAL_COURSE_YN,
+				OPEN_CLOSE_YN : "N"
 			}, "last", {focus: "END"});
 		
 		grid.repaint();
@@ -748,8 +765,10 @@ function fn_callbackAjax(data, id) {
 
 		gfn_cbRefresh("CB_OPEN_KIND", data.OpenKind, true);
 		$("#CB_OPEN_KIND").val("NOT_CLOSE");
-		gfn_cbRefresh("CB_YEAR", data.Year, true);
 
+		gfn_cbRefresh("CB_YEAR", data.Year, true);
+		$("#CB_YEAR").val(new Date().getFullYear());
+		
 		fn_makeGrid();
 	} else if ( id == "CB_LEVEL1" ){
 		gfn_cbRefresh("CB_LEVEL2", data.CategoryLevel2, true);
@@ -767,7 +786,7 @@ function fn_gridEvent(event, obj) {
 	if ( event == "Click" ) {
 		obj.self.select(obj.dindex);
 	} else if ( event == "DBLClick" ) {
-		if ( obj.column.key == "COURSE_EXAM_TYPE_NAME" ) {
+		if ( obj.column.key == "COURSE_EXAM_TYPE_NAME" && parseInt(obj.item.EXAM_RATE) > 0 ) {
 	    	Popup.showExamType( { COURSE_CODE : obj.item.COURSE_CODE } );
 		}
 	} else if ( event == "DataChanged" ) {

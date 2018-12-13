@@ -109,10 +109,24 @@
                     </ul>
                 </li>
                 <li>
-                    <button onclick='location.href = "./admin_counsel.html"'><span></span>상담내역</button>
+                    <button onclick='admin_sub_open(event)'>
+                        <span></span>
+                        문의 관리
+                    </button>
+                    <ul class='sub' id='sub6'>
+                        <li><a href='./admin_counsel.html'>상담내역</a></li>
+                        <li><a href='./admin_support.html'>기업교육/튜터지원 문의</a></li>
+                    </ul>
                 </li>
                 <li>
-                    <button onclick='location.href = "./admin_log.html"'><span></span>로그 관리</button>
+                    <button onclick='admin_sub_open(event)'>
+                        <span></span>
+                        로그 관리
+                    </button>
+                    <ul class='sub' id='sub7'>
+                        <li><a href='./admin_login_log.html'>로그인 로그 관리</a></li>
+                        <li><a href='./admin_access_log.html'>접속 로그 관리</a></li>
+                    </ul>
                 </li>
                 <li>
                     <button onclick='admin_sub_open(event)'>
@@ -172,7 +186,7 @@
         </div>
     </div>
 </frameset>
-<script src='../../js/dev_sub.js'></script>
+<script src='../../js/sub.js'></script>
 
 </body>
 </html>
