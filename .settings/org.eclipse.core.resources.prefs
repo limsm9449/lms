@@ -1,4 +1,5 @@
 eclipse.preferences.version=1
+encoding//readme/lgdacom/conf/mall.conf=UTF-8
 encoding//src/main/java/com/qp/lms/common/SessionInterceptor.java=UTF-8
 encoding//src/main/java/com/qp/lms/home/controller/HomeController.java=UTF-8
 encoding//src/main/webapp/WEB-INF/lms.properties=UTF-8

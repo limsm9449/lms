@@ -120,6 +120,8 @@ function lfn_btn(pKind, pParam) {
 				alert("<spring:message code="lms.msg.systemError" text="-" />");
 			}
 		})
+	} else if ( pKind =="mobileAuth" ) {
+		Popup.showPopup(context + "/guest/authOnly.do?userName=" + $("#userName").val() + "&birthDay=" + "${set.condiVO.userYear}".substring(2,4) + "${set.condiVO.userMonth}" + "${set.condiVO.userDay}",500,500,"mobileAuth");
 	}
 }
 
@@ -292,7 +294,7 @@ function lfn_validate() {
 </c:if>
                     <div class='info_input_phone clear_fix'>
                         <p>휴대폰 번호</p>
-                        <select name='agency' id='agency'>
+                        <select name='mobileKind' id='mobileKind'>
                             <option value='선택'>선택</option>
                             <option value='SKT'>SKT</option>
                             <option value='KT'>KT</option>
@@ -300,7 +302,7 @@ function lfn_validate() {
                             <option value='알뜰폰'>알뜰폰</option>
                         </select>
                         <input type='text' name='mobile' id='mobile' placeholder='- 없이 숫자만'>
-                        <button onclick="alert('작업중입니다.');">인증번호요청</button>
+                        <button onclick="lfn_btn('mobileAuth');">인증번호요청</button>
                     </div>
                     <div class='certification_name clear_fix'>
                         <p>비밀번호</p>

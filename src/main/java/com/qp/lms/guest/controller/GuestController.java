@@ -4,6 +4,8 @@ package com.qp.lms.guest.controller;
 
 import java.util.HashMap;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.qp.lms.board.model.BoardFaqSet;
 import com.qp.lms.board.model.BoardFaqVO;
@@ -19,6 +22,7 @@ import com.qp.lms.board.model.BoardVO;
 import com.qp.lms.board.service.BoardFaqService;
 import com.qp.lms.board.service.BoardNoticeService;
 import com.qp.lms.common.CommUtil;
+import com.qp.lms.common.service.CommService;
 import com.qp.lms.common.service.DdService;
 import com.qp.lms.education.model.EducationSet;
 import com.qp.lms.education.model.EducationVO;
@@ -31,6 +35,8 @@ import com.qp.lms.main.model.MainVO;
 import com.qp.lms.member.model.MemberSet;
 import com.qp.lms.member.model.MemberVO;
 import com.qp.lms.member.service.MemberService;
+import com.qp.lms.pg.model.PgSet;
+import com.qp.lms.pg.model.PgVO;
 
 import net.sf.json.JSONObject;
 
@@ -44,7 +50,10 @@ import net.sf.json.JSONObject;
 @Controller
 public class GuestController {
 
-	 private static final Logger logger = LoggerFactory.getLogger(GuestController.class);
+    @Autowired
+    private CommService commSvr;
+
+    private static final Logger logger = LoggerFactory.getLogger(GuestController.class);
 
     @Autowired
     private GuestService svr;
@@ -479,4 +488,39 @@ public class GuestController {
         return "/common/json";
     }
 
+    @RequestMapping(value = "/guest/authOnly", method = RequestMethod.GET)
+    public String authOnly(HttpServletRequest request, @ModelAttribute MemberVO vo, Model model) throws Exception {
+    	try {
+	    	MemberSet set = new MemberSet();
+	    	set.setCondiVO(vo);
+	    	
+	        model.addAttribute("set", set );
+    	} catch ( Exception e ) {
+    		e.printStackTrace();
+    	}
+
+    	request.setAttribute("g_CST_MID", commSvr.getSetting("g_CST_MID"));
+    	request.setAttribute("g_CST_PLATFORM", commSvr.getSetting("g_CST_PLATFORM"));
+
+        return "/pg/AuthOnly";
+    }
+
+    @RequestMapping(value = "/guest/authOnlyReq", method = RequestMethod.POST)
+    public String authOnlyReq(HttpServletRequest request, @ModelAttribute GuestVO vo, Model model) throws Exception {
+    	request.setAttribute("g_LGD_AUTH_RETURNURL", commSvr.getSetting("g_LGD_AUTH_RETURNURL"));
+
+        return "/pg/AuthOnlyReq";
+    }
+
+    @RequestMapping(value = "/guest/authOnlyRes", method = RequestMethod.POST)
+    public String authOnlyRes(HttpServletRequest request, @ModelAttribute GuestVO vo, Model model) throws Exception {
+    	request.setAttribute("g_configPath", commSvr.getSetting("g_configPath"));
+
+        return "/pg/AuthOnlyRes";
+    }
+
+    @RequestMapping(value = "/guest/AuthOnlyReturnurl", method = RequestMethod.POST)
+    public String AuthOnlyReturnurl(HttpServletRequest request, @ModelAttribute GuestVO vo, Model model) throws Exception {
+        return "/pg/AuthOnlyReturnurl";
+    }
 }
