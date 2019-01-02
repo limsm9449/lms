@@ -23,7 +23,7 @@
 																							// 테스트 아이디는 't'를 반드시 제외하고 입력하세요.(CST_MID: LGD_MID를 설정하기 위한 상점아이디)
 	String LGD_MID              	= ("test".equals(CST_PLATFORM.trim())?"t":"")+CST_MID;  // 상점 아이디 LGD_MID는 CST_PLATFORM의 값에 따라 테스트용 또는 서비스용 아이디로 설정됨
 
-	String LGD_MERTKEY          	= "95160cce09854ef44d2edb2bfb05f9f3";													// [반드시 세팅]상점MertKey(mertkey는 상점관리자 -> 계약정보 -> 상점정보관리에서 확인하실수 있습니다')
+	String LGD_MERTKEY          	= (String)request.getAttribute("g_LGD_MERTKEY");		// [반드시 세팅]상점MertKey(mertkey는 상점관리자 -> 계약정보 -> 상점정보관리에서 확인하실수 있습니다')
 																							// 상점아이디와 매핑되는 MertKey를 LGD_MERTKEY에 할당
 
 	String LGD_BUYER            	= request.getParameter("LGD_BUYER");              		// 성명(보안을 위해 DB난 세션에서 가져오세요)

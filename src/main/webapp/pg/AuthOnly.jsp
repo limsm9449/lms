@@ -20,11 +20,11 @@
 		<table>	
             <tr>
                 <td>상점아이디(t를 제외한 아이디) </td>
-                <td><input type="text" name="CST_MID" id="CST_MID" value="lgdacomxpay"/></td>
+                <td><input type="text" name="CST_MID" id="CST_MID" value="<%=request.getAttribute("g_CST_MID")%>"/></td>
             </tr>
             <tr>
                 <td>서비스,테스트 </td>
-                <td><input type="text" name="CST_PLATFORM" id="CST_PLATFORM" value="test"/></td>
+                <td><input type="text" name="CST_PLATFORM" id="CST_PLATFORM" value="<%=request.getAttribute("g_CST_PLATFORM")%>"/></td>
             </tr>
             <tr>
                 <td>

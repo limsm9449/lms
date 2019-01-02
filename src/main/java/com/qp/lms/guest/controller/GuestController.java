@@ -507,6 +507,7 @@ public class GuestController {
 
     @RequestMapping(value = "/guest/authOnlyReq", method = RequestMethod.POST)
     public String authOnlyReq(HttpServletRequest request, @ModelAttribute GuestVO vo, Model model) throws Exception {
+    	request.setAttribute("g_LGD_MERTKEY", commSvr.getSetting("g_LGD_MERTKEY"));
     	request.setAttribute("g_LGD_AUTH_RETURNURL", commSvr.getSetting("g_LGD_AUTH_RETURNURL"));
 
         return "/pg/AuthOnlyReq";
