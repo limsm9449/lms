@@ -1,3 +1,30 @@
 ALTER TABLE COURSE ADD (
 	OPEN_CLOSE_YN CHAR(1) DEFAULT 'N'
 );    
+
+DELETE FROM SETTING;
+INSERT INTO SETTING VALUES(1,'SERVER_MODE','DEV','개발/운영');
+INSERT INTO SETTING VALUES(2,'g_configPath','D:/jee-photon/lgdacom','conf 파일 root');
+INSERT INTO SETTING VALUES(3,'g_LGD_CASNOTEURL','http://localhost:8080/paymentGateway/casNoteUrl.do','무통장(가상계좌) 할당, 입금 통보 결과처리 페이지');
+INSERT INTO SETTING VALUES(4,'g_LGD_RETURNURL','http://localhost:8080/paymentGateway/returnUrl.do','인증결과 수신 및 전달 페이지');
+INSERT INTO SETTING VALUES(5,'g_LGD_AUTH_RETURNURL','http://localhost:8080/guest/AuthOnlyReturnurl.do','핸드폰 인증결과 수신 및 전달 페이지');
+INSERT INTO SETTING VALUES(6,'g_CST_MID','qpeople','상점ID');
+INSERT INTO SETTING VALUES(7,'g_LGD_MERTKEY','25af4663448c4b2f59025594581d891f','MERTKEY');
+INSERT INTO SETTING VALUES(8,'g_CST_PLATFORM','test','개발/운영');
+INSERT INTO SETTING VALUES(9,'g_xpay_js','https://pretest.uplus.co.kr:9443/xpay/js/xpay_crossplatform.js','결재 처리 js');
+INSERT INTO SETTING VALUES(10,'PICTURE_FOLDER','D:\\lms\\lms_image\\teacher','강사 사진 폴더');
+INSERT INTO SETTING VALUES(11,'ATTACH_FOLDER','d:\\lms\\lms_attach','첨부파일 폴더');
+INSERT INTO SETTING VALUES(12,'COMPANY_FOLDER','D:\\lms\\lms_image\\company','회사 이미지 폴더');
+INSERT INTO SETTING VALUES(13,'USER_FOLDER','D:\\lms\\lms_image\\user','사용자 이미지 폴더');
+INSERT INTO SETTING VALUES(14,'COURSE_IMG_FOLDER','D:\\lms\\lms_image\\contents','컨텐츠 폴더');
+INSERT INTO SETTING VALUES(15,'EVENT_IMG_FOLDER','D:\\lms\\lms_image\\event','이벤트 이미지 폴더');
+INSERT INTO SETTING VALUES(16,'NOTICE_IMG_FOLDER','D:\\lms\\lms_image\\notice','공지 이미지 폴더');
+INSERT INTO SETTING VALUES(17,'MAIN_IMG_FOLDER','D:\\lms\\lms_image\\main','메인페이지 이미지 폴더');
+INSERT INTO SETTING VALUES(18,'ZIPCODE_URL','https://www.epost.go.kr/search.RetrieveIntegrationNewZipCdList.comm','우편번호 검색');
+INSERT INTO SETTING VALUES(19,'FROM_YEAR','2015','조건 시작연도');
+INSERT INTO SETTING VALUES(20,'TO_YEAR','2025','조건 종료연도');
+INSERT INTO SETTING VALUES(21,'BIRTH_FROM_YEAR','1950','생일 시작연도');
+INSERT INTO SETTING VALUES(22,'BIRTH_TO_YEAR','2000','생일 종료연도');
+INSERT INTO SETTING VALUES(23,'QUEST_PROGRESS_RATIO','80','설문지 작성을 위한 진도율');
+INSERT INTO SETTING VALUES(24,'AGAIN_STUDY_DAY','365','재학습 가능일 일수');
+
