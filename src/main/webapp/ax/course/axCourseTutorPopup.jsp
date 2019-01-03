@@ -28,7 +28,7 @@ $(document.body).ready(function () {
         theme: "danger"
     });
     
-    gfn_callAjax("/common/axDd.do", { DD_KIND : "Tutor" }, fn_callbackAjax, "dd", { async : false });
+    gfn_callAjax("/common/axDd.do", { DD_KIND : "Tutor", COURSE_ID : gfn_getUrlParams("COURSE_ID") }, fn_callbackAjax, "dd", { async : false });
 
 
     $('[data-grid-control]').click(function () {

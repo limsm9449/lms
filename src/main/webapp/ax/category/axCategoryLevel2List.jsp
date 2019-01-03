@@ -94,7 +94,7 @@ $(document.body).ready(function () {
 		        fn_search();
 		        break;
 		    case "add":
-		    	gfn_showPopupDiv("categoryDiv");
+		    	Popup.showCategoryLevel1();
 
 		    	break;
 		    case "delete":
@@ -118,24 +118,16 @@ $(document.body).ready(function () {
     //fn_search();
 });
 
-
-function fn_hidePopupDiv(popupDivId) {
-	gfn_hidePopupDiv(popupDivId);
-	
-	if ( $("#INS_CB_LEVEL1 option:selected").val() == "" ) {
-		mask.open();
-		dialog.alert( { msg : "대분류를 선택하셔야 합니다." }, function () { mask.close(); } );
-	} else {
-		grid.addRow( 
-			{
-				NEW_FLAG : "Y", 
-				CODE : $("#INS_CB_LEVEL1 option:selected").val() + "**", 
-				CODE_NAME : "코드명을 입력하세요.", 
-				USE_YN : "Y", 
-				LEVEL1_CODE : $("#INS_CB_LEVEL1 option:selected").val(), 
-				LEVEL1_NAME : $("#INS_CB_LEVEL1 option:selected").text()
-			}, "last", {focus: "END"});
-	}
+function fn_categorySelect(data) {
+	grid.addRow( 
+		{
+			NEW_FLAG : "Y", 
+			CODE : data.CB_LEVEL1_CODE + "**", 
+			CODE_NAME : "코드명을 입력하세요.", 
+			USE_YN : "Y", 
+			LEVEL1_CODE : data.CB_LEVEL1_CODE, 
+			LEVEL1_NAME : data.CB_LEVEL1_NAME
+		}, "last", {focus: "END"});
 }
 
 function fn_params() {
@@ -252,15 +244,6 @@ function gfn_cbRefresh(id, options, isAll) {
 	
 
 <div class="mask"></div>
-<div class="popupDiv" id="categoryDiv" style="width:300px; height:200px;">
-	대분류
-	<select id="INS_CB_LEVEL1">
-	</select>
-	
-	<div style="height:30px"></div>
-    <input type="button" href="#" value="확인" onclick="fn_hidePopupDiv('categoryDiv')"/>
-    <input type="button" href="#" value="닫기" onclick="gfn_hidePopupDiv('categoryDiv');"/>
-</div>
 
 </body>
 </html>

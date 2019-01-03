@@ -11,7 +11,6 @@
 			       TITLE,
 			       A.USER_ID,
 			       B.USER_NAME,
-			       USER_IP,
 			       VIEW_CNT,
 			       DATE_FORMAT(IFNULL(A.UPDATE_DATE,A.CREATE_DATE), '%y.%m.%d %H:%i') CREATE_DATE,
 			       @ROWNUM := @ROWNUM + 1 ROWNUM,
@@ -38,7 +37,6 @@
 		       CONTENTS,
 		       A.USER_ID,
 		       B.USER_NAME,
-		       USER_IP,
 		       VIEW_CNT,
 		       DATE_FORMAT(IFNULL(A.UPDATE_DATE,A.CREATE_DATE), '%y.%m.%d %H:%i') CREATE_DATE
 		  FROM BOARD_DATA A LEFT OUTER JOIN USER B ON A.USER_ID = B.USER_ID
@@ -47,8 +45,8 @@
 
 	<!-- 자료실 게시판 추가 -->
     <insert id="boardBataIns" parameterType="Board">
-		INSERT INTO BOARD_DATA (COURSE_ID,TITLE,CONTENTS,USER_ID,USER_IP,VIEW_CNT,CREATE_DATE)
-		VALUES (#{courseId},#{title},#{contents},#{userId},#{userIp},0,CURRENT_TIMESTAMP)
+		INSERT INTO BOARD_DATA (COURSE_ID,TITLE,CONTENTS,USER_ID,VIEW_CNT,CREATE_DATE)
+		VALUES (#{courseId},#{title},#{contents},#{userId},0,CURRENT_TIMESTAMP)
     </insert>	
     
     <update id="boardDataUpd" parameterType="Board">

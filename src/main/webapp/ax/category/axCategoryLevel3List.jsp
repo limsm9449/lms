@@ -104,10 +104,7 @@ $(document.body).ready(function () {
 		        fn_search();
 		        break;
 		    case "add":
-		    	gfn_cbRemove("INS_CB_LEVEL2");
-		    	$("#INS_CB_LEVEL1").val("");
-		    	
-		    	gfn_showPopupDiv("categoryDiv");
+		    	Popup.showCategoryLevel2();
 
 		    	break;
 		    case "delete":
@@ -131,26 +128,18 @@ $(document.body).ready(function () {
     //fn_search();
 });
 
-
-function fn_hidePopupDiv(popupDivId) {
-	gfn_hidePopupDiv(popupDivId);
-	
-	if ( $("#INS_CB_LEVEL1 option:selected").val() == "" || $("#INS_CB_LEVEL2 option:selected").val() == "" ) {
-		mask.open();
-		dialog.alert( { msg : "대분류 / 중분류를 선택하셔야 합니다." }, function () { mask.close(); } );
-	} else {
-		grid.addRow( 
-			{
-				NEW_FLAG : "Y", 
-				CODE : $("#INS_CB_LEVEL2 option:selected").val() + "**", 
-				CODE_NAME : "코드명을 입력하세요.", 
-				USE_YN : "Y", 
-				LEVEL1_CODE : $("#INS_CB_LEVEL1 option:selected").val(), 
-				LEVEL1_NAME : $("#INS_CB_LEVEL1 option:selected").text(),
-				LEVEL2_CODE : $("#INS_CB_LEVEL2 option:selected").val(), 
-				LEVEL2_NAME : $("#INS_CB_LEVEL2 option:selected").text()
-			}, "last", {focus: "END"});
-	}
+function fn_categorySelect(data) {
+	grid.addRow( 
+		{
+			NEW_FLAG : "Y", 
+			CODE : data.CB_LEVEL2_CODE + "**", 
+			CODE_NAME : "코드명을 입력하세요.", 
+			USE_YN : "Y", 
+			LEVEL1_CODE : data.CB_LEVEL1_CODE, 
+			LEVEL1_NAME : data.CB_LEVEL1_NAME,
+			LEVEL2_CODE : data.CB_LEVEL2_CODE, 
+			LEVEL2_NAME : data.CB_LEVEL2_NAME
+		}, "last", {focus: "END"});
 }
 
 function fn_params() {
@@ -268,19 +257,6 @@ function fn_cbChange(id) {
 
 
 <div class="mask"></div>
-<div class="popupDiv" id="categoryDiv" style="width:300px; height:200px;">
-	대분류
-	<select id="INS_CB_LEVEL1" onchange="fn_cbChange('INS_CB_LEVEL1')">
-	</select>
-	<br></br>
-	중분류
-	<select id="INS_CB_LEVEL2">
-	</select>
-	
-	<div style="height:30px"></div>
-	<input type="button" href="#" value="확인" onclick="fn_hidePopupDiv('categoryDiv')"/>
-    <input type="button" href="#" value="닫기" onclick="gfn_hidePopupDiv('categoryDiv');"/>
-</div>
 
 </body>
 </html>

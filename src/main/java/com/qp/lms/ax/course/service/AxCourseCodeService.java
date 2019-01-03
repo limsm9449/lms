@@ -54,6 +54,8 @@ public class AxCourseCodeService {
 		List<HashMap<String, Object>> delList = (List<HashMap<String, Object>>)paramMap.get("deleted");
 		for ( int i = 0; i < delList.size(); i++ ) {
 			sqlSession.delete("axCourseCode.axCourseCodeDelete", delList.get(i));
+			
+			sqlSession.delete("axCourseCode.axCourseResourceAllDelete", delList.get(i));
 		}
 
 		hm.put("RtnMode", Constant.mode.OK.name());

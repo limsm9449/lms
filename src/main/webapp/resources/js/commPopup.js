@@ -492,6 +492,18 @@ var Popup = {
    		f_popup('/common/axOpenPage', {displayName:'CategoryPopup',option:'width=300,height=380', urlParams:urlParams});
 	},
 	
+	showCategoryLevel1 : function(pParams) {
+		var urlParams = $.param(pParams || {}) + "&page=/ax/common/axCategoryLevel1Popup";
+
+   		f_popup('/common/axOpenPage', {displayName:'CategoryLevel1Popup',option:'width=300,height=250', urlParams:urlParams});
+	},
+	
+	showCategoryLevel2 : function(pParams) {
+		var urlParams = $.param(pParams || {}) + "&page=/ax/common/axCategoryLevel2Popup";
+
+   		f_popup('/common/axOpenPage', {displayName:'CategoryLevel2Popup',option:'width=300,height=300', urlParams:urlParams});
+	},
+	
 	showExamType : function(pParams) {
 		var urlParams = $.param(pParams || {}) +  "&page=/ax/common/axExamTypePopup";
    		

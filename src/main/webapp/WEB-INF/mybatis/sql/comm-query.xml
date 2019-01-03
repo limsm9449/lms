@@ -408,5 +408,10 @@ SELECT QG_ID DD_KEY
 		 WHERE COURSE_ID = #{courseId}
     </select>
 
+    <select id="getSettingList" parameterType="hashmap" resultType="hashmap">
+		SELECT 	*
+		FROM	SETTING
+    </select>
+
     
 </mapper>

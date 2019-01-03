@@ -33,7 +33,7 @@
 				(SELECT C2C_YN FROM COMPANY WHERE COMP_CD = A.COMP_CD) C2C_YN 	 
     	  FROM 	USER A
     	 WHERE 	USER_ID = #{userId}
-    	   AND 	USER_PASSWORD = PASSWORD(#{password}) 
+    	   AND 	USER_PASSWORD = SHA1(#{password}) 
     </select>
 
     <select id="isExistUser" resultType="com.qp.lms.login.model.LoginVO">

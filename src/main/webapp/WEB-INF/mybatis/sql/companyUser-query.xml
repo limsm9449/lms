@@ -23,7 +23,7 @@ SELECT DATA.* FROM (
 
 <select id="userPwdReset" parameterType="CompanyUser">
 UPDATE USER
-   SET USER_PASSWORD = PASSWORD('init1234'),
+   SET USER_PASSWORD = SHA1('init1234'),
        UPDATE_DATE = CURRENT_TIMESTAMP,
        UPDATE_USER = #{updateUser}
  WHERE USER_ID = #{userId}

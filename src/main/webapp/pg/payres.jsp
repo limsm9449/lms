@@ -168,8 +168,8 @@ request.setCharacterEncoding("euc-kr");
          	} else {
     	        out.println( "<script type='text/javascript'>");
     	        //out.println( "alert('결제요청이 정상적으로 완료되었습니다.');");
-    	        out.println( "opener.lfn_attendCourse();");
-    	        out.println( "this.close();");
+    	        out.println( "opener.gfn_goPage('/paymentGateway/complete',{});");
+    	        out.println( "window.close();");
     	        out.println( "</script>");
          	}
          	
@@ -189,8 +189,8 @@ request.setCharacterEncoding("euc-kr");
 %>
 
 <script type="text/javascript">
-	opener.gfn_goPage('/paymentGateway/complete',{});
-	window.close();
+	
+	
 </script>
 
 </body>

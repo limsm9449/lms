@@ -264,13 +264,19 @@ public class CommUtil {
 	 */
 	public static String getFileFolder() throws Exception {
 		String fileFolder = "";
+		/*
 
 		fileFolder = SessionUtil.getProperties("serverFileFolder");
 		File downloadFile = new File(fileFolder);
 		if ( !downloadFile.exists() ) {
 			fileFolder = SessionUtil.getProperties("localFileFolder");
 		}
-				
+		*/
+		if ( "DEV".equals(SessionUtil.getSetting("DEV")) ) {
+			fileFolder = SessionUtil.getSetting("ATTACH_FOLDER") + "\\";
+		} else {
+			fileFolder = SessionUtil.getSetting("ATTACH_FOLDER") + "/";
+		}
 		return fileFolder;
 		
 	}

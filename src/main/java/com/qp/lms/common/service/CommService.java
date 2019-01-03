@@ -316,4 +316,8 @@ public class CommService {
     	return sqlSession.selectList("comm.getNotice", paramMap); 
     } 
 
+    public List<HashMap> getSettingList() throws Exception {
+    	return sqlSession.selectList("comm.getSettingList", null); 
+    }
+
 }

@@ -106,17 +106,22 @@ public class SessionInterceptor extends HandlerInterceptorAdapter {
 	        	String compName = "";
 	        	String compUseYn = "";
 	        	
+	        	//처음 도메인 체크
 	        	String[] domains = request.getServerName().split("[.]");
-	        	HashMap<String, Object> compInfo = axCommService.axCompInfoFromSubDomain(domains[0]);
-        		compCd = (String)compInfo.get("COMP_CD");
-        		compType = (String)compInfo.get("COMP_TYPE");
-        		compName = (String)compInfo.get("COMP_NAME");
-        		compUseYn = (String)compInfo.get("USE_YN");
-	        	SessionUtil.setAttribute("compCd", compCd);
-	        	SessionUtil.setAttribute("compType", compType);
-	        	SessionUtil.setAttribute("compName", compName);
+	   	 		if ( SessionUtil.getAttribute("domain") == null || !domains[0].equals(SessionUtil.getAttribute("domain")) ) {
+		        	SessionUtil.setAttribute("domain", domains[0]);
 
-	        	//회사 도메인 이면..
+		        	HashMap<String, Object> compInfo = axCommService.axCompInfoFromSubDomain(domains[0]);
+	        		compCd = (String)compInfo.get("COMP_CD");
+	        		compType = (String)compInfo.get("COMP_TYPE");
+	        		compName = (String)compInfo.get("COMP_NAME");
+	        		compUseYn = (String)compInfo.get("USE_YN");
+		        	SessionUtil.setAttribute("compCd", compCd);
+		        	SessionUtil.setAttribute("compType", compType);
+		        	SessionUtil.setAttribute("compName", compName);
+	   	 		}
+
+	        	//회사 도메인이면서 등록이 안되었거나, 사용불가인 경우 에러 페이지로 이동
 	        	if ( !url.equals("/main/errorNotUseCompany.do") ) {
 		        	if ( ( domains.length > 3 && !"www".equals(domains[0].toLowerCase()) && "B2C".equals(compType) ) ||
 			        	( !"B2C".equals(compType) && "N".equals(compUseYn) ) ) {
@@ -133,7 +138,12 @@ public class SessionInterceptor extends HandlerInterceptorAdapter {
 			    	prop.load(fis);
 			    	SessionUtil.setAttribute("properties",prop.clone());
 	   	 		}
-	
+
+	    		//환경설정을 가져온다.
+	   	 		if ( SessionUtil.getAttribute("settingList") == null ) {
+	   	 			SessionUtil.setAttribute("settingList", commSvr.getSettingList());
+	   	 		}
+
 	    		//마지막 접속 로그를 남긴다.
 			    if ( (SessionVO)SessionUtil.getSession() != null) {
 		        	commSvr.lastLog(SessionUtil.getSessionUserId());

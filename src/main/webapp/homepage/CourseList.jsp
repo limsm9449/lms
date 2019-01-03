@@ -226,7 +226,7 @@ function lfn_viewTypeChg(kind) {
 	                        <li class='process_filter_item select2'>
 	                            <select name='limitUnit' id='limitUnit' onchange="$('pageNum').val(1);">
 <c:choose>
-	<c:when test = "${set.condiVO.viewType eq null || set.condiVO.viewType eq 'LIST'}">
+	<c:when test = "${set.condiVO.viewType eq null || set.condiVO.viewType eq '' || set.condiVO.viewType eq 'LIST'}">
 	                                <option value='10' <c:if test="${set.condiVO.limitUnit eq '10'}">selected</c:if>>10개씩</option>
 	                                <option value='20' <c:if test="${set.condiVO.limitUnit eq '20'}">selected</c:if>>20개씩</option>
 	                                <option value='30' <c:if test="${set.condiVO.limitUnit eq '30'}">selected</c:if>>30개씩</option>
@@ -240,7 +240,7 @@ function lfn_viewTypeChg(kind) {
 	                            </select>
 	                        </li>
 <c:choose>
-	<c:when test = "${set.condiVO.viewType eq null || set.condiVO.viewType eq 'LIST'}">
+	<c:when test = "${set.condiVO.viewType eq null || set.condiVO.viewType eq '' || set.condiVO.viewType eq 'LIST'}">
 	                        <li class='process_filter_item list'>
 	                            <p class='on' onclick="lfn_viewTypeChg('LIST')">리스트</p>
 	                        </li>
@@ -264,7 +264,7 @@ function lfn_viewTypeChg(kind) {
 </form>
 
 <c:choose>
-	<c:when test = "${set.condiVO.viewType eq null || set.condiVO.viewType eq 'LIST'}">
+	<c:when test = "${set.condiVO.viewType eq null || set.condiVO.viewType eq '' || set.condiVO.viewType eq 'LIST'}">
 	            <!-- Search Result Area -->
 	            <div class='process_search_result'> 
 	                <div class='clear_fix'>

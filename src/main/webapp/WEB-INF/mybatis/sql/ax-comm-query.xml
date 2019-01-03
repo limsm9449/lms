@@ -46,7 +46,10 @@
 		       USER_NAME text
 		  FROM USER
 		 WHERE TUTOR_YN = 'Y'
-		 ORDER BY COMP_CD, USER_NAME
+<if test="COURSE_ID != null and COURSE_ID != ''">		  
+		 AND	USER_ID NOT IN ( SELECT TUTOR_ID FROM COURSE WHERE COURSE_ID = #{COURSE_ID}) 
+</if>		 
+		 ORDER BY USER_NAME
 	</select>
 
 	<select id="axDdCompanyTutor" resultType="hashmap">
@@ -124,14 +127,12 @@
 		SELECT 	1 ORD
 				,COMP_CD value
 		        ,COMP_NAME text
-		        ,TUTOR_ID
 		  FROM  COMPANY
 		 WHERE	COMP_CD = 'B2C' 
 		 UNION 	ALL
 		SELECT 	2 ORD
 				,COMP_CD value
 		        ,COMP_NAME text
-		        ,TUTOR_ID
 		  FROM  COMPANY
 		 WHERE	COMP_CD != 'B2C'
 		   AND	C2C_YN = 'N'
@@ -139,7 +140,6 @@
 		SELECT 	3 ORD
 				,COMP_CD value
 		        ,COMP_NAME text
-		        ,TUTOR_ID
 		  FROM  COMPANY
 		 WHERE	COMP_CD != 'B2C'
 		   AND	C2C_YN = 'Y'
@@ -149,7 +149,6 @@
 	<select id="axDdCompany1" resultType="hashmap">
 		SELECT 	COMP_CD value
 		        ,COMP_NAME text
-		        ,TUTOR_ID
 		FROM  	COMPANY
 		WHERE	COMP_CD != 'B2C'
 		AND		C2C_YN = 'N'
@@ -159,7 +158,6 @@
 	<select id="axDdCompany2" resultType="hashmap">
 		SELECT 	COMP_CD value
 		        ,COMP_NAME text
-		        ,TUTOR_ID
 		FROM  	COMPANY
 		WHERE	COMP_CD != 'B2C'
 		AND		C2C_YN = 'Y'

@@ -2,6 +2,7 @@ package com.qp.lms.common;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Properties;
@@ -209,4 +210,19 @@ public class SessionUtil {
 		 
 		 return sess.getC2cYn();
 	}
+	
+	public static String getSetting(String key) throws Exception  {
+		String value = "";
+
+		List<HashMap> list = (List<HashMap>)RequestContextHolder.getRequestAttributes().getAttribute("settingList", RequestAttributes.SCOPE_SESSION);
+		for ( int i = 0; i < list.size(); i++ ) {
+			if ( key.equals((String)list.get(i).get("OPTION_KEY")) ) {
+				value = (String)list.get(i).get("OPTION_VALUE");
+				break;
+			}
+		}
+		
+		return value;
+	}
+
 }

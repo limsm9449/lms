@@ -86,7 +86,7 @@
     	                 SEX,BIRTH_DAY, CERTIFICATION_YN,CERTIFICATION_KEY, 
     	                 BANK, ACC_NUM,
     	                 CREATE_DATE, CREATE_USER)
-    	VALUES (#{USER_ID},#{USER_NAME},#{EMAIL},PASSWORD(#{USER_PASSWORD}),
+    	VALUES (#{USER_ID},#{USER_NAME},#{EMAIL},SHA1(#{USER_PASSWORD}),
     	        #{HOME_ZIPCODE},#{HOME_ADDR},#{HOME_TEL},#{MOBILE},#{JOB},
     	        #{COMP_CD},'N', #{ADMIN_YN}, #{SITE_MANAGER_YN}, #{CONTENTS_MANAGER_YN}, #{TEACHER_YN},#{TUTOR_YN},
     	        #{SEX},#{BIRTH_DAY}, 'Y', '',
@@ -132,7 +132,7 @@
 
 	<update id="axChangePassword" parameterType="hashmap">
     	UPDATE 	USER
-    	SET 	USER_PASSWORD = PASSWORD(#{USER_PASSWORD}),
+    	SET 	USER_PASSWORD = SHA1(#{USER_PASSWORD}),
     	       	UPDATE_DATE = CURRENT_TIMESTAMP
     	 WHERE 	USER_ID = #{USER_ID} 
     </update>

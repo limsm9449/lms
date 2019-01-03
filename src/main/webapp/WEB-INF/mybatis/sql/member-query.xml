@@ -113,7 +113,7 @@
     	                 ADMIN_YN, TEACHER_YN, TUTOR_YN,
     	                 SEX,BIRTH_DAY,
     	                 CERTIFICATION_YN,CERTIFICATION_KEY)
-    	VALUES (#{userId},#{userName},#{email},PASSWORD(#{userPassword}),
+    	VALUES (#{userId},#{userName},#{email},SHA1(#{userPassword}),
     	        #{homeZipcodeSeq},#{homeAddr},#{homeTel},#{mobile},#{job},
     	        #{compCd},'N',CURRENT_TIMESTAMP,
     	        #{adminYn},#{teacherYn},#{tutorYn},
@@ -161,12 +161,12 @@
     	SELECT COUNT(*) CNT
     	  FROM USER
     	 WHERE USER_ID = #{userId}
-    	   AND USER_PASSWORD = PASSWORD(#{userPassword})
+    	   AND USER_PASSWORD = SHA1(#{userPassword})
     </select>
     
     <select id="userChangePasswordUpdate" parameterType="Member">
     	UPDATE USER
-    	   SET USER_PASSWORD = PASSWORD(#{newUserPassword}),
+    	   SET USER_PASSWORD = SHA1(#{newUserPassword}),
     	       UPDATE_DATE = CURRENT_TIMESTAMP
     	 WHERE USER_ID = #{userId} 
     </select>
@@ -189,7 +189,7 @@
     
     <select id="passwordReset" parameterType="Member">
     	UPDATE USER
-    	   SET USER_PASSWORD = PASSWORD(#{newUserPassword}),
+    	   SET USER_PASSWORD = SHA1(#{newUserPassword}),
     	       UPDATE_DATE = CURRENT_TIMESTAMP
     	 WHERE USER_ID = #{userId} 
     </select>
@@ -314,7 +314,7 @@
     	                 HOME_ZIPCODE, HOME_ADDR, MOBILE, 
     	                 SEX,BIRTH_DAY,
     	                 CERTIFICATION_YN,CERTIFICATION_KEY,CREATE_DATE, COMP_CD)
-	    VALUES (	#{userId},#{userName},#{email},PASSWORD(#{userPassword}),
+	    VALUES (	#{userId},#{userName},#{email},SHA1(#{userPassword}),
 	    	        #{homeZipcode},#{homeAddr},#{mobile},
 	    	        #{sex},#{birthDay},
 	    	        #{certificationYn},#{certificationKey},CURRENT_TIMESTAMP, #{compCd}

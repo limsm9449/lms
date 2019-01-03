@@ -24,7 +24,7 @@
     <!-- Password를 변경한다. -->
    	<select id="updNewPassword" parameterType="Ns">
 		UPDATE USER
-		   SET USER_PASSWORD = PASSWORD(#{newPassword}) 
+		   SET USER_PASSWORD = SHA1(#{newPassword}) 
 		 WHERE USER_ID = #{userId}
     </select>
     
