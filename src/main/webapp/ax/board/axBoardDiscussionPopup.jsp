@@ -52,11 +52,13 @@ $(document.body).ready(function () {
     	$("#TITLE").attr("readonly", true);
    		
    		//조회수 증가
+   		/*
    		var saveParams = {
  				MODE : "VIEW",
  				SEQ : SEQ
  		};
  		gfn_callAjax("/board/axBoardDiscussionSave.do", saveParams, fn_callbackAjax, "-");
+ 		*/
    	}
 }); 
 

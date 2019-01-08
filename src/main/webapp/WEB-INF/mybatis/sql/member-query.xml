@@ -93,6 +93,12 @@
     	 WHERE EMAIL = #{email}
     </select>
 
+    <select id="isExistRecommendUserId" parameterType="Member" resultType="Member">
+    	SELECT COUNT(*) CNT
+    	  FROM USER
+    	 WHERE USER_ID = #{recommendId}
+    </select>
+
     <select id="userData" parameterType="Member" resultType="Member">
 		SELECT USER_ID,
 		       USER_NAME,
@@ -313,12 +319,24 @@
     	INSERT INTO USER(USER_ID, USER_NAME, EMAIL, USER_PASSWORD, 
     	                 HOME_ZIPCODE, HOME_ADDR, MOBILE, 
     	                 SEX,BIRTH_DAY,
-    	                 CERTIFICATION_YN,CERTIFICATION_KEY,CREATE_DATE, COMP_CD)
+    	                 CERTIFICATION_YN,CERTIFICATION_KEY,CREATE_DATE, COMP_CD,
+    	                 RECOMMEND_ID )
 	    VALUES (	#{userId},#{userName},#{email},SHA1(#{userPassword}),
 	    	        #{homeZipcode},#{homeAddr},#{mobile},
 	    	        #{sex},#{birthDay},
-	    	        #{certificationYn},#{certificationKey},CURRENT_TIMESTAMP, #{compCd}
+	    	        #{certificationYn},#{certificationKey},CURRENT_TIMESTAMP, #{compCd},
+	    	        #{recommendId}
     	        )
+    </select>
+
+    <select id="userPointInsert1" parameterType="Member">
+    	INSERT INTO POINT ( USER_ID, KIND, IN_POINT,  OUT_POINT, REF_ID, REF_ID2, CREATE_DATE )
+	    VALUES ( #{userId}, 'RECOMMEND_JOIN', (SELECT OPTION_VALUE FROM SETTING WHERE OPTION_KEY = 'RECOMMEND_JOIN_POINT'), 0, NULL, #{recommendId}, CURRENT_TIMESTAMP )
+    </select>
+
+    <select id="userPointInsert2" parameterType="Member">
+    	INSERT INTO POINT ( USER_ID, KIND, IN_POINT,  OUT_POINT, REF_ID, REF_ID2, CREATE_DATE )
+	    VALUES ( #{recommendId}, 'RECOMMEND', (SELECT OPTION_VALUE FROM SETTING WHERE OPTION_KEY = 'RECOMMEND_POINT'), 0, NULL, #{userId}, CURRENT_TIMESTAMP )
     </select>
 
    

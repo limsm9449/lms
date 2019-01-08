@@ -287,6 +287,14 @@
 		ORDER 	BY 7 DESC
 	</select>
 
+    <select id="axBoardReplyCount" resultType="int">
+		SELECT 	COUNT(*) CNT
+		FROM 	REPLY
+		WHERE 	KIND = #{KIND}
+		AND		P_SEQ = #{P_SEQ}
+		AND		USER_ID = #{SESSION_USER_ID}
+	</select>
+	
 	<insert id="axBoardReplyInsert" parameterType="hashmap">
 		INSERT INTO REPLY (KIND,P_SEQ,CONTENTS,USER_ID,CREATE_DATE)
 		VALUES (#{KIND},#{P_SEQ},#{CONTENTS},#{SESSION_USER_ID},CURRENT_TIMESTAMP)

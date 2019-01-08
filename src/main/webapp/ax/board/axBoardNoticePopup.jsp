@@ -41,11 +41,13 @@ $(document.body).ready(function () {
     	$("#btn_save").hide();
     	
    		//조회수 증가
+   		/*
    		var saveParams = {
  				MODE : "VIEW",
  				SEQ : SEQ
  		};
  		gfn_callAjax("/board/axBoardNoticeSave.do", saveParams, fn_callbackAjax, "-");
+ 		*/
    	}
 }); 
 

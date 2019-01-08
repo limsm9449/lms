@@ -29,11 +29,6 @@ $(document.body).ready(function () {
 		gfn_gridResize("grid-parent", grid);
 	} );
 
-	$("#FROM_DT").val(gfn_currentDay(null, "-").substring(0,8) + "01");		
-	$("#TO_DT").val(gfn_currentDay(null, "-"));		
-	gfn_initDatepicker("FROM_DT");
-	gfn_initDatepicker("TO_DT");
-	
     confirmDialog.setConfig({
         theme: "danger"
     });
@@ -46,7 +41,7 @@ $(document.body).ready(function () {
 	            fn_search();
 	            break;
             case "export":
-                grid.exportExcel("입금관리.xls");
+                grid.exportExcel("월별수입관리.xls");
                 break;
         }
     });
@@ -85,21 +80,16 @@ function fn_makeGrid() {
 	            width : 50,
 	            align : "right"
 	        },{
-	            key : "COST_DATE",
-	            label : "부분 정산일",
-	            width : 100,
-	            align : "center"
-	        },{
 	        	key : "COMP_CD", 
 	        	label : "회사", 
 	            width : 100,
 	        	align : "center", 
 	        	editor: {
-                    type : "select", 
-                    config : {
-                        columnKeys: { optionValue: "value", optionText: "text" },
-                        options: dd.Company
-                    },
+	                type : "select", 
+	                config : {
+	                    columnKeys: { optionValue: "value", optionText: "text" },
+	                    options: dd.Company
+	                },
 	            	disabled : function () {
 	                    return true;
 	                }
@@ -108,47 +98,70 @@ function fn_makeGrid() {
 	                return gfn_getValueInList(dd.Company, "value",  this.item.COMP_CD, "text");
 	           	}
 	        },{
-	            key : "USER_CNT",
-	            label : "수강생",
-	            width : 70,
-	            align : "right"
+	            key : undefined,
+	            label : "전체", 
+              	columns : fn_monthColumn("T") 	        	
 	        },{
-	        	key : "COST", 
-	        	label : "금액", 
-	            width : 120,
-	        	align : "right",
-	            formatter : function () {
-	                return checkThousand(this.item.COST);
-	           	}
+	            key : undefined,
+	            label : "01 월", 
+              	columns : fn_monthColumn("01") 	        	
 	        },{
-	        	key : "BANK", 
-	        	label : "은행", 
-	            width : 100, 
-	        	align : "left"
+	            key : undefined,
+	            label : "02 월", 
+              	columns : fn_monthColumn("02") 	        	
 	        },{
-	        	key : "ACC_NUM", 
-	        	label : "계좌번호", 
-	            width : 200,
-	        	align : "left"
+	            key : undefined,
+	            label : "03 월", 
+              	columns : fn_monthColumn("03") 	        	
 	        },{
-	        	key : "PAYMENT_DATE",
-	            label : "지급일",
-	            width : 110,
-	            align : "center"
-	        }	], 
+	            key : undefined,
+	            label : "04 월", 
+              	columns : fn_monthColumn("04") 	        	
+	        },{
+	            key : undefined,
+	            label : "05 월", 
+              	columns : fn_monthColumn("05") 	        	
+	        },{
+	            key : undefined,
+	            label : "06 월", 
+              	columns : fn_monthColumn("06") 	        	
+	        },{
+	            key : undefined,
+	            label : "07 월", 
+              	columns : fn_monthColumn("07") 	        	
+	        },{
+	            key : undefined,
+	            label : "08 월", 
+              	columns : fn_monthColumn("08") 	        	
+	        },{
+	            key : undefined,
+	            label : "09 월", 
+              	columns : fn_monthColumn("09") 	        	
+	        },{
+	            key : undefined,
+	            label : "10 월", 
+              	columns : fn_monthColumn("10") 	        	
+	        },{
+	            key : undefined,
+	            label : "11 월", 
+              	columns : fn_monthColumn("11") 	        	
+	        },{
+	            key : undefined,
+	            label : "12 월", 
+              	columns : fn_monthColumn("12") 	        	
+	        }	
+	   	], 
 	  	null,
 	  	{
 			showRowSelector : false,
 	  		frozenColumnIndex : 6 
 	  	}
 	);
-	
+
 	$(window).trigger("resize"); 
 } 
 
 function fn_params() {
-	params.FROM_DT = $("#FROM_DT").val();	
-	params.TO_DT = $("#TO_DT").val();	
 	params.LEVEL1_CODE = $("#CB_LEVEL1 option:selected").val();	
 	params.LEVEL2_CODE = $("#CB_LEVEL2 option:selected").val();	
 	params.LEVEL3_CODE = $("#CB_LEVEL3 option:selected").val();	
@@ -158,6 +171,61 @@ function fn_params() {
 	params.courseName = $("#courseName").val();	
 	params.COMPANY = $("#CB_COMPANY option:selected").val();	
 	params.COMPANY2 = $("#CB_COMPANY2 option:selected").val();	
+	params.SEARCH_YEAR = $("#CB_SEARCH_YEAR option:selected").val();	
+}
+
+function fn_monthColumn(month) {
+	return 	[	        
+		  		{
+		        	key : "USER_CNT_" + month,
+		            label : "인원",
+		            width : 60,
+		            align : "right",
+		            formatter : function () {
+		                return checkThousand(this.item["USER_CNT_" + month]);
+		           	}
+		        },{
+		        	key : "TOTAL_COST_" + month,
+		            label : "전체",
+		            width : 60,
+		            align : "right",
+		            formatter : function () {
+		            	return checkThousand(this.item["TOTAL_COST_" + month]);
+		           	}
+		        },{
+		        	key : "TUTOR_COST_" + month,
+		            label : "튜터",
+		            width : 60,
+		            align : "right",
+		            formatter : function () {
+		            	return checkThousand(this.item["TUTOR_COST_" + month]);
+		           	}
+		        },{
+		        	key : "TEACHER_COST_" + month,
+		            label : "강사",
+		            width : 60,
+		            align : "right",
+		            formatter : function () {
+		            	return checkThousand(this.item["TEACHER_COST_" + month]);
+		           	}
+		        },{
+		        	key : "CP_COST_" + month,
+		            label : "CP",
+		            width : 60,
+		            align : "right",
+		            formatter : function () {
+		            	return checkThousand(this.item["CP_COST_" + month]);
+		           	}
+		        },{
+		        	key : "COMPANY_COST_" + month,
+		            label : "회사",
+		            width : 60,
+		            align : "right",
+		            formatter : function () {
+		            	return checkThousand(this.item["COMPANY_COST_" + month]);
+		           	}
+		        }
+		  	];	
 }
 
 function fn_search() {
@@ -165,7 +233,7 @@ function fn_search() {
 	
 	fn_params();
 	
-	gfn_callAjax("/cost/axIncomeList.do", params, fn_callbackAjax, "search");
+	gfn_callAjax("/cost/axIncomeMonthList.do", params, fn_callbackAjax, "search");
 }
 
 function fn_callbackAjax(data, id) {
@@ -177,12 +245,14 @@ function fn_callbackAjax(data, id) {
 		//mask.close();
 	} else if ( id == "dd" ){
 		dd = $.extend({}, data);
-		
+
 		gfn_cbRefresh("CB_COMPANY", data.CompanyKind, true);
 		gfn_cbRefresh("CB_LEVEL1", data.CategoryLevel1, true);
 
 		gfn_cbRefresh("CB_YEAR", data.Year, true);
-		//$("#CB_YEAR").val(new Date().getFullYear());		
+
+		gfn_cbRefresh("CB_SEARCH_YEAR", data.Year, true);
+		$("#CB_SEARCH_YEAR").val(new Date().getFullYear());		
 
 		fn_makeGrid();
 		//fn_search();
@@ -204,7 +274,7 @@ function fn_cbChange(id) {
 	    gfn_callAjax("/common/axDd.do", { DD_KIND : "CategoryLevel2", LEVEL1_CODE : $("#CB_LEVEL1 option:selected").val()}, fn_callbackAjax, "CB_LEVEL1", { async : false });
 	} else  if ( id == "CB_LEVEL2" ) {
 	    gfn_callAjax("/common/axDd.do", { DD_KIND : "CategoryLevel3", LEVEL2_CODE : $("#CB_LEVEL2 option:selected").val()}, fn_callbackAjax, "CB_LEVEL2", { async : false });
-	} else  if ( id == "CB_COMPANY" ) {
+	}else  if ( id == "CB_COMPANY" ) {
 		if ( $("#CB_COMPANY").val() == "B2B" ) {
 			gfn_cbRefresh("CB_COMPANY2", dd.Company1, true);
 		} else if ( $("#CB_COMPANY").val() == "C2C" ) {
@@ -222,7 +292,7 @@ function fn_cbChange(id) {
 
 <form id="frm" name="frm" method="post">
 
-<h2>수입 관리</h2>
+<h2>월별 수입 관리</h2>
 <div style="height:10px"></div>
 
 <div class="form-inline">
@@ -279,9 +349,10 @@ function fn_cbChange(id) {
 		</select>
   	</div>
   	<div class="form-group">
-    	<label for="courseName">&nbsp;일자</label>
-	   	<input id="FROM_DT" name="FROM_DT" maxlength="10" size="10" class="form-control datePicker" value="" readonly/> ~ 
-		<input id="TO_DT" name="TO_DT" maxlength="10" size="10" class="form-control datePicker" value="" readonly/>
+    	<label for="CB_SEARCH_YEAR">&nbsp;검색 년도</label>
+		<select class="form-control" id="CB_SEARCH_YEAR">
+			<option value="">전체</option>
+		</select>
   	</div>
 </div>
 

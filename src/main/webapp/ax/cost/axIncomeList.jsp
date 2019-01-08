@@ -103,10 +103,13 @@ function fn_makeGrid() {
 	                return gfn_getValueInList(dd.Company, "value",  this.item.COMP_CD, "text");
 	           	}
 	        },{
-	            key : "USER_CNT",
-	            label : "수강생",
-	            width : 70,
-	            align : "right"
+	        	key : "USER_CNT",
+	            label : "정산 인원",
+	            width : 80,
+	            align : "right",
+	            formatter : function () {
+	                return checkThousand(this.item.USER_CNT);
+	           	}
 	        },{
 	        	key : "TOTAL_COST",
 	            label : "전체 비용",
@@ -194,7 +197,7 @@ function fn_callbackAjax(data, id) {
 		gfn_cbRefresh("CB_LEVEL1", data.CategoryLevel1, true);
 
 		gfn_cbRefresh("CB_YEAR", data.Year, true);
-		$("#CB_YEAR").val(new Date().getFullYear());		
+		//$("#CB_YEAR").val(new Date().getFullYear());		
 
 		fn_makeGrid();
 		//fn_search();

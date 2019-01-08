@@ -26,7 +26,7 @@ public class AxPointController {
 	    @Autowired
 	    private AxPointService svr;
 
-	    @RequestMapping(value = "/account/axPointList", method = RequestMethod.POST, consumes = "application/json" )
+	    @RequestMapping(value = "/point/axPointList", method = RequestMethod.POST, consumes = "application/json" )
 	    public @ResponseBody HashMap<String,Object> axPointList(@RequestBody HashMap<String, Object> paramMap, HttpServletRequest request, HttpServletResponse response) throws Exception {
 	    	HashMap<String, Object> hm = new HashMap<String, Object>();
 
@@ -39,6 +39,18 @@ public class AxPointController {
 	        return hm;
 	    }
 	    
+	    @RequestMapping(value = "/point/axPointDetailList", method = RequestMethod.POST, consumes = "application/json" )
+	    public @ResponseBody HashMap<String,Object> axPointDetailList(@RequestBody HashMap<String, Object> paramMap, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	    	HashMap<String, Object> hm = new HashMap<String, Object>();
+
+	    	try {
+	    		hm = svr.axPointDetailList(paramMap);
+	    	} catch ( Exception e ) {
+	    		e.printStackTrace();
+	    	}
+
+	        return hm;
+	    }
 	    
 	    
 	    

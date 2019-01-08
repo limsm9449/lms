@@ -217,10 +217,13 @@ public class MemberService {
     	//userId 체크
     	int userIdCnt = ((MemberVO)sqlSession.selectOne("member.isExistUserId",set.getCondiVO())).getCnt();
     	int emailCnt = ((MemberVO)sqlSession.selectOne("member.isExistEmail",set.getCondiVO())).getCnt();
+    	int recommendUserIdCnt = ((MemberVO)sqlSession.selectOne("member.isExistRecommendUserId",set.getCondiVO())).getCnt();
     	if ( userIdCnt > 0 ) {
     		set.setRtnMode("EXIST_USERID");
     	} else if ( emailCnt > 0 ) {
     		set.setRtnMode("EXIST_EMAIL");
+    	} else if ( CommUtil.isEqual(set.getCondiVO().getRecommendId(), "") == false && recommendUserIdCnt == 0 ) {
+    		set.setRtnMode("NOT_EXIST_USERID");
     	} else {
 	    	MemberVO vo = set.getCondiVO();
 	
@@ -236,6 +239,14 @@ public class MemberService {
 	    	vo.setCertificationYn("N");
 	
 	    	sqlSession.insert("member.joinUserInsert",set.getCondiVO());
+	    	
+	    	//추천인이 있으면..
+	    	if ( CommUtil.isEqual(set.getCondiVO().getRecommendId(), "") == false ) {
+	    		//추천으로 가입된 포인트 적립
+	    		sqlSession.insert("member.userPointInsert1",set.getCondiVO());
+	    		//추천한 사람의 포인트 적립
+	    		sqlSession.insert("member.userPointInsert2",set.getCondiVO());
+	    	}
 	    	
 	    	try {
 	        	//메일 발송

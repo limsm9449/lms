@@ -30,10 +30,10 @@ function lfn_btn(pKind, pParam) {
 				alert("로그인 후에 수강신청을 하셔야 합니다.");
 				top.location = "/login.do?preUrl=" + encodeURIComponent(window.location + "?courseId=${set.courseData.courseId}");
 			</c:when>
-			<c:when test="${set.condiVO.isLogin eq 'Y' && set.courseData.subCnt ne 0}">
+			<c:when test="${set.courseData.subCnt ne 0}">
 				alert("신청한 과정입니다.");
 			</c:when>
-			<c:when test="${set.condiVO.compType eq 'B2B'}">
+			<c:when test="${set.condiVO.compType eq 'B2B' || set.courseData.courseCost eq 0}">
 				if ( confirm("과정을 신청하시겠습니까?") == true ) {
 					$.ajax({
 						type :"POST",
@@ -74,7 +74,7 @@ function lfn_btn(pKind, pParam) {
 				alert("로그인 후에 수강신청을 하셔야 합니다.");
 				top.location = "/login.do?preUrl=" + encodeURIComponent(window.location + "?courseId=${set.courseData.courseId}");
 			</c:when>
-			<c:when test="${set.condiVO.isLogin eq 'Y' && set.courseData.subCnt ne 0}">
+			<c:when test="${set.courseData.subCnt ne 0}">
 				alert("신청한 과정입니다.")
 			</c:when>
 			<c:otherwise>
@@ -286,7 +286,9 @@ function lfn_btn(pKind, pParam) {
                         </p>
                         <div class='register_btn_area clear_fix'>
                             <button onclick="javascript:Popup.showSampleCourse('${set.courseData.courseId}','${set.courseData.hPx + 100}','${set.courseData.vPx + 100}'); return false;">맛보기</button>
+<c:if test="${set.courseData.courseCost gt 0}">                        
                             <button onclick="javascript:lfn_btn('cart'); return false;">장바구니</button>
+</c:if>                            
 <c:choose>
 	<c:when test="${set.condiVO.isLogin eq 'N'}">
                             <button class='last_right' onclick="javascript:lfn_btn('application'); return false;">수강신청</button>
@@ -383,19 +385,17 @@ function lfn_btn(pKind, pParam) {
                             <strong>전체 강의 신청시 할인된 금액으로 수강신청이 가능</strong>합니다.
                         </p>
                         <table class='register_compose_table'>
+<c:choose>
+	<c:when test="${set.condiVO.requestKind eq 'PART'}">
                             <tr>
-<c:if test="${set.condiVO.requestKind eq 'PART'}">                        
                                 <th class='register_compose_col1 right_border part_only'><input type='checkbox' name='all' id='all' onclick="gfn_allChk('all','weeks')"></th>
-</c:if>                                
                                 <th>차시 제목</th>
                                 <th class='register_compose_col3 mobile_none'>학습시간</th>
                                 <th class='last_right part_only'>교육비</th>
                             </tr>
-<c:forEach var="row" items="${set.courseResourceList}" varStatus="idx">
+		<c:forEach var="row" items="${set.courseResourceList}" varStatus="idx">
                             <tr>
-	<c:if test="${set.condiVO.requestKind eq 'PART'}">                        
                                 <td class='right_border part_only'><input type='checkbox' name='weeks' id='weeks' value="${row.week}"></td>
-	</c:if>                                
                                 <td class='register_compose_lecture'>
                                     <p>
                                         ${idx.index + 1}<span></span>${row.title}
@@ -404,7 +404,25 @@ function lfn_btn(pKind, pParam) {
                                 <td class='mobile_none'>${row.weekTime}분</td>
                                 <td class='last_right part_only'><fmt:formatNumber value="${row.weekCost}" type="number"/> <span><img src='/resources/homepage/img/course/ic_won.png' alt=' '></span></td>
                             </tr>
-</c:forEach>                            
+		</c:forEach>                            
+	</c:when>
+	<c:otherwise>
+                            <tr>
+                                <th>차시 제목</th>
+                                <th class='last_right part_only'>학습시간</th>
+                            </tr>
+		<c:forEach var="row" items="${set.courseResourceList}" varStatus="idx">
+                            <tr>
+                                <td class='register_compose_lecture'>
+                                    <p>
+                                        ${idx.index + 1}<span></span>${row.title}
+                                    </p>
+                                </td>
+                                <td class='last_right part_only'>${row.weekTime}분</td>
+                            </tr>
+		</c:forEach>                            
+	</c:otherwise>
+</c:choose>  
                         </table>
                     </div>
                     <div class='register_tab_content_box' id='estimate'>

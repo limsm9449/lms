@@ -86,11 +86,13 @@ $(document.body).ready(function () {
     	*/
     	
    		//조회수 증가
+   		/*
    		var saveParams = {
  				MODE : "VIEW",
  				SEQ : SEQ
  		};
  		gfn_callAjax("/board/axBoardFreeSave.do", saveParams, fn_callbackAjax, "-");
+ 		*/
    	}
 }); 
 
@@ -139,7 +141,10 @@ function fn_callbackAjax(data, id) {
 	} else if ( id == "replySave" ){
 		mask.close();
 
-		if ( data.RtnMode && data.RtnMode != "OK" ) {
+		if ( data.RtnMode && data.RtnMode == "DUPLICATION" ) {
+			mask.open();
+			dialog.alert( { msg : "댓글을 중복으로 등록하실 수 없습니다. (" + data.RtnMode + ")" }, function () { fn_search(); mask.close(); } );
+		} else if ( data.RtnMode && data.RtnMode != "OK" ) {
 			mask.open();
 			dialog.alert( { msg : "저장시 문제가 발생했습니다. (" + data.RtnMode + ")" }, function () { mask.close(); } );
 		} else {
@@ -199,7 +204,7 @@ function fn_replySave(kind) {
 			return;
 		}
 	}
-
+	
 	var confirmMsg = "";
 	if ( kind == "INSERT" ) {
 		confirmMsg = "댓글을 추가하시겠습니까?";

@@ -174,6 +174,14 @@ function lfn_validate() {
                         <p>E-Mail</p>
                         <input type="text" name="email" id="email" value="${set.data.email}"/>
                     </div>
+                    <div class='certification_name clear_fix'>
+                        <p>힌트 질문</p>
+                        <input type='text' name='hintQuestion' id='hintQuestion' value="${set.data.hintQuestion}"/>
+                    </div>
+                    <div class='certification_name clear_fix'>
+                        <p>힌트 답변</p>
+                        <input type='text' name='hintAnswer' id='hintAnswer' value="${set.data.hintAnswer}"/>
+                    </div>
                     <div class='info_input_address clear_fix'>
                         <p>주소</p>
                         <input type='text' name='homeZipcode' id='homeZipcode' value="${set.data.homeZipcode}">

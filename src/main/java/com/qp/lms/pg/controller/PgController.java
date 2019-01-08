@@ -85,6 +85,7 @@ public class PgController {
 
     	request.setAttribute("g_LGD_CASNOTEURL", commSvr.getSetting("g_LGD_CASNOTEURL"));
     	request.setAttribute("g_LGD_RETURNURL", commSvr.getSetting("g_LGD_RETURNURL"));
+    	request.setAttribute("g_LGD_MERTKEY", commSvr.getSetting("g_LGD_MERTKEY"));
     	request.setAttribute("g_xpay_js", commSvr.getSetting("g_xpay_js"));
     	
         return "/pg/payreq_crossplatform";

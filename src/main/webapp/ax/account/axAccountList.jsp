@@ -26,7 +26,7 @@ var dd = {};
 var openParams = null;
 $(document.body).ready(function () {
 	openParams = parent.document.getElementById("left").contentWindow.pageParam["axAccountList"];
-	console.log(openParams);
+	//console.log(openParams);
 	
 	$( window ).resize( function() {
 		gfn_gridResize("grid-parent", grid);
@@ -332,16 +332,13 @@ function fn_makeGrid() {
 	            align : "left",
 	            editor : { 
 	            	type : "text",
-	            	disabled : function () {
-                        return ( this.item.NEW_FLAG != "Y" ? true : false );
-                    },
                     attributes : {
-                        "maxlength" : 10,
-                        "data-maxlength" : 10
+                        "maxlength" : 15,
+                        "data-maxlength" : 15
                     }
 				},
 				styleClass: function () {
-                    return (this.item.NEW_FLAG === "Y") ? "grid-cell-edit" : "";
+                    return "grid-cell-edit";
                 }
 	        },{
 	        	key : "CERTIFICATION_YN", 
@@ -425,6 +422,21 @@ function fn_makeGrid() {
 		                }
 			        }
 				]
+			},{
+	        	key : "RECOMMEND_ID", 
+	        	label : "추천 ID", 
+	            width : 110,
+	        	align : "center"
+			},{
+	        	key : "HINT_QUESTION", 
+	        	label : "힌트 질문", 
+	            width : 110,
+	        	align : "left"
+			},{
+	        	key : "HINT_ANSWER", 
+	        	label : "힌트 답변", 
+	            width : 110,
+	        	align : "left"
 			},{
 	        	key : "USER_IMG", 
 	        	label : "사용자 이미지", 

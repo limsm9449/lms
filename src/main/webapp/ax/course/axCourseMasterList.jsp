@@ -61,6 +61,9 @@ $(document.body).ready(function () {
             		mask.open();
             		dialog.alert( { msg : "과정을 선택하셔야 합니다." }, function () { mask.close();	} );
             		return;
+            	} else if ( row[0]["NEW_FLAG"] == "Y" ) {
+            		mask.open();
+            		dialog.alert( { msg : "신규로 추가한 경우는 저장후에 작업을 하셔야 합니다." }, function () { mask.close();	} );
             	}
             	if ( row[0]["NEXT_CREATE_FLAG"] == "Y" ) {
             		mask.open();
@@ -85,14 +88,14 @@ $(document.body).ready(function () {
             	if ( row.length == 0 ) {
             		mask.open();
             		dialog.alert( { msg : "과정을 선택하셔야 합니다." }, function () { mask.close();	} );
-            	} else if ( row[0]["NEW_FLAG"] == "N" ) {
+            	} else if ( row[0]["NEW_FLAG"] == "Y" ) {
+            		mask.open();
+            		dialog.alert( { msg : "신규로 추가한 경우는 저장후에 작업을 하셔야 합니다." }, function () { mask.close();	} );
+            	} else {
             		var urlParams = "page=/ax/course/axCourseMasterContentsPopup";
             		urlParams += "&COURSE_CODE=" + row[0]["COURSE_CODE"];
             		
             		f_popup('/common/axOpenPage', {displayName:'courseMasterContentsPopup',option:'width=900,height=600', urlParams:urlParams});
-            	} else {
-            		mask.open();
-            		dialog.alert( { msg : "신규로 추가한 경우는 저장후에 학습내용을 편집하셔야 합니다." }, function () { mask.close();	} );
             	}
             		
                 break;
@@ -101,14 +104,14 @@ $(document.body).ready(function () {
             	if ( row.length == 0 ) {
             		mask.open();
             		dialog.alert( { msg : "과정을 선택하셔야 합니다." }, function () { mask.close();	} );
-            	} else if ( row[0]["NEW_FLAG"] == "N" ) {
+            	} else if ( row[0]["NEW_FLAG"] == "Y" ) {
+            		mask.open();
+            		dialog.alert( { msg : "신규로 추가한 경우는 저장후에 작업을 하셔야 합니다." }, function () { mask.close();	} );
+            	} else {
             		var urlParams = "page=/ax/course/axCourseMasterImagePopup";
             		urlParams += "&COURSE_CODE=" + row[0]["COURSE_CODE"];
             		
             		f_popup('/common/axOpenPage', {displayName:'courseMasterImagePopup',option:'width=900,height=650', urlParams:urlParams});
-            	} else {
-            		mask.open();
-            		dialog.alert( { msg : "신규로 추가한 경우는 저장후에 이미지를 편집하셔야 합니다." }, function () { mask.close();	} );
             	}
             		
                 break;
@@ -117,6 +120,9 @@ $(document.body).ready(function () {
             	if ( row.length == 0 ) {
             		mask.open();
             		dialog.alert( { msg : "과정을 선택하셔야 합니다." }, function () { mask.close();	} );
+            	} else if ( row[0]["NEW_FLAG"] == "Y" ) {
+            		mask.open();
+            		dialog.alert( { msg : "신규로 추가한 경우는 저장후에 작업을 하셔야 합니다." }, function () { mask.close();	} );
             	} else if ( row[0]["WEEK_COST_YN"] == "N" ) {
             		mask.open();
             		dialog.alert( { msg : "차시별 과정비용 과정이 아닙니다." }, function () { mask.close();	} );
@@ -130,8 +136,17 @@ $(document.body).ready(function () {
                 break;
             case "contentsView":
             	var row = grid.getList("selected");
-            	Popup.showViewContents(row[0]["COURSE_CODE"], "", row[0]["H_PX"], row[0]["V_PX"]);
-
+            	if ( row.length == 0 ) {
+            		mask.open();
+            		dialog.alert( { msg : "과정을 선택하셔야 합니다." }, function () { mask.close();	} );
+            	} else if ( row[0]["NEW_FLAG"] == "Y" ) {
+            		mask.open();
+            		dialog.alert( { msg : "신규로 추가한 경우는 저장후에 작업을 하셔야 합니다." }, function () { mask.close();	} );
+            	} else {
+	            	var row = grid.getList("selected");
+	            	Popup.showViewContents(row[0]["COURSE_CODE"], "", row[0]["H_PX"], row[0]["V_PX"]);
+            	}
+            	
             	break;
         }
     });
@@ -225,23 +240,38 @@ function fn_makeGrid() {
                     return "grid-cell-edit";
                 }
 	        },{
-	        	key : "RESPONSIVE_CONTENTS_YN", 
-	        	label : "반응형 컨텐츠", 
-	            width : 110, 
-	        	align : "center", 
-	        	editor : { type : "checkbox", config : {height: 17, trueValue: "Y", falseValue: "N"} },
-				styleClass: function () {
-                    return "grid-cell-edit";
-                } 
-	        },{
-	        	key : "MOBILE_YN", 
-	        	label : "모바일", 
-	            width : 60, 
-	        	align : "center", 
-	        	editor : { type : "checkbox", config : {height: 17, trueValue: "Y", falseValue: "N"} },
-				styleClass: function () {
-                    return "grid-cell-edit";
-                }
+              	key : undefined, 
+              	label: "컨텐츠 유형", 
+              	columns: [	        
+			        {
+			        	key : "RESPONSIVE_CONTENTS_YN", 
+			        	label : "HTML5", 
+			            width : 80, 
+			        	align : "center", 
+			        	editor : { type : "checkbox", config : {height: 17, trueValue: "Y", falseValue: "N"} },
+						styleClass: function () {
+		                    return "grid-cell-edit";
+		                } 
+			        },{
+			        	key : "MOBILE_YN", 
+			        	label : "모바일", 
+			            width : 70, 
+			        	align : "center", 
+			        	editor : { type : "checkbox", config : {height: 17, trueValue: "Y", falseValue: "N"} },
+						styleClass: function () {
+		                    return "grid-cell-edit";
+						}
+			        },{
+			        	key : "OFFLINE_YN", 
+			        	label : "오프라인", 
+			            width : 80, 
+			        	align : "center", 
+			        	editor : { type : "checkbox", config : {height: 17, trueValue: "Y", falseValue: "N"} },
+						styleClass: function () {
+		                    return "grid-cell-edit";
+						}
+		        	}
+			   	]
 	        },{
               	key : undefined, 
               	label: "교육비지원", 
@@ -441,11 +471,11 @@ function fn_makeGrid() {
 			            editor : { 
 			            	type : "number",
 			            	disabled : function () {
-		                        return ( this.item.TEACHER_YN != "Y" ? true : false );
+			            		return ( this.item.OFFLINE_YN == "Y" ? true : false );
 		                    }
 						},
 						styleClass: function () {
-		                    return (this.item.TEACHER_YN == "Y" ? "grid-cell-edit" : "");
+							return ( this.item.OFFLINE_YN == "Y" ? "" : "grid-cell-edit");
 		                }
 			        },{
 			            key : "REPORT_COST",
@@ -453,10 +483,13 @@ function fn_makeGrid() {
 			            width : 100,
 			            align : "right",
 			            editor : { 
-			            	type : "number"
+			            	type : "number",
+			            	disabled : function () {
+		                        return ( this.item.OFFLINE_YN == "Y" ? true : false );
+		                    }
 						},
 						styleClass: function () {
-		                    return "grid-cell-edit";
+		                    return ( this.item.OFFLINE_YN == "Y" ? "" : "grid-cell-edit");
 		                },
 			            formatter : function () {
 			                return checkThousand(this.item.REPORT_COST);
@@ -467,10 +500,13 @@ function fn_makeGrid() {
 			            width : 80,
 			            align : "right",
 			            editor : { 
-			            	type : "number"
+			            	type : "number",
+			            	disabled : function () {
+		                        return ( this.item.OFFLINE_YN == "Y" ? true : false );
+		                    }
 						},
 						styleClass: function () {
-		                    return "grid-cell-edit";
+		                    return ( this.item.OFFLINE_YN == "Y" ? "" : "grid-cell-edit");
 		                },
 			            formatter : function () {
 			                return checkThousand(this.item.EVAL_COST);
@@ -481,10 +517,13 @@ function fn_makeGrid() {
 			            width : 120,
 			            align : "right",
 			            editor : { 
-			            	type : "number"
+			            	type : "number",
+			            	disabled : function () {
+		                        return ( this.item.OFFLINE_YN == "Y" ? true : false );
+		                    }
 						},
 						styleClass: function () {
-		                    return "grid-cell-edit";
+		                    return ( this.item.OFFLINE_YN == "Y" ? "" : "grid-cell-edit");
 		                },
 			            formatter : function () {
 			                return checkThousand(this.item.DATA_COST);
@@ -495,10 +534,13 @@ function fn_makeGrid() {
 			            width :100,
 			            align : "right",
 			            editor : { 
-			            	type : "number"
+			            	type : "number",
+			            	disabled : function () {
+		                        return ( this.item.OFFLINE_YN == "Y" ? true : false );
+		                    }
 						},
 						styleClass: function () {
-		                    return "grid-cell-edit";
+		                    return ( this.item.OFFLINE_YN == "Y" ? "" : "grid-cell-edit");
 		                },
 			            formatter : function () {
 			                return checkThousand(this.item.ANSWER_COST);
@@ -555,8 +597,8 @@ function fn_courseCodeSelect(data) {
 			STUDY_MAX_WEEK : 0,
 			WORKER_CARD_YN : 'N',
 			SUPPORT_EMPLOYER_YN : 'N',
-			NORMAL_COURSE_YN : 'Y'
-
+			NORMAL_COURSE_YN : 'Y',
+			OFFLINE_YN : "N"
 		}, "last", {focus: "END"}
 	);
 }
@@ -591,6 +633,11 @@ function fn_save() {
        		if ( parseInt(allList[i].REPORT_RATE) + parseInt(allList[i].EXAM_RATE) + parseInt(allList[i].DISCUSSION_RATE) + parseInt(allList[i].PROGRESS_RATE) != 100 ) {
     			mask.open();
     			dialog.alert( { msg : "점수 비율을 100이여야 합니다." }, function () { mask.close(); } );
+    			return false;
+       		}
+       		if ( allList[i].RESPONSIVE_CONTENTS_YN == "Y" && allList[i].MOBILE_YN == "Y" ) {
+    			mask.open();
+    			dialog.alert( { msg : "컨텐츠 유형은 동시에 HTML5 이고 모바일을 수 없습니다." }, function () { mask.close(); } );
     			return false;
        		}
        	}
@@ -641,10 +688,21 @@ function fn_gridEvent(event, obj) {
 	if ( event == "Click" ) {
 		obj.self.select(obj.dindex);
 	} else if ( event == "DataChanged" ) {
-		if ( obj.key == "REPORT_RATE" ||
+		if ( obj.key == "OFFLINE_YN" ||
+				obj.key == "REPORT_RATE" ||
 				obj.key == "EXAM_RATE" ||
 				obj.key == "DISCUSSION_RATE" ||
 				obj.key == "PROGRESS_RATE" ) {
+			
+			if ( obj.key == "OFFLINE_YN" && obj.item["OFFLINE_YN"] == "Y" ) {
+				grid.setValue(obj.item["__index"], "CP_COST_RATE", "0");
+				grid.setValue(obj.item["__index"], "TEACHER_COST_RATE", "0");
+				grid.setValue(obj.item["__index"], "REPORT_COST", "0");
+				grid.setValue(obj.item["__index"], "EVAL_COST", "0");
+				grid.setValue(obj.item["__index"], "DATA_COST", "0");
+				grid.setValue(obj.item["__index"], "ANSWER_COST", "0");
+			}
+					
 			grid.repaint();
 		}
 	}

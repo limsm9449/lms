@@ -160,8 +160,8 @@
 
 	<select id="courseEditInfo" parameterType="Comm" resultType="Comm">
 	<![CDATA[
+		/* comm.courseEditInfo */
 		SELECT CE.COMPLETE_YN,
-		       C.COURSE_KIND,
 		       IF(DATE_FORMAT(CURDATE(),'%Y-%m-%d')
 						BETWEEN 	CASE WHEN C.TERM_YN = 'Y' THEN C.STUDY_PERIOD_FROM ELSE DATE_FORMAT(CR.CONFIRM_DATE,'%Y-%m-%d') END
 						AND 		CASE WHEN C.TERM_YN = 'Y' THEN C.STUDY_PERIOD_TO ELSE DATE_FORMAT(DATE_ADD(CR.CONFIRM_DATE,INTERVAL C.C_PERIOD DAY),'%Y-%m-%d') END

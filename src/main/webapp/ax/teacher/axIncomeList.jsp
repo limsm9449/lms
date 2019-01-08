@@ -85,6 +85,11 @@ function fn_makeGrid() {
 	            width : 50,
 	            align : "right"
 	        },{
+	            key : "COST_DATE",
+	            label : "부분 정산일",
+	            width : 100,
+	            align : "center"
+	        },{
 	        	key : "COMP_CD", 
 	        	label : "회사", 
 	            width : 100,
@@ -94,24 +99,19 @@ function fn_makeGrid() {
                     config : {
                         columnKeys: { optionValue: "value", optionText: "text" },
                         options: dd.Company
-                    }
+                    },
+	            	disabled : function () {
+	                    return true;
+	                }
 	        	},
 	            formatter : function () {
 	                return gfn_getValueInList(dd.Company, "value",  this.item.COMP_CD, "text");
-	           	},
-				styleClass: function () {
-                    return "grid-cell-edit";
-                }
+	           	}
 	        },{
 	            key : "USER_CNT",
 	            label : "수강생",
 	            width : 70,
 	            align : "right"
-	        },{
-	            key : "USER_NAME",
-	            label : "이름",
-	            width : 80,
-	            align : "left"
 	        },{
 	        	key : "COST", 
 	        	label : "금액", 
@@ -182,7 +182,7 @@ function fn_callbackAjax(data, id) {
 		gfn_cbRefresh("CB_LEVEL1", data.CategoryLevel1, true);
 		
 		gfn_cbRefresh("CB_YEAR", data.Year, true);
-		$("#CB_YEAR").val(new Date().getFullYear());		
+		//$("#CB_YEAR").val(new Date().getFullYear());		
 
 		fn_makeGrid();
 		//fn_search();

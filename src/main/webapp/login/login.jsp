@@ -65,7 +65,7 @@ function lfn_login() {
 	}
 
 	if ( $("input:checkbox[id='cb_continue']").is(":checked") ) {
-		$.cookie(cookieName + 'login', "Y");
+		$.cookie(cookieName + 'login', "Y", { expires: 7 });
 		$.cookie(cookieName + 'userId', $("#userId").val(), { expires: 7 });
 		$.cookie(cookieName + 'password', $("#password").val(), { expires: 7 });
 	} else {

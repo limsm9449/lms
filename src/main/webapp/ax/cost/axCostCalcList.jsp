@@ -29,6 +29,11 @@ $(document.body).ready(function () {
 		gfn_gridResize("grid-parent", grid);
 	} );
 
+	$("#FROM_DT").val(gfn_currentDay(null, "-").substring(0,8) + "01");		
+	$("#TO_DT").val(gfn_currentDay(null, "-"));		
+	gfn_initDatepicker("FROM_DT");
+	gfn_initDatepicker("TO_DT");
+
     confirmDialog.setConfig({
         theme: "danger"
     });
@@ -40,6 +45,35 @@ $(document.body).ready(function () {
 	        case "search":
 	            fn_search();
 	            break;
+	        case "tutorCalc":
+	        	var row = grid.getList("selected");
+	        	if ( row.length == 0 ) {
+	        		mask.open();
+            		dialog.alert( { msg : "과정을 선택하셔야 합니다." }, function () { mask.close();	} );
+            		return;
+            	} else if ( parseInt(row[0]["TUTOR_PAYMENT_CNT"]) > 0 || row[0]["TEACHER_PAYMENT_YN"] == "Y" || row[0]["CP_PAYMENT_YN"] == "Y") {
+	        		mask.open(); 
+            		dialog.alert( { msg : "배분 금액이 지급되어서 튜터 작업 확정을 할 수 없습니다." }, function () { mask.close();	} );
+            		return;
+            	}
+	        	
+	        	mask.open();
+	           	confirmDialog.confirm(
+	           		{
+	                   	title: "Confirm",
+	                   	msg: '현재 정산에 튜터 작업들을 확정하시겠습니까?'
+	               	}, 
+	               	function(){
+	               		var saveParams = { COURSE_ID : row[0]["COURSE_ID"], SEQ : row[0]["SEQ"] };
+	                 	if ( this.key == "ok" ) {
+	                 		gfn_callAjax("/cost/axCostTutorCalcSave.do", saveParams, fn_callbackAjax, "tutorCalc");
+	                   	} else {
+	                   		mask.close();
+	                   	}
+	               	}
+	           	);
+	        	
+	            break;
 	        case "tutorConfirm":
 	        	var row = grid.getList("selected");
             	if ( row.length == 0 ) {
@@ -47,7 +81,7 @@ $(document.body).ready(function () {
             		dialog.alert( { msg : "과정을 선택하셔야 합니다." }, function () { mask.close();	} );
             	} else {
             		var urlParams = "page=/ax/cost/axCostCalcTutorBoardPopup";
-            		urlParams += "&COURSE_ID=" + row[0]["COURSE_ID"];
+            		urlParams += "&COURSE_ID=" + row[0]["COURSE_ID"] + "&SEQ=" + row[0]["SEQ"];
             		
             		f_popup('/common/axOpenPage', {displayName:'popup',option:'width=1000,height=820', urlParams:urlParams});
             	}
@@ -72,7 +106,7 @@ $(document.body).ready(function () {
 	                   	msg: '배분 금액을 계산하시겠습니까?'
 	               	}, 
 	               	function(){
-	               		var saveParams = { COURSE_ID : row[0]["COURSE_ID"] };
+	               		var saveParams = { COURSE_ID : row[0]["COURSE_ID"], SEQ : row[0]["SEQ"] };
 	                 	if ( this.key == "ok" ) {
 	                 		gfn_callAjax("/cost/axCostCalcUserSave.do", saveParams, fn_callbackAjax, "calcSave");
 	                   	} else {
@@ -89,7 +123,7 @@ $(document.body).ready(function () {
             		dialog.alert( { msg : "과정을 선택하셔야 합니다." }, function () { mask.close();	} );
             	} else {
             		var urlParams = "page=/ax/cost/axCostCalcPaymentPopup";
-            		urlParams += "&COURSE_ID=" + row[0]["COURSE_ID"];
+            		urlParams += "&COURSE_ID=" + row[0]["COURSE_ID"] + "&SEQ=" + row[0]["SEQ"];
             		
             		f_popup('/common/axOpenPage', {displayName:'popup',option:'width=750,height=420', urlParams:urlParams});
             	}
@@ -137,6 +171,11 @@ function fn_makeGrid() {
 	            label : "차수",
 	            width : 50,
 	            align : "right"
+	        },{
+	            key : "COST_DATE",
+	            label : "부분 정산일",
+	            width : 100,
+	            align : "center"
 	        },{
 	        	key : "COMP_CD", 
 	        	label : "회사", 
@@ -364,6 +403,8 @@ function fn_edit(item) {
 }
 
 function fn_params() {
+	params.FROM_DT = $("#FROM_DT").val();	
+	params.TO_DT = $("#TO_DT").val();	
 	params.LEVEL1_CODE = $("#CB_LEVEL1 option:selected").val();	
 	params.LEVEL2_CODE = $("#CB_LEVEL2 option:selected").val();	
 	params.LEVEL3_CODE = $("#CB_LEVEL3 option:selected").val();	
@@ -423,7 +464,7 @@ function fn_callbackAjax(data, id) {
 		gfn_cbRefresh("CB_LEVEL1", data.CategoryLevel1, true);
 
 		gfn_cbRefresh("CB_YEAR", data.Year, true);
-		$("#CB_YEAR").val(new Date().getFullYear());		
+		//$("#CB_YEAR").val(new Date().getFullYear());		
 
 		fn_makeGrid();
 		//fn_search();
@@ -441,6 +482,11 @@ function fn_callbackAjax(data, id) {
 
 		mask.open();
 		dialog.alert( { msg : "배분 금액이 계산되었습니다." }, function () { mask.close();	fn_search(); } );
+	} else if ( id == "tutorCalc" ){
+		mask.close();
+
+		mask.open();
+		dialog.alert( { msg : "튜터 작업 확정이 되었습니다." }, function () { mask.close();	fn_search(); } );
 	} 
 }
 
@@ -529,6 +575,11 @@ function fn_cbChange(id) {
 			<option value="">전체</option>
 		</select>
   	</div>
+  	<div class="form-group">
+    	<label for="courseName">&nbsp;일자</label>
+	   	<input id="FROM_DT" name="FROM_DT" maxlength="10" size="10" class="form-control datePicker" value="" readonly/> ~ 
+		<input id="TO_DT" name="TO_DT" maxlength="10" size="10" class="form-control datePicker" value="" readonly/>
+  	</div>
 </div>
 
 <div style="height:10px"></div>
@@ -536,6 +587,7 @@ function fn_cbChange(id) {
 <div>
     <button class="btn btn-default" data-grid-control="search">검색</button>
     <button class="btn btn-default" data-grid-control="tutorConfirm">튜터 작업 확인</button>
+    <button class="btn btn-default" data-grid-control="tutorCalc">튜터 작업 확정</button>
     <button class="btn btn-default" data-grid-control="calc">배분 금액 계산</button>
     <button class="btn btn-default" data-grid-control="payment">금액 지급</button>
     <button class="btn btn-default" data-grid-control="save">저장</button>

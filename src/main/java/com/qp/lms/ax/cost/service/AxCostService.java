@@ -59,6 +59,42 @@ public class AxCostService {
     	return hm;
     }
 	
+	public HashMap<String, Object> axCostCalcStatusList(HashMap<String, Object> paramMap) throws Exception {
+		HashMap<String, Object> hm = new HashMap<String, Object>();
+		
+    	List<HashMap<String, Object>> list = sqlSession.selectList("axCost.axCostCalcStatusList", paramMap);
+    	hm.put("list", list);
+        
+    	return hm;
+    }
+	
+	@Transactional(propagation=Propagation.REQUIRED, rollbackFor={Throwable.class})
+    public HashMap<String, Object>  axCostCalcStatusSave(HashMap<String, Object> paramMap) throws Exception {
+		HashMap<String, Object> hm = new HashMap<String, Object>();
+
+		//과정별 last_yn = n
+		sqlSession.update("axCost.axCostLastYnUpdate", paramMap);
+		
+		//COST에 데이타 생성
+		sqlSession.insert("axCost.axCostMasterInsert", paramMap);
+		
+		//마지막 ID를 구한다.
+    	paramMap.put("SEQ", (String)sqlSession.selectOne("axComm.lastInsertId"));
+
+		//과정의 사용자, 자료게시판, Qna 게시판, 답변의 대상에 COST의 SEQ 세팅
+		sqlSession.update("axCost.axCourseRegisterTargetUpdate", paramMap);
+		sqlSession.update("axCost.axBoardDataTargetUpdate", paramMap);
+		sqlSession.update("axCost.axBoardQnaTargetUpdate", paramMap);
+		sqlSession.update("axCost.axReplyTargetUpdate", paramMap);
+		
+		//정산 안한 수강생의 총 금액을 구한다.
+		sqlSession.update("axCost.axCostTotalCostUpdate", paramMap);
+
+		hm.put("RtnMode", Constant.mode.OK.name());
+		
+    	return hm;
+    }
+	
 	public HashMap<String, Object> axCostCalcList(HashMap<String, Object> paramMap) throws Exception {
 		HashMap<String, Object> hm = new HashMap<String, Object>();
 		
@@ -78,10 +114,6 @@ public class AxCostService {
 			HashMap<String, Object> row = (HashMap<String, Object>)updList.get(i);
 			row.put("SESSION_USER_ID", SessionUtil.getSessionUserId());
 
-			if ( "n".equals(row.get("EXIST_COST")) ) {
-				sqlSession.update("axCost.axCostMasterInsert", row);
-			}
-
 			sqlSession.update("axCost.axCostMasterUpdate", row);
 		}
 
@@ -91,14 +123,23 @@ public class AxCostService {
     }
 	
 	@Transactional(propagation=Propagation.REQUIRED, rollbackFor={Throwable.class})
-    public HashMap<String, Object>  axCostCalcUserSave(HashMap<String, Object> paramMap) throws Exception {
+    public HashMap<String, Object>  axCostTutorCalcSave(HashMap<String, Object> paramMap) throws Exception {
 		HashMap<String, Object> hm = new HashMap<String, Object>();
 		
-		HashMap<String, Object> costHm = sqlSession.selectOne("axCost.axCostMasterExist", paramMap); 
-		if ( "N".equals(costHm.get("EXIST_DATA")) ) {
-			costHm.put("SESSION_USER_ID", SessionUtil.getSessionUserId());
-			sqlSession.update("axCost.axCostMasterInsert", costHm);
-		}
+		//과정의 사용자, 자료게시판, Qna 게시판, 답변의 대상에 COST의 SEQ 세팅
+		sqlSession.update("axCost.axCourseRegisterTargetUpdate", paramMap);
+		sqlSession.update("axCost.axBoardDataTargetUpdate", paramMap);
+		sqlSession.update("axCost.axBoardQnaTargetUpdate", paramMap);
+		sqlSession.update("axCost.axReplyTargetUpdate", paramMap);
+
+		hm.put("RtnMode", Constant.mode.OK.name());
+		
+    	return hm;
+    }
+	
+	@Transactional(propagation=Propagation.REQUIRED, rollbackFor={Throwable.class})
+    public HashMap<String, Object>  axCostCalcUserSave(HashMap<String, Object> paramMap) throws Exception {
+		HashMap<String, Object> hm = new HashMap<String, Object>();
 		
 		List<HashMap<String, Object>> userList = sqlSession.selectList("axCost.axCostCalcUserList", paramMap);
 		for ( int i = 0 ; i < userList.size(); i++ ) {
@@ -193,6 +234,24 @@ public class AxCostService {
     		list = sqlSession.selectList("axCost.axIncomeAdminList", paramMap);
     	} else {
     		list = sqlSession.selectList("axCost.axIncomeList", paramMap);
+    	}
+    	hm.put("list", list);
+        
+    	return hm;
+    }    
+    
+	public HashMap<String, Object> axIncomeMonthList(HashMap<String, Object> paramMap) throws Exception {
+		HashMap<String, Object> hm = new HashMap<String, Object>();
+		
+		paramMap.put("AUTH", SessionUtil.getAuth());
+		paramMap.put("USER_ID", SessionUtil.getSessionUserId());
+		
+    	List<HashMap<String, Object>> list = null;
+    	
+    	if ( "ADMIN".equals(SessionUtil.getAuth()) ) {
+    		list = sqlSession.selectList("axCost.axIncomeMonthAdminList", paramMap);
+    	} else {
+    		list = sqlSession.selectList("axCost.axIncomeMonthList", paramMap);
     	}
     	hm.put("list", list);
         

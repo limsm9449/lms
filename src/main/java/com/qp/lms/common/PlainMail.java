@@ -92,7 +92,8 @@ public class PlainMail {
 		if ( senderName == null )
 			senderName = sender;
 		
-		senderAddress = new InternetAddress(sender, new String(senderName.getBytes("ISO-8859-1"),"UTF-8"));
+		//senderAddress = new InternetAddress(sender, new String(senderName.getBytes("ISO-8859-1"),"UTF-8"));
+		senderAddress = new InternetAddress(sender, senderName);
 	}
 	
 	/*

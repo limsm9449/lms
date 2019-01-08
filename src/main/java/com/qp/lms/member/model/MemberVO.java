@@ -55,6 +55,10 @@ public class MemberVO extends CommonVO{
 	private String userMonth;
 	private String userDay;
 	
+	private String recommendId;
+	private String hintQuestion;
+	private String hintAnswer;
+	
 	public String getUserId() {
 		return userId;
 	}
@@ -285,6 +289,24 @@ public class MemberVO extends CommonVO{
 	}
 	public void setHomeZipcode(String homeZipcode) {
 		this.homeZipcode = homeZipcode;
+	}
+	public String getRecommendId() {
+		return recommendId;
+	}
+	public void setRecommendId(String recommendId) {
+		this.recommendId = recommendId;
+	}
+	public String getHintQuestion() {
+		return hintQuestion;
+	}
+	public void setHintQuestion(String hintQuestion) {
+		this.hintQuestion = hintQuestion;
+	}
+	public String getHintAnswer() {
+		return hintAnswer;
+	}
+	public void setHintAnswer(String hintAnswer) {
+		this.hintAnswer = hintAnswer;
 	}
 	
 

@@ -115,8 +115,10 @@ var pageObj = {
 	axMainPageList :		{	page : "/ax/course/axMainPageList"	},
 	axCostList :			{	page : "/ax/cost/axCostList"	},
 	axCardCostList :		{	page : "/ax/cost/axCardCostList"	},
+	axCostCalcStatusList :	{	page : "/ax/cost/axCostCalcStatusList"	},
 	axCostCalcList :		{	page : "/ax/cost/axCostCalcList"	},
 	axIncomeList :			{	page : "/ax/cost/axIncomeList"	},
+	axIncomeMonthList :		{	page : "/ax/cost/axIncomeMonthList"	},
 	axScoreList :			{	page : "/ax/score/axScoreList"	},
 	axUserScoreList :		{	page : "/ax/score/axUserScoreList"	},
 	axAccountList :			{	page : "/ax/account/axAccountList"	},
@@ -124,6 +126,7 @@ var pageObj = {
 	axCompanyC2cList :		{	page : "/ax/account/axCompanyC2cList"	},
 	axCompanyUserList :		{	page : "/ax/account/axCompanyUserList"	},
 	axPointList :			{	page : "/ax/account/axPointList"	},	
+	axPointDetailList :		{	page : "/ax/account/axPointDetailList"	},	
 	axMainBoardNoticeList :	{	page : "/ax/board/axMainBoardNoticeList"	},
 	axBoardFaqList :		{	page : "/ax/board/axBoardFaqList"	},
 	axBoardReportList :		{	page : "/ax/board/axBoardReportList"	},
@@ -234,16 +237,26 @@ function gfn_openMenu(pageId, params) {
 			              	<li><a href="#" class="subMenu linker" onclick="gfn_openMenu('axCardCostList'); gfn_subMenu(this);"><span>카드 입급 관리</span></a></li>
 			         	</ul>
 			         </li>
-	          		<li><a href="#" class="mainMenu linker" onclick="gfn_openMenu('axCostCalcList'); gfn_menu(this)"><span>정산 관리</span></a></li>
-	          		<li><a href="#" class="mainMenu linker" onclick="gfn_openMenu('axIncomeList'); gfn_menu(this)"><span>수입 관리</span></a></li>
+	          		<li><a href="#" class="mainMenu linker" onclick="gfn_menu(this)"><span>정산 관리</span></a>
+			            <ul style="display:none" class="subMenuUl">
+			              	<li><a href="#" class="subMenu linker" onclick="gfn_openMenu('axCostCalcStatusList'); gfn_subMenu(this);"><span>정산 현황 관리</span></a></li>
+			              	<li><a href="#" class="subMenu linker" onclick="gfn_openMenu('axCostCalcList'); gfn_subMenu(this);"><span>정산 관리</span></a></li>
+			         	</ul>
+	          		</li>
+	          		<li><a href="#" class="mainMenu linker" onclick="gfn_menu(this)"><span>수입 관리</span></a>
+			            <ul style="display:none" class="subMenuUl">
+			              	<li><a href="#" class="subMenu linker" onclick="gfn_openMenu('axIncomeList'); gfn_subMenu(this);"><span>수입 관리</span></a></li>
+			              	<li><a href="#" class="subMenu linker" onclick="gfn_openMenu('axIncomeMonthList'); gfn_subMenu(this);"><span>월별 수입 관리</span></a></li>
+			         	</ul>
+	          		</li>
 	          		<li><a href="#" class="mainMenu linker" onclick="gfn_menu(this)"><span>계정 관리</span></a>
 			            <ul style="display:none" class="subMenuUl">
 			              	<li><a href="#" class="subMenu linker" onclick="gfn_openMenu('axAccountList'); gfn_subMenu(this);"><span>사용자 관리</span></a></li>
 			              	<li><a href="#" class="subMenu linker" onclick="gfn_openMenu('axCompanyList'); gfn_subMenu(this);"><span>회사 관리</span></a></li>
 			              	<li><a href="#" class="subMenu linker" onclick="gfn_openMenu('axCompanyC2cList'); gfn_subMenu(this);"><span>회사(C2C) 관리</span></a></li>
-			              	<li><a href="#" class="subMenu linker" onclick="gfn_openMenu('axPointList'); gfn_subMenu(this);"><span>포인트 관리</span></a></li>
 			         	</ul>
 			      	</li>
+	          		<li><a href="#" class="mainMenu linker" onclick="gfn_openMenu('axPointList'); gfn_menu(this)"><span>포인트 관리</span></a></li>
 	          		<li><a href="#" class="mainMenu linker" onclick="gfn_menu(this)"><span>게시물 관리</span></a>
 			            <ul style="display:none" class="subMenuUl">
 			              	<li><a href="#" class="subMenu linker" onclick="gfn_openMenu('axBoardFaqList'); gfn_subMenu(this);"><span>FAQ</span></a></li>

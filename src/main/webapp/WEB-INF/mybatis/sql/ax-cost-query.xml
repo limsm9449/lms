@@ -200,8 +200,9 @@
 </if>
 		ORDER 	BY A.CREATE_DATE DESC
 	</select>
-	
-	<select id="axCostCalcList" resultType="hashmap">
+
+	<select id="axCostCalcStatusList" resultType="hashmap">
+		/* axCost.axCostCalcStatusList */
 		SELECT	CAT.CATEGORY_NAME
 				,A.COURSE_ID
 				,A.COURSE_CODE
@@ -210,7 +211,157 @@
 				,A.MONTH
 				,A.CHASU CHASU
                	,A.COMP_CD
-		        ,IF(C.COURSE_ID IS NULL,'N','Y') EXIST_COST
+		        ,IFNULL(C.CP_COST_RATE, D.CP_COST_RATE) CP_COST_RATE
+		        ,IFNULL(C.TEACHER_COST_RATE, D.TEACHER_COST_RATE) TEACHER_COST_RATE
+		        ,IFNULL(C.REPORT_COST, D.REPORT_COST) REPORT_COST 
+		        ,IFNULL(C.EVAL_COST, D.EVAL_COST) EVAL_COST 
+		        ,IFNULL(C.DATA_COST, D.DATA_COST) DATA_COST 
+		        ,IFNULL(C.ANSWER_COST, D.ANSWER_COST) ANSWER_COST 
+				,G.CNT USER_CNT
+				,G.COST_CNT COST_USER_CNT
+				,G.CNT - G.COST_CNT NOT_COST_USER_CNT
+                ,D.CP_COST_RATE ORG_CP_COST_RATE
+                ,D.TEACHER_COST_RATE ORG_TEACHER_COST_RATE
+                ,D.REPORT_COST ORG_REPORT_COST
+                ,D.EVAL_COST ORG_EVAL_COST
+                ,D.DATA_COST ORG_DATA_COST
+                ,D.ANSWER_COST ORG_ANSWER_COST
+		FROM	COURSE A 
+					JOIN COURSE_CODE B ON B.COURSE_CODE = A.COURSE_CODE
+					JOIN (
+						   SELECT C3.CODE C3_CODE, C2.CODE C2_CODE, C1.CODE C1_CODE,
+								  CONCAT(C1.CODE_NAME,' > ',C2.CODE_NAME,' > ',C3.CODE_NAME) CATEGORY_NAME
+							 FROM CATEGORY C3 LEFT OUTER JOIN CATEGORY C2 ON C3.PARENT_CODE = C2.CODE
+									  LEFT OUTER JOIN CATEGORY C1 ON C2.PARENT_CODE = C1.CODE
+							WHERE C3.DEPTH = 3) CAT ON B.CODE = CAT.C3_CODE
+					LEFT OUTER JOIN COST C ON C.COURSE_ID = A.COURSE_ID AND LAST_YN = 'Y'
+		            JOIN COURSE_MASTER D ON D.COURSE_CODE = B.COURSE_CODE AND OFFLINE_YN = 'N'
+		          	LEFT OUTER JOIN (
+                     	SELECT  COURSE_ID,
+                     			COUNT(*) CNT,
+                     			SUM(COURSE_COST) COST,
+                                SUM(CASE WHEN COST_SEQ = 0 THEN 0 ELSE 1 END) COST_CNT
+                     	FROM	COURSE_REGISTER
+                     	WHERE	STATUS = 'A'
+                     	GROUP 	BY COURSE_ID ) G ON G.COURSE_ID = A.COURSE_ID
+                    LEFT OUTER JOIN COMPANY H ON H.COMP_CD = A.COMP_CD          
+		WHERE	G.CNT != G.COST_CNT
+		AND		A.COURSE_COST > 0
+		   <if test="LEVEL1_CODE != null and LEVEL1_CODE != ''"> AND CAT.C1_CODE = #{LEVEL1_CODE}</if>
+		   <if test="LEVEL2_CODE != null and LEVEL2_CODE != ''"> AND CAT.C2_CODE = #{LEVEL2_CODE}</if>
+		   <if test="LEVEL3_CODE != null and LEVEL3_CODE != ''"> AND CAT.C3_CODE = #{LEVEL3_CODE}</if>
+<if test="YEAR != null and YEAR != ''">
+		AND		A.YEAR = #{YEAR}
+</if>
+<if test="MONTH != null and MONTH != ''">
+		AND		A.MONTH = #{MONTH}
+</if>
+<if test="chasu != null and chasu != ''">
+		AND		A.CHASU = #{chasu}
+</if>
+<if test="courseName != null and courseName != ''"> 
+		AND ( UPPER(B.COURSE_CODE) LIKE CONCAT('%',UPPER(#{courseName}),'%') OR UPPER(B.COURSE_NAME) LIKE CONCAT('%',UPPER(#{courseName}),'%') )
+</if>		 
+<if test="COMPANY != null and COMPANY == 'B2C'">
+		AND 	IFNULL(A.COMP_CD,'B2C') = 'B2C'
+</if>
+<if test="COMPANY != null and COMPANY == 'B2B'">
+		AND 	IFNULL(A.COMP_CD,'B2C') != 'B2C'
+		AND 	IFNULL(H.C2C_YN,'N') = 'N'
+</if>
+<if test="COMPANY != null and COMPANY == 'C2C'">
+		AND 	IFNULL(A.COMP_CD,'B2C') != 'B2C'
+		AND 	IFNULL(H.C2C_YN,'N') = 'Y'
+</if>
+<if test="COMPANY2 != null and COMPANY2 != ''">
+		AND 	IFNULL(A.COMP_CD,'B2C') = #{COMPANY2}
+</if>
+		ORDER 	BY CAT.CATEGORY_NAME, B.COURSE_NAME, A.YEAR, A.MONTH, A.CHASU	
+	</select>
+
+	<update id="axCostLastYnUpdate" parameterType="hashmap">
+		/* axCost.axCostLastYnUpdate */
+		UPDATE 	COST
+    	   SET 	LAST_YN = 'N'
+    	 WHERE 	COURSE_ID = #{COURSE_ID} 
+	</update>  
+
+	<insert id="axCostMasterInsert" parameterType="hashmap">
+		/* axCost.axCostMasterInsert */
+		INSERT INTO COST (COURSE_ID, COST_DATE, CP_COST_RATE, TEACHER_COST_RATE, REPORT_COST, EVAL_COST, DATA_COST, ANSWER_COST, LAST_YN, CREATE_DATE, CREATE_USER)
+    	VALUES (#{COURSE_ID}, CURRENT_TIMESTAMP, #{CP_COST_RATE}, #{TEACHER_COST_RATE}, #{REPORT_COST}, #{EVAL_COST}, #{DATA_COST}, #{ANSWER_COST}, 'Y', CURRENT_TIMESTAMP, #{SESSION_USER_ID}) 
+	</insert>  
+
+	<update id="axCourseRegisterTargetUpdate" parameterType="hashmap">
+		/* axCost.axCourseRegisterTargetUpdate */
+		UPDATE 	COURSE_REGISTER
+    	SET 	COST_SEQ = #{SEQ}
+    	WHERE 	COURSE_ID = #{COURSE_ID} 
+    	AND		IFNULL(COST_SEQ, 0) = 0
+	</update>  
+
+	<update id="axBoardDataTargetUpdate" parameterType="hashmap">
+		/* axCost.axBoardDataTargetUpdate */
+		UPDATE 	BOARD_DATA
+    	SET 	COST_SEQ = #{SEQ}
+    	WHERE 	COURSE_ID = #{COURSE_ID} 
+    	AND		IFNULL(COST_SEQ, 0) = 0
+    	AND		USER_ID IN (
+					SELECT 	TUTOR_ID FROM COURSE WHERE COURSE_ID = #{COURSE_ID}
+			        UNION
+					SELECT 	TUTOR_ID FROM COURSE_TUTOR WHERE COURSE_ID = #{COURSE_ID}    	
+    			)
+	</update>  
+
+	<update id="axBoardQnaTargetUpdate" parameterType="hashmap">
+		/* axCost.axBoardQnaTargetUpdate */
+		UPDATE 	BOARD_QNA
+    	SET 	COST_SEQ = #{SEQ}
+    	WHERE 	COURSE_ID = #{COURSE_ID} 
+    	AND		IFNULL(COST_SEQ, 0) = 0
+    	AND		ANSWER_USER_ID IN (
+					SELECT 	TUTOR_ID FROM COURSE WHERE COURSE_ID = #{COURSE_ID}
+			        UNION
+					SELECT 	TUTOR_ID FROM COURSE_TUTOR WHERE COURSE_ID = #{COURSE_ID}    	
+    			)
+	</update>  
+
+	<update id="axReplyTargetUpdate" parameterType="hashmap">
+		/* axCost.axReplyTargetUpdate */
+		UPDATE 	REPLY
+    	SET 	COST_SEQ = #{SEQ}
+    	WHERE 	KIND = 'FREE'
+		AND		P_SEQ IN ( SELECT SEQ FROM BOARD_FREE WHERE COURSE_ID = #{COURSE_ID} )
+    	AND		IFNULL(COST_SEQ, 0) = 0
+    	AND		USER_ID IN (
+					SELECT 	TUTOR_ID FROM COURSE WHERE COURSE_ID = #{COURSE_ID}
+			        UNION
+					SELECT 	TUTOR_ID FROM COURSE_TUTOR WHERE COURSE_ID = #{COURSE_ID}    	
+    			)
+	</update>  
+
+	<update id="axCostTotalCostUpdate" parameterType="hashmap">
+		/* axCost.axCostTotalCostUpdate */
+		UPDATE 	COST
+    	   SET 	TOTAL_COST = (
+    	   				SELECT 	SUM(COURSE_COST)
+    	   				FROM	COURSE_REGISTER
+    	   				WHERE 	COURSE_ID = #{COURSE_ID}
+    	   				AND		COST_SEQ = #{SEQ}
+    	   		)
+    	 WHERE 	SEQ = #{SEQ} 
+	</update>  
+			
+	<select id="axCostCalcList" resultType="hashmap">
+		/* axCost.axCostCalcList */
+		SELECT	CAT.CATEGORY_NAME
+				,A.COURSE_ID
+				,A.COURSE_CODE
+				,B.COURSE_NAME
+				,A.YEAR
+				,A.MONTH
+				,A.CHASU CHASU
+               	,A.COMP_CD
 		        ,IFNULL(C.CP_COST_RATE, D.CP_COST_RATE) CP_COST_RATE
 		        ,IFNULL(C.TEACHER_COST_RATE, D.TEACHER_COST_RATE) TEACHER_COST_RATE
 		        ,IFNULL(C.REPORT_COST, D.REPORT_COST) REPORT_COST 
@@ -235,6 +386,15 @@
 				,CASE WHEN B.CONTENTS_MANAGER_ID IS NULL OR B.CONTENTS_MANAGER_ID = '' THEN 'N' ELSE 'Y'END CP_YN
 				,CASE WHEN B.TEACHER_ID IS NULL OR B.TEACHER_ID = '' THEN 'N' ELSE 'Y'END TEACHER_YN
 				,G.CNT USER_CNT
+				,C.SEQ
+				,C.LAST_YN
+                ,D.CP_COST_RATE ORG_CP_COST_RATE
+                ,D.TEACHER_COST_RATE ORG_TEACHER_COST_RATE
+                ,D.REPORT_COST ORG_REPORT_COST
+                ,D.EVAL_COST ORG_EVAL_COST
+                ,D.DATA_COST ORG_DATA_COST
+                ,D.ANSWER_COST ORG_ANSWER_COST
+                ,DATE_FORMAT(C.COST_DATE, '%y.%m.%d %H:%i') COST_DATE
 		FROM	COURSE A 
 					JOIN COURSE_CODE B ON B.COURSE_CODE = A.COURSE_CODE
 					JOIN (
@@ -243,29 +403,31 @@
 							 FROM CATEGORY C3 LEFT OUTER JOIN CATEGORY C2 ON C3.PARENT_CODE = C2.CODE
 									  LEFT OUTER JOIN CATEGORY C1 ON C2.PARENT_CODE = C1.CODE
 							WHERE C3.DEPTH = 3) CAT ON B.CODE = CAT.C3_CODE
-					LEFT OUTER JOIN COST C ON C.COURSE_ID = A.COURSE_ID
+					JOIN COST C ON C.COURSE_ID = A.COURSE_ID
 		            JOIN COURSE_MASTER D ON D.COURSE_CODE = B.COURSE_CODE
 		            LEFT OUTER JOIN (
-						SELECT	COURSE_ID
+						SELECT	SEQ
 								,SUM(CASE WHEN KIND = 'TUTOR' THEN 1 ELSE 0 END) TUTOR_ALL_CNT
 								,SUM(CASE WHEN KIND = 'TUTOR' AND IFNULL(PAYMENT_DATE,'') != '' THEN 1 ELSE 0 END) TUTOR_CNT
 								,SUM(CASE WHEN KIND = 'TEACHER' AND IFNULL(PAYMENT_DATE,'') != '' THEN 1 ELSE 0 END) TEACHER_CNT
 								,SUM(CASE WHEN KIND = 'CP' AND IFNULL(PAYMENT_DATE,'') != '' THEN 1 ELSE 0 END) CP_CNT
 		                FROM	COST_CALC
-		                WHERE	COURSE_ID IN ( SELECT COURSE_ID FROM COURSE WHERE OPEN_YN = 'Y' AND CLOSE_YN = 'Y' )
-		                AND		IFNULL(COST, 0) > 0
-		                GROUP	BY COURSE_ID ) E ON E.COURSE_ID = A.COURSE_ID
+		                WHERE	IFNULL(COST, 0) > 0
+		                GROUP	BY SEQ ) E ON E.SEQ = C.SEQ
 		          	LEFT OUTER JOIN (
                      	SELECT  COURSE_ID,
+								COST_SEQ,
                      			COUNT(*) CNT,
                      			SUM(COURSE_COST) COST
                      	FROM	COURSE_REGISTER
                      	WHERE	STATUS = 'A'
-                     	GROUP 	BY COURSE_ID ) G ON G.COURSE_ID = A.COURSE_ID
+                        AND		IFNULL(COST_SEQ, 0) != 0
+                     	GROUP 	BY COURSE_ID, COST_SEQ ) G ON G.COURSE_ID = C.COURSE_ID AND G.COST_SEQ = C.SEQ
                     LEFT OUTER JOIN COMPANY H ON H.COMP_CD = A.COMP_CD          
 					LEFT OUTER JOIN USER U1 ON A.CREATE_USER = U1.USER_ID
 					LEFT OUTER JOIN USER U2 ON A.UPDATE_USER = U2.USER_ID                 
-		WHERE	CLOSE_YN = 'Y'
+		WHERE	A.COURSE_COST > 0
+		AND		DATE_FORMAT(C.COST_DATE, '%Y-%m-%d') BETWEEN #{FROM_DT} AND #{TO_DT}
 		   <if test="LEVEL1_CODE != null and LEVEL1_CODE != ''"> AND CAT.C1_CODE = #{LEVEL1_CODE}</if>
 		   <if test="LEVEL2_CODE != null and LEVEL2_CODE != ''"> AND CAT.C2_CODE = #{LEVEL2_CODE}</if>
 		   <if test="LEVEL3_CODE != null and LEVEL3_CODE != ''"> AND CAT.C3_CODE = #{LEVEL3_CODE}</if>
@@ -279,7 +441,7 @@
 		AND		A.CHASU = #{chasu}
 </if>
 <if test="courseName != null and courseName != ''"> 
-		AND ( UPPER(S.COURSE_CODE) LIKE CONCAT('%',UPPER(#{courseName}),'%') OR UPPER(B.COURSE_NAME) LIKE CONCAT('%',UPPER(#{courseName}),'%') )
+		AND ( UPPER(B.COURSE_CODE) LIKE CONCAT('%',UPPER(#{courseName}),'%') OR UPPER(B.COURSE_NAME) LIKE CONCAT('%',UPPER(#{courseName}),'%') )
 </if>		 
 <if test="COMPANY != null and COMPANY == 'B2C'">
 		AND 	IFNULL(A.COMP_CD,'B2C') = 'B2C'
@@ -295,15 +457,11 @@
 <if test="COMPANY2 != null and COMPANY2 != ''">
 		AND 	IFNULL(A.COMP_CD,'B2C') = #{COMPANY2}
 </if>
-		ORDER 	BY CAT.CATEGORY_NAME, B.COURSE_NAME, A.YEAR, A.MONTH, A.CHASU	
+		ORDER 	BY CAT.CATEGORY_NAME, B.COURSE_NAME, A.YEAR, A.MONTH, A.CHASU, C.COST_DATE	
 	</select>
 	
-	<insert id="axCostMasterInsert" parameterType="hashmap">
-		INSERT INTO COST (COURSE_ID, CP_COST_RATE, TEACHER_COST_RATE, REPORT_COST, EVAL_COST, DATA_COST, ANSWER_COST, TOTAL_COST, CREATE_DATE, CREATE_USER)
-    	VALUES (#{COURSE_ID}, #{CP_COST_RATE}, #{TEACHER_COST_RATE}, #{REPORT_COST}, #{EVAL_COST}, #{DATA_COST}, #{ANSWER_COST}, #{TOTAL_COST}, CURRENT_TIMESTAMP, #{SESSION_USER_ID}) 
-	</insert>  
-
 	<update id="axCostMasterUpdate" parameterType="hashmap">
+		/* axCost.axCostMasterUpdate */
 		UPDATE 	COST
     	   SET 	CP_COST_RATE = #{CP_COST_RATE}
 				,TEACHER_COST_RATE = #{TEACHER_COST_RATE}
@@ -313,10 +471,10 @@
 				,ANSWER_COST = #{ANSWER_COST}
     	       	,UPDATE_DATE = CURRENT_TIMESTAMP
     	       	,UPDATE_USER = #{SESSION_USER_ID}
-    	 WHERE 	COURSE_ID = #{COURSE_ID} 
+    	 WHERE 	SEQ = #{SEQ} 
 	</update>  
 	
-	<select id="axCostMasterExist" parameterType="hashmap" resultType="hashmap">
+	<!-- <select id="axCostMasterExist" parameterType="hashmap" resultType="hashmap">
 		SELECT	A.COURSE_ID
 		        ,IFNULL(C.CP_COST_RATE, D.CP_COST_RATE) CP_COST_RATE
 		        ,IFNULL(C.TEACHER_COST_RATE, D.TEACHER_COST_RATE) TEACHER_COST_RATE
@@ -338,22 +496,25 @@
                      	WHERE	STATUS = 'A'
                      	GROUP 	BY COURSE_ID ) G ON G.COURSE_ID = A.COURSE_ID   
 		WHERE	A.COURSE_ID = #{COURSE_ID};
-	</select>
+	</select> -->
 
 	<update id="axCostMasterCalcUpdate" parameterType="hashmap">
+		/* axCost.axCostMasterCalcUpdate */
 		UPDATE 	COST
-    	   SET 	TUTOR_COST = ( SELECT SUM(COST) FROM COST_CALC WHERE COURSE_ID = #{COURSE_ID} AND KIND = 'TUTOR' )
-				,TEACHER_COST = ( SELECT SUM(COST) FROM COST_CALC WHERE COURSE_ID = #{COURSE_ID} AND KIND = 'TEACHER' )
-				,CP_COST = ( SELECT SUM(COST) FROM COST_CALC WHERE COURSE_ID = #{COURSE_ID} AND KIND = 'CP' )
-				,COMPANY_COST = TOTAL_COST - ( SELECT SUM(COST) FROM COST_CALC WHERE COURSE_ID = #{COURSE_ID} )
+    	   SET 	TUTOR_COST = ( SELECT SUM(COST) FROM COST_CALC WHERE SEQ = #{SEQ}  AND KIND = 'TUTOR' )
+				,TEACHER_COST = ( SELECT SUM(COST) FROM COST_CALC WHERE SEQ = #{SEQ}  AND KIND = 'TEACHER' )
+				,CP_COST = ( SELECT SUM(COST) FROM COST_CALC WHERE SEQ = #{SEQ}  AND KIND = 'CP' )
+				,COMPANY_COST = TOTAL_COST - ( SELECT SUM(COST) FROM COST_CALC WHERE SEQ = #{SEQ} )
     	       	,UPDATE_DATE = CURRENT_TIMESTAMP
     	       	,UPDATE_USER = #{SESSION_USER_ID}
-    	 WHERE 	COURSE_ID = #{COURSE_ID} 
+    	 WHERE 	SEQ = #{SEQ} 
 	</update>  
 	
 	<select id="axCostCalcUserList" resultType="hashmap">
+		/* axCost.axCostCalcUserList */
 		SELECT 	A.*
-				,IF(B.COURSE_ID IS NULL, 'N', 'Y') EXIST_USER
+				,IF(B.SEQ IS NULL, 'N', 'Y') EXIST_USER
+				,#{SEQ} SEQ
 		FROM	(
 					SELECT 	A.COURSE_ID
 							,1 ORD
@@ -396,16 +557,18 @@
 								JOIN COURSE_CODE B ON B.COURSE_CODE = A.COURSE_CODE
 								JOIN USER U1 ON B.CONTENTS_MANAGER_ID = U1.USER_ID
 					WHERE 	COURSE_ID = #{COURSE_ID}
-				) A LEFT OUTER JOIN COST_CALC B ON B.COURSE_ID = A.COURSE_ID AND B.KIND = A.KIND AND B.USER_ID = A.USER_ID
+				) A LEFT OUTER JOIN COST_CALC B ON B.SEQ = #{SEQ} AND B.KIND = A.KIND AND B.USER_ID = A.USER_ID
 		ORDER	BY ORD
 	</select>
 	
 	<insert id="axCostCalcInsert" parameterType="hashmap">
-		INSERT INTO COST_CALC ( COURSE_ID, KIND, USER_ID, BANK, ACC_NUM )
-    	VALUES ( #{COURSE_ID}, #{KIND}, #{USER_ID}, #{BANK}, #{ACC_NUM} ) 
+		/* axCost.axCostCalcInsert */
+		INSERT INTO COST_CALC ( SEQ, KIND, USER_ID, BANK, ACC_NUM )
+    	VALUES ( #{SEQ}, #{KIND}, #{USER_ID}, #{BANK}, #{ACC_NUM} ) 
 	</insert>
 	
 	<update id="axCostCalcTutorUpdate" parameterType="hashmap">
+		/* axCost.axCostCalcTutorUpdate */
 		UPDATE	COST_CALC 
 		SET		COST = (	SELECT 	A.REPORT_COST * B.REPORT_CNT +
 									A.EVAL_COST * B.EXAM_CNT +
@@ -437,43 +600,46 @@
 											AND		A.P_SEQ IN ( SELECT SEQ FROM BOARD_FREE WHERE COURSE_ID = #{COURSE_ID} )
 											AND		A.USER_ID = #{USER_ID}
 											AND 	A.ACCEPT_YN = 'Y' ) E ON 1 = 1
-							WHERE	A.COURSE_ID = #{COURSE_ID} )
-		WHERE	COURSE_ID = #{COURSE_ID}
+							WHERE	A.SEQ = #{SEQ} )
+		WHERE	SEQ = #{SEQ}
 		AND		KIND = #{KIND}
 		AND		USER_ID = #{USER_ID}
 	</update>
 	
 	<update id="axCostCalcCpUpdate" parameterType="hashmap">
+		/* axCost.axCostCalcCpUpdate */
 		UPDATE	COST_CALC 
-		SET		COST = (	SELECT 	(A.TOTAL_COST - B.TUTOR_COST) * (CP_COST_RATE / 100)
+		SET		COST = (	SELECT 	(A.TOTAL_COST - IFNULL(B.TUTOR_COST, 0)) * (CP_COST_RATE / 100)
 							FROM	COST A
 										JOIN (	
 											SELECT 	SUM(COST) TUTOR_COST
 											FROM 	COST_CALC
-											WHERE 	COURSE_ID = #{COURSE_ID}
+											WHERE 	SEQ = #{COURSE_ID}
 											AND		KIND = 'TUTOR' ) B ON 1 = 1
-							WHERE	A.COURSE_ID = #{COURSE_ID} )
-		WHERE	COURSE_ID = #{COURSE_ID}
+							WHERE	A.SEQ = #{SEQ} )
+		WHERE	SEQ = #{SEQ}
 		AND		KIND = #{KIND}
 		AND		USER_ID = #{USER_ID}
 	</update>
 	
 	<update id="axCostCalcTeacherUpdate" parameterType="hashmap">
+		/* axCost.axCostCalcTeacherUpdate */
 		UPDATE	COST_CALC 
-		SET		COST = (	SELECT 	(A.TOTAL_COST - B.TUTOR_COST) * (TEACHER_COST_RATE / 100)
+		SET		COST = (	SELECT 	(A.TOTAL_COST - IFNULL(B.TUTOR_COST, 0)) * (TEACHER_COST_RATE / 100)
 							FROM	COST A
 										JOIN (	
 											SELECT 	SUM(COST) TUTOR_COST
 											FROM 	COST_CALC
-											WHERE 	COURSE_ID = #{COURSE_ID}
+											WHERE 	SEQ = #{COURSE_ID}
 											AND		KIND = 'TUTOR' ) B ON 1 = 1
-							WHERE	A.COURSE_ID = #{COURSE_ID} )
-		WHERE	COURSE_ID = #{COURSE_ID}
+							WHERE	A.SEQ = #{SEQ} )
+		WHERE	SEQ = #{SEQ}
 		AND		KIND = #{KIND}
 		AND		USER_ID = #{USER_ID}
 	</update>
 	
 	<select id="axCostCalcTutorBoardList" resultType="hashmap">
+		/* axCost.axCostCalcTutorBoardList */
 		SELECT 	*
 		FROM	(
 					SELECT 	A.SEQ
@@ -492,14 +658,15 @@
 					AND		A.USER_ID IN ( 	SELECT TUTOR_ID FROM COURSE WHERE COURSE_ID = #{COURSE_ID}
 											UNION 
 											SELECT TUTOR_ID FROM COURSE_TUTOR WHERE COURSE_ID = #{COURSE_ID} )
+					AND		A.COST_SEQ = #{SEQ}											
 					UNION
 					SELECT 	B.SEQ 		
 							,'QNA_REPLY' KIND 
 							,'QNA 답변' KIND_NAME 
 							,B.TITLE
-					        ,U2.USER_NAME
-					        ,U1.USER_ID TUTOR_ID
-					        ,U1.USER_NAME TUTOR_NAME        
+					        ,U1.USER_NAME
+					        ,U2.USER_ID TUTOR_ID
+					        ,U2.USER_NAME TUTOR_NAME        
 					        ,B.ACCEPT_YN
 					        ,0 P_SEQ
 					        ,B.NO_REASON
@@ -510,6 +677,7 @@
 					AND		B.ANSWER_USER_ID IN ( 	SELECT TUTOR_ID FROM COURSE WHERE COURSE_ID = #{COURSE_ID}
 											UNION 
 											SELECT TUTOR_ID FROM COURSE_TUTOR WHERE COURSE_ID = #{COURSE_ID} ) 
+					AND		B.COST_SEQ = #{SEQ}											
 					UNION 
 					SELECT 	A.SEQ 		
 							,'FREE_REPLY' KIND 
@@ -530,6 +698,7 @@
 					AND		A.USER_ID IN ( 	SELECT TUTOR_ID FROM COURSE WHERE COURSE_ID = #{COURSE_ID}
 											UNION 
 											SELECT TUTOR_ID FROM COURSE_TUTOR WHERE COURSE_ID = #{COURSE_ID} ) 
+					AND		A.COST_SEQ = #{SEQ}											
 				) A
 <if test="TUTOR_ID != null and TUTOR_ID != ''">
 		WHERE	A.TUTOR_ID = #{TUTOR_ID}
@@ -538,6 +707,7 @@
 	</select>
 
 	<update id="axCostCalcBoardDataUpdate" parameterType="hashmap">
+		/* axCost.axCostCalcBoardDataUpdate */
 		UPDATE BOARD_DATA
     	   SET ACCEPT_YN = #{ACCEPT_YN},
     	   	   NO_REASON = #{NO_REASON}
@@ -545,6 +715,7 @@
 	</update>  
 
 	<update id="axCostCalcBoardQnaUpdate" parameterType="hashmap">
+		/* axCost.axCostCalcBoardQnaUpdate */
 		UPDATE BOARD_QNA
     	   SET ACCEPT_YN = #{ACCEPT_YN},
     	   	   NO_REASON = #{NO_REASON}
@@ -552,6 +723,7 @@
 	</update>  
 
 	<update id="axCostCalcReplyUpdate" parameterType="hashmap">
+		/* axCost.axCostCalcReplyUpdate */
 		UPDATE REPLY
     	   SET ACCEPT_YN = #{ACCEPT_YN},
     	   	   NO_REASON = #{NO_REASON}
@@ -559,7 +731,8 @@
 	</update>  
 		  
 	<select id="axCostCalcPaymentList" parameterType="hashmap" resultType="hashmap">
-		SELECT	A.COURSE_ID
+		/* axCost.axCostCalcPaymentList */
+		SELECT	A.SEQ
 				,A.KIND
 				,CASE WHEN A.KIND = 'CP' THEN 'CP' 
 						WHEN A.KIND = 'TUTOR' THEN '튜터'
@@ -573,21 +746,23 @@
 				,U1.USER_NAME
 		FROM	COST_CALC A
 					LEFT OUTER JOIN USER U1 ON A.USER_ID = U1.USER_ID 
-		WHERE 	A.COURSE_ID = #{COURSE_ID}
+		WHERE 	A.SEQ = #{SEQ}
         AND		IFNULL(A.COST, 0) > 0
 	</select>
 
 	<update id="axCostCalcPaymentUpdate" parameterType="hashmap">
+		/* axCost.axCostCalcPaymentUpdate */
 		UPDATE 	COST_CALC
     	SET 	PAYMENT_DATE = #{PAYMENT_DATE}
     			,BANK = #{BANK}
     			,ACC_NUM = #{ACC_NUM}
-    	WHERE 	COURSE_ID = #{COURSE_ID}
+    	WHERE 	SEQ = #{SEQ}
     	AND		KIND = #{KIND}
     	AND		USER_ID = #{USER_ID}
 	</update>
 	
 	<select id="axIncomeAdminList" resultType="hashmap">
+		/* axCost.axIncomeAdminList */
 		SELECT	CAT.CATEGORY_NAME
 				,A.COURSE_ID
 				,A.COURSE_CODE
@@ -595,6 +770,7 @@
 				,A.YEAR
 				,A.MONTH
 				,A.CHASU CHASU
+				,A.COMP_CD
 				,E.CNT USER_CNT
 		        ,IFNULL(C.TOTAL_COST, 0) TOTAL_COST
 		        ,IFNULL(C.COMPANY_COST, 0) COMPANY_COST
@@ -609,17 +785,26 @@
 							 FROM CATEGORY C3 LEFT OUTER JOIN CATEGORY C2 ON C3.PARENT_CODE = C2.CODE
 									  LEFT OUTER JOIN CATEGORY C1 ON C2.PARENT_CODE = C1.CODE
 							WHERE C3.DEPTH = 3) CAT ON B.CODE = CAT.C3_CODE
-					LEFT OUTER JOIN COST C ON C.COURSE_ID = A.COURSE_ID
+					JOIN (
+							SELECT	COURSE_ID
+									,SUM(TOTAL_COST) TOTAL_COST
+									,SUM(CP_COST) CP_COST
+									,SUM(TUTOR_COST) TUTOR_COST
+									,SUM(TEACHER_COST) TEACHER_COST
+									,SUM(COMPANY_COST) COMPANY_COST
+                            FROM	COST
+                            WHERE	DATE_FORMAT(COST_DATE, '%Y-%m-%d') BETWEEN #{FROM_DT} AND #{TO_DT}
+                            GROUP 	BY COURSE_ID ) C ON C.COURSE_ID = A.COURSE_ID
 		            JOIN COURSE_MASTER D ON D.COURSE_CODE = B.COURSE_CODE
 		          	LEFT OUTER JOIN (
                      	SELECT  COURSE_ID,
-                     			COUNT(*) CNT,
-                     			SUM(COURSE_COST) COST
+                     			COUNT(*) CNT
                      	FROM	COURSE_REGISTER
                      	WHERE	STATUS = 'A'
+                     	AND    	(COURSE_ID, COST_SEQ) IN ( SELECT COURSE_ID, SEQ FROM COST WHERE DATE_FORMAT(COST_DATE, '%Y-%m-%d') BETWEEN #{FROM_DT} AND #{TO_DT} )
                      	GROUP 	BY COURSE_ID ) E ON E.COURSE_ID = A.COURSE_ID
-		WHERE	CLOSE_YN = 'Y'
-		AND     DATE_FORMAT(A.UPDATE_DATE, '%Y-%m-%d') BETWEEN #{FROM_DT} AND #{TO_DT}	
+                    LEFT OUTER JOIN COMPANY G ON G.COMP_CD = A.COMP_CD  
+		WHERE	1 = 1	
 		   <if test="LEVEL1_CODE != null and LEVEL1_CODE != ''"> AND CAT.C1_CODE = #{LEVEL1_CODE}</if>
 		   <if test="LEVEL2_CODE != null and LEVEL2_CODE != ''"> AND CAT.C2_CODE = #{LEVEL2_CODE}</if>
 		   <if test="LEVEL3_CODE != null and LEVEL3_CODE != ''"> AND CAT.C3_CODE = #{LEVEL3_CODE}</if>
@@ -635,10 +820,25 @@
 <if test="courseName != null and courseName != ''"> 
 		AND ( UPPER(B.COURSE_CODE) LIKE CONCAT('%',UPPER(#{courseName}),'%') OR UPPER(B.COURSE_NAME) LIKE CONCAT('%',UPPER(#{courseName}),'%') )
 </if>		      
+<if test="COMPANY != null and COMPANY == 'B2C'">
+		AND 	IFNULL(A.COMP_CD,'B2C') = 'B2C'
+</if>
+<if test="COMPANY != null and COMPANY == 'B2B'">
+		AND 	IFNULL(A.COMP_CD,'B2C') != 'B2C'
+		AND 	IFNULL(G.C2C_YN,'N') = 'N'
+</if>
+<if test="COMPANY != null and COMPANY == 'C2C'">
+		AND 	IFNULL(A.COMP_CD,'B2C') != 'B2C'
+		AND 	IFNULL(G.C2C_YN,'N') = 'Y'
+</if>
+<if test="COMPANY2 != null and COMPANY2 != ''">
+		AND 	IFNULL(A.COMP_CD,'B2C') = #{COMPANY2}
+</if>
 		ORDER 	BY CAT.CATEGORY_NAME, B.COURSE_NAME, A.YEAR, A.MONTH, A.CHASU	
 	</select>
 	
 	<select id="axIncomeList" resultType="hashmap">
+		/* axCost.axIncomeList */
 		SELECT	CAT.CATEGORY_NAME
 				,A.COURSE_ID
 				,A.COURSE_CODE
@@ -653,6 +853,7 @@
 		        ,F.BANK
 		        ,F.ACC_NUM
 		        ,F.PAYMENT_DATE
+                ,DATE_FORMAT(C.COST_DATE, '%y.%m.%d %H:%i') COST_DATE
 		FROM	COURSE A 
 					JOIN COURSE_CODE B ON B.COURSE_CODE = A.COURSE_CODE
 					JOIN (
@@ -663,25 +864,27 @@
 							WHERE C3.DEPTH = 3) CAT ON B.CODE = CAT.C3_CODE
 					LEFT OUTER JOIN COST C ON C.COURSE_ID = A.COURSE_ID
 		            JOIN COURSE_MASTER D ON D.COURSE_CODE = B.COURSE_CODE
-		          	LEFT OUTER JOIN (
+		          	JOIN (
                      	SELECT  COURSE_ID,
+                     			COST_SEQ,
                      			COUNT(*) CNT,
                      			SUM(COURSE_COST) COST
                      	FROM	COURSE_REGISTER
                      	WHERE	STATUS = 'A'
-                     	GROUP 	BY COURSE_ID ) E ON E.COURSE_ID = A.COURSE_ID
-                   	LEFT OUTER JOIN (
-                   		SELECT  *
-                   		FROM	COST_CALC
-                   		<if test="AUTH == 'CONTENTS_MANAGER'"> WHERE KIND = 'CP'</if>
-                   		<if test="AUTH == 'TEACHER'"> WHERE KIND = 'TEACHER'</if>
-                   		<if test="AUTH == 'TUTOR'"> WHERE KIND = 'TUTOR' AND USER_ID = #{USER_ID}</if>
-                   		) F ON F.COURSE_ID = A.COURSE_ID
+                     	GROUP 	BY COURSE_ID, COST_SEQ ) E ON E.COURSE_ID = C.COURSE_ID AND E.COST_SEQ = C.SEQ
+                   	JOIN (
+                   		SELECT  A.*
+                   				,B.COURSE_ID
+                   		FROM	COST_CALC A
+                   					JOIN COST B ON B.SEQ = A.SEQ
+                   		WHERE 	 A.USER_ID = #{USER_ID}
+                   		<if test="AUTH == 'CONTENTS_MANAGER'"> AND A.KIND = 'CP'</if>
+                   		<if test="AUTH == 'TEACHER'"> AND A.KIND = 'TEACHER'</if>
+                   		<if test="AUTH == 'TUTOR'"> AND A.KIND = 'TUTOR'</if>
+                   		) F ON F.COURSE_ID = C.COURSE_ID AND F.SEQ = C.SEQ
                     LEFT OUTER JOIN COMPANY G ON G.COMP_CD = A.COMP_CD  
 					LEFT OUTER JOIN USER U1 ON F.USER_ID = U1.USER_ID
-		WHERE	CLOSE_YN = 'Y'
-		AND		IFNULL(F.PAYMENT_DATE,'') != ''
-		AND     F.PAYMENT_DATE BETWEEN #{FROM_DT} AND #{TO_DT}	
+		WHERE	IFNULL(F.PAYMENT_DATE,'') BETWEEN #{FROM_DT} AND #{TO_DT}	
 		   <if test="LEVEL1_CODE != null and LEVEL1_CODE != ''"> AND CAT.C1_CODE = #{LEVEL1_CODE}</if>
 		   <if test="LEVEL2_CODE != null and LEVEL2_CODE != ''"> AND CAT.C2_CODE = #{LEVEL2_CODE}</if>
 		   <if test="LEVEL3_CODE != null and LEVEL3_CODE != ''"> AND CAT.C3_CODE = #{LEVEL3_CODE}</if>
@@ -711,7 +914,227 @@
 <if test="COMPANY2 != null and COMPANY2 != ''">
 		AND 	IFNULL(A.COMP_CD,'B2C') = #{COMPANY2}
 </if>
-		ORDER 	BY CAT.CATEGORY_NAME, B.COURSE_NAME, A.YEAR, A.MONTH, A.CHASU	
+		ORDER 	BY CAT.CATEGORY_NAME, B.COURSE_NAME, A.YEAR, A.MONTH, A.CHASU, C.COST_DATE	
 	</select>
-	   
+
+	<select id="axIncomeMonthAdminList" resultType="hashmap">
+		/* axCost.axIncomeMonthAdminList */
+		SELECT	CAT.CATEGORY_NAME
+				,A.COURSE_ID
+				,A.COURSE_CODE
+				,B.COURSE_NAME
+				,A.YEAR
+				,A.MONTH
+				,A.CHASU CHASU
+				,A.COMP_CD
+				,IFNULL(E.CNT, 0) USER_CNT_T
+				,IFNULL(E.CNT_01, 0) USER_CNT_01
+				,IFNULL(E.CNT_02, 0) USER_CNT_02
+				,IFNULL(E.CNT_03, 0) USER_CNT_03
+				,IFNULL(E.CNT_04, 0) USER_CNT_04
+				,IFNULL(E.CNT_05, 0) USER_CNT_05
+				,IFNULL(E.CNT_06, 0) USER_CNT_06
+				,IFNULL(E.CNT_07, 0) USER_CNT_07
+				,IFNULL(E.CNT_08, 0) USER_CNT_08
+				,IFNULL(E.CNT_09, 0) USER_CNT_09
+				,IFNULL(E.CNT_10, 0) USER_CNT_10
+				,IFNULL(E.CNT_11, 0) USER_CNT_11
+				,IFNULL(E.CNT_12, 0) USER_CNT_12
+		        ,IFNULL(C.TOTAL_COST, 0) TOTAL_COST_T
+				,IFNULL(C.CP_COST, 0) CP_COST_T
+				,IFNULL(C.TUTOR_COST, 0) TUTOR_COST_T
+				,IFNULL(C.TEACHER_COST, 0) TEACHER_COST_T
+				,IFNULL(C.COMPANY_COST, 0) COMPANY_COST_T
+		        ,IFNULL(C.TOTAL_COST_01, 0) TOTAL_COST_01
+				,IFNULL(C.CP_COST_01, 0) CP_COST_01
+				,IFNULL(C.TUTOR_COST_01, 0) TUTOR_COST_01
+				,IFNULL(C.TEACHER_COST_01, 0) TEACHER_COST_01
+				,IFNULL(C.COMPANY_COST_01, 0) COMPANY_COST_01
+				,IFNULL(C.TOTAL_COST_02, 0) TOTAL_COST_02
+				,IFNULL(C.CP_COST_02, 0) CP_COST_02
+				,IFNULL(C.TUTOR_COST_02, 0) TUTOR_COST_02
+				,IFNULL(C.TEACHER_COST_02, 0) TEACHER_COST_02
+				,IFNULL(C.COMPANY_COST_02, 0) COMPANY_COST_02
+				,IFNULL(C.TOTAL_COST_03, 0) TOTAL_COST_03
+				,IFNULL(C.CP_COST_03, 0) CP_COST_03
+				,IFNULL(C.TUTOR_COST_03, 0) TUTOR_COST_03
+				,IFNULL(C.TEACHER_COST_03, 0) TEACHER_COST_03
+				,IFNULL(C.COMPANY_COST_03, 0) COMPANY_COST_03
+				,IFNULL(C.TOTAL_COST_04, 0) TOTAL_COST_04
+				,IFNULL(C.CP_COST_04, 0) CP_COST_04
+				,IFNULL(C.TUTOR_COST_04, 0) TUTOR_COST_04
+				,IFNULL(C.TEACHER_COST_04, 0) TEACHER_COST_04
+				,IFNULL(C.COMPANY_COST_04, 0) COMPANY_COST_04
+				,IFNULL(C.TOTAL_COST_05, 0) TOTAL_COST_05
+				,IFNULL(C.CP_COST_05, 0) CP_COST_05
+				,IFNULL(C.TUTOR_COST_05, 0) TUTOR_COST_05
+				,IFNULL(C.TEACHER_COST_05, 0) TEACHER_COST_05
+				,IFNULL(C.COMPANY_COST_05, 0) COMPANY_COST_05
+				,IFNULL(C.TOTAL_COST_06, 0) TOTAL_COST_06
+				,IFNULL(C.CP_COST_06, 0) CP_COST_06
+				,IFNULL(C.TUTOR_COST_06, 0) TUTOR_COST_06
+				,IFNULL(C.TEACHER_COST_06, 0) TEACHER_COST_06
+				,IFNULL(C.COMPANY_COST_06, 0) COMPANY_COST_06
+				,IFNULL(C.TOTAL_COST_07, 0) TOTAL_COST_07
+				,IFNULL(C.CP_COST_07, 0) CP_COST_07
+				,IFNULL(C.TUTOR_COST_07, 0) TUTOR_COST_07
+				,IFNULL(C.TEACHER_COST_07, 0) TEACHER_COST_07
+				,IFNULL(C.COMPANY_COST_07, 0) COMPANY_COST_07
+				,IFNULL(C.TOTAL_COST_08, 0) TOTAL_COST_08
+				,IFNULL(C.CP_COST_08, 0) CP_COST_08
+				,IFNULL(C.TUTOR_COST_08, 0) TUTOR_COST_08
+				,IFNULL(C.TEACHER_COST_08, 0) TEACHER_COST_08
+				,IFNULL(C.COMPANY_COST_08, 0) COMPANY_COST_08
+				,IFNULL(C.TOTAL_COST_09, 0) TOTAL_COST_09
+				,IFNULL(C.CP_COST_09, 0) CP_COST_09
+				,IFNULL(C.TUTOR_COST_09, 0) TUTOR_COST_09
+				,IFNULL(C.TEACHER_COST_09, 0) TEACHER_COST_09
+				,IFNULL(C.COMPANY_COST_09, 0) COMPANY_COST_09
+				,IFNULL(C.TOTAL_COST_10, 0) TOTAL_COST_10
+				,IFNULL(C.CP_COST_10, 0) CP_COST_10
+				,IFNULL(C.TUTOR_COST_10, 0) TUTOR_COST_10
+				,IFNULL(C.TEACHER_COST_10, 0) TEACHER_COST_10
+				,IFNULL(C.COMPANY_COST_10, 0) COMPANY_COST_10
+				,IFNULL(C.TOTAL_COST_11, 0) TOTAL_COST_11
+				,IFNULL(C.CP_COST_11, 0) CP_COST_11
+				,IFNULL(C.TUTOR_COST_11, 0) TUTOR_COST_11
+				,IFNULL(C.TEACHER_COST_11, 0) TEACHER_COST_11
+				,IFNULL(C.COMPANY_COST_11, 0) COMPANY_COST_11
+				,IFNULL(C.TOTAL_COST_12, 0) TOTAL_COST_12
+				,IFNULL(C.CP_COST_12, 0) CP_COST_12
+				,IFNULL(C.TUTOR_COST_12, 0) TUTOR_COST_12
+				,IFNULL(C.TEACHER_COST_12, 0) TEACHER_COST_12
+				,IFNULL(C.COMPANY_COST_12, 0) COMPANY_COST_12
+		FROM	COURSE A 
+					JOIN COURSE_CODE B ON B.COURSE_CODE = A.COURSE_CODE
+					JOIN (
+						   SELECT C3.CODE C3_CODE, C2.CODE C2_CODE, C1.CODE C1_CODE,
+								  CONCAT(C1.CODE_NAME,' > ',C2.CODE_NAME,' > ',C3.CODE_NAME) CATEGORY_NAME
+							 FROM CATEGORY C3 LEFT OUTER JOIN CATEGORY C2 ON C3.PARENT_CODE = C2.CODE
+									  LEFT OUTER JOIN CATEGORY C1 ON C2.PARENT_CODE = C1.CODE
+							WHERE C3.DEPTH = 3) CAT ON B.CODE = CAT.C3_CODE
+					JOIN (
+							SELECT	COURSE_ID
+									,SUM(TOTAL_COST) TOTAL_COST
+									,SUM(CP_COST) CP_COST
+									,SUM(TUTOR_COST) TUTOR_COST
+									,SUM(TEACHER_COST) TEACHER_COST
+									,SUM(COMPANY_COST) COMPANY_COST
+									,SUM(CASE WHEN DATE_FORMAT(COST_DATE, '%m') = '01' THEN TOTAL_COST ELSE 0 END) TOTAL_COST_01
+									,SUM(CASE WHEN DATE_FORMAT(COST_DATE, '%m') = '01' THEN CP_COST ELSE 0 END) CP_COST_01
+									,SUM(CASE WHEN DATE_FORMAT(COST_DATE, '%m') = '01' THEN TUTOR_COST ELSE 0 END) TUTOR_COST_01
+									,SUM(CASE WHEN DATE_FORMAT(COST_DATE, '%m') = '01' THEN TEACHER_COST ELSE 0 END) TEACHER_COST_01
+									,SUM(CASE WHEN DATE_FORMAT(COST_DATE, '%m') = '01' THEN COMPANY_COST ELSE 0 END) COMPANY_COST_01
+									,SUM(CASE WHEN DATE_FORMAT(COST_DATE, '%m') = '02' THEN TOTAL_COST ELSE 0 END) TOTAL_COST_02
+									,SUM(CASE WHEN DATE_FORMAT(COST_DATE, '%m') = '02' THEN CP_COST ELSE 0 END) CP_COST_02
+									,SUM(CASE WHEN DATE_FORMAT(COST_DATE, '%m') = '02' THEN TUTOR_COST ELSE 0 END) TUTOR_COST_02
+									,SUM(CASE WHEN DATE_FORMAT(COST_DATE, '%m') = '02' THEN TEACHER_COST ELSE 0 END) TEACHER_COST_02
+									,SUM(CASE WHEN DATE_FORMAT(COST_DATE, '%m') = '02' THEN COMPANY_COST ELSE 0 END) COMPANY_COST_02
+									,SUM(CASE WHEN DATE_FORMAT(COST_DATE, '%m') = '03' THEN TOTAL_COST ELSE 0 END) TOTAL_COST_03
+									,SUM(CASE WHEN DATE_FORMAT(COST_DATE, '%m') = '03' THEN CP_COST ELSE 0 END) CP_COST_03
+									,SUM(CASE WHEN DATE_FORMAT(COST_DATE, '%m') = '03' THEN TUTOR_COST ELSE 0 END) TUTOR_COST_03
+									,SUM(CASE WHEN DATE_FORMAT(COST_DATE, '%m') = '03' THEN TEACHER_COST ELSE 0 END) TEACHER_COST_03
+									,SUM(CASE WHEN DATE_FORMAT(COST_DATE, '%m') = '03' THEN COMPANY_COST ELSE 0 END) COMPANY_COST_03
+									,SUM(CASE WHEN DATE_FORMAT(COST_DATE, '%m') = '04' THEN TOTAL_COST ELSE 0 END) TOTAL_COST_04
+									,SUM(CASE WHEN DATE_FORMAT(COST_DATE, '%m') = '04' THEN CP_COST ELSE 0 END) CP_COST_04
+									,SUM(CASE WHEN DATE_FORMAT(COST_DATE, '%m') = '04' THEN TUTOR_COST ELSE 0 END) TUTOR_COST_04
+									,SUM(CASE WHEN DATE_FORMAT(COST_DATE, '%m') = '04' THEN TEACHER_COST ELSE 0 END) TEACHER_COST_04
+									,SUM(CASE WHEN DATE_FORMAT(COST_DATE, '%m') = '04' THEN COMPANY_COST ELSE 0 END) COMPANY_COST_04
+									,SUM(CASE WHEN DATE_FORMAT(COST_DATE, '%m') = '05' THEN TOTAL_COST ELSE 0 END) TOTAL_COST_05
+									,SUM(CASE WHEN DATE_FORMAT(COST_DATE, '%m') = '05' THEN CP_COST ELSE 0 END) CP_COST_05
+									,SUM(CASE WHEN DATE_FORMAT(COST_DATE, '%m') = '05' THEN TUTOR_COST ELSE 0 END) TUTOR_COST_05
+									,SUM(CASE WHEN DATE_FORMAT(COST_DATE, '%m') = '05' THEN TEACHER_COST ELSE 0 END) TEACHER_COST_05
+									,SUM(CASE WHEN DATE_FORMAT(COST_DATE, '%m') = '05' THEN COMPANY_COST ELSE 0 END) COMPANY_COST_05
+									,SUM(CASE WHEN DATE_FORMAT(COST_DATE, '%m') = '06' THEN TOTAL_COST ELSE 0 END) TOTAL_COST_06
+									,SUM(CASE WHEN DATE_FORMAT(COST_DATE, '%m') = '06' THEN CP_COST ELSE 0 END) CP_COST_06
+									,SUM(CASE WHEN DATE_FORMAT(COST_DATE, '%m') = '06' THEN TUTOR_COST ELSE 0 END) TUTOR_COST_06
+									,SUM(CASE WHEN DATE_FORMAT(COST_DATE, '%m') = '06' THEN TEACHER_COST ELSE 0 END) TEACHER_COST_06
+									,SUM(CASE WHEN DATE_FORMAT(COST_DATE, '%m') = '06' THEN COMPANY_COST ELSE 0 END) COMPANY_COST_06
+									,SUM(CASE WHEN DATE_FORMAT(COST_DATE, '%m') = '07' THEN TOTAL_COST ELSE 0 END) TOTAL_COST_07
+									,SUM(CASE WHEN DATE_FORMAT(COST_DATE, '%m') = '07' THEN CP_COST ELSE 0 END) CP_COST_07
+									,SUM(CASE WHEN DATE_FORMAT(COST_DATE, '%m') = '07' THEN TUTOR_COST ELSE 0 END) TUTOR_COST_07
+									,SUM(CASE WHEN DATE_FORMAT(COST_DATE, '%m') = '07' THEN TEACHER_COST ELSE 0 END) TEACHER_COST_07
+									,SUM(CASE WHEN DATE_FORMAT(COST_DATE, '%m') = '07' THEN COMPANY_COST ELSE 0 END) COMPANY_COST_07
+									,SUM(CASE WHEN DATE_FORMAT(COST_DATE, '%m') = '08' THEN TOTAL_COST ELSE 0 END) TOTAL_COST_08
+									,SUM(CASE WHEN DATE_FORMAT(COST_DATE, '%m') = '08' THEN CP_COST ELSE 0 END) CP_COST_08
+									,SUM(CASE WHEN DATE_FORMAT(COST_DATE, '%m') = '08' THEN TUTOR_COST ELSE 0 END) TUTOR_COST_08
+									,SUM(CASE WHEN DATE_FORMAT(COST_DATE, '%m') = '08' THEN TEACHER_COST ELSE 0 END) TEACHER_COST_08
+									,SUM(CASE WHEN DATE_FORMAT(COST_DATE, '%m') = '08' THEN COMPANY_COST ELSE 0 END) COMPANY_COST_08
+									,SUM(CASE WHEN DATE_FORMAT(COST_DATE, '%m') = '09' THEN TOTAL_COST ELSE 0 END) TOTAL_COST_09
+									,SUM(CASE WHEN DATE_FORMAT(COST_DATE, '%m') = '09' THEN CP_COST ELSE 0 END) CP_COST_09
+									,SUM(CASE WHEN DATE_FORMAT(COST_DATE, '%m') = '09' THEN TUTOR_COST ELSE 0 END) TUTOR_COST_09
+									,SUM(CASE WHEN DATE_FORMAT(COST_DATE, '%m') = '09' THEN TEACHER_COST ELSE 0 END) TEACHER_COST_09
+									,SUM(CASE WHEN DATE_FORMAT(COST_DATE, '%m') = '09' THEN COMPANY_COST ELSE 0 END) COMPANY_COST_09
+									,SUM(CASE WHEN DATE_FORMAT(COST_DATE, '%m') = '10' THEN TOTAL_COST ELSE 0 END) TOTAL_COST_10
+									,SUM(CASE WHEN DATE_FORMAT(COST_DATE, '%m') = '10' THEN CP_COST ELSE 0 END) CP_COST_10
+									,SUM(CASE WHEN DATE_FORMAT(COST_DATE, '%m') = '10' THEN TUTOR_COST ELSE 0 END) TUTOR_COST_10
+									,SUM(CASE WHEN DATE_FORMAT(COST_DATE, '%m') = '10' THEN TEACHER_COST ELSE 0 END) TEACHER_COST_10
+									,SUM(CASE WHEN DATE_FORMAT(COST_DATE, '%m') = '10' THEN COMPANY_COST ELSE 0 END) COMPANY_COST_10
+									,SUM(CASE WHEN DATE_FORMAT(COST_DATE, '%m') = '11' THEN TOTAL_COST ELSE 0 END) TOTAL_COST_11
+									,SUM(CASE WHEN DATE_FORMAT(COST_DATE, '%m') = '11' THEN CP_COST ELSE 0 END) CP_COST_11
+									,SUM(CASE WHEN DATE_FORMAT(COST_DATE, '%m') = '11' THEN TUTOR_COST ELSE 0 END) TUTOR_COST_11
+									,SUM(CASE WHEN DATE_FORMAT(COST_DATE, '%m') = '11' THEN TEACHER_COST ELSE 0 END) TEACHER_COST_11
+									,SUM(CASE WHEN DATE_FORMAT(COST_DATE, '%m') = '11' THEN COMPANY_COST ELSE 0 END) COMPANY_COST_11
+									,SUM(CASE WHEN DATE_FORMAT(COST_DATE, '%m') = '12' THEN TOTAL_COST ELSE 0 END) TOTAL_COST_12
+									,SUM(CASE WHEN DATE_FORMAT(COST_DATE, '%m') = '12' THEN CP_COST ELSE 0 END) CP_COST_12
+									,SUM(CASE WHEN DATE_FORMAT(COST_DATE, '%m') = '12' THEN TUTOR_COST ELSE 0 END) TUTOR_COST_12
+									,SUM(CASE WHEN DATE_FORMAT(COST_DATE, '%m') = '12' THEN TEACHER_COST ELSE 0 END) TEACHER_COST_12
+									,SUM(CASE WHEN DATE_FORMAT(COST_DATE, '%m') = '12' THEN COMPANY_COST ELSE 0 END) COMPANY_COST_12
+                            FROM	COST
+                            WHERE	DATE_FORMAT(COST_DATE, '%Y') = #{SEARCH_YEAR}
+                            GROUP 	BY COURSE_ID ) C ON C.COURSE_ID = A.COURSE_ID
+		            JOIN COURSE_MASTER D ON D.COURSE_CODE = B.COURSE_CODE
+		          	LEFT OUTER JOIN (
+                     	SELECT  A.COURSE_ID,
+                     			COUNT(*) CNT,
+                                SUM(CASE WHEN DATE_FORMAT(B.COST_DATE, '%m') = '01' THEN 1 ELSE 0 END) CNT_01,
+                                SUM(CASE WHEN DATE_FORMAT(B.COST_DATE, '%m') = '02' THEN 1 ELSE 0 END) CNT_02,
+                                SUM(CASE WHEN DATE_FORMAT(B.COST_DATE, '%m') = '03' THEN 1 ELSE 0 END) CNT_03,
+                                SUM(CASE WHEN DATE_FORMAT(B.COST_DATE, '%m') = '04' THEN 1 ELSE 0 END) CNT_04,
+                                SUM(CASE WHEN DATE_FORMAT(B.COST_DATE, '%m') = '05' THEN 1 ELSE 0 END) CNT_05,
+                                SUM(CASE WHEN DATE_FORMAT(B.COST_DATE, '%m') = '06' THEN 1 ELSE 0 END) CNT_06,
+                                SUM(CASE WHEN DATE_FORMAT(B.COST_DATE, '%m') = '07' THEN 1 ELSE 0 END) CNT_07,
+                                SUM(CASE WHEN DATE_FORMAT(B.COST_DATE, '%m') = '08' THEN 1 ELSE 0 END) CNT_08,
+                                SUM(CASE WHEN DATE_FORMAT(B.COST_DATE, '%m') = '09' THEN 1 ELSE 0 END) CNT_09,
+                                SUM(CASE WHEN DATE_FORMAT(B.COST_DATE, '%m') = '10' THEN 1 ELSE 0 END) CNT_10,
+                                SUM(CASE WHEN DATE_FORMAT(B.COST_DATE, '%m') = '11' THEN 1 ELSE 0 END) CNT_11,
+                                SUM(CASE WHEN DATE_FORMAT(B.COST_DATE, '%m') = '12' THEN 1 ELSE 0 END) CNT_12
+                     	FROM	COURSE_REGISTER A
+									JOIN COST B ON B.COURSE_ID = A.COURSE_ID AND B.SEQ = A.COST_SEQ
+                     	WHERE	STATUS = 'A'
+                        AND		DATE_FORMAT(B.COST_DATE, '%Y') = #{SEARCH_YEAR}
+                     	GROUP 	BY A.COURSE_ID ) E ON E.COURSE_ID = A.COURSE_ID
+                    LEFT OUTER JOIN COMPANY G ON G.COMP_CD = A.COMP_CD 
+		WHERE	1 = 1	
+		   <if test="LEVEL1_CODE != null and LEVEL1_CODE != ''"> AND CAT.C1_CODE = #{LEVEL1_CODE}</if>
+		   <if test="LEVEL2_CODE != null and LEVEL2_CODE != ''"> AND CAT.C2_CODE = #{LEVEL2_CODE}</if>
+		   <if test="LEVEL3_CODE != null and LEVEL3_CODE != ''"> AND CAT.C3_CODE = #{LEVEL3_CODE}</if>
+<if test="YEAR != null and YEAR != ''">
+		AND		A.YEAR = #{YEAR}
+</if>
+<if test="MONTH != null and MONTH != ''">
+		AND		A.MONTH = #{MONTH}
+</if>
+<if test="chasu != null and chasu != ''">
+		AND		A.CHASU = #{chasu}
+</if>
+<if test="courseName != null and courseName != ''"> 
+		AND ( UPPER(B.COURSE_CODE) LIKE CONCAT('%',UPPER(#{courseName}),'%') OR UPPER(B.COURSE_NAME) LIKE CONCAT('%',UPPER(#{courseName}),'%') )
+</if>		      
+<if test="COMPANY != null and COMPANY == 'B2C'">
+		AND 	IFNULL(A.COMP_CD,'B2C') = 'B2C'
+</if>
+<if test="COMPANY != null and COMPANY == 'B2B'">
+		AND 	IFNULL(A.COMP_CD,'B2C') != 'B2C'
+		AND 	IFNULL(G.C2C_YN,'N') = 'N'
+</if>
+<if test="COMPANY != null and COMPANY == 'C2C'">
+		AND 	IFNULL(A.COMP_CD,'B2C') != 'B2C'
+		AND 	IFNULL(G.C2C_YN,'N') = 'Y'
+</if>
+<if test="COMPANY2 != null and COMPANY2 != ''">
+		AND 	IFNULL(A.COMP_CD,'B2C') = #{COMPANY2}
+</if>
+		ORDER 	BY CAT.CATEGORY_NAME, B.COURSE_NAME, A.YEAR, A.MONTH, A.CHASU	
+	</select>	   
 </mapper>

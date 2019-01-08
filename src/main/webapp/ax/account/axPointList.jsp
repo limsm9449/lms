@@ -43,7 +43,17 @@ $(document.body).ready(function () {
                 grid.exportExcel("포인트관리.xls");
                 break;
             case "viewDetail":
-                alert("나중에 구현예정");
+            	var row = grid.getList("selected");
+            	if ( row.length == 0 ) {
+            		mask.open();
+            		dialog.alert( { msg : "사용자를 선택하셔야 합니다." }, function () { mask.close();	} );
+            	} else {
+	        		parent.document.getElementById("left").contentWindow.gfn_openMenu("axPointDetailList", { 
+	        				USER_ID : row[0].USER_ID
+		    			}
+		    		);
+            	}
+        		
                 break;
         }
     });
@@ -107,7 +117,7 @@ function fn_search() {
 	
 	fn_params();
 	
-	gfn_callAjax("/account/axPointList.do", params, fn_callbackAjax, "search");
+	gfn_callAjax("/point/axPointList.do", params, fn_callbackAjax, "search");
 }
 
 function fn_callbackAjax(data, id) {

@@ -55,6 +55,10 @@ function lfn_btn(pKind, pParam) {
 						alert("이메일주소가  존재합니다.\n다른 이메일주소를 입력하세요.");
 						btnBind("saveBtn");
 						$("#email").focus();
+					} else if ( json.rtnMode == "NOT_EXIST_USERID") {
+						alert("추천 아이디가 존재하지 않습니다.\n아이디를 확인해주세요.");
+						btnBind("saveBtn");
+						$("#recommendId").focus();
 					} else if ( json.rtnMode == "INSERT_OK") {
 						alert("정상적으로 회원가입이 되었습니다.\n발송된 이메일을 통해서 인증을 하셔야 로그인이 가능합니다.");
 						
@@ -315,6 +319,10 @@ function lfn_validate() {
                     <div class='certification_name clear_fix'>
                         <p>E-Mail</p>
                         <input type="text" name="email" id="email" value=""/>
+                    </div>
+                    <div class='certification_name clear_fix'>
+                        <p>추천ID</p>
+                        <input type='text' name='recommendId' id='recommendId' placeholder=''>
                     </div>
                     <div class='info_input_address clear_fix'>
                         <p>주소</p>

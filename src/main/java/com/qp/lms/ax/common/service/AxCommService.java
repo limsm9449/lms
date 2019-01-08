@@ -142,6 +142,9 @@ public class AxCommService {
 			} else if ( "AgainStudyDay".equals(ddKinds[i]) ) {
 				paramMap.put("OPTION_KEY", "AGAIN_STUDY_DAY");
 		    	hm.put(ddKinds[i], sqlSession.selectList("axComm.axDdSetting", paramMap));
+			} else if ( "PointKind".equals(ddKinds[i]) ) {
+				paramMap.put("DD_MAIN", "POINT_KIND");
+		    	hm.put(ddKinds[i], sqlSession.selectList("axComm.axDdCode", paramMap));
 			}
 		}
 		

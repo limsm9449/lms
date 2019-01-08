@@ -26,6 +26,14 @@
 		</if>			 
 		ORDER BY USER_NAME
 	</select>
+
+	<select id="axPointDetailList" resultType="hashmap">
+		SELECT 	A.*,
+				DATE_FORMAT(A.CREATE_DATE, '%y.%m.%d %H:%i') CREATE_DATE_STR
+		FROM 	POINT A
+		WHERE	USER_ID = #{USER_ID}
+		ORDER 	BY CREATE_DATE DESC
+	</select>
 	
 	
         

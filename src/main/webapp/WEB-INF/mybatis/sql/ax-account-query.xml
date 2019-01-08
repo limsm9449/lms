@@ -114,6 +114,7 @@
     	       BANK = #{BANK},
     	       ACC_NUM = #{ACC_NUM},
     	       CERTIFICATION_YN = #{CERTIFICATION_YN},
+    	       USER_PASSWORD = CASE WHEN #{PWD} != '' THEN SHA1(#{PWD}) ELSE USER_PASSWORD END,
     	       UPDATE_DATE = CURRENT_TIMESTAMP,
     	       UPDATE_USER = #{SESSION_USER_ID}
     	 WHERE USER_ID = #{USER_ID} 

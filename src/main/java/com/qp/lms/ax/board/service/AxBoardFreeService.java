@@ -76,6 +76,15 @@ public class AxBoardFreeService {
 			row.put("SESSION_USER_ID", SessionUtil.getSessionUserId());
 
 			if ( "Y".equals((String)row.get("NEW_FLAG")) ) {
+				//중복 체크
+				if ( SessionUtil.isTutor() ) {
+					int cnt = sqlSession.selectOne("axBoard.axBoardReplyCount", row);
+					if ( cnt >= 1 ) {
+						hm.put("RtnMode", Constant.mode.DUPLICATION.name());
+						return hm;
+					}
+				}
+				
 				sqlSession.insert("axBoard.axBoardReplyInsert", row);
 			} else {
 				sqlSession.update("axBoard.axBoardReplyUpdate", row);

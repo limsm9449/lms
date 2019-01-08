@@ -52,6 +52,9 @@ $(document.body).ready(function () {
             		mask.open();
             		dialog.alert( { msg : "과정을 선택하셔야 합니다." }, function () { mask.close();	} );
             		return;
+            	} else if ( row[0]["NEW_FLAG"] == "Y" ) {
+            		mask.open();
+            		dialog.alert( { msg : "신규로 추가한 경우는 저장후에 작업을 하셔야 합니다." }, function () { mask.close();	} );
             	}
             	
             	Popup.showMcbCompany();
@@ -68,6 +71,9 @@ $(document.body).ready(function () {
             		mask.open();
             		dialog.alert( { msg : "과정을 선택하셔야 합니다." }, function () { mask.close();	} );
             		return;
+            	} else if ( row[0]["NEW_FLAG"] == "Y" ) {
+            		mask.open();
+            		dialog.alert( { msg : "신규로 추가한 경우는 저장후에 작업을 하셔야 합니다." }, function () { mask.close();	} );
             	}
             	if ( row[0]["NEXT_CREATE_FLAG"] == "Y" ) {
             		mask.open();
@@ -92,6 +98,9 @@ $(document.body).ready(function () {
             	if ( row.length == 0 ) {
             		mask.open();
             		dialog.alert( { msg : "과정을 선택하셔야 합니다." }, function () { mask.close();	} );
+            	} else if ( row[0]["NEW_FLAG"] == "Y" ) {
+            		mask.open();
+            		dialog.alert( { msg : "신규로 추가한 경우는 저장후에 작업을 하셔야 합니다." }, function () { mask.close();	} );
             	} else {
             		var urlParams = "page=/ax/course/axCourseTutorPopup";
             		urlParams += "&COURSE_ID=" + row[0]["COURSE_ID"];
@@ -105,6 +114,9 @@ $(document.body).ready(function () {
             	if ( row.length == 0 ) {
             		mask.open();
             		dialog.alert( { msg : "과정을 선택하셔야 합니다." }, function () { mask.close();	} );
+            	} else if ( row[0]["NEW_FLAG"] == "Y" ) {
+            		mask.open();
+            		dialog.alert( { msg : "신규로 추가한 경우는 저장후에 작업을 하셔야 합니다." }, function () { mask.close();	} );
             	} else { 
             		var urlParams = "page=/ax/course/axCourseUserTutorPopup";
             		urlParams += "&COURSE_ID=" + row[0]["COURSE_ID"];
@@ -118,6 +130,9 @@ $(document.body).ready(function () {
             	if ( row.length == 0 ) {
             		mask.open();
             		dialog.alert( { msg : "과정을 선택하셔야 합니다." }, function () { mask.close();	} );
+            	} else if ( row[0]["NEW_FLAG"] == "Y" ) {
+            		mask.open();
+            		dialog.alert( { msg : "신규로 추가한 경우는 저장후에 작업을 하셔야 합니다." }, function () { mask.close();	} );
             	} else {
             		var urlParams = "page=/ax/course/axCourseContentsPopup";
             		urlParams += "&COURSE_ID=" + row[0]["COURSE_ID"];
@@ -131,6 +146,9 @@ $(document.body).ready(function () {
             	if ( row.length == 0 ) {
             		mask.open();
             		dialog.alert( { msg : "과정을 선택하셔야 합니다." }, function () { mask.close();	} );
+            	} else if ( row[0]["NEW_FLAG"] == "Y" ) {
+            		mask.open();
+            		dialog.alert( { msg : "신규로 추가한 경우는 저장후에 작업을 하셔야 합니다." }, function () { mask.close();	} );
             	} else {
             		var urlParams = "page=/ax/course/axCourseMasterImagePopup";
             		urlParams += "&COURSE_CODE=" + row[0]["COURSE_CODE"] + "&IS_VIEW=Y";
@@ -279,6 +297,11 @@ function fn_makeGrid() {
 	            formatter : function () {
 	                return checkThousand(this.item.AGAIN_STUDY_DAY);
 	           	}
+	        },{
+	            key : "OFFLINE_YN",
+	            label : "오프라인",
+	            width : 80,
+	            align : "center"
 	        },{
               	key : undefined, 
               	label: "교육비지원", 
@@ -794,7 +817,21 @@ function fn_gridEvent(event, obj) {
 				obj.key == "REPORT_RATE" ||
 				obj.key == "EXAM_RATE" ||
 				obj.key == "DISCUSSION_RATE" ||
-				obj.key == "PROGRESS_RATE" ) {
+				obj.key == "PROGRESS_RATE" ||
+				obj.key == "TERM_YN" ) {
+
+			if ( obj.key == "TERM_YN" ) {
+				if ( obj.item["TERM_YN"] == "Y" ) {
+					grid.setValue(obj.item["__index"], "C_PERIOD", "0");
+				} else {
+					grid.setValue(obj.item["__index"], "TERM_PERIOD_FROM", "");
+					grid.setValue(obj.item["__index"], "TERM_PERIOD_TO", "");
+					grid.setValue(obj.item["__index"], "STUDY_PERIOD_FROM", "");
+					grid.setValue(obj.item["__index"], "STUDY_PERIOD_TO", "");
+					grid.setValue(obj.item["__index"], "C_PERIOD", "30");
+				}
+			}
+			
 			grid.repaint();
 		}
 	}

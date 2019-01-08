@@ -136,19 +136,19 @@
 		       	,C.C_PERIOD
 		       	,IFNULL(C.STUDY_PERIOD_FROM, '') STUDY_PERIOD_FROM
                 ,IFNULL(C.STUDY_PERIOD_TO, '') STUDY_PERIOD_TO
-		       	,CASE WHEN IFNULL(F.EVAL, 0) > 0 AND IFNULL(F.EVAL, 0) <= 0.5 THEN 'star_active5'
+		       	,CASE WHEN IFNULL(F.EVAL, 0) > 0 AND IFNULL(F.EVAL, 0) <= 0.5 THEN 'star_half'
 					 WHEN IFNULL(F.EVAL, 0) > 0.5 THEN 'star_active'
                      ELSE 'star_inactive' END GRADE1
-                ,CASE WHEN IFNULL(F.EVAL, 0) > 1 AND IFNULL(F.EVAL, 0) <= 1.5 THEN 'star_active5'
+                ,CASE WHEN IFNULL(F.EVAL, 0) > 1 AND IFNULL(F.EVAL, 0) <= 1.5 THEN 'star_half'
 					 WHEN IFNULL(F.EVAL, 0) > 1.5 THEN 'star_active'
                      ELSE 'star_inactive' END GRADE2
-                ,CASE WHEN IFNULL(F.EVAL, 0) > 2 AND IFNULL(F.EVAL, 0) <= 2.5 THEN 'star_active5'
+                ,CASE WHEN IFNULL(F.EVAL, 0) > 2 AND IFNULL(F.EVAL, 0) <= 2.5 THEN 'star_half'
 					 WHEN IFNULL(F.EVAL, 0) > 2.5 THEN 'star_active'
                      ELSE 'star_inactive' END GRADE3
-                ,CASE WHEN IFNULL(F.EVAL, 0) > 3 AND IFNULL(F.EVAL, 0) <= 3.5 THEN 'star_active5'
+                ,CASE WHEN IFNULL(F.EVAL, 0) > 3 AND IFNULL(F.EVAL, 0) <= 3.5 THEN 'star_half'
 					 WHEN IFNULL(F.EVAL, 0) > 3.5 THEN 'star_active'
                      ELSE 'star_inactive' END GRADE4
-                ,CASE WHEN IFNULL(F.EVAL, 0) > 4 AND IFNULL(F.EVAL, 0) <= 4.5 THEN 'star_active5'
+                ,CASE WHEN IFNULL(F.EVAL, 0) > 4 AND IFNULL(F.EVAL, 0) <= 4.5 THEN 'star_half'
 					 WHEN IFNULL(F.EVAL, 0) > 4.5 THEN 'star_active'
                      ELSE 'star_inactive' END GRADE5
 		FROM 	COURSE_REGISTER CR

@@ -101,6 +101,7 @@ function fn_makeGrid() {
 
 function fn_params() {
 	params.COURSE_ID = gfn_getUrlParams("COURSE_ID");
+	params.SEQ = gfn_getUrlParams("SEQ");
 	params.TUTOR_ID = $("#CB_TUTOR option:selected").val();	
 }
 

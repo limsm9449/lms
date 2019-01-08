@@ -9,7 +9,6 @@ SELECT PAGE.* FROM ( SELECT DATA.* FROM (
 	SELECT A.SEQ,
 	       A.TITLE,
 	       A.USER_ID,
-	       A.USER_IP,
 	       B.USER_NAME,
 	       A.VIEW_CNT,
 	       DATE_FORMAT(IFNULL(A.UPDATE_DATE,A.CREATE_DATE), '%y.%m.%d %H:%i') CREATE_DATE,
@@ -35,7 +34,6 @@ SELECT A.SEQ,
        A.TITLE,
        A.CONTENTS,
        A.USER_ID,
-       A.USER_IP,
        B.USER_NAME,
        A.VIEW_CNT,	
        DATE_FORMAT(IFNULL(A.UPDATE_DATE,A.CREATE_DATE), '%y.%m.%d %H:%i') CREATE_DATE
@@ -44,8 +42,8 @@ SELECT A.SEQ,
 </select>
     
 <select id="boardFreeIns" parameterType="Board">
-INSERT INTO BOARD_FREE (COURSE_ID,TITLE,CONTENTS,USER_ID,USER_IP,VIEW_CNT,CREATE_DATE)
-VALUES (#{courseId},#{title},#{contents},#{userId},#{userIp},0,CURRENT_TIMESTAMP)
+INSERT INTO BOARD_FREE (COURSE_ID,TITLE,CONTENTS,USER_ID,VIEW_CNT,CREATE_DATE)
+VALUES (#{courseId},#{title},#{contents},#{userId},0,CURRENT_TIMESTAMP)
 </select>	
   
 <select id="boardFreeUpd" parameterType="Board">

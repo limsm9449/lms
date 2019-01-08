@@ -66,19 +66,19 @@
                 ,IFNULL(A.STUDY_PERIOD_FROM, '') STUDY_PERIOD_FROM
                 ,IFNULL(A.STUDY_PERIOD_TO, '') STUDY_PERIOD_TO
                 ,IFNULL(ROUND(F.GRADE, 1), 0) GRADE
-                ,CASE WHEN IFNULL(F.GRADE, 0) > 0 AND IFNULL(F.GRADE, 0) <![CDATA[<=]]> 0.5 THEN 'star_active5'
+                ,CASE WHEN IFNULL(F.GRADE, 0) > 0 AND IFNULL(F.GRADE, 0) <![CDATA[<=]]> 0.5 THEN 'star_half'
 					 WHEN IFNULL(F.GRADE, 0) > 0.5 THEN 'star_active'
                      ELSE 'star_inactive' END GRADE1
-                ,CASE WHEN IFNULL(F.GRADE, 0) > 1 AND IFNULL(F.GRADE, 0) <![CDATA[<=]]> 1.5 THEN 'star_active5'
+                ,CASE WHEN IFNULL(F.GRADE, 0) > 1 AND IFNULL(F.GRADE, 0) <![CDATA[<=]]> 1.5 THEN 'star_half'
 					 WHEN IFNULL(F.GRADE, 0) > 1.5 THEN 'star_active'
                      ELSE 'star_inactive' END GRADE2
-                ,CASE WHEN IFNULL(F.GRADE, 0) > 2 AND IFNULL(F.GRADE, 0) <![CDATA[<=]]> 2.5 THEN 'star_active5'
+                ,CASE WHEN IFNULL(F.GRADE, 0) > 2 AND IFNULL(F.GRADE, 0) <![CDATA[<=]]> 2.5 THEN 'star_half'
 					 WHEN IFNULL(F.GRADE, 0) > 2.5 THEN 'star_active'
                      ELSE 'star_inactive' END GRADE3
-                ,CASE WHEN IFNULL(F.GRADE, 0) > 3 AND IFNULL(F.GRADE, 0) <![CDATA[<=]]> 3.5 THEN 'star_active5'
+                ,CASE WHEN IFNULL(F.GRADE, 0) > 3 AND IFNULL(F.GRADE, 0) <![CDATA[<=]]> 3.5 THEN 'star_half'
 					 WHEN IFNULL(F.GRADE, 0) > 3.5 THEN 'star_active'
                      ELSE 'star_inactive' END GRADE4
-                ,CASE WHEN IFNULL(F.GRADE, 0) > 4 AND IFNULL(F.GRADE, 0) <![CDATA[<=]]> 4.5 THEN 'star_active5'
+                ,CASE WHEN IFNULL(F.GRADE, 0) > 4 AND IFNULL(F.GRADE, 0) <![CDATA[<=]]> 4.5 THEN 'star_half'
 					 WHEN IFNULL(F.GRADE, 0) > 4.5 THEN 'star_active'
                      ELSE 'star_inactive' END GRADE5
                 ,IFNULL(F.GRADE_CNT, 0) GRADE_CNT
@@ -285,19 +285,19 @@
 		       	B.V_Px,
 			   	(SELECT COUNT(*) FROM COURSE_REGISTER WHERE COURSE_ID = A.COURSE_ID AND USER_ID = #{userId} AND STATUS = 'A') CNT,
                 IFNULL(ROUND(D.GRADE, 1), 0) GRADE,
-                CASE WHEN IFNULL(D.GRADE, 0) > 0 AND IFNULL(D.GRADE, 0) <![CDATA[<=]]> 0.5 THEN 'star_active5'
+                CASE WHEN IFNULL(D.GRADE, 0) > 0 AND IFNULL(D.GRADE, 0) <![CDATA[<=]]> 0.5 THEN 'star_half'
 					 WHEN IFNULL(D.GRADE, 0) > 0.5 THEN 'star_active'
                      ELSE 'star_inactive' END GRADE1,
-                CASE WHEN IFNULL(D.GRADE, 0) > 1 AND IFNULL(D.GRADE, 0) <![CDATA[<=]]> 1.5 THEN 'star_active5'
+                CASE WHEN IFNULL(D.GRADE, 0) > 1 AND IFNULL(D.GRADE, 0) <![CDATA[<=]]> 1.5 THEN 'star_half'
 					 WHEN IFNULL(D.GRADE, 0) > 1.5 THEN 'star_active'
                      ELSE 'star_inactive' END GRADE2,
-                CASE WHEN IFNULL(D.GRADE, 0) > 2 AND IFNULL(D.GRADE, 0) <![CDATA[<=]]> 2.5 THEN 'star_active5'
+                CASE WHEN IFNULL(D.GRADE, 0) > 2 AND IFNULL(D.GRADE, 0) <![CDATA[<=]]> 2.5 THEN 'star_half'
 					 WHEN IFNULL(D.GRADE, 0) > 2.5 THEN 'star_active'
                      ELSE 'star_inactive' END GRADE3,
-                CASE WHEN IFNULL(D.GRADE, 0) > 3 AND IFNULL(D.GRADE, 0) <![CDATA[<=]]> 3.5 THEN 'star_active5'
+                CASE WHEN IFNULL(D.GRADE, 0) > 3 AND IFNULL(D.GRADE, 0) <![CDATA[<=]]> 3.5 THEN 'star_half'
 					 WHEN IFNULL(D.GRADE, 0) > 3.5 THEN 'star_active'
                      ELSE 'star_inactive' END GRADE4,
-                CASE WHEN IFNULL(D.GRADE, 0) > 4 AND IFNULL(D.GRADE, 0) <![CDATA[<=]]> 4.5 THEN 'star_active5'
+                CASE WHEN IFNULL(D.GRADE, 0) > 4 AND IFNULL(D.GRADE, 0) <![CDATA[<=]]> 4.5 THEN 'star_half'
 					 WHEN IFNULL(D.GRADE, 0) > 4.5 THEN 'star_active'
                      ELSE 'star_inactive' END GRADE5,
                 IFNULL(D.GRADE_CNT, 0) GRADE_CNT,
@@ -515,19 +515,19 @@
 		       	B.V_Px,
 			   	(SELECT COUNT(*) FROM COURSE_REGISTER WHERE COURSE_ID = A.COURSE_ID AND USER_ID = #{userId} AND STATUS = 'A') CNT,
                 IFNULL(ROUND(D.GRADE, 1), 0) GRADE,
-                CASE WHEN IFNULL(GRADE, 0) > 0 AND IFNULL(GRADE, 0) <![CDATA[<=]]> 0.5 THEN 'star_active5'
+                CASE WHEN IFNULL(GRADE, 0) > 0 AND IFNULL(GRADE, 0) <![CDATA[<=]]> 0.5 THEN 'star_half'
 					 WHEN IFNULL(GRADE, 0) > 0.5 AND IFNULL(GRADE, 0) <![CDATA[<=]]> 1 THEN 'star_active'
                      ELSE 'star_inactive' END GRADE1,
-                CASE WHEN IFNULL(GRADE, 0) > 1 AND IFNULL(GRADE, 0) <![CDATA[<=]]> 1.5 THEN 'star_active5'
+                CASE WHEN IFNULL(GRADE, 0) > 1 AND IFNULL(GRADE, 0) <![CDATA[<=]]> 1.5 THEN 'star_half'
 					 WHEN IFNULL(GRADE, 0) > 1.5 AND IFNULL(GRADE, 0) <![CDATA[<=]]> 2 THEN 'star_active'
                      ELSE 'star_inactive' END GRADE2,
-                CASE WHEN IFNULL(GRADE, 0) > 2 AND IFNULL(GRADE, 0) <![CDATA[<=]]> 2.5 THEN 'star_active5'
+                CASE WHEN IFNULL(GRADE, 0) > 2 AND IFNULL(GRADE, 0) <![CDATA[<=]]> 2.5 THEN 'star_half'
 					 WHEN IFNULL(GRADE, 0) > 2.5 AND IFNULL(GRADE, 0) <![CDATA[<=]]> 3 THEN 'star_active'
                      ELSE 'star_inactive' END GRADE3,
-                CASE WHEN IFNULL(GRADE, 0) > 3 AND IFNULL(GRADE, 0) <![CDATA[<=]]> 3.5 THEN 'star_active5'
+                CASE WHEN IFNULL(GRADE, 0) > 3 AND IFNULL(GRADE, 0) <![CDATA[<=]]> 3.5 THEN 'star_half'
 					 WHEN IFNULL(GRADE, 0) > 3.5 AND IFNULL(GRADE, 0) <![CDATA[<=]]> 4 THEN 'star_active'
                      ELSE 'star_inactive' END GRADE4,
-                CASE WHEN IFNULL(GRADE, 0) > 4 AND IFNULL(GRADE, 0) <![CDATA[<=]]> 4.5 THEN 'star_active5'
+                CASE WHEN IFNULL(GRADE, 0) > 4 AND IFNULL(GRADE, 0) <![CDATA[<=]]> 4.5 THEN 'star_half'
 					 WHEN IFNULL(GRADE, 0) > 4.5 AND IFNULL(GRADE, 0) <![CDATA[<=]]> 5 THEN 'star_active'
                      ELSE 'star_inactive' END GRADE5,
                 IFNULL(D.GRADE_CNT, 0) GRADE_CNT,

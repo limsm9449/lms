@@ -46,11 +46,13 @@ $(document.body).ready(function () {
    		$("#attachFrame").attr("src","/board/attachV.do?" + "pSeq=" + SEQ + "&kind=" + KIND);
    		
    		//조회수 증가
+   		/*
    		var saveParams = {
  				MODE : "VIEW",
  				SEQ : SEQ
  		};
  		gfn_callAjax("/board/axBoardDataSave.do", saveParams, fn_callbackAjax, "-");
+ 		*/
    	}
 }); 
 

@@ -29,11 +29,6 @@ $(document.body).ready(function () {
 		gfn_gridResize("grid-parent", grid);
 	} );
 
-	$("#FROM_DT").val(gfn_currentDay(null, "-").substring(0,8) + "01");		
-	$("#TO_DT").val(gfn_currentDay(null, "-"));		
-	gfn_initDatepicker("FROM_DT");
-	gfn_initDatepicker("TO_DT");
-	
     confirmDialog.setConfig({
         theme: "danger"
     });
@@ -45,8 +40,18 @@ $(document.body).ready(function () {
 	        case "search":
 	            fn_search();
 	            break;
+	        case "save":
+	        	var row = grid.getList("selected");
+            	if ( row.length == 0 ) {
+            		mask.open(); 
+            		dialog.alert( { msg : "과정을 선택하셔야 합니다." }, function () { mask.close();	} );
+            	} else {
+                	fn_save();
+            	}
+	        	
+	            break;
             case "export":
-                grid.exportExcel("입금관리.xls");
+                grid.exportExcel("정산현황관리.xls");
                 break;
         }
     });
@@ -85,21 +90,16 @@ function fn_makeGrid() {
 	            width : 50,
 	            align : "right"
 	        },{
-	            key : "COST_DATE",
-	            label : "부분 정산일",
-	            width : 100,
-	            align : "center"
-	        },{
 	        	key : "COMP_CD", 
 	        	label : "회사", 
 	            width : 100,
 	        	align : "center", 
 	        	editor: {
-                    type : "select", 
-                    config : {
-                        columnKeys: { optionValue: "value", optionText: "text" },
-                        options: dd.Company
-                    },
+	                type : "select", 
+	                config : {
+	                    columnKeys: { optionValue: "value", optionText: "text" },
+	                    options: dd.Company
+	                },
 	            	disabled : function () {
 	                    return true;
 	                }
@@ -108,33 +108,137 @@ function fn_makeGrid() {
 	                return gfn_getValueInList(dd.Company, "value",  this.item.COMP_CD, "text");
 	           	}
 	        },{
-	            key : "USER_CNT",
-	            label : "수강생",
-	            width : 70,
-	            align : "right"
+	            key : undefined,
+	            label : "수강생", 
+              	columns: [	        
+			        {
+			        	key : "USER_CNT",
+			            label : "총 인원",
+			            width : 80,
+			            align : "right",
+			            formatter : function () {
+			                return checkThousand(this.item.USER_CNT);
+			           	}
+			        },{
+			        	key : "COST_USER_CNT",
+			            label : "정산",
+			            width : 80,
+			            align : "right",
+			            formatter : function () {
+			                return checkThousand(this.item.COST_USER_CNT);
+			           	}
+			        },{
+			        	key : "NOT_COST_USER_CNT",
+			            label : "미정산",
+			            width : 80,
+			            align : "right",
+			            formatter : function () {
+			                return checkThousand(this.item.NOT_COST_USER_CNT);
+			           	}
+			        }
+			  	]
 	        },{
-	        	key : "COST", 
-	        	label : "금액", 
-	            width : 120,
-	        	align : "right",
-	            formatter : function () {
-	                return checkThousand(this.item.COST);
-	           	}
-	        },{
-	        	key : "BANK", 
-	        	label : "은행", 
-	            width : 100, 
-	        	align : "left"
-	        },{
-	        	key : "ACC_NUM", 
-	        	label : "계좌번호", 
-	            width : 200,
-	        	align : "left"
-	        },{
-	        	key : "PAYMENT_DATE",
-	            label : "지급일",
-	            width : 110,
-	            align : "center"
+              	key : undefined, 
+              	label: "정산 비용", 
+              	columns: [	        
+			        {
+			        	key : "CP_COST_RATE",
+			            label : "CP 비용 비율(%)",
+			            width : 130,
+			            align : "right",
+			            editor : { 
+			            	type : "number",
+			            	disabled : function () {
+		                        return ( parseInt(this.item.ORG_CP_COST_RATE) > 0 ? false : true ); 
+		                    }
+						},
+						styleClass: function () {
+		                    return ( parseInt(this.item.ORG_CP_COST_RATE) > 0 ? "grid-cell-edit" : "");
+		                }
+			        },{
+			            key : "TEACHER_COST_RATE",
+			            label : "강사 비용 비율(%)",
+			            width : 130,
+			            align : "right",
+			            editor : { 
+			            	type : "number",
+			            	disabled : function () {
+		                        return ( parseInt(this.item.ORG_TEACHER_COST_RATE) > 0 ? false : true );
+		                    }
+						},
+						styleClass: function () {
+		                    return ( parseInt(this.item.ORG_TEACHER_COST_RATE) > 0 ? "grid-cell-edit" : "");
+		                }
+			        },{
+			            key : "REPORT_COST",
+			            label : "레포트 비용",
+			            width : 100,
+			            align : "right",
+			            editor : { 
+			            	type : "number",
+			            	disabled : function () {
+		                        return ( parseInt(this.item.ORG_REPORT_COST) > 0 ? false : true );
+		                    }
+						},
+						styleClass: function () {
+		                    return ( parseInt(this.item.ORG_REPORT_COST) > 0 ? "grid-cell-edit" : "");
+		                },
+			            formatter : function () {
+			                return checkThousand(this.item.REPORT_COST);
+			           	}
+			        },{
+			            key : "EVAL_COST",
+			            label : "평가비용",
+			            width : 80,
+			            align : "right",
+			            editor : { 
+			            	type : "number",
+			            	disabled : function () {
+		                        return ( parseInt(this.item.ORG_EVAL_COST) > 0 ? false : true );
+		                    }
+						},
+						styleClass: function () {
+		                    return ( parseInt(this.item.ORG_EVAL_COST) > 0 ? "grid-cell-edit" : "");
+		                },
+			            formatter : function () {
+			                return checkThousand(this.item.EVAL_COST);
+			           	}
+			        },{
+			            key : "DATA_COST",
+			            label : "자료실 건당 비용",
+			            width : 120,
+			            align : "right",
+			            editor : { 
+			            	type : "number",
+			            	disabled : function () {
+		                        return ( parseInt(this.item.ORG_DATA_COST) > 0 ? false : true );
+		                    }
+						},
+						styleClass: function () {
+		                    return ( parseInt(this.item.ORG_DATA_COST) > 0 ? "grid-cell-edit" : "");
+		                },
+			            formatter : function () {
+			                return checkThousand(this.item.DATA_COST);
+			           	}
+			        },{
+			            key : "ANSWER_COST",
+			            label : "답변 건당 비용",
+			            width :100,
+			            align : "right",
+			            editor : { 
+			            	type : "number",
+			            	disabled : function () {
+		                        return ( parseInt(this.item.ORG_ANSWER_COST) > 0 ? false : true );
+		                    }
+						},
+						styleClass: function () {
+		                    return ( parseInt(this.item.ORG_ANSWER_COST) > 0 ? "grid-cell-edit" : "");
+		                },
+			            formatter : function () {
+			                return checkThousand(this.item.ANSWER_COST);
+			           	}
+			        }
+		        ]
 	        }	], 
 	  	null,
 	  	{
@@ -147,8 +251,6 @@ function fn_makeGrid() {
 } 
 
 function fn_params() {
-	params.FROM_DT = $("#FROM_DT").val();	
-	params.TO_DT = $("#TO_DT").val();	
 	params.LEVEL1_CODE = $("#CB_LEVEL1 option:selected").val();	
 	params.LEVEL2_CODE = $("#CB_LEVEL2 option:selected").val();	
 	params.LEVEL3_CODE = $("#CB_LEVEL3 option:selected").val();	
@@ -165,11 +267,36 @@ function fn_search() {
 	
 	fn_params();
 	
-	gfn_callAjax("/cost/axIncomeList.do", params, fn_callbackAjax, "search");
+	gfn_callAjax("/cost/axCostCalcStatusList.do", params, fn_callbackAjax, "search");
+}
+
+function fn_save() {
+   	mask.open();
+   	
+   	var row = grid.getList("selected");
+   	
+   	confirmDialog.confirm(
+   		{
+           	title: "Confirm",
+           	msg: '부분 정산을 하시겠습니까?'
+       	}, 
+       	function(){
+         	if ( this.key == "ok" ) {
+         		gfn_callAjax("/cost/axCostCalcStatusSave.do", row[0], fn_callbackAjax, "save");
+           	} else {
+           		mask.close();
+           	}
+       	}
+   	);
 }
 
 function fn_callbackAjax(data, id) {
-	//console.log("fn_callbackAjax : " + id);
+	if ( data.RtnMode == "ERROR" ) {
+		mask.open();
+		dialog.alert( { msg : "처리시 오류가 발생했습니다. 관리자에게 문의하세요." }, function () { mask.close();	fn_search(); } );
+		return;
+	}
+	
 	if ( id == "search" ) {
 		list = data.list;
 		grid.setData(data.list);
@@ -177,7 +304,7 @@ function fn_callbackAjax(data, id) {
 		//mask.close();
 	} else if ( id == "dd" ){
 		dd = $.extend({}, data);
-		
+
 		gfn_cbRefresh("CB_COMPANY", data.CompanyKind, true);
 		gfn_cbRefresh("CB_LEVEL1", data.CategoryLevel1, true);
 
@@ -190,12 +317,17 @@ function fn_callbackAjax(data, id) {
 		gfn_cbRefresh("CB_LEVEL2", data.CategoryLevel2, true);
 	} else if ( id == "CB_LEVEL2" ){
 		gfn_cbRefresh("CB_LEVEL3", data.CategoryLevel3, true);
-	}
+	} else if ( id == "save" ){
+		mask.close();
+
+		mask.open();
+		dialog.alert( { msg : "정산 데이타가 생성 되었습니다." }, function () { mask.close();	fn_search(); } );
+	} 
 }
 
 function fn_gridEvent(event, obj) {
 	if ( event == "Click" ) {
-		//obj.self.select(obj.dindex);
+		obj.self.select(obj.dindex);
 	}
 }
 
@@ -222,7 +354,7 @@ function fn_cbChange(id) {
 
 <form id="frm" name="frm" method="post">
 
-<h2>수입 관리</h2>
+<h2>정산 현황 관리</h2>
 <div style="height:10px"></div>
 
 <div class="form-inline">
@@ -278,17 +410,13 @@ function fn_cbChange(id) {
 			<option value="">전체</option>
 		</select>
   	</div>
-  	<div class="form-group">
-    	<label for="courseName">&nbsp;일자</label>
-	   	<input id="FROM_DT" name="FROM_DT" maxlength="10" size="10" class="form-control datePicker" value="" readonly/> ~ 
-		<input id="TO_DT" name="TO_DT" maxlength="10" size="10" class="form-control datePicker" value="" readonly/>
-  	</div>
 </div>
 
 <div style="height:10px"></div>
 
 <div>
     <button class="btn btn-default" data-grid-control="search">검색</button>
+    <button class="btn btn-default" data-grid-control="save">부분 정산</button>
     <button class="btn btn-default" data-grid-control="export">엑셀</button>
 </div> 
 

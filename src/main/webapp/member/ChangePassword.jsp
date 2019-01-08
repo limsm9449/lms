@@ -44,6 +44,7 @@ function lfn_btn(pKind, pParam) {
 					if ( json.rtnMode == "PASSWORD_ERROR") {
 						alert("기존 비밀번호가 틀립니다.");
 						$("#userPassword").focus();
+						btnBind("saveBtn");
 					} else if ( json.rtnMode == "PASSWORD_OK") {
 						alert("비밀번호가 변경되었습니다.");
 						page.goHome();

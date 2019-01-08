@@ -11,13 +11,12 @@ SELECT A.SEQ,
        A.P_SEQ,
        A.CONTENTS,
        A.USER_ID,
-       A.USER_IP,
        B.USER_NAME,
        DATE_FORMAT(IFNULL(A.UPDATE_DATE,A.CREATE_DATE), '%y.%m.%d %H:%i') UPDATE_DATE
   FROM REPLY A LEFT OUTER JOIN USER B ON A.USER_ID = B.USER_ID
  WHERE A.KIND = #{kind}
    AND A.P_SEQ = #{pSeq}  
- ORDER BY 8 DESC
+ ORDER BY IFNULL(A.UPDATE_DATE,A.CREATE_DATE) DESC
 </select>	
 
 <select id="replyData" parameterType="Reply" resultType="Reply">
@@ -28,8 +27,8 @@ SELECT SEQ,
 </select>	
 
 <select id="replyIns" parameterType="Reply">
-INSERT INTO REPLY (KIND,P_SEQ,CONTENTS,USER_ID,USER_IP,CREATE_DATE)
-VALUES (#{kind},#{pSeq},#{contents},#{userId},#{userIp},CURRENT_TIMESTAMP)
+INSERT INTO REPLY (KIND,P_SEQ,CONTENTS,USER_ID,CREATE_DATE)
+VALUES (#{kind},#{pSeq},#{contents},#{userId},CURRENT_TIMESTAMP)
 </select>	
     
 <select id="replyUpd" parameterType="Reply">
