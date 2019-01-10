@@ -95,5 +95,14 @@
 		WHERE	COURSE_ID = #{courseId}
 	 	AND 	USER_ID = #{userId}
 	</update>
+
+    <insert id="postscriptPointInsert" parameterType="Member">
+    	INSERT INTO POINT ( USER_ID, POINT_DATE, VALID_DATE, POINT_CODE, IN_POINT, REF_ID )
+	    VALUES ( #{userId}, CURRENT_TIMESTAMP, 
+	    			DATE_ADD(CURRENT_TIMESTAMP, INTERVAL (SELECT VALID_MONTH FROM POINT_CODE WHERE POINT_CODE = 'POSTSCRIPT') MONTH),
+	    			'POSTSCRIPT', 
+	    			(SELECT POINT FROM POINT_CODE WHERE POINT_CODE = 'POSTSCRIPT'), #{courseId} )
+    </insert>
+
 	
 </mapper>

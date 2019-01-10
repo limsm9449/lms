@@ -129,9 +129,11 @@
 	 </select>
 	        
 	<select id="userPoint" parameterType="Pg" resultType="Pg">
-		SELECT IFNULL(SUM(IN_POINT - OUT_POINT),0) POINT 
-		  FROM POINT
-		 WHERE USER_ID = #{userId}
+		SELECT 	IFNULL(SUM(CASE WHEN VALID_DATE >= CURDATE() THEN IN_POINT - IN_POINT_USE ELSE 0 END), 0) POINT 
+		FROM 	POINT
+		WHERE 	USER_ID = #{userId}
+		AND		CASE WHEN POINT_CODE IN ('COURSE','COURSE_EVENT') THEN DATE_ADD(CURRENT_TIMESTAMP, INTERVAL 15 DAY) ELSE POINT_DATE END <![CDATA[<]]> CURRENT_TIMESTAMP
+		AND		USE_YN = 'Y'
 	</select>
 
 	<select id="courseTutors" parameterType="Pg" resultType="Pg">
@@ -226,5 +228,95 @@
 		       	UPDATE_USER = #{userId}
 	     WHERE 	APPROVAL_ID = #{approvalId}
 	</update>          
-	          
+
+    <insert id="coursePointInsert" parameterType="pg">
+    	INSERT INTO POINT ( USER_ID, POINT_DATE, VALID_DATE, POINT_CODE, IN_POINT, REF_ID, REF_ID2 )
+	    VALUES ( #{userId}, CURRENT_TIMESTAMP, 
+	    			DATE_ADD(CURRENT_TIMESTAMP, INTERVAL (SELECT VALID_MONTH FROM POINT_CODE WHERE POINT_CODE = 'COURSE') MONTH), 
+	    			'COURSE',
+	    			(SELECT POINT FROM POINT_CODE WHERE POINT_CODE = 'COURSE') * (SELECT COURSE_COST FROM COURSE WHERE COURSE_ID = #{courseId}) / 100,
+	    			#{courseId},
+	    			#{approvalId} )
+    </insert>
+
+    <insert id="paymentPointInsert" parameterType="pg">
+    	INSERT INTO POINT ( USER_ID, POINT_DATE, VALID_DATE, POINT_CODE, OUT_POINT, REF_ID2 )
+	    VALUES ( #{userId}, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 'PAYMENT', #{paymentPoint}, #{approvalId} )
+    </insert>
+
+	<select id="userValidPoint" parameterType="Pg" resultType="Pg">
+		SELECT 	SEQ
+				,IN_POINT
+				,IN_POINT_USE
+		FROM 	POINT
+		WHERE 	USER_ID = #{userId}
+		AND		VALID_DATE >= CURDATE()
+		AND		IN_POINT - IN_POINT_USE > 0
+		AND		USE_YN = 'Y'
+		ORDER 	BY POINT_DATE
+	</select>
+
+	<update id="pointUpdate" parameterType="Pg">
+		UPDATE 	POINT
+		SET 	IN_POINT_USE = #{inPointUse}
+		WHERE 	SEQ = #{seq}
+	</update>
+
+    <insert id="pointLogInsert" parameterType="pg">
+    	INSERT INTO POINT_USE_LOG ( REF_ID2, POINT_SEQ, USE_POINT  )
+	    VALUES ( #{approvalId}, #{seq}, #{usePoint}  )
+    </insert>
+
+	<select id="userPointLog" parameterType="Pg" resultType="Pg">
+		SELECT 	*
+		FROM 	POINT_USE_LOG
+		WHERE 	REF_ID2 = #{approvalId}
+	</select>
+
+	<update id="userPointUseBackUpdate" parameterType="Pg">
+		UPDATE 	POINT
+		SET 	IN_POINT_USE = IN_POINT_USE - #{usePoint}
+		WHERE 	SEQ = #{pointSeq}
+	</update>
+
+	<update id="userPointDeleteUpdate" parameterType="Pg">
+		UPDATE 	POINT
+		SET 	USE_YN = 'N'
+		WHERE 	USER_ID = #{userId}
+		AND		REF_ID2 = #{approvalId}
+	</update>
+
+	<select id="approvalUserId" parameterType="Pg" resultType="String">
+		SELECT 	USER_ID
+		FROM 	APPROVAL
+		WHERE 	APPROVAL_ID = #{approvalId}
+	</select>
+
+	<update id="userPointUseBackCancelUpdate" parameterType="Pg">
+		UPDATE 	POINT
+		SET 	IN_POINT_USE = IN_POINT_USE + #{usePoint}
+		WHERE 	SEQ = #{pointSeq}
+	</update>
+
+	<update id="userPointDeleteCancelUpdate" parameterType="Pg">
+		UPDATE 	POINT
+		SET 	USE_YN = 'Y'
+		WHERE 	USER_ID = #{userId}
+		AND		REF_ID2 = #{approvalId}
+	</update>
+    
+    <insert id="courseEventPointInsert" parameterType="pg">
+    	INSERT INTO POINT ( USER_ID, POINT_DATE, VALID_DATE, POINT_CODE, IN_POINT, REF_ID, REF_ID2 )
+    	SELECT 	#{userId}
+    			,CURRENT_TIMESTAMP
+    			,DATE_ADD(CURRENT_TIMESTAMP, INTERVAL EVENT_POINT_MONTH MONTH)
+    			,'COURSE_EVENT'
+    			,EVENT_POINT
+    			,COURSE_ID
+    			,#{approvalId}
+    	FROM	COURSE
+    	WHERE 	COURSE_ID = #{courseId}
+    	AND		CURRENT_TIMESTAMP BETWEEN EVENT_POINT_FROM AND EVENT_POINT_TO
+    </insert>
+    
 </mapper>

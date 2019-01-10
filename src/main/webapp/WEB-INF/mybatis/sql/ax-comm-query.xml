@@ -357,5 +357,12 @@
 		 WHERE DD_MAIN IN ('FAQ_B2C','FAQ_B2B','FAQ_C2C')
 		 ORDER BY DD_KEY
 	</select>
+
+	<select id="axDdPointKind" resultType="hashmap">
+		SELECT 	POINT_CODE value
+		        ,POINT_NAME text
+		  FROM  POINT_CODE
+		 ORDER BY ORD 	
+	</select>
     
 </mapper>

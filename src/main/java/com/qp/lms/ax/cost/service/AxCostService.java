@@ -9,8 +9,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.qp.lms.common.CommUtil;
 import com.qp.lms.common.Constant;
 import com.qp.lms.common.SessionUtil;
+import com.qp.lms.pg.model.PgVO;
 
 @Service
 public class AxCostService {
@@ -36,12 +38,30 @@ public class AxCostService {
 			HashMap<String, Object> row = (HashMap<String, Object>)updList.get(i);
 			row.put("SESSION_USER_ID", SessionUtil.getSessionUserId());
 
+			//결재상태 변경
 			if ( "R".equals(row.get("STATUS")) ) {
 				sqlSession.update("axCost.axCostUpdateForRefund", row);
 			} else {
 				sqlSession.update("axCost.axCostUpdateForStatus", row);
 			}
+			
+			//포인트 금액 사용을 취소한다.
+			if ( "R".equals(row.get("STATUS")) || "C".equals(row.get("STATUS")) ) {
+				PgVO condiVO = new PgVO();
+				condiVO.setApprovalId((String)row.get("APPROVAL_ID"));
+				condiVO.setUserId((String)row.get("USER_ID"));
+				
+				//사용 포인트 취소
+				List<PgVO> pointUseLogList = sqlSession.selectList("pg.userPointLog", condiVO);
+				for ( int m = 0; m < pointUseLogList.size(); m++ ) {
+					sqlSession.update("pg.userPointUseBackUpdate", pointUseLogList.get(m));
+				}
 
+				//포인트 지급, 과정 적립 포인트를 사용안함으로 변경.
+				sqlSession.update("pg.userPointDeleteUpdate", condiVO);
+			}
+
+			//사용자의 상태 변경
 			sqlSession.update("axCost.axRegisterStatusUpd", row);
 		}
 

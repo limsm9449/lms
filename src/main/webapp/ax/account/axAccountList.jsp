@@ -268,17 +268,6 @@ function fn_makeGrid() {
                     return "grid-cell-edit";
                 }
 	        },{
-	            key : "HOME_TEL",
-	            label : "집 전화번호",
-	            width : 100,
-	            align : "left",
-	            editor : { 
-	            	type : "text"
-				},
-				styleClass: function () {
-                    return "grid-cell-edit";
-                }
-	        },{
 	            key : "MOBILE",
 	            label : "핸드폰",
 	            width : 100,

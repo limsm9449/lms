@@ -116,6 +116,42 @@ public class PgService {
 		//결재 내용 입력.
 		sqlSession.insert("pg.approvalIns",set.getCondiVO());
 		
+		//포인트가 있으면 포인트 사용
+		if ( Integer.parseInt(set.getCondiVO().getPaymentPoint()) > 0 ) {
+			int paymentPoint = Integer.parseInt(set.getCondiVO().getPaymentPoint());
+			
+			List<PgVO> pointList = sqlSession.selectList("pg.userValidPoint", set.getCondiVO());
+			for ( int i = 0; i < pointList.size(); i++ ) {
+				PgVO row = pointList.get(i);
+				row.setApprovalId(set.getCondiVO().getApprovalId());
+				
+				if ( paymentPoint > 0 ) {
+					if ( row.getInPointUse() < paymentPoint &&  row.getInPoint() >= paymentPoint ) {
+						row.setUsePoint(paymentPoint);
+						
+						row.setInPointUse(row.getInPointUse() + row.getUsePoint());
+						paymentPoint = 0;
+						
+						sqlSession.insert("pg.pointUpdate",row);
+						sqlSession.insert("pg.pointLogInsert",row);
+					} else {
+						row.setUsePoint(row.getInPoint() - row.getInPointUse());
+						
+						paymentPoint -= row.getUsePoint();
+						row.setInPointUse(row.getInPointUse() + row.getUsePoint());
+						
+						sqlSession.insert("pg.pointUpdate",row);
+						sqlSession.insert("pg.pointLogInsert",row);
+					}
+				} else {
+					break;
+				}
+			}
+			
+			//포인트 사용
+	    	sqlSession.insert("pg.paymentPointInsert", set.getCondiVO());
+		}
+		
 		HashMap cart = (HashMap)SessionUtil.getAttribute("cart");
 		if ( cart == null ) {
 			//바로 신청할 경우....
@@ -132,7 +168,13 @@ public class PgService {
 		String[] courseIds = set.getCondiVO().getCourseId().split(",");
 		for ( int i = 0; i < courseIds.length; i++ ) {
 			saveVO.setCourseId(courseIds[i]);
-			
+
+			//과정별 포인트 지급
+	    	sqlSession.insert("pg.coursePointInsert",saveVO);
+
+	    	//과정별 이벤트 포인트 지급
+	    	sqlSession.insert("pg.courseEventPointInsert",saveVO);
+	    	
 			//튜터를 구한다.
 			int courseUserCnt = sqlSession.selectOne("pg.courseUserCnt", saveVO);
 			List<PgVO> tutorList = sqlSession.selectList("pg.courseTutors", saveVO);
@@ -210,6 +252,17 @@ public class PgService {
 			sqlSession.update("pg.approvalUpdateForCardRefund", set.getCondiVO());
 			sqlSession.update("pg.registerUpdateForCardRefund", set.getCondiVO());
 			
+			//포인트 금액이 있으면 사용을 취소한다.
+			List<PgVO> pointUseLogList = sqlSession.selectList("pg.userPointLog", set.getCondiVO());
+			for ( int m = 0; m < pointUseLogList.size(); m++ ) {
+				sqlSession.update("pg.userPointUseBackUpdate", pointUseLogList.get(m));
+			}
+
+			//포인트 지급, 과정 적립 포인트를 사용안함으로 변경.
+			String userId = sqlSession.selectOne("pg.approvalUserId", set.getCondiVO());
+			set.getCondiVO().setUserId(userId);
+			sqlSession.update("pg.userPointDeleteUpdate", set.getCondiVO());
+			
 			System.out.println("=====================> XpayService approvalCancel end");
 		} catch ( Exception e) {
 			e.printStackTrace();
@@ -227,7 +280,19 @@ public class PgService {
 			
 			sqlSession.update("pg.approvalUpdateCancelForCardRefund", set.getCondiVO());
 			sqlSession.update("pg.registerUpdateCancelForCardRefund", set.getCondiVO());
-	
+
+			//pg 오류시 포인트 금액을 원복한다.
+			List<PgVO> pointUseLogList = sqlSession.selectList("pg.userPointLog", set.getCondiVO());
+			for ( int m = 0; m < pointUseLogList.size(); m++ ) {
+				sqlSession.update("pg.userPointUseBackCancelUpdate", pointUseLogList.get(m));
+			}
+
+			//포인트 지급, 과정 적립 포인트를 사용안함으로 변경.
+			String userId = sqlSession.selectOne("pg.approvalUserId", set.getCondiVO());
+			set.getCondiVO().setUserId(userId);
+			sqlSession.update("pg.userPointDeleteCancelUpdate", set.getCondiVO());
+			
+
 			System.out.println("=====================> XpayService approvalCancelRollback end");
 	
 		} catch ( Exception e) {

@@ -24,6 +24,12 @@ public class PgVO extends CommonVO {
 	private int toCnt;
 	private int reportSeq;
 	private String payApprovalId;
+	private int seq;
+	private int inPoint;
+	private int inPointUse;
+	private int usePoint;
+	private int pointSeq;
+	private String refId2;
 	
 	public String getCourseId() {
 		return courseId;
@@ -141,6 +147,42 @@ public class PgVO extends CommonVO {
 	}
 	public void setPayApprovalId(String payApprovalId) {
 		this.payApprovalId = payApprovalId;
+	}
+	public int getSeq() {
+		return seq;
+	}
+	public void setSeq(int seq) {
+		this.seq = seq;
+	}
+	public int getInPoint() {
+		return inPoint;
+	}
+	public void setInPoint(int inPoint) {
+		this.inPoint = inPoint;
+	}
+	public int getInPointUse() {
+		return inPointUse;
+	}
+	public void setInPointUse(int inPointUse) {
+		this.inPointUse = inPointUse;
+	}
+	public int getUsePoint() {
+		return usePoint;
+	}
+	public void setUsePoint(int usePoint) {
+		this.usePoint = usePoint;
+	}
+	public int getPointSeq() {
+		return pointSeq;
+	}
+	public void setPointSeq(int pointSeq) {
+		this.pointSeq = pointSeq;
+	}
+	public String getRefId2() {
+		return refId2;
+	}
+	public void setRefId2(String refId2) {
+		this.refId2 = refId2;
 	}
 
 	

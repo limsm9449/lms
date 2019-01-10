@@ -188,11 +188,13 @@ function fn_hidePopupDiv(popupDivId, mode) {
 <h2>사용자별 담당 튜터</h2>
 <div style="height:10px"></div>
 
-<div>
-	튜터
-	<select id="CB_TUTOR">
-		<option value="">전체</option>
-	</select>
+<div class="form-inline">
+  	<div class="form-group">
+    	<label for="CB_TUTOR">튜터</label>
+		<select class="form-control" id="CB_TUTOR">
+			<option value="">전체</option>
+		</select>
+  	</div>
 </div>
 
 <div style="height:10px"></div>

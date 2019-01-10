@@ -158,4 +158,69 @@ public class AxCourseService {
 		
     	return hm;
     }
+	
+	public HashMap<String, Object> axCoursePostscriptList(HashMap<String, Object> paramMap) throws Exception {
+		HashMap<String, Object> hm = new HashMap<String, Object>();
+		
+		CommUtil.setSesstionInfo(paramMap);
+
+    	List<HashMap<String, Object>> list = sqlSession.selectList("axCourse.axCoursePostscriptList", paramMap);
+    	hm.put("list", list);
+        
+    	return hm;
+    }
+	
+	@Transactional(propagation=Propagation.REQUIRED, rollbackFor={Throwable.class})
+    public HashMap<String, Object>  axCoursePostscriptSave(HashMap<String, Object> paramMap) throws Exception {
+		HashMap<String, Object> hm = new HashMap<String, Object>();
+		
+		List<HashMap<String, Object>> updList = (List<HashMap<String, Object>>)paramMap.get("modified");
+
+		for ( int i = 0; i < updList.size(); i++ ) {
+			HashMap<String, Object> row = (HashMap<String, Object>)updList.get(i);
+			row.put("SESSION_USER_ID", SessionUtil.getSessionUserId());
+
+			sqlSession.update("axCourse.axCoursePostscriptUpdate", row);
+			
+			if ( CommUtil.isEqual("Y", (String)row.get("BEST_YN")) ) {
+				int bestScript = sqlSession.selectOne("axCourse.axCourseBestPostscriptCnt", row);
+				if ( bestScript == 0 ) {
+					sqlSession.insert("axCourse.bestPostscriptPointInsert", row);
+				}
+			}
+		}
+
+		hm.put("RtnMode", Constant.mode.OK.name());
+		
+    	return hm;
+    }
+	
+	public HashMap<String, Object> axCourseEventPointList(HashMap<String, Object> paramMap) throws Exception {
+		HashMap<String, Object> hm = new HashMap<String, Object>();
+		
+		CommUtil.setSesstionInfo(paramMap);
+
+    	List<HashMap<String, Object>> list = sqlSession.selectList("axCourse.axCourseList", paramMap);
+    	hm.put("list", list);
+        
+    	return hm;
+    }
+	
+	@Transactional(propagation=Propagation.REQUIRED, rollbackFor={Throwable.class})
+    public HashMap<String, Object>  axCourseEventPointSave(HashMap<String, Object> paramMap) throws Exception {
+		HashMap<String, Object> hm = new HashMap<String, Object>();
+		
+		List<HashMap<String, Object>> updList = (List<HashMap<String, Object>>)paramMap.get("modified");
+
+		for ( int i = 0; i < updList.size(); i++ ) {
+			HashMap<String, Object> row = (HashMap<String, Object>)updList.get(i);
+			row.put("SESSION_USER_ID", SessionUtil.getSessionUserId());
+
+			sqlSession.update("axCourse.axCourseEventPointUpdate", row);
+		}
+
+		hm.put("RtnMode", Constant.mode.OK.name());
+		
+    	return hm;
+    }
 }

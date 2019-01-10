@@ -301,21 +301,21 @@
 		 WHERE USER_ID = #{userId}
     </select>
 
-    <select id="teacherUpdate" parameterType="Member">
+    <update id="teacherUpdate" parameterType="Member">
     	UPDATE USER
     	   SET CAREER = #{career},
     	       UPDATE_DATE = CURRENT_TIMESTAMP
     	 WHERE USER_ID = #{userId} 
-    </select>
+    </update>
 
-    <select id="teacherPictureUpdate" parameterType="Member">
+    <update id="teacherPictureUpdate" parameterType="Member">
     	UPDATE USER
     	   SET PICTURE = #{picture},
     	       UPDATE_DATE = CURRENT_TIMESTAMP
     	 WHERE USER_ID = #{userId} 
-    </select>
+    </update>
 
-    <select id="joinUserInsert" parameterType="Member">
+    <insert id="joinUserInsert" parameterType="Member">
     	INSERT INTO USER(USER_ID, USER_NAME, EMAIL, USER_PASSWORD, 
     	                 HOME_ZIPCODE, HOME_ADDR, MOBILE, 
     	                 SEX,BIRTH_DAY,
@@ -327,17 +327,31 @@
 	    	        #{certificationYn},#{certificationKey},CURRENT_TIMESTAMP, #{compCd},
 	    	        #{recommendId}
     	        )
-    </select>
+    </insert>
 
-    <select id="userPointInsert1" parameterType="Member">
-    	INSERT INTO POINT ( USER_ID, KIND, IN_POINT,  OUT_POINT, REF_ID, REF_ID2, CREATE_DATE )
-	    VALUES ( #{userId}, 'RECOMMEND_JOIN', (SELECT OPTION_VALUE FROM SETTING WHERE OPTION_KEY = 'RECOMMEND_JOIN_POINT'), 0, NULL, #{recommendId}, CURRENT_TIMESTAMP )
-    </select>
+    <insert id="joinPointInsert" parameterType="Member">
+    	INSERT INTO POINT ( USER_ID, POINT_DATE, VALID_DATE, POINT_CODE, IN_POINT )
+	    VALUES ( #{userId}, CURRENT_TIMESTAMP, 
+	    			DATE_ADD(CURRENT_TIMESTAMP, INTERVAL (SELECT VALID_MONTH FROM POINT_CODE WHERE POINT_CODE = 'JOIN') MONTH),
+	    			'JOIN', 
+	    			(SELECT POINT FROM POINT_CODE WHERE POINT_CODE = 'JOIN') )
+    </insert>
 
-    <select id="userPointInsert2" parameterType="Member">
-    	INSERT INTO POINT ( USER_ID, KIND, IN_POINT,  OUT_POINT, REF_ID, REF_ID2, CREATE_DATE )
-	    VALUES ( #{recommendId}, 'RECOMMEND', (SELECT OPTION_VALUE FROM SETTING WHERE OPTION_KEY = 'RECOMMEND_POINT'), 0, NULL, #{userId}, CURRENT_TIMESTAMP )
-    </select>
+    <insert id="recommendJoinPointInsert" parameterType="Member">
+    	INSERT INTO POINT ( USER_ID, POINT_DATE, VALID_DATE, POINT_CODE, IN_POINT, REF_ID2 )
+	    VALUES ( #{userId}, CURRENT_TIMESTAMP, 
+	    			DATE_ADD(CURRENT_TIMESTAMP, INTERVAL (SELECT VALID_MONTH FROM POINT_CODE WHERE POINT_CODE = 'RECOMMEND_JOIN') MONTH),
+	    			'RECOMMEND_JOIN', 
+	    			(SELECT POINT FROM POINT_CODE WHERE POINT_CODE = 'RECOMMEND_JOIN'), #{recommendId} )
+    </insert>
+
+    <insert id="recommendPointInsert" parameterType="Member">
+    	INSERT INTO POINT ( USER_ID, POINT_DATE, VALID_DATE, POINT_CODE, IN_POINT, REF_ID2 )
+	    VALUES ( #{recommendId}, CURRENT_TIMESTAMP, 
+	    			DATE_ADD(CURRENT_TIMESTAMP, INTERVAL (SELECT VALID_MONTH FROM POINT_CODE WHERE POINT_CODE = 'RECOMMEND') MONTH), 
+	    			'RECOMMEND',
+	    			(SELECT POINT FROM POINT_CODE WHERE POINT_CODE = 'RECOMMEND'), #{userId} )
+    </insert>
 
    
 </mapper>

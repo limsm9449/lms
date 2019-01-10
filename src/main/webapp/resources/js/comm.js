@@ -694,6 +694,12 @@ function isResidentNO(str_f_num,str_l_num){
 }
 
 function checkThousand(num) {
+	var isMinus = false;
+	if ( num < 0 ) {
+		isMinus = true;
+		num = num * -1;
+	}
+	
 	num = num + "";	//문자로 변환
 	num=num.replace(/,/g,'');    //콤마 제거
 	var commaValue = "";
@@ -705,7 +711,8 @@ function checkThousand(num) {
        else 
            commaValue = num.charAt(num.length-i) + commaValue;    
 	}
-    return commaValue;
+	
+    return ( isMinus ? "-" + commaValue : commaValue);
 }
 
 
@@ -1037,6 +1044,12 @@ function gfn_gridResize(gridParentId, gridObj, minusHeight) {
 		$("#" + gridParentId).height($(window).height() - $("#" + gridParentId).position().top - 20);
 		gridObj.setHeight($(window).height() - $("#" + gridParentId).position().top - 20);
 	}
+}
+
+function gfn_gridResize2(gridParentId, gridObj1, gridObj2) {
+	$("#" + gridParentId).height($(window).height() - $("#" + gridParentId).position().top - 20);
+	gridObj1.setHeight($(window).height() - $("#" + gridParentId).position().top - 20);
+	gridObj2.setHeight($(window).height() - $("#" + gridParentId).position().top - 20);
 }
 
 function gfn_initDatepicker(objId) {

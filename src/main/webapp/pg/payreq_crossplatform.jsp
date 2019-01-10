@@ -245,7 +245,7 @@ function payment_return() {
 %>
 
 <input type='hidden' name='totalCost' id='totalCost' value='<%=request.getParameter("totalCost")%>'>
-<input type='hidden' name='remainPoint' id='remainPoint' value='<%=request.getParameter("remainPoint")%>'>
+<input type='hidden' name='paymentPoint' id='paymentPoint' value='<%=request.getParameter("paymentPoint")%>'>
 <input type='hidden' name='courseId' id='courseId' value='<%=request.getParameter("courseId")%>'>
 <input type='hidden' name='paymentKind' id='paymentKind' value='<%=request.getParameter("LGD_CUSTOM_USABLEPAY")%>'>
 

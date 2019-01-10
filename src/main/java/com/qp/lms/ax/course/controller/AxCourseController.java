@@ -150,4 +150,66 @@ public class AxCourseController {
         return hm;
     }
 
+    @RequestMapping(value = "/course/axCoursePostscriptList", method = RequestMethod.POST, consumes = "application/json" )
+    public @ResponseBody HashMap<String,Object> axCoursePostscriptList(@RequestBody HashMap<String, Object> paramMap, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    	HashMap<String, Object> hm = new HashMap<String, Object>();
+
+    	commSvr.requestLog(SessionUtil.getSessionUserId(), request.getRequestURI(), paramMap.toString(), request.getRemoteAddr());
+    	
+    	try {
+    		hm = svr.axCoursePostscriptList(paramMap);
+    	} catch ( Exception e ) {
+    		e.printStackTrace();
+    	}
+
+        return hm;
+    }
+    
+    @RequestMapping(value = "/course/axCoursePostscriptSave", method = RequestMethod.POST, consumes = "application/json" )
+    public @ResponseBody HashMap<String,Object> axCoursePostscriptSave(@RequestBody HashMap<String, Object> paramMap, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    	HashMap<String, Object> hm = new HashMap<String, Object>();
+
+    	commSvr.requestLog(SessionUtil.getSessionUserId(), request.getRequestURI(), paramMap.toString(), request.getRemoteAddr());
+
+		try {
+    		hm = svr.axCoursePostscriptSave(paramMap);
+    	} catch ( Exception e ) {
+    		e.printStackTrace();
+    		hm.put("RtnMode", Constant.mode.ERROR.name());
+    	}
+
+        return hm;
+    }
+
+    @RequestMapping(value = "/course/axCourseEventPointList", method = RequestMethod.POST, consumes = "application/json" )
+    public @ResponseBody HashMap<String,Object> axCourseEventPointList(@RequestBody HashMap<String, Object> paramMap, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    	HashMap<String, Object> hm = new HashMap<String, Object>();
+
+    	commSvr.requestLog(SessionUtil.getSessionUserId(), request.getRequestURI(), paramMap.toString(), request.getRemoteAddr());
+    	
+    	try {
+    		hm = svr.axCourseEventPointList(paramMap);
+    	} catch ( Exception e ) {
+    		e.printStackTrace();
+    	}
+
+        return hm;
+    }
+    
+    @RequestMapping(value = "/course/axCourseEventPointSave", method = RequestMethod.POST, consumes = "application/json" )
+    public @ResponseBody HashMap<String,Object> axCourseEventPointSave(@RequestBody HashMap<String, Object> paramMap, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    	HashMap<String, Object> hm = new HashMap<String, Object>();
+
+    	commSvr.requestLog(SessionUtil.getSessionUserId(), request.getRequestURI(), paramMap.toString(), request.getRemoteAddr());
+
+		try {
+    		hm = svr.axCourseEventPointSave(paramMap);
+    	} catch ( Exception e ) {
+    		e.printStackTrace();
+    		hm.put("RtnMode", Constant.mode.ERROR.name());
+    	}
+
+        return hm;
+    }
+
 }

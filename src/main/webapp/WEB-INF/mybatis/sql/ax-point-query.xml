@@ -4,37 +4,123 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="axPoint">
 
+	<select id="axPointCodeList" resultType="hashmap">
+		/* axPoint.axPointCodeList */
+		SELECT 	A.*
+				,DATE_FORMAT(A.UPDATE_DATE, '%y.%m.%d %H:%i') LAST_UPDATE_DATE
+		FROM 	POINT_CODE A
+		WHERE   POINT_CODE NOT IN ('PAYMENT','COURSE_EVENT','MEMBER_EVENT')
+		ORDER 	BY A.ORD
+	</select>
+	
+	<insert id="axPointCodeInsert" parameterType="hashmap">
+		/* axPoint.axPointCodeList */
+		INSERT INTO POINT_CODE ( POINT_CODE, POINT_NAME, VALID_MONTH, POINT, ORD, UPDATE_DATE )
+		VALUES ( #{POINT_CODE}, #{POINT_NAME}, #{VALID_MONTH}, #{POINT}, #{ORD}, CURRENT_TIMESTAMP )
+	</insert>  
+	
+	<update id="axPointCodeUpdate" parameterType="hashmap">
+		/* axPoint.axPointCodeList */
+		UPDATE 	POINT_CODE
+		SET 	POINT_NAME = #{POINT_NAME}
+		       	,VALID_MONTH = #{VALID_MONTH}
+		       	,POINT = #{POINT}
+		       	,ORD = #{ORD}
+		       	,UPDATE_DATE = CURRENT_TIMESTAMP
+		WHERE 	POINT_CODE = #{POINT_CODE}   
+	</update>    
+	
+	<delete id="axPointCodeDelete" parameterType="hashmap">
+		/* axPoint.axPointCodeList */
+		DELETE 	FROM POINT_CODE
+	 	WHERE 	POINT_CODE = #{POINT_CODE}   
+	</delete>  
+	
+	<select id="axPointCodePk" parameterType="hashmap" resultType="int">
+		/* axPoint.axPointCodeList */
+		SELECT 	COUNT(*) CNT
+		FROM 	POINT_CODE
+		WHERE 	POINT_CODE = #{POINT_CODE}
+	</select>
+	
 	<select id="axPointList" resultType="hashmap">
 		SELECT 	A.USER_ID
 				,B.USER_NAME
 				,A.IN_POINT
 				,A.OUT_POINT
 				,A.REMAIN_POINT
+				,A.DELETE_POINT
 				,B.EMAIL
-				,B.MOBILE
 		FROM 	(
-					SELECT 	USER_ID, 
-							SUM(IN_POINT) IN_POINT, 
-							SUM(OUT_POINT) OUT_POINT, 
-							SUM(IN_POINT) - SUM(OUT_POINT) REMAIN_POINT
+					SELECT 	USER_ID
+							,SUM(IN_POINT) IN_POINT 
+							,SUM(OUT_POINT) OUT_POINT 
+					        ,SUM(CASE WHEN VALID_DATE >= CURDATE() THEN IN_POINT - IN_POINT_USE ELSE 0 END) REMAIN_POINT
+					        ,SUM(CASE WHEN VALID_DATE >= CURDATE() AND VALID_DATE <![CDATA[<]]> DATE_ADD(CURDATE(),INTERVAL 1 MONTH) THEN IN_POINT - IN_POINT_USE ELSE 0 END) DELETE_POINT
 					FROM 	POINT 
+					WHERE	USE_YN = 'Y'
 					GROUP 	BY USER_ID
 				) A LEFT OUTER JOIN USER B ON B.USER_ID = A.USER_ID
 	 	WHERE 	1 = 1
 		<if test="SEARCH_STR != null and SEARCH_STR != ''">
-			AND ( UPPER(A.USER_NAME) LIKE CONCAT('%',UPPER(#{SEARCH_STR}),'%') OR UPPER(A.USER_ID) LIKE CONCAT('%',UPPER(#{SEARCH_STR}),'%') )
+			AND ( UPPER(B.USER_NAME) LIKE CONCAT('%',UPPER(#{SEARCH_STR}),'%') OR UPPER(A.USER_ID) LIKE CONCAT('%',UPPER(#{SEARCH_STR}),'%') )
 		</if>			 
-		ORDER BY USER_NAME
+		ORDER 	BY B.USER_NAME
 	</select>
 
 	<select id="axPointDetailList" resultType="hashmap">
-		SELECT 	A.*,
-				DATE_FORMAT(A.CREATE_DATE, '%y.%m.%d %H:%i') CREATE_DATE_STR
+		SELECT 	A.*
+				,CASE WHEN IN_POINT > 0 THEN IN_POINT ELSE OUT_POINT * -1 END POINT
+				,DATE_FORMAT(A.POINT_DATE, '%y.%m.%d %H:%i') POINT_DATE_STR
+				,DATE_FORMAT(A.VALID_DATE, '%y.%m.%d') VALID_DATE_STR
+				,CASE WHEN VALID_DATE >= CURDATE() AND VALID_DATE <![CDATA[<]]> DATE_ADD(CURDATE(),INTERVAL 1 MONTH) THEN IN_POINT - IN_POINT_USE ELSE 0 END DELETE_POINT
+				,CASE WHEN VALID_DATE <![CDATA[<]]> CURDATE() THEN IN_POINT - IN_POINT_USE ELSE 0 END DELETED_POINT
 		FROM 	POINT A
 		WHERE	USER_ID = #{USER_ID}
-		ORDER 	BY CREATE_DATE DESC
+		AND		USE_YN = 'Y'
+		ORDER 	BY POINT_DATE DESC
 	</select>
 	
+	<select id="axPointEventMemberList" resultType="hashmap">
+		SELECT 	USER_ID
+				,USER_NAME
+				,EMAIL
+				,BIRTH_DAY
+				,MOBILE
+		FROM 	USER A
+	 	WHERE 	COMP_CD = 'B2C'
+	 	AND		RETIRED_YN = 'N'
+	 	AND		CERTIFICATION_YN = 'Y'
+	 	AND		ADMIN_YN = 'N'
+	 	AND		SITE_MANAGER_YN = 'N'
+	 	AND		CONTENTS_MANAGER_YN = 'N'
+	 	AND		TUTOR_YN = 'N'
+	 	AND		TEACHER_YN = 'N'
+		<if test="SEARCH_STR != null and SEARCH_STR != ''">
+			<if test="CB_SEARCHKIND == 'USER_ID'">
+			  AND UPPER(A.USER_ID) LIKE CONCAT('%',UPPER(#{SEARCH_STR}),'%') 
+			</if>
+			<if test="CB_SEARCHKIND == 'USER_NAME'">
+			  AND UPPER(A.USER_NAME) LIKE CONCAT('%',UPPER(#{SEARCH_STR}),'%') 
+			</if>
+			<if test="CB_SEARCHKIND == 'EMAIL'">
+			  AND UPPER(A.EMAIL) LIKE CONCAT('%',UPPER(#{SEARCH_STR}),'%') 
+			</if>
+			<if test="CB_SEARCHKIND == 'MOBILE'">
+			  AND UPPER(A.MOBILE) LIKE CONCAT('%',UPPER(#{SEARCH_STR}),'%') 
+			</if>
+		</if>			 
+		ORDER BY USER_NAME
+	</select>
 	
+    <insert id="memberEventPointInsert" parameterType="hashmap" >
+    	INSERT INTO POINT ( USER_ID, POINT_DATE, VALID_DATE, POINT_CODE, IN_POINT, REF_ID2 )
+	    VALUES ( #{USER_ID}, STR_TO_DATE(#{POINT_DATE}, '%Y-%m-%d'), 
+	    			DATE_ADD(STR_TO_DATE(#{POINT_DATE}, '%Y-%m-%d'), INTERVAL #{VALID_MONTH} MONTH),
+	    			'MEMBER_EVENT', 
+	    			#{POINT}, 
+	    			#{SESSION_USER_ID} )
+    </insert>
+
         
 </mapper>

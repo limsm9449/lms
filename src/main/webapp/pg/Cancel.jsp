@@ -27,7 +27,7 @@
 	ApplicationContext ac = RequestContextUtils.getWebApplicationContext(request);
 	PgService pgService = (PgService) ac.getBean("pgService");
 	boolean isDBOK = pgService.approvalCancel(set);
-	
+
 	if ( isDBOK ) {
 	    /*
 	     * [결제취소 요청 페이지]

@@ -121,7 +121,7 @@ $(document.body).ready(function () {
             		var urlParams = "page=/ax/course/axCourseUserTutorPopup";
             		urlParams += "&COURSE_ID=" + row[0]["COURSE_ID"];
             		
-            		f_popup('/common/axOpenPage', {displayName:'courseTutorPopup',option:'width=400,height=700', urlParams:urlParams});
+            		f_popup('/common/axOpenPage', {displayName:'courseTutorPopup',option:'width=800,height=700', urlParams:urlParams});
             	}
             		
                 break;
@@ -154,6 +154,22 @@ $(document.body).ready(function () {
             		urlParams += "&COURSE_CODE=" + row[0]["COURSE_CODE"] + "&IS_VIEW=Y";
             		
             		f_popup('/common/axOpenPage', {displayName:'courseImagePopup',option:'width=900,height=650', urlParams:urlParams});
+            	}
+            		
+                break;
+            case "bestPostscript":
+            	var row = grid.getList("selected");
+            	if ( row.length == 0 ) {
+            		mask.open();
+            		dialog.alert( { msg : "과정을 선택하셔야 합니다." }, function () { mask.close();	} );
+            	} else if ( row[0]["NEW_FLAG"] == "Y" ) {
+            		mask.open();
+            		dialog.alert( { msg : "신규로 추가한 경우는 저장후에 작업을 하셔야 합니다." }, function () { mask.close();	} );
+            	} else {
+            		var urlParams = "page=/ax/course/axCoursePostscriptPopup";
+            		urlParams += "&COURSE_ID=" + row[0]["COURSE_ID"];
+            		
+            		f_popup('/common/axOpenPage', {displayName:'coursePostscriptPopup',option:'width=900,height=700', urlParams:urlParams});
             	}
             		
                 break;
@@ -938,6 +954,7 @@ function fn_cbChange(id) {
     <button class="btn btn-default" data-grid-control="userTutor">담당튜터</button>
     <button class="btn btn-default" data-grid-control="viewContent">학습내용 편집</button>
     <button class="btn btn-default" data-grid-control="viewImage">강의 이미지</button>
+    <button class="btn btn-default" data-grid-control="bestPostscript">Best 수강후기</button>
 </div>
 
 <div style="height:10px"></div>

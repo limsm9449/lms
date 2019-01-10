@@ -138,7 +138,7 @@ request.setCharacterEncoding("euc-kr");
     		set.setCondiVO(new PgVO());
     		set.getCondiVO().setCourseId(request.getParameter("courseId"));
     		set.getCondiVO().setTotalCost(request.getParameter("totalCost"));
-    		set.getCondiVO().setPaymentPoint(request.getParameter("remainPoint"));
+    		set.getCondiVO().setPaymentPoint(request.getParameter("paymentPoint"));
     		set.getCondiVO().setPaymentCost(xpay.Response("LGD_AMOUNT",0));
     		set.getCondiVO().setPaymentKind(request.getParameter("paymentKind"));
     		set.getCondiVO().setPaymentBank("");

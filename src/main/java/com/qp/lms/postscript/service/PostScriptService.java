@@ -54,6 +54,8 @@ public class PostScriptService {
 
 		sqlSession.update("postscript.postscriptFlagUpd",set.getCondiVO());
 
+		sqlSession.update("postscript.postscriptPointInsert",set.getCondiVO());
+
 		set.setRtnMode(Constant.mode.INSERT_OK.name());
 		
     	return set;

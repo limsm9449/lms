@@ -53,9 +53,9 @@ $(document.body).ready(function () {
             		return;
             	}
 	        	for ( var i = 0; i < rows.length; i++ ) {
-					if ( rows[i].STATUS != "B" && rows[i].STATUS != "C") {
+					if ( rows[i].STATUS != "B" ) {
 	            		mask.open();
-	            		dialog.alert( { msg : (rows[i].__index + 1) + " 라인 : 은행입금 또는 거절(사용자 취소)이 아닙니다."	}, function () { mask.close();	} );
+	            		dialog.alert( { msg : (rows[i].__index + 1) + " 라인 : 은행입금이 아닙니다."	}, function () { mask.close();	} );
 	            		return;
 					}		        			
 	        	}
@@ -486,7 +486,7 @@ function fn_callbackAjax(data, id) {
 		gfn_cbRefresh("CB_LEVEL1", data.CategoryLevel1, true);
 
 		gfn_cbRefresh("CB_YEAR", data.Year, true);
-		$("#CB_YEAR").val(new Date().getFullYear());		
+		//$("#CB_YEAR").val(new Date().getFullYear());		
 
 		fn_makeGrid();
 		//fn_search();

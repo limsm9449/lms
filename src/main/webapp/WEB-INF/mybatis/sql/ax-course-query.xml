@@ -51,6 +51,10 @@
 				,IFNULL(A.SUPPORT_EMPLOYER_YN, 'N') SUPPORT_EMPLOYER_YN
 				,IFNULL(A.NORMAL_COURSE_YN, 'N') NORMAL_COURSE_YN
 				,IFNULL(J.OFFLINE_YN, 'N') OFFLINE_YN
+                ,IFNULL(A.EVENT_POINT_FROM, '') EVENT_POINT_FROM
+                ,IFNULL(A.EVENT_POINT_TO, '') EVENT_POINT_TO
+                ,IFNULL(A.EVENT_POINT, 0) EVENT_POINT
+                ,IFNULL(A.EVENT_POINT_MONTH, 0) EVENT_POINT_MONTH
 		  FROM COURSE A LEFT OUTER JOIN COURSE_CODE B ON A.COURSE_CODE = B.COURSE_CODE
 		                LEFT OUTER JOIN (
 							   SELECT C3.CODE C3_CODE, C2.CODE C2_CODE, C1.CODE C1_CODE,
@@ -269,5 +273,48 @@
 		 WHERE COURSE_ID = #{COURSE_ID}
 		   AND USER_ID = #{USER_ID}
 	</update>
+
+	<select id="axCoursePostscriptList" parameterType="hashmap" resultType="hashmap">
+		SELECT 	A.*,
+				U1.USER_NAME,
+				DATE_FORMAT(A.CREATE_DATE, '%y.%m.%d %H:%i') LAST_UPDATE_DATE
+		FROM 	POSTSCRIPT A
+		  			LEFT OUTER JOIN USER U1 ON A.USER_ID = U1.USER_ID
+		WHERE 	A.COURSE_ID = #{COURSE_ID}
+		ORDER 	BY BEST_YN DESC, CREATE_DATE DESC
+    </select>	
+
+	<update id="axCoursePostscriptUpdate" parameterType="hashmap">
+		UPDATE POSTSCRIPT
+		   SET BEST_YN = #{BEST_YN}
+		 WHERE COURSE_ID = #{COURSE_ID}
+		   AND USER_ID = #{USER_ID}
+	</update>
+
+	<select id="axCourseBestPostscriptCnt" parameterType="hashmap" resultType="int">
+		SELECT 	COUNT(*)
+		FROM 	POINT
+		WHERE 	USER_ID = #{USER_ID}
+		AND		POINT_CODE = 'BEST_POSTSCRIPT'
+		AND		REF_ID = #{COURSE_ID}
+    </select>	
+
+    <insert id="bestPostscriptPointInsert" parameterType="Member">
+    	INSERT INTO POINT ( USER_ID, POINT_DATE, VALID_DATE, POINT_CODE, IN_POINT, REF_ID )
+	    VALUES ( #{USER_ID}, CURRENT_TIMESTAMP, 
+	    			DATE_ADD(CURRENT_TIMESTAMP, INTERVAL (SELECT VALID_MONTH FROM POINT_CODE WHERE POINT_CODE = 'BEST_POSTSCRIPT') MONTH),
+	    			'BEST_POSTSCRIPT', 
+	    			(SELECT POINT FROM POINT_CODE WHERE POINT_CODE = 'BEST_POSTSCRIPT'), #{COURSE_ID} )
+    </insert>
+
+	<update id="axCourseEventPointUpdate" parameterType="hashmap">
+		UPDATE 	COURSE
+		SET 	EVENT_POINT_FROM = #{EVENT_POINT_FROM}
+				,EVENT_POINT_TO = #{EVENT_POINT_TO}
+				,EVENT_POINT = #{EVENT_POINT}
+				,EVENT_POINT_MONTH = #{EVENT_POINT_MONTH}
+		WHERE 	COURSE_ID = #{COURSE_ID}
+	</update>
+
 
 </mapper>
