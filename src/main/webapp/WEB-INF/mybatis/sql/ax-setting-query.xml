@@ -79,6 +79,71 @@
 				,ORD = #{ORD}
     	WHERE 	DD_MAIN = #{DD_MAIN} 
     	AND		DD_KEY = #{DD_KEY}
-	</update>    
+	</update>
+	
+	<select id="axMainFrameList" resultType="hashmap">
+		SELECT 	A.*
+				,'N' NEW_FLAG
+		FROM 	MAIN_FRAME A		 
+		ORDER 	BY T_ORD
+	</select>    
+
+	<insert id="axMainFrameInsert" parameterType="hashmap">
+		INSERT 	INTO MAIN_FRAME ( CHANNEL_KIND, FRAME_KIND, FRAME_NAME, BK_COLOR, BK_IMAGE_URL, ORD, USE_YN, T_BK_COLOR, T_BK_IMAGE_URL, T_ORD, T_USE_YN )
+		VALUES ( #{CHANNEL_KIND}, #{FRAME_KIND}, #{FRAME_NAME}, #{BK_COLOR}, #{BK_IMAGE_URL}, #{ORD}, #{USE_YN}, #{T_BK_COLOR}, #{T_BK_IMAGE_URL}, #{T_ORD}, #{T_USE_YN} )
+	</insert>   
+	
+	<update id="axMainFrameUpdate" parameterType="hashmap">
+		UPDATE 	MAIN_FRAME
+    	SET 	CHANNEL_KIND = #{CHANNEL_KIND}
+				,FRAME_KIND = #{FRAME_KIND}
+				,FRAME_NAME = #{FRAME_NAME}
+				,BK_COLOR = #{BK_COLOR}
+				,BK_IMAGE_URL = #{BK_IMAGE_URL}
+				,ORD = #{ORD}
+				,USE_YN = #{USE_YN}
+				,T_BK_COLOR = #{T_BK_COLOR}
+				,T_BK_IMAGE_URL = #{T_BK_IMAGE_URL}
+				,T_ORD = #{T_ORD}
+				,T_USE_YN = #{T_USE_YN}
+    	 WHERE 	SEQ = #{SEQ} 
+	</update>   
+
+	<delete id="axMainFrameDelete" parameterType="hashmap">
+		DELETE 	MAIN_FRAME
+    	WHERE 	SEQ = #{SEQ} 
+	</delete>   
+	
+	<select id="axMainFrameDetailList" resultType="hashmap">
+		SELECT 	A.*
+				,'N' NEW_FLAG
+		FROM 	MAIN_FRAME_DETAIL A		 
+		ORDER 	BY T_ORD
+	</select>    
+
+	<insert id="axMainFrameDetailInsert" parameterType="hashmap">
+		INSERT 	INTO MAIN_FRAME_DETAIL ( MAIN_FRAME_SEQ, CONTENTS_URL, LINK_URL, MP4_YN, ORD, USE_YN, T_CONTENTS_URL, T_LINK_URL, T_MP4_YN, T_ORD, T_USE_YN )
+		VALUES ( #{MAIN_FRAME_SEQ}, #{CONTENTS_URL}, #{LINK_URL}, #{MP4_YN}, #{ORD}, #{USE_YN}, #{T_CONTENTS_URL}, #{T_LINK_URL}, #{T_MP4_YN}, #{T_ORD}, #{T_USE_YN} )
+	</insert>   
+	
+	<update id="axMainFrameDetailUpdate" parameterType="hashmap">
+		UPDATE 	MAIN_FRAME_DETAIL
+    	SET 	CONTENTS_URL = #{CONTENTS_URL}
+				,LINK_URL = #{LINK_URL}
+				,MP4_YN = #{MP4_YN}
+				,ORD = #{ORD}
+				,USE_YN = #{USE_YN}
+				,T_CONTENTS_URL = #{T_CONTENTS_URL}
+				,T_LINK_URL = #{T_LINK_URL}
+				,T_MP4_YN = #{T_MP4_YN}
+				,T_ORD = #{T_ORD}
+				,T_USE_YN = #{T_USE_YN}
+    	 WHERE 	SEQ = #{SEQ} 
+	</update>   
+
+	<delete id="axMainFrameDetailDelete" parameterType="hashmap">
+		DELETE 	MAIN_FRAME_DETAIL
+    	WHERE 	SEQ = #{SEQ} 
+	</delete>   
 	
 </mapper>

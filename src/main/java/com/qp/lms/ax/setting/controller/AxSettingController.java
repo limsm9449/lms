@@ -31,7 +31,7 @@ public class AxSettingController {
     @Autowired
     private CommService commSvr;
 
-    @RequestMapping(value = "/set/axSettingBankList", method = RequestMethod.POST, consumes = "application/json" )
+    @RequestMapping(value = "/setting/axSettingBankList", method = RequestMethod.POST, consumes = "application/json" )
     public @ResponseBody HashMap<String,Object> axSettingBankList(@RequestBody HashMap<String, Object> paramMap, HttpServletRequest request, HttpServletResponse response) throws Exception {
     	HashMap<String, Object> hm = new HashMap<String, Object>();
 
@@ -44,7 +44,7 @@ public class AxSettingController {
         return hm;
     }
     
-    @RequestMapping(value = "/set/axSettingBankSave", method = RequestMethod.POST, consumes = "application/json" )
+    @RequestMapping(value = "/setting/axSettingBankSave", method = RequestMethod.POST, consumes = "application/json" )
     public @ResponseBody HashMap<String,Object> axSettingBankSave(@RequestBody HashMap<String, Object> paramMap, HttpServletRequest request, HttpServletResponse response) throws Exception {
     	HashMap<String, Object> hm = new HashMap<String, Object>();
     	
@@ -58,7 +58,7 @@ public class AxSettingController {
         return hm;
     }
 
-    @RequestMapping(value = "/set/axSettingMailList", method = RequestMethod.POST, consumes = "application/json" )
+    @RequestMapping(value = "/setting/axSettingMailList", method = RequestMethod.POST, consumes = "application/json" )
     public @ResponseBody HashMap<String,Object> axSettingMailList(@RequestBody HashMap<String, Object> paramMap, HttpServletRequest request, HttpServletResponse response) throws Exception {
     	HashMap<String, Object> hm = new HashMap<String, Object>();
 
@@ -71,7 +71,7 @@ public class AxSettingController {
         return hm;
     }
     
-    @RequestMapping(value = "/set/axSettingMailSave", method = RequestMethod.POST, consumes = "application/json" )
+    @RequestMapping(value = "/setting/axSettingMailSave", method = RequestMethod.POST, consumes = "application/json" )
     public @ResponseBody HashMap<String,Object> axSettingMailSave(@RequestBody HashMap<String, Object> paramMap, HttpServletRequest request, HttpServletResponse response) throws Exception {
     	HashMap<String, Object> hm = new HashMap<String, Object>();
     	
@@ -85,7 +85,7 @@ public class AxSettingController {
         return hm;
     }
 
-    @RequestMapping(value = "/set/axSettingConfigList", method = RequestMethod.POST, consumes = "application/json" )
+    @RequestMapping(value = "/setting/axSettingConfigList", method = RequestMethod.POST, consumes = "application/json" )
     public @ResponseBody HashMap<String,Object> axSettingConfigList(@RequestBody HashMap<String, Object> paramMap, HttpServletRequest request, HttpServletResponse response) throws Exception {
     	HashMap<String, Object> hm = new HashMap<String, Object>();
 
@@ -98,7 +98,7 @@ public class AxSettingController {
         return hm;
     }
     
-    @RequestMapping(value = "/set/axSettingConfigSave", method = RequestMethod.POST, consumes = "application/json" )
+    @RequestMapping(value = "/setting/axSettingConfigSave", method = RequestMethod.POST, consumes = "application/json" )
     public @ResponseBody HashMap<String,Object> axSettingConfigSave(@RequestBody HashMap<String, Object> paramMap, HttpServletRequest request, HttpServletResponse response) throws Exception {
     	HashMap<String, Object> hm = new HashMap<String, Object>();
     	
@@ -112,7 +112,7 @@ public class AxSettingController {
         return hm;
     }
 
-    @RequestMapping(value = "/set/axSettingCodeList", method = RequestMethod.POST, consumes = "application/json" )
+    @RequestMapping(value = "/setting/axSettingCodeList", method = RequestMethod.POST, consumes = "application/json" )
     public @ResponseBody HashMap<String,Object> axSettingCodeList(@RequestBody HashMap<String, Object> paramMap, HttpServletRequest request, HttpServletResponse response) throws Exception {
     	HashMap<String, Object> hm = new HashMap<String, Object>();
 
@@ -125,12 +125,67 @@ public class AxSettingController {
         return hm;
     }
     
-    @RequestMapping(value = "/set/axSettingCodeSave", method = RequestMethod.POST, consumes = "application/json" )
+    @RequestMapping(value = "/setting/axSettingCodeSave", method = RequestMethod.POST, consumes = "application/json" )
     public @ResponseBody HashMap<String,Object> axSettingCodeSave(@RequestBody HashMap<String, Object> paramMap, HttpServletRequest request, HttpServletResponse response) throws Exception {
     	HashMap<String, Object> hm = new HashMap<String, Object>();
     	
 		try {
     		hm = svr.axSettingCodeSave(paramMap);
+    	} catch ( Exception e ) {
+    		e.printStackTrace();
+    		hm.put("RtnMode", Constant.mode.ERROR.name());
+    	}
+
+        return hm;
+    }
+
+    @RequestMapping(value = "/setting/axMainFrameList", method = RequestMethod.POST, consumes = "application/json" )
+    public @ResponseBody HashMap<String,Object> axMainFrameList(@RequestBody HashMap<String, Object> paramMap, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    	HashMap<String, Object> hm = new HashMap<String, Object>();
+
+    	try {
+    		hm = svr.axMainFrameList(paramMap);
+    	} catch ( Exception e ) {
+    		e.printStackTrace();
+    	}
+
+        return hm;
+    }
+    
+    @RequestMapping(value = "/setting/axMainFrameSave", method = RequestMethod.POST, consumes = "application/json" )
+    public @ResponseBody HashMap<String,Object> axMainFrameSave(@RequestBody HashMap<String, Object> paramMap, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    	HashMap<String, Object> hm = new HashMap<String, Object>();
+    	
+		try {
+    		hm = svr.axMainFrameSave(paramMap);
+    	} catch ( Exception e ) {
+    		e.printStackTrace();
+    		hm.put("RtnMode", Constant.mode.ERROR.name());
+    	}
+
+        return hm;
+    }
+
+
+    @RequestMapping(value = "/set/axMainFrameDetailList", method = RequestMethod.POST, consumes = "application/json" )
+    public @ResponseBody HashMap<String,Object> axMainFrameDetailList(@RequestBody HashMap<String, Object> paramMap, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    	HashMap<String, Object> hm = new HashMap<String, Object>();
+
+    	try {
+    		hm = svr.axMainFrameDetailList(paramMap);
+    	} catch ( Exception e ) {
+    		e.printStackTrace();
+    	}
+
+        return hm;
+    }
+    
+    @RequestMapping(value = "/set/axMainFrameDetailSave", method = RequestMethod.POST, consumes = "application/json" )
+    public @ResponseBody HashMap<String,Object> axMainFrameDetailSave(@RequestBody HashMap<String, Object> paramMap, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    	HashMap<String, Object> hm = new HashMap<String, Object>();
+    	
+		try {
+    		hm = svr.axMainFrameDetailSave(paramMap);
     	} catch ( Exception e ) {
     		e.printStackTrace();
     		hm.put("RtnMode", Constant.mode.ERROR.name());

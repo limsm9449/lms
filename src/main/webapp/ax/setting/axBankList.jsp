@@ -106,7 +106,7 @@ $(document.body).ready(function () {
 function fn_search() {
 	//mask.open();
 	
-	gfn_callAjax("/set/axSettingBankList.do", {}, fn_callbackAjax, "search");
+	gfn_callAjax("/setting/axSettingBankList.do", {}, fn_callbackAjax, "search");
 }
 
 function fn_save() {
@@ -125,7 +125,7 @@ function fn_save() {
            	}, 
            	function(){
              	if ( this.key == "ok" ) {
-             		gfn_callAjax("/set/axSettingBankSave.do", gfn_getSaveData(grid), fn_callbackAjax, "save");
+             		gfn_callAjax("/setting/axSettingBankSave.do", gfn_getSaveData(grid), fn_callbackAjax, "save");
                	} else {
                		mask.close();
                	}

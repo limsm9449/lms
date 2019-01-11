@@ -528,4 +528,59 @@ public class CommUtil {
 		return hm;
 	}
 	
+	private static String capitalize(final String line) throws Exception {
+	   return Character.toUpperCase(line.charAt(0)) + line.substring(1);
+	}
+
+	public static String getCompTypePage(String page) throws Exception {
+		String compType = (String)SessionUtil.getAttribute("compType");
+		
+		/*
+		String b2cPage = "";
+		String c2cPage = "";
+		String b2bPage = "";
+		
+		String[] pagePath = page.split("/");
+		if ( pagePath.length == 1 ) {
+			b2cPage = "/qCh" + capitalize(pagePath[0]);
+			c2cPage = "/pCh" + capitalize(pagePath[0]);
+			b2bPage = pagePath[0];
+		} else if ( pagePath.length == 2 ) {
+			b2cPage = "/" + pagePath[0] + "/qCh" + capitalize(pagePath[1]);
+			c2cPage = "/" + pagePath[0] + "/pCh" + capitalize(pagePath[1]);
+			b2bPage = "/" + pagePath[0] + "/" + pagePath[1];
+		}
+		*/
+		
+		if ( compType.equals("B2C") ) {
+			//Q 채널
+			return page + "Qch";
+		} else if ( compType.equals("C2C") ) {
+			//P 채널
+			return page + "Pch";
+		} else if ( compType.equals("B2B") ) {
+			//연수원
+			return page;
+		} else {
+			return "error";
+		}
+	}
+
+	public static String getCompTypePage(String b2cPage, String c2cPage, String b2bPage) throws Exception {
+		String compType = (String)SessionUtil.getAttribute("compType");
+		
+		if ( compType.equals("B2C") ) {
+			//Q 채널
+			return b2cPage;
+		} else if ( compType.equals("C2C") ) {
+			//P 채널
+			return c2cPage;
+		} else if ( compType.equals("B2B") ) {
+			//연수원
+			return b2bPage;
+		} else {
+			return "error";
+		}
+	}
+
 }

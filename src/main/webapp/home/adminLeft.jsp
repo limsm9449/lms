@@ -8,7 +8,7 @@
 
 <%@ include file="../../common/commAxAdminInclude.jsp" %>
 
-<link rel="stylesheet" type="text/css" media="all" href="/resources/css/admin/left.css" />
+<link rel="stylesheet" type="text/css" media="all" href="/resources/css/admin/left.css?timestamp=<%=timestamp%>" />
 
 <script type="text/javascript">
 	isReload = false;
@@ -18,7 +18,7 @@
 
 $(document).ready(function(){
 	$(".mainMenu").each(function(){
-		$(this).removeClass("here");
+		$(this).removeClass("here"); 
 	});
 	$(".subMenuUl").each(function(){
 		$(this).css("display", "none");
@@ -139,6 +139,7 @@ var pageObj = {
 	axMainBoardEventList :		{	page : "/ax/board/axMainBoardEventList"	},
 	axCounselList :				{	page : "/ax/counsel/axCounselList"	},
 	axInquiryList :				{	page : "/ax/counsel/axInquiryList"	},
+	axMainFrameList :			{	page : "/ax/setting/axMainFrameList"	},
 	axConfigList :				{	page : "/ax/setting/axConfigList"	},
 	axMailList :				{	page : "/ax/setting/axMailList"	},
 	axBankList :				{	page : "/ax/setting/axBankList"	},
@@ -295,6 +296,7 @@ function gfn_openMenu(pageId, params) {
 			      	</li>
 	          		<li><a href="#" class="mainMenu linker" onclick="gfn_menu(this)"><span>설정 관리</span></a>
 			            <ul style="display:none" class="subMenuUl">
+			              	<li><a href="#" class="subMenu linker" onclick="gfn_openMenu('axMainFrameList'); gfn_subMenu(this);"><span>메인 프레임 설정</span></a></li>
 			              	<li><a href="#" class="subMenu linker" onclick="gfn_openMenu('axConfigList'); gfn_subMenu(this);"><span>환경설정</span></a></li>
 			              	<li><a href="#" class="subMenu linker" onclick="gfn_openMenu('axMailList'); gfn_subMenu(this);"><span>메일 담당자</span></a></li>
 			              	<li><a href="#" class="subMenu linker" onclick="gfn_openMenu('axBankList'); gfn_subMenu(this);"><span>은행</span></a></li>

@@ -421,7 +421,7 @@ public class GuestController {
     		e.printStackTrace();
     	}
     	
-        return "/guest/BankInfo";
+        return CommUtil.getCompTypePage("/guest/BankInfo");
     }
 
     

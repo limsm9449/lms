@@ -90,7 +90,7 @@ $(document.body).ready(function () {
 function fn_search() {
 	//mask.open();
 	
-	gfn_callAjax("/set/axSettingCodeList.do", {}, fn_callbackAjax, "search");
+	gfn_callAjax("/setting/axSettingCodeList.do", {}, fn_callbackAjax, "search");
 }
 
 function fn_save() {
@@ -108,7 +108,7 @@ function fn_save() {
            	}, 
            	function(){
              	if ( this.key == "ok" ) {
-             		gfn_callAjax("/set/axSettingCodeSave.do", gfn_getSaveData(grid), fn_callbackAjax, "save");
+             		gfn_callAjax("/setting/axSettingCodeSave.do", gfn_getSaveData(grid), fn_callbackAjax, "save");
                	} else {
                		mask.close();
                	}

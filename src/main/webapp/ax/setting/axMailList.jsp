@@ -88,7 +88,7 @@ $(document.body).ready(function () {
 function fn_search() {
 	//mask.open();
 	
-	gfn_callAjax("/set/axSettingMailList.do", {}, fn_callbackAjax, "search");
+	gfn_callAjax("/setting/axSettingMailList.do", {}, fn_callbackAjax, "search");
 }
 
 function fn_save() {
@@ -106,7 +106,7 @@ function fn_save() {
            	}, 
            	function(){
              	if ( this.key == "ok" ) {
-             		gfn_callAjax("/set/axSettingMailSave.do", gfn_getSaveData(grid), fn_callbackAjax, "save");
+             		gfn_callAjax("/setting/axSettingMailSave.do", gfn_getSaveData(grid), fn_callbackAjax, "save");
                	} else {
                		mask.close();
                	}

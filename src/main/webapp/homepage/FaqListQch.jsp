@@ -12,14 +12,14 @@
     <meta charset='utf-8'>
     <meta name='viewport' content='width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1'>
     <meta http-equiv='X-UA-Compatible' content='ie=edge'>
-    <title>Q learning - 공지사항</title>
+    <title>Q learning - Faq</title>
 
 	<%@ include file="../common/commMainInclude.jsp" %>
 	
     <link href='https://fonts.googleapis.com/css?family=Nanum+Gothic' rel='stylesheet'>
-    <link rel='stylesheet' href='/resources/homepage/css/initialization.css'>
-    <link rel='stylesheet' href='/resources/homepage/css/support/faq.css'>
-    <link rel='stylesheet' href='/resources/homepage/css/support/notice.css'>
+    <link rel='stylesheet' href='/resources/homepageQch/css/initialization.css'>
+    <link rel='stylesheet' href='/resources/homepageQch/css/notice/notice_main.css'>
+    <link rel='stylesheet' href='/resources/homepageQch/css/notice/notice.css'>
 
 </head>
 
@@ -53,52 +53,71 @@ function lfn_btn(pKind, pParam) {
 	<input id="seq" name="seq" type="hidden" value="">
 	<input id="prevParams" name="prevParams" type="hidden" value="">
 	
-    <frameset rows='*'>
-        <div class='wrap'>
-            <!-- HEADER -->
-            <%@ include file="../common/mainTop.jsp" %>
-            <!-- HEAD END -->
+<frameset rows='*'>
+    <div class='wrap'>
+        <!-- HEAD START -->
+        <%@ include file="../common/mainTopQch.jsp" %>
+        <!-- HEAD END -->
 
-            <!-- CONTENTS -->
-            <div class='contents_wrap support' >
-                <div class='contents_wrap_box'>
-                    <!-- QUICK MENU -->
-                    <%@ include file="../common/mainQuickMenu.jsp" %>
-
-                    <!-- Top -->
-                    <div class='top_area'>
-                        <div class='clear_fix'>
-                            <div class='process_history_box clear_fix'>
-                                <span>
-                                    <img src='/resources/homepage/img/course/ic_home.jpg' alt=' '>
-                                </span>
-                                <p>HOME</p>
-                                <span>
-                                    <img src='/resources/homepage/img/course/arr_right.jpg' alt=' '>
-                                </span>
-                                <p>고객지원</p>
-                                <span>
-                                    <img src='/resources/homepage/img/course/arr_right.jpg' alt=' '>
-                                </span>
-                                <p>Faq</p>
-                            </div>
+        <!-- CONTENTS -->
+        <div class='contents_wrap process'>
+            <!-- QUICK MENU -->
+       	 	<%@ include file="../common/mainQuickMenuQch.jsp" %>
+       	 	<!-- QUICK MENU -->
+       	 	
+            <div class='contents_wrap_box'>
+                <!-- Top -->
+                <div class='top_area'>
+                    <div class='clear_fix'>
+                        <div class='process_history_box clear_fix'>
+                            <span>
+                                <img src='/resources/homepageQch/img/course/ic_home.jpg' alt=' '>
+                            </span>
+                            <p>HOME</p>
+                            <span>
+                                <img src='/resources/homepageQch/img/course/arr_right.jpg' alt=' '>
+                            </span>
+                            <p>고객지원</p>
+                            
                         </div>
-                        <h1>
-                            FA<span>Q</span>
+                    </div>
+                    <h1>
+                        고객<span>지원</span>
+                    </h1>
+                </div>
+                <!-- Top END -->
+
+                <div class='classroom_subtitle'>
+                </div>
+
+                <!-- TAB AREA -->
+                <div class='register_method_tab clear_fix'>
+                    <a href="javascript:" onclick="page.goPage('/main/noticeList');"><button id="g1">공지<span></span>사항</button></a>
+                    <a href="javascript:"><button class="on">자주 <span></span>묻는 질문</button></a>
+                    <a href="javascript:" onclick="page.goPage('/main/mailQuestion');"><button>1:1 <span></span>메일문의</button></a>
+                    <a href="javascript:" onclick="page.goPage('/main/tutorial');"><button>학습<span></span>지원</button></a>
+                    <a href="javascript:" onclick="page.goPage('/guest/bankInfo');"><button>입금계좌<span></span>안내</button></a>
+                </div>
+
+              
+                <!-- REGISTER MOBILE VERSION -->
+                <div class='register_method_pc2'>
+                    <ol>
+                        <li class='mobile_list_item clear_fix'>
+                            <!-- Top -->
+                        <h1 class="two_h1">
+                           자주 묻는 <span class="two_h1_span">질문</span>
                         </h1>
                         <div class='top_text_box clear_fix'>
-                            <span><img src='/resources/homepage/img/support/faq_bg.jpg' alt=' '></span>
-                            <p class='top_title'>FAQ BEST</p>
+                        <span><img src='/resources/homepageQch/img/notice/notice1_bg.png' alt=' '></span>
+                            <p class='top_title'>FAQ</p>
                             <p>
                                 궁금하신 사항이 있으실 때 먼저 자주하는 질문을 참고하시면 <span></span>고객님의 궁금증을 빠르게 해결하실 수 있습니다.
                             </p>
                         </div>
-                    </div>
                     <!-- Top END -->
-
-                    <!-- Contents -->
                     <div class='faq_search_box'>
-                        <select name="category" style="width:170px">
+                    	<select name="category" style="width:170px">
                             <option value='전체'>전체</option>
 			          		<c:forEach var="row" items="${set.ddCategory}">
 				              	<option value="${row.ddKey}" <c:if test="${set.condiVO.category eq row.ddKey}">selected</c:if>>${row.ddValue}</option>
@@ -125,45 +144,43 @@ function lfn_btn(pKind, pParam) {
                                 <td class='notice_col4'>${row.createDate}</td>
                                 <td class='notice_col5 last_right'>${row.viewCnt}</td>
                             </tr>
-</c:forEach>                            
+</c:forEach>    
                         </table>
                     </div>
-                    <!-- Contents END -->
 
 					<input type='hidden' id='pageNum' name='pageNum' value="${set.condiVO.pageNum}">
                     <div class='pager_box'>
 	                    <div class='pager clear_fix'>
 	                        <div class='pager_prev clear_fix' id="pagingLayerPrev">
-	                            <div>&laquo;</div>
-	                            <div>&lsaquo;</div>
 	                        </div>
 	                        <ul class='clear_fix' id="pagingLayer">
-	                            <li class='on'>1</li>
-	                            <li>2</li>
-	                            <li>3</li>
-	                            <li>4</li>
-	                            <li>5</li>
 	                        </ul>
 	                        <div class='pager_next clear_fix' id="pagingLayerNext">
-	                            <div>&rsaquo;</div>
-	                            <div>&raquo;</div>
 	                        </div>
 	                    </div>
 	                </div>
 		            <!-- Pager Area END -->
-
+                    <!-- Contents END -->
+                        </li>
+                    </ol>
                 </div>
+                
+                
+                
+                
+                
             </div>
-            <!-- CONTENTS END -->
-
-            <!-- FOOTER -->
-            <%@ include file="../common/mainBottom.jsp" %>
-            <!-- FOOTER END -->
         </div>
-    </frameset>
+        <!-- CONTENTS END -->
+
+        <!-- FOOTER -->
+        <%@ include file="../common/mainBottomQch.jsp" %>
+        <!-- FOOTER END -->
+    </div>
+</frameset>
+<script src='/resources/homepageQch/js/sub.js?timestamp=<%=timestamp%>'></script>
+
 </form>
     
-    <script src='/resources/homepage/js/dev_sub.js?timestamp=<%=timestamp%>'></script>
 </body>
-
 </html>

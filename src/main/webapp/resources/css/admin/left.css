@@ -47,7 +47,7 @@
 	border-right: 0px;
 }
 
-/* left menu */
+/* left menu */ 
 #side #menu {
   width: 200px;
 }
@@ -61,9 +61,13 @@
 }
 #side #menu .snb {
   background-color: #fff;
+  padding-left:0;
+  list-style:none;
 }
 #side #menu .snb li ul {
   background-color: #f0f0f0;
+  padding-inline-start:0;
+  
 }
 #side #menu .snb li a {
   border-bottom: 1px solid #f0f0ef;

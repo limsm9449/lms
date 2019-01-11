@@ -150,4 +150,75 @@ public class AxSettingService {
 		
     	return hm;
     }
+	
+	public HashMap<String, Object> axMainFrameList(HashMap<String, Object> paramMap) throws Exception {
+		HashMap<String, Object> hm = new HashMap<String, Object>();
+		
+    	List<HashMap<String, Object>> list = sqlSession.selectList("axSetting.axMainFrameList", paramMap);
+    	hm.put("list", list);
+        
+    	return hm;
+    }
+	
+	@Transactional(propagation=Propagation.REQUIRED, rollbackFor={Throwable.class})
+    public HashMap<String, Object>  axMainFrameSave(HashMap<String, Object> paramMap) throws Exception {
+		HashMap<String, Object> hm = new HashMap<String, Object>();
+		
+		List<HashMap<String, Object>> updList = (List<HashMap<String, Object>>)paramMap.get("modified");
+
+		for ( int i = 0; i < updList.size(); i++ ) {
+			HashMap<String, Object> row = (HashMap<String, Object>)updList.get(i);
+
+			if ( "Y".equals((String)row.get("NEW_FLAG")) ) {
+				sqlSession.insert("axSetting.axMainFrameInsert", row);
+			} else {
+				sqlSession.update("axSetting.axMainFrameUpdate", row);
+			}
+		}
+
+		List<HashMap<String, Object>> delList = (List<HashMap<String, Object>>)paramMap.get("deleted");
+		for ( int i = 0; i < delList.size(); i++ ) {
+			sqlSession.delete("axSetting.axMainFrameDelete", delList.get(i));
+		}
+
+		hm.put("RtnMode", Constant.mode.OK.name());
+		
+    	return hm;
+    }
+	
+	public HashMap<String, Object> axMainFrameDetailList(HashMap<String, Object> paramMap) throws Exception {
+		HashMap<String, Object> hm = new HashMap<String, Object>();
+		
+    	List<HashMap<String, Object>> list = sqlSession.selectList("axSetting.axMainFrameDetailList", paramMap);
+    	hm.put("list", list);
+        
+    	return hm;
+    }
+	
+	@Transactional(propagation=Propagation.REQUIRED, rollbackFor={Throwable.class})
+    public HashMap<String, Object>  axMainFrameDetailSave(HashMap<String, Object> paramMap) throws Exception {
+		HashMap<String, Object> hm = new HashMap<String, Object>();
+		
+		List<HashMap<String, Object>> updList = (List<HashMap<String, Object>>)paramMap.get("modified");
+
+		for ( int i = 0; i < updList.size(); i++ ) {
+			HashMap<String, Object> row = (HashMap<String, Object>)updList.get(i);
+
+			if ( "Y".equals((String)row.get("NEW_FLAG")) ) {
+				sqlSession.insert("axSetting.axMainFrameDetailInsert", row);
+			} else {
+				sqlSession.update("axSetting.axMainFrameDetailUpdate", row);
+			}
+		}
+
+		List<HashMap<String, Object>> delList = (List<HashMap<String, Object>>)paramMap.get("deleted");
+		for ( int i = 0; i < delList.size(); i++ ) {
+			sqlSession.delete("axSetting.axMainFrameDetailDelete", delList.get(i));
+		}
+
+		hm.put("RtnMode", Constant.mode.OK.name());
+		
+    	return hm;
+    }
+	
 }

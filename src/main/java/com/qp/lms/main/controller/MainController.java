@@ -64,6 +64,12 @@ public class MainController {
         return "/homepage/errorNotUseCompany";
     }
 
+    @RequestMapping(value = "/main/error")
+    public String error(Model model) {
+
+        return "/error";
+    }
+
     /**
      * Main Top
      * @param vo
@@ -115,7 +121,7 @@ public class MainController {
     		e.printStackTrace();
     	}
 
-        return "/homepage/content";
+        return CommUtil.getCompTypePage("/homepage/content");
     }
     
     /**
@@ -361,7 +367,7 @@ public class MainController {
     		e.printStackTrace();
     	}
 
-        return "/homepage/mailQuestion";
+        return CommUtil.getCompTypePage("/homepage/mailQuestion");
     }
     
     @RequestMapping(value = "/main/courseList")
@@ -421,7 +427,7 @@ public class MainController {
     		e.printStackTrace();
     	}
 
-    	return "/homepage/tutorial";
+    	return CommUtil.getCompTypePage("/homepage/tutorial");
     }
 
     @RequestMapping(value = "/main/service")
@@ -457,7 +463,7 @@ public class MainController {
     		e.printStackTrace();
     	}
 
-        return "/homepage/NoticeList";
+        return CommUtil.getCompTypePage("/homepage/NoticeList");
     }
 
 
@@ -474,7 +480,7 @@ public class MainController {
     		e.printStackTrace();
     	}
 
-        return "/homepage/NoticeV";
+        return CommUtil.getCompTypePage("/homepage/NoticeV");
     }
 
     @RequestMapping(value = "/main/faqList")
@@ -490,7 +496,7 @@ public class MainController {
     		e.printStackTrace();
     	}
 
-        return "/homepage/FaqList";
+        return CommUtil.getCompTypePage("/homepage/FaqList");
     }
 
     @RequestMapping(value = "/main/faqV")
@@ -506,7 +512,7 @@ public class MainController {
     		e.printStackTrace();
     	}
 
-        return "/homepage/FaqV";
+        return CommUtil.getCompTypePage("/homepage/FaqV");
     }
 
     @RequestMapping(value = "/main/eventList")
