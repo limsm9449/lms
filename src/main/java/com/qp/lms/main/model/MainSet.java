@@ -1,5 +1,6 @@
 package com.qp.lms.main.model;
 
+import java.util.HashMap;
 import java.util.List;
 
 import com.qp.lms.board.model.BoardFaqVO;
@@ -55,6 +56,9 @@ public class MainSet extends CommonSet {
 	private BoardVO boardNotice;
 	private BoardFaqVO boardFaq;
 	private List<CourseVO> categoryMainCourseList;
+
+	private List<HashMap> mainFrame;
+	private HashMap mainFrameDetailHm;
 
 
 	
@@ -219,6 +223,18 @@ public class MainSet extends CommonSet {
 	}
 	public void setCategoryMainCourseList(List<CourseVO> categoryMainCourseList) {
 		this.categoryMainCourseList = categoryMainCourseList;
+	}
+	public List<HashMap> getMainFrame() {
+		return mainFrame;
+	}
+	public void setMainFrame(List<HashMap> mainFrame) {
+		this.mainFrame = mainFrame;
+	}
+	public HashMap getMainFrameDetailHm() {
+		return mainFrameDetailHm;
+	}
+	public void setMainFrameDetailHm(HashMap mainFrameDetailHm) {
+		this.mainFrameDetailHm = mainFrameDetailHm;
 	}
 	
 }

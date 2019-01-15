@@ -221,4 +221,16 @@ public class AxSettingService {
     	return hm;
     }
 	
+	@Transactional(propagation=Propagation.REQUIRED, rollbackFor={Throwable.class})
+    public HashMap<String, Object>  axMainFrameApply(HashMap<String, Object> paramMap) throws Exception {
+		HashMap<String, Object> hm = new HashMap<String, Object>();
+		
+		sqlSession.update("axSetting.axMainFrameApply", paramMap);
+		sqlSession.update("axSetting.axMainFrameDetailApply", paramMap);
+
+		hm.put("RtnMode", Constant.mode.OK.name());
+		
+    	return hm;
+    }
+	
 }

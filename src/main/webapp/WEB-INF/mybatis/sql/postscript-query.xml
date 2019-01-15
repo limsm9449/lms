@@ -4,6 +4,52 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="postscript">
 
+	<sql id="postscriptAllQuery">
+    	<![CDATA[
+		SELECT 	A.*
+		       	,DATE_FORMAT(IFNULL(A.UPDATE_DATE,A.CREATE_DATE), '%y.%m.%d %H:%i') UPDATE_DATE_STR
+		       	,@ROWNUM := @ROWNUM + 1 ROWNUM
+                ,CASE WHEN IFNULL(A.EVAL, 0) > 0 AND IFNULL(A.EVAL, 0) <= 0.5 THEN 'star_half'
+					 WHEN IFNULL(A.EVAL, 0) > 0.5 THEN 'star_active'
+                     ELSE 'star_inactive' END EVAL1
+                ,CASE WHEN IFNULL(A.EVAL, 0) > 1 AND IFNULL(A.EVAL, 0) <= 1.5 THEN 'star_half'
+					 WHEN IFNULL(A.EVAL, 0) > 1.5 THEN 'star_active'
+                     ELSE 'star_inactive' END EVAL2
+                ,CASE WHEN IFNULL(A.EVAL, 0) > 2 AND IFNULL(A.EVAL, 0) <= 2.5 THEN 'star_half'
+					 WHEN IFNULL(A.EVAL, 0) > 2.5 THEN 'star_active'
+                     ELSE 'star_inactive' END EVAL3
+                ,CASE WHEN IFNULL(A.EVAL, 0) > 3 AND IFNULL(A.EVAL, 0) <= 3.5 THEN 'star_half'
+					 WHEN IFNULL(A.EVAL, 0) > 3.5 THEN 'star_active'
+                     ELSE 'star_inactive' END EVAL4
+                ,CASE WHEN IFNULL(A.EVAL, 0) > 4 AND IFNULL(A.EVAL, 0) <= 4.5 THEN 'star_half'
+					 WHEN IFNULL(A.EVAL, 0) > 4.5 THEN 'star_active'
+                     ELSE 'star_inactive' END EVAL5
+                ,B.USER_NAME
+                ,D.COURSE_NAME
+                ,D.COURSE_CODE
+		FROM 	POSTSCRIPT A LEFT OUTER JOIN USER B ON B.USER_ID = A.USER_ID
+					LEFT OUTER JOIN COURSE C ON C.COURSE_ID = A.COURSE_ID
+					LEFT OUTER JOIN COURSE_CODE D ON D.COURSE_CODE = C.COURSE_CODE
+		       		,(SELECT @ROWNUM := 0) NUM
+		WHERE	C.COMP_CD = 'B2C'		       		
+		ORDER 	BY IFNULL(A.UPDATE_DATE, A.CREATE_DATE) DESC
+		]]>
+	</sql>
+	<select id="postscriptAllList" parameterType="PostScript" resultType="PostScript">
+		SELECT 	DATA.* 
+		FROM 	(
+					<include refid="postscriptAllQuery" />
+				) DATA 
+		LIMIT #{limitStart},#{limitUnit}
+	</select>	        
+	<select id="postscriptAllTotal" parameterType="PostScript" resultType="PostScript">
+		SELECT 	COUNT(*) CNT
+		FROM	(
+			<include refid="postscriptAllQuery" />
+				) DATA
+	</select>
+
+
     <select id="coursePostscriptList" parameterType="PostScript" resultType="PostScript">
     <![CDATA[
 	    SELECT 	A.USER_ID

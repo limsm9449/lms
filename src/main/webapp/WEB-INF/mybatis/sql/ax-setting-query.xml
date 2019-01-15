@@ -84,13 +84,17 @@
 	<select id="axMainFrameList" resultType="hashmap">
 		SELECT 	A.*
 				,'N' NEW_FLAG
-		FROM 	MAIN_FRAME A		 
+		FROM 	MAIN_FRAME A	
+		WHERE	1 = 1
+<if test="CHANNEL_KIND != null and CHANNEL_KIND != ''">
+		AND 	CHANNEL_KIND = #{CHANNEL_KIND}
+</if>
 		ORDER 	BY T_ORD
 	</select>    
 
 	<insert id="axMainFrameInsert" parameterType="hashmap">
-		INSERT 	INTO MAIN_FRAME ( CHANNEL_KIND, FRAME_KIND, FRAME_NAME, BK_COLOR, BK_IMAGE_URL, ORD, USE_YN, T_BK_COLOR, T_BK_IMAGE_URL, T_ORD, T_USE_YN )
-		VALUES ( #{CHANNEL_KIND}, #{FRAME_KIND}, #{FRAME_NAME}, #{BK_COLOR}, #{BK_IMAGE_URL}, #{ORD}, #{USE_YN}, #{T_BK_COLOR}, #{T_BK_IMAGE_URL}, #{T_ORD}, #{T_USE_YN} )
+		INSERT 	INTO MAIN_FRAME ( CHANNEL_KIND, FRAME_KIND, FRAME_NAME, FRAME_DESC, ORD, USE_YN, T_ORD, T_USE_YN )
+		VALUES ( #{CHANNEL_KIND}, #{FRAME_KIND}, #{FRAME_NAME}, #{FRAME_DESC}, #{ORD}, #{USE_YN}, #{T_ORD}, #{T_USE_YN} )
 	</insert>   
 	
 	<update id="axMainFrameUpdate" parameterType="hashmap">
@@ -98,42 +102,42 @@
     	SET 	CHANNEL_KIND = #{CHANNEL_KIND}
 				,FRAME_KIND = #{FRAME_KIND}
 				,FRAME_NAME = #{FRAME_NAME}
-				,BK_COLOR = #{BK_COLOR}
-				,BK_IMAGE_URL = #{BK_IMAGE_URL}
+				,FRAME_DESC = #{FRAME_DESC}
 				,ORD = #{ORD}
 				,USE_YN = #{USE_YN}
-				,T_BK_COLOR = #{T_BK_COLOR}
-				,T_BK_IMAGE_URL = #{T_BK_IMAGE_URL}
 				,T_ORD = #{T_ORD}
 				,T_USE_YN = #{T_USE_YN}
     	 WHERE 	SEQ = #{SEQ} 
 	</update>   
 
 	<delete id="axMainFrameDelete" parameterType="hashmap">
-		DELETE 	MAIN_FRAME
+		DELETE 	FROM MAIN_FRAME
     	WHERE 	SEQ = #{SEQ} 
 	</delete>   
-	
+		        
 	<select id="axMainFrameDetailList" resultType="hashmap">
 		SELECT 	A.*
 				,'N' NEW_FLAG
-		FROM 	MAIN_FRAME_DETAIL A		 
+		FROM 	MAIN_FRAME_DETAIL A		
+		WHERE 	MAIN_FRAME_SEQ = #{SEQ} 
 		ORDER 	BY T_ORD
 	</select>    
 
 	<insert id="axMainFrameDetailInsert" parameterType="hashmap">
-		INSERT 	INTO MAIN_FRAME_DETAIL ( MAIN_FRAME_SEQ, CONTENTS_URL, LINK_URL, MP4_YN, ORD, USE_YN, T_CONTENTS_URL, T_LINK_URL, T_MP4_YN, T_ORD, T_USE_YN )
-		VALUES ( #{MAIN_FRAME_SEQ}, #{CONTENTS_URL}, #{LINK_URL}, #{MP4_YN}, #{ORD}, #{USE_YN}, #{T_CONTENTS_URL}, #{T_LINK_URL}, #{T_MP4_YN}, #{T_ORD}, #{T_USE_YN} )
+		INSERT 	INTO MAIN_FRAME_DETAIL ( MAIN_FRAME_SEQ, BK_COLOR, BK_IMAGE_URL, LINK_URL, MP4_YN, ORD, USE_YN, T_BK_COLOR, T_BK_IMAGE_URL, T_LINK_URL, T_MP4_YN, T_ORD, T_USE_YN )
+		VALUES ( #{MAIN_FRAME_SEQ}, #{BK_COLOR}, #{BK_IMAGE_URL}, #{LINK_URL}, #{MP4_YN}, #{ORD}, #{USE_YN}, #{T_BK_COLOR}, #{T_BK_IMAGE_URL}, #{T_LINK_URL}, #{T_MP4_YN}, #{T_ORD}, #{T_USE_YN} )
 	</insert>   
 	
 	<update id="axMainFrameDetailUpdate" parameterType="hashmap">
 		UPDATE 	MAIN_FRAME_DETAIL
-    	SET 	CONTENTS_URL = #{CONTENTS_URL}
+    	SET 	BK_COLOR = #{BK_COLOR}
+				,BK_IMAGE_URL = #{BK_IMAGE_URL}
 				,LINK_URL = #{LINK_URL}
 				,MP4_YN = #{MP4_YN}
 				,ORD = #{ORD}
 				,USE_YN = #{USE_YN}
-				,T_CONTENTS_URL = #{T_CONTENTS_URL}
+				,T_BK_COLOR = #{T_BK_COLOR}
+				,T_BK_IMAGE_URL = #{T_BK_IMAGE_URL}
 				,T_LINK_URL = #{T_LINK_URL}
 				,T_MP4_YN = #{T_MP4_YN}
 				,T_ORD = #{T_ORD}
@@ -142,8 +146,24 @@
 	</update>   
 
 	<delete id="axMainFrameDetailDelete" parameterType="hashmap">
-		DELETE 	MAIN_FRAME_DETAIL
+		DELETE 	FROM MAIN_FRAME_DETAIL
     	WHERE 	SEQ = #{SEQ} 
 	</delete>   
+
+	<update id="axMainFrameApply" parameterType="hashmap">
+		UPDATE 	MAIN_FRAME
+    	SET 	ORD = T_ORD
+				,USE_YN = T_USE_YN
+	</update>   
+
+	<update id="axMainFrameDetailApply" parameterType="hashmap">
+		UPDATE 	MAIN_FRAME_DETAIL
+    	SET 	BK_COLOR = T_BK_COLOR
+				,BK_IMAGE_URL = T_BK_IMAGE_URL
+				,LINK_URL = T_LINK_URL
+				,MP4_YN = T_MP4_YN
+				,ORD = T_ORD
+				,USE_YN = T_USE_YN
+	</update>   
 	
 </mapper>

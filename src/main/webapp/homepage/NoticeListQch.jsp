@@ -55,12 +55,14 @@ function lfn_btn(pKind, pParam) {
 	
 <frameset rows='*'>
     <div class='wrap'>
+        <!-- HEAD -->
+        <div id='width_text'></div>
         <!-- HEAD START -->
         <%@ include file="../common/mainTopQch.jsp" %>
         <!-- HEAD END -->
 
         <!-- CONTENTS -->
-        <div class='contents_wrap process'>
+        <div class='contents_wrap'>
             <!-- QUICK MENU -->
        	 	<%@ include file="../common/mainQuickMenuQch.jsp" %>
        	 	<!-- QUICK MENU -->

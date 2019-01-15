@@ -18,6 +18,7 @@ import com.qp.lms.common.CodeVO;
 import com.qp.lms.common.CommUtil;
 import com.qp.lms.common.Constant;
 import com.qp.lms.common.SessionUtil;
+import com.qp.lms.common.service.CommService;
 import com.qp.lms.common.service.DdService;
 import com.qp.lms.counsel.model.CounselVO;
 import com.qp.lms.course.model.CourseResourceVO;
@@ -32,18 +33,87 @@ public class MainService {
 
 	@Autowired
 	private DdService ddService;
+	
+    @Autowired
+    private CommService commSvr;
 
-	public MainSet mainCourseList(MainSet set) throws Exception {
-		//공지사항
-		set.getCondiVO().setCnt(5);
-    	List<BoardVO> noticeList = sqlSession.selectList("main.noticeList", set.getCondiVO());
-		set.setNoticeList(noticeList);
+	public MainSet content(MainSet set) throws Exception {
+		String compType = (String)SessionUtil.getAttribute("compType");
+		if ( CommUtil.isEqual("B2C", compType) ) {
+    		//Q 채널
+    		List<HashMap> mainFrame = null; 
+    		HashMap<String, Object> paramMap = new HashMap<String, Object>();
+    		paramMap.put("CHANNEL_KIND", "Q_CHANNEL");
+    		mainFrame = sqlSession.selectList("comm.getMainFrame", paramMap);
 
-		//faq
-		set.getCondiVO().setCompType((String)SessionUtil.getAttribute("compType"));
-    	List<BoardVO> faqList = sqlSession.selectList("main.faqList", set.getCondiVO());
-		set.setFaqList(faqList);
+    		HashMap mainFrameDetailHm = new HashMap();
+    		for ( int i = 0; i < mainFrame.size(); i++ ) {
+    			List<HashMap> mainFrameDetail = sqlSession.selectList("comm.getMainFrameDetail", mainFrame.get(i));
+    			mainFrameDetailHm.put(mainFrame.get(i).get("SEQ"), mainFrameDetail);
+    		}
 
+    		set.setMainFrame(mainFrame); 
+    		set.setMainFrameDetailHm(mainFrameDetailHm);
+    		
+    		//전체 수강후기
+    		PostScriptVO postScriptVO = new PostScriptVO(); 
+    		postScriptVO.setPageNum(set.getCondiVO().getPageNum());
+    		postScriptVO.setLimitUnit(Constant.unitForPostscript);
+
+        	List<PostScriptVO> postScriptList = sqlSession.selectList("postscript.postscriptAllList", postScriptVO);
+        	set.setPostScriptList(postScriptList);
+        	set.setTotalCount(((PostScriptVO)sqlSession.selectOne("postscript.postscriptAllTotal",postScriptVO)).getCnt());
+        	set.setPageUnit(Constant.unitForPostscript);
+		} else if ( CommUtil.isEqual("C2C", compType) ) {
+			//P 채널
+    		List<HashMap> mainFrame = null; 
+    		HashMap<String, Object> paramMap = new HashMap<String, Object>();
+    		paramMap.put("CHANNEL_KIND", "P_CHANNEL");
+    		mainFrame = sqlSession.selectList("comm.getMainFrame", paramMap);
+
+    		HashMap mainFrameDetailHm = new HashMap();
+    		for ( int i = 0; i < mainFrame.size(); i++ ) {
+    			List<HashMap> mainFrameDetail = sqlSession.selectList("comm.getMainFrameDetail", mainFrame.get(i));
+    			mainFrameDetailHm.put(mainFrame.get(i).get("SEQ"), mainFrameDetail);
+    		}
+
+    		set.setMainFrame(mainFrame); 
+    		set.setMainFrameDetailHm(mainFrameDetailHm); 
+		} else {
+			String compCd = (String)SessionUtil.getAttribute("compCd");
+			
+			//베스트(인기)과정
+   	 		if ( SessionUtil.getAttribute("popularCourseList") == null ) {
+   	 			SessionUtil.setAttribute("popularCourseList", commSvr.getPopularCourseList(compCd));
+   	 		}
+   	 		//추천과정
+   	 		if ( SessionUtil.getAttribute("recommendCourseList") == null ) {
+   	 			SessionUtil.setAttribute("recommendCourseList", commSvr.getRecommendCourseList(compCd));
+   	 		}
+   	 		//신규과정
+   	 		if ( SessionUtil.getAttribute("newCourseList") == null ) {
+   	 			SessionUtil.setAttribute("newCourseList", commSvr.getNewCourseList(compCd));
+   	 		}
+   	 		//신규 이벤트
+   	 		if ( SessionUtil.getAttribute("eventList") == null ) {
+   	 			SessionUtil.setAttribute("eventList", commSvr.getEventList(compCd));
+   	 		}
+   	 		//주요공지사항
+   	 		if ( SessionUtil.getAttribute("noticeList") == null ) {
+   	 			SessionUtil.setAttribute("noticeList", commSvr.getNoticeList(compCd));
+   	 		}
+	   	 	
+			//공지사항
+			set.getCondiVO().setCnt(5);
+	    	List<BoardVO> noticeList = sqlSession.selectList("main.noticeList", set.getCondiVO());
+			set.setNoticeList(noticeList);
+	
+			//faq
+			set.getCondiVO().setCompType((String)SessionUtil.getAttribute("compType"));
+	    	List<BoardVO> faqList = sqlSession.selectList("main.faqList", set.getCondiVO());
+			set.setFaqList(faqList);
+		}
+		
     	return set;
     }
 	

@@ -27,6 +27,7 @@ public class Constant {
 	// 한페이지에 출력할 갯수...
 	public static int unitPerPage = 10;	  
 	public static int unitForBoard = 10;
+	public static int unitForPostscript = 10;
 
 	public static int unitForMain = 5;	  
 

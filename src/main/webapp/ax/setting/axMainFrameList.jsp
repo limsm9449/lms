@@ -33,7 +33,10 @@ $(document.body).ready(function () {
 	    limit: 10,
 	    position: '50%',
 	    onDrag: function(event) {
-	        if ( grid1 ) { 
+	    	$("#top-grid-parent").height($("#topPane").height());
+	    	$("#bottom-grid-parent").height($("#bottomPane").height());
+	        
+	    	if ( grid1 ) { 
 	        	grid1.setHeight($("#topPane").height());
 	        	grid2.setHeight($("#bottomPane").height());
 	        }
@@ -50,13 +53,87 @@ $(document.body).ready(function () {
         theme: "danger"
     });
 
-    gfn_callAjax("/common/axDd.do", { DD_KIND : "FrameKind" }, fn_callbackAjax, "dd", { async : false });
+    gfn_callAjax("/common/axDd.do", { DD_KIND : "FrameKind,ChannelKind" }, fn_callbackAjax, "dd", { async : false });
     
     $('[data-grid-control]').click(function () {
         switch (this.getAttribute("data-grid-control")) {
 	        case "search":
 	            fn_search();
 	            break; 
+            case "addMaster":
+            	grid1.addRow( {
+            		NEW_FLAG : "Y"
+					,CHANNEL_KIND : "Q_CHANNEL"
+					,FRAME_KIND : "SLIDE"
+					,FRAME_NAME : ""
+					,ORD : 1
+					,USE_YN : "N"
+					,T_ORD : 1
+					,T_USE_YN : "Y"
+            	}, "last", {focus: "END"});
+                break;
+            case "deleteMaster":
+            	var row = grid1.getList("selected");
+            	if ( row.length == 0 ) {
+            		mask.open();
+            		dialog.alert( { msg : "데이타를 선택하셔야 합니다." }, function () { mask.close();	} );
+            	} else {
+                	grid1.deleteRow("selected");
+            	}
+            	
+                break;
+            case "saveMaster" :
+            	fn_saveMaster();
+                break;
+            case "addDetail":
+            	var row = grid1.getList("selected");
+            	if ( row.length == 0 ) {
+            		mask.open();
+            		dialog.alert( { msg : "데이타를 선택하셔야 합니다." }, function () { mask.close();	} );
+            	} else if ( row[0].NEW_FLAG == "Y" ) {
+            		mask.open();
+            		dialog.alert( { msg : "저장후에 추가를 하셔야 합니다." }, function () { mask.close();	} );
+            	} else {            	
+	            	grid2.addRow( {
+	            		NEW_FLAG : "Y"
+	            		,MAIN_FRAME_SEQ : row[0]["SEQ"]
+						,BK_COLOR : ""
+						,BK_IMAGE_URL : ""
+	            		,LINK_URL : ""
+	            		,MP4_YN : ""
+	            		,ORD : 1
+	            		,USE_YN : "N"
+    					,T_BK_COLOR : ""
+   						,T_BK_IMAGE_URL : ""
+	            		,T_LINK_URL : ""
+	            		,T_MP4_YN : "N"
+	            		,T_ORD : 1
+	            		,T_USE_YN : "Y"
+	            	}, "last", {focus: "END"});
+            	}
+            	
+                break;
+            case "deleteDetail":
+            	var row = grid2.getList("selected");
+            	if ( row.length == 0 ) {
+            		mask.open();
+            		dialog.alert( { msg : "데이타를 선택하셔야 합니다." }, function () { mask.close();	} );
+            	} else {
+                	grid2.deleteRow("selected");
+            	}
+            	
+                break;
+            case "saveDetail" :
+            	fn_saveDetail();
+                break;
+            case "view" :
+            	var urlParams = "MODE=TEST";
+        		f_popup('/main/content', {displayName:'courseTutorPopup',option:'width=1400,height=900', urlParams:urlParams});
+        		
+                break;
+            case "saveApply" :
+            	fn_saveApply();
+                break;
         }
     });
     
@@ -70,7 +147,7 @@ function fn_makeGrid() {
 		[ 	{
 	            key : "CHANNEL_KIND",
 	            label : "채널 종류",
-	            width : 80,
+	            width : 90,
 	            align : "center", 
 	        	editor: {
                     type : "select", 
@@ -88,7 +165,7 @@ function fn_makeGrid() {
 	        },{
 	            key : "FRAME_KIND",
 	            label : "프레임 종류",
-	            width : 90,
+	            width : 130,
 	            align : "center", 
 	        	editor: {
                     type : "select", 
@@ -115,82 +192,21 @@ function fn_makeGrid() {
                     return "grid-cell-edit";
                 } 
 	        },{
-              	key : undefined, 
-              	label: "운영", 
-              	columns: [	        
-			        {
-			            key : "BK_COLOR",
-			            label : "배경색",
-			            width : 70,			            
-			            align : "left",
-			        	editor : { 
-			        		type : "text"
-			        	},
-						styleClass: function () {
-		                    return "grid-cell-edit";
-		                }  
-
-			        },{
-			            key : "BK_IMAGE_URL",
-			            label : "배경 Url",
-			            width : 170,			            
-			            align : "left",
-			        	editor : { 
-			        		type : "text"
-			        	},
-						styleClass: function () {
-		                    return "grid-cell-edit";
-		                }  
-
-			        },{
-			            key : "ORD",
-			            label : "순번",
-			            width : 70,
-			            align : "right",
-			        	editor : { 
-			        		type : "number"
-			        	},
-						styleClass: function () {
-		                    return "grid-cell-edit";
-		                } 
-			        },{
-			            key : "USE_YN",
-			            label : "사용여부",
-			            width : 90,
-			        	align : "center", 
-			        	editor : { type : "checkbox", config : {height: 17, trueValue: "Y", falseValue: "N"} },
-						styleClass: function () {
-		                    return "grid-cell-edit";
-		                } 
-			        }
-		        ]	        	
+	        	key : "FRAME_DESC", 
+	        	label : "프레임 설명", 
+	            width : 400,
+	        	align : "left", 
+	        	editor : { 
+	        		type : "text"
+	        	},
+				styleClass: function () {
+                    return "grid-cell-edit";
+                } 
 	        },{
               	key : undefined, 
               	label: "테스트", 
               	columns: [	        
 			        {
-			            key : "T_BK_COLOR",
-			            label : "배경색",
-			            width : 70,
-			            align : "left",
-			        	editor : { 
-			        		type : "text"
-			        	},
-						styleClass: function () {
-		                    return "grid-cell-edit";
-		                }  
-			        },{
-			            key : "T_BK_IMAGE_URL",
-			            label : "배경 Url",
-			            width : 170,
-			            align : "left",
-			        	editor : { 
-			        		type : "text"
-			        	},
-						styleClass: function () {
-		                    return "grid-cell-edit";
-		                }  
-			        },{
 			            key : "T_ORD",
 			            label : "순번",
 			            width : 70,
@@ -212,6 +228,32 @@ function fn_makeGrid() {
 		                } 
 			        }
 		        ]	        	
+	        },{
+              	key : undefined, 
+              	label: "운영", 
+              	columns: [	        
+			        {
+			            key : "ORD",
+			            label : "순번",
+			            width : 70,
+			            align : "right",
+			        	editor : { 
+			        		type : "number"
+			        	},
+						styleClass: function () {
+		                    return "grid-cell-edit";
+		                } 
+			        },{
+			            key : "USE_YN",
+			            label : "사용여부",
+			            width : 90,
+			        	align : "center", 
+			        	editor : { type : "checkbox", config : {height: 17, trueValue: "Y", falseValue: "N"} },
+						styleClass: function () {
+		                    return "grid-cell-edit";
+		                } 
+			        }
+		        ]	        	
 	        }	], 
 	  	null,
 	  	{
@@ -222,12 +264,92 @@ function fn_makeGrid() {
 	grid2 = gfn_makeAx5Grid("bottom-first-grid",
 		[ 	{
               	key : undefined, 
+              	label: "테스트", 
+              	columns: [	        
+              		{
+			            key : "T_BK_COLOR",
+			            label : "배경색",
+			            width : 70,
+			            align : "left",
+			        	editor : { 
+			        		type : "text"
+			        	},
+						styleClass: function () {
+		                    return "grid-cell-edit";
+		                }  
+			        },{
+			            key : "T_BK_IMAGE_URL",
+			            label : "배경 Url",
+			            width : 200,
+			            align : "left",
+			        	editor : { 
+			        		type : "text"
+			        	},
+						styleClass: function () {
+		                    return "grid-cell-edit";
+		                }  
+			        },{
+			            key : "T_LINK_URL",
+			            label : "연결할 URL",
+			            width : 170,			            
+			            align : "left",
+			        	editor : { 
+			        		type : "text"
+			        	},
+						styleClass: function () {
+		                    return "grid-cell-edit";
+		                }  
+			        },{
+			            key : "T_MP4_YN",
+			            label : "동영상 여부",
+			            width : 90,
+			        	align : "center", 
+			        	editor : { type : "checkbox", config : {height: 17, trueValue: "Y", falseValue: "N"} },
+						styleClass: function () {
+		                    return "grid-cell-edit";
+		                } 
+			        },{
+			            key : "T_ORD",
+			            label : "순번",
+			            width : 70,
+			            align : "right",
+			        	editor : { 
+			        		type : "number"
+			        	},
+						styleClass: function () {
+		                    return "grid-cell-edit";
+		                } 
+			        },{
+			            key : "T_USE_YN",
+			            label : "사용 여부",
+			            width : 90,
+			        	align : "center", 
+			        	editor : { type : "checkbox", config : {height: 17, trueValue: "Y", falseValue: "N"} },
+						styleClass: function () {
+		                    return "grid-cell-edit";
+		                } 
+			        }
+		        ]	        	
+	        },{
+              	key : undefined, 
               	label: "운영", 
               	columns: [	        
-			        {
-			            key : "CONTENTS_URL",
-			            label : "이미지 URL",
+              		{
+			            key : "BK_COLOR",
+			            label : "배경색",
 			            width : 70,			            
+			            align : "left",
+			        	editor : { 
+			        		type : "text"
+			        	},
+						styleClass: function () {
+		                    return "grid-cell-edit";
+		                }  
+
+			        },{
+			            key : "BK_IMAGE_URL",
+			            label : "배경 Url",
+			            width : 200,			            
 			            align : "left",
 			        	editor : { 
 			        		type : "text"
@@ -278,64 +400,6 @@ function fn_makeGrid() {
 		                } 
 			        }
 		        ]	        	
-	        },{
-              	key : undefined, 
-              	label: "테스트", 
-              	columns: [	        
-              		{
-			            key : "T_CONTENTS_URL",
-			            label : "이미지 URL",
-			            width : 70,			            
-			            align : "left",
-			        	editor : { 
-			        		type : "text"
-			        	},
-						styleClass: function () {
-		                    return "grid-cell-edit";
-		                }  
-
-			        },{
-			            key : "T_LINK_URL",
-			            label : "연결할 URL",
-			            width : 170,			            
-			            align : "left",
-			        	editor : { 
-			        		type : "text"
-			        	},
-						styleClass: function () {
-		                    return "grid-cell-edit";
-		                }  
-			        },{
-			            key : "T_MP4_YN",
-			            label : "동영상 여부",
-			            width : 90,
-			        	align : "center", 
-			        	editor : { type : "checkbox", config : {height: 17, trueValue: "Y", falseValue: "N"} },
-						styleClass: function () {
-		                    return "grid-cell-edit";
-		                } 
-			        },{
-			            key : "T_ORD",
-			            label : "순번",
-			            width : 70,
-			            align : "right",
-			        	editor : { 
-			        		type : "number"
-			        	},
-						styleClass: function () {
-		                    return "grid-cell-edit";
-		                } 
-			        },{
-			            key : "T_USE_YN",
-			            label : "사용 여부",
-			            width : 90,
-			        	align : "center", 
-			        	editor : { type : "checkbox", config : {height: 17, trueValue: "Y", falseValue: "N"} },
-						styleClass: function () {
-		                    return "grid-cell-edit";
-		                } 
-			        }
-		        ]	        	
 	        }	], 
 	  	null,
 	  	{
@@ -345,7 +409,7 @@ function fn_makeGrid() {
 }
 
 function fn_params() {
-	params.SEARCH_STR = $("#SEARCH_STR").val();	
+	params.CHANNEL_KIND = $("#CHANNEL_KIND option:selected").val();	
 }
 
 function fn_search() {
@@ -356,30 +420,122 @@ function fn_search() {
 	gfn_callAjax("/setting/axMainFrameList.do", params, fn_callbackAjax, "search");
 }
 
+function fn_searchDetail() {
+	var row = grid1.getList("selected");
+	if ( row.length == 1 ) {
+		params.SEQ = row[0].SEQ;
+		
+		if ( row[0].NEW_FLAG == "N" ) {
+			gfn_callAjax("/setting/axMainFrameDetailList.do", params, fn_callbackAjax, "searchDetail");
+		}
+	}
+}
+
 function fn_callbackAjax(data, id) {
-	//console.log("fn_callbackAjax : " + id);
+	//console.log("fn_callbackAjax : " + id); 
 	if ( id == "search" ) {
 		grid1.setData(data.list);
+		
+		grid1.select(0, {selected: true});
+		fn_searchDetail();
 	} else if ( id == "searchDetail" ) {
 		grid2.setData(data.list);
 	} else if ( id == "dd" ){
 		dd = $.extend({}, data);
+		
+		gfn_cbRefresh("CHANNEL_KIND", data.ChannelKind, true);
 
 		fn_makeGrid();
+	} else if ( id == "saveMaster" ){
+		mask.close();
+
+		mask.open();
+		dialog.alert( { msg : "저장 되었습니다." }, function () { mask.close();	fn_search(); } );
+	} else if ( id == "saveDetail" ){
+		mask.close();
+
+		mask.open();
+		dialog.alert( { msg : "저장 되었습니다." }, function () { mask.close();	fn_searchDetail(); } );
+	} else if ( id == "saveApply" ){
+		mask.close();
+
+		mask.open();
+		dialog.alert( { msg : "메인 화면에 반영되었습니다." }, function () { mask.close();	fn_search(); } );
 	}
 }
 
 function fn_gridEvent(event, obj) {
 	if ( event == "Click" ) {
 		obj.self.select(obj.dindex);
+
+		if ( obj.item.CHANNEL_KIND != undefined ) {
+			fn_searchDetail();
+		}
 	} else if ( event == "DBLClick" ) {
-		params.USER_ID = obj.item.USER_ID;	
-		
-		gfn_callAjax("/setting/axMainFrameList.do", params, fn_callbackAjax, "searchDetail");
 	} else if ( event == "DataChanged" ) {
 	}
 }
 
+function fn_saveMaster() {
+	var fieldParams = {
+   	};
+   	if ( gfn_validationCheck(grid1, fieldParams) ) {
+       	mask.open();
+       	confirmDialog.confirm(
+       		{
+               	title: "Confirm",
+               	msg: '저장하시겠습니까?'
+           	}, 
+           	function(){
+             	if ( this.key == "ok" ) {
+             		gfn_callAjax("/setting/axMainFrameSave.do", gfn_getSaveData(grid1), fn_callbackAjax, "saveMaster");
+               	} else {
+               		mask.close();
+               	}
+           	}
+       	);
+   	}
+}
+
+function fn_saveDetail() {
+	var fieldParams = {
+			T_BK_IMAGE_URL : { mendatory : true, colName : "배경 Url" }
+			,T_LINK_URL : { mendatory : true, colName : "연결할 URL" }
+   	};
+   	if ( gfn_validationCheck(grid2, fieldParams) ) {
+       	mask.open();
+       	confirmDialog.confirm(
+       		{
+               	title: "Confirm",
+               	msg: '저장하시겠습니까?'
+           	}, 
+           	function(){
+             	if ( this.key == "ok" ) {
+             		gfn_callAjax("/setting/axMainFrameDetailSave.do", gfn_getSaveData(grid2), fn_callbackAjax, "saveDetail");
+               	} else {
+               		mask.close();
+               	}
+           	}
+       	);
+   	}
+}
+
+function fn_saveApply() {
+   	mask.open();
+   	confirmDialog.confirm(
+   		{
+           	title: "Confirm",
+           	msg: '현재 설정값을 메인화면에 반영하시겠습니까?'
+       	}, 
+       	function(){
+         	if ( this.key == "ok" ) {
+         		gfn_callAjax("/setting/axMainFrameApply.do", {}, fn_callbackAjax, "saveApply");
+           	} else {
+           		mask.close();
+           	}
+       	}
+   	);
+}
 
 </script>
 
@@ -395,8 +551,6 @@ function fn_gridEvent(event, obj) {
     	<label for="CHANNEL_KIND">채널 종류</label>
 		<select class="form-control" id="CHANNEL_KIND">
 			<option value="">전체</option>
-			<option value="Q_CHANNEL">Q.채널</option>
-			<option value="P_CHANNEL">P.채널</option>
 		</select>
   	</div>
 </div>
@@ -404,9 +558,14 @@ function fn_gridEvent(event, obj) {
 
 <div>
     <button class="btn btn-default" data-grid-control="search">검색</button>
+    <button class="btn btn-default" data-grid-control="addMaster">Master 추가</button>
+    <button class="btn btn-default" data-grid-control="deleteMaster">Master 삭제</button>
     <button class="btn btn-default" data-grid-control="saveMaster">Master 저장</button>
-    <button class="btn btn-default" data-grid-control="saveDetail">Detail 저장</button>
-    <button class="btn btn-default" data-grid-control="saveApply">운영 적용</button>
+    <button class="btn btn-primary" data-grid-control="addDetail">Detail 추가</button>
+    <button class="btn btn-primary" data-grid-control="deleteDetail">Detail 삭제</button>
+    <button class="btn btn-primary" data-grid-control="saveDetail">Detail 저장</button>
+    <button class="btn btn-info" data-grid-control="view">설정 스타일 보기</button>
+    <button class="btn btn-danger" data-grid-control="saveApply">운영 적용</button>
 </div> 
 
 <div style="height:10px"></div>

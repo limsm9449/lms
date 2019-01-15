@@ -1,0 +1,1 @@
+background: url('../../img/main/channel_ic.png') 50% 0% no-repeat;

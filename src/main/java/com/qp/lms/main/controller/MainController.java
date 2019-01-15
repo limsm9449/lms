@@ -114,7 +114,7 @@ public class MainController {
 			set.setSessVO((SessionVO)SessionUtil.getSession());
 	    	
 			// 메인 페이지에 나올 과정 리스트
-			set = svr.mainCourseList(set);
+			set = svr.content(set);
 			
 	        model.addAttribute("set", set );
     	} catch ( Exception e ) {

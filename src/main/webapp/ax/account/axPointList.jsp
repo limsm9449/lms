@@ -231,10 +231,10 @@ function fn_callbackAjax(data, id) {
 function fn_gridEvent(event, obj) {
 	if ( event == "Click" ) {
 		obj.self.select(obj.dindex);
-	} else if ( event == "DBLClick" ) {
+
 		params.USER_ID = obj.item.USER_ID;	
-		
 		gfn_callAjax("/point/axPointDetailList.do", params, fn_callbackAjax, "searchDetail");
+	} else if ( event == "DBLClick" ) {
 	} else if ( event == "DataChanged" ) {
 	}
 }

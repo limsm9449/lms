@@ -10,6 +10,7 @@ public class CommonVO implements Serializable{
 	private String createDate;
 	private String createUser;
 	private String updateDate;
+	private String updateDateStr;
 	private String updateUser; 
 	private String locale;
 	
@@ -214,6 +215,12 @@ public class CommonVO implements Serializable{
 	}
 	public void setCompCd(String compCd) {
 		this.compCd = compCd;
+	}
+	public String getUpdateDateStr() {
+		return updateDateStr;
+	}
+	public void setUpdateDateStr(String updateDateStr) {
+		this.updateDateStr = updateDateStr;
 	}
 
 	

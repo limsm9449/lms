@@ -81,6 +81,30 @@
 		ORDER 	BY SEQ
 		LIMIT 	3
     </select> 
+
+    <select id="getMainFrame" parameterType="hashmap" resultType="hashmap">
+		SELECT 	*
+		FROM	MAIN_FRAME
+		WHERE 	CHANNEL_KIND = #{CHANNEL_KIND}
+		AND		USE_YN = 'Y'
+		ORDER 	BY ORD
+    </select>      
+
+    <select id="getMainFrameDetail" parameterType="hashmap" resultType="hashmap">
+		SELECT 	*
+		FROM	MAIN_FRAME_DETAIL
+		WHERE 	MAIN_FRAME_SEQ = #{SEQ}
+		AND		USE_YN = 'Y'
+		ORDER 	BY ORD
+    </select>      
+
+
+
+
+
+
+
+
 	
 	<select id="ddTeacher" resultType="Code">
 	SELECT USER_ID DD_KEY,

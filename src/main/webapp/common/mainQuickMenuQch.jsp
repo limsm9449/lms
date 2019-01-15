@@ -1,44 +1,41 @@
 <%@ page contentType="text/html;charset=utf-8"%>
 
-			<div class='quick_menu_wrap'>
-                <p class='quick_title'>
-                    Quick Menu
-                    <span></span>
-                </p>
+            <div class='quick_menu_wrap'>
+                <div class='mobile_btn'>
+                        <button onClick="sub_show_hide_pc(this)">
+                            <span class='first'></span><span class='middle'></span><span class='last'></span>
+                        </button>
+                    </div>
                 <ul>
-                    <li class='quick_menu_list'>
-                        <a href="javascript:" onclick="page.goPage('/main/cart');">
-                            <span></span>
-                            <img src='/resources/homepage/img/quick_menu1.png' alt=' '>
-                            장바구니
-                        </a>
-                    </li>
-                    <li class='quick_menu_list'>
-                        <a href="javascript:" onclick="page.goPage('/main/tutorial', '');">
-                            <span></span>
-                            <img src='/resources/homepage/img/quick_menu2.png' alt=' '>
-                            학습가이드
-                        </a>
-                    </li>
-                    <li class='quick_menu_list'>
-                        <a href="javascript:" onclick="page.goPage('/main/faqList', '')">
-                            <span></span>
-                            <img src='/resources/homepage/img/quick_menu3.png' alt=' '>
-                            FAQ
-                        </a>
-                    </li>
-                    <li class='quick_menu_list'>
-                        <a href="javascript:" onclick="page.goPage('/main/tutorial', 'shap=quick_to');">
-                            <span></span>
-                            <img src='/resources/homepage/img/quick_menu4.png' alt=' '>
-                            학습지원프로그램
-                        </a>
-                    </li>
+                	<a href='/resources/homepageQch/html/classroom/classroom.html'>
+                    	<li class='quick_menu_list' id="q_menu1"></li>
+                    </a>
+                    <a href='/resources/homepageQch/html/classroom/basket_step1.html'>
+                    	<li class='quick_menu_list' id="q_menu2"><img src="./img/main/quick/q_menu2_circle.png" alt=' ' id="q_menu2_circle"><span class="q_menu2_num">2</span></li>
+                    </a>
+                    <a href='#'>
+                    	<li class='quick_menu_list' id="q_menu3"> </li>
+                    </a>
+                    <a href='/resources/homepageQch/html/support/support.html'>
+                    	<li class='quick_menu_list' id="q_menu4"></li>
+                    </a>
+                    <a href='/resources/homepageQch/html/support/support.html'>
+                    	<li class='quick_menu_list' id="q_menu5"></li>
+                    </a>
+                    <a href='/resources/homepageQch/html/support/support.html'>
+                    	<li class='quick_menu_list' id="q_menu6"></li>
+                    </a>
+                    <li class='quick_menu_list' id="q_menu7"></li>
+                    
                 </ul>
-                <p class='quick_top' onclick="gfn_goScreenPosition('screen_top');">
+               <!-- 탑다운버튼<p class='quick_top'>
                     <span>
-                        <img src='/resources/homepage/img/quick_top.png' alt=' '>
+                        <img src='/resources/homepageQch/img/main/quick/q_topbtn.png' alt=' '>
                     </span>
-                    TOP
                 </p>
+                <p class='quick_down'>
+                    <span>
+                        <img src='/resources/homepageQch/img/main/quick/q_downbtn.png' alt=' '>
+                    </span>
+                </p>-->
             </div>

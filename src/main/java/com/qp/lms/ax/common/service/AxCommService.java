@@ -144,6 +144,12 @@ public class AxCommService {
 		    	hm.put(ddKinds[i], sqlSession.selectList("axComm.axDdSetting", paramMap));
 			} else if ( "PointKind".equals(ddKinds[i]) ) {
 		    	hm.put(ddKinds[i], sqlSession.selectList("axComm.axDdPointKind", paramMap));
+			} else if ( "FrameKind".equals(ddKinds[i]) ) {
+				paramMap.put("DD_MAIN", "FRAME_KIND");
+		    	hm.put(ddKinds[i], sqlSession.selectList("axComm.axDdCode", paramMap));
+			} else if ( "ChannelKind".equals(ddKinds[i]) ) {
+				paramMap.put("DD_MAIN", "CHANNEL_KIND");
+		    	hm.put(ddKinds[i], sqlSession.selectList("axComm.axDdCode", paramMap));
 			}
 		}
 		

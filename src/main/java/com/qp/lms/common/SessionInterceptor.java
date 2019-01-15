@@ -149,29 +149,8 @@ public class SessionInterceptor extends HandlerInterceptorAdapter {
 		        	commSvr.lastLog(SessionUtil.getSessionUserId());
 		        }
 
-	   	 		//베스트(인기)과정
-	   	 		if ( SessionUtil.getAttribute("popularCourseList") == null ) {
-	   	 			SessionUtil.setAttribute("popularCourseList", commSvr.getPopularCourseList(compCd));
-	   	 		}
-	   	 		//추천과정
-	   	 		if ( SessionUtil.getAttribute("recommendCourseList") == null ) {
-	   	 			SessionUtil.setAttribute("recommendCourseList", commSvr.getRecommendCourseList(compCd));
-	   	 		}
-	   	 		//신규과정
-	   	 		if ( SessionUtil.getAttribute("newCourseList") == null ) {
-	   	 			SessionUtil.setAttribute("newCourseList", commSvr.getNewCourseList(compCd));
-	   	 		}
-	   	 		//신규 이벤트
-	   	 		if ( SessionUtil.getAttribute("eventList") == null ) {
-	   	 			SessionUtil.setAttribute("eventList", commSvr.getEventList(compCd));
-	   	 		}
-	   	 		//주요공지사항
-	   	 		if ( SessionUtil.getAttribute("noticeList") == null ) {
-	   	 			SessionUtil.setAttribute("noticeList", commSvr.getNoticeList(compCd));
-	   	 		}
-
 	   	 		//과정 카테고리
-		   	 	if ( SessionUtil.getCourseCategoryList() == null ) {
+		   	 	if ( CommUtil.isEqual("B2C", compType) && SessionUtil.getCourseCategoryList() == null ) {
 	   	 			SessionUtil.setAttribute("courseCategoryList", commSvr.getCourseCategoryList());
 	   	 		}
 		   	 	

@@ -167,7 +167,7 @@ public class AxSettingController {
     }
 
 
-    @RequestMapping(value = "/set/axMainFrameDetailList", method = RequestMethod.POST, consumes = "application/json" )
+    @RequestMapping(value = "/setting/axMainFrameDetailList", method = RequestMethod.POST, consumes = "application/json" )
     public @ResponseBody HashMap<String,Object> axMainFrameDetailList(@RequestBody HashMap<String, Object> paramMap, HttpServletRequest request, HttpServletResponse response) throws Exception {
     	HashMap<String, Object> hm = new HashMap<String, Object>();
 
@@ -180,12 +180,26 @@ public class AxSettingController {
         return hm;
     }
     
-    @RequestMapping(value = "/set/axMainFrameDetailSave", method = RequestMethod.POST, consumes = "application/json" )
+    @RequestMapping(value = "/setting/axMainFrameDetailSave", method = RequestMethod.POST, consumes = "application/json" )
     public @ResponseBody HashMap<String,Object> axMainFrameDetailSave(@RequestBody HashMap<String, Object> paramMap, HttpServletRequest request, HttpServletResponse response) throws Exception {
     	HashMap<String, Object> hm = new HashMap<String, Object>();
     	
 		try {
     		hm = svr.axMainFrameDetailSave(paramMap);
+    	} catch ( Exception e ) {
+    		e.printStackTrace();
+    		hm.put("RtnMode", Constant.mode.ERROR.name());
+    	}
+
+        return hm;
+    }
+
+    @RequestMapping(value = "/setting/axMainFrameApply", method = RequestMethod.POST, consumes = "application/json" )
+    public @ResponseBody HashMap<String,Object> axMainFrameApply(@RequestBody HashMap<String, Object> paramMap, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    	HashMap<String, Object> hm = new HashMap<String, Object>();
+    	
+		try {
+    		hm = svr.axMainFrameApply(paramMap);
     	} catch ( Exception e ) {
     		e.printStackTrace();
     		hm.put("RtnMode", Constant.mode.ERROR.name());
