@@ -29,7 +29,6 @@
 <c:if test="${!empty session}">      		
                     <a href="javascript:" onclick="gfn_ajax.logout()" class='last_right'>로그아웃</a>
                     <a href="javascript:" onclick="page.goPage('/member/userMemberU');" class='pc'>회원정보수정</a>
-                    <p class='pc'>${session.userName}님 반갑습니다</p>
 </c:if>                  
                 </div>
             </div>

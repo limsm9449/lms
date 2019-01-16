@@ -399,18 +399,13 @@ function fn_makeGrid() {
               	label: "이미지", 
               	columns: [	        
 			        {
-			            key : "SWF",
-			            label : "메인 플레시",
-			            width : 100,
-			            align : "center"
-			        },{
 			            key : "B_IMG",
-			            label : "메인 배경",
+			            label : "리스트",
 			            width : 80,
 			            align : "center"
 			        },{
 			            key : "C_IMG",
-			            label : "과정 상세",
+			            label : "수강후기",
 			            width : 80,
 			            align : "center"
 			        },{

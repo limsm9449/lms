@@ -127,7 +127,7 @@ $(document.body).ready(function () {
             	fn_saveDetail();
                 break;
             case "view" :
-            	var urlParams = "MODE=TEST";
+            	var urlParams = "mainViewMode=TEST";
         		f_popup('/main/content', {displayName:'courseTutorPopup',option:'width=1400,height=900', urlParams:urlParams});
         		
                 break;
@@ -280,7 +280,7 @@ function fn_makeGrid() {
 			        },{
 			            key : "T_BK_IMAGE_URL",
 			            label : "배경 Url",
-			            width : 200,
+			            width : 400,
 			            align : "left",
 			        	editor : { 
 			        		type : "text"
@@ -291,7 +291,7 @@ function fn_makeGrid() {
 			        },{
 			            key : "T_LINK_URL",
 			            label : "연결할 URL",
-			            width : 170,			            
+			            width : 270,			            
 			            align : "left",
 			        	editor : { 
 			        		type : "text"
@@ -349,7 +349,7 @@ function fn_makeGrid() {
 			        },{
 			            key : "BK_IMAGE_URL",
 			            label : "배경 Url",
-			            width : 200,			            
+			            width : 400,			            
 			            align : "left",
 			        	editor : { 
 			        		type : "text"
@@ -361,7 +361,7 @@ function fn_makeGrid() {
 			        },{
 			            key : "LINK_URL",
 			            label : "연결할 URL",
-			            width : 170,			            
+			            width : 270,			            
 			            align : "left",
 			        	editor : { 
 			        		type : "text"

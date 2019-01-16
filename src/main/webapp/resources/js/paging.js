@@ -19,7 +19,7 @@ function f_makePageNavigator(objId, currentPage, totalCount, pageBlock) {
 		if ( pageNum == currentPage ) 
 			pagingHTML += "		<li class='on'>"+pageNum+"</li>";
 		else 
-			pagingHTML += "		<li><a href='#' onclick='javascript:paging("+pageNum+");'>"+pageNum+"</a></li>";
+			pagingHTML += "		<li onclick='javascript:paging("+pageNum+");'><a href='#'>"+pageNum+"</a></li>";
 		
 		if ( pageNum == lastPageNum )
 			break;

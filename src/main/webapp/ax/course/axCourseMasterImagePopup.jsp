@@ -81,9 +81,6 @@ function fn_search() {
 function fn_callbackAjax(data, id) {
 	//console.log("fn_callbackAjax : " + id);
 	if ( id == "search" ) {
-		if ( data.list[0].SWF == "Y" ) {
-			$('#swfImg').attr("src", "/cImage/swf.jpg");
-		}
 		if ( data.list[0].B_IMG == "Y" ) {
 			$('#bImg').attr("src", "/cImage/contents/" + params.COURSE_CODE + "/bImg.jpg" + "?timestamp=" + gfn_timestamp());
 		}
@@ -125,11 +122,7 @@ function fn_callbackAjax(data, id) {
 }
 
 function fn_upload(pParam) {
-	if ( pParam.kind == "SWF" && isExtention($("#swfFile").val(),"swf") == false ) {
-		mask.open();
-		dialog.alert( { msg : "플래시 파일을 선택해주세요." }, function () { mask.close();	} );
-		return false;
-	} else if ( pParam.kind == "B_IMG" && isExtention($("#bImgFile").val(),"jpg") == false ) {
+	if ( pParam.kind == "B_IMG" && isExtention($("#bImgFile").val(),"jpg") == false ) {
 		mask.open();
 		dialog.alert( { msg : "JPG 파일을 선택해주세요." }, function () { mask.close();	} );
 		return false;
@@ -198,29 +191,20 @@ function isExtention(fileName, compExt) {
 <div style="height:10px"></div>
 
 <div data-ax5layout="ax1" data-config='{layout:"tab-panel"}' style="height:515px;">
-    <div data-tab-panel='{label: "메인 플레시", "active": "true"}' style="background: #eee;">
+    <div data-tab-panel='{label: "리스트 이미지", "active": "true"}' style="background: #ccc;">
         <div style="padding: 10px;">
-            <div class="img_box"><img id="swfImg" src="/cImage/blank.jpg" style="width:650px;height:425px;"/></div>
+            <div class="img_box"><img id="bImg" src="/cImage/blank.jpg" style="width:160px;height:112px;"/></div>
             <div class="file_btn_group">
-		      <a class="grayBtn file_button">swf.swf(1300*850) 파일</a> 
-		      <input type="file" name="swfFile" id="swfFile" class="hidden_inputfile" title="" onChange="fn_upload({kind:'SWF'}); return false;">
-		    </div>
-        </div>
-    </div>
-    <div data-tab-panel='{label: "메인 배경 이미지", "active": "false"}' style="background: #ccc;">
-        <div style="padding: 10px;">
-            <div class="img_box"><img id="bImg" src="/cImage/blank.jpg" style="width:650px;height:425px;"/></div>
-            <div class="file_btn_group">
-		      <a class="grayBtn file_button">bImg.jpg(1300*850) 파일</a> 
+		      <a class="grayBtn file_button">bImg.jpg(160 * 112) 파일</a> 
 		      <input type="file" name="bImgFile" id="bImgFile" class="hidden_inputfile" title="" onChange="fn_upload({kind:'B_IMG'}); return false;">
 		    </div>
         </div>
     </div>
-    <div data-tab-panel='{label: "과정 상세 이미지", "active": "false"}' style="background: #ccc;">
+    <div data-tab-panel='{label: "수강후기 이미지", "active": "false"}' style="background: #ccc;">
         <div style="padding: 10px;">
-            <div class="img_box"><img id="cImg" src="/cImage/blank.jpg" style="width:356px;height:237px;"/></div>
+            <div class="img_box"><img id="cImg" src="/cImage/blank.jpg" style="width:320px;height:224px;"/></div>
             <div class="file_btn_group">
-		      <a class="grayBtn file_button">cImg.jpg(356*237) 파일</a> 
+		      <a class="grayBtn file_button">cImg.jpg(320 * 224) 파일</a> 
 		      <input type="file" name="cImgFile" id="cImgFile" class="hidden_inputfile" title="" onChange="fn_upload({kind:'C_IMG'}); return false;">
 		    </div>
         </div>
@@ -228,20 +212,20 @@ function isExtention(fileName, compExt) {
     <div data-tab-panel='{label: "과정 미리보기 이미지", "active": "false"}' style="background: #ccc;">
         <div style="padding: 10px;">
             <div class="img_box">
-           		<img id="mImg1" src="/cImage/blank.jpg" style="width:249px;height:156px;"/>
-           		<img id="mImg2" src="/cImage/blank.jpg" style="width:249px;height:156px;"/>
-           		<img id="mImg3" src="/cImage/blank.jpg" style="width:249px;height:156px;"/>
+           		<img id="mImg1" src="/cImage/blank.jpg" style="width:280px;height:180px;"/>
+           		<img id="mImg2" src="/cImage/blank.jpg" style="width:280px;height:180px;"/>
+           		<img id="mImg3" src="/cImage/blank.jpg" style="width:280px;height:180px;"/>
             </div>
             <div class="file_btn_group">
-		      <a class="grayBtn file_button">mImg1.jpg(374*235) 파일</a> 
+		      <a class="grayBtn file_button">mImg1.jpg(334 * 204) 파일</a> 
 		      <input type="file" name="mImg1File" id="mImg1File" class="hidden_inputfile" title="" onChange="fn_upload({kind:'M_IMG1'}); return false;">
 		    </div>
             <div class="file_btn_group">
-		      <a class="grayBtn file_button">mImg2.jpg(374*235) 파일</a> 
+		      <a class="grayBtn file_button">mImg2.jpg(334 * 204) 파일</a> 
 		      <input type="file" name="mImg2File" id="mImg2File" class="hidden_inputfile" title="" onChange="fn_upload({kind:'M_IMG2'}); return false;">
 		    </div>
             <div class="file_btn_group">
-		      <a class="grayBtn file_button">mImg3.jpg(374*235) 파일</a> 
+		      <a class="grayBtn file_button">mImg3.jpg(334 * 204) 파일</a> 
 		      <input type="file" name="mImg3File" id="mImg3File" class="hidden_inputfile" title="" onChange="fn_upload({kind:'M_IMG3'}); return false;">
 		    </div>
         </div>
@@ -249,20 +233,20 @@ function isExtention(fileName, compExt) {
     <div data-tab-panel='{label: "과정 썸네일 이미지", "active": "false"}' style="background: #ccc;">
         <div style="padding: 10px;">
             <div class="img_box">
-           		<img id="sImg1" src="/cImage/blank.jpg" style="width:249px;height:156px;"/>
-           		<img id="sImg2" src="/cImage/blank.jpg" style="width:249px;height:156px;"/>
-           		<img id="sImg3" src="/cImage/blank.jpg" style="width:249px;height:156px;"/>
+           		<img id="sImg1" src="/cImage/blank.jpg" style="width:107px;height:75px;"/>
+           		<img id="sImg2" src="/cImage/blank.jpg" style="width:107px;height:75px;"/>
+           		<img id="sImg3" src="/cImage/blank.jpg" style="width:107px;height:75px;"/>
             </div>
             <div class="file_btn_group">
-		      <a class="grayBtn file_button">sImg1.jpg(120*75) 파일</a> 
+		      <a class="grayBtn file_button">sImg1.jpg(107 * 75) 파일</a> 
 		      <input type="file" name="sImg1File" id="sImg1File" class="hidden_inputfile" title="" onChange="fn_upload({kind:'S_IMG1'}); return false;">
 		    </div>
             <div class="file_btn_group">
-		      <a class="grayBtn file_button">sImg2.jpg(120*75) 파일</a> 
+		      <a class="grayBtn file_button">sImg2.jpg(107 * 75) 파일</a> 
 		      <input type="file" name="sImg2File" id="sImg2File" class="hidden_inputfile" title="" onChange="fn_upload({kind:'S_IMG2'}); return false;">
 		    </div>
             <div class="file_btn_group">
-		      <a class="grayBtn file_button">sImg3.jpg(120*75) 파일</a> 
+		      <a class="grayBtn file_button">sImg3.jpg(107 * 75) 파일</a> 
 		      <input type="file" name="sImg3File" id="sImg3File" class="hidden_inputfile" title="" onChange="fn_upload({kind:'S_IMG3'}); return false;">
 		    </div>
         </div>

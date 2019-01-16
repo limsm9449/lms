@@ -10,6 +10,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
 
+<% pageContext.setAttribute("newLineChar", "\n"); %>
+
 
 <!DOCTYPE html>
 <html lang='ko' data-useragent="Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; Trident/6.0)">
@@ -28,22 +30,15 @@
     <link href="https://fonts.googleapis.com/css?family=Noto+Sans" rel="stylesheet">
 
     <link rel='stylesheet' type='text/css' href='/resources/homepageQch/css/initialization.css'>
-    <link rel='stylesheet' type='text/css' href='/resources/homepageQch/css/main.css'>
+    <link rel='stylesheet' type='text/css' href='/resources/homepageQch/css/main.css?timestamp=<%=timestamp%>'>
 </head>
 
 <script type="text/javascript">
 
 var courseInfo = {};
 $(document).ready(function(){
-	var isPc = true;
-	
-	var size = {
-	    width: window.innerWidth || document.body.clientWidth,
-	    height: window.innerHeight || document.body.clientHeight
-	}
-    if ( ( size.width <= 420 ) || ( ( size.height <= 420 ) && ( size.width > size.height ) ) ) {
-    	isPc = false;
-    }
+	var isPc = ( gfn_deviceCheck() == "PC" ? true : false );
+	console.log(isPc);
 	
 	<c:forEach var="row" items="${set.mainFrame}" varStatus="idx">
 		<c:set var = "detailList" value = "${set.mainFrameDetailHm[row.SEQ]}"/>
@@ -86,6 +81,10 @@ $(document).ready(function(){
 	</c:forEach>
 	
 	f_makePageNavigator("pagingLayer",${set.condiVO.pageNum},${set.totalCount},${set.pageUnit});
+	
+	<c:if test="${!empty set.condiVO.shap}">	      	
+		gfn_goScreenPosition("${set.condiVO.shap}");
+	</c:if>
 });
 
 function fn_linkCall(seq) {
@@ -104,11 +103,29 @@ function fn_linkCall(seq) {
 }
 
 function fn_getPcMobileImg(isPc, fileName) {
+	var rtnFileName = "";
 	if ( isPc ) {
-		return fileName;
+		rtnFileName = fileName;
 	} else {
 		var fileArray = fileName.split(".");
-		return fileArray[0] + "_mobile." + fileArray[1];
+		var lastPos = fileName.lastIndexOf(".");
+		rtnFileName = fileName.substring(0, lastPos) + "_m." + fileName.substring(lastPos + 1);
+	}
+	
+	console.log(rtnFileName);
+	return rtnFileName;
+}
+
+function lfn_btn(pKind, pParam) {
+	if ( pKind == "search" || pKind == "paging" ) {
+		if ( pKind == "search" )
+			$("#pageNum").val(1);
+		else if ( pKind == "paging" ) {
+			$("#pageNum").val(pParam.page);
+			$("#shap").val("screen_postscript");
+		}
+		
+		gfn_goPage("/main/content",$("#frm").serialize());
 	}
 }
 
@@ -116,7 +133,8 @@ function fn_getPcMobileImg(isPc, fileName) {
 
 <body>
 <form name="frm" id="frm" method="post">
-
+	<input type='hidden' id='shap' name='shap' value="">
+	
 <frameset rows='*'>
     <div class="wrap" >
         <!-- HEAD -->
@@ -134,19 +152,29 @@ function fn_getPcMobileImg(isPc, fileName) {
 	<c:set var = "detailList" value = "${set.mainFrameDetailHm[row.SEQ]}"/>
 	<c:choose>
  		<c:when test = "${row.FRAME_KIND eq 'DOT_SLIDE'}">
-            <ul class='slider_wrap tabs' id='tab${row.SEQ}'>
-				<c:forEach var="detailRow" items="${detailList}" varStatus="idx2">
-	                <li class='slide_box slide_${detailRow.SEQ}' onclick="fn_linkCall(${detailRow.SEQ})">
-	                    <div class='visual_box'>
-	                        <div class='slide clear_fix'>
-	                            <div class='slider_text_box'> 
-	                                
-	                            </div>
-	                        </div>
-	                    </div>
-	                </li>
-				</c:forEach>
-            </ul>
+ 			<div class='recommend_wrap lectures_wrap'>
+	 			<c:if test = "${row.FRAME_NAME ne ''}">
+	 				<p>
+	                    ${row.FRAME_NAME}
+	                </p>
+	 			</c:if>
+	 			<c:if test = "${row.FRAME_DESC ne ''}">
+	 				 <p class='pc'>${row.FRAME_DESC}</p>
+	 			</c:if>
+	            <ul class='slider_wrap tabs' id='tab${row.SEQ}'>
+					<c:forEach var="detailRow" items="${detailList}" varStatus="idx2">
+		                <li class='slide_box slide_${detailRow.SEQ}' onclick="fn_linkCall(${detailRow.SEQ})">
+		                    <div class='visual_box'>
+		                        <div class='slide clear_fix'>
+		                            <div class='slider_text_box'> 
+		                                
+		                            </div>
+		                        </div>
+		                    </div>
+		                </li>
+					</c:forEach>
+	            </ul>
+	      	</div>
         </c:when>
  		<c:when test = "${row.FRAME_KIND eq 'DOT_S_SLIDE'}">
             <div class='process_wrap lectures_wrap'>
@@ -185,7 +213,6 @@ function fn_getPcMobileImg(isPc, fileName) {
 	 			</c:if>
                 <div class="r_bg">
                     <div class="r_bg_b2">
-                    	<img id="recc_back" src="/resources/homepageQch/img/main/star_b.png" alt="" width="74">
                             <div class="r_div">
                                 <ul class='clear_fix' id="r_ul">
 									<c:forEach var="detailRow" items="${detailList}" varStatus="idx2">
@@ -195,7 +222,6 @@ function fn_getPcMobileImg(isPc, fileName) {
 									</c:forEach>
                                 </ul>
                             </div>
-                        <img id="recc_next" src="/resources/homepageQch/img/main/star_n.png" alt="" width="74">
                     </div>
                 </div>
             </div>			
@@ -288,8 +314,9 @@ function fn_getPcMobileImg(isPc, fileName) {
         </div>
         
          <!-- CONTENTS END -->
-         
-     <div class="p_visual3_bg">    
+	<div id='screen_postscript'></div>
+	         
+    <div class="p_visual3_bg">    
         <div class="p_visual3">
                 <!-- Search Result Area -->
                 <div class='p_search_result'>
@@ -298,13 +325,11 @@ function fn_getPcMobileImg(isPc, fileName) {
                         <li class='clear_fix'>
                             <div class='p_result_con con clear_fix'>
                                 <div class='p_result_img'>
-                                    <a href=""><img src='/cImage/contents/${row.courseCode}/mImg1.jpg' alt=' '></a>
+                                    <a href="#" onclick="gfn_goPage('/main/mainCourseData','courseId=${row.courseId}')"><img src='/cImage/contents/${row.courseCode}/cImg.jpg' alt=' '></a>
                                 </div>
                                 <div class='p_result_text'>
-                                    <p class="p_result_text_1">[ ${row.courseName} ]</p>
-                                    <p class="p_result_text_3">${row.contents}</p>
-                                    <p class="p_result_text_4"><span  class="p_result_txt_name">by ${row.userName}</span><span class="p_result_txt_date">${row.updateDateStr}</span></p>
-                                    <a href="#" onclick="gfn_goPage('/main/mainCourseData','courseId=${row.courseId}')" class="p_result_text_btn">더보기</a>
+                                    <p class="p_result_text_2">[ ${row.courseName} ]</p>
+                                    <p class="p_result_text_3">${fn:replace(row.contents, newLineChar, "<br>")}</p>
                                 </div>
                             </div>
                             <div class='p_result_review con'>
@@ -314,7 +339,9 @@ function fn_getPcMobileImg(isPc, fileName) {
 	                                <span><img src='/resources/homepage/img/process/${row.eval2}.png' alt=''></span>
 	                                <span><img src='/resources/homepage/img/process/${row.eval3}.png' alt=''></span>
 	                                <span><img src='/resources/homepage/img/process/${row.eval4}.png' alt=''></span>
-	                                <span><img src='/resources/homepage/img/process/${row.eval5}.png' alt=''></span>                                        
+	                                <span><img src='/resources/homepage/img/process/${row.eval5}.png' alt=''></span>
+                                    <p class="p_result_text_4"><span  class="p_result_txt_name">by ${row.userName}</span><div class="p_result_txt_date">${row.updateDateStr}</div></p>
+                                    <div><a href="#" onclick="gfn_goPage('/main/mainCourseData','courseId=${row.courseId}')" class="p_result_text_btn">더보기</a></div>                                        
                                 </div>
                             </div>
                         </li>
@@ -325,23 +352,20 @@ function fn_getPcMobileImg(isPc, fileName) {
             </div>
             </div>
             
-            
 <c:forEach var="row" items="${set.postScriptList}" varStatus="idx">
             <div class="mobile_recomm">
             	<div class='mobile_menu tutorial' id="mobile_r1">
-                    <button onclick='m_menu_open(this, "main")' id="menu_b_btn">
+                    <button id="menu_b_btn" onclick="gfn_goPage('/main/mainCourseData','courseId=${row.courseId}')">
                         <div class='p_result_text'>
-                                <p class="p_result_text_1">[ ${row.courseName} ]</p>
+                                <p class="p_result_text_2">[ ${row.courseName} ]</p>
+                                <p class="p_result_text_3">${fn:replace(row.contents, newLineChar, "<br>")}</p>
                                 <p class="p_result_text_4" id="t4">
                                     <span  class="p_result_txt_name">by ${row.userName}</span>
-                                    <span class="p_result_txt_date">${row.updateDateStr}</span>
+                                    <div class="p_result_txt_date">${row.updateDateStr}</div>
                                 </p>
                                 
                             </div>
                     </button>
-                    <ul>
-                        <li class="mobile_re_txt">${row.contents}</li>
-                    </ul>
                 </div>
             </div>
 </c:forEach> 
@@ -350,11 +374,11 @@ function fn_getPcMobileImg(isPc, fileName) {
 			<input type='hidden' id='pageNum' name='pageNum' value="${set.condiVO.pageNum}">
         	<div class='p_pager_box'>
                 <div class='p_pager clear_fix'>
-	                <div class='pager_prev clear_fix' id="pagingLayerPrev">
+	                <div class='p_pager_prev clear_fix' id="pagingLayerPrev">
 	                </div>
 	                <ul class='clear_fix' id="pagingLayer">
 	                </ul>
-	                <div class='pager_next clear_fix' id="pagingLayerNext">
+	                <div class='p_pager_next clear_fix' id="pagingLayerNext">
 	                </div>
                 </div>
             </div>

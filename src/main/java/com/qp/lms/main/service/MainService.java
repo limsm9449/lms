@@ -44,10 +44,12 @@ public class MainService {
     		List<HashMap> mainFrame = null; 
     		HashMap<String, Object> paramMap = new HashMap<String, Object>();
     		paramMap.put("CHANNEL_KIND", "Q_CHANNEL");
+    		paramMap.put("MODE", set.getCondiVO().getMainViewMode());
     		mainFrame = sqlSession.selectList("comm.getMainFrame", paramMap);
 
     		HashMap mainFrameDetailHm = new HashMap();
     		for ( int i = 0; i < mainFrame.size(); i++ ) {
+    			mainFrame.get(i).put("MODE", set.getCondiVO().getMainViewMode());
     			List<HashMap> mainFrameDetail = sqlSession.selectList("comm.getMainFrameDetail", mainFrame.get(i));
     			mainFrameDetailHm.put(mainFrame.get(i).get("SEQ"), mainFrameDetail);
     		}
@@ -69,10 +71,12 @@ public class MainService {
     		List<HashMap> mainFrame = null; 
     		HashMap<String, Object> paramMap = new HashMap<String, Object>();
     		paramMap.put("CHANNEL_KIND", "P_CHANNEL");
+    		paramMap.put("MODE", set.getCondiVO().getMainViewMode());
     		mainFrame = sqlSession.selectList("comm.getMainFrame", paramMap);
 
     		HashMap mainFrameDetailHm = new HashMap();
     		for ( int i = 0; i < mainFrame.size(); i++ ) {
+    			mainFrame.get(i).put("MODE", set.getCondiVO().getMainViewMode());
     			List<HashMap> mainFrameDetail = sqlSession.selectList("comm.getMainFrameDetail", mainFrame.get(i));
     			mainFrameDetailHm.put(mainFrame.get(i).get("SEQ"), mainFrameDetail);
     		}

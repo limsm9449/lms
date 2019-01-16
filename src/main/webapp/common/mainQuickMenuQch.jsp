@@ -7,28 +7,25 @@
                         </button>
                     </div>
                 <ul>
-                	<a href='/resources/homepageQch/html/classroom/classroom.html'>
+                	<a href='#' onclick="page.goPage('/main/myClassroom', '');">
                     	<li class='quick_menu_list' id="q_menu1"></li>
                     </a>
-                    <a href='/resources/homepageQch/html/classroom/basket_step1.html'>
+                    <a href='#' onclick="page.goPage('/main/courseList', '');">
                     	<li class='quick_menu_list' id="q_menu2"><img src="./img/main/quick/q_menu2_circle.png" alt=' ' id="q_menu2_circle"><span class="q_menu2_num">2</span></li>
                     </a>
-                    <a href='#'>
+                    <a href='#' onclick="page.goPage('/main/cart');">
                     	<li class='quick_menu_list' id="q_menu3"> </li>
                     </a>
-                    <a href='/resources/homepageQch/html/support/support.html'>
+                    <a href='#' onclick="alert('준비중입니다.')">
                     	<li class='quick_menu_list' id="q_menu4"></li>
                     </a>
-                    <a href='/resources/homepageQch/html/support/support.html'>
+                    <a href='#' onclick="page.goPage('/main/noticeList', '');">
                     	<li class='quick_menu_list' id="q_menu5"></li>
-                    </a>
-                    <a href='/resources/homepageQch/html/support/support.html'>
-                    	<li class='quick_menu_list' id="q_menu6"></li>
                     </a>
                     <li class='quick_menu_list' id="q_menu7"></li>
                     
                 </ul>
-               <!-- 탑다운버튼<p class='quick_top'>
+               <!-- 탑다운버튼1111111111111<p class='quick_top'>
                     <span>
                         <img src='/resources/homepageQch/img/main/quick/q_topbtn.png' alt=' '>
                     </span>

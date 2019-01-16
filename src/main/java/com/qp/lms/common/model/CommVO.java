@@ -25,6 +25,8 @@ public class CommVO extends CommonVO {
 	//2014.8.24
 	private String Url;
 	
+	private String shap;
+	
 	
 	public String getParentCode() {
 		return parentCode;
@@ -103,6 +105,12 @@ public class CommVO extends CommonVO {
 	}
 	public void setUrl(String url) {
 		Url = url;
+	}
+	public String getShap() {
+		return shap;
+	}
+	public void setShap(String shap) {
+		this.shap = shap;
 	}
 	
 	

@@ -58,9 +58,7 @@ $(document).ready(function() {
                         <div class='title'>
                             <p>내용</p>
                         </div>
-                        <div class='editor_area'>
-                        	<c:out value="${set.data.contents}" escapeXml="" /> 
-                        </div>
+                        <div class='editor_area'><pre><c:out value="${set.data.contents}" escapeXml="" /></pre></div>
                     </div>
                     <div class='form_box clear_fix'>
                         <div class='title'>

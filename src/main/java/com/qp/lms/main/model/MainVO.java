@@ -61,6 +61,7 @@ public class MainVO extends CommonVO {
 	private String authKey;
 	private String viewType;
 	private String viewTypeChg;
+	private String mainViewMode;
 
 	public String getC1Code() {
 		return c1Code;
@@ -352,6 +353,12 @@ public class MainVO extends CommonVO {
 	}
 	public void setViewTypeChg(String viewTypeChg) {
 		this.viewTypeChg = viewTypeChg;
+	}
+	public String getMainViewMode() {
+		return mainViewMode;
+	}
+	public void setMainViewMode(String mainViewMode) {
+		this.mainViewMode = mainViewMode;
 	}
 	
 	
