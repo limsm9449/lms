@@ -118,7 +118,7 @@ function lfn_btn(pKind, pParam) {
                     <!-- Top END -->
                     <div class='faq_search_box'>
                     	<select name="category" style="width:170px">
-                            <option value='전체'>전체</option>
+                            <option value=''>전체</option>
 			          		<c:forEach var="row" items="${set.ddCategory}">
 				              	<option value="${row.ddKey}" <c:if test="${set.condiVO.category eq row.ddKey}">selected</c:if>>${row.ddValue}</option>
 							</c:forEach>
@@ -178,7 +178,7 @@ function lfn_btn(pKind, pParam) {
         <!-- FOOTER END -->
     </div>
 </frameset>
-<script src='/resources/homepageQch/js/sub.js?timestamp=<%=timestamp%>'></script>
+<script src='/resources/homepageQch/js/main.js'></script>
 
 </form>
     

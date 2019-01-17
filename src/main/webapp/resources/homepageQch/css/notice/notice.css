@@ -75,6 +75,14 @@
 .top_text_box p span{
     display:block;
 }
+#detail_h1{
+	clear: both;
+    font-family: "NanumSquare";
+    font-size: 44px;
+    letter-spacing: -2px;
+    padding-bottom: 16px;
+    border-bottom: solid 1px #003366;
+}
 
 
 /* NOTICE SEARCH */
@@ -129,6 +137,7 @@ table tr .last_right{
 }
 .notice_col2{
     width: 13%;
+	text-align:center;
 }
 .notice_col3{
     width: 59%;
@@ -237,7 +246,7 @@ table th.notice_col3:hover{
     padding-bottom:200px;
 }
 .menu_sub li a{
-    text-align:center;
+
 }
 
 
@@ -448,9 +457,10 @@ table th.notice_col3:hover{
     padding-left: 0;
 	}
 	
-	/*2019*/
-    .head_mobile{
+	/*2019*/.head_mobile{
         display:block;
+		position:fixed;
+		padding-bottom:10px;
     }
     .head_wrap{
         margin:8px auto 0;

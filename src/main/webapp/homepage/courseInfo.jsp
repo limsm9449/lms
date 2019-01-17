@@ -8,6 +8,8 @@
 <!DOCTYPE html>
 <html lang='ko'>
 
+<% pageContext.setAttribute("newLineChar", "\n"); %>
+
 <head>
     <meta charset='utf-8'>
     <meta name='viewport' content='width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1'>
@@ -28,7 +30,7 @@ function lfn_btn(pKind, pParam) {
 		<c:choose>
 			<c:when test="${set.condiVO.isLogin eq 'N'}">
 				alert("로그인 후에 수강신청을 하셔야 합니다.");
-				top.location = "/login.do?preUrl=" + encodeURIComponent(window.location + "?courseId=${set.courseData.courseId}");
+				location = "/login.do?preUrl=" + encodeURIComponent(window.location + "?courseId=${set.courseData.courseId}");
 			</c:when>
 			<c:when test="${set.courseData.subCnt ne 0}">
 				alert("신청한 과정입니다.");
@@ -45,7 +47,7 @@ function lfn_btn(pKind, pParam) {
 								alert("과정이 신청되었습니다.");
 								page.goPage('/main/myClassroom', '');
 							} else if ( json.rtnMode == "NO_SESSION") {
-								top.location = "/login.do?preUrl=/main/courseList.do";		
+								location = "/login.do?preUrl=/main/courseList.do";		
 							} else {
 								alert("<spring:message code="lms.msg.systemError" text="-" />");
 							}
@@ -72,7 +74,7 @@ function lfn_btn(pKind, pParam) {
 		<c:choose>
 			<c:when test="${set.condiVO.isLogin eq 'N'}">
 				alert("로그인 후에 수강신청을 하셔야 합니다.");
-				top.location = "/login.do?preUrl=" + encodeURIComponent(window.location + "?courseId=${set.courseData.courseId}");
+				location = "/login.do?preUrl=" + encodeURIComponent(window.location + "?courseId=${set.courseData.courseId}");
 			</c:when>
 			<c:when test="${set.courseData.subCnt ne 0}">
 				alert("신청한 과정입니다.")
@@ -363,7 +365,7 @@ function lfn_btn(pKind, pParam) {
                                 <tr>
                                     <td>${idx.index + 1}</td>
                                     <td class='register_review_lecture'>
-                                        <p>${row.contents}</p>
+                                        <p>${fn:replace(row.contents, newLineChar, "<br>")}</p>
                                     </td>
                                     <td class='mobile_last'>
                                         <span><img src='/resources/homepage/img/course/register_${row.eval1}.png' alt=' '></span>

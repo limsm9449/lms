@@ -11,7 +11,7 @@
                     	<li class='quick_menu_list' id="q_menu1"></li>
                     </a>
                     <a href='#' onclick="page.goPage('/main/courseList', '');">
-                    	<li class='quick_menu_list' id="q_menu2"><img src="./img/main/quick/q_menu2_circle.png" alt=' ' id="q_menu2_circle"><span class="q_menu2_num">2</span></li>
+                    	<li class='quick_menu_list' id="q_menu2"><c:if test="${!empty cart}"><img src="/resources/homepageQch/img/main/quick/q_menu2_circle.png" alt=' ' id="q_menu2_circle"><span class="q_menu2_num">${cart.size()}</span></c:if></li>
                     </a>
                     <a href='#' onclick="page.goPage('/main/cart');">
                     	<li class='quick_menu_list' id="q_menu3"> </li>

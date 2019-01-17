@@ -7,18 +7,20 @@
 %>
 		<div id='screen_top'></div>
 
+		<input type="hidden" id="topSearch" name="topSearch">
+		
         <!-- PC HEADER -->
         <header class='head_pc'>
             <div class="head_wrap pc clear_fix">
                 <div class='head_con logo_box'>
-                    <a href='#'>
+                    <a href='#' onclick="page.goHome();">
                         <img src='/resources/homepageQch/img/main/logo.png' alt=' '>
                     </a>
                 </div>
                 <div class='head_con search_box'>
-                    <input type="text" id="courseName" name="courseName" value="${set.condiVO.courseName}">
-                    <button onclick="f_submitSelf('/main/courseList');">
-                        <img src='/resources/homepage/img/search_ic.png' alt=' '>
+                    <input type="text" id="topSearch1" name="topSearch1" value="">
+                    <button onclick="$('#topSearch').val($('#topSearch1').val());  f_submitSelf('/main/courseList');">
+                        <img src='/resources/homepageQch/img/search_ic.png' alt=' '>
                     </button>
                 </div>
                 <div class='head_con util_box'>
@@ -64,8 +66,8 @@
                         <ul class='menu_sub' id="menu_sub5">
                             <li class='menu_title'><a href=''>큐러닝</a></li>
                             <li><a href='http://www.qpeople.co.kr/page1_1.html' target='_blank'>회사소개</a></li>
-                            <li><a href="#" onclick="page.goNsJsp('company_learning'); return false;">기업교육문의</a></li>
-                            <li><a href="#" onclick="page.goNsJsp('tutor_support'); return false;">튜터지원</a></li>
+                            <li><a href="#" onclick="page.goNsJsp('company_learningQch'); return false;">기업교육문의</a></li>
+                            <li><a href="#" onclick="page.goNsJsp('tutor_supportQch'); return false;">튜터지원</a></li>
                         </ul>
                     </div>
                    
@@ -100,9 +102,9 @@
 </c:if>  
                 </div>
                 <div class='head_con search_box'>
-                    <input type="text" id="courseName" name="courseName" value="${set.condiVO.courseName}">
-                    <button onclick="f_submitSelf('/main/courseList');">
-                        <img src='/resources/homepage/img/search_ic.png' alt=' '>
+                    <input type="text" id="topSearch2" name="topSearch2" value="">
+                    <button onclick="$('#topSearch').val($('#topSearch1').val());  f_submitSelf('/main/courseList');">
+                        <img src='/resources/homepageQch/img/search_ic.png' alt=' '>
                     </button>
                 </div>
             </div>
@@ -181,4 +183,3 @@
         <!-- MOBILE HEADER END -->
 
 
-</script>

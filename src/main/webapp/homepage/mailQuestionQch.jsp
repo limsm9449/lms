@@ -23,7 +23,16 @@
     <link href='https://fonts.googleapis.com/css?family=Nanum+Gothic' rel='stylesheet'>
     <link rel='stylesheet' href='/resources/homepageQch/css/initialization.css'>
     <link rel='stylesheet' href='/resources/homepageQch/css/notice/notice_main.css'>
-    <link rel='stylesheet' href='/resources/homepageQch/css/notice/mail.css'>
+    <link rel='stylesheet' href='/resources/homepageQch/css/notice/mail.css'> 
+    <style>
+     .aaa {
+    	position: relative;
+	    left: 12px;
+	    top: 10px;
+	    width: 82.5% !important;
+	    padding-bottom: 20px;
+     }
+    </style>
 </head>
 
 <script type="text/javascript">
@@ -160,7 +169,7 @@ function lfn_btn(pKind, pParam) {
                             </p>
                         </div>
                         <div class='mail_ask clear_fix'>
-	                        <div class='form_box clear_fix'>
+	                        <div class='form_box clear_fix flex'>
 	                            <div class='title'>
 	                                <p>이름</p>
 	                            </div>
@@ -209,7 +218,7 @@ function lfn_btn(pKind, pParam) {
 	                            <div class='title'>
 	                                <p>내용</p>
 	                            </div>
-	                            <div>
+	                            <div class="aaa">
 	                                <textarea id="mailContents" name="mailContents" style="margin: 5px 0;width: 95%;height: 350px;border: 1px solid #e5e5e5;"></textarea>
 	                            </div>
 	                        </div>
@@ -234,7 +243,7 @@ function lfn_btn(pKind, pParam) {
         <!-- FOOTER END -->
     </div>
 </frameset>
-<script src='/resources/homepageQch/js/sub.js?timestamp=<%=timestamp%>'></script>
+<script src='/resources/homepageQch/js/main.js'></script>
 
 </form>
 </body>

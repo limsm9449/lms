@@ -19,7 +19,7 @@ $(document).ready(function() {
 		preUrl = request.getHeader("referer");
 	}
 %>
-	top.location = "/login.do?preUrl=<%=preUrl%>";
+	location = "/login.do?preUrl=<%=preUrl%>";
 });
 
 </script> 

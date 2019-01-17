@@ -169,7 +169,7 @@ function lfn_btn(pKind, pParam) {
         <!-- FOOTER END -->
     </div>
 </frameset>
-<script src='/resources/homepageQch/js/sub.js?timestamp=<%=timestamp%>'></script>
+<script src='/resources/homepageQch/js/main.js'></script>
 
 </form>
     

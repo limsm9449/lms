@@ -135,7 +135,7 @@ public class GuestController {
     		e.printStackTrace();
     	}
     	
-        return "/guest/Join"; 
+        return CommUtil.getCompTypePage("/guest/Join"); 
     }
 
     @RequestMapping(value = "/guest/join2")
@@ -152,7 +152,7 @@ public class GuestController {
     		e.printStackTrace();
     	}
     	
-        return "/guest/Join2"; 
+        return CommUtil.getCompTypePage("/guest/Join2"); 
     }
 
     @RequestMapping(value = "/guest/joinCheck")
@@ -178,6 +178,8 @@ public class GuestController {
 	    	MemberSet set = new MemberSet();
 	    	set.setCondiVO(vo);
 	    	
+	    	set = memberSvr.join3(set);
+	    	
 	    	set.setZipcodeUrl((String)ddService.getSettingData(CommUtil.getParamsHashMap("OPTION_KEY=ZIPCODE_URL")).get("OPTION_VALUE"));
 	    	set.setBirthFromYear((String)ddService.getSettingData(CommUtil.getParamsHashMap("OPTION_KEY=BIRTH_FROM_YEAR")).get("OPTION_VALUE"));
 	    	set.setBirthToYear((String)ddService.getSettingData(CommUtil.getParamsHashMap("OPTION_KEY=BIRTH_TO_YEAR")).get("OPTION_VALUE"));
@@ -187,7 +189,7 @@ public class GuestController {
     		e.printStackTrace();
     	}
     	
-        return "/guest/Join3"; 
+        return CommUtil.getCompTypePage("/guest/Join3"); 
     }
 
     @RequestMapping(value = "/guest/joinFinal")
@@ -201,7 +203,7 @@ public class GuestController {
     		e.printStackTrace();
     	}
     	
-        return "/guest/JoinFinal"; 
+        return CommUtil.getCompTypePage("/guest/JoinFinal"); 
     }
 
     

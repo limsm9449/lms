@@ -6,6 +6,8 @@
 	SessionVO sess = (SessionVO)request.getAttribute("sess"); 
 %>
 		<div id='screen_top'></div>
+		
+		<input type="hidden" id="topSearch" name="topSearch">
 
         <!-- PC HEADER -->
         <header class='head_pc'>
@@ -23,8 +25,8 @@
                     </a>
                 </div>
                 <div class='head_con search_box'>
-                    <input type="text" id="courseName" name="courseName" value="${set.condiVO.courseName}">
-                    <button onclick="f_submitSelf('/main/courseList');">
+                    <input type="text" id="topSearch1" name="topSearch1" value="">
+                    <button onclick="$('#topSearch').val($('#topSearch1').val());  f_submitSelf('/main/courseList');">
                         <img src='/resources/homepage/img/search_ic.png' alt=' '>
                     </button>
                 </div>
@@ -38,34 +40,6 @@
                     <a href="javascript:" onclick="page.goPage('/member/userMemberU');" class='pc'>회원정보수정</a>
                     <p class='pc'>${session.userName}님 반갑습니다</p>
 </c:if>  
-                </div>
-            </div>
-            <div class="head_wrap mobile clear_fix">
-                <div class='mobile_btn'>
-                    <button>
-                        <span></span><span></span><span></span>
-                    </button>
-                </div>
-                <div class='head_con logo_box'>
-                    <a href="javascript:" onclick="page.goHome();">
-<c:choose>
-	<c:when test="${compCd eq 'B2C'}">
-                        <img src='/resources/homepage/img/logo.png' alt=' '>
-	</c:when>
-	<c:otherwise>
-                        <img src='/cImage/company/${compCd}_gnb.jpg' alt=' '>
-	</c:otherwise>
-</c:choose>                    
-                    </a>
-                </div>
-                <div class='head_con util_box'>
-                    <a href="javascript:" onclick="gfn_ajax.logout()" class='last_right'>로그아웃</a>
-                </div>
-                <div class='head_con search_box'>
-                    <input type="text">
-                    <button>
-                        <img src='/resources/homepage/img/search_ic.png' alt=' '>
-                    </button>
                 </div>
             </div>
             <div class='menu_wrap'>
@@ -176,8 +150,8 @@
 
                 </div>
                 <div class='head_con search_box'>
-                    <input type="text">
-                    <button>
+                    <input type="text" id="topSearch2" name="topSearch2" value="">
+                    <button onclick="$('#topSearch').val($('#topSearch1').val());  f_submitSelf('/main/courseList');">
                         <img src='/resources/homepage/img/search_ic.png' alt=' '>
                     </button>
                 </div>
@@ -266,4 +240,3 @@
         </header>
         <!-- MOBILE HEADER END -->
 
-</script>

@@ -10,7 +10,7 @@
 <%@ include file="./common/commHomepageInclude.jsp" %>
 
 <script type="text/javascript">
-	top.location = "/login.do?preUrl=<%=request.getParameter("preUrl")%>&loginAuth=<%=request.getParameter("loginAuth")%>";
+	location = "/login.do?preUrl=<%=request.getParameter("preUrl")%>&loginAuth=<%=request.getParameter("loginAuth")%>";
 </script>
 
 </html>

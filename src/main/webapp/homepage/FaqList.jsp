@@ -99,7 +99,7 @@ function lfn_btn(pKind, pParam) {
                     <!-- Contents -->
                     <div class='faq_search_box'>
                         <select name="category" style="width:170px">
-                            <option value='전체'>전체</option>
+                            <option value=''>전체</option>
 			          		<c:forEach var="row" items="${set.ddCategory}">
 				              	<option value="${row.ddKey}" <c:if test="${set.condiVO.category eq row.ddKey}">selected</c:if>>${row.ddValue}</option>
 							</c:forEach>

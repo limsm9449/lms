@@ -25,6 +25,8 @@ public class MemberSet extends CommonSet {
 	private String birthFromYear;
 	private String birthToYear;
 	
+	private int point;
+	
 	public MemberVO getCondiVO() {
 		return condiVO;
 	}
@@ -90,6 +92,12 @@ public class MemberSet extends CommonSet {
 	}
 	public void setBirthToYear(String birthToYear) {
 		this.birthToYear = birthToYear;
+	}
+	public int getPoint() {
+		return point;
+	}
+	public void setPoint(int point) {
+		this.point = point;
 	}
 
 	

@@ -117,7 +117,7 @@ header{
     position:absolute;
     top:0;
     right:5%;
-    width:30%;
+    width:23%;
 }
 .util_box p,
 .util_box a{
@@ -896,6 +896,7 @@ header{
 .process_wrap .bx-viewport {
     height: 270px !important;
     background:#fff;
+	cursor:pointer;
 }
 .wrap .contents_wrap .bx-wrapper .bx-controls.bx-has-controls-auto .bx-controls-auto{
     display:none;

@@ -58,6 +58,7 @@ public class MemberVO extends CommonVO{
 	private String recommendId;
 	private String hintQuestion;
 	private String hintAnswer;
+	private String emailInformYn;
 	
 	public String getUserId() {
 		return userId;
@@ -307,6 +308,12 @@ public class MemberVO extends CommonVO{
 	}
 	public void setHintAnswer(String hintAnswer) {
 		this.hintAnswer = hintAnswer;
+	}
+	public String getEmailInformYn() {
+		return emailInformYn;
+	}
+	public void setEmailInformYn(String emailInformYn) {
+		this.emailInformYn = emailInformYn;
 	}
 	
 

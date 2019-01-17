@@ -320,12 +320,12 @@
     	                 HOME_ZIPCODE, HOME_ADDR, MOBILE, 
     	                 SEX,BIRTH_DAY,
     	                 CERTIFICATION_YN,CERTIFICATION_KEY,CREATE_DATE, COMP_CD,
-    	                 RECOMMEND_ID )
+    	                 RECOMMEND_ID, EMAIL_INFORM_YN )
 	    VALUES (	#{userId},#{userName},#{email},SHA1(#{userPassword}),
 	    	        #{homeZipcode},#{homeAddr},#{mobile},
 	    	        #{sex},#{birthDay},
 	    	        #{certificationYn},#{certificationKey},CURRENT_TIMESTAMP, #{compCd},
-	    	        #{recommendId}
+	    	        #{recommendId}, #{emailInformYn}
     	        )
     </insert>
 
@@ -353,5 +353,10 @@
 	    			(SELECT POINT FROM POINT_CODE WHERE POINT_CODE = 'RECOMMEND'), #{userId} )
     </insert>
 
+	<select id="getRecommendJoinPoint" parameterType="Member" resultType="int">
+		SELECT 	POINT
+		FROM	POINT_CODE
+		WHERE 	POINT_CODE = 'RECOMMEND_JOIN'
+    </select>
    
 </mapper>

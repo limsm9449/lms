@@ -401,4 +401,11 @@ public class MemberService {
     	return set;
     }
    
+    public MemberSet join3(MemberSet set) throws Exception {
+    	int point = sqlSession.selectOne("member.getRecommendJoinPoint", null);
+
+    	set.setPoint(point);
+    	
+    	return set;
+    }
 }

@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
@@ -60,7 +61,10 @@ public class SessionInterceptor extends HandlerInterceptorAdapter {
 		    	};
 	    	
 	    	String url = request.getRequestURI();
-	    	System.out.println("URL ===================> " + url);
+	    	if ( url.indexOf("/resources/") < 0 ) {
+	    		System.out.println("URL ===================> " + url);
+	    	}
+	    	
 	    	if ( url.indexOf("/resources/") > -1 ) {
 	    		return true;
 	    	} else {
@@ -108,7 +112,7 @@ public class SessionInterceptor extends HandlerInterceptorAdapter {
 	        	
 	        	//처음 도메인 체크
 	        	String[] domains = request.getServerName().split("[.]");
-	   	 		if ( SessionUtil.getAttribute("domain") == null || !domains[0].equals(SessionUtil.getAttribute("domain")) ) {
+	   	 		if ( SessionUtil.getAttribute("domain") == null ) {
 		        	SessionUtil.setAttribute("domain", domains[0]);
 
 		        	HashMap<String, Object> compInfo = axCommService.axCompInfoFromSubDomain(domains[0]);
@@ -119,7 +123,14 @@ public class SessionInterceptor extends HandlerInterceptorAdapter {
 		        	SessionUtil.setAttribute("compCd", compCd);
 		        	SessionUtil.setAttribute("compType", compType);
 		        	SessionUtil.setAttribute("compName", compName);
+	   	 		} else {
+	   	 			compCd = (String)SessionUtil.getAttribute("compCd");
+	   	 			compType = (String)SessionUtil.getAttribute("compType");
+	   	 			compName = (String)SessionUtil.getAttribute("compName");
+	   	 			compUseYn = (String)SessionUtil.getAttribute("compUseYn");
 	   	 		}
+
+   	 			System.out.println("---------------------------> " + RequestContextHolder.getRequestAttributes().getSessionId() + ", " + compCd + ", " + compType + ", " + compName + ", " + SessionUtil.getAttribute("compCd") + ", " + SessionUtil.getAttribute("compType") + ", " + SessionUtil.getAttribute("compName"));
 
 	        	//회사 도메인이면서 등록이 안되었거나, 사용불가인 경우 에러 페이지로 이동
 	        	if ( !url.equals("/main/errorNotUseCompany.do") ) {

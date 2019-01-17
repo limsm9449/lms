@@ -64,7 +64,8 @@ function lfn_btn(pKind, pParam) {
 						else
 							lfn_btn("refresh");
 					} else if ( json.rtnMode == "NO_SESSION") {
-						top.location = "/login.do?preUrl=/main/courseList.do";		
+						//top.location = "/login.do?preUrl=/main/courseList.do";		
+						location = "/login.do?preUrl=/main/courseList.do";
 					}
 				},
 				error : function(e) {
@@ -86,6 +87,12 @@ function lfn_viewTypeChg(kind) {
 </script>
 
 <body>
+
+<form name="frm" id="frm" method="post">
+	<input type='hidden' id='courseId' name='courseId'>
+	<input type='hidden' id='viewType' name='viewType'>
+	<input type='hidden' id='viewTypeChg' name='viewTypeChg' value="N">
+
 <frameset rows='*'>    
     <div class='wrap'>
 
@@ -164,11 +171,6 @@ function lfn_viewTypeChg(kind) {
 </c:if>	
 	            </ul>
 	            <!-- Process END -->
-
-<form name="frm" id="frm" method="post">
-	<input type='hidden' id='courseId' name='courseId'>
-	<input type='hidden' id='viewType' name='viewType'>
-	<input type='hidden' id='viewTypeChg' name='viewTypeChg' value="N">
 
 	            <!-- Search Area -->
 	            <div class='process_search clear_fix'>
@@ -261,7 +263,6 @@ function lfn_viewTypeChg(kind) {
 	                </div>
 	            </div>
 	            <!-- Filter Area END -->
-</form>
 
 <c:choose>
 	<c:when test = "${set.condiVO.viewType eq null || set.condiVO.viewType eq '' || set.condiVO.viewType eq 'LIST'}">
@@ -409,7 +410,11 @@ function lfn_viewTypeChg(kind) {
         <!-- FOOTER END -->
         
     </div>
-</frameset>    
+</frameset>
+
+</form>
+
+    
     <script src='/resources/homepage/js/dev_sub.js?timestamp=<%=timestamp%>'></script>
     
 </body>

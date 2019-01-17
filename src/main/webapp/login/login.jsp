@@ -138,19 +138,18 @@ function lfn_page(kind) {
 								<p>로그인 상태유지</p>
 							</div>
 							<div class='signin_sub_control right clear_fix'>
-								<a href='#' onclick="page.goPage('/guest/join');">회원가입</a> <a
-									href="#" onclick="window.location='/ns/searchUserIdV.do'">아이디찾기</a>
-								<a href="#" onclick="window.location='/ns/searchPasswordV.do'"
-									class='last_left'>비밀번호찾기</a>
+								<a href='#' onclick="page.goPage('/guest/join');">회원가입</a> 
+								<a href="#" onclick="window.location='/ns/searchUserIdV.do'">아이디찾기</a> 
+								<a href="#" onclick="window.location='/ns/searchPasswordV.do'" class='last_left'>비밀번호찾기</a>
 							</div>
 						</div>
 					</div>
-					<div class='signin_option_box clear_fix'>
+					<!-- <div class='signin_option_box clear_fix'>
 						<button class='naver' onclick="alert('작업중입니다.');">네이버
 							아이디로 로그인</button>
 						<button class='facebook' onclick="alert('작업중입니다.');">페이스북
 							아이디로 로그인</button>
-					</div>
+					</div> -->
 					<div class='signin_bg_box'> 
 						<img src='/resources/homepage/img/util/login_bg.png' alt=''>
 					</div>

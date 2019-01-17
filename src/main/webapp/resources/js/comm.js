@@ -46,6 +46,7 @@ $(document).ready(function() {
  */
 function lfn_enter() {
 	if ( event.keyCode == 13 ) {
+		alert("aaaaaaa");
 		lfn_btn('search');
 	}
 }

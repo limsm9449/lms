@@ -181,32 +181,32 @@ function fn_makeGrid() {
                     return "grid-cell-edit";
                 }
 	        },{
-	        	key : "FRAME_NAME", 
-	        	label : "프레임 이름", 
-	            width : 200,
-	        	align : "left", 
-	        	editor : { 
-	        		type : "text"
-	        	},
-				styleClass: function () {
-                    return "grid-cell-edit";
-                } 
-	        },{
-	        	key : "FRAME_DESC", 
-	        	label : "프레임 설명", 
-	            width : 400,
-	        	align : "left", 
-	        	editor : { 
-	        		type : "text"
-	        	},
-				styleClass: function () {
-                    return "grid-cell-edit";
-                } 
-	        },{
               	key : undefined, 
               	label: "테스트", 
               	columns: [	        
-			        {
+              		{
+        	        	key : "T_FRAME_NAME", 
+        	        	label : "프레임 이름", 
+        	            width : 200,
+        	        	align : "left", 
+        	        	editor : { 
+        	        		type : "text"
+        	        	},
+        				styleClass: function () {
+                            return "grid-cell-edit";
+                        } 
+        	        },{
+        	        	key : "T_FRAME_DESC", 
+        	        	label : "프레임 설명", 
+        	            width : 400,
+        	        	align : "left", 
+        	        	editor : { 
+        	        		type : "text"
+        	        	},
+        				styleClass: function () {
+                            return "grid-cell-edit";
+                        } 
+        	        },{
 			            key : "T_ORD",
 			            label : "순번",
 			            width : 70,
@@ -232,7 +232,29 @@ function fn_makeGrid() {
               	key : undefined, 
               	label: "운영", 
               	columns: [	        
-			        {
+              		{
+        	        	key : "FRAME_NAME", 
+        	        	label : "프레임 이름", 
+        	            width : 200,
+        	        	align : "left", 
+        	        	editor : { 
+        	        		type : "text"
+        	        	},
+        				styleClass: function () {
+                            return "grid-cell-edit";
+                        } 
+        	        },{
+        	        	key : "FRAME_DESC", 
+        	        	label : "프레임 설명", 
+        	            width : 400,
+        	        	align : "left", 
+        	        	editor : { 
+        	        		type : "text"
+        	        	},
+        				styleClass: function () {
+                            return "grid-cell-edit";
+                        } 
+        	        },{
 			            key : "ORD",
 			            label : "순번",
 			            width : 70,
@@ -464,11 +486,14 @@ function fn_callbackAjax(data, id) {
 	}
 }
 
+var currentIdx = -1;
 function fn_gridEvent(event, obj) {
 	if ( event == "Click" ) {
 		obj.self.select(obj.dindex);
 
-		if ( obj.item.CHANNEL_KIND != undefined ) {
+		if ( obj.item.CHANNEL_KIND != undefined && currentIdx != obj.dindex) {
+			currentIdx = obj.dindex;
+			
 			fn_searchDetail();
 		}
 	} else if ( event == "DBLClick" ) {

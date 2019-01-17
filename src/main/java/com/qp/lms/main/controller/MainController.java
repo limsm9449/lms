@@ -375,6 +375,10 @@ public class MainController {
     	try {
     		vo.setCompCd((String)SessionUtil.getAttribute("compCd"));
     		
+    		if ( !CommUtil.isEqual(vo.getTopSearch(), "") ) {
+    			vo.setCourseName(vo.getTopSearch());
+    		}
+    		
     		MainSet set = new MainSet();
     		set.setCondiVO(vo);
     		
@@ -486,6 +490,8 @@ public class MainController {
     @RequestMapping(value = "/main/faqList")
     public String faqList(@ModelAttribute MainVO vo,Model model) throws Exception {
     	try {
+    		vo.setCompCd((String)SessionUtil.getAttribute("compCd"));
+    		
     		MainSet set = new MainSet();
 	    	set.setCondiVO(vo);
 	    	

@@ -141,7 +141,9 @@ function lfn_btn(pKind, pParam) {
                             <div class='title'>
                                 <p>휴대폰</p>
                             </div>
-                            <input type='text' name='mobile' id='mobile' value="${session.mobile}" placeholder='- 없이 숫자만'>
+                            <div>
+       	                    	<input type='text' name='mobile' id='mobile' value="${session.mobile}" placeholder='- 없이 숫자만'>
+       	                    </div>
                         </div>
                         <div class='form_box clear_fix flex'>
                             <div class='title'>

@@ -5,18 +5,18 @@
     /* font-style: normal; */
     /* font-weight: 500; */
     src: local('NanumSquareR'),
-        url('../../font/NanumSquareR.woff') format('woff'),
-        url('../../font/NanumSquareR.ttf') format('truetype'),
-        url('../../font/NanumSquareR.eot') format('embedded-opentype');
+url('../../font/NanumSquareR.woff') format('woff'),
+url('../../font/NanumSquareR.ttf') format('truetype'),
+url('../../font/NanumSquareR.eot') format('embedded-opentype');
 }
 @font-face {
     font-family: 'NanumSquareB';
     /* font-style: normal; */
     /* font-weight: 900; */
     src: local('NanumSquareEB'),
-        url('../../font/NanumSquareEB.woff') format('woff'),
-        url('../../font/NanumSquareEB.ttf') format('truetype'),
-        url('../../font/NanumSquareEB.eot') format('embedded-opentype');
+url('../../font/NanumSquareEB.woff') format('woff'),
+url('../../font/NanumSquareEB.ttf') format('truetype'),
+url('../../font/NanumSquareEB.eot') format('embedded-opentype');
 }
 
 /* IF IE 10 */
@@ -59,6 +59,7 @@ header{
     position:relative;
     width:1122px;
     margin:24px auto 30px;
+	left:4%;
 }
 .head_wrap.mobile{display:none;}
 .head_con{
@@ -95,8 +96,8 @@ header{
 .util_box{
     position:absolute;
     top:0;
-    right:0;
-    width:30%;
+    right:5%;
+    width:23%;
 }
 .util_box p,
 .util_box a{
@@ -135,6 +136,7 @@ header{
 .mobile_btn button{
     padding: 38px 28px;
     background: #fff;
+	border-bottom:solid 1px #cccccc;
 }
 .mobile_btn button span{
     display: block;
@@ -325,7 +327,7 @@ header{
     font-size: 18px;
     font-weight: 900;
     padding: 16px 0 16px 30px;
-    background: url('../../img/channel_ic.png') 0% 45% no-repeat;
+    background: url('../img/channel_ic.png') 0% 45% no-repeat;
 }
 .mobile_menu button{
     display: block;
@@ -334,7 +336,7 @@ header{
     font-weight: 900;
     text-align: left;
     padding:16px 20px;
-    background:url('../../img//main/menu_arr_down.png') #fff 90% 50% no-repeat;
+    background:url('../img/main/menu_arr_down.png') #fff 90% 50% no-repeat;
     /*border-bottom:solid 1px #ddd;*/
 }
 .mobile_menu button:focus{
@@ -420,49 +422,72 @@ header{
 	border-width:1px;
 }
 #q_menu1{
-	background:url('../../img/main/quick/q_menu1.png') no-repeat; 
-	padding:43px 0px;
+	background:url('../../img/main/quick/q_menu1.png')  0px 20px no-repeat; 
+	padding:56px 0px;
 	cursor:pointer;
 }
 #q_menu1:hover{
-	background:url('../../img/main/quick/q_menu1_over.png') no-repeat; 
+	background:url('../../img/main/quick/q_menu1_over.png') 0px 20px no-repeat; 
+	background-color:#0073BF;
 }
 #q_menu2{
-	background:url('../../img/main/quick/q_menu2.png') no-repeat; 
-	padding:33px 0px;
+	background:url('../../img/main/quick/q_menu2.png') 0px 18px no-repeat; 
+	padding:44px 0px;
 	cursor:pointer;
 }
 #q_menu2:hover{
-	background:url('../../img/main/quick/q_menu2_over.png') no-repeat; 
+	background:url('../../img/main/quick/q_menu2_over.png')  0px 18px no-repeat; 
+	background-color:#0073BF;
 }
 #q_menu3{
-	background:url('../../img/main/quick/q_menu3.png') no-repeat; 
-	padding:48px 0px;
+	background:url('../../img/main/quick/q_menu3.png') 0px 20px no-repeat; 
+	padding:56px 0px;
 	cursor:pointer;
 }
 #q_menu3:hover{
-	background:url('../../img/main/quick/q_menu3_over.png') no-repeat; 
+	background:url('../../img/main/quick/q_menu3_over.png')  0px 20px no-repeat; 
+	background-color:#0073BF;
 }
 #q_menu4{
-	background:url('../../img/main/quick/q_menu4.png') no-repeat; 
-	padding:43px 0px;
+	background:url('../../img/main/quick/q_menu4.png')  0px 11px no-repeat; 
+	padding:50px 0px;
 	cursor:pointer;
 }
 #q_menu4:hover{
-	background:url('../../img/main/quick/q_menu4_over.png') no-repeat; 
+	background:url('../../img/main/quick/q_menu4_over.png')  0px 11px no-repeat; 
+	background-color:#0073BF;
 }
 #q_menu5{
+	background:url('../../img/main/quick/q_menu5.png')  0px 20px no-repeat; 
+	padding:56px 0px;
+	cursor:pointer;
+}
+#q_menu5:hover{
+	background:url('../../img/main/quick/q_menu5_over.png') 0px 20px no-repeat; 
+	background-color:#0073BF;
+}
+#q_menu6{
+	background:url('../../img/main/quick/q_menu6.png') 0px 20px no-repeat; 
+	padding:56px 0px;
+	cursor:pointer;
+}
+#q_menu6:hover{
+	background:url('../../img/main/quick/q_menu6_over.png') 0px 20px no-repeat; 
+	background-color:#0073BF;
+}
+#q_menu7{
 	padding:38px 0px;
 	padding-bottom:1000px;
 }
+
 #q_menu2_circle{
 	position:relative;
-	top:-25px;
+	top:88px;
 	left:-11px;
 }
 .q_menu2_num{
 	position:relative;
-	top:-29px;
+	top:84px;
 	left:-31px;
 	color:white;
 }
@@ -516,7 +541,9 @@ header{
     font-size: 24px;
     padding-bottom: 14px;
 }
-
+#class2{
+	padding:0 !important;
+}
 
 
 
@@ -590,7 +617,7 @@ header{
     font-size: 22px;
     text-align: center;
     padding: 6px 2px 3px 2px;
-    background:url('../../img/guidance/reg_num_ic.png') no-repeat;
+    background:url('../img/notice/reg_num_ic.png') no-repeat;
     background-size:contain;
 }
 .pc_list_item > span{

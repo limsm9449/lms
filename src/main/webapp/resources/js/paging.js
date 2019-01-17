@@ -9,8 +9,8 @@ function f_makePageNavigator(objId, currentPage, totalCount, pageBlock) {
 	var indexNum = (currentPage <= navigatorNum  ? 0 : parseInt((currentPage-1)/navigatorNum) * navigatorNum);
   
 	$("#"+objId + "Prev").html(
-			"<div><a href='#' onclick='javascript:paging("+firstPageNum+");'>&laquo;</a></div>" +
-	        "<div><a href='#' onclick='javascript:paging("+previewPageNum+");'>&lsaquo;</a></div>"
+			( firstPageNum == currentPage ? "<div>&laquo;</div>" : "<div onclick='javascript:paging("+firstPageNum+");'><a href='#'>&laquo;</a></div>" ) +
+	        ( previewPageNum == currentPage ? "<div>&lsaquo;</div>" : "<div onclick='javascript:paging("+previewPageNum+");'><a href='#'>&lsaquo;</a></div>" )
     	);
 
 	var pagingHTML = "";
@@ -27,8 +27,8 @@ function f_makePageNavigator(objId, currentPage, totalCount, pageBlock) {
 	$("#"+objId).html(pagingHTML);
 
 	$("#"+objId + "Next").html(
-			"<div><a href='#' onclick='javascript:paging("+nextPageNum+");'>&rsaquo;</a></div>" +
-	        "<div><a href='#' onclick='javascript:paging("+lastPageNum+");'>&raquo;</a></div>"
+			( nextPageNum == currentPage ? "<div>&rsaquo;</div>" : "<div onclick='javascript:paging("+nextPageNum+");'><a href='#'>&rsaquo;</a></div>" ) +
+			( lastPageNum == currentPage ? "<div>&raquo;</div>" : "<div onclick='javascript:paging("+lastPageNum+");'><a href='#'>&raquo;</a></div>" )
     	);
 }
 

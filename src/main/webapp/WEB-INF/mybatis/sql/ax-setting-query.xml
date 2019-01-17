@@ -93,8 +93,8 @@
 	</select>    
 
 	<insert id="axMainFrameInsert" parameterType="hashmap">
-		INSERT 	INTO MAIN_FRAME ( CHANNEL_KIND, FRAME_KIND, FRAME_NAME, FRAME_DESC, ORD, USE_YN, T_ORD, T_USE_YN )
-		VALUES ( #{CHANNEL_KIND}, #{FRAME_KIND}, #{FRAME_NAME}, #{FRAME_DESC}, #{ORD}, #{USE_YN}, #{T_ORD}, #{T_USE_YN} )
+		INSERT 	INTO MAIN_FRAME ( CHANNEL_KIND, FRAME_KIND, FRAME_NAME, FRAME_DESC, ORD, USE_YN, T_FRAME_NAME, T_FRAME_DESC, T_ORD, T_USE_YN )
+		VALUES ( #{CHANNEL_KIND}, #{FRAME_KIND}, #{FRAME_NAME}, #{FRAME_DESC}, #{ORD}, #{USE_YN}, #{T_FRAME_NAME}, #{T_FRAME_DESC}, #{T_ORD}, #{T_USE_YN} )
 	</insert>   
 	
 	<update id="axMainFrameUpdate" parameterType="hashmap">
@@ -105,6 +105,8 @@
 				,FRAME_DESC = #{FRAME_DESC}
 				,ORD = #{ORD}
 				,USE_YN = #{USE_YN}
+				,T_FRAME_NAME = #{T_FRAME_NAME}
+				,T_FRAME_DESC = #{T_FRAME_DESC}
 				,T_ORD = #{T_ORD}
 				,T_USE_YN = #{T_USE_YN}
     	 WHERE 	SEQ = #{SEQ} 

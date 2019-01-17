@@ -35,7 +35,6 @@
        	 	<%@ include file="../common/mainQuickMenuQch.jsp" %>
        	 	<!-- QUICK MENU -->
 
-
             <div class='contents_wrap_box'>
 
                 <!-- Top -->
@@ -108,9 +107,7 @@
                     </div>
                         </li>
                     </ol>
-                </div>
-                
-            </div>
+        	</div>
         </div>
         <!-- CONTENTS END -->
 
@@ -119,7 +116,7 @@
         <!-- FOOTER END -->
     </div>
 </frameset>
-<script src='/resources/homepageQch/js/sub.js?timestamp=<%=timestamp%>'></script>
+<script src='/resources/homepageQch/js/main.js'></script>
 
 </body>
 

@@ -107,7 +107,7 @@
 
 /* MAIL ASK */
 .mail_ask{
-    width:80%;
+    width:100%;
     border-top: solid 2px #1291de;
 }
 
@@ -171,9 +171,11 @@
 }
 .form_box select option{}
 .form_box.phone input[type='text']{
-    padding: 8px 1%;
-    margin: 10px 1.5% 6px 0;
-    border:solid 1px #ccc;
+    display:block;
+    width:95%;
+    padding:8px 1%;
+    margin:10px 1.5% 6px;
+    border:solid 1px #ddd;
 }
 .form_box textarea{
     width: 95%;
@@ -331,9 +333,10 @@
     /* HEAD */
     .head_pc{
         display:none;
-    }
-    .head_mobile{
+    }.head_mobile{
         display:block;
+		position:fixed;
+		padding-bottom:10px;
     }
     .head_wrap{
         margin:8px auto 0;
