@@ -37,7 +37,7 @@
 
 <script type="text/javascript">
 $(document).ready(function() {
-	$("textarea[name='mailContents']").cleditor({height:450});
+	//$("textarea[name='mailContents']").cleditor({height:450});
 });
 
 function lfn_btn(pKind, pParam) {

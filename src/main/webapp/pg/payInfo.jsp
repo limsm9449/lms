@@ -271,7 +271,6 @@ $(document.body).ready(function () {
 								<option value="SC0030">계좌이체</option>				
 								<!-- option value="SC0040">무통장입금</option-->				
 								<option value="SC0060">휴대폰</option>				
-								<option value="SC0070">유선전화결제</option>				
 								<option value="SC0090">OK캐쉬백</option>				
 								<option value="SC0111">문화상품권</option>				
 								<option value="SC0112">게임문화상품권</option>	

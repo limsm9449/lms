@@ -50,10 +50,11 @@
                         </ul>
                         <ul class='menu_sub' id="menu_sub3">
                             <li class='menu_title'><a href='#'>마이페이지</a></li>
-                            <li><a href='#'>주문/신청 조회</a></li>
-                            <li><a href='#'>포인트</a></li>
-                            <li><a href='#'>나의 활동관리</a></li>
+                            <li><a href='javascript:' onclick="page.goPage('/main/myOrder');">주문/신청 조회</a></li>
+                            <li><a href='javascript:' onclick="page.goPage('/main/myPoint');">포인트</a></li>
+                            <li><a href='javascript:' onclick="page.goPage('/main/myActivity');">나의 활동관리</a></li>
                             <li><a href="javascript:" onclick="page.goPage('/member/userMemberU');">회원정보수정</a></li>
+                            <li><a href="javascript:" onclick="page.goPage('/member/memberChangePassword');">비밀번호 변경</a></li>
                         </ul>
                         <ul class='menu_sub' id="menu_sub4">
                             <li class='menu_title'><a href="javascript:" onclick="page.goPage('/main/service', '');">고객지원</a></li>
@@ -145,11 +146,11 @@
                             마이페이지
                         </button>
                         <ul>
-                            <li class='first_depth'><a href='#'>마이페이지</a></li>
-                            <li><a href='#'>주문/신청 조회</a></li>
-                            <li><a href='#'>포인트</a></li>
-                            <li><a href='#'>나의 활동관리</a></li>
+                            <li class='first_depth'><a href='javascript:' onclick="page.goPage('/main/myOrder');">주문/신청 조회</a></li>
+                            <li><a href='javascript:' onclick="page.goPage('/main/myPoint');">포인트</a></li>
+                            <li><a href='javascript:' onclick="page.goPage('/main/myActivity');">나의 활동관리</a></li>
                             <li><a href="javascript:" onclick="page.goPage('/member/userMemberU');">회원정보수정</a></li>
+                            <li><a href="javascript:" onclick="page.goPage('/member/memberChangePassword');">비밀번호 변경</a></li>
                         </ul>
                     </div>
                     <div class='mobile_menu service'>
@@ -157,8 +158,7 @@
                             고객지원
                         </button>
                         <ul>
-                            <li class='first_depth'><a href="javascript:" onclick="page.goPage('/main/service', '');">고객지원</a></li>
-                            <li><a href="javascript:" onclick="page.goPage('/main/noticeList');">공지사항</a></li>
+                            <li class='first_depth'><a href="javascript:" onclick="page.goPage('/main/noticeList');">공지사항</a></li>
                             <li><a href="javascript:" onclick="page.goPage('/main/faqList');">자주 묻는 질문</a></li>
                             <li><a href="javascript:" onclick="page.goPage('/main/mailQuestion');">1:1 메일문의</a></li>
                             <li><a href="javascript:" onclick="page.goPage('/main/tutorial');">학습지원</a></li>

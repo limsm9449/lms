@@ -54,7 +54,7 @@ public class CounselController {
     		e.printStackTrace();
     	}
 
-        return "/counsel/UserCounselList";
+        return CommUtil.getCompTypePage("/counsel/UserCounselList");
     }
 
     /**
@@ -77,7 +77,7 @@ public class CounselController {
     		e.printStackTrace();
     	}
 
-        return "/counsel/UserCounselN";
+        return CommUtil.getCompTypePage("/counsel/UserCounselN");
     }
 
     /**
@@ -100,7 +100,7 @@ public class CounselController {
     		e.printStackTrace();
     	}
 
-        return "/counsel/UserCounselV";
+        return CommUtil.getCompTypePage("/counsel/UserCounselV");
     }
 
     /**
@@ -123,7 +123,7 @@ public class CounselController {
     		e.printStackTrace();
     	}
 
-        return "/counsel/UserCounselU";
+        return CommUtil.getCompTypePage("/counsel/UserCounselU");
     }
 
     /**

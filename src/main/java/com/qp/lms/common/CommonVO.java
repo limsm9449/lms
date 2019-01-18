@@ -41,7 +41,9 @@ public class CommonVO implements Serializable{
 	private String loginIp;
 	private String courseName;
 	private String compCd;
-
+    private String searchMonth;
+	private String limit;
+	private String shap;
 	
 	// 삭제하면 안됨.-------------------------------------------------
 	public int getPageNum() {
@@ -221,6 +223,24 @@ public class CommonVO implements Serializable{
 	}
 	public void setUpdateDateStr(String updateDateStr) {
 		this.updateDateStr = updateDateStr;
+	}
+	public String getSearchMonth() {
+		return searchMonth;
+	}
+	public void setSearchMonth(String searchMonth) {
+		this.searchMonth = searchMonth;
+	}
+	public String getLimit() {
+		return limit;
+	}
+	public void setLimit(String limit) {
+		this.limit = limit;
+	}
+	public String getShap() {
+		return shap;
+	}
+	public void setShap(String shap) {
+		this.shap = shap;
 	}
 
 	

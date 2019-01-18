@@ -35,6 +35,12 @@ public class BoardVO extends CommonVO{
 	private String limit;
 	private String answer;
 	private String answerYn;
+	private String mobileYn;
+	private String courseName;
+	private String cFromDate;
+	private String cToDate;
+	private String cPeriod;
+	private String createDateStr;
 	
 	public String getTitle() {
 		return title;
@@ -164,6 +170,42 @@ public class BoardVO extends CommonVO{
 	}
 	public void setAnswerYn(String answerYn) {
 		this.answerYn = answerYn;
+	}
+	public String getMobileYn() {
+		return mobileYn;
+	}
+	public void setMobileYn(String mobileYn) {
+		this.mobileYn = mobileYn;
+	}
+	public String getCourseName() {
+		return courseName;
+	}
+	public void setCourseName(String courseName) {
+		this.courseName = courseName;
+	}
+	public String getcFromDate() {
+		return cFromDate;
+	}
+	public void setcFromDate(String cFromDate) {
+		this.cFromDate = cFromDate;
+	}
+	public String getcToDate() {
+		return cToDate;
+	}
+	public void setcToDate(String cToDate) {
+		this.cToDate = cToDate;
+	}
+	public String getcPeriod() {
+		return cPeriod;
+	}
+	public void setcPeriod(String cPeriod) {
+		this.cPeriod = cPeriod;
+	}
+	public String getCreateDateStr() {
+		return createDateStr;
+	}
+	public void setCreateDateStr(String createDateStr) {
+		this.createDateStr = createDateStr;
 	}
 	
 	

@@ -19,6 +19,10 @@
         url('../../font/NanumSquareEB.eot') format('embedded-opentype');
 }
 
+html{
+    overflow-y:hidden !important;
+}
+
 /* IF IE 10 */
 
 html[data-useragent*='MSIE 10.0'] .head_mobile{
@@ -362,9 +366,16 @@ header{
 
 /* CONTENTS */
 .contents_wrap_box{
-    /* width:1122px; */
+    width:1122px;
+    min-height:700px;
     padding-top:95px;
     margin:0 auto;
+}
+.contents_wrap_box.popup{
+    width:98%;
+    max-width:800px;
+    margin:0 auto;
+    padding-top:20px;
 }
 
 /* QUICK MENU */
@@ -492,10 +503,6 @@ header{
 }
 
 /* Top */
-.top_area{
-    width:1122px;
-    margin:0 auto;
-}
 .process_history_box{
     font-size: 13px;
     float: right;
@@ -515,21 +522,204 @@ header{
     float: left;
     padding: 0 10px;
 }
+.top_area h1{
+    clear: both;
+    font-family:"NanumSquare";
+    font-size: 44px;
+    letter-spacing: -2px;
+    padding-bottom: 16px;
+    border-bottom: solid 1px #003366;
+}
+.top_area h1 span{
+    font-family:"NanumSquare";
+    color: #0180d3;
+}
+.top_text_box{
+    padding: 20px 5% 0 5%;
+    width: 90%;
+    background: #1291de;
+    border-bottom: solid 1px #1291de;
+}
+.top_text_box > span{
+    float: right;
+}
+.top_text_box > span img{
+    display:block;
+}
+.top_text_box p{
+    float: left;
+    width: 60%;
+    font-size: 15px;
+    letter-spacing: -1px;
+    color: #fff;
+    line-height: 150%;
+}
+.top_text_box .top_title{
+    font-family:'NanumSquare';
+    font-size: 34px;
+}
+.top_text_box p span{
+    display:block;
+}
 
 
 
+/* NOTICE REGISTER */
+.notice_register{
+    margin-top:20px;
+    border-top: solid 2px #1291de;
+}
+.contents_wrap_box.popup .notice_register{
+    margin-top:0;
+}
+.editor_area{
+    width:93%;
+    padding:20px 2%;
+    min-height:300px;
+    margin:10px 1.5%;
+    border:solid 1px #eee;
+}
+.contents_wrap_box.popup .form_box div iframe{
+    min-height:100px;
+}
+
+/* FORM AREA */
+.form_box{
+    border-bottom:solid 1px #ccc;
+}
+.form_box .editor_area {
+    width: 87%;
+    padding:0;
+    min-height: 100px;
+    margin: 10px 1.5%;
+    border:0;
+}
+.form_box .editor_area textarea{
+    border:none;
+    resize:none;
+}
+.form_box .editor_area textarea:focus{
+    outline:none;
+}
+.form_box .editor_area.exist{
+    padding:20px 2%;
+}
+.form_box.flex{
+    clear:both;
+    display:flex;
+}
+.form_box > div{
+    float: left;
+    width: 90%;
+}
+.form_box .title{
+    background: #f7f7f7;
+    width: 10%;
+    line-height: 300%;
+    text-align: center;
+    font-size: 16px;
+    font-weight: 500;
+}
+.form_box div input[type='text'],
+.form_box div .type{
+    display:block;
+    box-sizing:border-box;
+    width:98%;
+    padding:8px 1%;
+    margin:10px 1% 6px;
+    border:solid 1px #ddd;
+}
+.form_box div select.type{
+    margin:6px 1%;
+}
+
+.form_box > .test{
+    width:90%;
+}
+.form_box div iframe{
+    display:block;
+    width:100%;
+    /* width:95%; */
+    min-height:300px;
+    padding:8px 1%;
+    margin: 0;
+    resize:none;
+    box-sizing:border-box;
+}
+.form_box.half{
+    float: left;
+    width: 50%;
+}
+.form_box.half div input[type='text']{
+    display: block;
+    width: 90%;
+    margin: 10px 3% 6px;
+    padding: 8px 2%;
+}
+.form_box.half div{
+    width:80%;
+}
+.form_box.half .title{
+    width: 20%;
+}
+
+
+
+.form_box_score{
+    padding:14px 0 0; 
+}
+.form_box_score .first_left{
+    margin-left:10px;
+}
+.form_box_score span{
+    display:inline-block;
+    width:13px;
+    height:13px;
+    cursor:pointer;
+    background:url('../../img/course/register_star_inactive.png') no-repeat;
+}
+
+
+/* NOTICE DETAIL BUTTON */
+.detail_btn_area{
+    text-align: center;
+    padding:50px 0;
+}
+.detail_btn_area a,
+.detail_btn_area button{
+    display:inline-block;
+    width: 20%;
+    min-width: 170px;
+    font-size: 16px;
+    font-weight: 500;
+    color: #555;
+    text-align:center;
+    padding: 20px 0;
+    margin-bottom: 4px;
+    background: #fff;
+    border:solid 1px #ddd;
+}
+.detail_btn_area .bg_color{
+    color:#fff;
+    background:#0280d4;
+    border:solid 1px #0280d4;
+}
+
+
+/* MEMBER WITHDRAW MODIFIED */
 /* CONTENTS */
 .util_wrap{
-    width:764px;
+    width:100%;
+    max-width:1122px;
     margin:50px auto;
 }
 .util_wrap h1{
     font-family: 'NanumSquare';
-    font-size: 34px;
+    font-size: 24px;
     font-weight: 900;
     letter-spacing: -1px;
+    padding-bottom:14px;
 }
-
 .util_step_box{
     padding: 40px 0 50px;
 }
@@ -559,165 +749,8 @@ header{
     padding: 40px 0px;
     border: 0;
 }
-
-
-
-/* 회원가입 - 이용약관 */
-
-.signup_all_agree_box{
-    padding: 12px 0;
-    border-top: solid 1px #ddd;
-    border-bottom: solid 1px #ddd;
-}
-.signup_all_agree_box input{
-    width: 18px;
-    height: 18px;
-    float: left;
-    display: block;
-    margin-right: 10px;
-}
-.signup_all_agree_box p{
-    float: left;
-    font-size: 14px;
-    color: #666;
-}
-.signup_title_box{}
-.signup_title_box p{
-    font-size: 14px;
-    color:#555;
-    line-height: 130%;
-}
-.signup_title_box p .circle{
-    display:block;
-    float:left;
-    width:4px;
-    height:4px;
-    margin:4px 4px 0 0;
-    border:solid 2px #54a7d8;
-    border-radius:4px;
-}
-.signup_title_box .signup_title{
-    font-family: 'NanumSquareB';
-    font-size: 24px;
-    color: #0180d3;
-    padding: 20px 0 4px;
-}
-.signup_title_box .signup_title.line{
-    padding:20px 0 2px;
-    margin-bottom:4px;
-    border-bottom:solid 1px #ccc;
-}
-.signup_title_box p span{
-    display:block;
-}
-.signup_terms_box{}
-.signup_terms_box > div{}
-.signup_terms_box > div p{
-    font-family: 'NanumSquare';
-    font-size: 20px;
-    color: #666;
-    letter-spacing: -1px;
-    padding: 20px 0 6px;
-}
-.signup_terms_text{
-    display: block;
-    overflow-y:scroll;
-    width: 96%;
-    max-height: 200px;
-    font-size:14px;
-    padding: 10px 2%;
-    line-height: 150%;
-    resize: none;
-    border: solid 1px #ddd;
-}
-.signup_terms_text strong{
-    font-weight:500;
-    color:#0180d3;
-}
-.signup_terms_text strong.title{
-    display:block;
-    font-weight:500;
-    color:#555;
-    padding:20px 0 10px;
-}
-.signup_terms_text p{
-    text-align:right;
-}
-.signup_checkbox_area{
-    padding: 10px 0;
-}
-.signup_checkbox_area input{
-    display: block;
-    float: left;
-    width: 18px;
-    height: 18px;
-    margin-right: 8px;
-}
-.signup_terms_box .signup_checkbox_area p{
-    font-family: 'NanumGothic';
-    font-size: 14px;
-    float: left;
-    padding: 0;
-    letter-spacing: 0px;
-}
-.signup_btn_box{
-    text-align: center;
-    padding: 30px 0 50px;
-}
-.signup_btn_box button{
-    width: 48.9%;
-    padding: 20px 0;
-    background: #fff;
-    border: solid 1px #ddd;
-    font-size: 18px;
-    font-weight: 500;
-    color: #666;
-    font-family: 'NanumSquare';
-}
-.signup_btn_box .last{
-    background: #0180d3;
-    border: solid 1px #0180d3;
-    color: #fff;
-    margin-left:1%;
-}
-
-
-
-/*
-회원가입 - 가입여부확인,
-회원가입 - 회원정보입력
-*/
 .signup_certification_box{
     padding-top: 30px;
-}
-.info_chk{
-	background:#DCDFE4;
-	padding:10px 10px 15px 10px !important;
-	font-family: 'NanumSquare';
-    font-size: 18px;
-	word-break:keep-all;
-}
-.info_chk input[type='checkbox']{
-	width:20px;
-	height:20px;
-	margin-left:20px;
-	position:relative;
-	top:3px;
-}
-.info_choose{
-	border-bottom: solid 1px #cccccc;
-	padding: 20px 0 2px;
-	margin-bottom:4px;
-}
-.info_choose_title{
-	font-family: 'NanumSquareB';
-    font-size: 24px;
-    color: #0180d3;
-}
-.info_choose_title > span{
-	font-family: 'NanumSquareB';
-    font-size: 24px;
-    color: black;
 }
 .certification_tab_box{
     text-align: center;
@@ -762,23 +795,14 @@ header{
 .certification_list > div p,
 .signup_input_list > div p{
     font-family: 'NanumSquareB';
-    font-size: 18px;
-    color: #555;
-    width: 160px;
-    float: left;
-    line-height: 220%;
-}
-.info_choose_id{
-    font-family: 'NanumSquareB';
-    font-size: 18px;
+    font-size: 17px;
     color: #555;
     width: 160px;
     float: left;
     line-height: 220%;
 }
 .certification_list > div p:before,
-.signup_input_list > div p:before,
-.info_choose_id:before{
+.signup_input_list > div p:before{
     display: block;
     content: '';
     width: 6px;
@@ -788,13 +812,19 @@ header{
     float: left;
     margin: 10px 5% 0 0;
 }
-.certification_choose{
-	margin-top:10px;
+.certification_name .note{
+    font-family: 'NanumGothic';
+    width: 100%;
+    text-indent: 160px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #999;
 }
-.certification_name{}
+.certification_name .note:before{
+    display:none;
+}
 .certification_name input[type='text'],
 .signup_input_list > div input[type='text'],
-#choose_id_txt,
 .signup_input_list > div input[type='password']{
     display: block;
     float: left;
@@ -804,11 +834,7 @@ header{
 .certification_name input[type='text']{
     width:230px;
 }
-.certification_choose input[type='text']{
-    width:230px;
-}
 .signup_input_list > div input[type='text'],
-#choose_id_txt,
 .signup_input_list > div input[type='password']{
     width:460px;
 }
@@ -823,30 +849,8 @@ header{
 }
 .signup_input_list .info_input_phone input[type='text']{
     width:220px;
-    /*border-left: 0; qpeople 20190103*/
+    border-left: 0;
 }
-.signup_input_list .info_input_e-mail select{
-    float:left;
-    width:147px;
-    padding:9px 6px;
-    border:solid 1px #ccc;
-}
-.e-mail_b{
-	position:relative;
-	left:-317px;
-	top:10px;
-}
-.eMailtxt{
-	margin-right:20px;
-}
-.eMailtxt2{
-	border-right:none !important;
-}
-.signup_input_list .info_input_e-mail input[type='text']{
-    width:140px;
-    /*border-left: 0; qpeople 20190103*/
-}
-.certification_gender{}
 .certification_gender input[type='radio'],
 .signup_input_list > div input[type='radio']{
     display:block;
@@ -871,7 +875,6 @@ header{
     float:left;
     padding:10px 10px 0 8px;
 }
-.certification_birth{}
 .certification_birth select{
     padding: 8px 6px;
     border: solid 1px #ccc;
@@ -879,7 +882,6 @@ header{
 .certification_birth select{
     width:80px;
 }
-
 .certification_note{
     padding: 30px 0 150px;
 }
@@ -903,90 +905,58 @@ header{
 .info_input_address textarea{
     margin-top: 8px;
     display: block;
-    margin-left: 160px;
-    width: 468px;
-    resize: none;
-    height: 30px;
-    border: solid 1px #ccc;
-}
-
-.info_input_address .last_left{
-    margin:4px 0 0 160px;
-}
-
-
-/* 회원가입 - 가입완료 */
-.util_step_box.completed{
-    padding:40px 0 0;
-}
-.signup_completed_box{
-    padding: 16px 0;
-    margin-top: 20px;
-    background: #1897e2;
-}
-.signup_completed_box > p{
-    font-family: 'NanumSquare';
-    font-size: 24px;
-    color: #fff;
-    float: left;
-    width: 78%;
-    line-height: 130%;
-    letter-spacing: -1px;
-    padding-left: 2%;
-    padding-bottom: 10px;
-}
-.completed_note{
-    float: left;
-    width: 54%;
-    padding-left: 2%;
-    padding-top: 20px;
-    border-top: solid 1px #84c1ff;
-}
-.completed_note > span{
-    display: block;
-    float: left;
-    width: 17%;
-    margin-right: 3%;
-}
-.completed_note span img{
-    display: block;
     width: 100%;
-}
-.completed_note p{
+    resize: none;
+    min-height: 200px;
+    border: solid 1px #ccc;
     float: left;
-    width: 80%;
+    padding:10px;
+    box-sizing:border-box;
+}
+.signup_title_box p{
     font-size: 14px;
-    /* font-weight: 500; */
-    color: #fff;
+    color:#555;
     line-height: 130%;
 }
-.completed_note p span,
-.signup_completed_box a span{
+.signup_title_box p .circle{
     display:block;
+    float:left;
+    width:4px;
+    height:4px;
+    margin:4px 4px 0 0;
+    border:solid 2px #54a7d8;
+    border-radius:4px;
 }
-.signup_completed_box a{
-    display: block;
-    float: right;
-    border: solid 8px #FFF;
-    width: 120px;
-    height: 85px;
+.signup_title_box .signup_title{
     font-family: 'NanumSquareB';
-    text-align: center;
-    color: #fff;
     font-size: 24px;
-    padding-top: 35px;
-    margin-right: 2%;
+    color: #0180d3;
+    padding: 20px 0 4px;
 }
-.signup_completed_bg{}
-.signup_completed_bg span{
+.signup_title_box .signup_title.line{
+    padding:20px 0 2px;
+    margin-bottom:4px;
+    border-bottom:solid 1px #ccc;
+}
+.signup_title_box p span{
     display:block;
-    width:62%;
-    margin:0 auto;
 }
-.signup_completed_bg span img{
-    display:block;
-    width:100%;
+.withdraw_note{
+    background: #f3f3f3;
+    padding: 20px;
 }
+.withdraw_note p{
+    font-size: 15px;
+    font-weight: 500;
+    line-height: 150%;
+    letter-spacing:-1px;
+}
+.withdraw_note p strong{
+    display: block;
+    color: #0180d3;
+}
+
+
 
 
 /* FOOTER */
@@ -1038,11 +1008,12 @@ header{
 /* Media query */
 
  
-@media all and (max-width:1122px){ /* HEAD */
+@media all and (max-width:1122px){
+
+    /* HEAD */
     .head_wrap,
     .menu_layout,
-    .contents_wrap_box,
-    .top_area{
+    .contents_wrap_box{
         width:100%;
     }.util_box p,
     .util_box a{
@@ -1066,13 +1037,6 @@ header{
     }
 }
 @media all and (max-width:420px){
-	#choose_id_txt{
-		width:95%;
-	}
-	.info_chk input[type='checkbox'] {
-		margin-left: 318px;
-		margin-top: 5px;
-	}
     #width_text{
         color:#fff;
         background:green;
@@ -1172,11 +1136,17 @@ header{
     /* CONTENTS */
     .contents_wrap_box {
         width:92%;
+        min-height:600px;
         padding-top:95px;
         margin:0 auto;
     }
     .quick_menu_wrap{
         display:none;
+    }
+    .detail_btn_area a{
+        width:40%;
+        min-width:inherit;
+        padding:16px 0;
     }
 
     /* Top */
@@ -1187,189 +1157,67 @@ header{
     .process_history_box {
         float: left;
     }
-
-    .util_wrap{
-        width:100%;
-        margin:20px auto;
+    .top_text_box{
+        width:90%;
+        padding:20px 5%;
     }
-
-    /* STEP 1 */
-    .util_step_box{
-        padding:20px 0;
-    }
-    .util_step_box .active {
-        border: solid 2px #0180d3;
-        border-right: 0;
-    }
-    .util_step_box div {
-        width: 23.8%;
-        padding: 14px 0;
-        border: solid 2px #ddd;
-        border-right: 0;
-        border-radius:0;
-    }
-    .util_step_box .last_right{
-        border-right:solid 2px #ddd;
-    }
-    .util_step_box div p{
-        font-size:14px;
-    }
-    .util_step_box .arrow{
+    .top_text_box > span,
+    .top_text_box p span{
         display:none;
     }
-    .signup_all_agree_box p{
-        width:90%;
-        line-height:130%;
-    }
-
-    /* STEP 2 */
-    .certification_list{
-        padding:20px 0 0;
-    }
-    .certification_note{
-        padding:20px 0 30px;
-    }
-    .certification_list > div p{
-        width:50%;
-    }
-    .certification_list > div p:before{
-        margin:10px 5% 0 0;
-    }
-    .certification_name input[type='text']{
-        width:45%;
-        padding:10px 2%;
-    }
-    .certification_list .certification_birth p{
+    .top_text_box p{
         width:100%;
-    }
-    .certification_list .certification_birth p:before{
-        margin:10px 2.5% 0 0;
-    }
-    .certification_birth select{
-        width:24%;
-    }
-    .certification_birth .first{
-        margin-left:6%;
-    }
-    .certification_note p,
-    .certification_note p strong{
-        font-size:15px;
-    }
-
-    /* STEP 3 */
-    .signup_input_list > div p{
-        width:40%;
-        line-height:199%;
-    }
-    .signup_input_list > div input[type='text'],
-    .signup_input_list > div input[type='password'],
-    .signup_input_list .info_input_address input[type='text'],
-    .signup_input_list .certification_name.type_id input[type='text'],
-    .info_input_address textarea{
-        width:56%;
-    }
-	.signup_input_list .info_input_e-mail input[type='text']{
-		width:44%;
-	}
-	.eMailtxt{
-		margin-right:0;
-	}
-	.eMailtxt2{
-		margin-left:142px;
-		margin-top:5px;
-		border-right:solid 1px #cccccc !important;
-		width:56% !important;
-	}
-	.e-mail_b {
-		left: 4px;
-		top: 11px;
-	}
-	.signup_input_list .info_input_e-mail select{
-		margin-top:5px;
-		margin-left:142px;
-		width:59.8%;
-	}
-    .signup_input_list .long p{
-        width:100%;
-    }
-    .signup_input_list .long p:before{
-        margin:10px 2.5% 0 0;
-    }
-    .signup_input_list .info_input_phone select{
-        width:18%;
-    }
-    .signup_input_list .info_input_phone input[type='text']{
-        width:38%;
-    }
-    .info_input_phone button,
-    .certification_name.type_id button,
-    .info_input_address button,
-    .info_input_address .last_left{
-        width:59.5%;
-        margin-left: 40%;
-        margin-top: 4px;
-    }
-    .signup_input_list .info_input_address textarea{
-        padding:2px 1.5%;
-        margin-left:40%;
-        margin-top: 4px;
-    }
-    .certification_birth .second{
-        margin-left: 40%;
-        margin-top: 4px;
-    }
-
-
-    /* STEP 4 */
-    .signup_title_box p{
-        letter-spacing:-1px;
-    }
-    .signup_title_box .signup_title{
         text-align:center;
     }
-    .util_step_box.completed{
-        padding:20px 0 0;
+
+
+    /* NOTICE REGISTER */
+    .form_box > div{
+        width:80%;
     }
-    .signup_completed_box > p{
-        float:none;
-        width: 92%;
-        padding: 0 4% 10px;
-        font-size: 20px;
+    .form_box .title{
+        width:20%;
     }
-    .signup_completed_box a{
-        float: none;
-        width: 60%;
-        line-height: 120%;
-        padding: 10px 0;
-        margin: 20px auto 10px;
-        height: inherit;
-        border: solid 4px #fff;
+    .form_box div input[type='text']{
+        width:90%;
+        padding:8px 3%;
+        margin:10px 2% 6px;
     }
-    .signup_completed_box a span{
-        display:none;
+    .form_box div iframe{
+        width:90%;
+        padding:8px 3%;
+        margin:10px 2%;
     }
-    .completed_note{
-        float: none;
-        width: 92%;
-        padding: 20px 0 10px 2%;
-        margin: 0 auto;
+    .detail_btn_area{
+        padding:30px 0;
     }
-    .completed_note p{
-        width: 76%;
-    }
-    .completed_note p span{
-        display:none;
-    }
-    .signup_completed_bg span {
-        width: 80%;
-        margin: 10px auto 0;
+
+    .contents_wrap_box.popup .form_box .editor_area,
+    .contents_wrap_box.page .form_box .editor_area{
+        width:73%;
     }
 
 
-    /* BTN AREA */
-    .signup_btn_box button{
-        width:40%;
+    /* MEMBER WITHDRAW */
+    .util_wrap{
+        margin:30px auto;
     }
+    .signup_input_list > div input[type='text'],
+    .signup_input_list > div input[type='password'] {
+        width: 100%;
+        box-sizing: border-box;
+    }
+    .withdraw_note{
+        padding:15px;
+    }
+    .withdraw_note p{
+        font-size: 14px;
+    }
+    .certification_name .note{
+        text-indent:0;
+    }
+
+
 
 
 
@@ -1384,38 +1232,16 @@ header{
         display:none;
     }
 }
-@media all and (max-width: 400px){
-    .certification_birth select {
-        width: 22%;
-    }
-}
+
 @media all and (max-width:380px){
-    .signup_input_list > div p{
-        width:38%;
-        font-size:17px;
-    }
-    .info_input_phone button,
-    .certification_birth .second,
-    .info_input_address button,
-    .certification_name.type_id button,
-    .signup_input_list .info_input_address textarea,
-    .info_input_address .last_left{
-        margin-left:38%;
-    }
-}
-@media all and (max-width:370px){
-    .certification_tab_box button{
-        font-size:14px;
+    .detail_btn_area a,
+    .detail_btn_area button{
+        width:49%;
+        min-width:inherit;
     }
 }
 @media all and (max-width:360px){
-    .util_step_box .pd{
-        padding:22px 0;
-    }
-    .util_step_box div p{
-        line-height: 120%;
-    }
-    .util_step_box div p span{
-        display:block;
+    .certification_name .note{
+        font-size:13px;
     }
 }

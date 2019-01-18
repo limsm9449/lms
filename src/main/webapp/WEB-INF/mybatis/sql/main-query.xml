@@ -586,4 +586,195 @@
 		AND		AUTH_KEY = #{authKey}
     </select>	
 	
+	<sql id="myOrderQuery">
+		SELECT 	CD.COURSE_NAME,
+		       	C.COURSE_ID,
+		       	CASE WHEN C.TERM_YN = 'Y' THEN C.STUDY_PERIOD_FROM ELSE DATE_FORMAT(CR.CONFIRM_DATE,'%Y-%m-%d') END C_FROM_DATE,
+		        CASE WHEN C.TERM_YN = 'Y' THEN C.STUDY_PERIOD_TO ELSE DATE_FORMAT(DATE_ADD(CR.CONFIRM_DATE,INTERVAL C.C_PERIOD DAY),'%Y-%m-%d') END  C_TO_DATE,
+				DATEDIFF(DATE(CASE WHEN C.TERM_YN = 'Y' THEN C.STUDY_PERIOD_TO ELSE DATE_FORMAT(DATE_ADD(CR.CONFIRM_DATE,INTERVAL C.C_PERIOD DAY),'%Y-%m-%d') END),
+										DATE(CASE WHEN C.TERM_YN = 'Y' THEN C.STUDY_PERIOD_FROM ELSE DATE_FORMAT(CR.CONFIRM_DATE,'%Y-%m-%d') END)) + 1 C_PERIOD,
+				DATE_FORMAT(B.PAYMENT_DATE,'%Y-%m-%d %H:%i') PAYMENT_DATE,
+                B.TOTAL_COST,
+                B.PAYMENT_KIND,
+                ( SELECT DD_VALUE FROM CODE WHERE DD_MAIN = 'PAYMENT_KIND' AND DD_KEY = B.PAYMENT_KIND ) PAYMENT_KIND_NAME,
+                B.STATUS,
+                ( SELECT DD_VALUE FROM CODE WHERE DD_MAIN = 'USER_APPROVAL_STATUS' AND DD_KEY = B.STATUS ) STATUS_NAME,
+                CASE WHEN C.MOBILE_YN = 'Y' OR CM.RESPONSIVE_CONTENTS_YN = 'Y' THEN 'Y' ELSE 'N' END MOBILE_YN,
+				@ROWNUM := @ROWNUM + 1 ROWNUM
+		FROM 	COURSE_REGISTER CR
+					JOIN APPROVAL B ON B.APPROVAL_ID = CR.APPROVAL_ID
+					JOIN COURSE C ON C.COURSE_ID = CR.COURSE_ID		 
+					JOIN COURSE_CODE CD ON CD.COURSE_CODE = C.COURSE_CODE
+					JOIN COURSE_MASTER CM ON CM.COURSE_CODE = C.COURSE_CODE,
+					(SELECT @ROWNUM := 0) NUM
+		WHERE 	CR.USER_ID = #{userId}
+		AND 	( DATE_FORMAT(CURDATE(),'%Y-%m-%d')
+						BETWEEN 	CASE WHEN C.TERM_YN = 'Y' THEN C.STUDY_PERIOD_FROM ELSE DATE_FORMAT(CR.CONFIRM_DATE,'%Y-%m-%d') END
+						AND 		CASE WHEN C.TERM_YN = 'Y' THEN C.STUDY_PERIOD_TO ELSE DATE_FORMAT(DATE_ADD(CR.CONFIRM_DATE,INTERVAL C.C_PERIOD DAY),'%Y-%m-%d') END
+					OR 	DATE_FORMAT(CURDATE(),'%Y-%m-%d') <![CDATA[<]]> CASE WHEN C.TERM_YN = 'Y' THEN C.STUDY_PERIOD_FROM ELSE DATE_FORMAT(CR.CONFIRM_DATE,'%Y-%m-%d') END )
+<if test="searchMonth != null and searchMonth != ''">
+		AND 	B.PAYMENT_DATE BETWEEN DATE_ADD(CURDATE(), INTERVAL -${searchMonth} MONTH) AND CURDATE()
+</if>					
+		ORDER 	BY B.PAYMENT_DATE DESC
+	</sql>
+	<select id="myOrderList" parameterType="Main" resultType="Course">
+		SELECT 	DATA.* 
+		FROM 	(
+					<include refid="myOrderQuery" />
+				) DATA 
+		LIMIT #{limitStart},#{limitUnit}
+	</select>	        
+	<select id="myOrderTotal" parameterType="Main" resultType="Course">
+		SELECT 	COUNT(*) CNT
+		FROM	(
+			<include refid="myOrderQuery" />
+				) DATA
+	</select>	
+	
+	<sql id="myPointQuery">
+		SELECT 	A.*,
+				@ROWNUM := @ROWNUM + 1 ROWNUM
+		FROM	(
+					SELECT 	*
+					FROM	(
+								SELECT 	A.POINT_DATE
+										,DATE_FORMAT(A.POINT_DATE,'%Y-%m-%d') POINT_DATE_STR
+										,DATE_FORMAT(A.VALID_DATE,'%Y-%m-%d') VALID_DATE_STR
+										,CASE WHEN IN_POINT > 0 THEN IN_POINT ELSE OUT_POINT * -1 END POINT
+										,A.POINT_CODE
+										,( SELECT POINT_NAME FROM POINT_CODE WHERE POINT_CODE = A.POINT_CODE ) POINT_NAME
+                                        ,CC.COURSE_NAME
+								FROM 	POINT A
+											LEFT OUTER JOIN COURSE C ON C.COURSE_ID = A.REF_ID
+                                            LEFT OUTER JOIN COURSE_CODE CC ON CC.COURSE_CODE = C.COURSE_CODE
+								WHERE	A.USER_ID = #{userId}
+								AND		A.USE_YN = 'Y'
+								UNION 	ALL
+								SELECT 	A.VALID_DATE
+										,DATE_FORMAT(A.VALID_DATE,'%Y-%m-%d') POINT_DATE_STR
+										,'' VALID_DATE_STR
+										,(IN_POINT - IN_POINT_USE) * -1 POINT
+										,'' POINT_CODE
+										,'유효기간 만료' POINT_CODE
+										,'' COURSE_NAME
+								FROM 	POINT A
+								WHERE	USER_ID = #{userId}
+								AND		USE_YN = 'Y'
+								AND		VALID_DATE <![CDATA[<]]> CURDATE() 
+								AND		IN_POINT - IN_POINT_USE > 0 
+							) A
+<if test="searchMonth != null and searchMonth != ''">
+					WHERE 	A.POINT_DATE BETWEEN DATE_ADD(CURDATE(), INTERVAL -${searchMonth} MONTH) AND CURDATE()
+</if>					
+					ORDER 	BY POINT_DATE DESC
+				) A,
+				(SELECT @ROWNUM := 0) NUM
+	</sql>
+	<select id="myPointList" parameterType="Main" resultType="HashMap">
+		SELECT 	DATA.* 
+		FROM 	(
+					<include refid="myPointQuery" />
+				) DATA 
+		LIMIT #{limitStart},#{limitUnit}
+	</select>	        
+	<select id="myPointTotal" parameterType="Main" resultType="Main">
+		SELECT 	COUNT(*) CNT
+		FROM	(
+			<include refid="myPointQuery" />
+				) DATA
+	</select>	
+	
+	<select id="myPointInfo" resultType="hashmap">
+	<![CDATA[
+		SELECT 	SUM(IN_POINT) IN_POINT 
+				,SUM(OUT_POINT) OUT_POINT 
+				,IFNULL(SUM(CASE WHEN VALID_DATE >= CURDATE() THEN IN_POINT - IN_POINT_USE ELSE 0 END), 0) REMAIN_POINT
+				,IFNULL(SUM(CASE WHEN VALID_DATE >= CURDATE() AND VALID_DATE < DATE_ADD(CURDATE(),INTERVAL 1 MONTH) THEN IN_POINT - IN_POINT_USE ELSE 0 END), 0) DELETE_POINT
+		FROM 	POINT 
+		WHERE	USER_ID = #{userId}
+		AND 	USE_YN = 'Y'
+	]]>
+	</select>
+
+	<select id="myCounselLimit3" parameterType="Main" resultType="Counsel">
+		SELECT 	SEQ,
+		       	B.DD_VALUE CATEGORY_NAME,
+		       	TITLE,
+		       	CONTENTS,
+		       	ANSWER,
+		       	IF(ANSWER IS NULL,'X','O') ANSWER_YN,
+		       	DATE_FORMAT(IFNULL(UPDATE_DATE,CREATE_DATE), '%Y-%m-%d') CREATE_DATE
+		FROM 	COUNSEL A LEFT OUTER JOIN CODE B ON A.CATEGORY = B.DD_KEY AND B.DD_MAIN = 'FAQ_${compType}'
+		WHERE 	USER_ID = #{userId}
+		ORDER 	BY CREATE_DATE DESC
+		LIMIT	3
+	</select>	
+	<select id="myQnaLimit3" parameterType="Main" resultType="Board">
+		SELECT 	A.*,
+		       	IF(ANSWER IS NULL,'X','O') ANSWER_YN,
+		       	DATE_FORMAT(IFNULL(A.UPDATE_DATE,A.CREATE_DATE), '%Y-%m-%d') CREATE_DATE_STR,
+		       	CD.COURSE_NAME,
+		       	C.COURSE_ID,
+		       	CASE WHEN C.TERM_YN = 'Y' THEN C.STUDY_PERIOD_FROM ELSE DATE_FORMAT(CR.CONFIRM_DATE,'%Y-%m-%d') END C_FROM_DATE,
+		        CASE WHEN C.TERM_YN = 'Y' THEN C.STUDY_PERIOD_TO ELSE DATE_FORMAT(DATE_ADD(CR.CONFIRM_DATE,INTERVAL C.C_PERIOD DAY),'%Y-%m-%d') END  C_TO_DATE,
+				DATEDIFF(DATE(CASE WHEN C.TERM_YN = 'Y' THEN C.STUDY_PERIOD_TO ELSE DATE_FORMAT(DATE_ADD(CR.CONFIRM_DATE,INTERVAL C.C_PERIOD DAY),'%Y-%m-%d') END),
+										DATE(CASE WHEN C.TERM_YN = 'Y' THEN C.STUDY_PERIOD_FROM ELSE DATE_FORMAT(CR.CONFIRM_DATE,'%Y-%m-%d') END)) + 1 C_PERIOD,
+				CASE WHEN C.MOBILE_YN = 'Y' OR CM.RESPONSIVE_CONTENTS_YN = 'Y' THEN 'Y' ELSE 'N' END MOBILE_YN
+		FROM 	BOARD_QNA A
+					JOIN COURSE C ON C.COURSE_ID = A.COURSE_ID
+					JOIN COURSE_REGISTER CR ON CR.COURSE_ID = A.COURSE_ID AND CR.USER_ID = #{userId}
+					JOIN COURSE_CODE CD ON CD.COURSE_CODE = C.COURSE_CODE
+					JOIN COURSE_MASTER CM ON CM.COURSE_CODE = C.COURSE_CODE
+		WHERE 	A.COURSE_ID IN ( SELECT COURSE_ID FROM COURSE_REGISTER WHERE USER_ID = #{userId} )
+		AND		A.USER_ID = #{userId}
+		ORDER 	BY A.CREATE_DATE DESC
+		LIMIT	3
+	</select>	
+	
+	<sql id="myQnaQuery">
+		SELECT 	A.*,
+				@ROWNUM := @ROWNUM + 1 ROWNUM
+		FROM	(
+					SELECT 	A.*,
+					       	IF(ANSWER IS NULL,'X','O') ANSWER_YN,
+					       	DATE_FORMAT(IFNULL(A.UPDATE_DATE,A.CREATE_DATE), '%Y-%m-%d') CREATE_DATE_STR,
+					       	CD.COURSE_NAME,
+					       	CASE WHEN C.TERM_YN = 'Y' THEN C.STUDY_PERIOD_FROM ELSE DATE_FORMAT(CR.CONFIRM_DATE,'%Y-%m-%d') END C_FROM_DATE,
+					        CASE WHEN C.TERM_YN = 'Y' THEN C.STUDY_PERIOD_TO ELSE DATE_FORMAT(DATE_ADD(CR.CONFIRM_DATE,INTERVAL C.C_PERIOD DAY),'%Y-%m-%d') END  C_TO_DATE,
+							DATEDIFF(DATE(CASE WHEN C.TERM_YN = 'Y' THEN C.STUDY_PERIOD_TO ELSE DATE_FORMAT(DATE_ADD(CR.CONFIRM_DATE,INTERVAL C.C_PERIOD DAY),'%Y-%m-%d') END),
+													DATE(CASE WHEN C.TERM_YN = 'Y' THEN C.STUDY_PERIOD_FROM ELSE DATE_FORMAT(CR.CONFIRM_DATE,'%Y-%m-%d') END)) + 1 C_PERIOD,
+							CASE WHEN C.MOBILE_YN = 'Y' OR CM.RESPONSIVE_CONTENTS_YN = 'Y' THEN 'Y' ELSE 'N' END MOBILE_YN
+					FROM 	BOARD_QNA A
+								JOIN COURSE C ON C.COURSE_ID = A.COURSE_ID
+								JOIN COURSE_REGISTER CR ON CR.COURSE_ID = A.COURSE_ID AND CR.USER_ID = #{userId}
+								JOIN COURSE_CODE CD ON CD.COURSE_CODE = C.COURSE_CODE
+								JOIN COURSE_MASTER CM ON CM.COURSE_CODE = C.COURSE_CODE
+					WHERE 	A.COURSE_ID IN ( SELECT COURSE_ID FROM COURSE_REGISTER WHERE USER_ID = #{userId} )
+					AND		A.USER_ID = #{userId}
+				) A,
+				(SELECT @ROWNUM := 0) NUM
+	</sql>
+	<select id="myQnaList" parameterType="Main" resultType="Board">
+		SELECT 	DATA.* 
+		FROM 	(
+					<include refid="myQnaQuery" />
+				) DATA 
+		LIMIT #{limitStart},#{limitUnit}
+	</select>	        
+	<select id="myQnaTotal" parameterType="Main" resultType="Board">
+		SELECT 	COUNT(*) CNT
+		FROM	(
+			<include refid="myQnaQuery" />
+				) DATA
+	</select>
+	
+	<select id="myQnaData" parameterType="Main" resultType="Board">
+		SELECT 	A.*,
+		       	DATE_FORMAT(IFNULL(A.UPDATE_DATE,A.CREATE_DATE), '%Y-%m-%d') CREATE_DATE_STR,
+		       	CD.COURSE_NAME
+		FROM 	BOARD_QNA A
+					JOIN COURSE C ON C.COURSE_ID = A.COURSE_ID
+					JOIN COURSE_CODE CD ON CD.COURSE_CODE = C.COURSE_CODE
+		WHERE 	A.SEQ = #{seq}
+    </select>	
 </mapper>

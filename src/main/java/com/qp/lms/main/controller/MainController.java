@@ -718,5 +718,121 @@ public class MainController {
 
     	return "/common/json";
     }
+
+    @RequestMapping(value = "/main/myOrder")
+    public String myOrder(@ModelAttribute MainVO vo, Model model) throws Exception {
+    	try {
+    		if ( (SessionVO)SessionUtil.getSession() == null ) {
+    			return "/login/beforeLogin";
+    		} else {
+    			vo.setCompCd((String)SessionUtil.getAttribute("compCd"));
+	    		
+	    		MainSet set = new MainSet();
+	    		set.setCondiVO(vo);
+	    		
+				set = svr.myOrder(set);
+				
+		        model.addAttribute("set", set );
+    		}
+    	} catch ( Exception e ) {
+    		e.printStackTrace();
+    	}
+
+        return CommUtil.getCompTypePage("/homepage/myOrder");
+    }
+
+    @RequestMapping(value = "/main/myPoint")
+    public String myPoint(@ModelAttribute MainVO vo, Model model) throws Exception {
+    	try {
+    		if ( (SessionVO)SessionUtil.getSession() == null ) {
+    			return "/login/beforeLogin";
+    		} else {
+    			vo.setCompCd((String)SessionUtil.getAttribute("compCd"));
+	    		
+	    		MainSet set = new MainSet();
+	    		set.setCondiVO(vo);
+	    		
+				set = svr.myPoint(set);
+				
+		        model.addAttribute("set", set );
+    		}
+    	} catch ( Exception e ) {
+    		e.printStackTrace();
+    	}
+
+        return CommUtil.getCompTypePage("/homepage/myPoint");
+    }
+
+    @RequestMapping(value = "/main/myPointGuide")
+    public String myPointGuide(@ModelAttribute MainVO vo, Model model) throws Exception {
+        return CommUtil.getCompTypePage("/homepage/myPointGuide");
+    }
+
+    @RequestMapping(value = "/main/myActivity")
+    public String myActivity(@ModelAttribute MainVO vo, Model model) throws Exception {
+    	try {
+    		if ( (SessionVO)SessionUtil.getSession() == null ) {
+    			return "/login/beforeLogin";
+    		} else {
+	    		vo.setCompCd((String)SessionUtil.getAttribute("compCd"));
+	    		vo.setCompType((String)SessionUtil.getAttribute("compType"));
+	    		
+	    		MainSet set = new MainSet();
+	    		set.setCondiVO(vo);
+	    		
+				set = svr.myActivity(set);
+				
+		        model.addAttribute("set", set );
+    		}
+    	} catch ( Exception e ) {
+    		e.printStackTrace();
+    	}
+
+        return CommUtil.getCompTypePage("/homepage/myActivity");
+    }
     
+    @RequestMapping(value = "/main/myQnaList")
+    public String myQna(@ModelAttribute MainVO vo, Model model) throws Exception {
+    	try {
+    		if ( (SessionVO)SessionUtil.getSession() == null ) {
+    			return "/login/beforeLogin";
+    		} else {
+    			vo.setCompCd((String)SessionUtil.getAttribute("compCd"));
+	    		
+	    		MainSet set = new MainSet();
+	    		set.setCondiVO(vo);
+	    		
+				set = svr.myQnaList(set);
+				
+		        model.addAttribute("set", set );
+    		}
+    	} catch ( Exception e ) {
+    		e.printStackTrace();
+    	}
+
+        return CommUtil.getCompTypePage("/homepage/myQnaList");
+    }
+    
+    @RequestMapping(value = "/main/myQnaV")
+    public String myQnaV(@ModelAttribute MainVO vo, Model model) throws Exception {
+    	try {
+    		if ( (SessionVO)SessionUtil.getSession() == null ) {
+    			return "/login/beforeLogin";
+    		} else {
+    			vo.setCompCd((String)SessionUtil.getAttribute("compCd"));
+	    		
+	    		MainSet set = new MainSet();
+	    		set.setCondiVO(vo);
+	    		
+				set = svr.myQnaV(set);
+				
+		        model.addAttribute("set", set );
+    		}
+    	} catch ( Exception e ) {
+    		e.printStackTrace();
+    	}
+
+        return CommUtil.getCompTypePage("/homepage/myQnaV");
+    }
+
 }

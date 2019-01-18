@@ -95,7 +95,7 @@ public class LoginController {
    	 	model.addAttribute("set", set );
 
    	 	//사용자 정보가 존재하면 session 정보를 만든다.
-   	 	if ( set.getData() != null && !"".equals(set.getData().getUserId()) ) {
+   	 	if ( set.getData() != null && !"".equals(set.getData().getUserId()) && "N".equals(set.getData().getRetiredYn()) ) {
    	 		String auth = CommUtil.getString(loginVO.getAuth());
    	 		
    	 		if ( ("ADMIN".equals(auth) && !"Y".equals(CommUtil.getString(set.getData().getAdminYn()))) ||

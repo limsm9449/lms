@@ -24,8 +24,10 @@
 <script type="text/javascript">
 
 $(document).ready(function() {
-	//$("textarea[name='retiredReason']").cleditor();
 	$("textarea[name='retiredReason']").val("");
+	
+	$("#userId").val("");
+	$("#userPassword").val("");
 });
 
 function lfn_btn(pKind, pParam) {

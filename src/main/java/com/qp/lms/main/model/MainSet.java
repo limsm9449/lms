@@ -60,7 +60,12 @@ public class MainSet extends CommonSet {
 	private List<HashMap> mainFrame;
 	private HashMap mainFrameDetailHm;
 
-
+	private List<CourseVO> myOrderList;
+	private List<HashMap> myPointList;
+	private HashMap myPointInfo;
+	private List<CounselVO> myCounselList;
+	private List<BoardVO> myQnaList;
+	private BoardVO myQnaData;
 	
 	public void setCondiVO(MainVO condiVO) {
 		this.condiVO = condiVO;
@@ -235,6 +240,42 @@ public class MainSet extends CommonSet {
 	}
 	public void setMainFrameDetailHm(HashMap mainFrameDetailHm) {
 		this.mainFrameDetailHm = mainFrameDetailHm;
+	}
+	public List<CourseVO> getMyOrderList() {
+		return myOrderList;
+	}
+	public void setMyOrderList(List<CourseVO> myOrderList) {
+		this.myOrderList = myOrderList;
+	}
+	public List<HashMap> getMyPointList() {
+		return myPointList;
+	}
+	public void setMyPointList(List<HashMap> myPointList) {
+		this.myPointList = myPointList;
+	}
+	public List<CounselVO> getMyCounselList() {
+		return myCounselList;
+	}
+	public void setMyCounselList(List<CounselVO> myCounselList) {
+		this.myCounselList = myCounselList;
+	}
+	public List<BoardVO> getMyQnaList() {
+		return myQnaList;
+	}
+	public void setMyQnaList(List<BoardVO> myQnaList) {
+		this.myQnaList = myQnaList;
+	}
+	public HashMap getMyPointInfo() {
+		return myPointInfo;
+	}
+	public void setMyPointInfo(HashMap myPointInfo) {
+		this.myPointInfo = myPointInfo;
+	}
+	public BoardVO getMyQnaData() {
+		return myQnaData;
+	}
+	public void setMyQnaData(BoardVO myQnaData) {
+		this.myQnaData = myQnaData;
 	}
 	
 }

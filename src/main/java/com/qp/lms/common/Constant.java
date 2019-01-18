@@ -29,7 +29,8 @@ public class Constant {
 	public static int unitForBoard = 10;
 	public static int unitForPostscript = 10;
 
-	public static int unitForMain = 5;	  
+	public static int unitForMainPage = 10;	  
+	public static int pageForMainPage = 5;	  
 
 	//댓글 리스트 갯수
 	public static int unitForReply = 20;

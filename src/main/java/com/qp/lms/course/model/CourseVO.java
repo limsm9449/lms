@@ -198,6 +198,11 @@ public class CourseVO extends CommonVO {
     private String responsiveContentsYn;
     private String againStudyDay;
     
+    private String paymentDate;
+    private String paymentKind;
+    private String paymentKindName;
+    private String totalCost;
+    
     public String getPeriodProgress() {
 		return periodProgress;
 	}
@@ -1438,6 +1443,38 @@ public class CourseVO extends CommonVO {
 
 	public void setAgainStudyDay(String againStudyDay) {
 		this.againStudyDay = againStudyDay;
+	}
+
+	public String getPaymentDate() {
+		return paymentDate;
+	}
+
+	public void setPaymentDate(String paymentDate) {
+		this.paymentDate = paymentDate;
+	}
+
+	public String getPaymentKind() {
+		return paymentKind;
+	}
+
+	public void setPaymentKind(String paymentKind) {
+		this.paymentKind = paymentKind;
+	}
+
+	public String getPaymentKindName() {
+		return paymentKindName;
+	}
+
+	public void setPaymentKindName(String paymentKindName) {
+		this.paymentKindName = paymentKindName;
+	}
+
+	public String getTotalCost() {
+		return totalCost;
+	}
+
+	public void setTotalCost(String totalCost) {
+		this.totalCost = totalCost;
 	}
 
 

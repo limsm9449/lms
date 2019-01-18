@@ -23,6 +23,7 @@ import com.qp.lms.board.model.AttachSet;
 import com.qp.lms.board.model.AttachVO;
 import com.qp.lms.common.CommUtil;
 import com.qp.lms.common.Constant;
+import com.qp.lms.common.LoginManager;
 import com.qp.lms.common.PlainMail;
 import com.qp.lms.common.SessionUtil;
 import com.qp.lms.common.service.CommService;
@@ -209,7 +210,7 @@ public class MemberController {
     		e.printStackTrace();
     	}
     	
-        return "/member/ChangePassword";
+        return CommUtil.getCompTypePage("/member/ChangePassword");
     }
 
     /**
@@ -231,7 +232,7 @@ public class MemberController {
     		e.printStackTrace();
     	}
     	
-        return "/member/Retired";
+        return CommUtil.getCompTypePage("/member/Retired");
     }
     
     /**
@@ -300,6 +301,10 @@ public class MemberController {
 	    	set.getCondiVO().setUserId(SessionUtil.getSessionUserId());
 	    	
 	    	set = svr.memberRetiredUpdate(set);
+	    	
+	    	//세션 제거
+    		LoginManager loginManager = LoginManager.getInstance();
+    		loginManager.removeSession(set.getCondiVO().getUserId());
 	    	
 	    	model.addAttribute("json", CommUtil.getJsonObject(set.getRtnMode(),""));
     	} catch ( Exception e ) {
@@ -382,7 +387,7 @@ public class MemberController {
     		e.printStackTrace();
     	}
     	
-        return "/member/UserMemberU";
+        return CommUtil.getCompTypePage("/member/UserMemberU");
     }
     
     /**
@@ -397,6 +402,8 @@ public class MemberController {
     	try {
 	    	MemberSet set = new MemberSet();
 	    	set.setCondiVO(vo);
+	    	
+	    	set.getCondiVO().setUserId(SessionUtil.getSessionUserId());
 	    	
 	    	set = svr.userMemberUpd(set);
 	    	

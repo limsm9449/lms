@@ -5,18 +5,18 @@
     /* font-style: normal; */
     /* font-weight: 500; */
     src: local('NanumSquareR'),
-url('../../font/NanumSquareR.woff') format('woff'),
-url('../../font/NanumSquareR.ttf') format('truetype'),
-url('../../font/NanumSquareR.eot') format('embedded-opentype');
+url('../font/NanumSquareR.woff') format('woff'),
+url('../font/NanumSquareR.ttf') format('truetype'),
+url('../font/NanumSquareR.eot') format('embedded-opentype');
 }
 @font-face {
     font-family: 'NanumSquareB';
     /* font-style: normal; */
     /* font-weight: 900; */
     src: local('NanumSquareEB'),
-url('../../font/NanumSquareEB.woff') format('woff'),
-url('../../font/NanumSquareEB.ttf') format('truetype'),
-url('../../font/NanumSquareEB.eot') format('embedded-opentype');
+url('../font/NanumSquareEB.woff') format('woff'),
+url('../font/NanumSquareEB.ttf') format('truetype'),
+url('../font/NanumSquareEB.eot') format('embedded-opentype');
 }
 
 /* IF IE 10 */
@@ -112,6 +112,7 @@ header{
 .util_box .last_right{
     margin-right:0;
 }
+
 
 
 /* MENU */
@@ -422,72 +423,49 @@ header{
 	border-width:1px;
 }
 #q_menu1{
-	background:url('../../img/main/quick/q_menu1.png')  0px 20px no-repeat; 
-	padding:56px 0px;
+	background:url('../img/main/quick/q_menu1.png') no-repeat; 
+	padding:43px 0px;
 	cursor:pointer;
 }
 #q_menu1:hover{
-	background:url('../../img/main/quick/q_menu1_over.png') 0px 20px no-repeat; 
-	background-color:#0073BF;
+	background:url('../img/main/quick/q_menu1_over.png') no-repeat; 
 }
 #q_menu2{
-	background:url('../../img/main/quick/q_menu2.png') 0px 18px no-repeat; 
-	padding:44px 0px;
+	background:url('../img/main/quick/q_menu2.png') no-repeat; 
+	padding:33px 0px;
 	cursor:pointer;
 }
 #q_menu2:hover{
-	background:url('../../img/main/quick/q_menu2_over.png')  0px 18px no-repeat; 
-	background-color:#0073BF;
+	background:url('../img/main/quick/q_menu2_over.png') no-repeat; 
 }
 #q_menu3{
-	background:url('../../img/main/quick/q_menu3.png') 0px 20px no-repeat; 
-	padding:56px 0px;
+	background:url('../img/main/quick/q_menu3.png') no-repeat; 
+	padding:48px 0px;
 	cursor:pointer;
 }
 #q_menu3:hover{
-	background:url('../../img/main/quick/q_menu3_over.png')  0px 20px no-repeat; 
-	background-color:#0073BF;
+	background:url('../img/main/quick/q_menu3_over.png') no-repeat; 
 }
 #q_menu4{
-	background:url('../../img/main/quick/q_menu4.png')  0px 11px no-repeat; 
-	padding:50px 0px;
+	background:url('../img/main/quick/q_menu4.png') no-repeat; 
+	padding:43px 0px;
 	cursor:pointer;
 }
 #q_menu4:hover{
-	background:url('../../img/main/quick/q_menu4_over.png')  0px 11px no-repeat; 
-	background-color:#0073BF;
+	background:url('../img/main/quick/q_menu4_over.png') no-repeat; 
 }
 #q_menu5{
-	background:url('../../img/main/quick/q_menu5.png')  0px 20px no-repeat; 
-	padding:56px 0px;
-	cursor:pointer;
-}
-#q_menu5:hover{
-	background:url('../../img/main/quick/q_menu5_over.png') 0px 20px no-repeat; 
-	background-color:#0073BF;
-}
-#q_menu6{
-	background:url('../../img/main/quick/q_menu6.png') 0px 20px no-repeat; 
-	padding:56px 0px;
-	cursor:pointer;
-}
-#q_menu6:hover{
-	background:url('../../img/main/quick/q_menu6_over.png') 0px 20px no-repeat; 
-	background-color:#0073BF;
-}
-#q_menu7{
 	padding:38px 0px;
 	padding-bottom:1000px;
 }
-
 #q_menu2_circle{
 	position:relative;
-	top:88px;
+	top:-25px;
 	left:-11px;
 }
 .q_menu2_num{
 	position:relative;
-	top:84px;
+	top:-29px;
 	left:-31px;
 	color:white;
 }
@@ -541,14 +519,12 @@ header{
     font-size: 24px;
     padding-bottom: 14px;
 }
-#class2{
-	padding:0 !important;
-}
+
 
 
 
 .register_method_tab{
-    padding-bottom:50px;
+    padding-bottom:25px;
 }
 .register_method_tab button{
     float:left;
@@ -1326,9 +1302,10 @@ table tr .last_right{
     padding-left: 0;
 	}
 	
-	/*2019*/
-    .head_mobile{
+	/*2019*/.head_mobile{
         display:block;
+		position:fixed;
+		padding-bottom:10px;
     }
     .head_wrap{
         margin:8px auto 0;
@@ -1436,7 +1413,7 @@ table tr .last_right{
 
 
     .register_method_tab {
-        padding-bottom: 30px;
+        padding-bottom: 0px;
     }
     .register_method_tab button{
         font-size:15px;

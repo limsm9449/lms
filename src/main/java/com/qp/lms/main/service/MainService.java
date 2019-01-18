@@ -24,6 +24,7 @@ import com.qp.lms.counsel.model.CounselVO;
 import com.qp.lms.course.model.CourseResourceVO;
 import com.qp.lms.course.model.CourseVO;
 import com.qp.lms.main.model.MainSet;
+import com.qp.lms.main.model.MainVO;
 import com.qp.lms.postscript.model.PostScriptVO;
 
 @Service("mainService")
@@ -66,6 +67,7 @@ public class MainService {
         	set.setPostScriptList(postScriptList);
         	set.setTotalCount(((PostScriptVO)sqlSession.selectOne("postscript.postscriptAllTotal",postScriptVO)).getCnt());
         	set.setPageUnit(Constant.unitForPostscript);
+        	set.setPageCnt(Constant.pageForMainPage);
 		} else if ( CommUtil.isEqual("C2C", compType) ) {
 			//P 채널
     		List<HashMap> mainFrame = null; 
@@ -299,6 +301,7 @@ public class MainService {
     	//페이징 처리 변수 세팅
     	set.setTotalCount(((BoardVO)sqlSession.selectOne("mainBoardNotice.mainBoardNoticeTotal",board)).getCnt());
     	set.setPageUnit(Constant.unitForBoard);
+    	set.setPageCnt(Constant.pageForMainPage);
     	
         return set ;
     }
@@ -336,6 +339,7 @@ public class MainService {
     	//페이징 처리 변수 세팅
     	set.setTotalCount(((BoardFaqVO)sqlSession.selectOne("boardFaq.boardFaqTotal",board)).getCnt());
     	set.setPageUnit(Constant.unitForBoard);
+    	set.setPageCnt(Constant.pageForMainPage);
     	
         return set ;
     }
@@ -450,4 +454,98 @@ public class MainService {
 
     	return set;
     }
+	
+	public MainSet myOrder(MainSet set) throws Exception {
+		set.getCondiVO().setUserId(SessionUtil.getSessionUserId());
+
+    	//쿼리에서 가져올 갯수 지정
+    	set.getCondiVO().setLimitUnit(Constant.unitForMainPage);
+
+    	if ( CommUtil.isEqual(set.getCondiVO().getSearchMonth(), "") ) {
+    		set.getCondiVO().setSearchMonth("3");
+    	} else if ( CommUtil.isEqual(set.getCondiVO().getSearchMonth(), "all") ) {
+    		set.getCondiVO().setSearchMonth("");
+    	}
+    	
+    	List<CourseVO> myOrderList = sqlSession.selectList("main.myOrderList",set.getCondiVO());
+    	set.setMyOrderList(myOrderList);
+
+    	//페이징 처리 변수 세팅
+    	set.setTotalCount(((CourseVO)sqlSession.selectOne("main.myOrderTotal",set.getCondiVO())).getCnt());
+    	set.setPageUnit(Constant.unitForMainPage);
+    	set.setPageCnt(Constant.pageForMainPage);
+
+    	return set;
+    }
+	
+	public MainSet myPoint(MainSet set) throws Exception {
+		set.getCondiVO().setUserId(SessionUtil.getSessionUserId());
+		
+		HashMap myPointInfo = sqlSession.selectOne("main.myPointInfo",set.getCondiVO());
+    	set.setMyPointInfo(myPointInfo);
+    	
+    	//쿼리에서 가져올 갯수 지정
+    	set.getCondiVO().setLimitUnit(Constant.unitForMainPage);
+
+    	if ( CommUtil.isEqual(set.getCondiVO().getSearchMonth(), "") ) {
+    		set.getCondiVO().setSearchMonth("3");
+    	} else if ( CommUtil.isEqual(set.getCondiVO().getSearchMonth(), "all") ) {
+    		set.getCondiVO().setSearchMonth("");
+    	}
+    	
+    	List<HashMap> myPointList = sqlSession.selectList("main.myPointList",set.getCondiVO());
+    	set.setMyPointList(myPointList);
+
+    	//페이징 처리 변수 세팅
+    	set.setTotalCount(((MainVO)sqlSession.selectOne("main.myPointTotal",set.getCondiVO())).getCnt());
+    	set.setPageUnit(Constant.unitForMainPage);
+    	set.setPageCnt(Constant.pageForMainPage);
+
+    	return set;
+    }
+	
+	public MainSet myActivity(MainSet set) throws Exception {
+		set.getCondiVO().setUserId(SessionUtil.getSessionUserId());
+		
+    	List<CounselVO> myCounselList = sqlSession.selectList("main.myCounselLimit3",set.getCondiVO());
+    	set.setMyCounselList(myCounselList);
+
+    	List<BoardVO> myQnaList = sqlSession.selectList("main.myQnaLimit3",set.getCondiVO());
+    	set.setMyQnaList(myQnaList);
+
+    	return set;
+    }
+
+	public MainSet myQnaList(MainSet set) throws Exception {
+		set.getCondiVO().setUserId(SessionUtil.getSessionUserId());
+
+    	//쿼리에서 가져올 갯수 지정
+    	set.getCondiVO().setLimitUnit(Constant.unitForMainPage);
+
+    	if ( CommUtil.isEqual(set.getCondiVO().getSearchMonth(), "") ) {
+    		set.getCondiVO().setSearchMonth("3");
+    	} else if ( CommUtil.isEqual(set.getCondiVO().getSearchMonth(), "all") ) {
+    		set.getCondiVO().setSearchMonth("");
+    	}
+    	
+    	List<BoardVO> myQnaList = sqlSession.selectList("main.myQnaList",set.getCondiVO());
+    	set.setMyQnaList(myQnaList);
+
+    	//페이징 처리 변수 세팅
+    	set.setTotalCount(((BoardVO)sqlSession.selectOne("main.myQnaTotal",set.getCondiVO())).getCnt());
+    	set.setPageUnit(Constant.unitForMainPage);
+    	set.setPageCnt(Constant.pageForMainPage);
+    	
+    	return set;
+    }
+
+	public MainSet myQnaV(MainSet set) throws Exception {
+		set.getCondiVO().setUserId(SessionUtil.getSessionUserId());
+		
+		set.setMyQnaData((BoardVO) sqlSession.selectOne("main.myQnaData",set.getCondiVO()));
+		
+    	return set;
+    }
+	
+
 }

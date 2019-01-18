@@ -6,6 +6,7 @@ encoding//src/main/webapp/WEB-INF/lms.properties=UTF-8
 encoding//src/main/webapp/board/UserBoardDataN.jsp=UTF-8
 encoding//src/main/webapp/board/UserBoardQnaV.jsp=UTF-8
 encoding//src/main/webapp/counsel/UserCounselList.jsp=UTF-8
+encoding//src/main/webapp/counsel/UserCounselListQch.jsp=UTF-8
 encoding//src/main/webapp/counsel/UserCounselN.jsp=UTF-8
 encoding//src/main/webapp/counsel/UserCounselU.jsp=UTF-8
 encoding//src/main/webapp/education/Progress.jsp=UTF-8

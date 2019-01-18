@@ -1,5 +1,5 @@
-function f_makePageNavigator(objId, currentPage, totalCount, pageBlock) {
-	var navigatorNum    = 10;
+function f_makePageNavigator(objId, currentPage, totalCount, pageBlock, pageCnt) {
+	var navigatorNum = pageCnt || 10;
 
 	var firstPageNum  = 1;
 	var lastPageNum = (pageBlock == 1 ? totalCount : parseInt((totalCount-1)/pageBlock) + 1);

@@ -107,7 +107,8 @@
 		       HOME_ADDR,
 		       MOBILE,
 		       SEX,
-		       BIRTH_DAY
+		       BIRTH_DAY,
+		       EMAIL_INFORM_YN
 		  FROM USER
 		 WHERE USER_ID = #{userId}
     </select>
@@ -244,7 +245,8 @@
     	       HOME_ZIPCODE = #{homeZipcode}, 
     	       HOME_ADDR = #{homeAddr}, 
     	       EMAIL = #{email},
-    	       UPDATE_DATE = CURRENT_TIMESTAMP
+    	       UPDATE_DATE = CURRENT_TIMESTAMP,
+    	       EMAIL_INFORM_YN = #{emailInformYn}
     	 WHERE USER_ID = #{userId} 
     </select>
 

@@ -16,7 +16,7 @@
                     <a href='#' onclick="page.goPage('/main/cart');">
                     	<li class='quick_menu_list' id="q_menu3"> </li>
                     </a>
-                    <a href='#' onclick="alert('준비중입니다.')">
+                    <a href='#' onclick="page.goPage('/main/myOrder');">
                     	<li class='quick_menu_list' id="q_menu4"></li>
                     </a>
                     <a href='#' onclick="page.goPage('/main/noticeList', '');">

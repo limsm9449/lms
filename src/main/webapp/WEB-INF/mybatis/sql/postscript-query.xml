@@ -7,7 +7,7 @@
 	<sql id="postscriptAllQuery">
     	<![CDATA[
 		SELECT 	A.*
-		       	,DATE_FORMAT(IFNULL(A.UPDATE_DATE,A.CREATE_DATE), '%y.%m.%d') UPDATE_DATE_STR
+		       	,DATE_FORMAT(IFNULL(A.UPDATE_DATE,A.CREATE_DATE), '%Y-%m-%d') UPDATE_DATE_STR
 		       	,@ROWNUM := @ROWNUM + 1 ROWNUM
                 ,CASE WHEN IFNULL(A.EVAL, 0) > 0 AND IFNULL(A.EVAL, 0) <= 0.5 THEN 'star_half'
 					 WHEN IFNULL(A.EVAL, 0) > 0.5 THEN 'star_active'

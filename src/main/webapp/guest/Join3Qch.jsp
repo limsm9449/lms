@@ -302,7 +302,7 @@ function lfn_validate() {
                         <input type='text' name='email1' id='email1' placeholder='' class="eMailtxt">
                         <span class="e-mail_b">@</span>
                         <input type='text' name='email2' id='email2' placeholder='' class="eMailtxt2">
-                        <select name='emailKind' id='emailKind'>
+                        <select name='emailKind' id='emailKind' onchange="$('#email2').val('')">
                             <option value=''>직접입력</option>
                             <option value='naver.com'>naver.com</option>
                             <option value='gmail.com'>gmail.com</option>

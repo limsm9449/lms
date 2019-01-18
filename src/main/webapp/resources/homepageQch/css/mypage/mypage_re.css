@@ -663,6 +663,9 @@ header{
 .signup_btn_box{
     text-align: center;
     padding: 30px 0 50px;
+	max-width:1190px;
+	width:58%;
+	margin:0 auto;
 }
 .signup_btn_box button{
     width: 48.9%;
@@ -700,7 +703,7 @@ header{
 .info_chk input[type='checkbox']{
 	width:20px;
 	height:20px;
-	margin-left:20px;
+	margin-left:385px;
 	position:relative;
 	top:3px;
 }
@@ -764,7 +767,7 @@ header{
     font-family: 'NanumSquareB';
     font-size: 18px;
     color: #555;
-    width: 160px;
+    width: 185px;
     float: left;
     line-height: 220%;
 }
@@ -897,13 +900,15 @@ header{
 .certification_note p span{
     display: block;
 }
-.signup_input_list .info_input_address input[type='text'] {
-    width: 320px;
+.address_txt{
+	position:relative;
+	margin-top:10px;
+	left:183px;
 }
 .info_input_address textarea{
     margin-top: 8px;
     display: block;
-    margin-left: 160px;
+    margin-left: 185px;
     width: 468px;
     resize: none;
     height: 30px;
@@ -1033,7 +1038,35 @@ header{
     font-size:11px;
     color:#eee;
 }
-
+#sign_out{
+	position:relative;
+	top:-57px;
+	left:1043px;
+	background:#69BEF1;
+	padding:10px;
+	font-family: 'NanumSquare';
+	color:white;
+}
+#out_txt{
+	width:100%;
+	position:relative;
+	top:0px;
+	left:0px;
+	height:200px;
+}
+.out_memo{
+	line-height:25px;
+	font-family: 'NanumSquareB';
+	font-weight:100;
+	color:#333;
+	font-size:17px;
+}
+#memo_t{
+	line-height:25px;
+	font-family: 'NanumSquareB';
+	font-weight:100;
+	color:#017FD3;
+}
 
 /* Media query */
 
@@ -1073,6 +1106,9 @@ header{
 		margin-left: 318px;
 		margin-top: 5px;
 	}
+	#out_txt{
+		width:96%;
+	}
     #width_text{
         color:#fff;
         background:green;
@@ -1096,6 +1132,7 @@ header{
     }
     .head_wrap{
         margin:8px auto 0;
+		left:0;
     }
     .head_mobile .menu_layout{
         display:inline-block;
@@ -1261,6 +1298,9 @@ header{
         width:40%;
         line-height:199%;
     }
+	.patter{
+		width:67% !important;
+	}
     .signup_input_list > div input[type='text'],
     .signup_input_list > div input[type='password'],
     .signup_input_list .info_input_address input[type='text'],
@@ -1269,16 +1309,16 @@ header{
         width:56%;
     }
 	.signup_input_list .info_input_e-mail input[type='text']{
-		width:44%;
+		width:49%;
 	}
 	.eMailtxt{
-		margin-right:0;
+		margin-right:0 !important;
 	}
 	.eMailtxt2{
-		margin-left:142px;
+		margin-left:147px;
 		margin-top:5px;
 		border-right:solid 1px #cccccc !important;
-		width:56% !important;
+		width:56%;
 	}
 	.e-mail_b {
 		left: 4px;
@@ -1286,7 +1326,7 @@ header{
 	}
 	.signup_input_list .info_input_e-mail select{
 		margin-top:5px;
-		margin-left:142px;
+		margin-left:147px;
 		width:59.8%;
 	}
     .signup_input_list .long p{
@@ -1364,7 +1404,15 @@ header{
         width: 80%;
         margin: 10px auto 0;
     }
-
+	#sign_out{
+		top:836px;
+		left:264px;
+		padding:5px;
+	}
+	.address_txt{
+		margin-top:5px;
+		left:146px;
+	}
 
     /* BTN AREA */
     .signup_btn_box button{
@@ -1383,6 +1431,13 @@ header{
     .foot_link_pc{
         display:none;
     }
+	.signup_btn_box{
+		max-width:1190px;
+		width:100%;
+		margin:0 auto;
+	}
+
+	
 }
 @media all and (max-width: 400px){
     .certification_birth select {

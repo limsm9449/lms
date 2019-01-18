@@ -2,9 +2,10 @@ package com.qp.lms.common;
 
 
 public class CommonSet {
-	private int pageUnit;
 	private String rtnMode;		// 결과용
 	private String rtnData;		// 결과용
+	private int pageUnit; //1페이지당 갯수
+	private int pageCnt; //페이지 갯수
 	private int totalCount;
 	
 	private String isAdminYn; 
@@ -38,6 +39,12 @@ public class CommonSet {
 	}
 	public void setRtnData(String rtnData) {
 		this.rtnData = rtnData;
+	}
+	public int getPageCnt() {
+		return pageCnt;
+	}
+	public void setPageCnt(int pageCnt) {
+		this.pageCnt = pageCnt;
 	}
 	
 

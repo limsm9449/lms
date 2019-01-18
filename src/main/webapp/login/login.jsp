@@ -91,6 +91,11 @@ function lfn_page(kind) {
 <body>
 <frameset rows='*'>
 	<form name="frm" action="dupLoginCheck.do" method="post">
+		<div style="display:none">
+			<!-- 이것은 자동이동을 막기위함이다. -->
+			<input type="submit" onclick="return false;" />
+			<input type="text"/>
+		</div>
 
 		<div class="wrap">
 			<!-- HEAD -->

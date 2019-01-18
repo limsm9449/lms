@@ -80,7 +80,7 @@ $(document).ready(function(){
 		</c:choose>                    
 	</c:forEach>
 	
-	f_makePageNavigator("pagingLayer",${set.condiVO.pageNum},${set.totalCount},${set.pageUnit});
+	f_makePageNavigator("pagingLayer",${set.condiVO.pageNum},${set.totalCount},${set.pageUnit},${set.pageCnt});
 	
 	<c:if test="${!empty set.condiVO.shap}">	      	
 		gfn_goScreenPosition("${set.condiVO.shap}");
@@ -336,11 +336,11 @@ function lfn_btn(pKind, pParam) {
                             <div class='p_result_review con'>
                                 <div class='clear_fix'>
                                 	<img src="/resources/homepageQch/img/main/u_line.png" alt='' class="u_line">
-	                                <span><img src='/resources/homepageQch/img/process/${row.eval1}.png' alt=''></span>
-	                                <span><img src='/resources/homepageQch/img/process/${row.eval2}.png' alt=''></span>
-	                                <span><img src='/resources/homepageQch/img/process/${row.eval3}.png' alt=''></span>
-	                                <span><img src='/resources/homepageQch/img/process/${row.eval4}.png' alt=''></span>
-	                                <span><img src='/resources/homepageQch/img/process/${row.eval5}.png' alt=''></span>
+	                                <span><img src='/resources/homepageQch/img/course/${row.eval1}.png' alt=''></span>
+	                                <span><img src='/resources/homepageQch/img/course/${row.eval2}.png' alt=''></span>
+	                                <span><img src='/resources/homepageQch/img/course/${row.eval3}.png' alt=''></span>
+	                                <span><img src='/resources/homepageQch/img/course/${row.eval4}.png' alt=''></span> 
+	                                <span><img src='/resources/homepageQch/img/course/${row.eval5}.png' alt=''></span>
                                     <p class="p_result_text_4"><span  class="p_result_txt_name">by ${row.userName}</span><div class="p_result_txt_date">${row.updateDateStr}</div></p>
                                     <div><a href="#" onclick="gfn_goPage('/main/mainCourseData','courseId=${row.courseId}')" class="p_result_text_btn">더보기</a></div>                                        
                                 </div>

@@ -1181,6 +1181,21 @@ function gfn_findValueInList(list, findField, findValue, returnField) {
 	return "";
 }
 
+function gfn_isExistValueInList(list, findField, findValue) {
+	var isExist = false;
+	
+	if ( list ) {
+		for ( var i = 0; i < list.length; i++ ) {
+			if ( list[i][findField] == findValue ) {
+				isExist = true;
+				break;
+			}
+		}
+	}
+	
+	return isExist;
+}
+
 function gfn_findObjectInList(list, findField, findValue) {
 	if ( list ) {
 		for ( var i = 0; i < list.length; i++ ) {

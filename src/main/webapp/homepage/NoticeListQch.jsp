@@ -26,7 +26,7 @@
 <script type="text/javascript">
 
 $(document).ready(function() {
-	f_makePageNavigator("pagingLayer",${set.condiVO.pageNum},${set.totalCount},${set.pageUnit});
+	f_makePageNavigator("pagingLayer",${set.condiVO.pageNum},${set.totalCount},${set.pageUnit},${set.pageCnt});
 });
 
 function lfn_btn(pKind, pParam) {
