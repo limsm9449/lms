@@ -218,15 +218,15 @@ function lfn_btn(pKind, pParam) {
                 </div>
                 <div class='register_course_contents clear_fix'>
                     <div class='register_course_image'>
-                        <div id='register_big_img'><img src='/cImage/contents/${set.courseData.courseCode}/mImg1.jpg' alt=' '></div>
+                        <div id='register_big_img'><img id="mImg" src='/cImage/contents/${set.courseData.courseCode}/mImg1.jpg' alt=' '></div>
                         <ul class='register_image_list clear_fix'>
-                            <li onclick='thumbnail(event, 1)' class='register_image_list_item active'>
+                            <li onclick="$('#mImg').attr('src','/cImage/contents/${set.courseData.courseCode}/mImg1.jpg');" class='register_image_list_item active'>
                                 <img src='/cImage/contents/${set.courseData.courseCode}/sImg1.jpg' alt=' '>
                             </li>
-                            <li onclick='thumbnail(event, 2)' class='register_image_list_item'>
+                            <li onclick="$('#mImg').attr('src','/cImage/contents/${set.courseData.courseCode}/mImg2.jpg');" class='register_image_list_item'>
                                 <img src='/cImage/contents/${set.courseData.courseCode}/sImg2.jpg' alt=' '>
                             </li>
-                            <li onclick='thumbnail(event, 3)' class='register_image_list_item last_right'>
+                            <li onclick="$('#mImg').attr('src','/cImage/contents/${set.courseData.courseCode}/mImg3.jpg');" class='register_image_list_item last_right'>
                                 <img src='/cImage/contents/${set.courseData.courseCode}/sImg3.jpg' alt=' '>
                             </li>
                         </ul>

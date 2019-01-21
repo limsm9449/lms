@@ -76,7 +76,7 @@ $(document.body).ready(function () {
             case "export":
                 grid.exportExcel("과정코드관리.xls");
                 break;
-            case "editDetail":
+            case "editWeek":
             	var row = grid.getList("selected");
             	if ( row.length == 0 ) {
             		mask.open();
@@ -86,6 +86,22 @@ $(document.body).ready(function () {
             		urlParams += "&COURSE_CODE=" + row[0]["COURSE_CODE"];
             		
             		f_popup('/common/axOpenPage', {displayName:'courseResourcePopup',option:'width=1100,height=820', urlParams:urlParams});
+            	} else {
+            		mask.open();
+            		dialog.alert( { msg : "신규로 추가한 경우는 저장후에 주차를 편집하셔야 합니다." }, function () { mask.close();	} );
+            	}
+            		
+                break;
+            case "editWeekPage":
+            	var row = grid.getList("selected");
+            	if ( row.length == 0 ) {
+            		mask.open();
+            		dialog.alert( { msg : "과정을 선택하셔야 합니다." }, function () { mask.close();	} );
+            	} else if ( row[0]["NEW_FLAG"] == "N" ) {
+            		var urlParams = "page=/ax/course/axCourseResourcePagePopupList";
+            		urlParams += "&COURSE_CODE=" + row[0]["COURSE_CODE"];
+            		
+            		f_popup('/common/axOpenPage', {displayName:'courseResourcePagePopup',option:'width=1100,height=820', urlParams:urlParams});
             	} else {
             		mask.open();
             		dialog.alert( { msg : "신규로 추가한 경우는 저장후에 주차를 편집하셔야 합니다." }, function () { mask.close();	} );
@@ -427,7 +443,8 @@ function fn_cbChange(id) {
     <button class="btn btn-default" data-grid-control="reset">초기화</button>
     <button class="btn btn-default" data-grid-control="save">저장</button>
     <button class="btn btn-default" data-grid-control="export">엑셀</button>
-    <button class="btn btn-default" data-grid-control="editDetail">주차 편집</button>
+    <button class="btn btn-default" data-grid-control="editWeek">주차 편집</button>
+    <button class="btn btn-default" data-grid-control="editWeekPage">주차별 페이지 편집</button>
 </div>
 <div style="height:10px"></div>
 

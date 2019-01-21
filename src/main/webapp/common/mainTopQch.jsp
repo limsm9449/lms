@@ -7,7 +7,7 @@
 %>
 		<div id='screen_top'></div>
 
-		<input type="hidden" id="topSearch" name="topSearch">
+		<input type="hidden" id="courseName" name="courseName">
 		
         <!-- PC HEADER -->
         <header class='head_pc'>
@@ -18,8 +18,8 @@
                     </a>
                 </div>
                 <div class='head_con search_box'>
-                    <input type="text" id="topSearch1" name="topSearch1" value="">
-                    <button onclick="$('#topSearch').val($('#topSearch1').val());  f_submitSelf('/main/courseList');">
+                    <input type="text" id="topSearch1" name="topSearch1" value="${set.condiVO.courseName}">
+                    <button onclick="$('#courseName').val($('#topSearch1').val());  f_submitSelf('/main/courseList');">
                         <img src='/resources/homepageQch/img/search_ic.png' alt=' '>
                     </button>
                 </div>
@@ -43,7 +43,7 @@
                             <li class='menu_title'><a href="javascript:" onclick="page.goPage('/main/courseList', '');">전체과정보기</a></li>
                         </ul>
                         <ul class='menu_sub classroom' id="menu_sub2">
-                            <li class='menu_title'><a href="javascript:" onclick="page.goPage('/main/myClassroom', '');">나의강의실</a></li>
+                            <li class='menu_title'><a href="javascript:" onclick="page.goPage('/normalUser/attendCourseList', '');">나의강의실</a></li>
                             <li><a href="javascript:" onclick="page.goPage('/normalUser/attendCourseList');">수강중 과정</a></li>
                             <li><a href="javascript:" onclick="page.goPage('/normalUser/waitingCourseList');">대기중 과정</a></li>
                             <li><a href="javascript:" onclick="page.goPage('/normalUser/myCourseList');">수강완료과정</a></li>
@@ -103,8 +103,8 @@
 </c:if>  
                 </div>
                 <div class='head_con search_box'>
-                    <input type="text" id="topSearch2" name="topSearch2" value="">
-                    <button onclick="$('#topSearch').val($('#topSearch1').val());  f_submitSelf('/main/courseList');">
+                    <input type="text" id="topSearch2" name="topSearch2" value="${set.condiVO.courseName}">
+                    <button onclick="$('#courseName').val($('#topSearch2').val());  f_submitSelf('/main/courseList');">
                         <img src='/resources/homepageQch/img/search_ic.png' alt=' '>
                     </button>
                 </div>

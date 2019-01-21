@@ -57,7 +57,7 @@ public class EvaluationVO extends CommonVO {
 	private String cFromDate;
 	private String cToDate;
 	private String cPeriod;
-
+	
 	public static long getSerialVersionUID() {
 		return serialVersionUID;
 	}

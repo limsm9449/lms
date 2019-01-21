@@ -31,7 +31,7 @@ $(document.body).ready(function () {
 		[ 	{
 	        	key : "WEEK", 
 	        	label : "주차", 
-	            width : 100,
+	            width : 70,
 	        	align : "center",
 				styleClass: function () {
                     return "grid-cell-edit";
@@ -50,7 +50,7 @@ $(document.body).ready(function () {
 	        },{
 	        	key : "DIRECTORY", 
 	        	label : "경로", 
-	            width : 80,
+	            width : 60,
 	        	align : "left", 
 	        	editor : { 
 	        		type : "text"
@@ -61,7 +61,7 @@ $(document.body).ready(function () {
 	        },{
 	        	key : "PAGE_CNT", 
 	        	label : "페이지", 
-	            width : 80,
+	            width : 70,
 	        	align : "right", 
 	        	editor : { 
 	        		type : "number"
@@ -91,6 +91,11 @@ $(document.body).ready(function () {
 				styleClass: function () {
                     return "grid-cell-edit";
                 }
+	        },{
+	        	key : "ADD_PAGE_CNT", 
+	        	label : "등록 페이지", 
+	            width : 100,
+	        	align : "right" 
 	        }	], 
 	  	null,
 	  	{

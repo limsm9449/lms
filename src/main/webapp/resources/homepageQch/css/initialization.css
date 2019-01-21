@@ -326,6 +326,9 @@ button.active .middle{
 .footer_wrap .foot_link_box li a{
     display:inline;
 }
+#Reference_contents{
+	min-height:90px !important;
+}
 
 
 @media all and (max-width:420px){

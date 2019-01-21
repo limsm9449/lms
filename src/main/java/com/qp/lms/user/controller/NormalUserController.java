@@ -52,7 +52,7 @@ public class NormalUserController {
     		e.printStackTrace();
     	}
 
-        return "/user/NormalAttendCourseList";
+        return CommUtil.getCompTypePage("/user/NormalAttendCourseList");
     }
 
     /**
@@ -75,7 +75,7 @@ public class NormalUserController {
     		e.printStackTrace();
     	}
 
-        return "/user/NormalWaitingCourseList";
+        return CommUtil.getCompTypePage("/user/NormalWaitingCourseList");
     }
 
     /**
@@ -98,7 +98,7 @@ public class NormalUserController {
     		e.printStackTrace();
     	}
 
-        return "/user/NormalCancelCourseList";
+        return CommUtil.getCompTypePage("/user/NormalCancelCourseList");
     }
 
     /**
@@ -121,7 +121,7 @@ public class NormalUserController {
     		e.printStackTrace();
     	}
 
-        return "/user/NormalMyCourseList";
+        return CommUtil.getCompTypePage("/user/NormalMyCourseList");
     }
 
     @RequestMapping(value = "/normalUser/interestCourseList")

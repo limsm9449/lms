@@ -36,6 +36,8 @@ $(document.body).ready(function () {
 		$("#columns").val("USER_ID,USER_NAME,EMAIL,SEX,BIRTH_DAY,HOME_ZIPCODE,HOME_ADDR,HOME_TEL,MOBILE,PWD");
 	} else if ( screen == "CompanyAuth" ) {
 		$("#columns").val("AUTH_KEY,INFO1,INFO2,INFO3");
+	} else if ( screen == "CourseResourcePage" ) {
+		$("#columns").val("WEEK,PAGE,TITLE");
 	}
 });
 
@@ -197,6 +199,27 @@ function lfn_tran(data) {
 					data.list[i].SEX = "M";
 				} else if ( data.list[i].SEX == "여" ) {
 					data.list[i].SEX = "F";
+				}
+			}
+			if ( isNotValid ) {
+				$("#validArea").text(msg);
+				fn_fileInit();
+				return;
+			}
+		} else if ( screen == "CourseResourcePage" ) {
+			for ( var i = 0; i < data.list.length; i++ ) {
+				var rowMsg = "";
+				if ( data.list[i].WEEK == "" || isNaN(data.list[i].WEEK) ) {
+					isNotValid = true;
+					rowMsg += "주차 오류[정수타입] -> " + data.list[i].WEEK;
+				} 
+				if ( data.list[i].PAGE == "" || isNaN(data.list[i].PAGE) ) {
+					isNotValid = true;
+					rowMsg += "페이지 오류[정수타입] -> " + data.list[i].PAGE;
+				}
+								
+				if ( rowMsg != "" ) {
+					msg += (i + 1) + " 라인 : " + rowMsg + "\n";
 				}
 			}
 			if ( isNotValid ) {

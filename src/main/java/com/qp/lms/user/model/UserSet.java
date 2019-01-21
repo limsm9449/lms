@@ -8,6 +8,7 @@ import com.qp.lms.board.model.BoardVO;
 import com.qp.lms.common.CodeVO;
 import com.qp.lms.common.CommonSet;
 import com.qp.lms.course.model.CourseCodeVO;
+import com.qp.lms.course.model.CourseResourceVO;
 import com.qp.lms.course.model.CourseVO;
 import com.qp.lms.evaluation.model.EvaluationVO;
 
@@ -48,6 +49,10 @@ public class UserSet extends CommonSet {
 	private List<CodeVO> ddCategory3Depth;		// 카테고리 소분류	
 
 	private List<EvaluationVO> attendanceDays;
+	
+	private List<CourseResourceVO> ResourceList;
+	private List<CourseResourceVO> ResourcePageList;
+	
 
 	public UserVO getCondiVO() {
 		return condiVO;
@@ -204,6 +209,18 @@ public class UserSet extends CommonSet {
 	}
 	public void setAttendanceDays(List<EvaluationVO> attendanceDays) {
 		this.attendanceDays = attendanceDays;
+	}
+	public List<CourseResourceVO> getResourceList() {
+		return ResourceList;
+	}
+	public void setResourceList(List<CourseResourceVO> resourceList) {
+		ResourceList = resourceList;
+	}
+	public List<CourseResourceVO> getResourcePageList() {
+		return ResourcePageList;
+	}
+	public void setResourcePageList(List<CourseResourceVO> resourcePageList) {
+		ResourcePageList = resourcePageList;
 	}
 
 

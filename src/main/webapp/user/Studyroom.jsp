@@ -29,6 +29,11 @@
 var flag = "NOTICE";
 
 $(document).ready(function(){
+	<c:if test="${set.courseInfo eq null}">
+		alert("해당 과정을 신청한 사용자가 아닙니다.");
+		window.close();
+	</c:if>
+	
 	gfn_refresh();
 	
 	opener.gfn_refresh();

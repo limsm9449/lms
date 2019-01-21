@@ -69,15 +69,31 @@
 	<!-- 과정 제목을 가져온다. -->
     <select id="courseResourceList" parameterType="Education" resultType="CourseResource">
 		 SELECT A.TITLE,
-		        IF(C.WEEK IS NULL,'0',A.WEEK) WEEK,
-		        IF(C.WEEK IS NULL,'',A.DIRECTORY) DIRECTORY,
-		        IF(C.WEEK IS NULL,'',B.DIRECTORY) ROOT_DIRECTORY,
-		        IF(C.WEEK IS NULL,0,A.PAGE_CNT) PAGE_CNT,
-		        A.PREVIEW_PAGE
+		        A.WEEK,
+		        A.DIRECTORY,
+		        B.DIRECTORY ROOT_DIRECTORY,
+		        A.PAGE_CNT,
+		        A.PREVIEW_PAGE,
+		       	IFNULL(CRP.CNT,0) ADD_PAGE_CNT
            FROM COURSE_RESOURCE A LEFT OUTER JOIN COURSE_CODE B ON A.COURSE_CODE = B.COURSE_CODE
-                                  LEFT OUTER JOIN (SELECT WEEK FROM COURSE_WEEK WHERE COURSE_ID = #{courseId} AND USER_ID = #{userId}) C ON C.WEEK = A.WEEK
+		            LEFT OUTER JOIN (
+		  				SELECT 	WEEK
+		  						,COUNT(*) CNT
+		  				FROM 	COURSE_RESOURCE_PAGE
+		  				WHERE 	COURSE_CODE = (SELECT COURSE_CODE FROM COURSE WHERE COURSE_ID = #{courseId})
+		  				GROUP	BY WEEK
+		  			) CRP ON CRP.WEEK = A.WEEK
 		  WHERE A.COURSE_CODE = ( SELECT COURSE_CODE FROM COURSE WHERE COURSE_ID = #{courseId})
 		  ORDER BY A.WEEK
+    </select>
+
+    <select id="courseResourcePageList" parameterType="Education" resultType="CourseResource">
+		 SELECT WEEK
+		 		,PAGE
+		 		,TITLE
+           FROM COURSE_RESOURCE_PAGE
+		  WHERE COURSE_CODE = ( SELECT COURSE_CODE FROM COURSE WHERE COURSE_ID = #{courseId})
+		  ORDER BY WEEK, PAGE
     </select>
 
 	<!-- 과정코드 정보를 가져온다. -->

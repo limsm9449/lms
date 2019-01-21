@@ -92,5 +92,35 @@ public class AxCourseCodeService {
     	return hm;
     }
 	
+	public HashMap<String, Object> axCourseResourcePageList(HashMap<String, Object> paramMap) throws Exception {
+		HashMap<String, Object> hm = new HashMap<String, Object>();
+		
+    	List<HashMap<String, Object>> list = sqlSession.selectList("axCourseCode.axCourseResourcePageList", paramMap);
+    	hm.put("list", list);
+        
+    	return hm;
+    }
+	
+	@Transactional(propagation=Propagation.REQUIRED, rollbackFor={Throwable.class})
+    public HashMap<String, Object>  axCourseResourcePageSave(HashMap<String, Object> paramMap) throws Exception {
+		HashMap<String, Object> hm = new HashMap<String, Object>();
+		
+		List<HashMap<String, Object>> updList = (List<HashMap<String, Object>>)paramMap.get("modified");
+
+		sqlSession.delete("axCourseCode.axCourseResourcePageAllDelete", paramMap);
+
+		for ( int i = 0; i < updList.size(); i++ ) {
+			HashMap<String, Object> row = (HashMap<String, Object>)updList.get(i);
+			row.put("SESSION_USER_ID", SessionUtil.getSessionUserId());
+
+			sqlSession.insert("axCourseCode.axCourseResourcePageInsert", row);
+		}
+
+		hm.put("RtnMode", Constant.mode.OK.name());
+		
+    	return hm;
+    }
+	
+	
 	
 }

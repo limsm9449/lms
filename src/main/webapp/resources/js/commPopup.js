@@ -439,7 +439,8 @@ var Popup = {
 			
 	},
 
-	showStudyroom : function(pCourseId) {
+	showStudyroom : function(pCourseId, isNewTab) {
+		console.log(isNewTab);
 		$.ajax({
 			type :"POST",
 			url : context + "/user/checkMyCourse.do",
@@ -450,6 +451,8 @@ var Popup = {
 				
 				if ( json.cnt == 0 ) {
 					alert("내가 등록한 과정이 아닙니다.");
+				} else if ( isNewTab != undefined && isNewTab ) {
+					window.open(context + "/user/studyroom.do?courseId=" + pCourseId + "&timestamp=" + gfn_timestamp(), "_blank");
 				} else if ( gfn_deviceCheck() == "MOBILE" ) {
 					pWidth = window.innerWidth || document.body.clientWidth;
 					pHeight = window.innerHeight || document.body.clientHeight

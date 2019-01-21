@@ -248,11 +248,30 @@ public class EducationController {
 	    			"Y".equals(course.getIsReport()) ||
 	    			"Y".equals(course.getIsDiscussion()) ) {
 		    	hm.put("isOther","Y");
+		    	hm.put("IsExam",course.getIsExam());
+		    	hm.put("IsReport",course.getIsReport());
+		    	hm.put("IsDiscussion",course.getIsDiscussion());
 	    	} else {
 		    	hm.put("isOther","N");
 	    	}
 	    	
 	    	model.addAttribute("json", JSONObject.fromObject(hm));
+    	} catch ( Exception e ) {
+    		e.printStackTrace();
+    	}
+
+        return "/common/json";
+    }
+
+    @RequestMapping(value = "/education/resourceInfo", method = RequestMethod.POST)
+    public String resourceInfo(@ModelAttribute EducationVO vo, Model model) throws Exception {
+    	try {
+    		EducationSet set = new EducationSet();
+	    	set.setCondiVO(vo);
+	    	
+	    	set = svr.resourceInfo(set);
+	    	
+	    	model.addAttribute("json", JSONObject.fromObject(set));
     	} catch ( Exception e ) {
     		e.printStackTrace();
     	}

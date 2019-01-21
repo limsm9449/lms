@@ -7,7 +7,7 @@
                         </button>
                     </div>
                 <ul>
-                	<a href='#' onclick="page.goPage('/main/myClassroom', '');">
+                	<a href='#' onclick="page.goPage('/normalUser/attendCourseList', '');">
                     	<li class='quick_menu_list' id="q_menu1"></li>
                     </a>
                     <a href='#' onclick="page.goPage('/main/courseList', '');">

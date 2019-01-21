@@ -34,6 +34,9 @@ public class CourseResourceVO extends CommonVO {
 	private String hPx;
 	
 	private String fileName;
+	private String page;
+	
+	private int addPageCnt;
 	
 	
 	
@@ -183,6 +186,18 @@ public class CourseResourceVO extends CommonVO {
 	}
 	public void setWeekTime(String weekTime) {
 		this.weekTime = weekTime;
+	}
+	public String getPage() {
+		return page;
+	}
+	public void setPage(String page) {
+		this.page = page;
+	}
+	public int getAddPageCnt() {
+		return addPageCnt;
+	}
+	public void setAddPageCnt(int addPageCnt) {
+		this.addPageCnt = addPageCnt;
 	}
 	
 

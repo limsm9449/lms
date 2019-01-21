@@ -57,7 +57,7 @@ public class UserController {
     		e.printStackTrace();
     	}
 
-        return "/user/Studyroom";
+        return CommUtil.getCompTypePage("/user/Studyroom");
     }
 
     @RequestMapping(value = "/goPage")

@@ -58,7 +58,7 @@
 		       ,C.WEEK_COST_YN
 		       ,(SELECT DD_VALUE FROM CODE WHERE DD_MAIN = 'WEEK_COST_YN' AND DD_KEY = C.WEEK_COST_YN) WEEK_COST_YN_NAME
 		       ,E.CAREER
-		       ,A.MOBILE_YN
+		       ,CASE WHEN IFNULL(A.MOBILE_YN, 'N') = 'Y' OR IFNULL(C.RESPONSIVE_CONTENTS_YN, 'N') = 'Y' THEN 'Y' ELSE 'N' END MOBILE_YN
 		       ,(SELECT COUNT(*) FROM COURSE_RESOURCE WHERE COURSE_CODE = A.COURSE_CODE) WEEK_CNT 
 		       	,IFNULL(A.TERM_YN,'N') TERM_YN
                 ,IFNULL(A.TERM_PERIOD_FROM, '') TERM_PERIOD_FROM
@@ -346,10 +346,10 @@
 				)
 		</if>
 		<if test="orderKind == 'Popularity'">
-			ORDER BY E.CNT, B.COURSE_NAME
+			ORDER BY E.CNT DESC, B.COURSE_NAME
 		</if>
 		<if test="orderKind == 'Recommendation'">
-			ORDER BY IFNULL(D.GRADE, 0), IFNULL(D.GRADE_CNT, 0), B.COURSE_NAME
+			ORDER BY IFNULL(D.GRADE_CNT, 0) DESC, IFNULL(D.GRADE, 0) DESC, B.COURSE_NAME
 		</if>
 	</sql>
 	<select id="courseList" parameterType="Main" resultType="Course">
@@ -573,11 +573,11 @@
 		VALUES ( #{userId}, #{courseId} ) 
 	</insert>	        
 
-	<insert id="interestCourseDelete" parameterType="Main">
+	<delete id="interestCourseDelete" parameterType="Main">
 		DELETE 	FROM USER_INTEREST_COURSE
 		WHERE	USER_ID = #{userId}
 		AND		COURSE_ID = #{courseId}
-	</insert>	        
+	</delete>	        
 	
 	<select id="isExistCompAuth" parameterType="Main" resultType="Main">
 		SELECT 	COUNT(*) CNT
@@ -753,6 +753,7 @@
 					AND		A.USER_ID = #{userId}
 				) A,
 				(SELECT @ROWNUM := 0) NUM
+		ORDER 	BY CREATE_DATE DESC
 	</sql>
 	<select id="myQnaList" parameterType="Main" resultType="Board">
 		SELECT 	DATA.* 
@@ -776,5 +777,20 @@
 					JOIN COURSE C ON C.COURSE_ID = A.COURSE_ID
 					JOIN COURSE_CODE CD ON CD.COURSE_CODE = C.COURSE_CODE
 		WHERE 	A.SEQ = #{seq}
-    </select>	
+    </select>
+
+    <update id="myQnaUpd" parameterType="Main">
+		UPDATE BOARD_QNA
+		   SET TITLE = #{title},
+		       CONTENTS = #{contents},
+		       UPDATE_DATE = CURRENT_TIMESTAMP
+		 WHERE SEQ = #{seq}
+    </update>
+
+    <delete id="myQnaDel" parameterType="Main">
+		DELETE FROM BOARD_QNA
+		 WHERE SEQ = #{seq}
+    </delete>
+    
+    	    
 </mapper>

@@ -41,7 +41,6 @@ public class UserVO extends CommonVO {
 	
 	private String compCd;
 	
-	
 	public String getCourseCode() {
 		return courseCode;
 	}

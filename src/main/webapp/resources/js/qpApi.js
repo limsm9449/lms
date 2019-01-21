@@ -31,6 +31,10 @@ var etop = {
 	currentPage : ""
 }
 
+var weeks = [], pages = [], directorys = [], titles = [];
+var rootDirectory = "";
+var mobileYn = "N";
+var oldCurrentWeek = 0;
 
 var QP_API = {
 	/**
@@ -47,6 +51,31 @@ var QP_API = {
 		totalWeek = pTotalWeek;		
 		isSaveOk = pIsSaveOk; 
 		isSample = pIsSample;
+		
+		if ( weeks.length == 0 ) {
+			$.ajax({
+				type :"POST",
+				url : context +"/education/resourceInfo.do",
+				dataType :"json",
+				async : false,
+				data : "courseId=" + currentCourseId,
+				success : function(json){
+					for ( var i = 0; i < json.resourceList.length; i++ ) {
+						weeks.push(json.resourceList[i].week); 
+						pages.push(json.resourceList[i].pageCnt); 
+						directorys.push(json.resourceList[i].rootDirectory + "/" + json.resourceList[i].directory + "/"); 
+						titles.push(json.resourceList[i].title);
+					}
+					
+					if ( json.resourceList.length > 0 ) {
+						rootDirectory = json.resourceList[0].rootDirectory; 
+					}
+				},
+				error : function(e) {
+					alert("오류 발생");
+				}
+			})
+		}
 	},
 		
 	/**
@@ -55,13 +84,13 @@ var QP_API = {
 	goNextPage : function() {
 		//페이지가 0이거나(샘플보기가 없는 경우), 마지막 페이지면 다음 차시로 넘어간다.
 		if ( pages[currentWeek - 1] == 0 || currentPage == pages[currentWeek - 1] ) {
+			//이전 페이지 완료 처리
+			QP_API.updPrevPage();
+
 			//마지막 페이지이면...
 			if ( currentWeek == totalWeek ) {
 				alert("해당 차시의 마지막 페이지입니다.");
 			}
-
-			//이전 페이지 완료 처리
-			QP_API.updPrevPage();
 
 			//다음 차시를 구한다.
 			//currentWeek = currentWeek + 1;
@@ -88,8 +117,18 @@ var QP_API = {
 					dataType :"json",
 					data : "courseId=" + currentCourseId,
 					success : function(json){
-						if ( json.isOther == "Y") {
-							alert("과정의 진도가 끝났습니다. 레포트, 시험, 설문지 작성을 해주세요.");
+						var msg = "";
+						if ( json.IsExam == "Y") {
+							msg += ( msg == "" ? "" : ", " ) + "레포트";
+						}
+						if ( json.IsReport == "Y") {
+							msg += ( msg == "" ? "" : ", " ) + "시험";
+						}
+						if ( json.IsDiscussion == "Y") {
+							msg += ( msg == "" ? "" : ", " ) + "설문지 작성";
+						}
+						if ( json.isOther == "Y" && msg != "") {
+							alert("과정의 진도가 끝났습니다. " + msg + "을 해주세요.");
 						} else {
 							alert("과정의 진도가 끝났습니다.");
 						}
@@ -152,6 +191,8 @@ var QP_API = {
 		$("#eduContent").attr("src", contents + directorys[currentWeek - 1] + QP_API.currPageHtml());
 		console.log(contents + directorys[currentWeek - 1] + QP_API.currPageHtml());
 		
+		QP_API.showPageInfo();
+		
 		//현재 페이지 시작 처리
 		QP_API.updPage();
 	},
@@ -164,6 +205,8 @@ var QP_API = {
 		//top.eduContent.document.getElementsByName("contents")[0].src = htmlPage;
 		$("#eduContent").attr("src", contents + directorys[currentWeek - 1] + htmlPage);
 		console.log(contents + directorys[currentWeek - 1] + htmlPage);
+		
+		QP_API.showPageInfo();
 		
 		//현재 페이지 시작 처리
 		QP_API.updPage();
@@ -193,6 +236,8 @@ var QP_API = {
 			document.frm.method = "GET";	
 			document.frm.submit();
 
+			QP_API.showPageInfo();
+			
 			//현재 페이지 시작 처리
 			QP_API.updPage();
 		}
@@ -217,6 +262,8 @@ var QP_API = {
 			//document.frm.method = "GET";	
 			document.frm.submit();
 	 
+			QP_API.showPageInfo();
+			
 			//현재 페이지 시작 처리
 			QP_API.updPage();
 		}
@@ -293,13 +340,41 @@ var QP_API = {
 	currPageHtml : function() {
 		return (1000 + currentPage) + ".html";
 	},
-	
+
+	showPageInfo : function() {
+		if ( $(".now_page").length > 0 ) {
+			$(".now_page").html(currentPage);
+			$(".total_page").html(pages[currentWeek]);
+			
+			if ( oldCurrentWeek != currentWeek ) {
+				//차시 오픈
+				left_menu_open(document.getElementById("left_week_" + currentWeek), "main");
+				oldCurrentWeek = currentWeek;
+			}
+			
+			$.each($(".left_bottom_ul > li"), function(i) {
+				$(this).removeClass("first_depth");
+			});
+			
+			$("#left_page_" + currentWeek + "_" + currentPage).addClass("first_depth");
+		}
+	},
+
+	clickPage : function(cWeek, cPage) {
+		currentWeek = cWeek;
+		currentPage = cPage;
+		
+		//클릭시 차시는 열려있기에 flag를 변경해줌.
+		oldCurrentWeek = currentWeek;
+		
+		QP_API.openPage(QP_API.currPageHtml());
+		
+	},
+
 	a : function() {
 	}
-	
-	
-	
 }
+
 
 
 

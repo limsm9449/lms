@@ -125,9 +125,16 @@ public class EducationService {
     public EducationSet progressComplete(EducationSet set) throws Exception {
     	set.getCondiVO().setUserId(SessionUtil.getSessionUserId());
     	
-    	sqlSession.insert("education.updEvalKeyForComplete",set.getCondiVO());
+    	sqlSession.update("education.updEvalKeyForComplete",set.getCondiVO());
 
     	set.setData((CourseVO) sqlSession.selectOne("education.courseData",set.getCondiVO()));
+
+        return set ;
+    }
+
+    public EducationSet resourceInfo(EducationSet set) throws Exception {
+    	List<CourseResourceVO> resourceList = sqlSession.selectList("education.courseResourceList",set.getCondiVO());
+    	set.setResourceList(resourceList);
 
         return set ;
     }

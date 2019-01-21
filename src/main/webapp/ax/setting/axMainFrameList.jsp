@@ -550,7 +550,7 @@ function fn_saveApply() {
    	confirmDialog.confirm(
    		{
            	title: "Confirm",
-           	msg: '현재 설정값을 메인화면에 반영하시겠습니까?'
+           	msg: '테스트 설정값을 메인페이지에 반영하시겠습니까?'
        	}, 
        	function(){
          	if ( this.key == "ok" ) {
@@ -589,8 +589,8 @@ function fn_saveApply() {
     <button class="btn btn-primary" data-grid-control="addDetail">Detail 추가</button>
     <button class="btn btn-primary" data-grid-control="deleteDetail">Detail 삭제</button>
     <button class="btn btn-primary" data-grid-control="saveDetail">Detail 저장</button>
-    <button class="btn btn-info" data-grid-control="view">설정 스타일 보기</button>
-    <button class="btn btn-danger" data-grid-control="saveApply">운영 적용</button>
+    <button class="btn btn-info" data-grid-control="view">테스트 설정  미리보기</button>
+    <button class="btn btn-danger" data-grid-control="saveApply">메인페이지 적용</button>
 </div> 
 
 <div style="height:10px"></div>

@@ -20,6 +20,7 @@ import com.qp.lms.common.Constant;
 import com.qp.lms.common.SessionUtil;
 import com.qp.lms.common.service.CommService;
 import com.qp.lms.common.service.DdService;
+import com.qp.lms.counsel.model.CounselSet;
 import com.qp.lms.counsel.model.CounselVO;
 import com.qp.lms.course.model.CourseResourceVO;
 import com.qp.lms.course.model.CourseVO;
@@ -203,6 +204,8 @@ public class MainService {
     }
 
 	public MainSet courseList(MainSet set) throws Exception {
+		set.getCondiVO().setCompCd((String)SessionUtil.getAttribute("compCd"));
+		
 		if ( "Y".equals(set.getCondiVO().getViewTypeChg()) ) {
 			if ( "LIST".equals(set.getCondiVO().getViewType()) ) {
 				set.getCondiVO().setLimitUnit(10);
@@ -222,9 +225,12 @@ public class MainService {
 		int totalCnt = sqlSession.selectOne("main.courseListTotal", set.getCondiVO());
 		set.setTotalCount(totalCnt);
 
-    	List<CourseVO> categoryMainCourseList = sqlSession.selectList("main.categoryMainCourseList", set.getCondiVO());
-		set.setCategoryMainCourseList(categoryMainCourseList);
-
+		String compType = (String)SessionUtil.getAttribute("compType");
+		if ( CommUtil.isEqual(compType, "B2B") ) {
+	    	List<CourseVO> categoryMainCourseList = sqlSession.selectList("main.categoryMainCourseList", set.getCondiVO());
+			set.setCategoryMainCourseList(categoryMainCourseList);
+		}
+		
     	return set;
     }
 	
@@ -547,5 +553,30 @@ public class MainService {
     	return set;
     }
 	
+	public MainSet myQnaU(MainSet set) throws Exception {
+		set.getCondiVO().setUserId(SessionUtil.getSessionUserId());
+		
+		set.setMyQnaData((BoardVO) sqlSession.selectOne("main.myQnaData",set.getCondiVO()));
+		
+    	return set;
+    }
 
+    @Transactional(propagation=Propagation.REQUIRED, rollbackFor={Throwable.class})
+    public MainSet myQnaUpd(MainSet set) throws Exception {
+    	sqlSession.update("main.myQnaUpd",set.getCondiVO());
+    	
+    	set.setRtnMode(Constant.mode.UPDATE_OK.name());
+    	
+    	return set;
+    }
+
+    @Transactional(propagation=Propagation.REQUIRED, rollbackFor={Throwable.class})
+    public MainSet myQnaDel(MainSet set) throws Exception {
+    	sqlSession.update("main.myQnaDel",set.getCondiVO());
+    	
+    	set.setRtnMode(Constant.mode.UPDATE_OK.name());
+    	
+    	return set;
+    }
+	
 }

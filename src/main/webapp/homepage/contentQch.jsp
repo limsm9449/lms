@@ -92,13 +92,20 @@ function fn_linkCall(seq) {
 	}
 	<c:forEach var="row" items="${set.mainFrame}" varStatus="idx">
 		<c:set var = "detailList" value = "${set.mainFrameDetailHm[row.SEQ]}"/>
-		<c:if test = "${row.FRAME_KIND ne 'IMAGE'}">
-			<c:forEach var="detailRow" items="${detailList}" varStatus="idx2">
-				else if ( seq == ${detailRow.SEQ} ) {
-					${detailRow.LINK_URL};
-				}
-			</c:forEach>
-		</c:if>
+		<c:forEach var="detailRow" items="${detailList}" varStatus="idx2">
+			<c:choose>
+				<c:when test = "${detailRow.MP4_YN eq 'Y'}">
+					else if ( seq == ${detailRow.SEQ} ) {
+						fn_show("${detailRow.LINK_URL}");
+					}
+				</c:when>
+				<c:otherwise>
+					else if ( seq == ${detailRow.SEQ} ) {
+						${detailRow.LINK_URL};
+					}
+				</c:otherwise>
+			</c:choose> 
+		</c:forEach>
 	</c:forEach>
 }
 
@@ -112,7 +119,7 @@ function fn_getPcMobileImg(isPc, fileName) {
 		rtnFileName = fileName.substring(0, lastPos) + "_m." + fileName.substring(lastPos + 1);
 	}
 	
-	console.log(rtnFileName);
+	//console.log(rtnFileName);
 	return rtnFileName;
 }
 
@@ -218,7 +225,7 @@ function lfn_btn(pKind, pParam) {
                                 <ul class='clear_fix' id="r_ul">
 									<c:forEach var="detailRow" items="${detailList}" varStatus="idx2">
 	                                    <li class='recommend slide_${detailRow.SEQ} clear_fix <c:if test="${idx2.last}">last_right</c:if>' onclick="fn_linkCall(${detailRow.SEQ})">
-	                                        <p class='recommend_text' onclick='location.href = "/resources/homepageQch/html/course/register_course.html"'></p>
+	                                        <p class='recommend_text'></p>
 	                                    </li>
 									</c:forEach>
                                 </ul>
@@ -243,13 +250,13 @@ function lfn_btn(pKind, pParam) {
            		<div class="slide" id="s_slide">
                     <ul id="slide_ul">
 						<c:forEach var="detailRow" items="${detailList}" varStatus="idx2">
-	                        <a href="#" onclick="fn_linkCall(${detailRow.SEQ})"><div class="star slide_p_${detailRow.SEQ}"></div></a>
+	                        <a href="javascript:" onclick="fn_linkCall(${detailRow.SEQ})"><div class="star slide_p_${detailRow.SEQ}"></div></a>
 						</c:forEach>
 						<c:forEach var="detailRow" items="${detailList}" varStatus="idx2">
-	                        <a href="#" onclick="fn_linkCall(${detailRow.SEQ})"><div class="star slide_${detailRow.SEQ}"></div></a>
+	                        <a href="javascript:" onclick="fn_linkCall(${detailRow.SEQ})"><div class="star slide_${detailRow.SEQ}"></div></a>
 						</c:forEach>
 						<c:forEach var="detailRow" items="${detailList}" varStatus="idx2">
-	                        <a href="#" onclick="fn_linkCall(${detailRow.SEQ})"><div class="star slide_n_${detailRow.SEQ}"></div></a>
+	                        <a href="javascript:" onclick="fn_linkCall(${detailRow.SEQ})"><div class="star slide_n_${detailRow.SEQ}"></div></a>
 						</c:forEach>
                       </ul>
                 </div>
@@ -266,22 +273,13 @@ function lfn_btn(pKind, pParam) {
 	 			<c:if test = "${row.FRAME_DESC ne ''}">
 	 				 <p class='pc'>${row.FRAME_DESC}</p>
 	 			</c:if>
-				<c:forEach var="detailRow" items="${detailList}" varStatus="idx2">
-	                <div class="v1">
-	                	<a onclick="v1_show()"><img src="${detailRow.BK_IMAGE_URL}" alt=""></a>
-	                </div>
-	                <div class="m1">
-	                    <div id="movie1">
-	                    	<div class="v1_close" id="vclose" onClick="v_close()">
-	                    		<img src ="/resources/homepageQch/img/main/ic_menu_close.png" alt="">
-	                    	</div>
-	                        <video id="video1" controls>
-	                             <source src="${detailRow.LINK_URL}" type="video/mp4">
-	                        </video>
-	                    </div>
-	                </div>
-				</c:forEach>
-             </div>
+
+	            <div class="v1">
+					<c:forEach var="detailRow" items="${detailList}" varStatus="idx2">
+            			<a href="javascript:" onclick="fn_linkCall(${detailRow.SEQ})"><img src="${detailRow.BK_IMAGE_URL}" alt=""></a>
+            		</c:forEach>
+	            </div>
+			</div>
         </c:when>
  		<c:when test = "${row.FRAME_KIND eq 'IMAGE_MP4'}">
  			IMAGE_MP4<br>
@@ -304,6 +302,17 @@ function lfn_btn(pKind, pParam) {
         </c:otherwise>
 	</c:choose>                    
 </c:forEach>
+
+            <div class="m1">
+                <div id="movie1">
+                	<div class="v1_close" id="vclose" onClick="fn_close()">
+                		<img src ="/resources/homepageQch/img/main/ic_menu_close.png" alt="">
+                	</div>
+                    <video id="video1" controls>
+                         <source id="mp4" src="${detailRow.LINK_URL}" type="video/mp4">
+                    </video>
+                </div>
+            </div>
              
             <div class='user_cs clear_fix'>
                 <div class='user_cs_notice_box'>
@@ -390,8 +399,8 @@ function lfn_btn(pKind, pParam) {
         <%@ include file="../common/mainBottomQch.jsp" %>
         <!-- FOOTER END -->
     </div>
-    <script src='/resources/homepageQch/js/main.js'></script>
-    <script type="text/javascript">
+<script src='/resources/homepageQch/js/main.js'></script>
+<script type="text/javascript">
     $(document).ready(function(){
       var imgs;
 	  var star_count = 1;
@@ -471,7 +480,25 @@ function lfn_btn(pKind, pParam) {
 		
       }
 	   });
-  </script>
+
+function fn_show(mp4File){
+	movie1.style.display= "block";
+	vclose.style.display = "block";
+	
+	$("#mp4").attr("src", mp4File);
+	video1.load();
+	video1.play();
+}
+
+function fn_close(){
+	movie1.style.display= "none";
+	vclose.style.display = "none";
+	
+	video1.currentTime= 0;
+	video1.pause();
+}
+
+</script>
 
 </frameset>
 

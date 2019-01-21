@@ -33,6 +33,8 @@ import com.qp.lms.common.SessionUtil;
 import com.qp.lms.common.SessionVO;
 import com.qp.lms.common.service.CommService;
 import com.qp.lms.company.controller.CompanyController;
+import com.qp.lms.counsel.model.CounselSet;
+import com.qp.lms.counsel.model.CounselVO;
 import com.qp.lms.main.model.MainSet;
 import com.qp.lms.main.model.MainVO;
 import com.qp.lms.main.service.MainService;
@@ -152,7 +154,7 @@ public class MainController {
     		e.printStackTrace();
     	}
 
-        return "/homepage/courseInfo";
+        return CommUtil.getCompTypePage("/homepage/courseInfo");
     }
 
     /**
@@ -373,12 +375,6 @@ public class MainController {
     @RequestMapping(value = "/main/courseList")
     public String courseList(@ModelAttribute MainVO vo, Model model, HttpServletRequest request) throws Exception {
     	try {
-    		vo.setCompCd((String)SessionUtil.getAttribute("compCd"));
-    		
-    		if ( !CommUtil.isEqual(vo.getTopSearch(), "") ) {
-    			vo.setCourseName(vo.getTopSearch());
-    		}
-    		
     		MainSet set = new MainSet();
     		set.setCondiVO(vo);
     		
@@ -397,7 +393,7 @@ public class MainController {
     		e.printStackTrace();
     	}
 
-        return "/homepage/CourseList";
+        return CommUtil.getCompTypePage("/homepage/CourseList");
     }
     
     @RequestMapping(value = "/main/myClassroom")
@@ -794,18 +790,14 @@ public class MainController {
     @RequestMapping(value = "/main/myQnaList")
     public String myQna(@ModelAttribute MainVO vo, Model model) throws Exception {
     	try {
-    		if ( (SessionVO)SessionUtil.getSession() == null ) {
-    			return "/login/beforeLogin";
-    		} else {
-    			vo.setCompCd((String)SessionUtil.getAttribute("compCd"));
-	    		
-	    		MainSet set = new MainSet();
-	    		set.setCondiVO(vo);
-	    		
-				set = svr.myQnaList(set);
-				
-		        model.addAttribute("set", set );
-    		}
+			vo.setCompCd((String)SessionUtil.getAttribute("compCd"));
+    		
+    		MainSet set = new MainSet();
+    		set.setCondiVO(vo);
+    		
+			set = svr.myQnaList(set);
+			
+	        model.addAttribute("set", set );
     	} catch ( Exception e ) {
     		e.printStackTrace();
     	}
@@ -816,23 +808,68 @@ public class MainController {
     @RequestMapping(value = "/main/myQnaV")
     public String myQnaV(@ModelAttribute MainVO vo, Model model) throws Exception {
     	try {
-    		if ( (SessionVO)SessionUtil.getSession() == null ) {
-    			return "/login/beforeLogin";
-    		} else {
-    			vo.setCompCd((String)SessionUtil.getAttribute("compCd"));
-	    		
-	    		MainSet set = new MainSet();
-	    		set.setCondiVO(vo);
-	    		
-				set = svr.myQnaV(set);
-				
-		        model.addAttribute("set", set );
-    		}
+			vo.setCompCd((String)SessionUtil.getAttribute("compCd"));
+    		
+    		MainSet set = new MainSet();
+    		set.setCondiVO(vo);
+    		
+			set = svr.myQnaV(set);
+			
+	        model.addAttribute("set", set );
     	} catch ( Exception e ) {
     		e.printStackTrace();
     	}
 
         return CommUtil.getCompTypePage("/homepage/myQnaV");
     }
+    
+    @RequestMapping(value = "/main/myQnaU")
+    public String myQnaU(@ModelAttribute MainVO vo, Model model) throws Exception {
+    	try {
+			vo.setCompCd((String)SessionUtil.getAttribute("compCd"));
+    		
+    		MainSet set = new MainSet();
+    		set.setCondiVO(vo);
+    		
+			set = svr.myQnaU(set);
+			
+	        model.addAttribute("set", set );
+    	} catch ( Exception e ) {
+    		e.printStackTrace();
+    	}
 
+        return CommUtil.getCompTypePage("/homepage/myQnaU");
+    }
+
+    @RequestMapping(value = "/main/myQnaUpd", method = RequestMethod.POST)
+    public String myQnaUpd(@ModelAttribute MainVO vo, Model model) throws Exception {
+    	try {
+    		MainSet set = new MainSet();
+	    	set.setCondiVO(vo);
+	    	
+	    	set = svr.myQnaUpd(set);
+	    	
+	    	model.addAttribute("json", CommUtil.getJsonObject(set.getRtnMode(),""));
+    	} catch ( Exception e ) {
+    		e.printStackTrace();
+    	}
+
+        return "/common/json";
+    }
+
+    @RequestMapping(value = "/main/myQnaDel", method = RequestMethod.POST)
+    public String myQnaDel(@ModelAttribute MainVO vo, Model model) throws Exception {
+    	try {
+    		MainSet set = new MainSet();
+	    	set.setCondiVO(vo);
+	    	
+	    	set = svr.myQnaDel(set);
+	    	
+	    	model.addAttribute("json", CommUtil.getJsonObject(set.getRtnMode(),""));
+    	} catch ( Exception e ) {
+    		e.printStackTrace();
+    	}
+
+        return "/common/json";
+    }
 }

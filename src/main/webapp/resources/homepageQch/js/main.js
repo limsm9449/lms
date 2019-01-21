@@ -21,7 +21,7 @@ var doc = document.documentElement;
 doc.setAttribute('data-useragent', navigator.userAgent);
 
 
-
+var resources = '../../';
 var dropdown_area_pc = document.getElementById('menu_dropdown_pc');
 var dropdown_area_mobile = document.getElementById('menu_dropdown_mobile');
 
@@ -157,12 +157,12 @@ function sub_menu_open(btn, page) {
 
     switch (page) {
         case 'main':
-            url_up = 'url("./img/menu_arr_up.png") #fff 90% 50% no-repeat';
-            url_down = 'url("./img/menu_arr_down.png") #fff 90% 50% no-repeat';
+            url_up = 'url("'+resources+'img/menu_arr_up.png") #fff 90% 50% no-repeat';
+            url_down = 'url("'+resources+'img/menu_arr_down.png") #fff 90% 50% no-repeat';
             break;
         case 'others':
-            url_up = 'url("../../img/menu_arr_up.png") #fff 90% 50% no-repeat';
-            url_down = 'url("../../img/menu_arr_down.png") #fff 90% 50% no-repeat';
+            url_up = 'url("../mg/menu_arr_up.png") #fff 90% 50% no-repeat';
+            url_down = 'url("'+resources+'img/menu_arr_down.png") #fff 90% 50% no-repeat';
             break;
     }
 
@@ -193,12 +193,12 @@ function m_menu_open(btn, page) {
 
     switch (page) {
         case 'main':
-            url_up = 'url("./img/menu_arr_up.png") #fff 98% 64% no-repeat';
-            url_down = 'url("./img/menu_arr_down.png") #fff 98% 64% no-repeat';
+            url_up = 'url("'+resources+'img/menu_arr_up.png") #fff 98% 64% no-repeat';
+            url_down = 'url("'+resources+'img/menu_arr_down.png") #fff 98% 64% no-repeat';
             break;
         case 'others':
-            url_up = 'url("../../img/menu_arr_up.png") #fff 98% 64% no-repeat';
-            url_down = 'url("../../img/menu_arr_down.png") #fff 98% 64% no-repeat';
+            url_up = 'url("'+resources+'img/menu_arr_up.png") #fff 98% 64% no-repeat';
+            url_down = 'url("'+resources+'img/menu_arr_down.png") #fff 98% 64% no-repeat';
             break;
     }
 
@@ -206,6 +206,7 @@ function m_menu_open(btn, page) {
     var menu_box = clicked_button.parentNode.querySelector('ul');
     var list_style = window.getComputedStyle(menu_box)['display'];
     var all_list = document.querySelectorAll('.mobile_menu > ul');
+    console.log(all_list);
 
     for (var i = 0; i < all_list.length; i++) {
         var temp = all_list[i];
@@ -218,6 +219,44 @@ function m_menu_open(btn, page) {
                 clicked_button.style.background = url_down;
                 temp.style.display = 'none';
 				document.getElementById('t4').style.display = 'block';
+            }
+        } else {
+            temp.parentNode.querySelector('button').style.background = url_down;
+            temp.style.display = 'none';
+        }
+    }
+}
+function left_menu_open(btn, page) {
+    var url_up = '';
+    var url_down = '';
+
+    switch (page) {
+        case 'main':
+            url_up = 'url("'+resources+'img/main/menu_arr_up.png") #fff 98% 88% no-repeat';
+            url_down = 'url("'+resources+'img/main/menu_arr_down.png") #fff 98% 88% no-repeat';
+            break;
+        case 'others':
+            url_up = 'url("'+resources+'img/main/menu_arr_up.png") #fff 98% 88% no-repeat';
+            url_down = 'url("'+resources+'img/main/menu_arr_down.png") #fff 98% 88% no-repeat';
+            break;
+    }
+
+    var clicked_button = btn;
+    var menu_box = clicked_button.parentNode.querySelector('ul');
+    var list_style = window.getComputedStyle(menu_box)['display'];
+    var all_list = document.querySelectorAll('.left_menu > ul');
+
+    for (var i = 0; i < all_list.length; i++) {
+        var temp = all_list[i];
+        if (temp === menu_box) {
+            if (list_style === 'none') {
+                clicked_button.style.background = url_up;
+                temp.style.display = 'block';
+				//document.getElementById('t4').style.display = 'none';
+            } else {
+                clicked_button.style.background = url_down;
+                temp.style.display = 'none';
+				//document.getElementById('t4').style.display = 'block';
             }
         } else {
             temp.parentNode.querySelector('button').style.background = url_down;

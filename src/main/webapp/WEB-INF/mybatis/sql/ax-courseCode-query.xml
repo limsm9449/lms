@@ -84,19 +84,26 @@
 	 WHERE COURSE_CODE = #{COURSE_CODE}   
 </delete>
 	
-
 <select id="axCourseResourceList" parameterType="hashMap" resultType="hashMap">
 	SELECT COURSE_CODE,
-		   TITLE,
-		   WEEK,
+		   A.TITLE,
+		   A.WEEK,
 		   DIRECTORY,
 		   PAGE_CNT,
 		   PREVIEW_PAGE,
 		   WEEK_TIME,
+		   IFNULL(B.CNT,0) ADD_PAGE_CNT,
 		   'N' NEW_FLAG
-	  FROM COURSE_RESOURCE
-	 WHERE COURSE_CODE = #{COURSE_CODE}
-	 ORDER BY WEEK
+	FROM 	COURSE_RESOURCE A
+	  			LEFT OUTER JOIN (
+	  				SELECT 	WEEK
+	  						,COUNT(*) CNT
+	  				FROM 	COURSE_RESOURCE_PAGE
+	  				WHERE 	COURSE_CODE = #{COURSE_CODE}
+	  				GROUP	BY WEEK
+	  			) B ON B.WEEK = A.WEEK
+	WHERE 	COURSE_CODE = #{COURSE_CODE}
+	ORDER 	BY WEEK
 </select>
 
 <insert id="axCourseResourceInsert" parameterType="hashMap">
@@ -107,6 +114,27 @@
 <delete id="axCourseResourceAllDelete" parameterType="hashMap">
 	DELETE FROM COURSE_RESOURCE
 	 WHERE COURSE_CODE = #{COURSE_CODE}   
+</delete>
+
+<select id="axCourseResourcePageList" parameterType="hashMap" resultType="hashMap">
+	SELECT COURSE_CODE,
+		   WEEK,
+		   PAGE,
+		   TITLE,
+		   'N' NEW_FLAG
+	  FROM COURSE_RESOURCE_PAGE
+	 WHERE COURSE_CODE = #{COURSE_CODE}
+	 ORDER BY WEEK, PAGE
+</select>
+
+<insert id="axCourseResourcePageInsert" parameterType="hashMap">
+	INSERT INTO COURSE_RESOURCE_PAGE(COURSE_CODE,WEEK,PAGE,TITLE)
+	VALUES (#{COURSE_CODE},#{WEEK},#{PAGE},#{TITLE})
+</insert>
+
+<delete id="axCourseResourcePageAllDelete" parameterType="hashMap">
+	DELETE 	FROM COURSE_RESOURCE_PAGE
+	WHERE 	COURSE_CODE = #{COURSE_CODE}   
 </delete>
 
 
