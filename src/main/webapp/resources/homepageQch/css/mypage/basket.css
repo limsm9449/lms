@@ -37,11 +37,16 @@ html[data-useragent*='MSIE 10.0'] .head_mobile.on .mobile_dropwdown_wrap{
 
 
 
-
+body{
+	overflow:hidden;
+}
 /* CONTENTS */
+.wrap{
+	overflow:hidden;
+	padding-left:5px !important;
+}
 .contents_wrap_box{
     position:relative;
-    width:1122px;
     min-height:700px;
     padding-top:95px;
     margin:0 auto;
@@ -515,8 +520,9 @@ html[data-useragent*='MSIE 10.0'] .head_mobile.on .mobile_dropwdown_wrap{
 }
 .basket_completed_popup{
     width:100%;
-    max-width: 800px;
+    max-width: 700px;
     border: solid 1px #0071bc;
+	margin-top:30px;
     /* position: absolute;
     top: 50%;
     left: 50%;
@@ -524,7 +530,7 @@ html[data-useragent*='MSIE 10.0'] .head_mobile.on .mobile_dropwdown_wrap{
     background: #fff;
 }
 .basket_completed_popup .title{
-    padding: 10px 2%;
+    padding: 30px 2%;
 }
 .basket_completed_popup .title p{
     font-size: 30px;
@@ -554,7 +560,7 @@ html[data-useragent*='MSIE 10.0'] .head_mobile.on .mobile_dropwdown_wrap{
     background: none;
 }
 .basket_popup_contents{
-    padding: 10px 2% 50px 2%;
+    padding: 10px 2% 20px 2%;
 }
 .popup_info{
     border-top: solid 2px #0071bc;

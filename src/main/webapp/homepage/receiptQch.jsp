@@ -38,9 +38,6 @@
                     <div class='title clear_fix'>
                         <p>영수증<span class="span_txt">(공급받는자용)</span></p>
                     </div>
-                    <div class="second_title">
-                    	<p>수강생성명 &nbsp;<span>윤석홍</span></p>
-                    </div>
                     <div class='basket_popup_contents'>
                         <table class="print_table">
                             <tr class="print_table_top">
@@ -84,7 +81,6 @@
                     	</table>
                     
                         <p>* 위 금액을 정희 영수하였습니다. </p>
-                        <button onclick='basket_popup_close()'>인쇄</button>
                     </div>
                 </div>
 

@@ -548,7 +548,7 @@ var Popup = {
 	},
 
 	showReceipt : function(pCourseId) {
-		Popup.showPopup(context + "/main/receipt.do?courseId=" + pCourseId,960,670,"receiptPopup");
+		Popup.showPopup(context + "/main/receipt.do?courseId=" + pCourseId,715,620,"receiptPopup");
 	},
 
 }

@@ -823,7 +823,7 @@ table th.notice_col3:hover{
 .print_table tr td{
 	font-family: 'NanumSquare';
 	font-size:18px;
-	padding:10px 18px;
+	padding:10px 8px;
 	word-break:keep-all;
 }
 .print_table_top{
@@ -876,7 +876,7 @@ table th.notice_col3:hover{
 	padding:10px 10px !important;
 }
 .print_t2{
-	width:35%;
+	width:18%;
 }
 .print_t3{
 	width:60%;
