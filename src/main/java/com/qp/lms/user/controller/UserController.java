@@ -59,6 +59,24 @@ public class UserController {
 
         return CommUtil.getCompTypePage("/user/Studyroom");
     }
+    
+    @RequestMapping(value = "/user/studyroomQch")
+    public String studyroomQch(@ModelAttribute UserVO vo,Model model) throws Exception {
+    	try {
+	    	UserSet set = new UserSet();
+	    	set.setCondiVO(vo);
+	    	
+	    	set.getCondiVO().setUserId(SessionUtil.getSessionUserId());
+	    	
+	    	set = svr.studyroomQch(set);
+	    	
+	        model.addAttribute("set", set ); 
+    	} catch ( Exception e ) {
+    		e.printStackTrace();
+    	}
+
+        return CommUtil.getCompTypePage("/user/Studyroom");
+    }
 
     @RequestMapping(value = "/goPage")
     public String goPage(@ModelAttribute UserVO vo,Model model) throws Exception {

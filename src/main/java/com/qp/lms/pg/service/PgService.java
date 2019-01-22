@@ -225,6 +225,9 @@ public class PgService {
     			//과정 신청 및 금액 데이타 생성
 		    	sqlSession.insert("pg.courseRegisterPartIns",saveVO);
 			}
+			
+			//수료증 번호 생성
+	    	sqlSession.update("pg.myCertificateNoUpd",saveVO);
 		}
 
 		//cart에서 결재한건 삭제한다.

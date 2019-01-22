@@ -196,7 +196,7 @@ public class MainController {
     		e.printStackTrace();
     	}
 
-    	return "/homepage/cart";
+    	return CommUtil.getCompTypePage("/homepage/cart");
     }
 
     
@@ -345,7 +345,7 @@ public class MainController {
     		e.printStackTrace();
     	}
 
-    	return "/homepage/cart";
+    	return CommUtil.getCompTypePage("/homepage/cart");
     }
 
     /**
@@ -872,4 +872,55 @@ public class MainController {
 
         return "/common/json";
     }
+    
+    @RequestMapping(value = "/main/certificate")
+    public String certificate(@ModelAttribute MainVO vo, Model model) throws Exception {
+    	try {
+    		MainSet set = new MainSet();
+    		set.setCondiVO(vo);
+    		
+			set = svr.certificate(set);
+			
+	        model.addAttribute("set", set );
+    	} catch ( Exception e ) {
+    		e.printStackTrace();
+    	}
+
+        return CommUtil.getCompTypePage("/homepage/certificate");
+    }
+    
+    @RequestMapping(value = "/main/receipt")
+    public String receipt(@ModelAttribute MainVO vo, Model model) throws Exception {
+    	try {
+    		MainSet set = new MainSet();
+    		set.setCondiVO(vo);
+    		
+			set = svr.receipt(set);
+			
+	        model.addAttribute("set", set );
+    	} catch ( Exception e ) {
+    		e.printStackTrace();
+    	}
+
+        return CommUtil.getCompTypePage("/homepage/receipt");
+    }
+
+    @RequestMapping(value = "/main/sampleCourse")
+    public String sampleCourse(@ModelAttribute MainVO vo,Model model) throws Exception {
+    	try {
+    		MainSet set = new MainSet();
+	    	set.setCondiVO(vo);
+	    	
+	    	set.getCondiVO().setUserId(SessionUtil.getSessionUserId());
+	    	
+	    	set = svr.sampleCourse(set);
+	    	
+	        model.addAttribute("set", set ); 
+    	} catch ( Exception e ) {
+    		e.printStackTrace();
+    	}
+
+        return CommUtil.getCompTypePage("/homepage/sampleCourse");
+    }
+    
 }

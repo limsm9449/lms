@@ -136,7 +136,7 @@ $(document).ready(function(){
                             <td class="my_table_mid_6">
                             	<div class='process_result_btn con'>
 	<c:if test="${row.status eq 'A'}">	                                        
-                                    <button class='process_result_admission' onclick="alert('작업중입니다.')">발급</button>
+                                    <button class='process_result_admission' onclick="javascript:Popup.showReceipt('${row.courseId}'); return false;">발급</button>
 	</c:if>                                        
 	<c:if test="${row.status ne 'A'}">	                                        
                                     <button class='process_result_admission'>-</button>

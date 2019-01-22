@@ -66,7 +66,12 @@ public class MainSet extends CommonSet {
 	private List<CounselVO> myCounselList;
 	private List<BoardVO> myQnaList;
 	private BoardVO myQnaData;
+
+	private HashMap dataHm;	
 	
+	private List<CourseResourceVO> ResourceList;
+	private List<CourseResourceVO> ResourcePageList;
+
 	public void setCondiVO(MainVO condiVO) {
 		this.condiVO = condiVO;
 	}
@@ -276,6 +281,24 @@ public class MainSet extends CommonSet {
 	}
 	public void setMyQnaData(BoardVO myQnaData) {
 		this.myQnaData = myQnaData;
+	}
+	public HashMap getDataHm() {
+		return dataHm;
+	}
+	public void setDataHm(HashMap dataHm) {
+		this.dataHm = dataHm;
+	}
+	public List<CourseResourceVO> getResourceList() {
+		return ResourceList;
+	}
+	public void setResourceList(List<CourseResourceVO> resourceList) {
+		ResourceList = resourceList;
+	}
+	public List<CourseResourceVO> getResourcePageList() {
+		return ResourcePageList;
+	}
+	public void setResourcePageList(List<CourseResourceVO> resourcePageList) {
+		ResourcePageList = resourcePageList;
 	}
 	
 }

@@ -772,7 +772,8 @@
 	<select id="myQnaData" parameterType="Main" resultType="Board">
 		SELECT 	A.*,
 		       	DATE_FORMAT(IFNULL(A.UPDATE_DATE,A.CREATE_DATE), '%Y-%m-%d') CREATE_DATE_STR,
-		       	CD.COURSE_NAME
+		       	CD.COURSE_NAME,
+		       	IF(ANSWER IS NULL,'X','O') ANSWER_YN
 		FROM 	BOARD_QNA A
 					JOIN COURSE C ON C.COURSE_ID = A.COURSE_ID
 					JOIN COURSE_CODE CD ON CD.COURSE_CODE = C.COURSE_CODE
@@ -791,6 +792,37 @@
 		DELETE FROM BOARD_QNA
 		 WHERE SEQ = #{seq}
     </delete>
-    
-    	    
+
+	<select id="myCertificate" parameterType="Main" resultType="hashmap">
+		SELECT	CC.COURSE_NAME
+				,U.USER_NAME
+		        ,A.COURSE_CODE
+		        ,LPAD(CE.CERTIFICATE_NO, 5, '0') CERTIFICATE_NO
+		        ,(	SELECT 	COUNT(*) 
+					FROM	COURSE_RESOURCE
+		            WHERE 	COURSE_CODE = A.COURSE_CODE ) STUDY_HOUR
+				,DATE_FORMAT(CURDATE(),'%Y년 %m월 %d일') CERTIFICATE_DATE
+				,CASE WHEN A.TERM_YN = 'Y' THEN A.STUDY_PERIOD_FROM ELSE DATE_FORMAT(CURDATE(),'%Y.%m.%d') END C_FROM_DATE
+				,CASE WHEN A.TERM_YN = 'Y' THEN A.STUDY_PERIOD_TO ELSE DATE_FORMAT(DATE_ADD(CR.CONFIRM_DATE,INTERVAL A.C_PERIOD DAY),'%Y.%m.%d') END  C_TO_DATE
+				,CE.COMPLETE_YN
+		FROM 	COURSE A
+					JOIN COURSE_CODE CC ON CC.COURSE_CODE = A.COURSE_CODE
+					JOIN COURSE_REGISTER CR ON CR.COURSE_ID = A.COURSE_ID AND CR.USER_ID = #{userId}
+					JOIN COURSE_EVAL CE ON CE.COURSE_ID = A.COURSE_ID AND CE.USER_ID =  #{userId}
+		            JOIN USER U ON U.USER_ID = CE.USER_ID
+		WHERE  	A.COURSE_ID = #{courseId}
+    </select>     	    
+
+	<select id="myReceipt" parameterType="Main" resultType="hashmap">
+		SELECT	CC.COURSE_NAME
+				,U.USER_NAME
+                ,CR.COURSE_COST
+				,DATE_FORMAT(CR.CONFIRM_DATE,'%Y. %m. %d') CONFIRM_DATE
+		FROM 	COURSE A
+					JOIN COURSE_CODE CC ON CC.COURSE_CODE = A.COURSE_CODE
+					JOIN COURSE_REGISTER CR ON CR.COURSE_ID = A.COURSE_ID AND CR.USER_ID = #{userId}
+		            JOIN USER U ON U.USER_ID = CR.USER_ID
+		WHERE  	A.COURSE_ID = #{courseId}
+    </select>     	    
+
 </mapper>

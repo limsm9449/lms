@@ -121,10 +121,10 @@ function lfn_btn(pKind, pParam) {
                                 <div class="class3_btn">
 <c:choose>
 	<c:when test="${row.questYn eq 'Y'}">
-                              		<div class="class_3_btn1" onclick="javascript:Popup.showQuestResult('${row.courseId}'); return false;">설문 확인</div>
+                              		<div class="class_3_btn1" onclick="javascript:Popup.showQuestResult('${row.courseId}'); return false;">설문확인</div>
 	</c:when>
 	<c:otherwise>
-                             		<div class="class_3_btn1" onclick="javascript:Popup.showQuest('${row.courseId}'); return false;">설문 참여</div>
+                             		<div class="class_3_btn1" onclick="javascript:Popup.showQuest('${row.courseId}'); return false;">설문참여</div>
 	</c:otherwise>
 </c:choose>
                                 
@@ -142,9 +142,14 @@ function lfn_btn(pKind, pParam) {
                                     
                                 </div>
                                 <div class="class3_btn">
-                                    <div class="class_3_btn3">
-                                        수료증
-                                    </div>
+<c:choose>
+	<c:when test="${row.completeYn eq 'Y'}">
+									<div class="class_3_btn3" onclick="javascript:Popup.showCertificate('${row.courseId}'); return false;">수료증</div>
+	</c:when>
+	<c:otherwise>
+									<div class="class_3_btn3" onclick="javascript:alert('미수료인 경우 수료증을 발급받을 수 없습니다.');">미수료</div>
+	</c:otherwise>
+</c:choose>                                 
                                 </div>
                             </div>
                     	</div>

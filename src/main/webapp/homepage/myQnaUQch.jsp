@@ -12,23 +12,69 @@
     <meta charset='utf-8'>
     <meta name='viewport' content='width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1'>
     <meta http-equiv='X-UA-Compatible' content='ie=edge'>
-    <title>Q learning - 나의강의실 - 학습 Q&A 내역 상세보기</title>
+    <title>Q learning - 나의강의실 - 상담내역 상세보기</title>
 
     <%@ include file="../common/commMainInclude.jsp" %>
 
     <link href='https://fonts.googleapis.com/css?family=Nanum+Gothic' rel='stylesheet'>
-	<link rel='stylesheet' href='/resources/homepageQch/css/initialization.css'>
-    <link rel='stylesheet' href='/resources/homepageQch/css/mypage/mypage_main.css'>
-    <link rel='stylesheet' href='/resources/homepageQch/css/mypage/mypage_table.css'>
-    <link rel='stylesheet' href='/resources/homepageQch/css/mypage/mypage.css'>
+    <link rel='stylesheet' href='/resources/homepageQch/css/initialization.css'>
+    <link rel='stylesheet' href='/resources/homepageQch/css/mypage/mypage_register.css'>   
 </head>
 
 <script type="text/javascript">
 
+$(document).ready(function() {
+	$("textarea[name='contents']").cleditor();
+});
+
 function lfn_btn(pKind, pParam) {
-	if ( pKind =="list" ) {
+	if ( pKind =="save" ) {
+		if ( lfn_validate() == false )
+			return false;
+		
+		if ( confirm("저장하시겠습니까?") == true ) {
+			btnUnbind("saveBtn");
+			$.ajax({
+				type :"POST",
+				url : context + "/main/myQnaUpd.do",
+				dataType :"json",
+				data : $("#frm").serialize(),
+				success : function(json){
+					if ( json.rtnMode == "UPDATE_OK") {
+						lfn_btn("list");
+					}
+				},
+				error : function(e) {
+					alert("<spring:message code="lms.msg.systemError" text="-" />");
+				}
+			})
+		}
+	} else if ( pKind =="list" ) {
 		gfn_goPage("/main/myQnaList",""); 
 	}
+}
+
+function lfn_validate() {
+	if ($("#title").val() == "") {
+	    alert('제목을 입력해 주세요.');
+	    $("#title").select();
+	    return false;
+	}  
+
+	if ($("textarea[name='contents']").val() == "") {
+	    alert('내용을 입력해주세요.');
+	    return false;
+	} 
+	
+	if ( formValid.check("title",{maxLeng:200}) == false )
+		return false;
+	if ( checkByte($("textarea[name='contents']").val()) > board_contents_length ) {
+		alert("입력 가능한 자릿수를 넘었습니다. (" + checkByte($("textarea[name='contents']").val()) + ")");
+		$("textarea[name='contents']").Focus();
+		return false;
+	}	
+	
+	return true;
 }
 
 </script>
@@ -36,6 +82,13 @@ function lfn_btn(pKind, pParam) {
 <body style='background:#fff'>
 
 <form id="frm" name="frm" method="post">
+	<div style="display:none">
+		<!-- 이것은 자동이동을 막기위함이다. -->
+		<input type="submit" onclick="return false;" />
+		<input type="text"/>
+	</div>
+	
+	<input type="hidden" id="seq" name="seq" value="${set.condiVO.seq}"/>
 
 <frameset rows='*'>
     <div class='wrap'>
@@ -60,69 +113,45 @@ function lfn_btn(pKind, pParam) {
                             <span>
                                 <img src='/resources/homepageQch/img/course/arr_right.jpg' alt=' '>
                             </span>
-                            <p>마이페이지</p>
+                            <p>학습 Q&A 상세보기</p>
                         </div>
                     </div>
                     <h1>
-                        <span>마이</span>페이지
+                        학습 Q&A <span>상세</span>보기
                     </h1>
                 </div>
                 <!-- Top END -->
 
-                <div class='classroom_subtitle' id="detail_2">
+				<div class='notice_register clear_fix'>
+                    <div class='form_box clear_fix'>
+                        <div class='title'>
+                            <p>과정명</p>
+                        </div>
+                        <div>
+                            <input type='text' name='courseName' id='courseName' value="${set.myQnaData.courseName}" readonly>
+                        </div>
+                    </div>
+                    <div class='form_box clear_fix'>
+                        <div class='title'>
+                            <p>제목</p>
+                        </div>
+                        <div>
+                            <input type='text' name='title' id='title' value="${set.myQnaData.title}">
+                        </div>
+                    </div>
+                    <div class='form_box clear_fix flex'>
+                        <div class='title'>
+                            <p>내용</p>
+                        </div>
+                        <div class='editor_area'>
+                        	<textarea id="contents" name="contents">${set.myQnaData.contents}</textarea>
+                        </div>
+                    </div>
                 </div>
-
-                <!-- TAB AREA -->
-                
-
-                <!-- REGISTER PC VERSION -->
-                <div class='register_method_pc1' id="detail_3">
-                    <!-- <img src='../../img/notice/pc.jpg' alt=' '> -->
-                    <ol>
-                        
-                        <!-- Contents -->
-                    
-                    
-                    
-					<!-- Search Result Area -->
-                    <div class="pra2_point">
-                        <div class="t1_point">
-                            학습 Q&A 내역
-                        </div>
-                        <div class="t1_point_txt" id="detail_4">
-                            상세보기 
-                        </div>
-                    </div>
-                    <table class="QAde_table" id="QAde_t1">
-                    	<tr class="QAde_table_top">
-                        	<td class="QAde_table_top_1">과정명</td>
-                            <td class="QAde_table_top_2">${set.myQnaData.courseName}</td>
-                            <td class="QAde_table_top_3">등록일</td>
-                            <td class="QAde_table_top_4">${set.myQnaData.createDateStr}</td>
-                        </tr>
-                        <tr>
-                        	<td class="QAde_table_top_1">제목</td>
-                            <td class="QAde_table_top_4"  colspan="3">${set.myQnaData.title}</td>
-                        </tr>
-                        <tr>
-                        	<td class="QAde_table_top_1">내용</td>
-                            <td class="QAde_table_top_4"  colspan="3">${set.myQnaData.contents}</td>
-                        </tr>
-                        <tr>
-                            <td class="QAde_table_top_4"  colspan="4"></td>
-                        </tr>
-                        <tr>
-                        	<td class="QAde_table_top_1">답변</td>
-                            <td class="QAde_table_top_4"  colspan="3">${set.myQnaData.answer}</td>
-                        </tr>
-                    </table>
-                    <div class="QAde_btndiv">
-                    		<button class="QA_back_btn" onclick="lfn_btn('list');">목록으로</button>
-                    </div>
-
-                    
-                    <!-- Search Result Area END -->
-                   
+                <div class='detail_btn_area'>
+                    <button onclick="lfn_btn('list');">취소</button>
+                    <button id="saveBtn" onclick="lfn_btn('save');" class='bg_color'>수정하기</button>
+                </div>
             </div>
         </div>
         <!-- CONTENTS END -->

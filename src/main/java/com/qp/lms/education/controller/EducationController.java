@@ -263,7 +263,7 @@ public class EducationController {
         return "/common/json";
     }
 
-    @RequestMapping(value = "/education/resourceInfo", method = RequestMethod.POST)
+    @RequestMapping(value = "/ns/education/resourceInfo", method = RequestMethod.POST)
     public String resourceInfo(@ModelAttribute EducationVO vo, Model model) throws Exception {
     	try {
     		EducationSet set = new EducationSet();

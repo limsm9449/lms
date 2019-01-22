@@ -206,7 +206,6 @@ function m_menu_open(btn, page) {
     var menu_box = clicked_button.parentNode.querySelector('ul');
     var list_style = window.getComputedStyle(menu_box)['display'];
     var all_list = document.querySelectorAll('.mobile_menu > ul');
-    console.log(all_list);
 
     for (var i = 0; i < all_list.length; i++) {
         var temp = all_list[i];
@@ -252,11 +251,9 @@ function left_menu_open(btn, page) {
             if (list_style === 'none') {
                 clicked_button.style.background = url_up;
                 temp.style.display = 'block';
-				//document.getElementById('t4').style.display = 'none';
             } else {
                 clicked_button.style.background = url_down;
                 temp.style.display = 'none';
-				//document.getElementById('t4').style.display = 'block';
             }
         } else {
             temp.parentNode.querySelector('button').style.background = url_down;

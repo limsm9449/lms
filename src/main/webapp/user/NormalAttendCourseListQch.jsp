@@ -87,8 +87,8 @@
 	                        </div>
 	                        <div class="class_1_div1">
 	                            <div class="class_1_title">
-	                                <a href='#' class='user_lecture_list_subject' onclick="javascript:Popup.showStudyroom('${row.courseId}', true);">${row.courseName}</a>
-	                            </div>
+	                                <a href='#' class='user_lecture_list_subject' onclick="javascript:Popup.showStudyroomQch('${row.courseId}');">${row.courseName}</a>
+	                            </div> 
 <c:if test="${row.mobileYn eq 'Y'}">                        
 	                            <div class="class_1_mobile">
 	                                모바일 병행
@@ -129,7 +129,7 @@
 	                        
 	                        <div class="class_1_div3">
 	                        	<div class="class_btn">
-	                                <div class="class_1_btn1" onclick="javascript:Popup.showStudyroom('${row.courseId}', true)">
+	                                <div class="class_1_btn1" onclick="javascript:Popup.showStudyroomQch('${row.courseId}')">
 	                                    학습시작
 	                                </div>
 	                            </div>

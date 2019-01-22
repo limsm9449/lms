@@ -55,16 +55,23 @@ var QP_API = {
 		if ( weeks.length == 0 ) {
 			$.ajax({
 				type :"POST",
-				url : context +"/education/resourceInfo.do",
+				url : context +"/ns/education/resourceInfo.do",
 				dataType :"json",
 				async : false,
 				data : "courseId=" + currentCourseId,
 				success : function(json){
 					for ( var i = 0; i < json.resourceList.length; i++ ) {
-						weeks.push(json.resourceList[i].week); 
-						pages.push(json.resourceList[i].pageCnt); 
-						directorys.push(json.resourceList[i].rootDirectory + "/" + json.resourceList[i].directory + "/"); 
-						titles.push(json.resourceList[i].title);
+						if ( isSample ) {
+							weeks.push(json.resourceList[i].week); 
+							pages.push(json.resourceList[i].previewPage); 
+							directorys.push(json.resourceList[i].rootDirectory + "/" + json.resourceList[i].directory + "/"); 
+							titles.push(json.resourceList[i].title);
+						} else {
+							weeks.push(json.resourceList[i].week); 
+							pages.push(json.resourceList[i].pageCnt); 
+							directorys.push(json.resourceList[i].rootDirectory + "/" + json.resourceList[i].directory + "/"); 
+							titles.push(json.resourceList[i].title);
+						}
 					}
 					
 					if ( json.resourceList.length > 0 ) {
@@ -92,18 +99,18 @@ var QP_API = {
 				alert("해당 차시의 마지막 페이지입니다.");
 			}
 
+			console.log("currentWeek : " + currentWeek);
+
 			//다음 차시를 구한다.
 			//currentWeek = currentWeek + 1;
 			var isNext = false;
-			for ( i = currentWeek + 1; i < totalWeek; i++ ) {
+			for ( i = currentWeek; i < totalWeek; i++ ) {
 				if ( weeks[i] != 0 && pages[i] != 0) {
-					currentWeek = i;
+					currentWeek = i + 1;
 					isNext = true;
 					break;
 				}
 			}
-			
-			console.log("currentWeek : " + currentWeek);
 
 			//차시가 변경이 되면 설문기능 반영을 위해서 강의창을 refresh 한다.
 			if ( isNext == true ) {

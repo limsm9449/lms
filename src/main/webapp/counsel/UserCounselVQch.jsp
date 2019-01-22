@@ -54,6 +54,11 @@ function lfn_btn(pKind, pParam) {
 <body style='background:#fff'>
 
 <form id="frm" name="frm" method="post">
+	<div style="display:none">
+		<!-- 이것은 자동이동을 막기위함이다. -->
+		<input type="submit" onclick="return false;" />
+		<input type="text"/>
+	</div>
 	<input type="hidden" id="seq" name="seq" value="${set.condiVO.seq}"/>
 
 <frameset rows='*'>

@@ -25,43 +25,44 @@ public class UserService {
 	private DdService ddService;
 
     public UserSet studyroom(UserSet set) throws Exception {
-    	String compType = (String)SessionUtil.getAttribute("compType");
-    	if ( compType.equals("B2C") || compType.equals("C2C") ) {
-	    	EducationVO eduVO = new EducationVO();
-	    	eduVO.setUserId(SessionUtil.getSessionUserId());
-	    	eduVO.setCourseId(set.getCondiVO().getCourseId());
-	    	
-	    	set.setCourseInfo((CourseVO) sqlSession.selectOne("education.courseData",eduVO));
+    	set.getCondiVO().setUserId(SessionUtil.getSessionUserId());
+    	
+		set.setCourseInfo((CourseVO) sqlSession.selectOne("user.courseData",set.getCondiVO()));
+    	
+    	List<EvaluationVO> courseWeekList = sqlSession.selectList("evaluation.courseWeekList",set.getCondiVO());
+    	set.setWeek(courseWeekList);
 
-	    	List<CourseResourceVO> resourceList = sqlSession.selectList("education.courseResourceList",set.getCondiVO());
-	    	set.setResourceList(resourceList);
+    	List<CourseVO> courseExamList = sqlSession.selectList("user.courseExamList",set.getCondiVO());
+    	set.setExam(courseExamList);
 
-	    	List<CourseResourceVO> resourcePageList = sqlSession.selectList("education.courseResourcePageList",set.getCondiVO());
-	    	set.setResourcePageList(resourcePageList);
-    	} else {
-        	set.getCondiVO().setUserId(SessionUtil.getSessionUserId());
-        	
-			set.setCourseInfo((CourseVO) sqlSession.selectOne("user.courseData",set.getCondiVO()));
-	    	
-	    	List<EvaluationVO> courseWeekList = sqlSession.selectList("evaluation.courseWeekList",set.getCondiVO());
-	    	set.setWeek(courseWeekList);
-	
-	    	List<CourseVO> courseExamList = sqlSession.selectList("user.courseExamList",set.getCondiVO());
-	    	set.setExam(courseExamList);
-	
-	    	sqlSession.insert("user.courseAttendanceLogInsert", set.getCondiVO());
-	    	
-	    	BoardVO board = new BoardVO();
-	    	board.setCourseId(set.getCondiVO().getCourseId());
-	    	board.setUserId(set.getCondiVO().getUserId());
-	    	board.setLimit("4");
-	    	
-	    	List<BoardVO> boardNotice4List = sqlSession.selectList("boardNotice.boardNoticeLimitList", board);
-	    	set.setBoardNoticeList(boardNotice4List);
-	
-	    	List<BoardVO> boardQna4List = sqlSession.selectList("boardQna.boardQnaLimitList", board);
-	    	set.setBoardQnaList(boardQna4List);
-    	}
+    	sqlSession.insert("user.courseAttendanceLogInsert", set.getCondiVO());
+    	
+    	BoardVO board = new BoardVO();
+    	board.setCourseId(set.getCondiVO().getCourseId());
+    	board.setUserId(set.getCondiVO().getUserId());
+    	board.setLimit("4");
+    	
+    	List<BoardVO> boardNotice4List = sqlSession.selectList("boardNotice.boardNoticeLimitList", board);
+    	set.setBoardNoticeList(boardNotice4List);
+
+    	List<BoardVO> boardQna4List = sqlSession.selectList("boardQna.boardQnaLimitList", board);
+    	set.setBoardQnaList(boardQna4List);
+    	
+        return set ;
+    }
+
+    public UserSet studyroomQch(UserSet set) throws Exception {
+    	EducationVO eduVO = new EducationVO();
+    	eduVO.setUserId(SessionUtil.getSessionUserId());
+    	eduVO.setCourseId(set.getCondiVO().getCourseId());
+    	
+    	set.setCourseInfo((CourseVO) sqlSession.selectOne("education.courseData",eduVO));
+
+    	List<CourseResourceVO> resourceList = sqlSession.selectList("education.courseResourceList",set.getCondiVO());
+    	set.setResourceList(resourceList);
+
+    	List<CourseResourceVO> resourcePageList = sqlSession.selectList("education.courseResourcePageList",set.getCondiVO());
+    	set.setResourcePageList(resourcePageList);
     	
         return set ;
     }

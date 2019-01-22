@@ -88,6 +88,11 @@ function lfn_btn(pKind, pParam) {
 
 <body>
 <form name="frm" id="frm" method="post">
+	<div style="display:none">
+		<!-- 이것은 자동이동을 막기위함이다. -->
+		<input type="submit" onclick="return false;" />
+		<input type="text"/>
+	</div>
 
     <frameset rows='*'>
         <div class='wrap'>

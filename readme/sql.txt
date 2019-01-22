@@ -197,5 +197,8 @@ CREATE TABLE COURSE_RESOURCE_PAGE (
 	TITLE VARCHAR(255), 
 	PRIMARY KEY(COURSE_CODE,WEEK,PAGE) );
 
+ALTER TABLE COURSE_EVAL ADD (
+	CERTIFICATE_NO INT DEFAULT 0
+);
 ------------------------------ 미적용 ------------------------------------
   

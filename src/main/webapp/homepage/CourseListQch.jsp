@@ -209,7 +209,7 @@ function lfn_viewTypeChg(kind) {
 	                            </p>
 	                        </div>
 	                        <div class='process_result_btn con'>
-	                            <button onclick="javascript:Popup.showSampleCourse('${row.courseId}','${row.hPx + 100}','${row.vPx + 100}'); return false;">맛보기</button>
+	                            <button onclick="javascript:Popup.showSampleCourseQch('${row.courseId}','${row.hPx + 100}','${row.vPx + 100}'); return false;">맛보기</button>
 	                            <button onclick="javascript:lfn_btn('cart',{courseId:'${row.courseId}',cnt:'${row.cnt}'}); return false;">장바구니</button>
 	                            <button onclick="javascript:lfn_btn('view',{courseId:'${row.courseId}'}); return false;" class='process_result_admission'>수강신청</button>
 	                        </div>
@@ -223,7 +223,7 @@ function lfn_viewTypeChg(kind) {
                	<div class='process_search_result'>
                     <ul class='process_list_wrap clear_fix'>
 		<c:forEach var="row" items="${set.courseList}" varStatus="idx">
-                        <li <c:if test="${idx.index % 4 eq 3}">  class='last_right'</c:if>>
+                        <li <c:if test="${idx.index % 3 eq 2}">  class='last_right'</c:if>>
 			<c:choose>
 				<c:when test = "${row.courseId ne null}">
                             <a href=''><img src='/cImage/contents/${row.courseCode}/sImg1.jpg' alt=' '></a>
@@ -240,7 +240,8 @@ function lfn_viewTypeChg(kind) {
                                     </p>
                                 </div>
                                 <div class='process_btn_area clear_fix'>
-                                    <button onclick="javascript:Popup.showSampleCourse('${row.courseId}','${row.hPx + 100}','${row.vPx + 100}'); return false;">맛보기</button>
+                                    <button onclick="javascript:Popup.showSampleCourseQch('${row.courseId}','${row.hPx + 100}','${row.vPx + 100}'); return false;">맛보기</button>
+		                            <button onclick="javascript:lfn_btn('cart',{courseId:'${row.courseId}',cnt:'${row.cnt}'}); return false;">장바구니</button>
                                     <button onclick="javascript:lfn_btn('view',{courseId:'${row.courseId}'}); return false;" class='admission'>수강신청</button>
                                 </div>
                                 <div class='process_score_box clear_fix'>

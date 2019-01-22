@@ -319,4 +319,15 @@
     	AND		CURRENT_TIMESTAMP BETWEEN EVENT_POINT_FROM AND EVENT_POINT_TO
     </insert>
     
+    <update id="myCertificateNoUpd" parameterType="pg">
+		UPDATE 	COURSE_EVAL
+		SET 	CERTIFICATE_NO = (
+									SELECT 	COUNT(*)
+									FROM	COURSE_REGISTER
+									WHERE	COURSE_ID IN ( SELECT COURSE_ID FROM COURSE WHERE COURSE_CODE = ( SELECT COURSE_CODE FROM COURSE WHERE COURSE_ID = #{courseId} ) )
+									)
+		WHERE 	COURSE_ID = #{courseId}
+		AND		USER_ID =  #{userId}
+    </update>  
+    
 </mapper>

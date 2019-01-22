@@ -17,8 +17,8 @@
     <%@ include file="../common/commMainInclude.jsp" %>
 
     <link href='https://fonts.googleapis.com/css?family=Nanum+Gothic' rel='stylesheet'>
-    <link rel='stylesheet' href='/resources/homepage/css/initialization.css'>
-    <link rel='stylesheet' href='/resources/homepage/css/classroom/basket.css'>
+    <link rel='stylesheet' href='/resources/homepageQch/css/initialization.css'>
+    <link rel='stylesheet' href='/resources/homepageQch/css/classroom/basket.css'>
 </head>
 
 <script type="text/javascript">
@@ -82,7 +82,7 @@ function lfn_pay() {
 			success : function(json){
 				if ( json.rtnMode == "OK") {
 					alert("입금 확인후에 수강신청이 완료됩니다.\n승인후에 나의 강의실에서 과정을 들으시면 됩니다.");
-					page.goPage('/main/myClassroom');
+					page.goPage('/normalUser/waitingCourseList');
 				}
 			},
 			error : function(e) {
@@ -146,29 +146,25 @@ $(document.body).ready(function () {
 <frameset rows='*'>
     <div class='wrap'>
         <!-- PC HEADER -->
-        <%@ include file="../common/mainTop.jsp" %>
+        <%@ include file="../common/mainTopQch.jsp" %>
         <!-- HEAD END -->
 
         <!-- CONTENTS -->
         <div class='contents_wrap process' >
-            <div class='contents_wrap_box'>
-                <!-- QUICK MENU -->
-                <%@ include file="../common/mainQuickMenu.jsp" %>
+            <!-- QUICK MENU -->
+            <%@ include file="../common/mainQuickMenuQch.jsp" %>
 
+            <div class='contents_wrap_box'>
                 <!-- Top -->
                 <div class='top_area'>
                     <div class='clear_fix'>
                         <div class='process_history_box clear_fix'>
                             <span>
-                                <img src='/resources/homepage/img/course/ic_home.jpg' alt=' '>
+                                <img src='/resources/homepageQch/img/course/ic_home.jpg' alt=' '>
                             </span>
                             <p>HOME</p>
                             <span>
-                                <img src='/resources/homepage/img/course/arr_right.jpg' alt=' '>
-                            </span>
-                            <p>나의강의실</p>
-                            <span>
-                                <img src='/resources/homepage/img/course/arr_right.jpg' alt=' '>
+                                <img src='/resources/homepageQch/img/course/arr_right.jpg' alt=' '>
                             </span>
                             <p>장바구니</p>
                         </div>
@@ -182,22 +178,22 @@ $(document.body).ready(function () {
                 <div class='basket_step_box'>
                     <ul>
                         <li class='basket_step_list clear_fix'>
-                            <span><img src='/resources/homepage/img/classroom/basket_step1_inactive.png' alt=' '></span>
+                            <span><img src='/resources/homepageQch/img/classroom/basket_step1_inactive.png' alt=' '></span>
                             <p class='basket_title'>장바구니</p>
                         </li>
                         <li class='basket_arr'>
-                            <img src='/resources/homepage/img/etc/arr_right.png' alt=' '>
+                            <img src='/resources/homepageQch/img/etc/arr_right.png' alt=' '>
                         </li>
                         <li class='basket_step_list clear_fix on'>
-                            <span><img src='/resources/homepage/img/classroom/basket_step2_active.png' alt=' '></span>
+                            <span><img src='/resources/homepageQch/img/classroom/basket_step2_active.png' alt=' '></span>
                             <p class='basket_title'>결제정보입력</p>
                             <p>총 결제금액을 확인하시고 배송 및 결제정보를 확인해주십시오.</p>
                         </li>
                         <li class='basket_arr'>
-                            <img src='/resources/homepage/img/etc/arr_right.png' alt=' '>
+                            <img src='/resources/homepageQch/img/etc/arr_right.png' alt=' '>
                         </li>
                         <li class='basket_step_list clear_fix'>
-                            <span><img src='/resources/homepage/img/classroom/basket_step3_inactive.png' alt=' '></span>
+                            <span><img src='/resources/homepageQch/img/classroom/basket_step3_inactive.png' alt=' '></span>
                             <p class='basket_title'>결제완료</p>
                         </li>
                     </ul>
@@ -231,10 +227,9 @@ $(document.body).ready(function () {
 </c:forEach>                    
                     <div class='basket_lectures_result clear_fix'>
                         <p class='first'>주문금액 : <span class='text'><fmt:formatNumber value="${set.condiVO.paymentCost}" type="number"/></span>원</p>
-                        <span class='ic_first'><img src='/resources/homepage/img/classroom/basket_ic1.png' alt=' '></span>
-                        <p class='second'>할인금액 : <span class='text'><input id="paymentPoint" name="paymentPoint" type="text" value="0" onblur="lfn_pointChg();" style="width:40px"/></span>원</p>
-                        (잔여 포인트 : ${set.condiVO.point})
-                        <span class='ic_second'><img src='/resources/homepage/img/classroom/basket_ic2.png' alt=' '></span>
+                        <span class='ic_first'><img src='/resources/homepageQch/img/classroom/basket_ic1.png' alt=' '></span>
+                        <p class='second'>적용포인트 : <span class='text'><input id="paymentPoint" name="paymentPoint" type="text" value="0" onblur="lfn_pointChg();" class="basket_discount"/></span>원</p>
+                        <span class='ic_second'><img src='/resources/homepageQch/img/classroom/basket_ic2.png' alt=' '></span>
                         <p class='last_payment'>최종결제금액 : <span class='text' id="paymentCost1"><fmt:formatNumber value="${set.condiVO.paymentCost}" type="number"/></span>원</p>
                         
                         <input id="totalCost" name="totalCost" type="hidden" readonly value="${set.condiVO.paymentCost}"/>
@@ -242,6 +237,9 @@ $(document.body).ready(function () {
 			          	<input id="paymentCost" name="paymentCost" type="hidden" value="${set.condiVO.paymentCost}"/>
 			          	<input type="hidden" name="LGD_AMOUNT" id="LGD_AMOUNT" class="w100" readonly value="${set.condiVO.paymentCost}" maxlength="9"/>
                     </div>
+                </div>
+                <div class="basket_point">
+                	<p>잔여 포인트 : <span class='t_point_txt'><fmt:formatNumber value="${set.condiVO.point}" type="number"/></span>P</p>
                 </div>
 
                 <p class='basket_payment_title'>주문하시는 분 정보</p>
@@ -292,6 +290,7 @@ $(document.body).ready(function () {
 									</c:forEach>
 								</select>
                         </li>
+                        <div style="height:10px;"></div>
                         <li class='basket_info_list clear_fix'>
                             <span></span>
                             <p class='basket_info_type'>결제금액</p>
@@ -308,13 +307,13 @@ $(document.body).ready(function () {
         <!-- CONTENTS END -->
 
         <!-- FOOTER -->
-        <%@ include file="../common/mainBottom.jsp" %>
+        <%@ include file="../common/mainBottomQch.jsp" %>
         <!-- FOOTER END -->
     </div>
 </frameset>
 
 </form>
 
-<script src='/resources/homepage/js/dev_sub.js'></script>
+<script src='/resources/homepageQch/js/sub.js'></script>
 </body>
 </html>

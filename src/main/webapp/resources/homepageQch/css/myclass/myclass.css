@@ -20,10 +20,10 @@
 }
 .class_1_div1{
 	display: inline-block;
-    border-right: solid 1px #ccc;
     padding: 57px 18px 23px 10px;
     position: relative;
     top: -5px;
+	width:27%;
 }
 .class_3_div1{
 	display: inline-block;
@@ -31,11 +31,12 @@
     padding: 36px 18px 23px 10px;
     position: relative;
     top: -5px;
-	width:17%;
+	width:16%;
 }
 .class_1_div2 {
     display: inline-block;
     border-right: solid 1px #ccc;
+	border-left: solid 1px #ccc;
     padding: 13px 20px 9px 14px;
     position: relative;
     top: -1px;
@@ -43,7 +44,7 @@
 .class_3_div2 {
     display: inline-block;
     border-right: solid 1px #ccc;
-    padding: 74px 20px 17px 14px;
+    padding: 74px 38px 17px 31px;
     position: relative;
     top: -4px;
 }
@@ -55,9 +56,11 @@
 }
 .class_2_div {
     display: inline-block;
-    padding: 13px 20px 9px 14px;
+    padding: 44px 20px 42px 14px;
+    margin-bottom: -25px;
     position: relative;
     top: -34px;
+    border-left: solid 1px #ccc;
 }
 .class_1_per_div{
 	margin-bottom:5px;
@@ -160,7 +163,7 @@
 }
 .class3_btn{
 	display:inline-block;
-	width:120px;
+	width:112px;
 }
 .class_1_btn1{
 	font-family: 'NanumSquare';
@@ -190,7 +193,7 @@
 	font-size:17px;
 	color:white;
 	background:#0071BD;
-	padding:10px 20px;
+	padding:15% 20px;
 	text-align:center;
 	position: relative;
     top: -13px;
@@ -202,9 +205,9 @@
 	font-size:17px;
 	color:white;
 	background:#0071BD;
-	padding:10px 20px;
+	padding:8.5px 20px;
 	position: relative;
-    top: -13px;
+    top: -4px;
 	margin-right:10px;
 	cursor:pointer;
 	text-align:center;
@@ -214,7 +217,7 @@
 	font-size:17px;
 	color:white;
 	background:#0071BD;
-	padding:10px 20px;
+	padding:15% 20px;
 	text-align:center;
 	position: relative;
     top: -13px;
@@ -227,6 +230,12 @@
 	display:none;
 }
 @media all and (max-width:420px){
+	.class_2_div {
+		padding: 10px 20px 10px 14px;
+		margin-bottom: 0;
+		top: -34px;
+		border:none;
+	}
 	.class_2{
 		margin-bottom:-27px;
 	}
@@ -245,9 +254,14 @@
 	}
 	.class_1_div1{
 		padding:57px 18px 0 10px;
+		width:95%;
 	}
 	.class_1_div2{
-		padding:0 9px 3px;
+		padding:0 9px 27px;
+		border:none;
+	}
+	.class_3_btn2 {
+		padding: 6.8px 20px;
 	}
 
 	.class_1_per{
@@ -273,7 +287,7 @@
 		width:58px;
 	}
 	.class_1_div3 {
-		padding: 18px 10px 0 10px;
+		padding: 0 10px 0 10px;
 		top:0;
 	}
 	.class_3_div1{

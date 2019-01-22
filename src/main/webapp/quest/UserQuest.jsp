@@ -21,6 +21,10 @@
 
 <script type="text/javascript">
 $(document).ready(function() {
+	if ( $("[id=types]").length == 0 ) {
+		alert("등록된 설문이 없습니다.");
+		window.close();
+	}
 });
 
 function lfn_btn(pKind, pParam) {

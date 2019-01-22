@@ -282,7 +282,7 @@ function lfn_btn(pKind, pParam) {
                             </span>
                         </p>
                         <div class='register_btn_area clear_fix'>
-                            <button onclick="javascript:Popup.showSampleCourse('${set.courseData.courseId}','${set.courseData.hPx + 100}','${set.courseData.vPx + 100}'); return false;">맛보기</button>
+                            <button onclick="javascript:Popup.showSampleCourseQch('${set.courseData.courseId}','${set.courseData.hPx + 100}','${set.courseData.vPx + 100}'); return false;">맛보기</button>
 <c:if test="${set.courseData.courseCost gt 0}">                        
                             <button onclick="javascript:lfn_btn('cart'); return false;">장바구니</button>
 </c:if>                            

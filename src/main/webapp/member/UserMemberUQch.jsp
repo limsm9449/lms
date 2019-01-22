@@ -104,6 +104,11 @@ function lfn_validate() {
 <body>
 
 <form id="frm" name="frm" method="post">
+	<div style="display:none">
+		<!-- 이것은 자동이동을 막기위함이다. -->
+		<input type="submit" onclick="return false;" />
+		<input type="text"/>
+	</div>
 	<input type="hidden" id="sex" name="sex">
 	<input type="hidden" id="birthDay" name="birthDay">
 	

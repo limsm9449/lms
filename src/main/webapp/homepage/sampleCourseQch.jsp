@@ -30,16 +30,14 @@ resources = '/resources/homepageQch/';
 
 $(document).ready(function() {
 	<c:choose>
-		<c:when test="${set.courseInfo eq null}">
-			alert("정상적으로 등록한 과정이 아닙니다.");
+		<c:when test="${set.courseData eq null}">
+			alert("등록된 과정이 아닙니다.");
 			window.close();
 		</c:when>
 		<c:otherwise>
-			$("textarea[name='contents']").cleditor();
-			
 			<%-- 초기값 세팅 --%>
-			QP_API.init(${set.condiVO.courseId}, ${set.courseInfo.lastWeek}, ${set.courseInfo.lastPage}, ${set.courseInfo.totalWeek}, true, false);
-	
+			QP_API.init(${set.condiVO.courseId}, ${set.courseData.lastWeek}, ${set.courseData.lastPage}, ${set.courseData.totalWeek}, false, true);
+		
 			QP_API.openLastPage();
 		</c:otherwise>
 	</c:choose>
@@ -131,7 +129,7 @@ function lfn_validate() {
             	<img src="/resources/homepageQch/img/myclass/top_btn.png">
             </div>
             <div class="top_title">
-        		${set.courseInfo.courseName}
+        		${set.courseData.courseName}
             </div>
          </div>
          <!-----left----->   
@@ -143,6 +141,7 @@ function lfn_validate() {
          <div class="cl_left" id="index">
              <div class="cl_fixed">
 <c:forEach var="row" items="${set.resourceList}" varStatus="idx"> 
+	<c:if test="${row.previewPage gt 0}">                 
                 <div class='left_menu tutorial'>
                     <button onclick='left_menu_open(this, "main")' class="left_b_btn" id="left_week_${idx.index + 1}">
                         <div class='left_txt'>
@@ -151,15 +150,16 @@ function lfn_validate() {
                         </div>
                     </button>
                     <ul class="left_bottom_ul">
-	<c:set var="subIdx" value="1"/>                     
-	<c:forEach var="row2" items="${set.resourcePageList}" varStatus="idx2">
-		<c:if test="${row2.week eq row.week}">             
+		<c:set var="subIdx" value="1"/>                     
+		<c:forEach var="row2" items="${set.resourcePageList}" varStatus="idx2">
+			<c:if test="${row2.week eq row.week && row.previewPage ge subIdx}">             
                         <li class="left_bottom_txt <c:if test="${subIdx eq 1}">first_depth</c:if>" onclick="QP_API.clickPage(${row.week}, ${row2.page});" id="left_page_${row.week}_${row2.page}">${row2.title}</li>
                         <c:set var="subIdx" value="${subIdx + 1}"/>     
-        </c:if>
-   	</c:forEach>               
+            </c:if>
+      	</c:forEach>               
                     </ul>
                 </div>
+	</c:if>                        
 </c:forEach>               
              </div>
          </div>
@@ -169,7 +169,7 @@ function lfn_validate() {
         <div class="videohtml">
         
         	<div class="innerhtml" >
-        		<iframe name="eduContent" id="eduContent" class="innerframe" src="" style="width: ${set.courseInfo.hPx}px;height: ${set.courseInfo.vPx}px;"></iframe>
+        		<iframe name="eduContent" id="eduContent" class="innerframe" src="" style="width: ${set.courseData.hPx}px;height: ${set.courseData.vPx}px;"></iframe>
             </div>
             
             <!-----------------nav-------------->
@@ -188,30 +188,6 @@ function lfn_validate() {
                     <span class="rightbtn_txt">다음</span>
                 </div>
         	</div>
-            
-            <!-----------------학습Q&A------------->
-            <div class="qa_nav">
-            	<div class="qa_bottom">
-                    <div class="qa_title">
-                        학습 Q&A
-                    </div>
-                    <div class="qa_title_txt">
-                    	강의내용과 관련하여 궁금한 내용을 물어보세요.
-                    </div>
-                    <div class="memo_write">
-                    	<input class="memo_title" name='title' id='title' placeholder="제목을 입력해 주십시오.">
-                    	<textarea class="memo_content" id="contents" name="contents" placeholder="내용을 입력해 주십시오."></textarea>
-                    </div>
-                    <div class="memo_savebtn">
-                    	<div class="memo_save_txt">
-                        	나의 Q&A 작성 내용과 답변내용은 [마이페이지 > 나의 활동관리 > 학습 Q&A 내역]에서 확인할 수 있습니다.  
-                        </div>
-                    	<div id="saveBtn" class="m_savebtn" onclick="javascript:lfn_btn('save');">
-                        	저장
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
 </frameset>
 

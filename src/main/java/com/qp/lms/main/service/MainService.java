@@ -24,6 +24,7 @@ import com.qp.lms.counsel.model.CounselSet;
 import com.qp.lms.counsel.model.CounselVO;
 import com.qp.lms.course.model.CourseResourceVO;
 import com.qp.lms.course.model.CourseVO;
+import com.qp.lms.education.model.EducationVO;
 import com.qp.lms.main.model.MainSet;
 import com.qp.lms.main.model.MainVO;
 import com.qp.lms.postscript.model.PostScriptVO;
@@ -215,8 +216,8 @@ public class MainService {
 		}
 		
     	List<CourseVO> courseList = sqlSession.selectList("main.courseList", set.getCondiVO());
-    	if ( "IMAGE".equals(set.getCondiVO().getViewType()) && courseList.size() % 4 != 0 ) {
-	    	for ( int i = courseList.size() % 4 + 1; i <= 4; i++ ) {
+    	if ( "IMAGE".equals(set.getCondiVO().getViewType()) && courseList.size() % 3 != 0 ) {
+	    	for ( int i = courseList.size() % 3 + 1; i <= 3; i++ ) {
 	    		courseList.add(new CourseVO());	
 	    	}
     	}
@@ -574,9 +575,44 @@ public class MainService {
     public MainSet myQnaDel(MainSet set) throws Exception {
     	sqlSession.update("main.myQnaDel",set.getCondiVO());
     	
-    	set.setRtnMode(Constant.mode.UPDATE_OK.name());
+    	set.setRtnMode(Constant.mode.DELETE_OK.name());
     	
     	return set;
     }
-	
+
+    public MainSet certificate(MainSet set) throws Exception {
+		set.getCondiVO().setUserId(SessionUtil.getSessionUserId());
+		
+    	set.setDataHm((HashMap)sqlSession.selectOne("main.myCertificate",set.getCondiVO()));
+
+    	return set;
+    }
+
+    public MainSet receipt(MainSet set) throws Exception {
+		set.getCondiVO().setUserId(SessionUtil.getSessionUserId());
+		
+    	set.setDataHm((HashMap)sqlSession.selectOne("main.myReceipt",set.getCondiVO()));
+
+    	return set;
+    }
+
+    public MainSet sampleCourse(MainSet set) throws Exception {
+		set.getCondiVO().setUserId(SessionUtil.getSessionUserId());
+		
+    	EducationVO eduVO = new EducationVO();
+    	eduVO.setUserId(SessionUtil.getSessionUserId());
+    	eduVO.setCourseId(set.getCondiVO().getCourseId());
+    	
+    	set.setCourseData((CourseVO) sqlSession.selectOne("education.courseSampleData",eduVO));
+
+    	List<CourseResourceVO> resourceList = sqlSession.selectList("education.courseResourceList",set.getCondiVO());
+    	set.setResourceList(resourceList);
+
+    	List<CourseResourceVO> resourcePageList = sqlSession.selectList("education.courseResourcePageList",set.getCondiVO());
+    	set.setResourcePageList(resourcePageList);
+
+    	return set;
+    }
+    
+    
 }

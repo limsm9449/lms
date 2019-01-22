@@ -55,7 +55,7 @@ public class PgController {
     		e.printStackTrace();
     	}
 
-        return "/pg/payInfo";
+        return CommUtil.getCompTypePage("/pg/payInfo");
     }
 
     @RequestMapping(value = "/paymentGateway/cartPay", method = RequestMethod.POST)
@@ -76,7 +76,7 @@ public class PgController {
     		e.printStackTrace();
     	}
 
-        return "/pg/payInfo";
+        return CommUtil.getCompTypePage("/pg/payInfo");
     }
     
     @RequestMapping(value = "/paymentGateway/payreqCrossplatform", method = RequestMethod.POST)
@@ -141,7 +141,7 @@ public class PgController {
 
     @RequestMapping(value = "/paymentGateway/complete", method = RequestMethod.POST)
     public String complete(HttpServletRequest request, @ModelAttribute PgVO vo, Model model) throws Exception {
-        return "/pg/complete";
+        return CommUtil.getCompTypePage("/pg/complete");
     }
 
 }
