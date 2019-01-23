@@ -55,6 +55,7 @@ public class UserService {
     	EducationVO eduVO = new EducationVO();
     	eduVO.setUserId(SessionUtil.getSessionUserId());
     	eduVO.setCourseId(set.getCondiVO().getCourseId());
+    	eduVO.setCompCd(SessionUtil.getSessionCompCd());
     	
     	set.setCourseInfo((CourseVO) sqlSession.selectOne("education.courseData",eduVO));
 

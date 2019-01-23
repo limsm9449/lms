@@ -22,7 +22,7 @@
                     <a href='#' onclick="page.goPage('/main/noticeList', '');">
                     	<li class='quick_menu_list' id="q_menu5"></li>
                     </a>
-                    <li class='quick_menu_list' id="q_menu7"></li>
+                    <li class='quick_menu_list' id="q_menu7">Q</li>
                     
                 </ul>
                <!-- 탑다운버튼1111111111111<p class='quick_top'>

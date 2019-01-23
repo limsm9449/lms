@@ -41,8 +41,8 @@ public class LoginController {
      * Log In 화면 호출 
      */
     @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public String login(Model model) {
-        return "login/login";
+    public String login(Model model) throws Exception {
+        return CommUtil.getCompTypePage("login/login");
     } 
 
     @RequestMapping(value = "/dupLoginCheck", method = RequestMethod.POST)
@@ -65,7 +65,7 @@ public class LoginController {
     }
 
     @RequestMapping(value = "/loginConfirm", method = RequestMethod.GET)
-    public String loginConfirm(@ModelAttribute LoginVO loginVO, Model model) {
+    public String loginConfirm(@ModelAttribute LoginVO loginVO, Model model) throws Exception {
     	LoginSet set = new LoginSet();
     	set.setCondiVO(loginVO);
     	
@@ -74,7 +74,7 @@ public class LoginController {
     	LoginManager loginManager = LoginManager.getInstance();
     	model.addAttribute("loginTime", loginManager.getLoginTime(loginVO.getUserId()));
     	
-        return "/login/loginConfirm";
+        return CommUtil.getCompTypePage("/login/loginConfirm");
     } 
 
     /*
@@ -87,8 +87,8 @@ public class LoginController {
     	LoginSet set = new LoginSet();
     	set.setCondiVO(loginVO);
     	
-    	String[] domains = request.getServerName().split("[.]");
-    	set.getCondiVO().setCompCd(axCommService.axCompCdFromSubDomain(domains[0]));
+    	set.getCondiVO().setCompCd(SessionUtil.getSessionCompCd());
+    	set.getCondiVO().setCompType(SessionUtil.getSessionCompType());
 			
     	set = service.loginCheck(set);
     	

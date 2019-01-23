@@ -63,7 +63,7 @@ $(document.body).ready(function () {
             case "addMaster":
             	grid1.addRow( {
             		NEW_FLAG : "Y"
-					,CHANNEL_KIND : "Q_CHANNEL"
+					,CHANNEL_KIND : ( $("#CHANNEL_KIND option:selected").val() == "" ? "Q_CHANNEL" :  $("#CHANNEL_KIND option:selected").val() )
 					,FRAME_KIND : "SLIDE"
 					,FRAME_NAME : ""
 					,ORD : 1
@@ -128,7 +128,17 @@ $(document.body).ready(function () {
                 break;
             case "view" :
             	var urlParams = "mainViewMode=TEST";
-        		f_popup('/main/content', {displayName:'courseTutorPopup',option:'width=1400,height=900', urlParams:urlParams});
+            	
+            	if ( $("#CHANNEL_KIND option:selected").val() == "" ) {
+        			f_popup('/main/content', {displayName:'mainPopup',option:'width=1400,height=900', urlParams:urlParams});
+            	} else {
+            		window.open("","mainPopup","width=1400,height=900");
+            		document.frm.action = "http://" + $("#CHANNEL_KIND option:selected").val() + "." + window.location.host + "/main/content.do" + "?" + urlParams + "&timestamp=" + timestamp;
+            		console.log(document.frm.action);
+            		document.frm.target = "mainPopup";
+            		document.frm.method = "POST";	
+            		document.frm.submit();
+            	}
         		
                 break;
             case "saveApply" :
@@ -145,9 +155,14 @@ $(document.body).ready(function () {
 function fn_makeGrid() {
 	grid1 = gfn_makeAx5Grid("top-first-grid",
 		[ 	{
+	            key : "SEQ",
+	            label : "SEQ", 
+	            width : 50,
+	            align : "right" 
+	        },{
 	            key : "CHANNEL_KIND",
 	            label : "채널 종류",
-	            width : 90,
+	            width : 150,
 	            align : "center", 
 	        	editor: {
                     type : "select", 
@@ -285,6 +300,11 @@ function fn_makeGrid() {
 	
 	grid2 = gfn_makeAx5Grid("bottom-first-grid",
 		[ 	{
+	            key : "SEQ",
+	            label : "SEQ",
+	            width : 50,
+	            align : "right" 
+	        },{
               	key : undefined, 
               	label: "테스트", 
               	columns: [	        
@@ -465,7 +485,7 @@ function fn_callbackAjax(data, id) {
 	} else if ( id == "dd" ){
 		dd = $.extend({}, data);
 		
-		gfn_cbRefresh("CHANNEL_KIND", data.ChannelKind, true);
+		gfn_cbRefresh("CHANNEL_KIND", data.ChannelKind, false);
 
 		fn_makeGrid();
 	} else if ( id == "saveMaster" ){
@@ -525,7 +545,6 @@ function fn_saveMaster() {
 function fn_saveDetail() {
 	var fieldParams = {
 			T_BK_IMAGE_URL : { mendatory : true, colName : "배경 Url" }
-			,T_LINK_URL : { mendatory : true, colName : "연결할 URL" }
    	};
    	if ( gfn_validationCheck(grid2, fieldParams) ) {
        	mask.open();

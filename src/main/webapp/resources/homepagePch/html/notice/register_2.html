@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang='ko'>
+
+<head>
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1'>
+    <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+    <title>Q learning - 교육안내 - 학습방법</title>
+
+    <script src='../../js/jquery_3.3.1.js'></script>
+
+    <link href='https://fonts.googleapis.com/css?family=Nanum+Gothic' rel='stylesheet'>
+    <link rel='stylesheet' href='../../css/initialization.css'>
+    <link rel='stylesheet' href='../../css/notice/notice_main.css'>
+    <link rel='stylesheet' href='../../css/notice/notice.css'>
+    
+</head>
+
+<body>
+<frameset rows='*'>
+    <div class='wrap'>
+        <!-- PC HEADER -->
+        <header class='head_pc'>
+            <div class='head_wrap pc clear_fix'>
+                <div class='head_con logo_box'>
+                    <a href='../../index.html'>
+                        <img src='../../img/main/logo.png' alt=' '>
+                    </a>
+                </div>
+                <div class='head_con search_box'>
+                    <input type='text'>
+                    <button>
+                        <img src='../../img/main/search_ic.png' alt=' '>
+                    </button>
+                </div>
+                <div class='head_con util_box'>
+                    <!-- 로그인 상태 -->
+                    <!-- <a href='#' class='last_right'>로그아웃</a>
+                    <a href='../etc/user_info_change.html' class='pc'>회원정보수정</a>
+                    <p class='pc'>OOO님 반갑습니다.</p> -->
+
+                    <!-- 로그오프 상태 -->
+                    <a href='../../html/etc/signup_step1.html' class='last_right'>회원가입</a>
+                    <a href='../../html/etc/signin.html' onclick='login()'>로그인</a>
+                </div>
+            </div>
+            <div class='head_wrap mobile clear_fix'>
+                <div class='mobile_btn'>
+                    <button>
+                        <span></span><span></span><span></span>
+                    </button>
+                </div>
+                <div class='head_con logo_box'>
+                    <img src='../../img/main/logo.png' alt=' '>
+                </div>
+                <div class='head_con util_box'>
+                    <a href='#' class='last_right'>로그아웃</a>
+                </div>
+                <div class='head_con search_box'>
+                    <input type='text'>
+                    <button>
+                        <img src='../../img/main/search_ic.png' alt=' '>
+                    </button>
+                </div>
+            </div>
+            <div class='menu_wrap'>
+                <div class='menu_layout pc'>
+                    
+                    
+                    
+                </div>
+                <div class='menu_dropdown_wrapper' id='menu_dropdown_pc'>
+                    <div class='menu_dropdown_wrap clear_fix'>
+                        <ul class='menu_sub' id="menu_sub1">
+                            <li class='menu_title'><a href='../../html/course/process.html'>전체과정보기</a></li>
+                        </ul>
+                        <ul class='menu_sub classroom' id="menu_sub2">
+                            <li class='menu_title'><a href='../../html/classroom/classroom.html'>나의강의실</a></li>
+                            <li><a href='../../html/classroom/lectures.html'>수강중 과정</a></li>
+                            <li><a href='../../html/classroom/lecture_standby.html'>대기중 과정</a></li>
+                            <li><a href='../../html/classroom/lecture_completed.html'>수강완료과정</a></li>
+                        </ul>
+                        <ul class='menu_sub' id="menu_sub3">
+                            <li class='menu_title'><a href='#'>마이페이지</a></li>
+                            <li><a href='#'>주문/신청 조회</a></li>
+                            <li><a href='#'>포인트</a></li>
+                            <li><a href='#'>나의 활동관리</a></li>
+                            <li><a href='../../html/etc/user_info_change.html' class='pc'>회원정보수정</a></li>
+                        </ul>
+                        <ul class='menu_sub' id="menu_sub4">
+                            <li class='menu_title'><a href='../../html/support/support.html'>고객지원</a></li>
+                            <li><a href='../../html/support/notice.html'>공지사항</a></li>
+                            <li><a href='../../html/support/notice.html'>자주 묻는 질문</a></li>
+                            <li><a href='../../html/support/notice.html'>1:1 메일문의</a></li>
+                            <li><a href='../../html/support/notice.html'>학습지원</a></li>
+                            <li><a href='../../html/support/notice.html'>입금계좌안내</a></li>
+                        </ul>
+                        <ul class='menu_sub' id="menu_sub5">
+                            <li class='menu_title'><a href=''>큐러닝</a></li>
+                            <li><a href='http://www.qpeople.co.kr/page1_1.html' target='_blank'>회사소개</a></li>
+                            <li><a href='../../html/etc/company_learning.html'>기업교육문의</a></li>
+                            <li><a href='../../html/etc/tutor_support.html'>튜터지원</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <!-- PC HEADER END -->
+
+        <!-- MOBILE HEADER -->
+        <header class='head_mobile'>
+            <div class='head_wrap pc clear_fix'>
+                <div class='menu_wrap'>
+                    <div class='menu_layout pc' onclick='sub_show_hide()'>
+                        <div class='mobile_btn'>
+                            <button onclick='mobile_menu()'>
+                                <span></span><span></span><span></span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class='head_con logo_box'>
+                    <a href='../../index.html'>
+                        <img src='../../img/main/logo.png' alt=' '>
+                    </a>
+                </div>
+                <div class='head_con util_box'>
+                    <a href='../etc/signin.html' class='last_right' onclick='login()'>로그인</a>
+                    <!--<a href='../../index.html' class='last_right' onclick=''>로그아웃</a>-->
+                </div>
+                <div class='head_con search_box'>
+                    <input type='text'>
+                    <button>
+                        <img src='../../img/main/search_ic.png' alt=' '>
+                    </button>
+                </div>
+            </div>
+            <div class='mobile_dropwdown_wrap'>
+                <div class='mobile_bg_box'>
+                    <div class='close_btn_area' onclick='mobile_menu_close()'>
+                        <img src='../../img/main/ic_menu_close.png' alt=' '>
+                    </div>
+                    <div class='mobile_menu login clear_fix'>
+                        <span>
+                            <img src='../../img/main/ic_login.png' alt=' '>
+                        </span>
+                        <!-- <a href='../../html/etc/signin.html' onclick='login()'>로그인</a> -->
+                        <a href='./index.html'>로그아웃</a>
+                    </div>
+                    <div class='mobile_study_box'>
+                        <a href='../../html/classroom/classroom.html'>
+                            나의강의실
+                        </a>
+                    </div>
+                    <div class='mobile_full_box'>
+                        <a href='../../html/course/process.html'>
+                            전체과정보기
+                        </a>
+                    </div>
+                    <div class='mobile_menu classroom'>
+                        <button onclick='sub_menu_open(this, "main")'>
+                            나의강의실
+                        </button>
+                        <ul>
+                        	<li class='first_depth'><a href='../../html/classroom/classroom.html'>나의강의실</a></li>
+                            <li><a href='../../html/classroom/lectures.html'>수강중 과정</a></li>
+                            <li><a href='../../html/classroom/lecture_standby.html'>대기중 과정</a></li>
+                            <li><a href='../../html/classroom/lecture_completed.html'>수강완료과정</a></li>
+                        </ul>
+                    </div>
+                    <div class='mobile_menu tutorial'>
+                        <button onclick='sub_menu_open(this, "main")'>
+                            마이페이지
+                        </button>
+                        <ul>
+                            <li class='first_depth'><a href='#'>마이페이지</a></li>
+                            <li><a href='#'>주문/신청 조회</a></li>
+                            <li><a href='#'>포인트</a></li>
+                            <li><a href='#'>나의 활동관리</a></li>
+                            <li><a href='../../html/etc/user_info_change.html' class='pc'>회원정보수정</a></li>
+                        </ul>
+                    </div>
+                    <div class='mobile_menu service'>
+                        <button onclick='sub_menu_open(this, "main")'>
+                            고객지원
+                        </button>
+                        <ul>
+                            <li class='first_depth'><a href='../../html/support/support.html'>고객지원</a></li>
+                            <li><a href='../../html/support/notice.html'>공지사항</a></li>
+                            <li><a href='../../html/support/notice.html'>자주 묻는 질문</a></li>
+                            <li><a href='../../html/support/notice.html'>1:1 메일문의</a></li>
+                            <li><a href='../../html/support/notice.html'>학습지원</a></li>
+                            <li><a href='../../html/support/notice.html'>입금계좌안내</a></li>
+                        </ul>
+                    </div>
+                    <div class='mobile_menu service'>
+                        <button onclick='sub_menu_open(this, "main")'>
+                            큐러닝
+                        </button>
+                        <ul>
+                            <li class='first_depth'><a href='../../html/support/support.html'>큐러닝</a></li>
+                            <li><a href='http://www.qpeople.co.kr/page1_1.html' target='_blank'>회사소개</a></li>
+                            <li><a href='../../html/etc/company_learning.html'>기업교육문의</a></li>
+                            <li><a href='../../html/etc/tutor_support.html'>튜터지원</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <!-- MOBILE HEADER END -->
+        <!-- HEAD END -->
+
+        <!-- CONTENTS -->
+        <div class='contents_wrap process'>
+            <!-- QUICK MENU -->
+       	 	<div class='quick_menu_wrap'>
+                <div class='mobile_btn'>
+                        <button onClick="sub_show_hide_pc(this)">
+                            <span class='first'></span><span class='middle'></span><span class='last'></span>
+                        </button>
+                    </div>
+                <ul>
+                	<a href='../../html/classroom/classroom.html'>
+                    	<li class='quick_menu_list' id="q_menu1"></li>
+                    </a>
+                    <a href='../../html/classroom/basket_step1.html'>
+                    	<li class='quick_menu_list' id="q_menu2"><img src="../../img/main/quick/q_menu2_circle.png" alt=' ' id="q_menu2_circle"><span class="q_menu2_num">2</span></li>
+                    </a>
+                    <a href='#'>
+                    	<li class='quick_menu_list' id="q_menu3"> </li>
+                    </a>
+                    <a href='../../html/support/support.html'>
+                    	<li class='quick_menu_list' id="q_menu4"></li>
+                    </a>
+                    <li class='quick_menu_list' id="q_menu5"></li>
+                    
+                </ul>
+            </div>
+            <div class='contents_wrap_box'>
+
+                <!-- Top -->
+                <div class='top_area'>
+                    <div class='clear_fix'>
+                        <div class='process_history_box clear_fix'>
+                            <span>
+                                <img src='../../img/course/ic_home.jpg' alt=' '>
+                            </span>
+                            <p>HOME</p>
+                            <span>
+                                <img src='../../img/course/arr_right.jpg' alt=' '>
+                            </span>
+                            <p>고객지원</p>
+                            
+                        </div>
+                    </div>
+                    <h1>
+                        고객<span>지원</span>
+                    </h1>
+                </div>
+                <!-- Top END -->
+
+                <div class='classroom_subtitle'>
+                </div>
+
+                <!-- TAB AREA -->
+                <div class='register_method_tab clear_fix'>
+                    <a href='../../html/notice/register_1.html'><button id="g1">공지<span></span>사항</button></a>
+                    <a href='../../html/notice/register_2.html'><button class="on" >자주 <span></span>묻는 질문</button></a>
+                    <a href='../../html/notice/register_3.html'><button>1:1 <span></span>메일문의</button></a>
+                    <a href='../../html/notice/register_4.html'><button>학습<span></span>지원</button></a>
+                    <a href='../../html/notice/register_5.html'><button>입금계좌<span></span>안내</button></a>
+                </div>
+
+              
+                <!-- REGISTER MOBILE VERSION -->
+                <div class='register_method_pc2'>
+                    <!-- <img src='../../img/notice/mobile.jpg' alt=' '> -->
+                    <ol>
+                        <li class='mobile_list_item clear_fix'>
+                            <!-- Top -->
+                        <h1 class="two_h1">
+                           자주 묻는 <span class="two_h1_span">질문</span>
+                        </h1>
+                        <div class='top_text_box clear_fix'>
+                        <span><img src='../../img/notice/notice1_bg.png' alt=' '></span>
+                            <p class='top_title'>FAQ</p>
+                            <p>
+                                궁금하신 사항이 있으실 때 먼저 자주하는 질문을 참고하시면 <span></span>고객님의 궁금증을 빠르게 해결하실 수 있습니다.
+                            </p>
+                        </div>
+                    <!-- Top END -->
+                    <div class='faq_search_box'>
+                        <select>
+                            <option value='전체'>전체</option>
+                            <option value='일반'>일반</option>
+                            <option value='동영상'>동영상</option>
+                            <option value='학습진도'>학습진도</option>
+                            <option value='시험/과제'>시험/과제</option>
+                            <option value='로그인' onclick='login()'>로그인</option>
+                        </select>
+                        <input type='text' name='' id=''>
+                        <button>검색</button>
+                    </div>
+
+
+                    <div class='notice_list_box'>
+                        <table>
+                            <tr class='notice_table_head'>
+                                <th class='notice_col1'>번호</th>
+                                <th class='notice_col2'>분류</th>
+                                <th class='notice_col3'>제목</th>
+                                <th class='notice_col4'>등록일</th>
+                                <th class='notice_col5 last_right'>조회</th>
+                            </tr>
+                            <tr>
+                                <td class='notice_col1'>1</td>
+                                <td class='notice_col2'>일반</td>
+                                <td class='notice_col3'><a href='./faq_detail.html'>[공지] 개인정보처리방침 개정 안내 [공지] 개인정보처리방침 개정 안내 [공지] 개인정보처리방침 개정 안내 [공지] 개인정보처리방침 개정 안내</a></td>
+                                <td class='notice_col4'>2018.10.28</td>
+                                <td class='notice_col5 last_right'>3</td>
+                            </tr>
+                            <tr>
+                                <td class='notice_col1'>2</td>
+                                <td class='notice_col2'>서비스</td>
+                                <td class='notice_col3'><a href='./faq_detail.html'>[공지 당첨자발표] 2018 추석 &#60;출석체크 연휴 개근상&#62; 당첨자 발표</a></td>
+                                <td class='notice_col4'>2018.10.28</td>
+                                <td class='notice_col5 last_right'>40</td>
+                            </tr>
+                            <tr>
+                                <td class='notice_col1'>3</td>
+                                <td class='notice_col2'>이벤트</td>
+                                <td class='notice_col3'><a href='./faq_detail.html'>[공지] 카카오뱅크(10/14) 시스템 작업 안내</a></td>
+                                <td class='notice_col4'>2018.10.28</td>
+                                <td class='notice_col5 last_right'>999</td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div class='detail_btn_area'>
+                        <a href='./faq_register.html' class='bg_color'>등록하기</a>
+                    </div>
+                    <!-- Contents END -->
+                        </li>
+                    </ol>
+                </div>
+                
+                
+                
+                
+                
+            </div>
+        </div>
+        <!-- CONTENTS END -->
+
+        <!-- FOOTER -->
+        <div class='footer_wrap'>
+            <ul class='foot_link_box clear_fix'>
+                <li>
+                    <a href='http://www.qpeople.co.kr/page1_1.html' target='_blank'>회사소개</a>
+                </li>
+                <li>
+                    <a href='../etc/signup_step1.html'>서비스이용약관</a>
+                </li>
+                <li>
+                    <a href='../etc/signup_step1.html'>개인정보취급방침</a>
+                </li>
+                <li>
+                    <a href='../support/map.html'>찾아오시는길</a>
+                </li>
+                <li class='second_first'>
+                    <a href='../etc/company_learning.html'>기업교육 문의</a>
+                </li>
+                <li class='foot_link_pc'>
+                    <a href='../etc/tutor_support.html'>튜터 지원</a>
+                </li>
+                <li class='foot_link_pc last_right'>
+                    <a href='../etc/sitemap.html'>사이트맵</a>
+                </li>
+            </ul>
+            <div class='foot_box'>
+                <p>
+                    (주)큐피플 서울시 금천구 가산동 371-50번지 에이스하이엔드3차 410/411호 | 대표이사 : 이준호 | 사업자등록번호: 119-81-78776 |
+                    <span>
+                        Copyright 2017 Qpeople Academy. ALL Rights Reserved
+                    </span>
+                </p>
+            </div>
+        </div>
+        <!-- FOOTER END -->
+    </div>
+</frameset>
+<script src='../../js/sub.js'></script>
+
+</body>
+</html>

@@ -156,6 +156,8 @@
 		UPDATE 	MAIN_FRAME
     	SET 	ORD = T_ORD
 				,USE_YN = T_USE_YN
+				,FRAME_NAME = T_FRAME_NAME
+				,FRAME_DESC = T_FRAME_DESC
 	</update>   
 
 	<update id="axMainFrameDetailApply" parameterType="hashmap">

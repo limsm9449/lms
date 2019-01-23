@@ -37,7 +37,7 @@ $(document.body).ready(function () {
 	} else if ( screen == "CompanyAuth" ) {
 		$("#columns").val("AUTH_KEY,INFO1,INFO2,INFO3");
 	} else if ( screen == "CourseResourcePage" ) {
-		$("#columns").val("WEEK,PAGE,TITLE");
+		$("#columns").val("WEEK,CLIP,TITLE,FROM_PAGE,TO_PAGE");
 	}
 });
 
@@ -213,9 +213,17 @@ function lfn_tran(data) {
 					isNotValid = true;
 					rowMsg += "주차 오류[정수타입] -> " + data.list[i].WEEK;
 				} 
-				if ( data.list[i].PAGE == "" || isNaN(data.list[i].PAGE) ) {
+				if ( data.list[i].CLIP == "" || isNaN(data.list[i].CLIP) ) {
 					isNotValid = true;
-					rowMsg += "페이지 오류[정수타입] -> " + data.list[i].PAGE;
+					rowMsg += "클립 오류[정수타입] -> " + data.list[i].CLIP;
+				}
+				if ( data.list[i].FROM_PAGE == "" || isNaN(data.list[i].FROM_PAGE) ) {
+					isNotValid = true;
+					rowMsg += "시작 페이지 오류[정수타입] -> " + data.list[i].FROM_PAGE;
+				}
+				if ( data.list[i].TO_PAGE == "" || isNaN(data.list[i].TO_PAGE) ) {
+					isNotValid = true;
+					rowMsg += "종료 페이지 오류[정수타입] -> " + data.list[i].TO_PAGE;
 				}
 								
 				if ( rowMsg != "" ) {

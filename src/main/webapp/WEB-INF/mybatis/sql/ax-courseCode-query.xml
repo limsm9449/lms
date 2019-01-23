@@ -117,19 +117,16 @@
 </delete>
 
 <select id="axCourseResourcePageList" parameterType="hashMap" resultType="hashMap">
-	SELECT COURSE_CODE,
-		   WEEK,
-		   PAGE,
-		   TITLE,
-		   'N' NEW_FLAG
-	  FROM COURSE_RESOURCE_PAGE
+	SELECT A.*
+		   ,'N' NEW_FLAG
+	  FROM COURSE_RESOURCE_PAGE A
 	 WHERE COURSE_CODE = #{COURSE_CODE}
-	 ORDER BY WEEK, PAGE
+	 ORDER BY WEEK, CLIP
 </select>
 
 <insert id="axCourseResourcePageInsert" parameterType="hashMap">
-	INSERT INTO COURSE_RESOURCE_PAGE(COURSE_CODE,WEEK,PAGE,TITLE)
-	VALUES (#{COURSE_CODE},#{WEEK},#{PAGE},#{TITLE})
+	INSERT INTO COURSE_RESOURCE_PAGE(COURSE_CODE,WEEK,CLIP,TITLE,FROM_PAGE,TO_PAGE)
+	VALUES (#{COURSE_CODE},#{WEEK},#{CLIP},#{TITLE},#{FROM_PAGE},#{TO_PAGE})
 </insert>
 
 <delete id="axCourseResourcePageAllDelete" parameterType="hashMap">

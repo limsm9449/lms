@@ -153,7 +153,7 @@ function lfn_validate() {
 		<c:set var="subIdx" value="1"/>                     
 		<c:forEach var="row2" items="${set.resourcePageList}" varStatus="idx2">
 			<c:if test="${row2.week eq row.week && row.previewPage ge subIdx}">             
-                        <li class="left_bottom_txt <c:if test="${subIdx eq 1}">first_depth</c:if>" onclick="QP_API.clickPage(${row.week}, ${row2.page});" id="left_page_${row.week}_${row2.page}">${row2.title}</li>
+                        <li class="left_bottom_txt <c:if test="${subIdx eq 1}">first_depth</c:if>" onclick="QP_API.clickPage(${row.week}, ${row2.fromPage});" id="left_page_${row.week}_${row2.clip}">${row2.title}</li>
                         <c:set var="subIdx" value="${subIdx + 1}"/>     
             </c:if>
       	</c:forEach>               

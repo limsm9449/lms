@@ -224,5 +224,13 @@ public class SessionUtil {
 		
 		return value;
 	}
+	
+	public static String getSessionCompCd() throws Exception  {
+		 return (String)getAttribute("compCd");
+	}
+
+	public static String getSessionCompType() throws Exception  {
+		 return (String)getAttribute("compType");
+	}
 
 }

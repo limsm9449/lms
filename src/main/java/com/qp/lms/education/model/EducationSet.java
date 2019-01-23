@@ -16,6 +16,7 @@ public class EducationSet extends CommonSet {
 	//private EvaluationVO courseRate;				
 	private EvaluationVO evaluation;				
 	private List<EvaluationVO> week;
+	private List<CourseResourceVO> resourcePageList;
 	
 	
 	public EducationVO getCondiVO() {
@@ -47,6 +48,12 @@ public class EducationSet extends CommonSet {
 	}
 	public void setWeek(List<EvaluationVO> week) {
 		this.week = week;
+	}
+	public List<CourseResourceVO> getResourcePageList() {
+		return resourcePageList;
+	}
+	public void setResourcePageList(List<CourseResourceVO> resourcePageList) {
+		this.resourcePageList = resourcePageList;
 	}
 
 

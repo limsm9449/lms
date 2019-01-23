@@ -41,7 +41,7 @@ public class MainService {
     private CommService commSvr;
 
 	public MainSet content(MainSet set) throws Exception {
-		String compType = (String)SessionUtil.getAttribute("compType");
+		String compType = SessionUtil.getSessionCompType();
 		if ( CommUtil.isEqual("B2C", compType) ) {
     		//Q 채널
     		List<HashMap> mainFrame = null; 
@@ -74,7 +74,7 @@ public class MainService {
 			//P 채널
     		List<HashMap> mainFrame = null; 
     		HashMap<String, Object> paramMap = new HashMap<String, Object>();
-    		paramMap.put("CHANNEL_KIND", "P_CHANNEL");
+    		paramMap.put("CHANNEL_KIND", SessionUtil.getSessionCompCd());
     		paramMap.put("MODE", set.getCondiVO().getMainViewMode());
     		mainFrame = sqlSession.selectList("comm.getMainFrame", paramMap);
 
@@ -87,6 +87,10 @@ public class MainService {
 
     		set.setMainFrame(mainFrame); 
     		set.setMainFrameDetailHm(mainFrameDetailHm); 
+    		
+    		set.getCondiVO().setCompCd(SessionUtil.getSessionCompCd());
+    		HashMap pchMainInfo = sqlSession.selectOne("main.pchMainInfo", set.getCondiVO());
+    		set.setPchMainInfo(pchMainInfo);
 		} else {
 			String compCd = (String)SessionUtil.getAttribute("compCd");
 			
@@ -602,6 +606,7 @@ public class MainService {
     	EducationVO eduVO = new EducationVO();
     	eduVO.setUserId(SessionUtil.getSessionUserId());
     	eduVO.setCourseId(set.getCondiVO().getCourseId());
+    	eduVO.setCompCd(SessionUtil.getSessionCompCd());
     	
     	set.setCourseData((CourseVO) sqlSession.selectOne("education.courseSampleData",eduVO));
 

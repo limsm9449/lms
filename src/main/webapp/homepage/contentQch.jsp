@@ -69,12 +69,39 @@ $(document).ready(function(){
 					document.querySelector('.slide_n_${detailRow.SEQ}').style.background = "${detailRow.BK_COLOR} url('" + "${detailRow.BK_IMAGE_URL}" + "') 50% 0 / contain no-repeat";
 				</c:forEach>
 			</c:when>
+			<c:when test = "${row.FRAME_KIND eq 'MP4'}">
+			</c:when>
 			<c:when test = "${row.FRAME_KIND eq 'IMAGE'}">
+				<c:forEach var="detailRow" items="${detailList}" varStatus="idx2">
+					$(".slide_i_${detailRow.SEQ}").attr("src",fn_getPcMobileImg(isPc, "${detailRow.BK_IMAGE_URL}"));
+				</c:forEach>
 			</c:when>
 			<c:when test = "${row.FRAME_KIND eq 'IMAGE_MP4'}">
+				<c:forEach var="detailRow" items="${detailList}" varStatus="idx2">
+					<c:set var="imgs" value="${fn:split(detailRow.BK_IMAGE_URL,'^')}" />
+					<c:forEach var="img" items="${imgs}" varStatus="g">
+						<c:if test="${g.count == 1}">
+							document.querySelector('.slide_mi1_${detailRow.SEQ}').style.background = "url('" + "${img}" + "') 50% 0 / contain no-repeat";
+						</c:if>
+						<c:if test="${g.count == 2}">
+							$(".slide_mi2_${detailRow.SEQ}").attr("src","${img}");
+					    </c:if>
+					</c:forEach> 
+				</c:forEach>
 			</c:when>
 			<c:when test = "${row.FRAME_KIND eq 'MP4_IMAGE'}">
-			</c:when>
+			<c:forEach var="detailRow" items="${detailList}" varStatus="idx2">
+				<c:set var="imgs" value="${fn:split(detailRow.BK_IMAGE_URL,'^')}" />
+				<c:forEach var="img" items="${imgs}" varStatus="g">
+					<c:if test="${g.count == 1}">
+						$(".slide_mi1_${detailRow.SEQ}").attr("src","${img}");
+					</c:if>
+					<c:if test="${g.count == 2}">
+						document.querySelector('.slide_mi2_${detailRow.SEQ}').style.background = "url('" + "${img}" + "') 50% 0 / contain no-repeat";
+				    </c:if>
+				</c:forEach> 
+			</c:forEach>
+		</c:when>
 			<c:otherwise>
 			</c:otherwise>
 		</c:choose>                    
@@ -94,7 +121,7 @@ function fn_linkCall(seq) {
 		<c:set var = "detailList" value = "${set.mainFrameDetailHm[row.SEQ]}"/>
 		<c:forEach var="detailRow" items="${detailList}" varStatus="idx2">
 			<c:choose>
-				<c:when test = "${detailRow.MP4_YN eq 'Y'}">
+				<c:when test = "${row.FRAME_KIND eq 'MP4' || row.FRAME_KIND eq 'MP4_IMAGE' || row.FRAME_KIND eq 'IMAGE_MP4'}">
 					else if ( seq == ${detailRow.SEQ} ) {
 						fn_show("${detailRow.LINK_URL}");
 					}
@@ -246,9 +273,9 @@ function lfn_btn(pKind, pParam) {
 	 			</c:if>
             </div>
             <div class="star_slide">
-            	<img id="star_back" src="/resources/homepageQch/img/main/star_b.png" alt="" width="74">
+            	<img id="star_back" src="/resources/homepageQch/img/main/star_b.png" alt="" width="74" onclick="back('thumbnailSlide_${row.SEQ}')">
            		<div class="slide" id="s_slide">
-                    <ul id="slide_ul">
+                    <ul id="thumbnailSlide_${row.SEQ}">
 						<c:forEach var="detailRow" items="${detailList}" varStatus="idx2">
 	                        <a href="javascript:" onclick="fn_linkCall(${detailRow.SEQ})"><div class="star slide_p_${detailRow.SEQ}"></div></a>
 						</c:forEach>
@@ -260,10 +287,10 @@ function lfn_btn(pKind, pParam) {
 						</c:forEach>
                       </ul>
                 </div>
-                <img id="star_next" src="/resources/homepageQch/img/main/star_n.png" alt="" width="74">
+                <img id="star_next" src="/resources/homepageQch/img/main/star_n.png" alt="" width="74" onclick="next('thumbnailSlide_${row.SEQ}')">
            </div>
         </c:when>
- 		<c:when test = "${row.FRAME_KIND eq 'IMAGE'}">
+ 		<c:when test = "${row.FRAME_KIND eq 'MP4'}">
  			<div class='recommend_wrap lectures_wrap'>
 	 			<c:if test = "${row.FRAME_NAME ne ''}">
 	 				<p>
@@ -281,22 +308,75 @@ function lfn_btn(pKind, pParam) {
 	            </div>
 			</div>
         </c:when>
+ 		<c:when test = "${row.FRAME_KIND eq 'IMAGE'}">
+ 			<div class='recommend_wrap lectures_wrap'>
+	 			<c:if test = "${row.FRAME_NAME ne ''}">
+	 				<p>
+	                    ${row.FRAME_NAME}
+	                </p>
+	 			</c:if>
+	 			<c:if test = "${row.FRAME_DESC ne ''}">
+	 				 <p class='pc'>${row.FRAME_DESC}</p>
+	 			</c:if>
+				<c:forEach var="detailRow" items="${detailList}" varStatus="idx2">
+	 				<div class="img_iframe" id="title_on" style="background:${detailRow.BK_COLOR};">
+	                    <div class="q_iframimg">
+	                		<img src="" class="slide_i_${detailRow.SEQ}" onclick="fn_linkCall(${detailRow.SEQ})" style="cursor:pointer">
+	               		 </div>
+	                </div>
+	 			</c:forEach>
+ 			</div> 
+        </c:when>
  		<c:when test = "${row.FRAME_KIND eq 'IMAGE_MP4'}">
- 			IMAGE_MP4<br>
- 			<c:set var="detailList" value="${fn:split(row.BK_IMAGE_URL,'^')}" />
-			<c:forEach var="telNum" items="${tel}" varStatus="idx2">
-				<c:if test="${idx2.count == 1}"></c:if>
-				<c:if test="${idx2.count == 2}"></c:if>
-			</c:forEach> 
+			<div class='recommend_wrap lectures_wrap'>
+	 			<c:if test = "${row.FRAME_NAME ne ''}">
+	 				<p>
+	                    ${row.FRAME_NAME}
+	                </p>
+	 			</c:if>
+	 			<c:if test = "${row.FRAME_DESC ne ''}">
+	 				 <p class='pc'>${row.FRAME_DESC}</p>
+	 			</c:if>
+				<c:forEach var="detailRow" items="${detailList}" varStatus="idx2">
+	                <div class="img_iframe" id="title_on">
+						<div class="top2_txt">
+							<div class="p_v1_txt slide_mi1_${detailRow.SEQ}">
+							</div>
+							<div class="p_v1_vod">
+								<div class="p_v1">
+									<a onclick="fn_linkCall(${detailRow.SEQ})"><img src="" alt="" class="slide_mi2_${detailRow.SEQ}"></a>
+								</div>
+							</div>
+						</div>
+				 	</div>
+	 			</c:forEach>
+         	</div>        
         </c:when>
  		<c:when test = "${row.FRAME_KIND eq 'MP4_IMAGE'}">
- 			MP4_IMAGE<br>
- 			<c:set var="detailList" value="${fn:split(row.BK_IMAGE_URL,'^')}" />
-			<c:forEach var="telNum" items="${tel}" varStatus="idx2">
-				<c:if test="${idx2.count == 1}"></c:if>
-				<c:if test="${idx2.count == 2}"></c:if>
-			</c:forEach> 
-        </c:when>
+			<div class='recommend_wrap lectures_wrap'>
+	 			<c:if test = "${row.FRAME_NAME ne ''}">
+	 				<p>
+	                    ${row.FRAME_NAME}
+	                </p>
+	 			</c:if>
+	 			<c:if test = "${row.FRAME_DESC ne ''}">
+	 				 <p class='pc'>${row.FRAME_DESC}</p>
+	 			</c:if>
+				<c:forEach var="detailRow" items="${detailList}" varStatus="idx2">
+	                <div class="img_iframe" id="title_on">
+						<div class="top2_txt">
+							<div class="p_v1_vod">
+								<div class="p_v1">
+									<a onclick="fn_linkCall(${detailRow.SEQ})"><img src="" alt="" class="slide_mi1_${detailRow.SEQ}"></a>
+								</div>
+							</div>
+							<div class="p_v1_txt slide_mi2_${detailRow.SEQ}">
+							</div>
+						</div>
+				 	</div>
+	 			</c:forEach>
+         	</div>        
+       	</c:when>
         <c:otherwise>
         	메인 프레임 정보가 없습니다.
         </c:otherwise>
@@ -401,85 +481,39 @@ function lfn_btn(pKind, pParam) {
     </div>
 <script src='/resources/homepageQch/js/main.js'></script>
 <script type="text/javascript">
-    $(document).ready(function(){
-      var imgs;
-	  var star_count = 1;
-	  var min_count = -4;
-	  var max_count = 6;
 
-      imgs = $(".slide ul");
-      img_count = imgs.children().length;
-
-      //버튼을 클릭했을 때 함수 실행
-      $('#star_back').click(function () {
-        back();
-      });
-      $('#star_next').click(function () {
-        next();
-      });
-
-      function back() {
-        if(star_count!=min_count){
-          imgs.animate({
-            left:'+=224px'
-          });
-		  star_count--;
-        }
-      }
-      function next() {
-        if(star_count!=max_count){
-          imgs.animate({
-            left:'-=224px'
-          });
-		  star_count++;
-        } 
-      }
-
-
-      //이미지 끝까지 가면 버튼 사라지기
+var idxInfo = {};
+function back(objId) {
+	var imgs = $("#" + objId);
+	var img_count = imgs.children().length;
 	
-
-
-    });
+	if ( idxInfo[objId] == undefined ) {
+		idxInfo[objId] = 1;
+	}
 	
-	$(document).ready(function(){
-      var r_imgs;
-      var r_img_position = 1;
-	  var r_count = 1;
-	  var r_min_count = -4;
-	  var r_max_count = 6;
+	if ( idxInfo[objId] > ( ( img_count / 3 ) - 1 ) * -1 ) {
+      	imgs.animate({
+        	left:'+=224px'
+      	});
+      	idxInfo[objId] = idxInfo[objId] - 1;
+    }
+}
 
-      r_imgs = $("#r_ul");
-      r_img_count = r_imgs.children().length;
-
-      //버튼을 클릭했을 때 함수 실행
-      $('#recc_back').click(function () {
-        r_back();
-      });
-      $('#recc_next').click(function () {
-        r_next();
-      });
-
-      function r_back() {
-        if(r_count!=r_min_count){
-          r_imgs.animate({
-            left:'+=364px'
-          });
-          r_img_position--;
-		  r_count--;
-        }
-      }
-      function r_next() {
-        if(r_count!=r_max_count){
-          r_imgs.animate({
-            left:'-=364px'
-          });
-          r_img_position++;
-		  r_count++;
-        }
-		
-      }
-	   });
+function next(objId) {
+	var imgs = $("#" + objId);
+	var img_count = imgs.children().length;
+	
+	if ( idxInfo[objId] == undefined ) {
+		idxInfo[objId] = 1;
+	}
+	
+	if ( idxInfo[objId] < ( img_count / 3 ) + 1 ){
+      	imgs.animate({
+        	left:'-=224px'
+      	});
+      	idxInfo[objId] = idxInfo[objId] + 1;
+    } 
+}
 
 function fn_show(mp4File){
 	movie1.style.display= "block";

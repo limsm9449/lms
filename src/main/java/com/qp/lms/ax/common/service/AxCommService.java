@@ -148,8 +148,7 @@ public class AxCommService {
 				paramMap.put("DD_MAIN", "FRAME_KIND");
 		    	hm.put(ddKinds[i], sqlSession.selectList("axComm.axDdCode", paramMap));
 			} else if ( "ChannelKind".equals(ddKinds[i]) ) {
-				paramMap.put("DD_MAIN", "CHANNEL_KIND");
-		    	hm.put(ddKinds[i], sqlSession.selectList("axComm.axDdCode", paramMap));
+		    	hm.put(ddKinds[i], sqlSession.selectList("axComm.axDdChannelKind", paramMap));
 			}
 		}
 		

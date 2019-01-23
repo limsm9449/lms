@@ -37,6 +37,9 @@ public class CourseResourceVO extends CommonVO {
 	private String page;
 	
 	private int addPageCnt;
+	private String clip;
+	private String fromPage;
+	private String toPage;
 	
 	
 	
@@ -198,6 +201,24 @@ public class CourseResourceVO extends CommonVO {
 	}
 	public void setAddPageCnt(int addPageCnt) {
 		this.addPageCnt = addPageCnt;
+	}
+	public String getClip() {
+		return clip;
+	}
+	public void setClip(String clip) {
+		this.clip = clip;
+	}
+	public String getFromPage() {
+		return fromPage;
+	}
+	public void setFromPage(String fromPage) {
+		this.fromPage = fromPage;
+	}
+	public String getToPage() {
+		return toPage;
+	}
+	public void setToPage(String toPage) {
+		this.toPage = toPage;
 	}
 	
 

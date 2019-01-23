@@ -118,11 +118,7 @@ function lfn_page(kind) {
 							<span> <img
 								src='/resources/homepage/img/course/arr_right.jpg' alt=' '>
 							</span>
-							<p>수강신청</p>
-							<span> <img
-								src='/resources/homepage/img/course/arr_right.jpg' alt=' '>
-							</span>
-							<p>교육과정</p>
+							<p>로그인</p>
 						</div>
 					</div>
 				</div>
@@ -144,7 +140,7 @@ function lfn_page(kind) {
 							</div>
 							<div class='signin_sub_control right clear_fix'>
 								<a href='#' onclick="page.goPage('/guest/join');">회원가입</a> 
-								<a href="#" onclick="window.location='/ns/searchUserIdV.do'">아이디찾기</a> 
+								<a href="#" onclick="window.location='/ns/searchUserIdV.do'">아이디찾기</a>
 								<a href="#" onclick="window.location='/ns/searchPasswordV.do'" class='last_left'>비밀번호찾기</a>
 							</div>
 						</div>

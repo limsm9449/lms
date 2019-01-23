@@ -31,7 +31,7 @@ var etop = {
 	currentPage : ""
 }
 
-var weeks = [], pages = [], directorys = [], titles = [];
+var weeks = [], pages = [], directorys = [], titles = [], clips = [];
 var rootDirectory = "";
 var mobileYn = "N";
 var oldCurrentWeek = 0;
@@ -72,6 +72,16 @@ var QP_API = {
 							directorys.push(json.resourceList[i].rootDirectory + "/" + json.resourceList[i].directory + "/"); 
 							titles.push(json.resourceList[i].title);
 						}
+						
+					}
+					
+					for ( var i = 0; i < json.resourcePageList.length; i++ ) {
+						clips.push({
+							week : json.resourcePageList[i].week,
+							clip : json.resourcePageList[i].clip,
+							fromPage : json.resourcePageList[i].fromPage,
+							toPage : json.resourcePageList[i].toPage
+						});
 					}
 					
 					if ( json.resourceList.length > 0 ) {
@@ -105,7 +115,9 @@ var QP_API = {
 			//currentWeek = currentWeek + 1;
 			var isNext = false;
 			for ( i = currentWeek; i < totalWeek; i++ ) {
-				if ( weeks[i] != 0 && pages[i] != 0) {
+				// 2019.1.23 ????
+				//if ( weeks[i] != 0 && pages[i] != 0) {
+				if ( pages[i] != 0) {
 					currentWeek = i + 1;
 					isNext = true;
 					break;
@@ -171,12 +183,15 @@ var QP_API = {
 			} else {
 				//이전 차시를 구한다.
 				//currentWeek = currentWeek - 1;
+				/* 2019.1.23 ?????
 				for ( i = currentWeek - 2; i >= 0; i-- ) {
 					if ( weeks[i] != 0 ) {
 						currentWeek = i + 1;
 						break;
 					}
 				}
+				*/
+				currentWeek = currentWeek - 1;
 
 				console.log("currentWeek : " + currentWeek);
 				
@@ -345,7 +360,9 @@ var QP_API = {
 	 * @returns {String}
 	 */
 	currPageHtml : function() {
-		return (1000 + currentPage) + ".html";
+		//return (1000 + currentPage) + ".html";
+		console.log(( currentWeek > 9 ? currentWeek : "0" + currentWeek ) + "_" + ( currentPage > 9 ? currentPage : "0" + currentPage ) + ".html");
+		return ( currentWeek > 9 ? currentWeek : "0" + currentWeek ) + "_" + ( currentPage > 9 ? currentPage : "0" + currentPage ) + ".html";
 	},
 
 	showPageInfo : function() {
@@ -363,7 +380,12 @@ var QP_API = {
 				$(this).removeClass("first_depth");
 			});
 			
-			$("#left_page_" + currentWeek + "_" + currentPage).addClass("first_depth");
+			for ( var i = 0; i < clips.length; i++ ) {
+				if ( parseInt(clips[i].week) == currentWeek && parseInt(clips[i].fromPage) <= currentPage && parseInt(clips[i].toPage) >= currentPage ) {
+					$("#left_page_" + currentWeek + "_" + clips[i].clip).addClass("first_depth");
+					break;
+				}
+			}
 		}
 	},
 

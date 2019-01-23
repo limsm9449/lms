@@ -40,8 +40,8 @@ $(document.body).ready(function () {
                     return "grid-cell-edit";
                 }
 	        },{
-	        	key : "PAGE", 
-	        	label : "페이지", 
+	        	key : "CLIP", 
+	        	label : "클립", 
 	            width : 80,
 	        	align : "center",
 	            editor : { 
@@ -53,10 +53,32 @@ $(document.body).ready(function () {
 	        },{
 	            key : "TITLE",
 	            label : "목차",
-	            width : 800,
+	            width : 640,
 	            align : "left",
 	            editor : { 
 	            	type : "text"
+				},
+				styleClass: function () {
+                    return "grid-cell-edit";
+                }
+	        },{
+	        	key : "FROM_PAGE", 
+	        	label : "시작 페이지", 
+	            width : 100,
+	        	align : "center",
+	            editor : { 
+	            	type : "number"
+				},
+				styleClass: function () {
+                    return "grid-cell-edit";
+                }
+	        },{
+	        	key : "TO_PAGE", 
+	        	label : "종료 페이지", 
+	            width : 100,
+	        	align : "center",
+	            editor : { 
+	            	type : "number"
 				},
 				styleClass: function () {
                     return "grid-cell-edit";
@@ -75,7 +97,7 @@ $(document.body).ready(function () {
 	            fn_search();
 	            break;
             case "add":              	
-            	grid.addRow({NEW_FLAG : "Y", COURSE_CODE : params.COURSE_CODE, WEEK : 1, PAGE : 1, TITLE : "목차를 입력하세요."}, "last", {focus: "END"});
+            	grid.addRow({NEW_FLAG : "Y", COURSE_CODE : params.COURSE_CODE, WEEK : 1, CLIP : 1, TITLE : "목차를 입력하세요.", FROM_PAGE : 1, TO_PAGE : 1}, "last", {focus: "END"});
 
                 break;
             case "delete":
@@ -96,13 +118,17 @@ $(document.body).ready(function () {
 
                 	if ( rowIdx > 0 ) {
                 		grid.setValue(rowIdx, "WEEK", all[rowIdx - 1].WEEK);
-                		grid.setValue(rowIdx, "PAGE", all[rowIdx - 1].PAGE);
+                		grid.setValue(rowIdx, "CLIP", all[rowIdx - 1].CLIP);
                 		grid.setValue(rowIdx, "TITLE", all[rowIdx - 1].TITLE);
+                		grid.setValue(rowIdx, "FROM_PAGE", all[rowIdx - 1].FROM_PAGE);
+                		grid.setValue(rowIdx, "TO_PAGE", all[rowIdx - 1].TO_PAGE);
                 		grid.setValue(rowIdx, "NEW_FLAG", all[rowIdx - 1].NEW_FLAG);
 
                 		grid.setValue(rowIdx - 1, "WEEK", row[0].WEEK);
-                		grid.setValue(rowIdx - 1, "PAGE", row[0].PAGE);
+                		grid.setValue(rowIdx - 1, "CLIP", row[0].CLIP);
                 		grid.setValue(rowIdx - 1, "TITLE", row[0].TITLE);
+                		grid.setValue(rowIdx - 1, "FROM_PAGE", row[0].FROM_PAGE);
+                		grid.setValue(rowIdx - 1, "TO_PAGE", row[0].TO_PAGE);
                 		grid.setValue(rowIdx - 1, "NEW_FLAG", row[0].NEW_FLAG);
                 		
                 		grid.select(rowIdx - 1);
@@ -121,13 +147,17 @@ $(document.body).ready(function () {
 
                 	if ( rowIdx < all.length - 1 ) {
                 		grid.setValue(rowIdx, "WEEK", all[rowIdx + 1].WEEK);
-                		grid.setValue(rowIdx, "PAGE", all[rowIdx + 1].PAGE);
+                		grid.setValue(rowIdx, "CLIP", all[rowIdx + 1].CLIP);
                 		grid.setValue(rowIdx, "TITLE", all[rowIdx + 1].TITLE);
+                		grid.setValue(rowIdx, "FROM_PAGE", all[rowIdx + 1].FROM_PAGE);
+                		grid.setValue(rowIdx, "TO_PAGE", all[rowIdx + 1].TO_PAGE);
                 		grid.setValue(rowIdx, "NEW_FLAG", all[rowIdx + 1].NEW_FLAG);
 
                 		grid.setValue(rowIdx + 1, "TITLE", row[0].TITLE);
-                		grid.setValue(rowIdx + 1, "PAGE", row[0].PAGE);
+                		grid.setValue(rowIdx + 1, "CLIP", row[0].CLIP);
                 		grid.setValue(rowIdx + 1, "TITLE", row[0].TITLE);
+                		grid.setValue(rowIdx + 1, "FROM_PAGE", row[0].FROM_PAGE);
+                		grid.setValue(rowIdx + 1, "TO_PAGE", row[0].TO_PAGE);
                 		grid.setValue(rowIdx + 1, "NEW_FLAG", row[0].NEW_FLAG);
                 		
                 		grid.select(rowIdx + 1);
@@ -171,10 +201,12 @@ function fn_search() {
 
 function fn_save() {
 	var fieldParams = {
-		DUP_FIELDS : "WEEK,PAGE",	
+		DUP_FIELDS : "WEEK,CLIP",	
 		TITLE : { mendatory : true, colName : "목차" },
 		WEEK : { mendatory : true, colName : "주차", type : "number" },
-   		PAGE : { mendatory : true, colName : "페이지", type : "number" }
+   		CLIP : { mendatory : true, colName : "클립", type : "number" },
+   		FROM_PAGE : { mendatory : true, colName : "시작 페이지", type : "number" },
+   		TO_PAGE : { mendatory : true, colName : "종료 페이지", type : "number" }
    	};
    	if ( gfn_validationCheck(grid, fieldParams) ) {
        	mask.open();
@@ -228,8 +260,10 @@ function fn_callbackAjax(data, id) {
        				NEW_FLAG : "Y", 
        				COURSE_CODE : params.COURSE_CODE, 
        				WEEK : data.list[i].WEEK, 
-       				PAGE : data.list[i].PAGE, 
-       				TITLE : data.list[i].TITLE
+       				CLIP : data.list[i].CLIP, 
+       				TITLE : data.list[i].TITLE, 
+       				FROM_PAGE : data.list[i].FROM_PAGE, 
+       				TO_PAGE : data.list[i].TO_PAGE
        			}, "last", {focus: "END"});
 		}
 	}

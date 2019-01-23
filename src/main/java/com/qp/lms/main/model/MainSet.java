@@ -69,6 +69,8 @@ public class MainSet extends CommonSet {
 
 	private HashMap dataHm;	
 	
+	private HashMap pchMainInfo;
+	
 	private List<CourseResourceVO> ResourceList;
 	private List<CourseResourceVO> ResourcePageList;
 
@@ -299,6 +301,12 @@ public class MainSet extends CommonSet {
 	}
 	public void setResourcePageList(List<CourseResourceVO> resourcePageList) {
 		ResourcePageList = resourcePageList;
+	}
+	public HashMap getPchMainInfo() {
+		return pchMainInfo;
+	}
+	public void setPchMainInfo(HashMap pchMainInfo) {
+		this.pchMainInfo = pchMainInfo;
 	}
 	
 }

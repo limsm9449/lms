@@ -364,5 +364,19 @@
 		  FROM  POINT_CODE
 		 ORDER BY ORD 	
 	</select>
+
+	<select id="axDdChannelKind" resultType="hashmap">
+		SELECT 	1 ORD
+				,'Q_CHANNEL' value
+		        ,'Q.채널' text
+		UNION 	ALL
+		SELECT 	2 ORD
+				,COMP_CD value
+				,CONCAT('P.채널 - ',COMP_NAME) text
+		FROM 	COMPANY        
+		WHERE	C2C_YN = 'Y'
+		AND		USE_YN = 'Y'
+		ORDER 	BY 1, 3
+	</select>
     
 </mapper>

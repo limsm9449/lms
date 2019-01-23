@@ -136,6 +136,9 @@ public class EducationService {
     	List<CourseResourceVO> resourceList = sqlSession.selectList("education.courseResourceList",set.getCondiVO());
     	set.setResourceList(resourceList);
 
+    	List<CourseResourceVO> resourcePageList = sqlSession.selectList("education.courseResourcePageList",set.getCondiVO());
+    	set.setResourcePageList(resourcePageList);
+
         return set ;
     }
 

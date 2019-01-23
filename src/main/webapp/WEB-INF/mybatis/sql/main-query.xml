@@ -825,4 +825,35 @@
 		WHERE  	A.COURSE_ID = #{courseId}
     </select>     	    
 
+	<select id="pchMainInfo" parameterType="Main" resultType="hashmap">
+		SELECT 	CASE WHEN IFNULL(A.GRADE, 0) > 0 AND IFNULL(A.GRADE, 0) <![CDATA[<=]]> 0.5 THEN 'star_half'
+					 WHEN IFNULL(A.GRADE, 0) > 0.5 THEN 'star_active'
+					 ELSE 'star_inactive' END GRADE1
+				,CASE WHEN IFNULL(A.GRADE, 0) > 1 AND IFNULL(A.GRADE, 0) <![CDATA[<=]]> 1.5 THEN 'star_half'
+					 WHEN IFNULL(A.GRADE, 0) > 1.5 THEN 'star_active'
+					 ELSE 'star_inactive' END GRADE2
+				,CASE WHEN IFNULL(A.GRADE, 0) > 2 AND IFNULL(A.GRADE, 0) <![CDATA[<=]]> 2.5 THEN 'star_half'
+					 WHEN IFNULL(A.GRADE, 0) > 2.5 THEN 'star_active'
+					 ELSE 'star_inactive' END GRADE3
+				,CASE WHEN IFNULL(A.GRADE, 0) > 3 AND IFNULL(A.GRADE, 0) <![CDATA[<=]]> 3.5 THEN 'star_half'
+					 WHEN IFNULL(A.GRADE, 0) > 3.5 THEN 'star_active'
+					 ELSE 'star_inactive' END GRADE4
+				,CASE WHEN IFNULL(A.GRADE, 0) > 4 AND IFNULL(A.GRADE, 0) <![CDATA[<=]]> 4.5 THEN 'star_half'
+					 WHEN IFNULL(A.GRADE, 0) > 4.5 THEN 'star_active'
+					 ELSE 'star_inactive' END GRADE5
+				,ROUND(A.GRADE, 1) GRADE
+		        ,(
+					SELECT  COUNT(*)
+					FROM	COURSE
+					WHERE	COMP_CD = #{compCd}
+		            AND		OPEN_YN = 'Y'
+		            AND 	CLOSE_YN = 'N' ) COURSE_CNT
+		FROM 	(            
+					SELECT	IFNULL(AVG(EVAL), 0) GRADE
+							,COUNT(*) GRADE_CNT
+					FROM 	POSTSCRIPT
+					WHERE	COURSE_ID IN ( SELECT COURSE_ID FROM COURSE WHERE COMP_CD = #{compCd} )
+				) A
+    </select>
+    
 </mapper>
