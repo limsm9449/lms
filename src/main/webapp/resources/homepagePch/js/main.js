@@ -362,6 +362,7 @@ function device_check() {
             window.alert('device - pc');
         }
     }
+	
 }
 // device_check();
 
@@ -416,5 +417,6 @@ function p_v_close(){
 	p_video1.currentTime= 0;
 	p_video1.stop();
 }
+
 
 

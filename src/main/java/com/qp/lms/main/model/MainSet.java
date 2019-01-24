@@ -74,6 +74,9 @@ public class MainSet extends CommonSet {
 	private List<CourseResourceVO> ResourceList;
 	private List<CourseResourceVO> ResourcePageList;
 
+	private List<HashMap> talkList;
+	private int newTalkCnt;
+
 	public void setCondiVO(MainVO condiVO) {
 		this.condiVO = condiVO;
 	}
@@ -307,6 +310,18 @@ public class MainSet extends CommonSet {
 	}
 	public void setPchMainInfo(HashMap pchMainInfo) {
 		this.pchMainInfo = pchMainInfo;
+	}
+	public List<HashMap> getTalkList() {
+		return talkList;
+	}
+	public void setTalkList(List<HashMap> talkList) {
+		this.talkList = talkList;
+	}
+	public int getNewTalkCnt() {
+		return newTalkCnt;
+	}
+	public void setNewTalkCnt(int newTalkCnt) {
+		this.newTalkCnt = newTalkCnt;
 	}
 	
 }

@@ -91,6 +91,9 @@ public class MainService {
     		set.getCondiVO().setCompCd(SessionUtil.getSessionCompCd());
     		HashMap pchMainInfo = sqlSession.selectOne("main.pchMainInfo", set.getCondiVO());
     		set.setPchMainInfo(pchMainInfo);
+    		
+    		int newTalkCnt = sqlSession.selectOne("main.talkNewTalkCnt", set.getCondiVO());
+    		set.setNewTalkCnt(newTalkCnt);
 		} else {
 			String compCd = (String)SessionUtil.getAttribute("compCd");
 			
@@ -618,6 +621,50 @@ public class MainService {
 
     	return set;
     }
-    
-    
+	
+	public MainSet talk(MainSet set) throws Exception {
+		set.getCondiVO().setTalkId(SessionUtil.getSessionCompCd());
+		set.getCondiVO().setUserId(SessionUtil.getSessionUserId());
+		
+    	List<HashMap> talkList = sqlSession.selectList("main.talkList",set.getCondiVO());
+    	set.setTalkList(talkList);
+
+    	sqlSession.update("main.talkLastViewDateUpd",set.getCondiVO());
+    	
+    	return set;
+    }
+
+	public MainSet talkNext(MainSet set) throws Exception {
+		set.getCondiVO().setTalkId(SessionUtil.getSessionCompCd());
+		set.getCondiVO().setUserId(SessionUtil.getSessionUserId());
+		
+    	List<HashMap> talkList = sqlSession.selectList("main.talkNextList",set.getCondiVO());
+    	set.setTalkList(talkList);
+    	
+    	return set;
+    }
+
+	public MainSet talkPrev(MainSet set) throws Exception {
+		set.getCondiVO().setTalkId(SessionUtil.getSessionCompCd());
+		set.getCondiVO().setUserId(SessionUtil.getSessionUserId());
+		
+    	List<HashMap> talkList = sqlSession.selectList("main.talkPrevList",set.getCondiVO());
+    	set.setTalkList(talkList);
+    	
+    	return set;
+    }
+
+    @Transactional(propagation=Propagation.REQUIRED, rollbackFor={Throwable.class})
+    public MainSet talkIns(MainSet set) throws Exception {
+		set.getCondiVO().setTalkId(SessionUtil.getSessionCompCd());
+		set.getCondiVO().setUserId(SessionUtil.getSessionUserId());
+
+		sqlSession.update("main.talkIns",set.getCondiVO());
+		
+    	List<HashMap> talkList = sqlSession.selectList("main.talkNextList",set.getCondiVO());
+    	set.setTalkList(talkList);
+    	
+    	return set;
+    }
+
 }

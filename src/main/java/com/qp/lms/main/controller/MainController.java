@@ -41,6 +41,8 @@ import com.qp.lms.main.service.MainService;
 import com.qp.lms.user.model.UserSet;
 import com.qp.lms.user.model.UserVO;
 
+import net.sf.json.JSONObject;
+
 /**
  * Main
  * @author limsm
@@ -922,5 +924,70 @@ public class MainController {
 
         return CommUtil.getCompTypePage("/homepage/sampleCourse");
     }
+
+    @RequestMapping(value = "/main/talk")
+    public String talk(@ModelAttribute MainVO vo,Model model) throws Exception {
+    	try {
+    		MainSet set = new MainSet();
+	    	set.setCondiVO(vo);
+	    	
+	    	set = svr.talk(set);
+	    	
+	        model.addAttribute("set", set ); 
+    	} catch ( Exception e ) {
+    		e.printStackTrace();
+    	}
+
+        return CommUtil.getCompTypePage("/homepage/talk");
+    }
+
+    @RequestMapping(value = "/main/talkNext", method = RequestMethod.POST)
+    public String talkNext(@ModelAttribute MainVO vo, Model model) throws Exception {
+    	try {
+    		MainSet set = new MainSet();
+	    	set.setCondiVO(vo);
+	    	
+	    	set = svr.talkNext(set);
+	    	
+	    	model.addAttribute("json", JSONObject.fromObject(set));
+    	} catch ( Exception e ) {
+    		e.printStackTrace();
+    	}
+
+        return "/common/json";
+    }
+
+    @RequestMapping(value = "/main/talkPrev", method = RequestMethod.POST)
+    public String talkPrev(@ModelAttribute MainVO vo, Model model) throws Exception {
+    	try {
+    		MainSet set = new MainSet();
+	    	set.setCondiVO(vo);
+	    	
+	    	set = svr.talkPrev(set);
+	    	
+	    	model.addAttribute("json", JSONObject.fromObject(set));
+    	} catch ( Exception e ) {
+    		e.printStackTrace();
+    	}
+
+        return "/common/json";
+    }
+
+    @RequestMapping(value = "/main/talkIns", method = RequestMethod.POST)
+    public String talkIns(@ModelAttribute MainVO vo, Model model) throws Exception {
+    	try {
+    		MainSet set = new MainSet();
+	    	set.setCondiVO(vo);
+	    	
+	    	set = svr.talkIns(set);
+	    	
+	    	model.addAttribute("json", JSONObject.fromObject(set));
+    	} catch ( Exception e ) {
+    		e.printStackTrace();
+    	}
+
+        return "/common/json";
+    }
     
+
 }

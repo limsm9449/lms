@@ -1,0 +1,405 @@
+@charset "utf-8";
+
+.t_bg{
+	background:url('../img/talk/t_bg.png') #0F97A7 0% 0% no-repeat;
+	height:1000px;
+	margin-bottom:250px;
+}
+.t_title{
+	margin-bottom:10px;
+	padding-top:20px;
+}
+.t_title p{
+	font-family: 'NanumSquare';
+	font-size:30px;
+	text-align:center;
+	color:white;
+}
+.t_title p span{
+	color:#ffff00;
+	font-size:48px;
+}
+.t_title_txt p{
+	font-family: 'NanumSquare';
+	font-size:18px;
+	text-align:center;
+	color:white;
+}
+.t_view{
+	max-width:870px;
+	width:100%;
+	margin:0 auto;
+	background:#C2D8ED;
+	margin-top:30px;
+	margin-bottom:30px;
+	min-height:874px;
+}
+.t_chat_view{
+	
+	
+}
+.back_txt{
+	max-width:200px;
+	width:100%;
+	margin:0 auto;
+	padding-top:10px;
+}
+.back_txt_btn{
+	background:#36A2E2;
+	font-family: 'NanumSquare';
+	font-size:18px;
+	text-align:center;
+	color:white;
+	padding:10px 20px;
+	display:block;
+	cursor:pointer;
+}
+.t_day{
+	font-family: 'NanumSquare';
+	font-weight:bold;
+	font-size:16px;
+	text-align:center;
+	color:#666666;
+	padding:10px;
+	position:relative;
+	top:-17px;
+	background:#C2D8ED;
+}
+.t_day_bg{
+	max-width:150px;
+	margin:0 auto;
+	width:100%;
+}
+.t_day_line{
+	background:#999;
+	height:1px;
+	max-width:1050px;
+	margin:0 auto;
+	margin-bottom:45px;
+	width:100%;
+}
+.t_chat{
+	margin-top:15px;
+	max-height:765px;
+	overflow-y:auto;
+}
+/*****************me*********************/
+.me_chat{
+	max-width:1100px;
+	width:100%;
+	margin:0 auto;
+	text-align:right;
+	margin-bottom:25px;
+}
+.me_textbox{
+	display:inline-block;
+	margin-right:30px;
+}
+.me_txt{
+	font-family: 'NanumSquare';
+	font-size:15px;
+	font-weight:bold;
+	color:#333333;
+	text-align:left;
+	background:#FFFCAB;
+	position:relative;
+	padding:10px;
+	border-radius:5px;
+	display:inline-block;
+	max-width:620px;
+	line-height:24px;
+	word-break:keep-all;
+}
+.me_box{
+	display:inline-block;
+	position:relative;
+}
+.me_time{
+	font-family: 'NanumSquare';
+	font-size:15px;
+	font-weight:bold;
+	display:inline-block;
+	margin-right:10px;
+	position:relative;
+	top:10px;
+	color:#666666;
+}
+
+.me_textbox:after {
+    content: "";
+    position: absolute;
+    width: 0px;
+    height: 0px;
+    border: 10px solid;
+    border-color: transparent transparent transparent #FFFCAB;
+    right: 10px;
+    top: 11px;
+}
+/*********************you**********************/
+.you_chat{
+	max-width:1100px;
+	width:100%;
+	margin:0 auto;
+	text-align:left;
+	margin-bottom:45px;
+}
+.you_textbox{
+	display:inline-block;
+	margin-right:30px;
+}
+.you_txt{
+	font-family: 'NanumSquare';
+	font-size:15px;
+	font-weight:bold;
+	color:#333333;
+	text-align:left;
+	background:#9BBDD9;
+	position:relative;
+	padding:10px;
+	border-radius:5px;
+	display:inline-block;
+	max-width:620px;
+	line-height:24px;
+	margin-left:90px;
+	word-break:keep-all;
+}
+
+.you_box{
+	display:inline-block;
+	position:relative;
+	margin-left:20px;
+}
+.you_time{
+	font-family: 'NanumSquare';
+	font-size:15px;
+	font-weight:bold;
+	display:inline-block;
+	position:relative;
+	top:10px;
+	left:-20px;
+	color:#666666;
+}
+.you_txt:before {
+    content: "";
+    position: absolute;
+    width: 0px;
+    height: 0px;
+    border: 10px solid;
+    border-color: transparent #9BBDD9 transparent transparent ;
+    left:-19px;
+    top: 10px;
+}
+.you_face{
+	width:70px;
+	height:70px;
+	display:inline-block;
+	background: #9BBDD9;
+	border-radius:50%;
+	position:absolute;
+	top:-15px;
+}
+.you_id{
+	font-family: 'NanumSquare';
+	font-size:18px;
+	color:white;
+	position:relative;
+	top:26px;
+	left:-1px;
+	text-align:center;
+}
+
+/*********************teacher*********************/
+.tch_chat{
+	max-width:1100px;
+	width:100%;
+	margin:0 auto;
+	text-align:left;
+	margin-bottom:45px;
+}
+.tch_textbox{
+	display:inline-block;
+	margin-right:30px;
+}
+.tch_txt{
+	font-family: 'NanumSquare';
+	font-size:15px;
+	color:#333333;
+	font-weight:bold;
+	text-align:left;
+	background:#FFF;
+	position:relative;
+	padding:10px;
+	border-radius:5px;
+	display:inline-block;
+	max-width:620px;
+	line-height:24px;
+	margin-left:90px;
+	word-break:keep-all;
+}
+
+.tch_box{
+	display:inline-block;
+	position:relative;
+	margin-left:20px;
+}
+.tch_time{
+	font-family: 'NanumSquare';
+	font-size:15px;
+	font-weight:bold;
+	color:#666666;
+	display:inline-block;
+	position:relative;
+	top:10px;
+	left:-20px;
+}
+.tch_txt:before {
+    content: "";
+    position: absolute;
+    width: 0px;
+    height: 0px;
+    border: 10px solid;
+    border-color: transparent #FFF transparent transparent ;
+    left:-19px;
+    top: 10px;
+}
+.tch_face{
+	position:absolute;
+	top:-15px;
+	left:-3px;
+}
+.tch_face img{
+	width:75px;
+}
+/*****************텍스트 입력***********************/
+.t_typing{
+	background:#F6F6F6;
+	height:115px;
+	position:relative;
+	top:0;
+}
+
+.t_typing_txt{
+	width:94%;
+	position:relative;
+	border-radius:10px;
+	height:50px;
+	padding:10px;
+	font-family: 'NanumSquare';
+	font-size:15px;
+	font-weight:bold;
+}
+.t_table{
+	width:100%;
+	position:relative;
+	top:21px;
+	left:10px;
+}
+.t_0{
+	width:572px;
+}
+
+.t_2{
+	width:17px;
+	
+}
+.t_typing_btn {
+    background: #017FD4;
+    color: white;
+    font-family: 'NanumSquare';
+    font-size: 16px;
+    font-weight: bold;
+    padding: 28px 33px;
+    border-radius: 5px;
+    text-align: center;
+	cursor:pointer;
+	width:30px;
+	position:relative;
+}
+/*************************************/
+@media all and (max-width:970px){
+	body{
+		overflow-x:hidden;
+	}
+	.t_day_line{
+		margin-bottom:25px;
+		margin-top:25px;
+	}
+	.t_day{
+		font-size:14px;
+	}
+	.t_0 {
+		width: 85%;
+	}
+	.t_typing_txt{
+		width:87%;
+	}
+	.me_txt{
+		max-width:235px;
+		font-size:14px;
+	}
+	
+	.you_time,
+	.me_time,
+	.tch_time{
+		font-size:12px;
+	}
+	
+	.you_txt,
+	.tch_txt{
+		max-width:172px;
+		font-size:14px;
+	}
+	.me_textbox{
+		margin-right:18px;
+	}
+	.me_textbox:after{
+		right:0;
+	}
+	.you_face{
+		width:50px;
+		height:50px;
+		top:-7px;
+	}
+	.you_id{
+		font-size:15px;
+		top:18px;
+	}
+	.you_chat,
+	.tch_chat,
+	.me_chat{
+		margin-bottom:20px;
+	}
+	.you_txt,
+	.tch_txt{
+		margin-left:66px;
+	}
+	.you_box,
+	.tch_box{
+		margin-left:7px;
+	}
+	.tch_face{
+		top:-8px;
+		left:-1px;
+	}
+	.tch_face img{
+		width:55px;
+		height:55px;
+	}
+	.t_title_txt p{
+		font-size:16px;
+	}
+	.back_txt_btn {
+		font-size:16px;
+	}
+	.t_typing_frame {
+	}
+	
+}
+@media all and (max-width:420px){
+.t_2{
+		width:20%;
+	}
+	.t_0{
+		width:45%;
+	}
+}

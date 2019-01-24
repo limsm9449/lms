@@ -63,6 +63,7 @@ public class MainVO extends CommonVO {
 	private String viewTypeChg;
 	private String mainViewMode;
 	private String topSearch;
+	private String talkId;
 
 	public String getC1Code() {
 		return c1Code;
@@ -366,6 +367,12 @@ public class MainVO extends CommonVO {
 	}
 	public void setTopSearch(String topSearch) {
 		this.topSearch = topSearch;
+	}
+	public String getTalkId() {
+		return talkId;
+	}
+	public void setTalkId(String talkId) {
+		this.talkId = talkId;
 	}
 	
 	

@@ -69,16 +69,15 @@ html[data-useragent*='MSIE 10.0'] .head_mobile.on .mobile_dropwdown_wrap{
     text-align: center;
     z-index: 9999999999999;
 }
-header {
-    position: absolute;
-    width: 85%;
-    background: #fff;
+header{
+    position:absolute;
+    width:94%;
+    background:#fff;
     z-index: 999;
-    left: 13%;
 }
 .head_wrap{
     position:relative;
-    width:1016px;
+    width:1122px;
     margin:24px auto 30px;
 	left:4%;
 }
@@ -88,6 +87,7 @@ header {
 }
 .head_con img{
     display:block;
+    width:60%;
 }
 
 .logo_box{
@@ -1987,9 +1987,6 @@ header {
 	  }
 
 /**********피*****************/
-#title_on{
-	margin-top:0px !important;
-}
 .pp_lectures_wrap{
 	background-color:#10ACC5;
 	max-width:1200px;
@@ -2055,16 +2052,13 @@ header {
 }
 .top3_img{
 	background:url('../img/main/p_visual1.png') #EEE 50% 0% no-repeat;
+	height:510px;
 	cursor:pointer;
 }
 .top4_img{
 	background:url('../img/main/p_visual2.png') #FFF 50% 0% no-repeat;
+	height:510px;
 	cursor:pointer;
-}
-.q_iframimg{
-	max-width:1200px;
-	width:100%;
-	margin:0 auto;
 }
 .top2_txt{
 	max-width:1200px;
@@ -2229,18 +2223,6 @@ header {
 }
 
 /* Media query */
-@media all and (max-width:1220px){
-	.head_wrap{
-		width:94%;
-	}
-	.q_name_txt,
-	.q_name_l{
-		display:none;
-	}
-	.search_box{
-		left:11%;
-	}
-}
 @media all and (max-width:420px){
 	/*******************/
 	.top1_bottom1{
@@ -3045,7 +3027,6 @@ header {
         display:block;
 		position:fixed;
 		padding-bottom:10px;
-		left:0%;
     }
     .head_wrap{
         margin:8px auto 0;

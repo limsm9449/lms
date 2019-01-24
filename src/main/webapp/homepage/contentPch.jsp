@@ -218,7 +218,7 @@ function lfn_btn(pKind, pParam) {
 		                        </span>
 		                        <span class="lecture_6"><p class="p_talk_score">99+</p></span>
 		                        <span>
-		                            <button class="p_talk_btn" onclick="">
+		                            <button class="p_talk_btn" onclick="page.goPage('/main/talk');">
 		                                <img src='/resources/homepagePch/img/main/p_btn.png' alt=' '>
 		                            </button>
 		                        </span>
@@ -448,12 +448,13 @@ function lfn_btn(pKind, pParam) {
          <!-- CONTENTS END -->
 	<div id='screen_postscript'></div>
 	         
+<c:if test = "${set.postScriptList ne null}">
     <div class="p_visual3_bg">    
         <div class="p_visual3">
                 <!-- Search Result Area -->
                 <div class='p_search_result'>
                     <ul class='p_result_list'>
-<c:forEach var="row" items="${set.postScriptList}" varStatus="idx">
+	<c:forEach var="row" items="${set.postScriptList}" varStatus="idx">
                         <li class='clear_fix'>
                             <div class='p_result_con con clear_fix'>
                                 <div class='p_result_img'>
@@ -477,14 +478,14 @@ function lfn_btn(pKind, pParam) {
                                 </div>
                             </div>
                         </li>
-</c:forEach> 
+	</c:forEach> 
                     </ul>
                 </div>
               </div>
             </div>
             </div>
             
-<c:forEach var="row" items="${set.postScriptList}" varStatus="idx">
+	<c:forEach var="row" items="${set.postScriptList}" varStatus="idx">
             <div class="mobile_recomm">
             	<div class='mobile_menu tutorial' id="mobile_r1">
                     <button id="menu_b_btn" onclick="gfn_goPage('/main/mainCourseData','courseId=${row.courseId}')">
@@ -500,7 +501,7 @@ function lfn_btn(pKind, pParam) {
                     </button>
                 </div>
             </div>
-</c:forEach> 
+	</c:forEach> 
             
             
 			<input type='hidden' id='pageNum' name='pageNum' value="${set.condiVO.pageNum}">
@@ -514,7 +515,7 @@ function lfn_btn(pKind, pParam) {
 	                </div>
                 </div>
             </div>
-        
+</c:if>        
         <!-- CONTENTS END -->
 
         <!-- FOOTER -->
