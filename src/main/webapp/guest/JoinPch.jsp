@@ -18,8 +18,8 @@
 
     <link href='https://fonts.googleapis.com/css?family=Nanum+Gothic' rel='stylesheet'>
 
-    <link rel='stylesheet' href='/resources/homepageQch/css/initialization.css'>
-    <link rel='stylesheet' href='/resources/homepageQch/css/etc/signup.css'>
+    <link rel='stylesheet' href='/resources/homepagePch/css/initialization.css'>
+    <link rel='stylesheet' href='/resources/homepagePch/css/etc/signup.css'>
 </head>
 
 <script type="text/javascript">
@@ -57,11 +57,11 @@ function lfn_btn(pKind, pParam) {
 <frameset rows='*'>
     <div class='wrap'>
         <!-- HEAD -->
-        <%@ include file="../common/mainTopQch.jsp" %>
+        <%@ include file="../common/mainTopPch.jsp" %>
         <!-- HEAD END -->
 
         <!-- QUICK MENU -->
-        <%@ include file="../common/mainQuickMenuQch.jsp" %>
+        <%@ include file="../common/mainQuickMenuPch.jsp" %>
 
         <!-- CONTENTS -->
         <div class='contents_wrap_box' >
@@ -71,11 +71,11 @@ function lfn_btn(pKind, pParam) {
                 <div class='clear_fix'>
                     <div class='process_history_box clear_fix'>
                         <span>
-                            <img src='/resources/homepageQch/img/course/ic_home.jpg' alt=' '>
+                            <img src='/resources/homepagePch/img/course/ic_home.jpg' alt=' '>
                         </span>
                         <p>HOME</p>
                         <span>
-                            <img src='/resources/homepageQch/img/course/arr_right.jpg' alt=' '>
+                            <img src='/resources/homepagePch/img/course/arr_right.jpg' alt=' '>
                         </span>
                         <p>회원가입</p>
                     </div>
@@ -89,22 +89,22 @@ function lfn_btn(pKind, pParam) {
                 </h1>
                 <div class='util_step_box clear_fix'>
                     <div class='active pd'>
-                        <span><img src='/resources/homepageQch/img/etc/ic_step1_active.png' alt=''></span>
+                        <span><img src='/resources/homepagePch/img/etc/ic_step1_active.png' alt=''></span>
                         <p>이용약관</p>
                     </div>
-                    <div class='arrow'><img src='/resources/homepageQch/img/etc/arr_right.png' alt=''></div>
+                    <div class='arrow'><img src='/resources/homepagePch/img/etc/arr_right.png' alt=''></div>
                     <div>
-                        <span><img src='/resources/homepageQch/img/etc/ic_step2.png' alt=''></span>
+                        <span><img src='/resources/homepagePch/img/etc/ic_step2.png' alt=''></span>
                         <p>가입여부<span></span>확인</p>
                     </div>
-                    <div class='arrow'><img src='/resources/homepageQch/img/etc/arr_right.png' alt=''></div>
+                    <div class='arrow'><img src='/resources/homepagePch/img/etc/arr_right.png' alt=''></div>
                     <div>
-                        <span><img src='/resources/homepageQch/img/etc/ic_step3.png' alt=''></span>
+                        <span><img src='/resources/homepagePch/img/etc/ic_step3.png' alt=''></span>
                         <p>회원정보<span></span>입력</p>
                     </div>
-                    <div class='arrow'><img src='/resources/homepageQch/img/etc/arr_right.png' alt=''></div>
+                    <div class='arrow'><img src='/resources/homepagePch/img/etc/arr_right.png' alt=''></div>
                     <div class='last_right pd'>
-                        <span><img src='/resources/homepageQch/img/etc/ic_step4.png' alt=''></span>
+                        <span><img src='/resources/homepagePch/img/etc/ic_step4.png' alt=''></span>
                         <p>가입완료</p>
                     </div>
                 </div>
@@ -261,11 +261,11 @@ function lfn_btn(pKind, pParam) {
         <!-- CONTENTS END -->
 
         <!-- FOOTER -->
-        <%@ include file="../common/mainBottomQch.jsp" %>
+        <%@ include file="../common/mainBottomPch.jsp" %>
         <!-- FOOTER END -->
     </div>
     <!-- Local -->
-    <script src='/resources/homepageQch/js/main.js'></script>
+    <script src='/resources/homepagePch/js/main.js'></script>
 </frameset>
 </body>
 

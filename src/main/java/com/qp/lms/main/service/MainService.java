@@ -92,6 +92,8 @@ public class MainService {
     		HashMap pchMainInfo = sqlSession.selectOne("main.pchMainInfo", set.getCondiVO());
     		set.setPchMainInfo(pchMainInfo);
     		
+    		set.getCondiVO().setTalkId(SessionUtil.getSessionCompCd());
+    		set.getCondiVO().setUserId(SessionUtil.getSessionUserId());
     		int newTalkCnt = sqlSession.selectOne("main.talkNewTalkCnt", set.getCondiVO());
     		set.setNewTalkCnt(newTalkCnt);
 		} else {

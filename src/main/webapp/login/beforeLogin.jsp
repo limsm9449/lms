@@ -12,14 +12,15 @@
 <script type="text/javascript">
 
 $(document).ready(function() {
-	alert("로그인 후에 수강신청을 하셔야 합니다.");
+	alert("로그인 후에 사용하셔야 합니다.");
 <%
-	String preUrl = (String)request.getAttribute("preUrl");
-	if ( preUrl == null ) {
-		preUrl = request.getHeader("referer");
+	String urlPage = (String)request.getParameter("urlPage");
+	String urlParam = (String)request.getParameter("urlParam");
+	if ( urlPage == null ) {
+		urlPage = request.getHeader("referer");
 	}
 %>
-	location = "/login.do?preUrl=<%=preUrl%>";
+	location = "/login.do?urlPage=<%=urlPage%>&urlParam=<%=urlParam%>";
 });
 
 </script> 

@@ -17,9 +17,9 @@
 	<%@ include file="../common/commMainInclude.jsp" %>
 	
     <link href='https://fonts.googleapis.com/css?family=Nanum+Gothic' rel='stylesheet'>
-    <link rel='stylesheet' href='/resources/homepageQch/css/initialization.css'>
-    <link rel='stylesheet' href='/resources/homepageQch/css/notice/notice_main.css'>
-    <link rel='stylesheet' href='/resources/homepageQch/css/notice/notice.css'>
+    <link rel='stylesheet' href='/resources/homepagePch/css/initialization.css'>
+    <link rel='stylesheet' href='/resources/homepagePch/css/notice/notice_main.css'>
+    <link rel='stylesheet' href='/resources/homepagePch/css/notice/notice.css'>
         
 </head>
 
@@ -62,13 +62,13 @@ function lfn_btn(pKind, pParam) {
     <div class='wrap'>
         <!-- HEAD -->
         <!-- HEAD START -->
-        <%@ include file="../common/mainTopQch.jsp" %>
+        <%@ include file="../common/mainTopPch.jsp" %>
         <!-- HEAD END -->
 
         <!-- CONTENTS -->
         <div class='contents_wrap process'>
             <!-- QUICK MENU -->
-       	 	<%@ include file="../common/mainQuickMenuQch.jsp" %>
+       	 	<%@ include file="../common/mainQuickMenuPch.jsp" %>
        	 	<!-- QUICK MENU -->
        	 	
             <div class='contents_wrap_box'>
@@ -77,11 +77,11 @@ function lfn_btn(pKind, pParam) {
                     <div class='clear_fix'>
                         <div class='process_history_box clear_fix'>
                             <span>
-                                <img src='/resources/homepageQch/img/course/ic_home.jpg' alt=' '>
+                                <img src='/resources/homepagePch/img/course/ic_home.jpg' alt=' '>
                             </span>
                             <p>HOME</p>
                             <span>
-                                <img src='/resources/homepageQch/img/course/arr_right.jpg' alt=' '>
+                                <img src='/resources/homepagePch/img/course/arr_right.jpg' alt=' '>
                             </span>
                             <p>고객지원</p>
                         </div>
@@ -106,14 +106,14 @@ function lfn_btn(pKind, pParam) {
 
                 <!-- REGISTER PC VERSION -->
                 <div class='register_method_pc1'>
-                    <!-- <img src='/resources/homepageQch/img/notice/pc.jpg' alt=' '> -->
+                    <!-- <img src='/resources/homepagePch/img/notice/pc.jpg' alt=' '> -->
                     <ol>
                         <li class='pc_list_item'>
                             <h1 class="two_h1">
                             공지<span class="two_h1_span">사항</span>
                         	</h1>
                         <div class='top_text_box clear_fix'>
-                        	<span><img src='/resources/homepageQch/img/notice/notice1_bg.png' alt=' '></span>
+                        	<span><img src='/resources/homepagePch/img/notice/notice1_bg.png' alt=' '></span>
                             <p class='top_title'>NEWS & NOTICE!</p>
                             <p>
                                 큐러닝의 소식과 공지사항을 알려드립니다. <span></span>항상 유익하고 풍성한 소식 놓치지 말고 확인하세요.
@@ -170,11 +170,11 @@ function lfn_btn(pKind, pParam) {
         <!-- CONTENTS END -->
 
         <!-- FOOTER -->
-        <%@ include file="../common/mainBottomQch.jsp" %>
+        <%@ include file="../common/mainBottomPch.jsp" %>
         <!-- FOOTER END -->
     </div>
 </frameset>
-<script src='/resources/homepageQch/js/main.js'></script>
+<script src='/resources/homepagePch/js/main.js'></script>
 
 </form>
     

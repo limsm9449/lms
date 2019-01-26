@@ -59,6 +59,12 @@
 		FROM 	SETTING A		 
 		ORDER BY SEQ
 	</select>
+
+	<select id="axSettingConfigList1" resultType="String">
+		SELECT 	OPTION_VALUE
+		FROM 	SETTING A	
+		where   OPTION_KEY = 'ZIPCODE_URL'	 
+	</select>
 	
 	<update id="axSettingConfigUpdate" parameterType="hashmap">
 		UPDATE 	SETTING

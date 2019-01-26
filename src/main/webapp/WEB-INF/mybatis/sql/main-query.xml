@@ -857,7 +857,7 @@
     </select>
 
 	<select id="talkNewTalkCnt" parameterType="Main" resultType="int">
-		SELECT 	COUNT(*) CNT
+		SELECT 	IF(COUNT(*),0,99) CNT
 		FROM	TALK_DETAIL A
 		WHERE	A.TALK_ID = #{talkId}
 		AND 	A.CREATE_DATE > ( SELECT LAST_VIEW_DATE FROM TALK WHERE TALK_ID = #{talkId} AND USER_ID = #{userId} );

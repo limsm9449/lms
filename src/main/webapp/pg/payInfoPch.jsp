@@ -17,8 +17,8 @@
     <%@ include file="../common/commMainInclude.jsp" %>
 
     <link href='https://fonts.googleapis.com/css?family=Nanum+Gothic' rel='stylesheet'>
-    <link rel='stylesheet' href='/resources/homepageQch/css/initialization.css'>
-    <link rel='stylesheet' href='/resources/homepageQch/css/classroom/basket.css'>
+    <link rel='stylesheet' href='/resources/homepagePch/css/initialization.css'>
+    <link rel='stylesheet' href='/resources/homepagePch/css/classroom/basket.css'>
 </head>
 
 <script type="text/javascript">
@@ -146,13 +146,13 @@ $(document.body).ready(function () {
 <frameset rows='*'>
     <div class='wrap'>
         <!-- PC HEADER -->
-        <%@ include file="../common/mainTopQch.jsp" %>
+        <%@ include file="../common/mainTopPch.jsp" %>
         <!-- HEAD END -->
 
         <!-- CONTENTS -->
         <div class='contents_wrap process' >
             <!-- QUICK MENU -->
-            <%@ include file="../common/mainQuickMenuQch.jsp" %>
+            <%@ include file="../common/mainQuickMenuPch.jsp" %>
 
             <div class='contents_wrap_box'>
                 <!-- Top -->
@@ -160,11 +160,11 @@ $(document.body).ready(function () {
                     <div class='clear_fix'>
                         <div class='process_history_box clear_fix'>
                             <span>
-                                <img src='/resources/homepageQch/img/course/ic_home.jpg' alt=' '>
+                                <img src='/resources/homepagePch/img/course/ic_home.jpg' alt=' '>
                             </span>
                             <p>HOME</p>
                             <span>
-                                <img src='/resources/homepageQch/img/course/arr_right.jpg' alt=' '>
+                                <img src='/resources/homepagePch/img/course/arr_right.jpg' alt=' '>
                             </span>
                             <p>장바구니</p>
                         </div>
@@ -178,22 +178,22 @@ $(document.body).ready(function () {
                 <div class='basket_step_box'>
                     <ul>
                         <li class='basket_step_list clear_fix'>
-                            <span><img src='/resources/homepageQch/img/classroom/basket_step1_inactive.png' alt=' '></span>
+                            <span><img src='/resources/homepagePch/img/classroom/basket_step1_inactive.png' alt=' '></span>
                             <p class='basket_title'>장바구니</p>
                         </li>
                         <li class='basket_arr'>
-                            <img src='/resources/homepageQch/img/etc/arr_right.png' alt=' '>
+                            <img src='/resources/homepagePch/img/etc/arr_right.png' alt=' '>
                         </li>
                         <li class='basket_step_list clear_fix on'>
-                            <span><img src='/resources/homepageQch/img/classroom/basket_step2_active.png' alt=' '></span>
+                            <span><img src='/resources/homepagePch/img/classroom/basket_step2_active.png' alt=' '></span>
                             <p class='basket_title'>결제정보입력</p>
                             <p>총 결제금액을 확인하시고 배송 및 결제정보를 확인해주십시오.</p>
                         </li>
                         <li class='basket_arr'>
-                            <img src='/resources/homepageQch/img/etc/arr_right.png' alt=' '>
+                            <img src='/resources/homepagePch/img/etc/arr_right.png' alt=' '>
                         </li>
                         <li class='basket_step_list clear_fix'>
-                            <span><img src='/resources/homepageQch/img/classroom/basket_step3_inactive.png' alt=' '></span>
+                            <span><img src='/resources/homepagePch/img/classroom/basket_step3_inactive.png' alt=' '></span>
                             <p class='basket_title'>결제완료</p>
                         </li>
                     </ul>
@@ -227,9 +227,9 @@ $(document.body).ready(function () {
 </c:forEach>                    
                     <div class='basket_lectures_result clear_fix'>
                         <p class='first'>주문금액 : <span class='text'><fmt:formatNumber value="${set.condiVO.paymentCost}" type="number"/></span>원</p>
-                        <span class='ic_first'><img src='/resources/homepageQch/img/classroom/basket_ic1.png' alt=' '></span>
+                        <span class='ic_first'><img src='/resources/homepagePch/img/classroom/basket_ic1.png' alt=' '></span>
                         <p class='second'>적용포인트 : <span class='text'><input id="paymentPoint" name="paymentPoint" type="text" value="0" onblur="lfn_pointChg();" class="basket_discount"/></span>원</p>
-                        <span class='ic_second'><img src='/resources/homepageQch/img/classroom/basket_ic2.png' alt=' '></span>
+                        <span class='ic_second'><img src='/resources/homepagePch/img/classroom/basket_ic2.png' alt=' '></span>
                         <p class='last_payment'>최종결제금액 : <span class='text' id="paymentCost1"><fmt:formatNumber value="${set.condiVO.paymentCost}" type="number"/></span>원</p>
                         
                         <input id="totalCost" name="totalCost" type="hidden" readonly value="${set.condiVO.paymentCost}"/>
@@ -307,13 +307,13 @@ $(document.body).ready(function () {
         <!-- CONTENTS END -->
 
         <!-- FOOTER -->
-        <%@ include file="../common/mainBottomQch.jsp" %>
+        <%@ include file="../common/mainBottomPch.jsp" %>
         <!-- FOOTER END -->
     </div>
 </frameset>
 
 </form>
 
-<script src='/resources/homepageQch/js/sub.js'></script>
+<script src='/resources/homepagePch/js/sub.js'></script>
 </body>
 </html>

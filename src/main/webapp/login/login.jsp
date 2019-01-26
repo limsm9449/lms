@@ -82,7 +82,11 @@ function lfn_page(kind) {
 	if ( kind == "loginConfirm" ) {
 		page.goPage("/loginConfirm", "userId=" + $("#userId").val() + "&password=" + $("#password").val());
 	} else {
-		page.goHome();
+		if ( "<%=request.getParameter("urlPage")%>" == "null" ) {
+			page.goHome();
+		} else {
+			page.goPage("<%=request.getParameter("urlPage")%>", "<%=request.getParameter("urlParam")%>");
+		}
 	}
 }
 

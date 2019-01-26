@@ -512,10 +512,12 @@ public class CommUtil {
 			rtn = ((Float)obj).intValue();
 		} else if ( obj.getClass() == Long.class ) {
 			rtn = ((Long)obj).intValue();
+		} else if ( obj.getClass() == String.class ) {
+			rtn = Integer.parseInt((String)obj);
 		}
 		return rtn;
 	}
-	
+
 	public static HashMap<String, Object> getParamsHashMap(String params) throws Exception {
 		HashMap<String, Object> hm = new HashMap<String, Object>();
 		

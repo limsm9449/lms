@@ -17,11 +17,11 @@
     <%@ include file="../common/commMainInclude.jsp" %>
 
     <link href='https://fonts.googleapis.com/css?family=Nanum+Gothic' rel='stylesheet'>
-    <link rel='stylesheet' href='/resources/homepageQch/css/initialization.css'>
-    <link rel='stylesheet' href='/resources/homepageQch/css/mypage/mypage_main.css'>
-    <link rel='stylesheet' href='/resources/homepageQch/css/mypage/mypage_table.css'>
-    <link rel='stylesheet' href='/resources/homepageQch/css/mypage/mypage_re.css'>
-    <link rel='stylesheet' href='/resources/homepageQch/css/mypage/mypage.css'>
+    <link rel='stylesheet' href='/resources/homepagePch/css/initialization.css'>
+    <link rel='stylesheet' href='/resources/homepagePch/css/mypage/mypage_main.css'>
+    <link rel='stylesheet' href='/resources/homepagePch/css/mypage/mypage_table.css'>
+    <link rel='stylesheet' href='/resources/homepagePch/css/mypage/mypage_re.css'>
+    <link rel='stylesheet' href='/resources/homepagePch/css/mypage/mypage.css'>
 </head>
 
 
@@ -91,13 +91,13 @@ function lfn_validate() {
 <frameset rows='*'>
     <div class='wrap'>
         <!-- HEAD -->
-        <%@ include file="../common/mainTopQch.jsp" %>
+        <%@ include file="../common/mainTopPch.jsp" %>
         <!-- HEAD END -->
 
         <!-- CONTENTS -->
         <div class='contents_wrap process'>
             <!-- QUICK MENU -->
-            <%@ include file="../common/mainQuickMenuQch.jsp" %>
+            <%@ include file="../common/mainQuickMenuPch.jsp" %>
             
             <div class='contents_wrap_box'>
                 <!-- Top -->
@@ -105,11 +105,11 @@ function lfn_validate() {
                     <div class='clear_fix'>
                         <div class='process_history_box clear_fix'>
                             <span>
-                                <img src='/resources/homepageQch/img/course/ic_home.jpg' alt=' '>
+                                <img src='/resources/homepagePch/img/course/ic_home.jpg' alt=' '>
                             </span>
                             <p>HOME</p>
                             <span>
-                                <img src='/resources/homepageQch/img/course/arr_right.jpg' alt=' '>
+                                <img src='/resources/homepagePch/img/course/arr_right.jpg' alt=' '>
                             </span>
                             <p>마이페이지</p>
                         </div>
@@ -232,14 +232,14 @@ function lfn_validate() {
         <!-- CONTENTS END -->
 
         <!-- FOOTER -->
-        <%@ include file="../common/mainBottomQch.jsp" %>
+        <%@ include file="../common/mainBottomPch.jsp" %>
         <!-- FOOTER END -->
     </div>
 </frameset>
 
 </form>
 
-<script src='/resources/homepageQch/js/main.js'></script>
+<script src='/resources/homepagePch/js/main.js'></script>
 
 
 </body>

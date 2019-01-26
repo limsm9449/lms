@@ -79,6 +79,7 @@ function lfn_login() {
 }
 
 function lfn_page() {
+	alert("A");
 	if ( "<%=request.getParameter("preUrl")%>" == "null")
 		page.goHome();
 	else {

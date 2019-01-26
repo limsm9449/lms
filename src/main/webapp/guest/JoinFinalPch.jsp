@@ -18,32 +18,32 @@
 
     <link href='https://fonts.googleapis.com/css?family=Nanum+Gothic' rel='stylesheet'>
 
-    <link rel='stylesheet' href='/resources/homepageQch/css/initialization.css'>
-    <link rel='stylesheet' href='/resources/homepageQch/css/etc/signup.css'>
+    <link rel='stylesheet' href='/resources/homepagePch/css/initialization.css'>
+    <link rel='stylesheet' href='/resources/homepagePch/css/etc/signup.css'>
 </head>
 
 <body>
 <frameset rows='*'>
     <div class='wrap'>
         <!-- HEAD -->
-        <%@ include file="../common/mainTopQch.jsp" %>
+        <%@ include file="../common/mainTopPch.jsp" %>
         <!-- HEAD END -->
 
         <!-- CONTENTS -->
         <div class='contents_wrap_box' >
             <!-- QUICK MENU -->
-            <%@ include file="../common/mainQuickMenuQch.jsp" %>
+            <%@ include file="../common/mainQuickMenuPch.jsp" %>
 
             <!-- Top -->
             <div class='top_area'>
                 <div class='clear_fix'>
                     <div class='process_history_box clear_fix'>
                         <span>
-                            <img src='/resources/homepageQch/img/course/ic_home.jpg' alt=' '>
+                            <img src='/resources/homepagePch/img/course/ic_home.jpg' alt=' '>
                         </span>
                         <p>HOME</p>
                         <span>
-                            <img src='/resources/homepageQch/img/course/arr_right.jpg' alt=' '>
+                            <img src='/resources/homepagePch/img/course/arr_right.jpg' alt=' '>
                         </span>
                         <p>회원가입</p>
                     </div>
@@ -57,22 +57,22 @@
                 </h1>
                 <div class='util_step_box clear_fix completed'>
                     <div class='pd'>
-                        <span><img src='/resources/homepageQch/img/etc/ic_step1.png' alt=''></span>
+                        <span><img src='/resources/homepagePch/img/etc/ic_step1.png' alt=''></span>
                         <p>이용약관</p>
                     </div>
-                    <div class='arrow'><img src='/resources/homepageQch/img/etc/arr_right.png' alt=''></div>
+                    <div class='arrow'><img src='/resources/homepagePch/img/etc/arr_right.png' alt=''></div>
                     <div>
-                        <span><img src='/resources/homepageQch/img/etc/ic_step2.png' alt=''></span>
+                        <span><img src='/resources/homepagePch/img/etc/ic_step2.png' alt=''></span>
                         <p>가입여부<span></span>확인</p>
                     </div>
-                    <div class='arrow'><img src='/resources/homepageQch/img/etc/arr_right.png' alt=''></div>
+                    <div class='arrow'><img src='/resources/homepagePch/img/etc/arr_right.png' alt=''></div>
                     <div>
-                        <span><img src='/resources/homepageQch/img/etc/ic_step3.png' alt=''></span>
+                        <span><img src='/resources/homepagePch/img/etc/ic_step3.png' alt=''></span>
                         <p>회원정보<span></span>입력</p>
                     </div>
-                    <div class='arrow'><img src='/resources/homepageQch/img/etc/arr_right.png' alt=''></div>
+                    <div class='arrow'><img src='/resources/homepagePch/img/etc/arr_right.png' alt=''></div>
                     <div class='active last_right pd'>
-                        <span><img src='/resources/homepageQch/img/etc/ic_step4_active.png' alt=''></span>
+                        <span><img src='/resources/homepagePch/img/etc/ic_step4_active.png' alt=''></span>
                         <p>가입완료</p>
                     </div>
                 </div>
@@ -90,13 +90,13 @@
                     </a>
                     <div class='completed_note'>
                         <span>
-                            <img src='/resources/homepageQch/img/etc/completed_image.png' alt=' '>
+                            <img src='/resources/homepagePch/img/etc/completed_image.png' alt=' '>
                         </span>
                         <p>입력하신 메일 주소로 인증 메일이 도착하지 않았다면 <span></span>스팸메일로 분류되지 않았는지 확인해보십시오.</p>
                     </div>
                 </div>
                 <div class='signup_completed_bg'>
-                    <span><img src='/resources/homepageQch/img/etc/completed_bg.jpg' alt=' '></span>
+                    <span><img src='/resources/homepagePch/img/etc/completed_bg.jpg' alt=' '></span>
                 </div>
             </div>
 
@@ -104,11 +104,11 @@
         <!-- CONTENTS END -->
 
         <!-- FOOTER -->
-        <%@ include file="../common/mainBottomQch.jsp" %>
+        <%@ include file="../common/mainBottomPch.jsp" %>
         <!-- FOOTER END -->
     </div>
     <!-- Local -->
-    <script src='/resources/homepageQch/js/main.js'></script>
+    <script src='/resources/homepagePch/js/main.js'></script>
 </frameset>
 </body>
 

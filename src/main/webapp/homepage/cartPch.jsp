@@ -17,8 +17,8 @@
     <%@ include file="../common/commMainInclude.jsp" %>
 
     <link href='https://fonts.googleapis.com/css?family=Nanum+Gothic' rel='stylesheet'>
-    <link rel='stylesheet' href='/resources/homepageQch/css/initialization.css'>
-    <link rel='stylesheet' href='/resources/homepageQch/css/classroom/basket.css'>
+    <link rel='stylesheet' href='/resources/homepagePch/css/initialization.css'>
+    <link rel='stylesheet' href='/resources/homepagePch/css/classroom/basket.css'>
 </head>
 
 <script type="text/javascript">
@@ -90,13 +90,13 @@ function lfn_btn(pKind, pParam) {
 <frameset rows='*'>
     <div class='wrap'>
         <!-- PC HEADER -->
-        <%@ include file="../common/mainTopQch.jsp" %>
+        <%@ include file="../common/mainTopPch.jsp" %>
         <!-- HEAD END -->
 
         <!-- CONTENTS -->
         <div class='contents_wrap process' >
             <!-- QUICK MENU -->
-            <%@ include file="../common/mainQuickMenuQch.jsp" %>
+            <%@ include file="../common/mainQuickMenuPch.jsp" %>
 
             <div class='contents_wrap_box'>
                 <!-- Top -->
@@ -104,11 +104,11 @@ function lfn_btn(pKind, pParam) {
                     <div class='clear_fix'>
                         <div class='process_history_box clear_fix'>
                             <span>
-                                <img src='/resources/homepageQch/img/course/ic_home.jpg' alt=' '>
+                                <img src='/resources/homepagePch/img/course/ic_home.jpg' alt=' '>
                             </span>
                             <p>HOME</p>
                             <span>
-                                <img src='/resources/homepageQch/img/course/arr_right.jpg' alt=' '>
+                                <img src='/resources/homepagePch/img/course/arr_right.jpg' alt=' '>
                             </span>
                             <p>장바구니</p>
                         </div>
@@ -122,22 +122,22 @@ function lfn_btn(pKind, pParam) {
                 <div class='basket_step_box'>
                     <ul>
                         <li class='basket_step_list clear_fix on'>
-                            <span><img src='/resources/homepageQch/img/classroom/basket_step1_active.png' alt=' '></span>
+                            <span><img src='/resources/homepagePch/img/classroom/basket_step1_active.png' alt=' '></span>
                             <p class='basket_title'>장바구니</p>
                             <p>장바구니의 최종 금액을 확인하시고 선택하여 주십시오.</p>
                         </li>
                         <li class='basket_arr'>
-                            <img src='/resources/homepageQch/img/etc/arr_right.png' alt=' '>
+                            <img src='/resources/homepagePch/img/etc/arr_right.png' alt=' '>
                         </li>
                         <li class='basket_step_list clear_fix'>
-                            <span><img src='/resources/homepageQch/img/classroom/basket_step2_inactive.png' alt=' '></span>
+                            <span><img src='/resources/homepagePch/img/classroom/basket_step2_inactive.png' alt=' '></span>
                             <p class='basket_title'>결제정보입력</p>
                         </li>
                         <li class='basket_arr'>
-                            <img src='/resources/homepageQch/img/etc/arr_right.png' alt=' '>
+                            <img src='/resources/homepagePch/img/etc/arr_right.png' alt=' '>
                         </li>
                         <li class='basket_step_list clear_fix'>
-                            <span><img src='/resources/homepageQch/img/classroom/basket_step3_inactive.png' alt=' '></span>
+                            <span><img src='/resources/homepagePch/img/classroom/basket_step3_inactive.png' alt=' '></span>
                             <p class='basket_title'>결제완료</p>
                         </li>
                     </ul>
@@ -221,13 +221,13 @@ function lfn_btn(pKind, pParam) {
         <!-- CONTENTS END -->
 
         <!-- FOOTER -->
-        <%@ include file="../common/mainBottomQch.jsp" %>
+        <%@ include file="../common/mainBottomPch.jsp" %>
         <!-- FOOTER END -->
     </div>
 </frameset>
 
 </form>
 
-<script src='/resources/homepageQch/js/sub.js'></script>
+<script src='/resources/homepagePch/js/sub.js'></script>
 </body>
 </html>

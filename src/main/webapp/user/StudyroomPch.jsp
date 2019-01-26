@@ -17,16 +17,16 @@
 	<%@ include file="../common/commMainInclude.jsp" %>
 	
     <link href='https://fonts.googleapis.com/css?family=Nanum+Gothic' rel='stylesheet'>
-    <link rel='stylesheet' href='/resources/homepageQch/css/initialization.css'>
-    <link rel='stylesheet' href='/resources/homepageQch/css/myclass/classroom.css'>
+    <link rel='stylesheet' href='/resources/homepagePch/css/initialization.css'>
+    <link rel='stylesheet' href='/resources/homepagePch/css/myclass/classroom.css'>
 </head>
 
-<script src='/resources/homepageQch/js/main.js?timestamp=<%=timestamp%>'></script>
+<script src='/resources/homepagePch/js/main.js?timestamp=<%=timestamp%>'></script>
 <script type="text/javascript" src="/resources/js/qpApi.js?timestamp=<%=timestamp%>"></script>
 
 <script>
 
-resources = '/resources/homepageQch/';
+resources = '/resources/homepagePch/';
 
 $(document).ready(function() {
 	<c:choose>
@@ -128,7 +128,7 @@ function lfn_validate() {
          <!--header-->
          <div class="cl_top">
          	<div class="mobile_topbtn" onclick="mobile_show();">
-            	<img src="/resources/homepageQch/img/myclass/top_btn.png">
+            	<img src="/resources/homepagePch/img/myclass/top_btn.png">
             </div>
             <div class="top_title">
         		${set.courseInfo.courseName}
@@ -137,7 +137,7 @@ function lfn_validate() {
          <!-----left----->   
          <div class="cl_bg" id="index_bg">
          <div class="cl_close" id="index_close" onClick="mobile_close();">
-         	<img src="/resources/homepageQch/img/myclass/close.png">
+         	<img src="/resources/homepagePch/img/myclass/close.png">
          </div>
          
          <div class="cl_left" id="index">
@@ -175,7 +175,7 @@ function lfn_validate() {
             <!-----------------nav-------------->
             <div class="video_nav">
                 <div class="nav_btn_group">
-                    <img src="/resources/homepageQch/img/myclass/b_btn.png" style="cursor:pointer" class="b_btn" onclick="QP_API.goPrevPage();">
+                    <img src="/resources/homepagePch/img/myclass/b_btn.png" style="cursor:pointer" class="b_btn" onclick="QP_API.goPrevPage();">
                     <span class="leftbtn_txt">이전</span>
                     
                     <span class="nav_num">
@@ -184,7 +184,7 @@ function lfn_validate() {
                         <span class="total_page">13</span>
                     </span>
                     
-                    <img src="/resources/homepageQch/img/myclass/n_btn.png" style="cursor:pointer" class="n_btn" onclick="QP_API.goNextPage();">
+                    <img src="/resources/homepagePch/img/myclass/n_btn.png" style="cursor:pointer" class="n_btn" onclick="QP_API.goNextPage();">
                     <span class="rightbtn_txt">다음</span>
                 </div>
         	</div>

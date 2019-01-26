@@ -17,8 +17,8 @@
     <%@ include file="../common/commMainInclude.jsp" %>
 
     <link href='https://fonts.googleapis.com/css?family=Nanum+Gothic' rel='stylesheet'>
-    <link rel='stylesheet' href='/resources/homepageQch/css/initialization.css'>
-    <link rel='stylesheet' href='/resources/homepageQch/css/mypage/mypage_clear.css'>
+    <link rel='stylesheet' href='/resources/homepagePch/css/initialization.css'>
+    <link rel='stylesheet' href='/resources/homepagePch/css/mypage/mypage_clear.css'>
 </head>
 
 <script type="text/javascript">
@@ -73,7 +73,7 @@ $(document).ready(function() {
         <!-- CONTENTS END -->
     </div>
 </frameset>
-<script src='/resources/homepageQch/js/sub.js'></script>
+<script src='/resources/homepagePch/js/sub.js'></script>
 
 </body>
 </html>

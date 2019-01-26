@@ -97,6 +97,17 @@ function lfn_btn(pKind, pParam) {
 
 function fn_nextTalk(list) {
 	for ( var i = 0; i < list.length; i++ ) {
+		if ( $("#dt_" + list[i].DATE_STR_ID).length == 0 ) {
+			var dtHtml = "    <div class='t_day_line' id='dt_" + list[i].DATE_STR_ID + "'>" + 
+							"	<div class='t_day_bg'>" + 
+							"	    <div class='t_day'>" + 
+							"		" + list[i].DATE_STR +  
+							"	    </div>" + 
+							"	</div>" + 
+							"    </div>";
+			$(".t_chat").append( dtHtml );
+		}
+
 		if ( list[i].MY_YN == "Y" ) {
 			$(".t_chat").append( fn_myTalkContents( list[i] ) );
 		} else if ( list[i].MY_YN == "N" && list[i].TEACHER_YN == "Y" ) {
@@ -125,6 +136,7 @@ function fn_prevTalk(list) {
 							"    </div>";
 			$(".t_chat").prepend( dtHtml );
 		}
+		
 		if ( list[i].MY_YN == "Y" ) {
 			$("#dt_" + list[i].DATE_STR_ID).after( fn_myTalkContents( list[i] ) );
 		} else if ( list[i].MY_YN == "N" && list[i].TEACHER_YN == "Y" ) {
@@ -340,7 +352,7 @@ function fn_otherTalkContents(row) {
         <%@ include file="../common/mainBottomPch.jsp" %>
         <!-- FOOTER END -->
     </div>
-    <script src='/resources/homepageQch/js/main.js'></script>
+    <script src='/resources/homepagePch/js/main.js'></script>
     
 </frameset>
 </form>

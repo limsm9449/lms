@@ -927,17 +927,21 @@ public class MainController {
 
     @RequestMapping(value = "/main/talk")
     public String talk(@ModelAttribute MainVO vo,Model model) throws Exception {
-    	try {
-    		MainSet set = new MainSet();
-	    	set.setCondiVO(vo);
-	    	
-	    	set = svr.talk(set);
-	    	
-	        model.addAttribute("set", set ); 
-    	} catch ( Exception e ) {
-    		e.printStackTrace();
-    	}
-
+		if ( (SessionVO)SessionUtil.getSession() == null ) {
+			return "/login/beforeLogin";
+		} else {
+	    	try {
+	    		MainSet set = new MainSet();
+		    	set.setCondiVO(vo);
+		    	
+		    	set = svr.talk(set);
+		    	
+		        model.addAttribute("set", set ); 
+	    	} catch ( Exception e ) {
+	    		e.printStackTrace();
+	    	}
+		}
+		
         return CommUtil.getCompTypePage("/homepage/talk");
     }
 

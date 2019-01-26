@@ -38,35 +38,35 @@
 var courseInfo = {};
 $(document).ready(function(){
 	var isPc = ( gfn_deviceCheck() == "PC" ? true : false );
-	console.log(isPc);
+	//console.log(isPc);
 	
 	<c:forEach var="row" items="${set.mainFrame}" varStatus="idx">
 		<c:set var = "detailList" value = "${set.mainFrameDetailHm[row.SEQ]}"/>
 		<c:choose>
 			<c:when test = "${row.FRAME_KIND eq 'DOT_SLIDE'}">
 				<c:forEach var="detailRow" items="${detailList}" varStatus="idx2">
-					document.querySelector('#tab${row.SEQ} .slide_${detailRow.SEQ}').style.background = "${detailRow.BK_COLOR} url('" + fn_getPcMobileImg(isPc, "${detailRow.BK_IMAGE_URL}") + "') 50% 0 / contain no-repeat";
+					document.querySelector('#tab${row.SEQ} .slide_${detailRow.SEQ}').style.background = "${detailRow.BK_COLOR} url('" + fn_getPcMobileImg(isPc, "${detailRow.BK_IMAGE_URL}") + "') 50% 0 no-repeat";
 				</c:forEach>
 			</c:when>
 			<c:when test = "${row.FRAME_KIND eq 'DOT_S_SLIDE'}">
 				<c:forEach var="detailRow" items="${detailList}" varStatus="idx2">
-					document.querySelector('#tab${row.SEQ} .slide_${detailRow.SEQ}').style.background = "${detailRow.BK_COLOR} url('" + fn_getPcMobileImg(isPc, "${detailRow.BK_IMAGE_URL}") + "') 50% 0 / contain no-repeat";
+					document.querySelector('#tab${row.SEQ} .slide_${detailRow.SEQ}').style.background = "${detailRow.BK_COLOR} url('" + fn_getPcMobileImg(isPc, "${detailRow.BK_IMAGE_URL}") + "') 50% 0 no-repeat";
 				</c:forEach>
 			</c:when>
 			<c:when test = "${row.FRAME_KIND eq 'SLIDE'}">
 				<c:forEach var="detailRow" items="${detailList}" varStatus="idx2">
-					document.querySelector('.slide_${detailRow.SEQ}').style.background = "${detailRow.BK_COLOR} url('" + "${detailRow.BK_IMAGE_URL}" + "') 50% 0 / contain no-repeat";
+					document.querySelector('.slide_${detailRow.SEQ}').style.background = "${detailRow.BK_COLOR} url('" + "${detailRow.BK_IMAGE_URL}" + "') 50% 0 no-repeat";
 				</c:forEach>
 			</c:when>
 			<c:when test = "${row.FRAME_KIND eq 'THUMBNAIL_SLIDE'}">
 				<c:forEach var="detailRow" items="${detailList}" varStatus="idx2">
-					document.querySelector('.slide_p_${detailRow.SEQ}').style.background = "${detailRow.BK_COLOR} url('" + "${detailRow.BK_IMAGE_URL}" + "') 50% 0 / contain no-repeat";
+					document.querySelector('.slide_p_${detailRow.SEQ}').style.background = "${detailRow.BK_COLOR} url('" + "${detailRow.BK_IMAGE_URL}" + "') 50% 0 no-repeat";
 				</c:forEach>
 				<c:forEach var="detailRow" items="${detailList}" varStatus="idx2">
-					document.querySelector('.slide_${detailRow.SEQ}').style.background = "${detailRow.BK_COLOR} url('" + "${detailRow.BK_IMAGE_URL}" + "') 50% 0 / contain no-repeat";
+					document.querySelector('.slide_${detailRow.SEQ}').style.background = "${detailRow.BK_COLOR} url('" + "${detailRow.BK_IMAGE_URL}" + "') 50% 0 no-repeat";
 				</c:forEach>
 				<c:forEach var="detailRow" items="${detailList}" varStatus="idx2">
-					document.querySelector('.slide_n_${detailRow.SEQ}').style.background = "${detailRow.BK_COLOR} url('" + "${detailRow.BK_IMAGE_URL}" + "') 50% 0 / contain no-repeat";
+					document.querySelector('.slide_n_${detailRow.SEQ}').style.background = "${detailRow.BK_COLOR} url('" + "${detailRow.BK_IMAGE_URL}" + "') 50% 0 no-repeat";
 				</c:forEach>
 			</c:when>
 			<c:when test = "${row.FRAME_KIND eq 'MP4'}">
@@ -81,7 +81,7 @@ $(document).ready(function(){
 					<c:set var="imgs" value="${fn:split(detailRow.BK_IMAGE_URL,'^')}" />
 					<c:forEach var="img" items="${imgs}" varStatus="g">
 						<c:if test="${g.count == 1}">
-							document.querySelector('.slide_mi1_${detailRow.SEQ}').style.background = "url('" + "${img}" + "') 50% 0 / contain no-repeat";
+							document.querySelector('.slide_mi1_${detailRow.SEQ}').style.background = "url('" + "${img}" + "') 50% 0 no-repeat";
 						</c:if>
 						<c:if test="${g.count == 2}">
 							$(".slide_mi2_${detailRow.SEQ}").attr("src","${img}");
@@ -97,7 +97,7 @@ $(document).ready(function(){
 						$(".slide_mi1_${detailRow.SEQ}").attr("src","${img}");
 					</c:if>
 					<c:if test="${g.count == 2}">
-						document.querySelector('.slide_mi2_${detailRow.SEQ}').style.background = "url('" + "${img}" + "') 50% 0 / contain no-repeat";
+						document.querySelector('.slide_mi2_${detailRow.SEQ}').style.background = "url('" + "${img}" + "') 50% 0 no-repeat";
 				    </c:if>
 				</c:forEach> 
 			</c:forEach>
@@ -406,12 +406,13 @@ function lfn_btn(pKind, pParam) {
          <!-- CONTENTS END -->
 	<div id='screen_postscript'></div>
 	         
+<c:if test = "${set.postScriptList ne null}">
     <div class="p_visual3_bg">    
         <div class="p_visual3">
                 <!-- Search Result Area -->
                 <div class='p_search_result'>
                     <ul class='p_result_list'>
-<c:forEach var="row" items="${set.postScriptList}" varStatus="idx">
+	<c:forEach var="row" items="${set.postScriptList}" varStatus="idx">
                         <li class='clear_fix'>
                             <div class='p_result_con con clear_fix'>
                                 <div class='p_result_img'>
@@ -435,14 +436,14 @@ function lfn_btn(pKind, pParam) {
                                 </div>
                             </div>
                         </li>
-</c:forEach> 
+	</c:forEach> 
                     </ul>
                 </div>
               </div>
             </div>
             </div>
             
-<c:forEach var="row" items="${set.postScriptList}" varStatus="idx">
+	<c:forEach var="row" items="${set.postScriptList}" varStatus="idx">
             <div class="mobile_recomm">
             	<div class='mobile_menu tutorial' id="mobile_r1">
                     <button id="menu_b_btn" onclick="gfn_goPage('/main/mainCourseData','courseId=${row.courseId}')">
@@ -458,7 +459,7 @@ function lfn_btn(pKind, pParam) {
                     </button>
                 </div>
             </div>
-</c:forEach> 
+	</c:forEach> 
             
             
 			<input type='hidden' id='pageNum' name='pageNum' value="${set.condiVO.pageNum}">
@@ -472,7 +473,7 @@ function lfn_btn(pKind, pParam) {
 	                </div>
                 </div>
             </div>
-        
+</c:if>        
         <!-- CONTENTS END -->
 
         <!-- FOOTER -->

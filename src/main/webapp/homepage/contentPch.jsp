@@ -45,33 +45,33 @@ $(document).ready(function(){
 		<c:choose>
 			<c:when test = "${row.FRAME_KIND eq 'P_MAIN'}">
 				<c:forEach var="detailRow" items="${detailList}" varStatus="idx2">
-					document.querySelector('.slide_${detailRow.SEQ}').style.background = "${detailRow.BK_COLOR} url('" + fn_getPcMobileImg(isPc, "${detailRow.BK_IMAGE_URL}") + "') 50% 0 / contain no-repeat";
+					document.querySelector('.slide_${detailRow.SEQ}').style.background = "${detailRow.BK_COLOR} url('" + fn_getPcMobileImg(isPc, "${detailRow.BK_IMAGE_URL}") + "') 50% 0 no-repeat";
 				</c:forEach>
 			</c:when>
 			<c:when test = "${row.FRAME_KIND eq 'DOT_SLIDE'}">
 				<c:forEach var="detailRow" items="${detailList}" varStatus="idx2">
-					document.querySelector('#tab${row.SEQ} .slide_${detailRow.SEQ}').style.background = "${detailRow.BK_COLOR} url('" + fn_getPcMobileImg(isPc, "${detailRow.BK_IMAGE_URL}") + "') 50% 0 / contain no-repeat";
+					document.querySelector('#tab${row.SEQ} .slide_${detailRow.SEQ}').style.background = "${detailRow.BK_COLOR} url('" + fn_getPcMobileImg(isPc, "${detailRow.BK_IMAGE_URL}") + "') 50% 0 no-repeat";
 				</c:forEach>
 			</c:when>
 			<c:when test = "${row.FRAME_KIND eq 'DOT_S_SLIDE'}">
 				<c:forEach var="detailRow" items="${detailList}" varStatus="idx2">
-					document.querySelector('#tab${row.SEQ} .slide_${detailRow.SEQ}').style.background = "${detailRow.BK_COLOR} url('" + fn_getPcMobileImg(isPc, "${detailRow.BK_IMAGE_URL}") + "') 50% 0 / contain no-repeat";
+					document.querySelector('#tab${row.SEQ} .slide_${detailRow.SEQ}').style.background = "${detailRow.BK_COLOR} url('" + fn_getPcMobileImg(isPc, "${detailRow.BK_IMAGE_URL}") + "') 50% 0 no-repeat";
 				</c:forEach>
 			</c:when>
 			<c:when test = "${row.FRAME_KIND eq 'SLIDE'}">
 				<c:forEach var="detailRow" items="${detailList}" varStatus="idx2">
-					document.querySelector('.slide_${detailRow.SEQ}').style.background = "${detailRow.BK_COLOR} url('" + "${detailRow.BK_IMAGE_URL}" + "') 50% 0 / contain no-repeat";
+					document.querySelector('.slide_${detailRow.SEQ}').style.background = "${detailRow.BK_COLOR} url('" + "${detailRow.BK_IMAGE_URL}" + "') 50% 0 no-repeat";
 				</c:forEach>
 			</c:when>
 			<c:when test = "${row.FRAME_KIND eq 'THUMBNAIL_SLIDE'}">
 				<c:forEach var="detailRow" items="${detailList}" varStatus="idx2">
-					document.querySelector('.slide_p_${detailRow.SEQ}').style.background = "${detailRow.BK_COLOR} url('" + "${detailRow.BK_IMAGE_URL}" + "') 50% 0 / contain no-repeat";
+					document.querySelector('.slide_p_${detailRow.SEQ}').style.background = "${detailRow.BK_COLOR} url('" + "${detailRow.BK_IMAGE_URL}" + "') 50% 0 no-repeat";
 				</c:forEach>
 				<c:forEach var="detailRow" items="${detailList}" varStatus="idx2">
-					document.querySelector('.slide_${detailRow.SEQ}').style.background = "${detailRow.BK_COLOR} url('" + "${detailRow.BK_IMAGE_URL}" + "') 50% 0 / contain no-repeat";
+					document.querySelector('.slide_${detailRow.SEQ}').style.background = "${detailRow.BK_COLOR} url('" + "${detailRow.BK_IMAGE_URL}" + "') 50% 0 no-repeat";
 				</c:forEach>
 				<c:forEach var="detailRow" items="${detailList}" varStatus="idx2">
-					document.querySelector('.slide_n_${detailRow.SEQ}').style.background = "${detailRow.BK_COLOR} url('" + "${detailRow.BK_IMAGE_URL}" + "') 50% 0 / contain no-repeat";
+					document.querySelector('.slide_n_${detailRow.SEQ}').style.background = "${detailRow.BK_COLOR} url('" + "${detailRow.BK_IMAGE_URL}" + "') 50% 0 no-repeat";
 				</c:forEach>
 			</c:when>
 			<c:when test = "${row.FRAME_KIND eq 'MP4'}">
@@ -86,7 +86,7 @@ $(document).ready(function(){
 					<c:set var="imgs" value="${fn:split(detailRow.BK_IMAGE_URL,'^')}" />
 					<c:forEach var="img" items="${imgs}" varStatus="g">
 						<c:if test="${g.count == 1}">
-							document.querySelector('.slide_mi1_${detailRow.SEQ}').style.background = "url('" + "${img}" + "') 50% 0 / contain no-repeat";
+							document.querySelector('.slide_mi1_${detailRow.SEQ}').style.background = "url('" + "${img}" + "') 50% 0 no-repeat";
 						</c:if>
 						<c:if test="${g.count == 2}">
 							$(".slide_mi2_${detailRow.SEQ}").attr("src","${img}");
@@ -102,7 +102,7 @@ $(document).ready(function(){
 						$(".slide_mi1_${detailRow.SEQ}").attr("src","${img}");
 					</c:if>
 					<c:if test="${g.count == 2}">
-						document.querySelector('.slide_mi2_${detailRow.SEQ}').style.background = "url('" + "${img}" + "') 50% 0 / contain no-repeat";
+						document.querySelector('.slide_mi2_${detailRow.SEQ}').style.background = "url('" + "${img}" + "') 50% 0 no-repeat";
 				    </c:if>
 				</c:forEach> 
 			</c:forEach>
@@ -216,7 +216,7 @@ function lfn_btn(pKind, pParam) {
 		                       <span class="lecture_5">
 		                            <img src='/resources/homepagePch/img/main/talk.png' alt=' '>
 		                        </span>
-		                        <span class="lecture_6"><p class="p_talk_score">99+</p></span>
+		                        <span class="lecture_6"><p class="p_talk_score">${set.newTalkCnt}+</p></span>
 		                        <span>
 		                            <button class="p_talk_btn" onclick="page.goPage('/main/talk');">
 		                                <img src='/resources/homepagePch/img/main/p_btn.png' alt=' '>

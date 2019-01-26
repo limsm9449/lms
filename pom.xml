@@ -70,6 +70,11 @@
     	<version>5.1.26</version>
     </dependency>
     <dependency>
+	    <groupId>org.mariadb.jdbc</groupId>
+	    <artifactId>mariadb-java-client</artifactId>
+	    <version>1.6.3</version>
+	</dependency>
+    <dependency>
     	<groupId>commons-pool</groupId>
     	<artifactId>commons-pool</artifactId>
     	<version>20030825.183949</version>
@@ -164,7 +169,7 @@
 	</dependency>
   </dependencies>
   <build>
-    <finalName>www</finalName>
+    <finalName>ROOT</finalName>
 	<plugins>
 		<plugin>
 			<groupId>org.apache.maven.plugins</groupId>

@@ -17,10 +17,10 @@
     <%@ include file="../common/commMainInclude.jsp" %>
 
     <link href='https://fonts.googleapis.com/css?family=Nanum+Gothic' rel='stylesheet'>
-    <link rel='stylesheet' href='/resources/homepageQch/css/initialization.css'>
-    <link rel='stylesheet' href='/resources/homepageQch/css/myclass/myclass_main.css'>
-    <link rel='stylesheet' href='/resources/homepageQch/css/myclass/myclass_table.css'>
-    <link rel='stylesheet' href='/resources/homepageQch/css/myclass/myclass.css'>    
+    <link rel='stylesheet' href='/resources/homepagePch/css/initialization.css'>
+    <link rel='stylesheet' href='/resources/homepagePch/css/myclass/myclass_main.css'>
+    <link rel='stylesheet' href='/resources/homepagePch/css/myclass/myclass_table.css'>
+    <link rel='stylesheet' href='/resources/homepagePch/css/myclass/myclass.css'>    
 </head>
 
 <script type="text/javascript">
@@ -34,13 +34,13 @@
 <frameset rows='*'>
     <div class='wrap'>
         <!-- PC HEADER -->
-        <%@ include file="../common/mainTopQch.jsp" %>
+        <%@ include file="../common/mainTopPch.jsp" %>
         <!-- HEAD END -->
 
         <!-- CONTENTS -->
         <div class='contents_wrap process' >
             <!-- QUICK MENU -->
-            <%@ include file="../common/mainQuickMenuQch.jsp" %>
+            <%@ include file="../common/mainQuickMenuPch.jsp" %>
 
             <div class='contents_wrap_box'>
                 <!-- Top -->
@@ -152,13 +152,13 @@
         <!-- CONTENTS END -->
 
         <!-- FOOTER -->
-        <%@ include file="../common/mainBottomQch.jsp" %>
+        <%@ include file="../common/mainBottomPch.jsp" %>
         <!-- FOOTER END -->
     </div>
 </frameset>
 
 </form>
-<script src='/resources/homepageQch/js/sub.js'></script>
+<script src='/resources/homepagePch/js/sub.js'></script>
 
 </body>
 </html>

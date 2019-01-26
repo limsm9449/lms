@@ -17,8 +17,8 @@
     <%@ include file="../common/commMainInclude.jsp" %>
 
     <link href='https://fonts.googleapis.com/css?family=Nanum+Gothic' rel='stylesheet'>
-    <link rel='stylesheet' href='/resources/homepageQch/css/initialization.css'>
-    <link rel='stylesheet' href='/resources/homepageQch/css/course/process.css'>
+    <link rel='stylesheet' href='/resources/homepagePch/css/initialization.css'>
+    <link rel='stylesheet' href='/resources/homepagePch/css/course/process.css'>
 </head>
 
 
@@ -96,13 +96,13 @@ function lfn_viewTypeChg(kind) {
 <frameset rows='*'>
     <div class='wrap'>
         <!-- HEAD START -->
-	     <%@ include file="../common/mainTopQch.jsp" %>
+	     <%@ include file="../common/mainTopPch.jsp" %>
 	     <!-- HEAD END -->
 
         <!-- CONTENTS -->
         <div class='contents_wrap process'>
             <!-- QUICK MENU -->
-            <%@ include file="../common/mainQuickMenuQch.jsp" %>
+            <%@ include file="../common/mainQuickMenuPch.jsp" %>
             
             <div class='contents_wrap_box'>
                     <!-- Top -->
@@ -110,11 +110,11 @@ function lfn_viewTypeChg(kind) {
                         <div class='clear_fix'>
                             <div class='process_history_box clear_fix'>
                                 <span>
-                                    <img src='/resources/homepageQch/img/course/ic_home.jpg' alt=' '>
+                                    <img src='/resources/homepagePch/img/course/ic_home.jpg' alt=' '>
                                 </span>
                                 <p>HOME</p>
                                 <span>
-                                    <img src='/resources/homepageQch/img/course/arr_right.jpg' alt=' '>
+                                    <img src='/resources/homepagePch/img/course/arr_right.jpg' alt=' '>
                                 </span>
                                 <p>전체과정</p>
                             </div>
@@ -196,11 +196,11 @@ function lfn_viewTypeChg(kind) {
 	                        </div>
 	                        <div class='process_result_review con'>
 	                            <div class='clear_fix' onclick="Popup.showPostscriptList('${row.courseId}')">
-	                                <span><img src='/resources/homepageQch/img/course/${row.grade1}.png' alt=''></span>
-	                                <span><img src='/resources/homepageQch/img/course/${row.grade2}.png' alt=''></span>
-	                                <span><img src='/resources/homepageQch/img/course/${row.grade3}.png' alt=''></span>
-	                                <span><img src='/resources/homepageQch/img/course/${row.grade4}.png' alt=''></span>
-	                                <span><img src='/resources/homepageQch/img/course/${row.grade5}.png' alt=''></span>
+	                                <span><img src='/resources/homepagePch/img/course/${row.grade1}.png' alt=''></span>
+	                                <span><img src='/resources/homepagePch/img/course/${row.grade2}.png' alt=''></span>
+	                                <span><img src='/resources/homepagePch/img/course/${row.grade3}.png' alt=''></span>
+	                                <span><img src='/resources/homepagePch/img/course/${row.grade4}.png' alt=''></span>
+	                                <span><img src='/resources/homepagePch/img/course/${row.grade5}.png' alt=''></span>
 	                            </div>
 	                            <p>
 	                                평점 : <span>${row.grade}</span>
@@ -209,7 +209,7 @@ function lfn_viewTypeChg(kind) {
 	                            </p>
 	                        </div>
 	                        <div class='process_result_btn con'>
-	                            <button onclick="javascript:Popup.showSampleCourseQch('${row.courseId}','${row.hPx + 100}','${row.vPx + 100}'); return false;">맛보기</button>
+	                            <button onclick="javascript:Popup.showSampleCoursePch('${row.courseId}','${row.hPx + 100}','${row.vPx + 100}'); return false;">맛보기</button>
 	                            <button onclick="javascript:lfn_btn('cart',{courseId:'${row.courseId}',cnt:'${row.cnt}'}); return false;">장바구니</button>
 	                            <button onclick="javascript:lfn_btn('view',{courseId:'${row.courseId}'}); return false;" class='process_result_admission'>수강신청</button>
 	                        </div>
@@ -240,17 +240,17 @@ function lfn_viewTypeChg(kind) {
                                     </p>
                                 </div>
                                 <div class='process_btn_area clear_fix'>
-                                    <button onclick="javascript:Popup.showSampleCourseQch('${row.courseId}','${row.hPx + 100}','${row.vPx + 100}'); return false;">맛보기</button>
+                                    <button onclick="javascript:Popup.showSampleCoursePch('${row.courseId}','${row.hPx + 100}','${row.vPx + 100}'); return false;">맛보기</button>
 		                            <button onclick="javascript:lfn_btn('cart',{courseId:'${row.courseId}',cnt:'${row.cnt}'}); return false;">장바구니</button>
                                     <button onclick="javascript:lfn_btn('view',{courseId:'${row.courseId}'}); return false;" class='admission'>수강신청</button>
                                 </div>
                                 <div class='process_score_box clear_fix'>
                                     <div class='process_score_image clear_fix' onclick="Popup.showPostscriptList('${row.courseId}')">
-                                        <span><img src='/resources/homepageQch/img/course/${row.grade1}.png' alt=''></span>
-		                                <span><img src='/resources/homepageQch/img/course/${row.grade2}.png' alt=''></span>
-		                                <span><img src='/resources/homepageQch/img/course/${row.grade3}.png' alt=''></span>
-		                                <span><img src='/resources/homepageQch/img/course/${row.grade4}.png' alt=''></span>
-		                                <span><img src='/resources/homepageQch/img/course/${row.grade5}.png' alt=''></span>
+                                        <span><img src='/resources/homepagePch/img/course/${row.grade1}.png' alt=''></span>
+		                                <span><img src='/resources/homepagePch/img/course/${row.grade2}.png' alt=''></span>
+		                                <span><img src='/resources/homepagePch/img/course/${row.grade3}.png' alt=''></span>
+		                                <span><img src='/resources/homepagePch/img/course/${row.grade4}.png' alt=''></span>
+		                                <span><img src='/resources/homepagePch/img/course/${row.grade5}.png' alt=''></span>
                                     </div>
                                     <p class='process_score_text'>
                                         평점 : <span id='process_score_num'>${row.grade}</span> / 후기 : <span id='process_review_num'>${row.gradeCnt}</span>건
@@ -291,14 +291,14 @@ function lfn_viewTypeChg(kind) {
             <!-- CONTENTS END -->
 
             <!-- FOOTER -->
-            <%@ include file="../common/mainBottomQch.jsp" %>
+            <%@ include file="../common/mainBottomPch.jsp" %>
             <!-- FOOTER END -->
         </div>
     </frameset>
 
 </form>
     
-    <script src='/resources/homepageQch/js/sub.js'></script>
+    <script src='/resources/homepagePch/js/sub.js'></script>
     
 </body>
 
