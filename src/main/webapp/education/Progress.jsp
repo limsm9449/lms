@@ -46,7 +46,7 @@
                     <table>
                         <tr>
                             <th class='col_1'>레포트 점수(${set.evaluation.reportRate})</th>
-                            <th class='col_2'>시험 점수(${set.evaluation.examRate})</th>
+                            <th class='col_2'>평가 점수(${set.evaluation.examRate})</th>
                             <th class='col_3'>토론 점수(${set.evaluation.discussionRate})</th>
                             <th class='col_4'>강의진도 점수(${set.evaluation.progressRate})</th>
                             <th class='col_5'>합계 점수</th>
@@ -79,7 +79,7 @@
                 <div class='lecture_detail_table_box contents'>
                     <table>
                         <tr>
-                            <th class='col_1'>주차</th>
+                            <th class='col_1'>차시</th>
                             <th class='col_2'>차시명</th>
                             <th class='col_3'>진도율</th>
                             <th class='col_4'>학습일자</th>

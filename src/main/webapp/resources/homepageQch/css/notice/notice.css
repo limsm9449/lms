@@ -406,6 +406,16 @@ table th.notice_col3:hover{
 
 
 /* Media query */
+@media all and (max-width:1220px){
+
+	.q_name_txt,
+	.q_name_l{
+		display:none;
+	}
+	.search_box{
+		left:11%;
+	}
+}
 
  
 @media all and (max-width:1122px){

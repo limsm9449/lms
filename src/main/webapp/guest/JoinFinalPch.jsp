@@ -84,7 +84,7 @@
                     </p>
                 </div>
                 <div class='signup_completed_box clear_fix'>
-                    <p>메인 인증을 완료하셔야 정상적으로 로그인하실 수 있습니다.</p>
+                    <p>메일 인증을 완료하셔야 정상적으로 로그인하실 수 있습니다.</p>
                     <a href='#' onclick='page.goHome();'>
                         큐러닝 <span></span>메인 가기
                     </a>

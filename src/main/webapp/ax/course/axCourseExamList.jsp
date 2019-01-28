@@ -45,7 +45,7 @@ $(document.body).ready(function () {
 	            fn_search();
 	            break;
             case "export":
-                grid.exportExcel("과정시험관리.xls");
+                grid.exportExcel("과정평가관리.xls");
                 break;
             case "editDetail":
             	var row = grid.getList("selected");
@@ -90,7 +90,7 @@ function fn_makeGrid() {
 	            align : "left"
 	        },{
 	            key : "WEEK_CNT",
-	            label : "주차",
+	            label : "차시",
 	            width : 90,
 	            align : "right"
 	        },{
@@ -105,7 +105,7 @@ function fn_makeGrid() {
 	        	align : "right"
 	        },{
 	            key : "QUESTION_TYPE_CNT",
-	            label : "시험 유형 갯수",
+	            label : "평가 유형 갯수",
 	            width : 120,
 	            align : "right"
 	        }	], 
@@ -171,7 +171,7 @@ function fn_cbChange(id) {
 
 <body style="padding : 10px">
 
-<h2>과정 시험 관리</h2>
+<h2>과정 평가 관리</h2>
 <div style="height:10px"></div>
 
 <form id="frm" name="frm" method="post" class="form-inline">

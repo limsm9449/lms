@@ -67,7 +67,7 @@ $(document.body).ready(function () {
             	}
             	if ( row[0]["NEXT_CREATE_FLAG"] == "Y" ) {
             		mask.open();
-            		dialog.alert( { msg : "과정 시험을 먼저 삭제하셔야 합니다." }, function () { mask.close();	} );
+            		dialog.alert( { msg : "과정 평가을 먼저 삭제하셔야 합니다." }, function () { mask.close();	} );
             		return;
             	}
 
@@ -171,7 +171,7 @@ function fn_makeGrid() {
 	            align : "left"
 	        },{
 	        	key : "WEEK_COST_YN", 
-	        	label : "과정비용", 
+	        	label : "결제 유형", 
 	            width : 90,
 	        	align : "center", 
 	        	editor: {
@@ -241,12 +241,12 @@ function fn_makeGrid() {
                 }
 	        },{
               	key : undefined, 
-              	label: "컨텐츠 유형", 
+              	label: "콘텐츠 유형", 
               	columns: [	        
 			        {
 			        	key : "RESPONSIVE_CONTENTS_YN", 
-			        	label : "HTML5", 
-			            width : 80, 
+			        	label : "모바일 병행", 
+			            width : 110, 
 			        	align : "center", 
 			        	editor : { type : "checkbox", config : {height: 17, trueValue: "Y", falseValue: "N"} },
 						styleClass: function () {
@@ -254,13 +254,37 @@ function fn_makeGrid() {
 		                } 
 			        },{
 			        	key : "MOBILE_YN", 
-			        	label : "모바일", 
-			            width : 70, 
+			        	label : "모바일 변환",  
+			            width : 110, 
 			        	align : "center", 
 			        	editor : { type : "checkbox", config : {height: 17, trueValue: "Y", falseValue: "N"} },
 						styleClass: function () {
 		                    return "grid-cell-edit";
 						}
+			        },{
+			        	key : "SMART_LEARNING_YN", 
+			        	label : "스마트러닝", 
+			            width : 110, 
+			        	align : "center", 
+			        	editor : { type : "checkbox", config : {height: 17, trueValue: "Y", falseValue: "N"} },
+						styleClass: function () {
+		                    return "grid-cell-edit";
+						}
+		        	}
+			   	]
+	        },{
+              	key : undefined, 
+              	label: "추가 제공 서비스 유형", 
+              	columns: [	        
+			        {
+			        	key : "BOOK_YN", 
+			        	label : "교재", 
+			            width : 80, 
+			        	align : "center", 
+			        	editor : { type : "checkbox", config : {height: 17, trueValue: "Y", falseValue: "N"} },
+						styleClass: function () {
+		                    return "grid-cell-edit";
+		                } 
 			        },{
 			        	key : "OFFLINE_YN", 
 			        	label : "오프라인", 
@@ -353,7 +377,7 @@ function fn_makeGrid() {
 		                }
 			        },{
 			            key : "EXAM_RATE",
-			            label : "시험",
+			            label : "평가",
 			            width : 70,
 			            align : "right",
 			            editor : { 
@@ -554,7 +578,7 @@ function fn_makeGrid() {
 	            align : "center"
 	        },{
 	            key : "NEXT_CREATE_FLAG",
-	            label : "과정 시험 여부",
+	            label : "과정 평가 여부",
 	            width : 130,
 	            align : "center"
 	        }	], 
@@ -618,7 +642,7 @@ function fn_save() {
 		TUTOR_ID : { mendatory : true, colName : "튜터" },
 		COURSE_COST : { mendatory : true, colName : "과정비용", type : "number" },
 		REPORT_RATE : { mendatory : true, colName : "레포트", type : "number" },
-		EXAM_RATE : { mendatory : true, colName : "시험", type : "number" },
+		EXAM_RATE : { mendatory : true, colName : "평가", type : "number" },
 		DISCUSSION_RATE : { mendatory : true, colName : "토론", type : "number" },
 		PROGRESS_RATE : { mendatory : true, colName : "강의진도", type : "number" }
    	};
@@ -632,7 +656,7 @@ function fn_save() {
        		}
        		if ( allList[i].RESPONSIVE_CONTENTS_YN == "Y" && allList[i].MOBILE_YN == "Y" ) {
     			mask.open();
-    			dialog.alert( { msg : "컨텐츠 유형은 동시에 HTML5 이고 모바일을 수 없습니다." }, function () { mask.close(); } );
+    			dialog.alert( { msg : "콘텐츠 유형은 동시에 HTML5 이고 모바일을 수 없습니다." }, function () { mask.close(); } );
     			return false;
        		}
        	}
@@ -749,7 +773,7 @@ function fn_cbChange(id) {
     <button class="btn btn-default" data-grid-control="editContent">학습내용 편집</button>
     <button class="btn btn-default" data-grid-control="editImage">이미지 편집</button>
     <button class="btn btn-default" data-grid-control="editWeekCost">차시별 비용</button>
-    <button class="btn btn-default" data-grid-control="contentsView">컨텐츠 미리보기</button>
+    <button class="btn btn-default" data-grid-control="contentsView">콘텐츠 미리보기</button>
 </div>
 
 <div style="height:10px"></div>

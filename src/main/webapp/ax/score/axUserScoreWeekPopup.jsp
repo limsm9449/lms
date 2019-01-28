@@ -31,7 +31,7 @@ $(document.body).ready(function () {
 	grid = gfn_makeAx5Grid("first-grid",
 		[ 	{
 	            key : "WEEK",
-	            label : "주차",
+	            label : "차시",
 	            width : 60,
 	            align : "right"
 	        },{
@@ -119,7 +119,7 @@ function fn_gridEvent(event, obj) {
 
 <form id="frm" name="frm" method="post">
 
-<h2>주차별 진도</h2>
+<h2>차시별 진도</h2>
 <div style="height:10px"></div>
 
 <div>

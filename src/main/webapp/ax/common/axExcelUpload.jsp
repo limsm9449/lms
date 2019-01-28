@@ -29,7 +29,7 @@ $(document.body).ready(function () {
 	if ( screen == "Quest" ) {
 		$("#columns").val("TYPE,QUESTION,QA1,QA2,QA3,QA4,USE_YN");
 	} else if ( screen == "Exam" ) {
-		$("#columns").val("TYPE,QUESTION,QA1,QA2,QA3,QA4,ANSWER,ANSWER_DESC,WEEK,LEVEL,USE_YN");
+		$("#columns").val("WEEK,TYPE,QUESTION,QA1,QA2,QA3,QA4,ANSWER,ANSWER_DESC,LEVEL,USE_YN");
 	} else if ( screen == "CourseResource" ) {
 		$("#columns").val("WEEK,TITLE,DIRECTORY,PAGE_CNT,WEEK_TIME,PREVIEW_PAGE");
 	} else if ( screen == "CompanyUser" ) {
@@ -107,9 +107,9 @@ function lfn_tran(data) {
 					isNotValid = true;
 					rowMsg += " , 난이도 오류[상/중/하] -> " + data.list[i].LEVEL;
 				} 
-				if ( parseInt(data.list[i].WEEK.replace("주차", "").replace(" ", "")) > weekCnt ) {
+				if ( parseInt(data.list[i].WEEK.replace("차시", "").replace(" ", "")) > weekCnt ) {
 					isNotValid = true;
-					rowMsg += " , 주차 오류[1 ~ " + weekCnt + "] -> " + data.list[i].WEEK;
+					rowMsg += " , 차시 오류[1 ~ " + weekCnt + "] -> " + data.list[i].WEEK;
 				}
 				if ( !gfn_isExistStringInString(data.list[i].USE_YN, "Y,N") ) {
 					isNotValid = true;
@@ -133,7 +133,7 @@ function lfn_tran(data) {
 				} else if ( data.list[i].LEVEL == "하" ) {
 					data.list[i].LEVEL = "3";
 				}
-				data.list[i].WEEK = data.list[i].WEEK.replace("주차", "").replace(" ", "");
+				data.list[i].WEEK = data.list[i].WEEK.replace("차시", "").replace(" ", "");
 				
 				//기타 데이타 입력
 				data.list[i].COURSE_CODE = gfn_getUrlParams("COURSE_CODE");
@@ -211,11 +211,11 @@ function lfn_tran(data) {
 				var rowMsg = "";
 				if ( data.list[i].WEEK == "" || isNaN(data.list[i].WEEK) ) {
 					isNotValid = true;
-					rowMsg += "주차 오류[정수타입] -> " + data.list[i].WEEK;
+					rowMsg += "차시 오류[정수타입] -> " + data.list[i].WEEK;
 				} 
 				if ( data.list[i].CLIP == "" || isNaN(data.list[i].CLIP) ) {
 					isNotValid = true;
-					rowMsg += "클립 오류[정수타입] -> " + data.list[i].CLIP;
+					rowMsg += "클립순서 오류[정수타입] -> " + data.list[i].CLIP;
 				}
 				if ( data.list[i].FROM_PAGE == "" || isNaN(data.list[i].FROM_PAGE) ) {
 					isNotValid = true;

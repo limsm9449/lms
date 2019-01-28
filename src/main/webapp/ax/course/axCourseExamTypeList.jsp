@@ -67,7 +67,7 @@ $(document.body).ready(function () {
             	fn_save();
                 break;
             case "export":
-                grid.exportExcel("과정시험유형관리.xls");
+                grid.exportExcel("과정평가유형관리.xls");
                 break;
             case "editDetail":
             	var row = grid.getList("selected");
@@ -138,7 +138,7 @@ function fn_makeGrid() {
 	            align : "left"
 	        },{
 	            key : "WEEK_CNT",
-	            label : "과정 주차",
+	            label : "과정 차시",
 	            width : 90,
 	            align : "right"
 	        },{
@@ -170,7 +170,7 @@ function fn_makeGrid() {
                 }
 	        },{
               	key : undefined, 
-              	label: "전체시험", 
+              	label: "최종평가", 
               	columns: [	
               		{
 			        	key : "STANDARD_CNT1", 
@@ -184,7 +184,7 @@ function fn_makeGrid() {
 			        	align : "right"
 			        },{
 			        	key : "STANDARD_QUESTION_CNT_J1", 
-			        	label : "주간식 문항수", 
+			        	label : "주관식 문항수", 
 			            width : 100,
 			        	align : "right"
 			        },{
@@ -202,7 +202,7 @@ function fn_makeGrid() {
 			   	]
 	        },{
               	key : undefined, 
-              	label: "주별시험", 
+              	label: "진행단계평가", 
               	columns: [	
 			       	{
 			        	key : "STANDARD_CNT2", 
@@ -211,12 +211,12 @@ function fn_makeGrid() {
 			        	align : "right"
 			        },{
 			        	key : "STANDARD_QUESTION_CNT_G2", 
-			        	label : "객간식 문항수", 
+			        	label : "객관식 문항수", 
 			            width : 100,
 			        	align : "right"
 			        },{
 			        	key : "STANDARD_QUESTION_CNT_J2", 
-			        	label : "주간식 문항수", 
+			        	label : "주관식 문항수", 
 			            width : 100,
 			        	align : "right"
 			        },{
@@ -369,7 +369,7 @@ function fn_cbChange(id) {
 
 <body style="padding : 10px">
 
-<h2>과정 시험 유형 관리</h2>
+<h2>과정 평가 유형 관리</h2>
 <div style="height:10px"></div>
 
 <form id="frm" name="frm" method="post" class="form-inline">
@@ -401,8 +401,8 @@ function fn_cbChange(id) {
     <button class="btn btn-default" data-grid-control="save">저장</button>
     <button class="btn btn-default" data-grid-control="export">엑셀</button>
     <button class="btn btn-default" data-grid-control="editDetail">유형 기준 편집</button>
-    <button class="btn btn-default" data-grid-control="preview1">주별시험 미리보기</button>
-    <button class="btn btn-default" data-grid-control="preview2">전체시험 미리보기</button>
+    <button class="btn btn-default" data-grid-control="preview1">진행단계평가 미리보기</button>
+    <button class="btn btn-default" data-grid-control="preview2">최종평가 미리보기</button>
 </div>
 
 <div style="height:10px"></div>

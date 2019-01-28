@@ -26,16 +26,16 @@
 var gCondition = {
 }
 
-<%-- 주차별 정보 --%>
+<%-- 차시별 정보 --%>
 var weeks = [<c:forEach var="row" items="${set.resourceList}" varStatus="idx"><c:if test="${idx.index ne 0}">,</c:if> ${row.week}</c:forEach>];
 
-<%-- 주차별 페이지 정보 --%>
+<%-- 차시별 페이지 정보 --%>
 var pages = [<c:forEach var="row" items="${set.resourceList}" varStatus="idx"><c:if test="${idx.index ne 0}">,</c:if> 0</c:forEach>];
 
-<%-- 주차별 디렉토리 정보 --%>
+<%-- 차시별 디렉토리 정보 --%>
 var directorys = [<c:forEach var="row" items="${set.resourceList}" varStatus="idx"><c:if test="${idx.index ne 0}">,</c:if> "${row.rootDirectory}/${row.directory}/"</c:forEach>];
 
-<%-- 주차별 목차 --%>
+<%-- 차시별 목차 --%>
 var titles = [<c:forEach var="row" items="${set.resourceList}" varStatus="idx"><c:if test="${idx.index ne 0}">,</c:if> "${row.week}/${row.title}/"</c:forEach>];
 
 var rootDirectory = "${set.data.directory}";

@@ -260,7 +260,7 @@ button.active .middle{
 .menu_dropdown_wrap .menu_sub{
     box-sizing:border-box;
     width: 100%;
-    padding:10px 2.5%;
+    padding:10px 10%;
     margin:0;
 }
 .menu_dropdown_wrap .menu_sub.classroom{
@@ -311,7 +311,7 @@ button.active .middle{
 
 .footer_wrap .foot_link_box{
     width:100%;
-    max-width:1122px;
+    max-width:777px;
 }
 .footer_wrap .foot_link_box li{
     display:inline-block;

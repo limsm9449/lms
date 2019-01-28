@@ -30,7 +30,7 @@ $(document.body).ready(function () {
 	grid = gfn_makeAx5Grid("first-grid",
 		[ 	{
 	        	key : "WEEK", 
-	        	label : "주차", 
+	        	label : "차시", 
 	            width : 70,
 	        	align : "center",
 				styleClass: function () {
@@ -190,7 +190,7 @@ $(document.body).ready(function () {
             	window.close();
                 break;
             case "export":
-                grid.exportExcel("과정 주차 관리.xls");
+                grid.exportExcel("과정 차시 관리.xls");
                 break;
             case "import":
             	var urlParams = "page=/ax/common/axExcelUpload";
@@ -313,7 +313,7 @@ function fn_gridEvent(event, obj) {
 
 <form id="frm" name="frm" method="post">
 
-<h2>과정 주차 관리</h2>
+<h2>과정 차시 관리</h2>
 <div style="height:10px"></div>
 
 <div>

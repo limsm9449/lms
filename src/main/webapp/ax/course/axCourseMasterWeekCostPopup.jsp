@@ -30,7 +30,7 @@ $(document.body).ready(function () {
 	grid = gfn_makeAx5Grid("first-grid",
 		[ 	{
 	        	key : "WEEK", 
-	        	label : "주차", 
+	        	label : "차시", 
 	            width : 100,
 	        	align : "center"
 	        },{

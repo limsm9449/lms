@@ -31,13 +31,31 @@ $(document.body).ready(function () {
     
     var weekCnt = gfn_getUrlParams("WEEK_CNT");
     for ( var i = 0; i < weekCnt; i++ ) {
-    	ddWeek.push({	CD : i + 1, NM : (i + 1) + " 주차"	});
+    	ddWeek.push({	CD : i + 1, NM : (i + 1) + " 차시"	});
     }
     
 	grid = gfn_makeAx5Grid("first-grid",
 		[ 	{
+	        	key : "WEEK", 
+	        	label : "차시", 
+	            width : 80,
+	        	align : "center", 
+	        	editor: {
+	                type : "select", 
+	                config : {
+	                    columnKeys: { optionValue: "CD", optionText: "NM" },
+	                    options: ddWeek
+	                } 
+	        	},
+	            formatter : function () {
+	            	return ( this.item.WEEK == undefined ? 1 : this.item.WEEK ) + " 차시";
+	           	},
+				styleClass: function () {
+	                return "grid-cell-edit";
+	            }
+	        },{
 	        	key : "TYPE", 
-	        	label : "타입", 
+	        	label : "문제유형", 
 	            width : 100,
 	        	align : "center", 
 	        	editor: {
@@ -64,7 +82,7 @@ $(document.body).ready(function () {
                 }
 	        },{
 	            key : "QUESTION",
-	            label : "질문",
+	            label : "문제",
 	            width : 300,
 	            align : "left",
 	            editor : { 
@@ -75,7 +93,7 @@ $(document.body).ready(function () {
                 }
 	        },{
 	        	key : "QA1", 
-	        	label : "1번 답", 
+	        	label : "보기 1", 
 	            width : 80,
 	        	align : "left", 
 	        	editor : { 
@@ -89,7 +107,7 @@ $(document.body).ready(function () {
                 }
 	        },{
 	        	key : "QA2", 
-	        	label : "2번 답", 
+	        	label : "보기 2", 
 	            width : 80,
 	        	align : "left", 
 	        	editor : { 
@@ -103,7 +121,7 @@ $(document.body).ready(function () {
                 }
 	        },{
 	        	key : "QA3", 
-	        	label : "3번 답", 
+	        	label : "보기 3", 
 	            width : 80,
 	        	align : "left", 
 	        	editor : { 
@@ -117,7 +135,7 @@ $(document.body).ready(function () {
                 }
 	        },{
 	        	key : "QA4", 
-	        	label : "4번 답", 
+	        	label : "보기 4", 
 	            width : 80,
 	        	align : "left", 
 	        	editor : { 
@@ -142,30 +160,12 @@ $(document.body).ready(function () {
                 }
 	        },{
 	        	key : "ANSWER_DESC", 
-	        	label : "정답 설명", 
+	        	label : "해설", 
 	            width : 150,
 	        	align : "left", 
 	        	editor : { 
 	        		type : "text"
 	        	},
-				styleClass: function () {
-                    return "grid-cell-edit";
-                }
-	        },{
-	        	key : "WEEK", 
-	        	label : "주차", 
-	            width : 80,
-	        	align : "center", 
-	        	editor: {
-                    type : "select", 
-                    config : {
-                        columnKeys: { optionValue: "CD", optionText: "NM" },
-                        options: ddWeek
-                    } 
-	        	},
-	            formatter : function () {
-	            	return ( this.item.WEEK == undefined ? 1 : this.item.WEEK ) + " 주차";
-	           	},
 				styleClass: function () {
                     return "grid-cell-edit";
                 }
@@ -355,7 +355,7 @@ $(document.body).ready(function () {
 
             	break;
             case "export":
-                grid.exportExcel("시험 과정 문항 관리.xls");
+                grid.exportExcel("과정평가문항관리.xls");
                 break;
             case "import":
             	var urlParams = "page=/ax/common/axExcelUpload";
@@ -489,7 +489,7 @@ function fn_gridEvent(event, obj) {
 
 <form id="frm" name="frm" method="post">
 
-<h2>과정 시험 문항 관리</h2>
+<h2>과정 평가 문항 관리</h2>
 <div style="height:10px"></div>
 
 <div>

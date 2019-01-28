@@ -69,7 +69,7 @@
                         <th class='col_2'>학습기간</th>
                         <th class='col_3'>진도</th>
                         <th class='col_4'>총점수</th>
-                        <th class='col_5'>시험</th>
+                        <th class='col_5'>평가</th>
                         <th class='col_6'>수료여부</th>
                         <th class='col_7'>수강후기</th>
                     </tr>

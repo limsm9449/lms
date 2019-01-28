@@ -17,22 +17,22 @@
     <%@ include file="../common/commMainInclude.jsp" %>
 
     <link href='https://fonts.googleapis.com/css?family=Nanum+Gothic' rel='stylesheet'>
-    <link rel='stylesheet' href='/resources/homepage/css/initialization.css'>
-    <link rel='stylesheet' href='/resources/homepage/css/support/account.css'>
+    <link rel='stylesheet' href='/resources/homepagePch/css/initialization.css'>
+    <link rel='stylesheet' href='/resources/homepagePch/css/etc/signup.css'>
 </head>
 
 <body>
     <frameset rows='*'>
     <div class='wrap'>
         <!-- HEAD -->
-        <%@ include file="../common/mainTop.jsp" %>
+        <%@ include file="../common/mainTopPch.jsp" %>
         <!-- HEAD END -->
+
+        <!-- QUICK MENU -->
+        <%@ include file="../common/mainQuickMenuPch.jsp" %>
 
         <!-- CONTENTS -->
         <div class='contents_wrap_box' >
-            <!-- QUICK MENU -->
-            <%@ include file="../common/mainQuickMenu.jsp" %>
-
             <!-- Top -->
             <div class='top_area'>
                 <div class='clear_fix'>
@@ -54,21 +54,23 @@
                 <h1>
                     회원가입
                 </h1>
-                <div class='signup_all_agree_box clear_fix'>
-                    <c:choose>
-	<c:when test="${set.rtnMode eq 'OK'}">
-		        <div class="joinflow_box">
-		          <p class="big_2"><span class="blue">메일인증 완료</span></p>
-		          <p>큐러닝 회원가입이 정상적으로 완료되었습니다. <br />국내 최고의 온라인 교육 서비스를 제공하도록 최선을 다하겠습니다.</p>
-		        </div>
-	</c:when>
-	<c:otherwise>
-		        <div class="joinflow_box">
-		          <p class="big_2"><span class="blue">메일인증 오류</span></p>
-		          <p>정상적인 인증 절차에 의한 확인이 아닙니다.</p>
-		        </div>
-	</c:otherwise>
-</c:choose> 
+                
+                <div class='signup_title_box'>
+                    <p class='signup_title'>메일인증완료</p>
+                    <p>
+                        큐러닝 메일인증이 정상적으로 완료되었습니다.<span></span>
+                        국내 최고의 온라인 교육 서비스를 제공하도록 최선을 다하겠습니다.
+                    </p>
+                </div>
+                <div class='signup_completed_box clear_fix'>
+                    <p class="signup_top">메일 인증을 완료하여 정상적으로 로그인하실 수 있습니다.</p>
+                    <a href='#' onclick='page.goHome();'>
+                        큐러닝 <span></span>메인 가기
+                    </a>
+                    
+                </div>
+                <div class='signup_completed_bg'>
+                    <span><img src='/resources/homepagePch/img/etc/completed_bg.jpg' alt=' '></span>
                 </div>
             </div>
 
@@ -76,11 +78,11 @@
         <!-- CONTENTS END -->
 
         <!-- FOOTER -->
-        <%@ include file="../common/mainBottom.jsp" %>
+        <%@ include file="../common/mainBottomPch.jsp" %>
         <!-- FOOTER END -->
     </div>
     <!-- Local -->
-    <script src='/resources/homepage/js/dev_sub.js?timestamp=<%=timestamp%>'></script>
+    <script src='/resources/homepagePch/js/sub.js'></script>
 </frameset>
 </body>
 

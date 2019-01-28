@@ -79,7 +79,10 @@ function fn_callbackAjax(data, id) {
 	//console.log("fn_callbackAjax : " + id);
 	if ( id == "search" ) {
 		if ( data.row.USER_IMG == "Y" ) {
-			$('#userImg').attr("src", "/cImage/user/" + data.row.USER_ID + ".jpg");
+			$('#userImg').attr("src", "/cImage/user/" + data.row.USER_ID + ".jpg" + "?timestamp=" + gfn_timestamp());
+		}
+		if ( data.row.TALK_IMAGE_YN == "Y" ) {
+			$('#userTalkImg').attr("src", "/cImage/user/" + data.row.USER_ID + "_talk.jpg" + "?timestamp=" + gfn_timestamp());
 		}
 		//mask.close();
 	} else if ( id == "save" ){
@@ -99,6 +102,11 @@ function fn_callbackAjax(data, id) {
 
 function fn_upload(pParam) {
 	if ( pParam.kind == "USER" && isExtention($("#userImgFile").val(),"jpg") == false ) {
+		mask.open();
+		dialog.alert( { msg : "JPG 파일을 선택해주세요." }, function () { mask.close();	} );
+		return false;
+	}
+	if ( pParam.kind == "USER_TALK" && isExtention($("#userTalkImgFile").val(),"jpg") == false ) {
 		mask.open();
 		dialog.alert( { msg : "JPG 파일을 선택해주세요." }, function () { mask.close();	} );
 		return false;
@@ -141,10 +149,19 @@ function isExtention(fileName, compExt) {
 <div data-ax5layout="ax1" data-config='{layout:"tab-panel"}' style="height:515px;">
     <div data-tab-panel='{label: "사용자 이미지", "active": "true"}' style="background: #eee;">
         <div style="padding: 10px;">
-            <div class="img_box"><img id="userImg" src="/cImage/blank.jpg" style="width:650px;height:425px;"/></div>
+            <div class="img_box"><img id="userImg" src="/cImage/blank.jpg" style="width:150px;height:150px;"/></div>
             <div class="file_btn_group">
-		      <a class="grayBtn file_button">User Image.jpg 파일</a> 
+		      <a class="grayBtn file_button">userId.jpg(150 * 150) 파일</a> 
 		      <input type="file" name="userImgFile" id="userImgFile" class="hidden_inputfile" title="" onChange="fn_upload({kind:'USER'}); return false;">
+		    </div>
+        </div>
+    </div>
+    <div data-tab-panel='{label: "Talk 이미지", "active": "false"}' style="background: #eee;">
+        <div style="padding: 10px;">
+            <div class="img_box"><img id="userTalkImg" src="/cImage/blank.jpg" style="width:75px;height:75px;"/></div>
+            <div class="file_btn_group">
+		      <a class="grayBtn file_button">userId_talk.jpg(75 * 75) 파일</a> 
+		      <input type="file" name="userTalkImgFile" id="userTalkImgFile" class="hidden_inputfile" title="" onChange="fn_upload({kind:'USER_TALK'}); return false;">
 		    </div>
         </div>
     </div>

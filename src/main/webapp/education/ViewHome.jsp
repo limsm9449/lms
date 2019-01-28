@@ -9,7 +9,7 @@
     <meta charset='utf-8'>
     <meta name='viewport' content='width=device-width, initial-scale=1.0'>
     <meta http-equiv='X-UA-Compatible' content='ie=edge'>
-    <title>강의 컨텐츠 미리보기</title>
+    <title>강의 콘텐츠 미리보기</title>
 
 	<%@ include file="../common/commMainInclude.jsp" %>
 
@@ -26,16 +26,16 @@
 var gCondition = {
 }
 
-<%-- 주차별 정보 --%>
+<%-- 차시별 정보 --%>
 var weeks = [<c:forEach var="row" items="${set.resourceList}" varStatus="idx"><c:if test="${idx.index ne 0}">,</c:if> ${row.week}</c:forEach>];
 
-<%-- 주차별 페이지 정보 --%>
+<%-- 차시별 페이지 정보 --%>
 var pages = [<c:forEach var="row" items="${set.resourceList}" varStatus="idx"><c:if test="${idx.index ne 0}">,</c:if> ${row.pageCnt}</c:forEach>];
 
-<%-- 주차별 디렉토리 정보 --%>
+<%-- 차시별 디렉토리 정보 --%>
 var directorys = [<c:forEach var="row" items="${set.resourceList}" varStatus="idx"><c:if test="${idx.index ne 0}">,</c:if> "${row.rootDirectory}/${row.directory}/"</c:forEach>];
 
-<%-- 주차별 목차 --%>
+<%-- 차시별 목차 --%>
 var titles = [<c:forEach var="row" items="${set.resourceList}" varStatus="idx"><c:if test="${idx.index ne 0}">,</c:if> "${row.week}/${row.title}/"</c:forEach>];
 
 var rootDirectory = "${set.data.directory}";
@@ -60,7 +60,7 @@ $(document).ready(function() {
     	<h3 class="title">${set.data.courseName}</h3>
   	</div>
   	<div class="study_content" style="width: ${set.data.hPx}px; height: ${set.data.vPx}px;">
-		<iframe name="eduContent" id="eduContent" src="about:blank;">학습 컨텐츠 영역</iframe>
+		<iframe name="eduContent" id="eduContent" src="about:blank;">학습 콘텐츠 영역</iframe>
 	</div>
 	<div class="study_tools">
 	   	<ul class="lms">

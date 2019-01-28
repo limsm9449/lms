@@ -123,7 +123,7 @@ $(document.body).ready(function () {
     	grid = gfn_makeAx5Grid("first-grid",
    			[ 	{
    		            key : "WEEK",
-   		            label : "주차",
+   		            label : "차시",
    		            width : 50,
    		            align : "right"
    		        },{
@@ -260,7 +260,7 @@ function fn_retryExam() {
    	confirmDialog.confirm(
    		{
            	title: "Confirm",
-           	msg: '시험을 재응시 하도록 초기화 하시겠습니까?'
+           	msg: '평가을 재응시 하도록 초기화 하시겠습니까?'
        	}, 
        	function(){
          	if ( this.key == "ok" ) {
@@ -349,11 +349,11 @@ function fn_gridEvent(event, obj) {
 
 <form id="frm" name="frm" method="post">
 
-<h2>시험</h2>
+<h2>평가</h2>
 <div style="height:10px"></div>
 
 <div>
-    <button class="btn btn-default" data-grid-control="retryExam" id="retryExam">재시험</button>
+    <button class="btn btn-default" data-grid-control="retryExam" id="retryExam">재평가</button>
     <button class="btn btn-default" data-grid-control="save">저장</button>
     <button class="btn btn-default" data-grid-control="close">닫기</button>
 </div>

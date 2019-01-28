@@ -9,7 +9,7 @@
     <meta charset='utf-8'>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>온라인 시험</title>
+    <title>온라인 평가</title>
 
 	<%@ include file="../../common/commMainInclude.jsp" %>
 	
@@ -20,11 +20,11 @@
 </head>
 
 <body>
-    <!-- 시험 결과 POPUP -->
+    <!-- 평가 결과 POPUP -->
     <div id='popup_exam_result' class='popup'>
         <div class='popup_fix'>
             <p class='popup_title'>
-                시험
+                평가
             </p>
         </div>
         <ul class='popup_question'>
@@ -100,7 +100,7 @@
             <button onclick="javascript:window.close()">닫기</button>
         </div>
     </div>
-    <!-- 시험 결과 POPUP END-->
+    <!-- 평가 결과 POPUP END-->
 </body>
 
 </html>

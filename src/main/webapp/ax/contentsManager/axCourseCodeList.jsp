@@ -61,7 +61,7 @@ $(document.body).ready(function () {
             		f_popup('/common/axOpenPage', {displayName:'courseResourcePopup',option:'width=1100,height=820', urlParams:urlParams});
             	} else {
             		mask.open();
-            		dialog.alert( { msg : "신규로 추가한 경우는 저장후에 주차를 편집하셔야 합니다." }, function () { mask.close();	} );
+            		dialog.alert( { msg : "신규로 추가한 경우는 저장후에 차시를 편집하셔야 합니다." }, function () { mask.close();	} );
             	}
             		
                 break;
@@ -106,7 +106,7 @@ function fn_makeGrid() {
 	           	}
 	        },{
 	            key : "WEEK_CNT",
-	            label : "주차 갯수",
+	            label : "차시 갯수",
 	            width : 80,
 	            align : "right"
 	        },{
@@ -315,7 +315,7 @@ function fn_cbChange(id) {
     <button class="btn btn-default" data-grid-control="reset">초기화</button>
     <button class="btn btn-default" data-grid-control="save">저장</button>
     <button class="btn btn-default" data-grid-control="export">엑셀</button>
-    <button class="btn btn-default" data-grid-control="editDetail">주차 편집</button>
+    <button class="btn btn-default" data-grid-control="editDetail">차시 편집</button>
 </div>
 
 <div style="height:10px"></div>

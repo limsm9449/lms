@@ -244,12 +244,17 @@ function gfn_popup(pDoUrl,pParam,pWIdth, pHeight) {
  * 중복방지 기능
  */
 var evt = {}; 
+var isBtnClick = false;
 function btnUnbind(pBtn) {
+	isBtnClick = true;
+
 	evt[pBtn] = document.getElementById(pBtn).onclick;
-	document.getElementById(pBtn).onclick = null; 
+	document.getElementById(pBtn).onclick = null;
 }
 function btnBind(pBtn) {
 	document.getElementById(pBtn).onclick = evt[pBtn];
+	
+	isBtnClick = false;
 }
 
 /**
@@ -523,6 +528,13 @@ formValid = {
 						return false;
 					}
 				}
+				if ( param.isMobile != undefined && param.isMobile == true ) {
+					if ( isNum(str.replace(/-/gi, "")) == false ) {
+						alert("숫자만 입력 가능합니다.");
+						$($("[name=" + objId + "]")[idx]).select();
+						return false;
+					}
+				}
 			}
 		},
 		
@@ -752,7 +764,7 @@ function gfn_validationCheck( gridObj, fieldParams ) {
 					return false;
 				}
 			} 
-			if ( fieldInfo.length > 0 && fieldInfo.length && fieldValue.length != fieldInfo.length ) {
+			if ( fieldValue != "" && fieldInfo.length > 0 && fieldInfo.length && fieldValue.length != fieldInfo.length ) {
 				mask.open();
 				dialog.alert( { msg : (modified[i].__index + 1) + "라인의 " + fieldInfo.colName + "은(는) " + fieldInfo.length + "자리를 입력해야 합니다." }, function () { mask.close(); } );
 				

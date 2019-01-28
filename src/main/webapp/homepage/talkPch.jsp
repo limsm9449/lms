@@ -174,7 +174,7 @@ function fn_teacherTalkContents(row) {
 	var rtn = "<div class='tch_chat'>  " + 
 			 "	<div class='tch_box'> " + 
 			 "	    <div class='tch_face'>" + 
-			 "		<img src='/cImage/user/" + row.USER_ID + ".png'>" + 
+			 "		<img src='/cImage/user/" + row.USER_ID + "_talk.jpg'>" + 
 			 "	    </div>" + 
 			 "	    <div class='tch_textbox'>" + 
 			 "		<p class='tch_txt'>" + row.CONTENTS.replace(/\n/gi,"<br>") + "</p>" + 

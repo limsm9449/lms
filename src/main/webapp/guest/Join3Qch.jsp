@@ -32,6 +32,10 @@ $(document.body).ready(function () {
 });
 
 function lfn_btn(pKind, pParam) {
+	if ( isBtnClick ) {
+		return;
+	}
+	
 	if ( pKind =="save" ) {
 		if ( lfn_validate() == false )
 			return false;
@@ -121,7 +125,7 @@ function lfn_validate() {
 		$("#userPassword2").focus();
 		return false;
 	}
-	if ( formValid.check("mobile",{isNecess:true,msg:"휴대전화번호를 입력하세요.",minLeng:11,maxLeng:12,isNum:true}) == false ) return false;
+	if ( formValid.check("mobile",{isNecess:true,msg:"휴대전화번호를 입력하세요.",minLeng:11,maxLeng:13,isMobile:true}) == false ) return false;
 	
 	if ( formValid.check("email1",{isNecess:true,msg:"이메일주소를 입력하세요.",maxLeng:50}) == false ) return false;
 	if ( $("#emailKind").val() == "" && $("#email2").val() == "" ) {
@@ -135,7 +139,7 @@ function lfn_validate() {
 		$("#email").val($("#email1").val() + "@" + $("#emailKind").val());
 	}
 	if ( formValid.check("homeZipcode",{isNecess:true,msg:"우편번호를 입력하세요.",maxLeng:50}) == false ) return false;
-	if ( formValid.check("homeAddr",{isNecess:true,msg:"주소를 입력하세요.",maxLeng:50}) == false ) return false;
+	if ( formValid.check("homeAddr",{isNecess:true,msg:"주소를 입력하세요.",maxLeng:100}) == false ) return false;
 	if ( $("#userIdCheck").val() != "Y" ) {
 		alert("회원 아이디를 확인하셔야 합니다.");
 		$("#userId").focus();

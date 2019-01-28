@@ -9,7 +9,7 @@
     <meta charset='utf-8'>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>온라인 시험</title>
+    <title>온라인 평가</title>
 
 	<%@ include file="../common/commMainInclude.jsp" %>
 	
@@ -29,7 +29,7 @@ $(document).ready(function() {
 	
 	$(window).on('beforeunload', function(event){
 		if ( isSave == false && "${set.condiVO.examKind}" == "TOTAL" ) {
-			return "최종 학습평가는 시험 시간이 1시간 입니다. 1시간안에 다시 접속해서 시험을 보시기 바랍니다.";
+			return "최종 학습평가는 평가 시간이 1시간 입니다. 1시간안에 다시 접속해서 평가을 보시기 바랍니다.";
 		}
 	});
 	
@@ -81,9 +81,9 @@ function showRemaining() {
 	var distance = end - now;
 	if (distance < 0) {
 		clearInterval(timer);
-		document.getElementById("time").innerHTML = '시험종료';
+		document.getElementById("time").innerHTML = '평가종료';
 		
-		alert("시험시간이 종료되었습니다.");
+		alert("평가시간이 종료되었습니다.");
 		
 		$("#examKind").val("${set.condiVO.examKind}");
 		lfn_save();
@@ -104,7 +104,7 @@ function lfn_btn(pKind, pParam) {
 		if ( lfn_validate() == false )
 			return false;
 		
-		if ( confirm("시험은 한번만 저장하실 수 있습니다.\n저장하시겠습니까?") == true ) {
+		if ( confirm("평가은 한번만 저장하실 수 있습니다.\n저장하시겠습니까?") == true ) {
 			$("#examKind").val("${set.condiVO.examKind}");
 			lfn_save();
 		}
@@ -242,21 +242,21 @@ function lfn_getCookie() {
 	<input type="hidden" id="week" name="week" value="${set.condiVO.week}"/>
 	<input type="hidden" id="examKind" name="examKind" value=""/>
 	 
-    <!-- 시험 응시 POPUP -->
+    <!-- 평가 응시 POPUP -->
     <div id='popup_exam' class='popup'>
         <div class='popup_fix'>
             <!-- <div class='popup_head clear_fix'>
-                <p>온라인 시험</p>
+                <p>온라인 평가</p>
                 <button type='button' onclick='close_popup("popup_exam")'>X</button>
             </div> -->
             <p class='popup_title'>
-                시험보기
+                평가보기
 <c:choose>
 	<c:when test="${set.condiVO.week eq '0'}">
                 <span>과정을 수료하기 위한 최종 과정평가입니다.</span>
 	</c:when>
 	<c:otherwise>
-                <span>주차별 진행 학습평가입니다.</span>
+                <span>차시별 진행 학습평가입니다.</span>
 	</c:otherwise>
 </c:choose>                  
             </p>
@@ -355,7 +355,7 @@ function lfn_getCookie() {
             <button onclick="javascript:lfn_btn('save'); return false;">제출하기</button>
         </div>
     </div>
-    <!-- 시험 응시 POPUP END-->
+    <!-- 평가 응시 POPUP END-->
 
 </form>
     

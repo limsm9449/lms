@@ -301,6 +301,16 @@ body{
 	top:-1px;
 }
 /* Media query */
+@media all and (max-width:1220px){
+
+	.q_name_txt,
+	.q_name_l{
+		display:none;
+	}
+	.search_box{
+		left:11%;
+	}
+}
 @media all and (max-width:1320px){
 	.cl_left{
 		display:none;

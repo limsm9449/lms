@@ -66,7 +66,7 @@ $(document.body).ready(function () {
             	fn_save();
                 break;
             case "export":
-                grid.exportExcel("회사관리(C2C).xls");
+                grid.exportExcel("개인채널관리.xls");
                 break;
             case "editImage":
             	var row = grid.getList("selected");
@@ -366,7 +366,7 @@ function fn_gridEvent(event, obj) {
 
 <form id="frm" name="frm" method="post">
 
-<h2>회사 관리(C2C)</h2>
+<h2>개인채널 관리</h2>
 <div style="height:10px"></div>
 
 <div class="form-inline">

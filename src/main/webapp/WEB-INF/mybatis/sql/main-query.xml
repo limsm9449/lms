@@ -918,7 +918,7 @@
 					WHERE	A.TALK_ID = #{talkId}
 					AND		A.SEQ <![CDATA[<]]> #{seq}
 					ORDER 	BY SEQ DESC
-					LIMIT	2
+					LIMIT	30
 				) A LEFT OUTER JOIN USER U ON U.USER_ID = A.USER_ID
 					JOIN ( SELECT C2C_USER_ID USER_ID FROM COMPANY WHERE COMP_CD = #{talkId} ) B ON 1 = 1
     </select>
@@ -934,4 +934,24 @@
 		WHERE 	TALK_ID = #{talkId}
 		AND		USER_ID = #{userId}
 	</update>
+	
+	<select id="mainNoticePopupList" parameterType="Main" resultType="hashmap">
+		SELECT 	A.SEQ
+		FROM	MAIN_BOARD_NOTICE A
+		WHERE	CURDATE() BETWEEN OPEN_FROM_DATE AND OPEN_TO_DATE
+    </select>
+
+	<select id="mainNoticePopup" parameterType="Main" resultType="hashmap">
+		SELECT 	A.*
+		FROM	MAIN_BOARD_NOTICE A
+		WHERE	SEQ = #{seq}
+    </select>
+
+	<select id="pChannelInfo" parameterType="Main" resultType="hashmap">
+		SELECT 	A.USER_NAME
+				,A.SLOGAN
+		FROM	USER A
+		WHERE	USER_ID = (SELECT C2C_USER_ID FROM COMPANY WHERE COMP_CD = #{compCd})
+    </select>
+    
 </mapper>

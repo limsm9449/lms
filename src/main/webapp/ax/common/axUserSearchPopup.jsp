@@ -133,7 +133,7 @@ function fn_makeGrid() {
 			        	}
 			        },{
 			        	key : "CONTENTS_MANAGER_YN", 
-			        	label : "컨텐츠 관리자", 
+			        	label : "콘텐츠 관리자", 
 			            width : 120,
 			        	align : "center", 
 			        	editor : { type : "checkbox", config : {height: 17, trueValue: "Y", falseValue: "N"},

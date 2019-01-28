@@ -129,7 +129,7 @@ $(document.body).ready(function () {
             case "view" :
             	var urlParams = "mainViewMode=TEST";
             	
-            	if ( $("#CHANNEL_KIND option:selected").val() == "" ) {
+            	if ( $("#CHANNEL_KIND option:selected").val() == "Q_CHANNEL" ) {
         			f_popup('/main/content', {displayName:'mainPopup',option:'width=1400,height=900', urlParams:urlParams});
             	} else {
             		window.open("","mainPopup","width=1400,height=900");
@@ -162,7 +162,7 @@ function fn_makeGrid() {
 	        },{
 	            key : "CHANNEL_KIND",
 	            label : "채널 종류",
-	            width : 150,
+	            width : 130,
 	            align : "center", 
 	        	editor: {
                     type : "select", 
@@ -180,7 +180,7 @@ function fn_makeGrid() {
 	        },{
 	            key : "FRAME_KIND",
 	            label : "프레임 종류",
-	            width : 130,
+	            width : 180,
 	            align : "center", 
 	        	editor: {
                     type : "select", 

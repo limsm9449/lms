@@ -164,7 +164,11 @@ public class SessionInterceptor extends HandlerInterceptorAdapter {
 		   	 	if ( CommUtil.isEqual("B2C", compType) && SessionUtil.getCourseCategoryList() == null ) {
 	   	 			SessionUtil.setAttribute("courseCategoryList", commSvr.getCourseCategoryList());
 	   	 		}
-		   	 	
+
+		   	 	if ( CommUtil.isEqual("C2C", compType) && SessionUtil.getAttribute("pChannelInfo") == null ) {
+	   	 			SessionUtil.setAttribute("pChannelInfo", commSvr.getPChannelInfo());
+	   	 		}
+
 		    	if ( url.equals("/") || 
 		    			url.equals("/lms") || 
 		    			CommUtil.isMatchUrl(urls, url) || 

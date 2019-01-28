@@ -30,7 +30,7 @@ $(document.body).ready(function () {
 	grid = gfn_makeAx5Grid("first-grid",
 		[ 	{
 	        	key : "WEEK", 
-	        	label : "주차", 
+	        	label : "차시", 
 	            width : 70,
 	        	align : "center",
 	            editor : { 
@@ -41,7 +41,7 @@ $(document.body).ready(function () {
                 }
 	        },{
 	        	key : "CLIP", 
-	        	label : "클립", 
+	        	label : "클립순서", 
 	            width : 80,
 	        	align : "center",
 	            editor : { 
@@ -173,7 +173,7 @@ $(document.body).ready(function () {
             	window.close();
                 break;
             case "export":
-                grid.exportExcel("과정 주차별 페이지 관리.xls");
+                grid.exportExcel("과정 차시별 페이지 관리.xls");
                 break;
             case "import":
             	var urlParams = "page=/ax/common/axExcelUpload";
@@ -203,8 +203,8 @@ function fn_save() {
 	var fieldParams = {
 		DUP_FIELDS : "WEEK,CLIP",	
 		TITLE : { mendatory : true, colName : "목차" },
-		WEEK : { mendatory : true, colName : "주차", type : "number" },
-   		CLIP : { mendatory : true, colName : "클립", type : "number" },
+		WEEK : { mendatory : true, colName : "차시", type : "number" },
+   		CLIP : { mendatory : true, colName : "클립순서", type : "number" },
    		FROM_PAGE : { mendatory : true, colName : "시작 페이지", type : "number" },
    		TO_PAGE : { mendatory : true, colName : "종료 페이지", type : "number" }
    	};
@@ -282,7 +282,7 @@ function fn_gridEvent(event, obj) {
 
 <form id="frm" name="frm" method="post">
 
-<h2>과정 주차별 페이지 관리</h2>
+<h2>과정 차시별 페이지 관리</h2>
 <div style="height:10px"></div>
 
 <div>

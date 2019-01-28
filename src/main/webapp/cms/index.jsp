@@ -75,7 +75,7 @@ function lfn_login(userId) {
 				<select id="auth" name="auth" class="input_log auth">
    		          	<option value="">권한 선택</option>
    					<option value="ADMIN" selected="">Admin</option>
-   					<option value="CONTENTS_MANAGER">컨텐츠 관리자</option>
+   					<option value="CONTENTS_MANAGER">콘텐츠 관리자</option>
    					<option value="SITE_MANAGER">사이트 관리자</option>
    					<option value="TEACHER">Teacher</option>
    					<option value="TUTOR">Tutor</option>
@@ -88,31 +88,6 @@ function lfn_login(userId) {
 
 </form>
 <iframe name="tranFrame" style="display:none;"></iframe>
-
-		<br>
-		<br>
-		<br>
-		<br>
-		<a href="#" onclick="javascript:lfn_login('admin'); return false;">admin</a><br>
-		<a href="#" onclick="javascript:lfn_login('admin2'); return false;">Contents admin</a><br>
-		<a href="#" onclick="javascript:lfn_login('admin3'); return false;">Manage admin</a><br>
-		<a href="#" onclick="javascript:lfn_login('USER001'); return false;">USER001</a>
-		<a href="#" onclick="javascript:lfn_login('USER002'); return false;">USER002</a>
-		<a href="#" onclick="javascript:lfn_login('USER003'); return false;">USER003</a>
-		<a href="#" onclick="javascript:lfn_login('USER004'); return false;">USER004</a>
-		<a href="#" onclick="javascript:lfn_login('USER005'); return false;">USER005</a><br>
-		<a href="#" onclick="javascript:lfn_login('TUTOR1'); return false;">TUTOR1</a>
-		<a href="#" onclick="javascript:lfn_login('TUTOR2'); return false;">TUTOR2</a>
-		<a href="#" onclick="javascript:lfn_login('TUTOR3'); return false;">TUTOR3</a>
-		<a href="#" onclick="javascript:lfn_login('TUTOR4'); return false;">TUTOR4</a>
-		<a href="#" onclick="javascript:lfn_login('TUTOR5'); return false;">TUTOR5</a><br>
-		<a href="#" onclick="javascript:lfn_login('TEACHER1'); return false;">TEACHER1</a>
-		<a href="#" onclick="javascript:lfn_login('TEACHER2'); return false;">TEACHER2</a>
-		<a href="#" onclick="javascript:lfn_login('TEACHER3'); return false;">TEACHER3</a>
-		<a href="#" onclick="javascript:lfn_login('TEACHER4'); return false;">TEACHER4</a>
-		<a href="#" onclick="javascript:lfn_login('TEACHER5'); return false;">TEACHER5</a><br>
-		<a href="#" onclick="javascript:lfn_login('c1user001'); return false;">c1user001</a>
-		<a href="#" onclick="javascript:lfn_login('c5user001'); return false;">c5user001</a>
 		
 <script src='/resources/homepage/js/dev_sub.js?timestamp=<%=timestamp%>'></script>
 </body>

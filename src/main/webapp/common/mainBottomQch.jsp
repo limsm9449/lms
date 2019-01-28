@@ -3,6 +3,9 @@
         <div class='footer_wrap'>
             <ul class='foot_link_box clear_fix'>
                 <li>
+                    <a href='#' target='_blank'></a>
+                </li>
+                <li>
                     <a href='http://www.qpeople.co.kr/page1_1.html' target='_blank'>회사소개</a>
                 </li>
                 <li>

@@ -118,7 +118,7 @@ public class AxAccountController {
     }
     
     @RequestMapping(value = "/account/axAccountImageUpload", method = RequestMethod.POST)
-    public String axAccountImageUpload(@RequestParam("kind") String kind, @RequestParam("USER_ID") String USER_ID, MultipartHttpServletRequest request, Model model) throws Exception {
+    public String axAccountImageUpload(@RequestParam("kind") String kind, @RequestParam("USER_ID") String userId, MultipartHttpServletRequest request, Model model) throws Exception {
     	HashMap<String, Object> hm = new HashMap<String, Object>();
 
     	try {
@@ -130,9 +130,17 @@ public class AxAccountController {
 	    	
 	    	// 파일 처리
 	    	Map<String, MultipartFile> files = request.getFileMap();
-	        CommonsMultipartFile cmf = (CommonsMultipartFile) files.get("userImgFile");
 	        
-	        String fileName = USER_ID + ".jpg";
+	        String fileName = "";
+	        CommonsMultipartFile cmf = null;
+
+	        if ( "USER".equals(kind) ) {
+	        	fileName = userId + ".jpg";
+	        	cmf = (CommonsMultipartFile) files.get("userImgFile");
+	        } else if ( "USER_TALK".equals(kind) ) {
+	        	fileName = userId+ "_talk.jpg";
+	        	cmf = (CommonsMultipartFile) files.get("userTalkImgFile");
+	        }
 	        
 	    	//파일 저장
 	        File f = new File(attachDir + "//" + fileName);
@@ -141,7 +149,7 @@ public class AxAccountController {
 	        //파일 정보를 DB에 저장
 	        HashMap<String, Object> paramMap = new HashMap<String, Object>();
 	        paramMap.put("kind", kind);
-	        paramMap.put("USER_ID", USER_ID);
+	        paramMap.put("USER_ID", userId);
 	        
 	        hm = svr.axAccountImageUpload(paramMap);
 	        

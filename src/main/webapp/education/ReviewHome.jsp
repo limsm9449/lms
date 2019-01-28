@@ -27,16 +27,16 @@
 var gCondition = {
 }
 
-<%-- 주차별 정보 --%>
+<%-- 차시별 정보 --%>
 var weeks = [<c:forEach var="row" items="${set.resourceList}" varStatus="idx"><c:if test="${idx.index ne 0}">,</c:if> ${row.week}</c:forEach>];
 
-<%-- 주차별 페이지 정보 --%>
+<%-- 차시별 페이지 정보 --%>
 var pages = [<c:forEach var="row" items="${set.resourceList}" varStatus="idx"><c:if test="${idx.index ne 0}">,</c:if> ${row.pageCnt}</c:forEach>];
 
-<%-- 주차별 디렉토리 정보 --%>
+<%-- 차시별 디렉토리 정보 --%>
 var directorys = [<c:forEach var="row" items="${set.resourceList}" varStatus="idx"><c:if test="${idx.index ne 0}">,</c:if> "${row.rootDirectory}/${row.directory}/"</c:forEach>];
 
-<%-- 주차별 목차 --%>
+<%-- 차시별 목차 --%>
 var titles = [<c:forEach var="row" items="${set.resourceList}" varStatus="idx"><c:if test="${idx.index ne 0}">,</c:if> "${row.week}.${row.title}"</c:forEach>];
 
 var rootDirectory = "${set.data.directory}";
@@ -67,7 +67,7 @@ $(document).ready(function() {
             </p>
         </div>
         <div class='learnig_test_image'>
-            <iframe name="eduContent" id="eduContent" src="about:blank;" style="width: ${set.data.hPx}px; height: ${set.data.vPx}px;">학습 컨텐츠 영역</iframe>
+            <iframe name="eduContent" id="eduContent" src="about:blank;" style="width: ${set.data.hPx}px; height: ${set.data.vPx}px;">학습 콘텐츠 영역</iframe>
         </div>
         <div class='learnig_btn_area clear_fix'>
             <button onclick="javascript:Popup.showUserBoard('NOTICE','${set.condiVO.courseId}'); return false;">공지사항</button>
@@ -76,7 +76,7 @@ $(document).ready(function() {
             <button onclick="javascript:Popup.showUserBoard('QNA','${set.condiVO.courseId}'); return false;">Q&A</button>
 
 			<button onclick="javascript:Popup.showProgress('${set.condiVO.courseId}'); return false;">진도</button>
-            <button onclick="javascript:Popup.showExamResult('${set.condiVO.courseId}', 0); return false;">시험 결과</button>
+            <button onclick="javascript:Popup.showExamResult('${set.condiVO.courseId}', 0); return false;">평가 결과</button>
             <button onclick="javascript:Popup.showQuestResult('${set.condiVO.courseId}'); return false;">설문 결과</button>
             <button onclick="javascript:Popup.showReportResult('${set.condiVO.courseId}'); return false;">과정리포트 채점결과</button>
         </div>

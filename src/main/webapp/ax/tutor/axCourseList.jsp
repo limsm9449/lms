@@ -154,7 +154,7 @@ function fn_makeGrid() {
 			            align : "right"
 			        },{
 			            key : "EXAM_RATE",
-			            label : "시험",
+			            label : "평가",
 			            width : 70,
 			            align : "right"
 			        },{
@@ -179,7 +179,7 @@ function fn_makeGrid() {
 		        ]
 	        },{
 	        	key : "COURSE_EXAM_TYPE_NAME", 
-	        	label : "시험 유형", 
+	        	label : "평가 유형", 
 	            width : 150,
 	        	align : "left"
 	        },{
@@ -193,7 +193,7 @@ function fn_makeGrid() {
 			            align : "right"
 			        },{
 			            key : "EXAM_FAIL",
-			            label : "시험",
+			            label : "평가",
 			            width : 70,
 			            align : "right"
 			        },{

@@ -7,8 +7,6 @@
 %>
 		<div id='screen_top'></div>
 
-		<input type="hidden" id="courseName" name="courseName">
-		
         <!-- PC HEADER -->
         <header class='head_pc'>
             <div class="head_wrap pc clear_fix">
@@ -18,10 +16,10 @@
                     </a>
                 </div>
                 <div class='head_con search_box'>
-                    <input type="text" id="topSearch1" name="topSearch1" value="${set.condiVO.courseName}">
-                    <button onclick="$('#courseName').val($('#topSearch1').val());  f_submitSelf('/main/courseList');">
-                        <img src='/resources/homepagePch/img/search_ic.png' alt=' '>
-                    </button>
+                    <img src='/resources/homepagePch/img/main/ic_Ch.png' alt=' '  id="p_logo">
+                    <span class="q_name">${pChannelInfo.USER_NAME}</span>
+                    <span class="q_name_l">l</span>
+                    <span class="q_name_txt">${pChannelInfo.SLOGAN}</span>
                 </div>
                 <div class='head_con util_box'>
 <c:if test="${empty session}">
@@ -39,23 +37,23 @@
                 </div>
                 <div class='menu_dropdown_wrapper' id='menu_dropdown_pc'>
                     <div class='menu_dropdown_wrap clear_fix'>
-                        <ul class='menu_sub classroom' id="menu_sub2">
+                        <ul class='menu_sub ' id="menu_sub1">
                             <li class='menu_title'><a href="javascript:" onclick="page.goPage('/normalUser/attendCourseList', '');">나의강의실</a></li>
                             <li><a href="javascript:" onclick="page.goPage('/normalUser/attendCourseList');">수강중 과정</a></li>
                             <li><a href="javascript:" onclick="page.goPage('/normalUser/waitingCourseList');">대기중 과정</a></li>
                             <li><a href="javascript:" onclick="page.goPage('/normalUser/myCourseList');">수강완료과정</a></li>
                         </ul>
-                        <ul class='menu_sub' id="menu_sub3">
+                        <ul class='menu_sub' id="menu_sub2">
                             <li class='menu_title'><a href='#'>마이페이지</a></li>
                             <li><a href='javascript:' onclick="page.goPage('/main/myOrder');">주문/신청 조회</a></li>
                             <li><a href='javascript:' onclick="page.goPage('/main/myPoint');">포인트</a></li>
                             <li><a href='javascript:' onclick="page.goPage('/main/myActivity');">나의 활동관리</a></li>
+                            <li><a href='javascript:' onclick="page.goPage('/main/myQnaList');">학습 Q&A 내역</a></li>
+                            <li><a href="javascript:" onclick="page.goPage('/member/userMemberU');">회원정보수정</a></li>                            
                             <li><a href="javascript:" onclick="page.goPage('/member/userMemberU');">회원정보수정</a></li>
                             <li><a href="javascript:" onclick="page.goPage('/member/memberChangePassword');">비밀번호 변경</a></li>
-                            <li><a href='javascript:' onclick="page.goPage('/counsel/userCounselList');">상담내역</a></li>
-                            <li><a href='javascript:' onclick="page.goPage('/main/myQnaList');">학습 Q&A 내역</a></li>
                         </ul>
-                        <ul class='menu_sub' id="menu_sub4">
+                        <ul class='menu_sub' id="menu_sub3">
                             <li class='menu_title'><a href="javascript:" onclick="page.goPage('/main/service', '');">고객지원</a></li>
                             <li><a href="javascript:" onclick="page.goPage('/main/noticeList');">공지사항</a></li>
                             <li><a href="javascript:" onclick="page.goPage('/main/faqList');">자주 묻는 질문</a></li>
@@ -94,12 +92,6 @@
 <c:if test="${!empty session}">      		
                     <a href="javascript:" onclick="gfn_ajax.logout()" class='last_right'>로그아웃</a>
 </c:if>  
-                </div>
-                <div class='head_con search_box'>
-                    <input type="text" id="topSearch2" name="topSearch2" value="${set.condiVO.courseName}">
-                    <button onclick="$('#courseName').val($('#topSearch2').val());  f_submitSelf('/main/courseList');">
-                        <img src='/resources/homepagePch/img/search_ic.png' alt=' '>
-                    </button>
                 </div>
             </div>
             <div class='mobile_dropwdown_wrap'>
@@ -142,6 +134,8 @@
                             <li class='first_depth'><a href='javascript:' onclick="page.goPage('/main/myOrder');">주문/신청 조회</a></li>
                             <li><a href='javascript:' onclick="page.goPage('/main/myPoint');">포인트</a></li>
                             <li><a href='javascript:' onclick="page.goPage('/main/myActivity');">나의 활동관리</a></li>
+                            <li><a href='javascript:' onclick="page.goPage('/main/myActivity');">나의 활동관리</a></li>
+                            <li><a href='javascript:' onclick="page.goPage('/main/myQnaList');">학습 Q&A 내역</a></li>
                             <li><a href="javascript:" onclick="page.goPage('/member/userMemberU');">회원정보수정</a></li>
                             <li><a href="javascript:" onclick="page.goPage('/member/memberChangePassword');">비밀번호 변경</a></li>
                         </ul>

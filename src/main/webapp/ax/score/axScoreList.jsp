@@ -188,7 +188,7 @@ function fn_makeGrid() {
 			            align : "right"
 			        },{
 			            key : "EXAM_CNT",
-			            label : "시험",
+			            label : "평가",
 			            width : 70,
 			            align : "right"
 			        },{

@@ -30,7 +30,7 @@
 	
 <div id="popup_wrap">
   	<div class="pop_header">
-    	<h3 class="title">시험</h3>
+    	<h3 class="title">평가</h3>
     	<p class="closeBtn" onClick="window.close();">Close</p>
   	</div>
   	<div class="pop_content">

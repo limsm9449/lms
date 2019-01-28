@@ -384,7 +384,7 @@ function fn_makeGrid() {
 		                }
 			        },{
 			        	key : "CONTENTS_MANAGER_YN", 
-			        	label : "컨텐츠 관리자", 
+			        	label : "콘텐츠 관리자", 
 			            width : 120,
 			        	align : "center", 
 			        	editor : { type : "checkbox", config : {height: 17, trueValue: "Y", falseValue: "N"} },
@@ -429,6 +429,11 @@ function fn_makeGrid() {
 			},{
 	        	key : "USER_IMG", 
 	        	label : "사용자 이미지", 
+	            width : 110,
+	        	align : "center"
+			},{
+	        	key : "TALK_IMAGE_YN", 
+	        	label : "Talk 이미지", 
 	            width : 110,
 	        	align : "center"
 			},{
@@ -624,7 +629,7 @@ function fn_cbChange(id) {
 			<option value="MANAGER">관리자</option>
 			<option value="ADMIN"> - Admin</option>
 			<option value="SITE_MANAGER"> - 사이트 관리자</option>
-			<option value="CONTENTS_MANAGER"> - 컨텐츠 관리자</option>
+			<option value="CONTENTS_MANAGER"> - 콘텐츠 관리자</option>
 			<option value="TEACHER"> - 강사</option>
 			<option value="TUTOR"> - 튜터</option>
 			<option value="USER">일반사용자</option>

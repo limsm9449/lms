@@ -992,6 +992,22 @@ public class MainController {
 
         return "/common/json";
     }
-    
+
+    @RequestMapping(value = "/main/mainNoticePopup")
+    public String mainNoticePopup(@ModelAttribute MainVO vo, Model model) throws Exception {
+    	try {
+    		MainSet set = new MainSet();
+    		set.setCondiVO(vo);
+    		
+			// 메인 페이지에 나올 과정 리스트
+			set = svr.mainNoticePopup(set);
+			
+	        model.addAttribute("set", set );
+    	} catch ( Exception e ) {
+    		e.printStackTrace();
+    	}
+
+        return "/homepage/mainNoticePopup";
+    }
 
 }

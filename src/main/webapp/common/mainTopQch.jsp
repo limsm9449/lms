@@ -39,36 +39,29 @@
                 </div>
                 <div class='menu_dropdown_wrapper' id='menu_dropdown_pc'>
                     <div class='menu_dropdown_wrap clear_fix'>
-                        <ul class='menu_sub' id="menu_sub1">
-                            <li class='menu_title'><a href="javascript:" onclick="page.goPage('/main/courseList', '');">전체과정보기</a></li>
-                        </ul>
-                        <ul class='menu_sub classroom' id="menu_sub2">
+                        <ul class='menu_sub classroom' id="menu_sub1">
                             <li class='menu_title'><a href="javascript:" onclick="page.goPage('/normalUser/attendCourseList', '');">나의강의실</a></li>
                             <li><a href="javascript:" onclick="page.goPage('/normalUser/attendCourseList');">수강중 과정</a></li>
                             <li><a href="javascript:" onclick="page.goPage('/normalUser/waitingCourseList');">대기중 과정</a></li>
                             <li><a href="javascript:" onclick="page.goPage('/normalUser/myCourseList');">수강완료과정</a></li>
                         </ul>
-                        <ul class='menu_sub' id="menu_sub3">
+                        <ul class='menu_sub' id="menu_sub2">
                             <li class='menu_title'><a href='#'>마이페이지</a></li>
                             <li><a href='javascript:' onclick="page.goPage('/main/myOrder');">주문/신청 조회</a></li>
                             <li><a href='javascript:' onclick="page.goPage('/main/myPoint');">포인트</a></li>
                             <li><a href='javascript:' onclick="page.goPage('/main/myActivity');">나의 활동관리</a></li>
+                            <li><a href='javascript:' onclick="page.goPage('/counsel/userCounselList');">상담내역</a></li>
+                            <li><a href='javascript:' onclick="page.goPage('/main/myQnaList');">학습 Q&A 내역</a></li>
                             <li><a href="javascript:" onclick="page.goPage('/member/userMemberU');">회원정보수정</a></li>
                             <li><a href="javascript:" onclick="page.goPage('/member/memberChangePassword');">비밀번호 변경</a></li>
                         </ul>
-                        <ul class='menu_sub' id="menu_sub4">
+                        <ul class='menu_sub' id="menu_sub3">
                             <li class='menu_title'><a href="javascript:" onclick="page.goPage('/main/service', '');">고객지원</a></li>
                             <li><a href="javascript:" onclick="page.goPage('/main/noticeList');">공지사항</a></li>
                             <li><a href="javascript:" onclick="page.goPage('/main/faqList');">자주 묻는 질문</a></li>
                             <li><a href="javascript:" onclick="page.goPage('/main/mailQuestion');">1:1 메일문의</a></li>
                             <li><a href="javascript:" onclick="page.goPage('/main/tutorial');">학습지원</a></li>
                             <li><a href="javascript:" onclick="page.goPage('/guest/bankInfo');">입금계좌안내</a></li>
-                        </ul>
-                        <ul class='menu_sub' id="menu_sub5">
-                            <li class='menu_title'><a href=''>큐러닝</a></li>
-                            <li><a href='http://www.qpeople.co.kr/page1_1.html' target='_blank'>회사소개</a></li>
-                            <li><a href="#" onclick="page.goNsJsp('company_learningQch'); return false;">기업교육문의</a></li>
-                            <li><a href="#" onclick="page.goNsJsp('tutor_supportQch'); return false;">튜터지원</a></li>
                         </ul>
                     </div>
                    
@@ -149,6 +142,8 @@
                             <li class='first_depth'><a href='javascript:' onclick="page.goPage('/main/myOrder');">주문/신청 조회</a></li>
                             <li><a href='javascript:' onclick="page.goPage('/main/myPoint');">포인트</a></li>
                             <li><a href='javascript:' onclick="page.goPage('/main/myActivity');">나의 활동관리</a></li>
+                            <li><a href='javascript:' onclick="page.goPage('/main/myActivity');">나의 활동관리</a></li>
+                            <li><a href='javascript:' onclick="page.goPage('/main/myQnaList');">학습 Q&A 내역</a></li>
                             <li><a href="javascript:" onclick="page.goPage('/member/userMemberU');">회원정보수정</a></li>
                             <li><a href="javascript:" onclick="page.goPage('/member/memberChangePassword');">비밀번호 변경</a></li>
                         </ul>

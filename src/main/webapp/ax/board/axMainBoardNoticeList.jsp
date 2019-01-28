@@ -144,7 +144,36 @@ function fn_makeGrid() {
 	        	editor : { type : "text" } ,
 				styleClass: function () {
                     return "grid-cell-edit";
-                } 
+                }
+
+	        },{
+              	key : undefined, 
+              	label: "팝업 오픈", 
+              	columns: [	        
+              		{
+			            key : "OPEN_FROM_DATE",
+			            label : "시작일",
+			            width : 90,
+			            align : "center",
+			            editor : { 
+			            	type : "date"
+						},
+						styleClass: function () {
+		                    return "grid-cell-edit";
+		                }
+			        },{
+			            key : "OPEN_TO_DATE",
+			            label : "종료일",
+			            width : 90,
+			            align : "center",
+			            editor : { 
+			            	type : "date"
+						},
+						styleClass: function () {
+		                    return "grid-cell-edit";
+		                }
+			        }
+		        ]	        	
 	        }
 		], 
 	  	null,

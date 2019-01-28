@@ -11,7 +11,7 @@
                     	<li class='quick_menu_list' id="q_menu1"></li>
                     </a>
                     <a href='#' onclick="page.goPage('/main/courseList', '');">
-                    	<li class='quick_menu_list' id="q_menu2"><c:if test="${!empty cart}"><img src="/resources/homepageQch/img/main/quick/q_menu2_circle.png" alt=' ' id="q_menu2_circle"><span class="q_menu2_num">${cart.size()}</span></c:if></li>
+                    	<li class='quick_menu_list' id="q_menu2"></li>
                     </a>
                     <a href='#' onclick="page.goPage('/main/cart');">
                     	<li class='quick_menu_list' id="q_menu3"> </li>
@@ -23,6 +23,7 @@
                     	<li class='quick_menu_list' id="q_menu5"></li>
                     </a>
                     <li class='quick_menu_list' id="q_menu7">Q</li>
+                    <c:if test="${!empty cart}"><img src="/resources/homepageQch/img/main/quick/q_menu2_circle.png" alt=' ' id="q_menu2_circle"><span class="q_menu2_num">${cart.size()}</span></c:if>
                     
                 </ul>
                <!-- 탑다운버튼1111111111111<p class='quick_top'>

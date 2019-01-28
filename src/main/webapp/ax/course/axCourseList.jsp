@@ -77,7 +77,7 @@ $(document.body).ready(function () {
             	}
             	if ( row[0]["NEXT_CREATE_FLAG"] == "Y" ) {
             		mask.open();
-            		dialog.alert( { msg : "과정 시험을 먼저 삭제하셔야 합니다." }, function () { mask.close();	} );
+            		dialog.alert( { msg : "과정 평가을 먼저 삭제하셔야 합니다." }, function () { mask.close();	} );
             		return;
             	}
 
@@ -368,7 +368,7 @@ function fn_makeGrid() {
 		                }
 			        },{
 			            key : "EXAM_RATE",
-			            label : "시험",
+			            label : "평가",
 			            width : 70,
 			            align : "right",
 			            editor : { 
@@ -414,7 +414,7 @@ function fn_makeGrid() {
 		        ]
 	        },{
 	        	key : "COURSE_EXAM_TYPE_NAME", 
-	        	label : "시험 유형", 
+	        	label : "평가 유형", 
 	            width : 150,
 	        	align : "left", 
 				styleClass: function () {
@@ -437,7 +437,7 @@ function fn_makeGrid() {
 		                }
 			        },{
 			            key : "EXAM_FAIL",
-			            label : "시험",
+			            label : "평가",
 			            width : 70,
 			            align : "right",
 			            editor : { 
@@ -747,7 +747,7 @@ function fn_save() {
 		TUTOR_ID : { mendatory : true, colName : "튜터" },
 		COURSE_COST : { mendatory : true, colName : "과정비용", type : "number" },
 		REPORT_RATE : { mendatory : true, colName : "레포트", type : "number" },
-		EXAM_RATE : { mendatory : true, colName : "시험", type : "number" },
+		EXAM_RATE : { mendatory : true, colName : "평가", type : "number" },
 		DISCUSSION_RATE : { mendatory : true, colName : "토론", type : "number" },
 		PROGRESS_RATE : { mendatory : true, colName : "강의진도", type : "number" },
 		C_PERIOD : { colName : "교육일수", type : "number" }

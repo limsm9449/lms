@@ -9,7 +9,7 @@
     <meta charset='utf-8'>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>온라인 시험</title>
+    <title>온라인 평가</title>
 
 	<%@ include file="../common/commMainInclude.jsp" %>
 	
@@ -20,16 +20,16 @@
 </head>
 
 <body>
-    <!-- 시험 결과 POPUP -->
+    <!-- 평가 결과 POPUP -->
     <div id='popup_exam_result' class='popup'>
         <div class='popup_fix'>
             <p class='popup_title'>
-                시험보기
+                평가보기
                 <span>과정을 수료하기 위한 최종 과정평가입니다.</span>
             </p>
             <div class='popup_score_box'>
                 <div class='popup_score clear_fix'>
-                    <p class='score_text'>최종평가<br>시험결과</p>
+                    <p class='score_text'>최종평가<br>평가결과</p>
                     <p class='score_value'>점수 : <span>${set.eval.examTotal}</span>점 입니다.</p>
                 </div>
                 <ul class='popup_info_list score'>
@@ -134,7 +134,7 @@
             <button onclick="javascript:window.close()">닫기</button>
         </div>
     </div>
-    <!-- 시험 결과 POPUP END-->
+    <!-- 평가 결과 POPUP END-->
 </body>
 
 </html>

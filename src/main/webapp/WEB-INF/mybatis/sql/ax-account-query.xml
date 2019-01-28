@@ -157,6 +157,8 @@
     	   SET 	UPDATE_DATE = CURRENT_TIMESTAMP
     	       	,UPDATE_USER = #{SESSION_USER_ID}
 		   		,USER_IMG = 'Y'
+		   <if test="kind != null and kind == 'USER_IMG'"> ,USER_IMG = 'Y'</if>
+		   <if test="kind != null and kind == 'USER_TALK'"> ,TALK_IMAGE_YN = 'Y'</if>
     	 WHERE 	USER_ID = #{USER_ID} 
 	</update>  
 	

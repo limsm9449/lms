@@ -227,12 +227,11 @@ function gfn_openMenu(pageId, params) {
 			              	<li><a href="#" class="subMenu linker" onclick="gfn_openMenu('axCourseCodeList'); gfn_subMenu(this);"><span>과정 코드 관리</span></a></li>
 			              	<li><a href="#" class="subMenu linker" onclick="gfn_openMenu('axCourseMasterList'); gfn_subMenu(this);"><span>과정 Master 관리</span></a></li>
 			              	<li><a href="#" class="subMenu linker" onclick="gfn_openMenu('axCourseReportList'); gfn_subMenu(this);"><span>과정 리포트 관리</span></a></li>
-			              	<li><a href="#" class="subMenu linker" onclick="gfn_openMenu('axCourseExamList'); gfn_subMenu(this);"><span>과정 시험 관리</span></a></li>
-			              	<li><a href="#" class="subMenu linker" onclick="gfn_openMenu('axCourseExamTypeList'); gfn_subMenu(this);"><span>과정 시험 유형 관리</span></a></li>
+			              	<li><a href="#" class="subMenu linker" onclick="gfn_openMenu('axCourseExamList'); gfn_subMenu(this);"><span>과정 평가 관리</span></a></li>
+			              	<li><a href="#" class="subMenu linker" onclick="gfn_openMenu('axCourseExamTypeList'); gfn_subMenu(this);"><span>과정 평가 유형 관리</span></a></li>
 			         	</ul>
 			      	</li>
 	          		<li><a href="#" class="mainMenu linker" onclick="gfn_openMenu('axCourseList'); gfn_menu(this)" id="firstGroup"><span>강의 관리</span></a></li>
-	          		<li><a href="#" class="mainMenu linker" onclick="gfn_openMenu('axMainPageList'); gfn_menu(this)" id="firstGroup"><span>메인 페이지 관리</span></a></li>
 	          		<li><a href="#" class="mainMenu linker" onclick="gfn_openMenu('axScoreList'); gfn_menu(this)"><span>성적 관리</span></a></li>
 	          		<li><a href="#" class="mainMenu linker" onclick="gfn_menu(this)"><span>입금 관리</span></a>
 			            <ul style="display:none" class="subMenuUl">
@@ -256,7 +255,7 @@ function gfn_openMenu(pageId, params) {
 			            <ul style="display:none" class="subMenuUl">
 			              	<li><a href="#" class="subMenu linker" onclick="gfn_openMenu('axAccountList'); gfn_subMenu(this);"><span>사용자 관리</span></a></li>
 			              	<li><a href="#" class="subMenu linker" onclick="gfn_openMenu('axCompanyList'); gfn_subMenu(this);"><span>회사 관리</span></a></li>
-			              	<li><a href="#" class="subMenu linker" onclick="gfn_openMenu('axCompanyC2cList'); gfn_subMenu(this);"><span>회사(C2C) 관리</span></a></li>
+			              	<li><a href="#" class="subMenu linker" onclick="gfn_openMenu('axCompanyC2cList'); gfn_subMenu(this);"><span>개인채널 관리</span></a></li>
 			         	</ul>
 			      	</li>
 	          		<li><a href="#" class="mainMenu linker" onclick="gfn_menu(this)"><span>포인트 관리</span></a>
@@ -303,6 +302,7 @@ function gfn_openMenu(pageId, params) {
 			              	<li><a href="#" class="subMenu linker" onclick="gfn_openMenu('axCodeList'); gfn_subMenu(this);"><span>코드</span></a></li>
 			         	</ul>
 			      	</li>
+	          		<li><a href="#" class="mainMenu linker" onclick="gfn_openMenu('axMainPageList'); gfn_menu(this)" id="firstGroup"><span>메인 페이지 관리(?)</span></a></li>
 </c:if>
 <c:if test="${auth eq 'CONTENTS_MANAGER'}">         		
 	          		<li><a href="#" class="mainMenu linker" onclick="gfn_menu(this)" id="cmFirstGroup"><span>과정 관리</span></a>
@@ -310,8 +310,8 @@ function gfn_openMenu(pageId, params) {
 			              	<li><a href="#" class="subMenu linker" onclick="gfn_openMenu('axCourseCodeListCm'); gfn_subMenu(this);" id="cmFirst"><span>과정 코드 관리</span></a></li>
 			              	<li><a href="#" class="subMenu linker" onclick="gfn_openMenu('axCourseMasterList'); gfn_subMenu(this);"><span>과정 Master 관리</span></a></li>
 			              	<li><a href="#" class="subMenu linker" onclick="gfn_openMenu('axCourseReportList'); gfn_subMenu(this);"><span>과정 레포트 관리</span></a></li>
-			              	<li><a href="#" class="subMenu linker" onclick="gfn_openMenu('axCourseExamList'); gfn_subMenu(this);"><span>과정 시험 관리</span></a></li>
-			              	<li><a href="#" class="subMenu linker" onclick="gfn_openMenu('axCourseExamTypeList'); gfn_subMenu(this);"><span>과정 시험 유형 관리</span></a></li>
+			              	<li><a href="#" class="subMenu linker" onclick="gfn_openMenu('axCourseExamList'); gfn_subMenu(this);"><span>과정 평가 관리</span></a></li>
+			              	<li><a href="#" class="subMenu linker" onclick="gfn_openMenu('axCourseExamTypeList'); gfn_subMenu(this);"><span>과정 평가 유형 관리</span></a></li>
 			         	</ul>
 			      	</li>
 	          		<li><a href="#" class="mainMenu linker" onclick="gfn_openMenu('axCourseListCm'); gfn_menu(this)"><span>강의 관리</span></a></li>

@@ -49,7 +49,7 @@ function fn_delete() {
 function fn_ok() {
 	if ( $("#CB_EXAM_TYPE option:selected").val() == "" ) {
 		mask.open();
-		dialog.alert( { msg : "시험 유형을 선택하셔야 합니다." }, function () { mask.close(); } );
+		dialog.alert( { msg : "평가 유형을 선택하셔야 합니다." }, function () { mask.close(); } );
 		return;
 	} 
 
@@ -72,13 +72,13 @@ function fn_close() {
 
 <body style="padding : 10px">
 
-<h2>시험유형</h2>
+<h2>평가유형</h2>
 
 <div style="height:10px"></div>
 
 <div class="form-inline">
   	<div class="form-group">
-    	<label for="CB_EXAM_TYPE">시험유형</label>
+    	<label for="CB_EXAM_TYPE">평가유형</label>
 		<select class="form-control" id="CB_EXAM_TYPE" name="CB_EXAM_TYPE">
 		</select>
   	</div>

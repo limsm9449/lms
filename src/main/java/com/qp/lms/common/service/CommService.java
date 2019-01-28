@@ -21,6 +21,7 @@ import com.qp.lms.common.model.CommVO;
 import com.qp.lms.common.model.LogVO;
 import com.qp.lms.course.model.CourseVO;
 import com.qp.lms.login.model.LoginVO;
+import com.qp.lms.main.model.MainVO;
 import com.qp.lms.member.model.MemberVO;
 
 @Service
@@ -319,5 +320,12 @@ public class CommService {
     public List<HashMap> getSettingList() throws Exception {
     	return sqlSession.selectList("comm.getSettingList", null); 
     }
+
+    public HashMap getPChannelInfo() throws Exception {
+    	MainVO vo = new MainVO();
+    	vo.setCompCd(SessionUtil.getSessionCompCd());
+    	return  sqlSession.selectOne("main.pChannelInfo", vo); 
+    }
+    
 
 }

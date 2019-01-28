@@ -76,7 +76,10 @@ public class MainSet extends CommonSet {
 
 	private List<HashMap> talkList;
 	private int newTalkCnt;
-
+	private List<HashMap> noticePopupList;
+	private HashMap noticeHm;	
+	
+	
 	public void setCondiVO(MainVO condiVO) {
 		this.condiVO = condiVO;
 	}
@@ -322,6 +325,18 @@ public class MainSet extends CommonSet {
 	}
 	public void setNewTalkCnt(int newTalkCnt) {
 		this.newTalkCnt = newTalkCnt;
+	}
+	public List<HashMap> getNoticePopupList() {
+		return noticePopupList;
+	}
+	public void setNoticePopupList(List<HashMap> noticePopupList) {
+		this.noticePopupList = noticePopupList;
+	}
+	public HashMap getNoticeHm() {
+		return noticeHm;
+	}
+	public void setNoticeHm(HashMap noticeHm) {
+		this.noticeHm = noticeHm;
 	}
 	
 }

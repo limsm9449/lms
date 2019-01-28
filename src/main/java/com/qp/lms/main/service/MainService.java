@@ -70,6 +70,9 @@ public class MainService {
         	set.setTotalCount(((PostScriptVO)sqlSession.selectOne("postscript.postscriptAllTotal",postScriptVO)).getCnt());
         	set.setPageUnit(Constant.unitForPostscript);
         	set.setPageCnt(Constant.pageForMainPage);
+        	
+        	List<HashMap> noticePopupList = sqlSession.selectList("main.mainNoticePopupList", null);
+        	set.setNoticePopupList(noticePopupList);
 		} else if ( CommUtil.isEqual("C2C", compType) ) {
 			//P 채널
     		List<HashMap> mainFrame = null; 
@@ -96,6 +99,9 @@ public class MainService {
     		set.getCondiVO().setUserId(SessionUtil.getSessionUserId());
     		int newTalkCnt = sqlSession.selectOne("main.talkNewTalkCnt", set.getCondiVO());
     		set.setNewTalkCnt(newTalkCnt);
+        	
+        	List<HashMap> noticePopupList = sqlSession.selectList("main.mainNoticePopupList", null);
+        	set.setNoticePopupList(noticePopupList);
 		} else {
 			String compCd = (String)SessionUtil.getAttribute("compCd");
 			
@@ -129,6 +135,9 @@ public class MainService {
 			set.getCondiVO().setCompType((String)SessionUtil.getAttribute("compType"));
 	    	List<BoardVO> faqList = sqlSession.selectList("main.faqList", set.getCondiVO());
 			set.setFaqList(faqList);
+        	
+        	List<HashMap> noticePopupList = sqlSession.selectList("main.mainNoticePopupList", null);
+        	set.setNoticePopupList(noticePopupList);
 		}
 		
     	return set;
@@ -665,6 +674,16 @@ public class MainService {
 		
     	List<HashMap> talkList = sqlSession.selectList("main.talkNextList",set.getCondiVO());
     	set.setTalkList(talkList);
+    	
+    	return set;
+    }
+
+	public MainSet mainNoticePopup(MainSet set) throws Exception {
+		set.getCondiVO().setTalkId(SessionUtil.getSessionCompCd());
+		set.getCondiVO().setUserId(SessionUtil.getSessionUserId());
+		
+    	HashMap noticeHm = sqlSession.selectOne("main.mainNoticePopup",set.getCondiVO());
+    	set.setNoticeHm(noticeHm);
     	
     	return set;
     }

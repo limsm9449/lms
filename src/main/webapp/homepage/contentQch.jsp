@@ -108,7 +108,11 @@ $(document).ready(function(){
 	</c:forEach>
 	
 	f_makePageNavigator("pagingLayer",${set.condiVO.pageNum},${set.totalCount},${set.pageUnit},${set.pageCnt});
-	
+
+	<c:forEach var="row" items="${set.noticePopupList}" varStatus="idx">
+		Popup.showMainNoticePopup(${row.SEQ});
+	</c:forEach>
+
 	<c:if test="${!empty set.condiVO.shap}">	      	
 		gfn_goScreenPosition("${set.condiVO.shap}");
 	</c:if>

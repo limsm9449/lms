@@ -31,13 +31,13 @@ $(document.body).ready(function () {
     
     var weekCnt = gfn_getUrlParams("WEEK_CNT");
     for ( var i = 0; i < weekCnt; i++ ) {
-    	ddWeek.push({	CD : i + 1, NM : (i + 1) + " 주차"	});
+    	ddWeek.push({	CD : i + 1, NM : (i + 1) + " 차시"	});
     }
     
 	grid = gfn_makeAx5Grid("first-grid",
 		[ 	{
 	            key : "EXAM_KIND",
-	            label : "시험 종류",
+	            label : "평가 종류",
 	            width : 100,
 	            align : "center", 
 	            editor: {
@@ -45,16 +45,16 @@ $(document.body).ready(function () {
                     config : {
                         columnKeys: { optionValue: "CD", optionText: "NM" },
                         options: [
-                            {CD: "TOTAL", NM: "전체 시험"},
-                            {CD: "WEEK", NM: "주별 시험"}
+                            {CD: "TOTAL", NM: "전체 평가"},
+                            {CD: "WEEK", NM: "주별 평가"}
                         ]
                     } 
 	        	},
 	            formatter : function () {
 	            	if ( this.item.EXAM_KIND == "WEEK" )
-	            		return "주별 시험";
+	            		return "주별 평가";
 	            	else if ( this.item.EXAM_KIND == "TOTAL" )
-	                	return "전체 시험";
+	                	return "전체 평가";
 	            	else 
 	                	return "-";
 	           	},
@@ -63,7 +63,7 @@ $(document.body).ready(function () {
                 }
 	        },{
 	            key : "WEEK_FROM",
-	            label : "주차 From",
+	            label : "차시 From",
 	            width : 100,
 	            align : "center", 
 	        	editor: {
@@ -74,14 +74,14 @@ $(document.body).ready(function () {
                     } 
 	        	},
 	            formatter : function () {
-	            	return ( this.item.WEEK_FROM == undefined ? 1 : this.item.WEEK_FROM ) + " 주차";
+	            	return ( this.item.WEEK_FROM == undefined ? 1 : this.item.WEEK_FROM ) + " 차시";
 	           	},
 				styleClass: function () {
                     return "grid-cell-edit";
                 }
 	        },{
 	        	key : "WEEK_TO", 
-	        	label : "주차 To", 
+	        	label : "차시 To", 
 	            width : 100,
 	        	align : "center", 
 	        	editor: {
@@ -92,7 +92,7 @@ $(document.body).ready(function () {
                     } 
 	        	},
 	            formatter : function () {
-	            	return ( this.item.WEEK_TO == undefined ? 1 : this.item.WEEK_TO ) + " 주차";
+	            	return ( this.item.WEEK_TO == undefined ? 1 : this.item.WEEK_TO ) + " 차시";
 	           	},
 				styleClass: function () {
 					return "grid-cell-edit";
@@ -239,13 +239,13 @@ function fn_save() {
 		var questionCnt = 0;
        	var allList = grid.getList();
        	for ( var i = 0; i < allList.length; i++ ) {
-       		if ( allList[i].USE_YN == "Y" ) {
-       			questionCnt = allList[i].QUESTION_CNT;
+       		if ( allList[i].EXAM_KIND == "TOTAL" && allList[i].USE_YN == "Y" ) {
+       			questionCnt += parseInt(allList[i].QUESTION_CNT);
        		}
        	}
-       	if ( parseInt(questionCnt) > parseInt(params.QUESTION_CNT) ) {
+       	if ( parseInt(questionCnt) != parseInt(params.QUESTION_CNT) ) {
 			mask.open();
-			dialog.alert( { msg : "전체 문항수는 " + params.QUESTION_CNT + "입니다." }, function () { mask.close(); } );
+			dialog.alert( { msg : "전체 평가의 문항수는  " + params.QUESTION_CNT + "문항이여야 합니다." }, function () { mask.close(); } );
 			return false;
        	}
 
@@ -307,7 +307,7 @@ function fn_gridEvent(event, obj) {
 
 <form id="frm" name="frm" method="post">
 
-<h2>과정 시험 유형 기준 관리</h2>
+<h2>과정 평가 유형 기준 관리</h2>
 <div style="height:10px"></div>
 
 <div>

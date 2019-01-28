@@ -202,11 +202,11 @@ function fn_makeGrid() {
 	            align : "left"
 	        },{
               	key : undefined, 
-              	label: "시험", 
+              	label: "평가", 
               	columns: [
               		{
 			            key : "EXAM_TOTAL",
-			            label : "전체 시험",
+			            label : "전체 평가",
 			            width : 90,
 			            align : "right"
 			        },{
@@ -219,7 +219,7 @@ function fn_makeGrid() {
 			           	} 
 			        },{
 			            key : "EXAM_WEEK",
-			            label : "주별 시험",
+			            label : "주별 평가",
 			            width : 90,
 			            align : "right"
 			        },{
@@ -238,7 +238,7 @@ function fn_makeGrid() {
               	columns: [	        
               		{
 			            key : "EXAM",
-			            label : "시험",
+			            label : "평가",
 			            width : 70,
 			            align : "right"
 			        },{
@@ -327,11 +327,11 @@ function fn_makeGrid() {
 	        	}
 	        },{
               	key : undefined, 
-              	label: "주차 학습", 
+              	label: "차시 학습", 
               	columns: [	        
 			        {
 			            key : "LAST_WEEK",
-			            label : "최종 학습 주차",
+			            label : "최종 학습 차시",
 			            width : 120,
 			            align : "right"
 			        },{
@@ -343,7 +343,7 @@ function fn_makeGrid() {
 		        ]
 	        },{
               	key : undefined, 
-              	label: "시험", 
+              	label: "평가", 
               	columns: [	        
 			        {
 			            key : "E_FROM_DATE",
@@ -482,9 +482,9 @@ function fn_gridEvent(event, obj) {
     <button class="btn btn-default" data-grid-control="search">검색</button>
     <button class="btn btn-default" data-grid-control="save">저장</button>
     <button class="btn btn-default" data-grid-control="export">엑셀</button>
-    <button class="btn btn-default" data-grid-control="viewWeek">주차별 진도</button>
-    <button class="btn btn-default" data-grid-control="viewWeekExam" id="btnWeekExam">주별시험</button>
-    <button class="btn btn-default" data-grid-control="viewTotalExam" id="btnTotalExam">전체시험</button>
+    <button class="btn btn-default" data-grid-control="viewWeek">차시별 진도</button>
+    <button class="btn btn-default" data-grid-control="viewWeekExam" id="btnWeekExam">주별평가</button>
+    <button class="btn btn-default" data-grid-control="viewTotalExam" id="btnTotalExam">전체평가</button>
     <button class="btn btn-default" data-grid-control="viewNotice">공지사항</button>
     <button class="btn btn-default" data-grid-control="viewFree">자유게시판</button>
     <button class="btn btn-default" data-grid-control="viewData">자료실</button>

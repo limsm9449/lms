@@ -48,7 +48,7 @@
                 <p class='note_title'>평가항목 및 수료 기준</p>
                 <ul class='box'>
                     <li>진도율 : <span>80% 이상 진행</span></li>
-                    <li>평가 : <span>시험/과제 제출 (시험유무는 과정별로 상이함)</span></li>
+                    <li>평가 : <span>평가/과제 제출 (평가유무는 과정별로 상이함)</span></li>
                     <li>수료기준 : <span>총점 60점 이상 (100점 만점 기준)</span></li>
                 </ul>
             </div>

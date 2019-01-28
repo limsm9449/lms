@@ -55,7 +55,7 @@ $(document.body).ready(function () {
             	}
             	if ( row[0]["NEXT_CREATE_FLAG"] == "Y" ) {
             		mask.open();
-            		dialog.alert( { msg : "과정 시험을 먼저 삭제하셔야 합니다." }, function () { mask.close();	} );
+            		dialog.alert( { msg : "과정 평가을 먼저 삭제하셔야 합니다." }, function () { mask.close();	} );
             		return;
             	}
 

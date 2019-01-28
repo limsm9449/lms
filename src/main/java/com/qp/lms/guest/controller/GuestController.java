@@ -389,7 +389,7 @@ public class GuestController {
     		e.printStackTrace();
     	}
 
-    	return "/guest/Certification";
+    	return CommUtil.getCompTypePage("/guest/Certification");
     }
     
 
