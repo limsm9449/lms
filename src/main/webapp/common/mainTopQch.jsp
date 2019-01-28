@@ -142,7 +142,7 @@
                             <li class='first_depth'><a href='javascript:' onclick="page.goPage('/main/myOrder');">주문/신청 조회</a></li>
                             <li><a href='javascript:' onclick="page.goPage('/main/myPoint');">포인트</a></li>
                             <li><a href='javascript:' onclick="page.goPage('/main/myActivity');">나의 활동관리</a></li>
-                            <li><a href='javascript:' onclick="page.goPage('/main/myActivity');">나의 활동관리</a></li>
+                            <li><a href='javascript:' onclick="page.goPage('/counsel/userCounselList');">상담내역</a></li>
                             <li><a href='javascript:' onclick="page.goPage('/main/myQnaList');">학습 Q&A 내역</a></li>
                             <li><a href="javascript:" onclick="page.goPage('/member/userMemberU');">회원정보수정</a></li>
                             <li><a href="javascript:" onclick="page.goPage('/member/memberChangePassword');">비밀번호 변경</a></li>
