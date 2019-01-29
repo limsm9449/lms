@@ -23,10 +23,6 @@
 </head>
 
 <script type="text/javascript">
-function lfn_btn() {
-	alert("A");
-}
-
 function form_chk() {
   	var f = document.frm;
   

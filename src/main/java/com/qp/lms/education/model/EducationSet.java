@@ -17,6 +17,7 @@ public class EducationSet extends CommonSet {
 	private EvaluationVO evaluation;				
 	private List<EvaluationVO> week;
 	private List<CourseResourceVO> resourcePageList;
+	private String contentsUrl;
 	
 	
 	public EducationVO getCondiVO() {
@@ -55,6 +56,13 @@ public class EducationSet extends CommonSet {
 	public void setResourcePageList(List<CourseResourceVO> resourcePageList) {
 		this.resourcePageList = resourcePageList;
 	}
+	public String getContentsUrl() {
+		return contentsUrl;
+	}
+	public void setContentsUrl(String contentsUrl) {
+		this.contentsUrl = contentsUrl;
+	}
+
 
 
 }

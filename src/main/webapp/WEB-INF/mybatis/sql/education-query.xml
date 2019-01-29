@@ -37,7 +37,7 @@
 						SELECT 	COURSE_ID
 								,IF(COUNT(*) - SUM(IF(PROGRESS_RATE = 100, 1 ,0)) = 0, 'Y', 'N') PROGRESS_COMPLETE_YN
                         FROM 	COURSE_WEEK
-                        WHERE	COURSE_ID = 11
+                        WHERE	COURSE_ID = #{courseId}
 						AND 	USER_ID = #{userId}
                         GROUP	BY COURSE_ID ) E ON E.COURSE_ID = A.COURSE_ID
 		 WHERE A.COURSE_ID = #{courseId}
@@ -75,7 +75,8 @@
 		        B.DIRECTORY ROOT_DIRECTORY,
 		        A.PAGE_CNT,
 		        A.PREVIEW_PAGE,
-		       	IFNULL(CRP.CNT,0) ADD_PAGE_CNT
+		       	IFNULL(CRP.CNT,0) ADD_PAGE_CNT,
+		        A.PREVIEW_PAGE PREVIEW_PAGE_INT
            FROM COURSE_RESOURCE A LEFT OUTER JOIN COURSE_CODE B ON A.COURSE_CODE = B.COURSE_CODE
 		            LEFT OUTER JOIN (
 		  				SELECT 	WEEK
@@ -94,6 +95,7 @@
 		 		,TITLE
 		 		,FROM_PAGE
 		 		,TO_PAGE
+		 		,FROM_PAGE FROM_PAGE_INT
            FROM COURSE_RESOURCE_PAGE
 		  WHERE COURSE_CODE = ( SELECT COURSE_CODE FROM COURSE WHERE COURSE_ID = #{courseId})
 		  ORDER BY WEEK, CLIP
@@ -255,6 +257,12 @@
            FROM COURSE_RESOURCE A LEFT OUTER JOIN COURSE_CODE B ON A.COURSE_CODE = B.COURSE_CODE
 		  WHERE A.COURSE_CODE = ( SELECT COURSE_CODE FROM COURSE WHERE COURSE_ID = #{courseId})
 		  ORDER BY A.WEEK
+    </select>
+
+    <select id="courseContentsUrl" parameterType="Education" resultType="String">
+		 SELECT IFNULL(CONTENTS_URL,'-') CONTENTS_URL
+           FROM COURSE_CODE
+		  WHERE COURSE_CODE = ( SELECT COURSE_CODE FROM COURSE WHERE COURSE_ID = #{courseId})
     </select>
 
         

@@ -71,7 +71,8 @@ public class MainService {
         	set.setPageUnit(Constant.unitForPostscript);
         	set.setPageCnt(Constant.pageForMainPage);
         	
-        	List<HashMap> noticePopupList = sqlSession.selectList("main.mainNoticePopupList", null);
+        	set.getCondiVO().setCompCd(SessionUtil.getSessionCompCd());
+        	List<HashMap> noticePopupList = sqlSession.selectList("main.mainNoticePopupList", set.getCondiVO());
         	set.setNoticePopupList(noticePopupList);
 		} else if ( CommUtil.isEqual("C2C", compType) ) {
 			//P 채널
@@ -100,6 +101,7 @@ public class MainService {
     		int newTalkCnt = sqlSession.selectOne("main.talkNewTalkCnt", set.getCondiVO());
     		set.setNewTalkCnt(newTalkCnt);
         	
+        	set.getCondiVO().setCompCd(SessionUtil.getSessionCompCd());
         	List<HashMap> noticePopupList = sqlSession.selectList("main.mainNoticePopupList", null);
         	set.setNoticePopupList(noticePopupList);
 		} else {
@@ -136,6 +138,7 @@ public class MainService {
 	    	List<BoardVO> faqList = sqlSession.selectList("main.faqList", set.getCondiVO());
 			set.setFaqList(faqList);
         	
+			set.getCondiVO().setCompCd(SessionUtil.getSessionCompCd());
         	List<HashMap> noticePopupList = sqlSession.selectList("main.mainNoticePopupList", null);
         	set.setNoticePopupList(noticePopupList);
 		}

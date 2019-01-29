@@ -152,7 +152,7 @@ function lfn_validate() {
                     <ul class="left_bottom_ul">
 		<c:set var="subIdx" value="1"/>                     
 		<c:forEach var="row2" items="${set.resourcePageList}" varStatus="idx2">
-			<c:if test="${row2.week eq row.week && row.previewPage ge subIdx}">             
+			<c:if test="${row2.week eq row.week && row.previewPageInt ge row2.fromPageInt}">                              
                         <li class="left_bottom_txt <c:if test="${subIdx eq 1}">first_depth</c:if>" onclick="QP_API.clickPage(${row.week}, ${row2.fromPage});" id="left_page_${row.week}_${row2.clip}">${row2.title}</li>
                         <c:set var="subIdx" value="${subIdx + 1}"/>     
             </c:if>
@@ -169,7 +169,7 @@ function lfn_validate() {
         <div class="videohtml">
         
         	<div class="innerhtml" >
-        		<iframe name="eduContent" id="eduContent" class="innerframe" src="" style="width: ${set.courseData.hPx}px;height: ${set.courseData.vPx}px;"></iframe>
+        		<iframe name="eduContent" id="eduContent" class="innerframe" src="" style="width:100%;height: ${set.courseData.vPx}px;"></iframe>
             </div>
             
             <!-----------------nav-------------->

@@ -552,7 +552,7 @@ var Popup = {
 	},
 
 	showMainNoticePopup : function(seq) {
-		Popup.showPopup(context + "/main/mainNoticePopup.do?seq=" + seq,800,600,"mainNoticePopup" + seq);
+		Popup.showPopup(context + "/main/mainNoticePopup.do?seq=" + seq,400,480,"mainNoticePopup" + seq);
 	},
 
 }

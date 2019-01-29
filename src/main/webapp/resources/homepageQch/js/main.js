@@ -21,7 +21,7 @@ var doc = document.documentElement;
 doc.setAttribute('data-useragent', navigator.userAgent);
 
 
-var resources = '../../';
+var resources = '/resources/homepageQch/';
 var dropdown_area_pc = document.getElementById('menu_dropdown_pc');
 var dropdown_area_mobile = document.getElementById('menu_dropdown_mobile');
 
@@ -51,30 +51,7 @@ function sub_show_hide() {
 }
 
 $(document).ready(function () {
-    // var size = size_check();
-    var tab1 = document.getElementById('tab1');
-    var tab2 = document.getElementById('tab2');
-    var tab3 = document.getElementById('tab3');
-
-    if (tab1) {
-        $('.slider_wrap').bxSlider({
-            mode: 'fade',
-            controls: false,
-            pager: true,
-            autoHover: true,
-            auto: true,
-            ease: 'cubic-sezier(0.42, 0, 0.58, 1)',
-            autocontrolsCombine: true,
-            autoControls: true,
-            touchEnabled: false,
-            shrinkItems: true,
-            pause: 5000,
-            speed: 800
-        });
-
-        tab2.parentNode.parentNode.style.display = 'none';
-        tab3.parentNode.parentNode.style.display = 'none';
-    }
+  
 });
 
 // device size check
@@ -157,12 +134,12 @@ function sub_menu_open(btn, page) {
 
     switch (page) {
         case 'main':
-            url_up = 'url("'+resources+'img/menu_arr_up.png") #fff 90% 50% no-repeat';
-            url_down = 'url("'+resources+'img/menu_arr_down.png") #fff 90% 50% no-repeat';
+            url_up = 'url("'+resources+'img/main/menu_arr_up.png") #fff 90% 50% no-repeat';
+            url_down = 'url("'+resources+'img/main/menu_arr_down.png") #fff 90% 50% no-repeat';
             break;
         case 'others':
-            url_up = 'url("../mg/menu_arr_up.png") #fff 90% 50% no-repeat';
-            url_down = 'url("'+resources+'img/menu_arr_down.png") #fff 90% 50% no-repeat';
+            url_up = 'url("'+resources+'img/main/menu_arr_up.png") #fff 90% 50% no-repeat';
+            url_down = 'url("'+resources+'img/main/menu_arr_down.png") #fff 90% 50% no-repeat';
             break;
     }
 
@@ -193,12 +170,12 @@ function m_menu_open(btn, page) {
 
     switch (page) {
         case 'main':
-            url_up = 'url("'+resources+'img/menu_arr_up.png") #fff 98% 64% no-repeat';
-            url_down = 'url("'+resources+'img/menu_arr_down.png") #fff 98% 64% no-repeat';
+            url_up = 'url("'+resources+'img/main/menu_arr_up.png") #fff 98% 64% no-repeat';
+            url_down = 'url("'+resources+'img/main/menu_arr_down.png") #fff 98% 64% no-repeat';
             break;
         case 'others':
-            url_up = 'url("'+resources+'img/menu_arr_up.png") #fff 98% 64% no-repeat';
-            url_down = 'url("'+resources+'img/menu_arr_down.png") #fff 98% 64% no-repeat';
+            url_up = 'url("'+resources+'img/main/menu_arr_up.png") #fff 98% 64% no-repeat';
+            url_down = 'url("'+resources+'img/main/menu_arr_down.png") #fff 98% 64% no-repeat';
             break;
     }
 

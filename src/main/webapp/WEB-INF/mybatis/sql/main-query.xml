@@ -939,10 +939,12 @@
 		SELECT 	A.SEQ
 		FROM	MAIN_BOARD_NOTICE A
 		WHERE	CURDATE() BETWEEN OPEN_FROM_DATE AND OPEN_TO_DATE
+		AND 	COMP_CD = #{compCd}
     </select>
 
 	<select id="mainNoticePopup" parameterType="Main" resultType="hashmap">
 		SELECT 	A.*
+				,DATE_FORMAT(A.CREATE_DATE,'%Y-%m-%d') CREATE_DATE_STR
 		FROM	MAIN_BOARD_NOTICE A
 		WHERE	SEQ = #{seq}
     </select>

@@ -16,7 +16,7 @@ if (!document.getElementsByClassName) {
 }
 
 
-
+var resources = '/resources/homepageQch/';
 var doc = document.documentElement;
 doc.setAttribute('data-useragent', navigator.userAgent);
 
@@ -72,12 +72,12 @@ function sub_menu_open(btn, page) {
 
     switch (page) {
         case 'main':
-            url_up = 'url("./img/menu_arr_up.png") #fff 90% 50% no-repeat';
-            url_down = 'url("./img/menu_arr_down.png") #fff 90% 50% no-repeat';
+            url_up = 'url("'+resources+'img/main/menu_arr_up.png") #fff 90% 50% no-repeat';
+            url_down = 'url("'+resources+'img/main/menu_arr_down.png") #fff 90% 50% no-repeat';
             break;
         case 'others':
-            url_up = 'url("../../img/menu_arr_up.png") #fff 90% 50% no-repeat';
-            url_down = 'url("../../img/menu_arr_down.png") #fff 90% 50% no-repeat';
+            url_up = 'url("'+resources+'img/main/menu_arr_up.png") #fff 90% 50% no-repeat';
+            url_down = 'url("'+resources+'img/main/menu_arr_down.png") #fff 90% 50% no-repeat';
             break;
     }
 
@@ -456,11 +456,11 @@ function answer(elem) {
     var arrow = box.querySelector('.faq_arrow > img');
 
     if (window.getComputedStyle(answer)['display'] === 'none') {
-        arrow.setAttribute('src', '../../img/support/arr_up.jpg');
+        arrow.setAttribute('src', '"'+resources+'img/support/arr_up.jpg');
         answer.style.display = 'block';
         box.style.background = '#f7f7f7';
     } else {
-        arrow.setAttribute('src', '../../img/support/arr_down.jpg');
+        arrow.setAttribute('src', '"'+resources+'img/support/arr_down.jpg');
         answer.style.display = 'none';
         box.style.background = '#fff';
     }

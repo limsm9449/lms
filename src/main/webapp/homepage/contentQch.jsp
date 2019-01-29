@@ -110,12 +110,32 @@ $(document).ready(function(){
 	f_makePageNavigator("pagingLayer",${set.condiVO.pageNum},${set.totalCount},${set.pageUnit},${set.pageCnt});
 
 	<c:forEach var="row" items="${set.noticePopupList}" varStatus="idx">
-		Popup.showMainNoticePopup(${row.SEQ});
+		if ( $.cookie(cookieName + "_notice_${row.SEQ}") != "Y" ) {
+			Popup.showMainNoticePopup(${row.SEQ});
+		}
 	</c:forEach>
 
 	<c:if test="${!empty set.condiVO.shap}">	      	
 		gfn_goScreenPosition("${set.condiVO.shap}");
 	</c:if>
+	
+	if ( $('.slider_wrap').length > 0 ) {
+	    $('.slider_wrap').bxSlider({
+	        mode: 'fade',
+	        controls: false,
+	        pager: true,
+	        autoHover: true,
+	        auto: true,
+	        ease: 'cubic-sezier(0.42, 0, 0.58, 1)',
+	        autocontrolsCombine: true,
+	        autoControls: true,
+	        touchEnabled: false,
+	        shrinkItems: true,
+	        pause: 5000,
+	        speed: 800
+	    });
+	}	    
+
 });
 
 function fn_linkCall(seq) {

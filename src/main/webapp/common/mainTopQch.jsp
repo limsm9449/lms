@@ -114,7 +114,7 @@
                         <a href="javascript:" onclick="gfn_ajax.logout()" >로그아웃</a>
                     </div>
                     <div class='mobile_study_box'>
-                        <a href="javascript:" onclick="page.goPage('/main/myClassroom', '');">
+                        <a href="javascript:" onclick="page.goPage('/normalUser/attendCourseList', '');">
                             나의강의실
                         </a>
                     </div>
@@ -128,7 +128,7 @@
                             나의강의실
                         </button>
                         <ul>
-                        	<li class='first_depth'><a href="javascript:" onclick="page.goPage('/main/myClassroom', '');">나의강의실</a></li>
+                        	<li class='first_depth'><a href="javascript:" onclick="page.goPage('/normalUser/attendCourseList', '');">나의강의실</a></li>
                             <li><a href="javascript:" onclick="page.goPage('/normalUser/attendCourseList');">수강중 과정</a></li>
                             <li><a href="javascript:" onclick="page.goPage('/normalUser/waitingCourseList');">대기중 과정</a></li>
                             <li><a href="javascript:" onclick="page.goPage('/normalUser/myCourseList');">수강완료과정</a></li>
@@ -160,18 +160,6 @@
                             <li><a href="javascript:" onclick="page.goPage('/guest/bankInfo');">입금계좌안내</a></li>
                         </ul>
                     </div>
-                    <div class='mobile_menu service'>
-                        <button onclick='sub_menu_open(this, "main")'>
-                            큐러닝
-                        </button>
-                        <ul>
-                            <li class='first_depth'><a href='/resources/homepageQch/html/support/support.html'>큐러닝</a></li>
-                            <li><a href='http://www.qpeople.co.kr/page1_1.html' target='_blank'>회사소개</a></li>
-                            <li><a href="#" onclick="page.goNsJsp('company_learning'); return false;">기업교육문의</a></li>
-                            <li><a href="#" onclick="page.goNsJsp('tutor_support'); return false;">튜터지원</a></li>
-                        </ul>
-                    </div>
-
                 </div>
             </div>
         </header>

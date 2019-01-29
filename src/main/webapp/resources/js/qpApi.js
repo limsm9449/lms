@@ -60,6 +60,10 @@ var QP_API = {
 				async : false,
 				data : "courseId=" + currentCourseId,
 				success : function(json){
+					if ( json.contentsUrl != "-" ) {
+						contents = json.contentsUrl;
+					}
+					
 					for ( var i = 0; i < json.resourceList.length; i++ ) {
 						if ( isSample ) {
 							weeks.push(json.resourceList[i].week); 
@@ -368,7 +372,7 @@ var QP_API = {
 	showPageInfo : function() {
 		if ( $(".now_page").length > 0 ) {
 			$(".now_page").html(currentPage);
-			$(".total_page").html(pages[currentWeek]);
+			$(".total_page").html(pages[currentWeek - 1]);
 			
 			if ( oldCurrentWeek != currentWeek ) {
 				//차시 오픈

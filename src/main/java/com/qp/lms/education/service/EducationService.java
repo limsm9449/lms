@@ -133,6 +133,9 @@ public class EducationService {
     }
 
     public EducationSet resourceInfo(EducationSet set) throws Exception {
+    	String contentsUrl = sqlSession.selectOne("education.courseContentsUrl",set.getCondiVO());
+    	set.setContentsUrl(contentsUrl);
+    	
     	List<CourseResourceVO> resourceList = sqlSession.selectList("education.courseResourceList",set.getCondiVO());
     	set.setResourceList(resourceList);
 

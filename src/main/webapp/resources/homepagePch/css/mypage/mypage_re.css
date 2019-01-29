@@ -68,7 +68,6 @@ header {
 }
 .head_con img{
     display:block;
-    width:60%;
 }
 .logo_box{
     width:20%;
@@ -1162,6 +1161,7 @@ header {
         display:block;
 		position:fixed;
 		padding-bottom:10px;
+		left:0%;
     }
     .head_wrap{
         margin:8px auto 0;
@@ -1181,10 +1181,9 @@ header {
     }
     .logo_box img{
         width:95%;
-    }
-    .search_box {
+    }    .search_box {
         width:92%;
-        margin:0 4%;
+        margin:0 -7%;
     }
     .search_box input[type='text'] {
         padding:12px 4.5%;

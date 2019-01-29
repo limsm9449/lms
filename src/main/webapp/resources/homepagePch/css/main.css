@@ -2255,15 +2255,22 @@ header {
 }
 
 /* Media query */
-@media all and (max-width:1220px){
+@media all and (max-width:1122px){
 
-	.q_name_txt,
-	.q_name_l{
-		display:none;
-	}
-	.search_box{
-		left:11%;
-	}
+    .head_wrap,
+    .menu_layout,
+    .contents_wrap_box,
+    .cs
+    {
+        width:100%;
+    }.util_box p,
+    .util_box a{
+        margin:0 2%;
+    }
+	header{
+    width:79%;
+    }
+    
 }
 @media all and (max-width:1220px){
 
@@ -3083,6 +3090,7 @@ header {
     }
     .head_wrap{
         margin:8px auto 0;
+		left:0;
     }
     .head_mobile .menu_layout{
         display:inline-block;

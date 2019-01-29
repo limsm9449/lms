@@ -51,6 +51,31 @@ $(document).ready(function(){
 		change_img("process", 1, ${idx.index + 1}, "/cImage/main/${row.COMP_CD}/${row.COURSE_ID}_new1.jpg", "/cImage/main/${row.COMP_CD}/${row.COURSE_ID}_new2.jpg", "#${row.COLOR}");
 		courseInfo["new${idx.index + 1}"] = ${row.COURSE_ID};
 	</c:forEach>	
+
+	<c:forEach var="row" items="${set.noticePopupList}" varStatus="idx">
+		if ( $.cookie(cookieName + "_notice_${row.SEQ}") != "Y" ) {
+			Popup.showMainNoticePopup(${row.SEQ});
+		}
+	</c:forEach>
+	
+	
+	if ( $('.slider_wrap').length > 0 ) {
+	    $('.slider_wrap').bxSlider({
+	        mode: 'fade',
+	        controls: false,
+	        pager: true,
+	        autoHover: true,
+	        auto: true,
+	        ease: 'cubic-sezier(0.42, 0, 0.58, 1)',
+	        autocontrolsCombine: true,
+	        autoControls: true,
+	        touchEnabled: false,
+	        shrinkItems: true,
+	        pause: 5000,
+	        speed: 800
+	    });
+	}	    
+
 });
 
 var size = {

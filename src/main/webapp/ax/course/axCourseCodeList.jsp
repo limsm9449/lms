@@ -199,6 +199,17 @@ function fn_makeGrid() {
                     return "grid-cell-edit";
                 }
 	        },{
+	            key : "CONTENTS_URL",
+	            label : "콘텐츠 URL",
+	            width : 160,
+	            align : "left",
+	            editor : { 
+	            	type : "text"
+				},
+				styleClass: function () {
+                    return "grid-cell-edit";
+                }
+	        },{
 	            key : "DIRECTORY",
 	            label : "디렉토리",
 	            width : 90,
@@ -373,6 +384,7 @@ function fn_categorySelect(data) {
 					DIRECTORY : maxSeq,
 					POINT : 0,
 					USE_YN : "Y", 
+					CONTENTS_URL : ""
 				}, "last", {focus: "END"});
 		},
 		error : function(e) {
