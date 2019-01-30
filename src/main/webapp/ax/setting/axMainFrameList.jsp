@@ -132,12 +132,7 @@ $(document.body).ready(function () {
             	if ( $("#CHANNEL_KIND option:selected").val() == "Q_CHANNEL" ) {
         			f_popup('/main/content', {displayName:'mainPopup',option:'width=1400,height=900', urlParams:urlParams});
             	} else {
-            		window.open("","mainPopup","width=1400,height=900");
-            		document.frm.action = "http://" + $("#CHANNEL_KIND option:selected").val() + "." + window.location.host + "/main/content.do" + "?" + urlParams + "&timestamp=" + timestamp;
-            		console.log(document.frm.action);
-            		document.frm.target = "mainPopup";
-            		document.frm.method = "POST";	
-            		document.frm.submit();
+            		gfn_callAjax("/setting/axMainFrameCompanyDomain.do", { COMP_CD : $("#CHANNEL_KIND option:selected").val() }, fn_callbackAjax, "companyDomain");
             	}
         		
                 break;
@@ -503,6 +498,15 @@ function fn_callbackAjax(data, id) {
 
 		mask.open();
 		dialog.alert( { msg : "메인 화면에 반영되었습니다." }, function () { mask.close();	fn_search(); } );
+	} else if ( id == "companyDomain" ){
+		var urlParams = "mainViewMode=TEST";
+		
+   		window.open("","mainPopup","width=1400,height=900");
+   		document.frm.action = "http://" + data.domain + "." + window.location.host + "/main/content.do" + "?" + urlParams + "&timestamp=" + timestamp;
+   		console.log(document.frm.action);
+   		document.frm.target = "mainPopup";
+   		document.frm.method = "POST";	
+   		document.frm.submit();
 	}
 }
 

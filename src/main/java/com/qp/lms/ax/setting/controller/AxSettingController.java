@@ -208,4 +208,17 @@ public class AxSettingController {
         return hm;
     }
 
+    @RequestMapping(value = "/setting/axMainFrameCompanyDomain", method = RequestMethod.POST, consumes = "application/json" )
+    public @ResponseBody HashMap<String,Object> axMainFrameCompanyDomain(@RequestBody HashMap<String, Object> paramMap, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    	HashMap<String, Object> hm = new HashMap<String, Object>();
+
+    	try {
+    		hm = svr.axMainFrameCompanyDomain(paramMap);
+    	} catch ( Exception e ) {
+    		e.printStackTrace();
+    	}
+
+        return hm;
+    }
+    
 }

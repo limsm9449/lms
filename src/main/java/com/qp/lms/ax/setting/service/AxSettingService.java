@@ -232,5 +232,14 @@ public class AxSettingService {
 		
     	return hm;
     }
+
+	public HashMap<String, Object> axMainFrameCompanyDomain(HashMap<String, Object> paramMap) throws Exception {
+		HashMap<String, Object> hm = new HashMap<String, Object>();
+		
+    	String domain = sqlSession.selectOne("axSetting.axMainFrameCompanyDomain", paramMap);
+    	hm.put("domain", domain);
+        
+    	return hm;
+    }
 	
 }
