@@ -34,7 +34,7 @@
 <!-- bootstrap -->
 <link rel="stylesheet" href="/resources/bootstrap/css/bootstrap.min.css">
 <link rel="stylesheet" href="/resources/bootstrap/css/bootstrap-theme.min.css">
-<script src="/resources/bootstrap/bootstrap/js/bootstrap.min.js"></script>
+<script src="/resources/bootstrap/js/bootstrap.min.js"></script>
 
 <%-- multiselect --%>
 <link rel="stylesheet" type="text/css" href="/resources/multiselect/css/bootstrap-multiselect.css" />

@@ -1198,7 +1198,7 @@ header {
     display:block;
 }
 .recommend_text{
-    height: 393px;
+    height: 420px;
     text-align:center;
     padding:21px 3% 0;
     cursor:pointer;
@@ -1997,7 +1997,7 @@ header {
 	  }
 	  .r_bg{
 	  	background-color:#e5e6e8;
-		height:467px;
+		height:412px;
 	  }
 	  .r_bg_b2{
 	  	max-width:1300px;

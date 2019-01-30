@@ -27,7 +27,7 @@
 <link rel="stylesheet" type="text/css" href="/resources/CLEditor/jquery.cleditor.css" />
 <script type="text/javascript" src="/resources/CLEditor/jquery.cleditor.min.js"></script>
 
-<script src="/resources/bootstrap/bootstrap/js/bootstrap.min.js"></script>
+<script src="/resources/bootstrap/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="/resources/multiselect/js/bootstrap-multiselect.js"></script>
 
 
