@@ -66,8 +66,13 @@ $(document.body).ready(function () {
 					,CHANNEL_KIND : ( $("#CHANNEL_KIND option:selected").val() == "" ? "Q_CHANNEL" :  $("#CHANNEL_KIND option:selected").val() )
 					,FRAME_KIND : "SLIDE"
 					,FRAME_NAME : ""
+					,FRAME_DESC : ""
+					,BOTTOM_HEIGHT : 0
 					,ORD : 1
 					,USE_YN : "N"
+					,T_FRAME_NAME : ""
+					,T_FRAME_DESC : ""
+					,T_BOTTOM_HEIGHT : 0
 					,T_ORD : 1
 					,T_USE_YN : "Y"
             	}, "last", {focus: "END"});
@@ -227,6 +232,17 @@ function fn_makeGrid() {
 						styleClass: function () {
 		                    return "grid-cell-edit";
 		                } 
+        	        },{
+			            key : "T_BOTTOM_HEIGHT",
+			            label : "하단 여백",
+			            width : 90,
+			            align : "right",
+			        	editor : { 
+			        		type : "number"
+			        	},
+						styleClass: function () {
+		                    return "grid-cell-edit";
+		                } 
 			        },{
 			            key : "T_USE_YN",
 			            label : "사용여부",
@@ -268,6 +284,17 @@ function fn_makeGrid() {
 			            key : "ORD",
 			            label : "순번",
 			            width : 70,
+			            align : "right",
+			        	editor : { 
+			        		type : "number"
+			        	},
+						styleClass: function () {
+		                    return "grid-cell-edit";
+		                } 
+        	        },{
+			            key : "BOTTOM_HEIGHT",
+			            label : "하단 여백",
+			            width : 90,
 			            align : "right",
 			        	editor : { 
 			        		type : "number"
@@ -577,7 +604,7 @@ function fn_saveApply() {
        	}, 
        	function(){
          	if ( this.key == "ok" ) {
-         		gfn_callAjax("/setting/axMainFrameApply.do", {}, fn_callbackAjax, "saveApply");
+         		gfn_callAjax("/setting/axMainFrameApply.do", { CHANNEL_KIND : $("#CHANNEL_KIND option:selected").val() }, fn_callbackAjax, "saveApply");
            	} else {
            		mask.close();
            	}

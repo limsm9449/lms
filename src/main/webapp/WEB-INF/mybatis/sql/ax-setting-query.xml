@@ -99,8 +99,8 @@
 	</select>    
 
 	<insert id="axMainFrameInsert" parameterType="hashmap">
-		INSERT 	INTO MAIN_FRAME ( CHANNEL_KIND, FRAME_KIND, FRAME_NAME, FRAME_DESC, ORD, USE_YN, T_FRAME_NAME, T_FRAME_DESC, T_ORD, T_USE_YN )
-		VALUES ( #{CHANNEL_KIND}, #{FRAME_KIND}, #{FRAME_NAME}, #{FRAME_DESC}, #{ORD}, #{USE_YN}, #{T_FRAME_NAME}, #{T_FRAME_DESC}, #{T_ORD}, #{T_USE_YN} )
+		INSERT 	INTO MAIN_FRAME ( CHANNEL_KIND, FRAME_KIND, FRAME_NAME, FRAME_DESC, ORD, USE_YN, T_FRAME_NAME, T_FRAME_DESC, T_ORD, T_USE_YN, BOTTOM_HEIGHT, T_BOTTOM_HEIGHT )
+		VALUES ( #{CHANNEL_KIND}, #{FRAME_KIND}, #{FRAME_NAME}, #{FRAME_DESC}, #{ORD}, #{USE_YN}, #{T_FRAME_NAME}, #{T_FRAME_DESC}, #{T_ORD}, #{T_USE_YN}, #{BOTTOM_HEIGHT}, #{T_BOTTOM_HEIGHT} )
 	</insert>   
 	
 	<update id="axMainFrameUpdate" parameterType="hashmap">
@@ -115,6 +115,8 @@
 				,T_FRAME_DESC = #{T_FRAME_DESC}
 				,T_ORD = #{T_ORD}
 				,T_USE_YN = #{T_USE_YN}
+				,BOTTOM_HEIGHT = #{BOTTOM_HEIGHT}
+				,T_BOTTOM_HEIGHT = #{T_BOTTOM_HEIGHT}
     	 WHERE 	SEQ = #{SEQ} 
 	</update>   
 
@@ -164,6 +166,8 @@
 				,USE_YN = T_USE_YN
 				,FRAME_NAME = T_FRAME_NAME
 				,FRAME_DESC = T_FRAME_DESC
+				,BOTTOM_HEIGHT = T_BOTTOM_HEIGHT
+		WHERE	CHANNEL_KIND = #{CHANNEL_KIND}				
 	</update>   
 
 	<update id="axMainFrameDetailApply" parameterType="hashmap">
@@ -174,6 +178,7 @@
 				,MP4_YN = T_MP4_YN
 				,ORD = T_ORD
 				,USE_YN = T_USE_YN
+		WHERE	SEQ IN ( SELECT SEQ FROM MAIN_FRAME WHERE CHANNEL_KIND = #{CHANNEL_KIND} )				
 	</update>
 
 	<select id="axMainFrameCompanyDomain" parameterType="hashmap" resultType="String">

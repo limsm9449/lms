@@ -241,7 +241,7 @@ function lfn_btn(pKind, pParam) {
 		                       <span class="lecture_5">
 		                            <img src='/resources/homepagePch/img/main/talk.png' alt=' '>
 		                        </span>
-		                        <span class="lecture_6"><p class="p_talk_score">${set.newTalkCnt}+</p></span>
+		                        <span class="lecture_6"><!--<p class="p_talk_score">${set.newTalkCnt}+</p>--></span>
 		                        <span>
 		                            <button class="p_talk_btn" onclick="page.goPage('/main/talk');">
 		                                <img src='/resources/homepagePch/img/main/p_btn.png' alt=' '>
@@ -473,7 +473,7 @@ function lfn_btn(pKind, pParam) {
          <!-- CONTENTS END -->
 	<div id='screen_postscript'></div>
 	         
-<c:if test = "${set.postScriptList ne null}">
+<c:if test = "${fn:length(set.postScriptList) > 0}">
     <div class="p_visual3_bg">    
         <div class="p_visual3">
                 <!-- Search Result Area -->

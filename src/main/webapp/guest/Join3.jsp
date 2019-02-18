@@ -138,9 +138,9 @@ function lfn_goBack() {
 }
 
 function lfn_validate() {
-	if ( formValid.check("userId",{isNecess:true,msg:"아이디를 입력하세요.",minLeng:7,maxLeng:15}) == false ) return false;
-	if ( formValid.check("userPassword",{isNecess:true,msg:"비밀번호를 입력하세요.",minLeng:1,maxLeng:15}) == false ) return false;
-	if ( formValid.check("userPassword2",{isNecess:true,msg:"비밀번호 확인을 입력하세요.",minLeng:1,maxLeng:15}) == false ) return false;
+	if ( formValid.check("userId",{isNecess:true,msg:"아이디를 입력하세요.",minLeng:5,maxLeng:15}) == false ) return false;
+	if ( formValid.check("userPassword",{isNecess:true,msg:"비밀번호를 입력하세요.",minLeng:5,maxLeng:15}) == false ) return false;
+	if ( formValid.check("userPassword2",{isNecess:true,msg:"비밀번호 확인을 입력하세요.",minLeng:5,maxLeng:15}) == false ) return false;
 	if ( isExistNumAlpha($("#userPassword").val()) == false ) {
 		alert("영문/숫자(혼용)를 입력하셔야 합니다.");
 		$("#userPassword").focus();

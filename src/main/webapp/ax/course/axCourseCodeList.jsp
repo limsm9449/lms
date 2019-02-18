@@ -365,7 +365,7 @@ function fn_categorySelect(data) {
 		data : JSON.stringify(params || {}),
 		success : function(jData){
 			var maxSeq = jData.list[0].YYYYMMDD;
-			if ( jData.list[0].MAX_SEQ < 10 ) {
+			if ( jData.list[0].MAX_SEQ < 9 ) {
 				maxSeq += "00" + ( jData.list[0].MAX_SEQ + 1 );
 			} else if ( jData.list[0].MAX_SEQ < 100 ) {
 				maxSeq += "0" + ( jData.list[0].MAX_SEQ + 1 );

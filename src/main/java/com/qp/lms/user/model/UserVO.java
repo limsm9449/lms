@@ -40,6 +40,7 @@ public class UserVO extends CommonVO {
 	private String isLogin;
 	
 	private String compCd;
+	private String compType;
 	
 	public String getCourseCode() {
 		return courseCode;
@@ -211,6 +212,14 @@ public class UserVO extends CommonVO {
 
 	public void setCompCd(String compCd) {
 		this.compCd = compCd;
+	}
+
+	public String getCompType() {
+		return compType;
+	}
+
+	public void setCompType(String compType) {
+		this.compType = compType;
 	}
 
 

@@ -31,6 +31,7 @@ public class PostScriptVO extends CommonVO {
 	private String c3Code;			/** 소분류 코드 */
 	private String searchStr;
 	private String searchKind;
+	private String compCd;
     
 	public String getCourseId() {
 		return courseId;
@@ -181,6 +182,12 @@ public class PostScriptVO extends CommonVO {
 	}
 	public void setEval5(String eval5) {
 		this.eval5 = eval5;
+	}
+	public String getCompCd() {
+		return compCd;
+	}
+	public void setCompCd(String compCd) {
+		this.compCd = compCd;
 	}
 
 	

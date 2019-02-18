@@ -59,6 +59,13 @@
     	 WHERE 	COMP_CD = #{COMP_CD}
 	</update>    
 	
+	<update id="axCompanyUserUpdate" parameterType="hashmap">
+		UPDATE 	USER
+    	   SET 	SLOGAN = #{SLOGAN}
+				,SIMPLE_INFORM = #{SIMPLE_INFORM}
+    	 WHERE 	USER_ID = #{C2C_USER_ID}
+	</update>    
+	
 	<delete id="axCompanyDelete" parameterType="hashmap">
 		DELETE FROM COMPANY
 		 WHERE COMP_CD = #{COMP_CD}
@@ -91,7 +98,8 @@
 				,IFNULL(U2.USER_NAME, U1.USER_NAME) LAST_UPDATE_USER
 				,U3.USER_NAME
 				,'N' NEW_FLAG
-				,'' USER_ID
+				,U3.SLOGAN
+				,U3.SIMPLE_INFORM
 		FROM 	COMPANY A
                     LEFT OUTER JOIN USER U1 ON A.CREATE_USER = U1.USER_ID
 	  	            LEFT OUTER JOIN USER U2 ON A.UPDATE_USER = U2.USER_ID                 

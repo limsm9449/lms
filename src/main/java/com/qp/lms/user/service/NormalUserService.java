@@ -24,6 +24,7 @@ public class NormalUserService {
 
     public UserSet attendCourseList(UserSet set) throws Exception {
     	set.getCondiVO().setUserId(SessionUtil.getSessionUserId());
+    	set.getCondiVO().setCompType(SessionUtil.getSessionCompType());
     	set.getCondiVO().setCompCd(SessionUtil.getSessionCompCd());
     	List<CourseVO> list = sqlSession.selectList("normalUser.attendCourseList",set.getCondiVO());
     	set.setCourse(list);
@@ -35,6 +36,7 @@ public class NormalUserService {
 
     public UserSet waitingCourseList(UserSet set) throws Exception {
     	set.getCondiVO().setUserId(SessionUtil.getSessionUserId());
+    	set.getCondiVO().setCompType(SessionUtil.getSessionCompType());
     	set.getCondiVO().setCompCd(SessionUtil.getSessionCompCd());
     	List<CourseVO> list = sqlSession.selectList("normalUser.waitingCourseList",set.getCondiVO());
     	set.setCourse(list);
@@ -44,6 +46,7 @@ public class NormalUserService {
 
     public UserSet cancelCourseList(UserSet set) throws Exception {
     	set.getCondiVO().setUserId(SessionUtil.getSessionUserId());
+    	set.getCondiVO().setCompType(SessionUtil.getSessionCompType());
     	set.getCondiVO().setCompCd(SessionUtil.getSessionCompCd());
     	List<CourseVO> list = sqlSession.selectList("normalUser.cancelCourseList",set.getCondiVO());
     	set.setCourse(list);
@@ -53,6 +56,7 @@ public class NormalUserService {
 
     public UserSet myCourseList(UserSet set) throws Exception {
     	set.getCondiVO().setUserId(SessionUtil.getSessionUserId());
+    	set.getCondiVO().setCompType(SessionUtil.getSessionCompType());
     	set.getCondiVO().setCompCd(SessionUtil.getSessionCompCd());
     	List<CourseVO> list = sqlSession.selectList("normalUser.myCourseList",set.getCondiVO());
     	set.setCourse(list);

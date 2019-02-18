@@ -487,6 +487,10 @@ var Popup = {
 		window.open(context + "/main/sampleCourse.do?courseId=" + pCourseId + "&timestamp=" + gfn_timestamp(), "_blank");
 	},
 
+	showSampleCoursePch : function(pCourseId) {
+		window.open(context + "/main/sampleCourse.do?courseId=" + pCourseId + "&timestamp=" + gfn_timestamp(), "_blank");
+	},
+
 	showCourseAttendance : function(pCourseId) {
 		Popup.showPopup(context + "/user/courseAttendanceV.do?courseId=" + pCourseId,900,800);
 	},

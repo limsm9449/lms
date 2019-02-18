@@ -55,6 +55,8 @@ public class AxCompanyService {
 			} else {
 				sqlSession.update("axCompany.axCompanyUpdate", row);
 			}
+
+			sqlSession.update("axCompany.axCompanyUserUpdate", row);
 		}
 
 		List<HashMap<String, Object>> delList = (List<HashMap<String, Object>>)paramMap.get("deleted");

@@ -211,7 +211,7 @@ function lfn_btn(pKind, pParam) {
 	<c:set var = "detailList" value = "${set.mainFrameDetailHm[row.SEQ]}"/>
 	<c:choose>
  		<c:when test = "${row.FRAME_KIND eq 'DOT_SLIDE'}">
- 			<div class='recommend_wrap lectures_wrap'>
+ 			<div class='recommend_wrap lectures_wrap' style="margin-bottom:${row.BOTTOM_HEIGHT}px">
 	 			<c:if test = "${row.FRAME_NAME ne ''}">
 	 				<p>
 	                    ${row.FRAME_NAME}
@@ -236,7 +236,7 @@ function lfn_btn(pKind, pParam) {
 	      	</div>
         </c:when>
  		<c:when test = "${row.FRAME_KIND eq 'DOT_S_SLIDE'}">
-            <div class='process_wrap lectures_wrap'>
+            <div class='process_wrap lectures_wrap' style="margin-bottom:${row.BOTTOM_HEIGHT}px">
 	 			<c:if test = "${row.FRAME_NAME ne ''}">
 	 				<p>
 	                    ${row.FRAME_NAME}
@@ -261,7 +261,7 @@ function lfn_btn(pKind, pParam) {
             </div> 		
         </c:when>
  		<c:when test = "${row.FRAME_KIND eq 'SLIDE'}">
-            <div class='recommend_wrap lectures_wrap'>
+            <div class='recommend_wrap lectures_wrap' style="margin-bottom:${row.BOTTOM_HEIGHT}px">
 	 			<c:if test = "${row.FRAME_NAME ne ''}">
 	 				<p>
 	                    ${row.FRAME_NAME}
@@ -296,7 +296,7 @@ function lfn_btn(pKind, pParam) {
 	 				 <p class='pc'>${row.FRAME_DESC}</p>
 	 			</c:if>
             </div>
-            <div class="star_slide">
+            <div class="star_slide" style="margin-bottom:${row.BOTTOM_HEIGHT}px">
             	<img id="star_back" src="/resources/homepageQch/img/main/star_b.png" alt="" width="74" onclick="back('thumbnailSlide_${row.SEQ}')">
            		<div class="slide" id="s_slide">
                     <ul id="thumbnailSlide_${row.SEQ}">
@@ -315,7 +315,7 @@ function lfn_btn(pKind, pParam) {
            </div>
         </c:when>
  		<c:when test = "${row.FRAME_KIND eq 'MP4'}">
- 			<div class='recommend_wrap lectures_wrap'>
+ 			<div class='recommend_wrap lectures_wrap' style="margin-bottom:${row.BOTTOM_HEIGHT}px">
 	 			<c:if test = "${row.FRAME_NAME ne ''}">
 	 				<p>
 	                    ${row.FRAME_NAME}
@@ -333,7 +333,7 @@ function lfn_btn(pKind, pParam) {
 			</div>
         </c:when>
  		<c:when test = "${row.FRAME_KIND eq 'IMAGE'}">
- 			<div class='recommend_wrap lectures_wrap'>
+ 			<div class='recommend_wrap lectures_wrap' style="margin-bottom:${row.BOTTOM_HEIGHT}px">
 	 			<c:if test = "${row.FRAME_NAME ne ''}">
 	 				<p>
 	                    ${row.FRAME_NAME}
@@ -352,7 +352,7 @@ function lfn_btn(pKind, pParam) {
  			</div> 
         </c:when>
  		<c:when test = "${row.FRAME_KIND eq 'IMAGE_MP4'}">
-			<div class='recommend_wrap lectures_wrap'>
+			<div class='recommend_wrap lectures_wrap' style="margin-bottom:${row.BOTTOM_HEIGHT}px">
 	 			<c:if test = "${row.FRAME_NAME ne ''}">
 	 				<p>
 	                    ${row.FRAME_NAME}
@@ -377,7 +377,7 @@ function lfn_btn(pKind, pParam) {
          	</div>        
         </c:when>
  		<c:when test = "${row.FRAME_KIND eq 'MP4_IMAGE'}">
-			<div class='recommend_wrap lectures_wrap'>
+			<div class='recommend_wrap lectures_wrap' style="margin-bottom:${row.BOTTOM_HEIGHT}px">
 	 			<c:if test = "${row.FRAME_NAME ne ''}">
 	 				<p>
 	                    ${row.FRAME_NAME}
@@ -430,7 +430,7 @@ function lfn_btn(pKind, pParam) {
          <!-- CONTENTS END -->
 	<div id='screen_postscript'></div>
 	         
-<c:if test = "${set.postScriptList ne null}">
+<c:if test = "${fn:length(set.postScriptList) > 0}">
     <div class="p_visual3_bg">    
         <div class="p_visual3">
                 <!-- Search Result Area -->

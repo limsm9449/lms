@@ -94,8 +94,7 @@ $(document.body).ready(function () {
             		dialog.alert( { msg : "회사를 선택하셔야 합니다." }, function () { mask.close();	} );
             	} else {
 	        		parent.document.getElementById("left").contentWindow.gfn_openMenu("axAccountList", { 
-	        				COMP_CD : row[0].COMP_CD,
-	        				CB_USERKIND : "B2C"
+	        				USER_ID : row[0].C2C_USER_ID
 		    			}
 		    		);
             	}
@@ -177,6 +176,22 @@ function fn_makeGrid() {
                     return "grid-cell-edit";
                 }
 	        },{
+	            key : "USER_NAME",
+	            label : "강사 ID",
+	            width : 80,
+	            align : "center"
+	        },{
+	            key : "SLOGAN",
+	            label : "슬로건",
+	            width : 130,
+	            align : "left",
+	            editor : { 
+	            	type : "text"
+				},
+				styleClass: function () {
+                    return "grid-cell-edit";
+                }
+	        },{
 	            key : "ZIPCODE",
 	            label : "우편번호",
 	            width : 80,
@@ -240,16 +255,6 @@ function fn_makeGrid() {
 				styleClass: function () {
                     return "grid-cell-edit";
                 }
-	        },{
-	        	key : "LOGIN_IMG", 
-	        	label : "로그인화면 이미지", 
-	            width : 140,
-	        	align : "center"
-			},{
-	        	key : "GNB_IMG", 
-	        	label : "타이틀 로고 이미지", 
-	            width : 140,
-	        	align : "center"
 	        },{
 	            key : "LAST_UPDATE_USER",
 	            label : "수정자",
@@ -346,7 +351,9 @@ function fn_callbackAjax(data, id) {
 				SUB_DOMAIN : data.USER_ID, 
 				USER_ID : data.USER_ID, 
 				C2C_YN : "Y",
-				USE_YN : "Y"
+				USE_YN : "Y",
+				SLOGAN : "",
+				SIMPLE_INFORM : ""
 			}, "last", {focus: "END"});
 	}
 }
@@ -384,7 +391,6 @@ function fn_gridEvent(event, obj) {
     <button class="btn btn-default" data-grid-control="reset">초기화</button>
     <button class="btn btn-default" data-grid-control="save">저장</button>
     <button class="btn btn-default" data-grid-control="export">엑셀</button>
-    <button class="btn btn-default" data-grid-control="editImage">이미지 관리</button>
     <button class="btn btn-default" data-grid-control="zipcodeUrl">주소검색</button>
     <button class="btn btn-default" data-grid-control="employee">강사 상세정보</button>
 </div> 

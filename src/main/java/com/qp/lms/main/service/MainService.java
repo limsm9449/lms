@@ -64,6 +64,7 @@ public class MainService {
     		PostScriptVO postScriptVO = new PostScriptVO(); 
     		postScriptVO.setPageNum(set.getCondiVO().getPageNum());
     		postScriptVO.setLimitUnit(Constant.unitForPostscript);
+    		postScriptVO.setCompCd("B2C");
 
         	List<PostScriptVO> postScriptList = sqlSession.selectList("postscript.postscriptAllList", postScriptVO);
         	set.setPostScriptList(postScriptList);
@@ -100,7 +101,19 @@ public class MainService {
     		set.getCondiVO().setUserId(SessionUtil.getSessionUserId());
     		int newTalkCnt = sqlSession.selectOne("main.talkNewTalkCnt", set.getCondiVO());
     		set.setNewTalkCnt(newTalkCnt);
-        	
+
+    		//전체 수강후기
+    		PostScriptVO postScriptVO = new PostScriptVO(); 
+    		postScriptVO.setPageNum(set.getCondiVO().getPageNum());
+    		postScriptVO.setLimitUnit(Constant.unitForPostscript);
+    		postScriptVO.setCompCd(SessionUtil.getSessionCompCd());
+
+        	List<PostScriptVO> postScriptList = sqlSession.selectList("postscript.postscriptAllList", postScriptVO);
+        	set.setPostScriptList(postScriptList);
+        	set.setTotalCount(((PostScriptVO)sqlSession.selectOne("postscript.postscriptAllTotal",postScriptVO)).getCnt());
+        	set.setPageUnit(Constant.unitForPostscript);
+        	set.setPageCnt(Constant.pageForMainPage);
+
         	set.getCondiVO().setCompCd(SessionUtil.getSessionCompCd());
         	List<HashMap> noticePopupList = sqlSession.selectList("main.mainNoticePopupList", null);
         	set.setNoticePopupList(noticePopupList);

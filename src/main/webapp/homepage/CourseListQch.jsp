@@ -178,7 +178,7 @@ function lfn_viewTypeChg(kind) {
 	                        </div>
 	                        <div class='process_result_con con clear_fix'>
 	                            <div class='process_result_img'>
-	                                <img src='/cImage/contents/${row.courseCode}/sImg1.jpg' alt=' '>
+	                                <img src='/cImage/contents/${row.courseCode}/bImg.jpg' alt=' '>
 	                            </div>
 	                            <div class='process_result_text'>
 	                                <div class='process_result_text_top clear_fix'>
@@ -226,7 +226,7 @@ function lfn_viewTypeChg(kind) {
                         <li <c:if test="${idx.index % 3 eq 2}">  class='last_right'</c:if>>
 			<c:choose>
 				<c:when test = "${row.courseId ne null}">
-                            <a href=''><img src='/cImage/contents/${row.courseCode}/sImg1.jpg' alt=' '></a>
+                            <a href=''><img src='/cImage/contents/${row.courseCode}/bImg.jpg' alt=' '></a>
                             <div class='process_text_box'>
                                 <div class='process_info_box'>
                                     <div>

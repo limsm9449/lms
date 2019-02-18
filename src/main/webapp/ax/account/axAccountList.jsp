@@ -579,6 +579,11 @@ function fn_callbackAjax(data, id) {
 				$("#SEARCH_STR").val(openParams.COMP_CD);
 				fn_search();
 			}
+			if ( openParams.USER_ID ) {
+				$("#CB_SEARCHKIND").val("USER_ID");
+				$("#SEARCH_STR").val(openParams.USER_ID);
+				fn_search();
+			}
 		}
 	}
 }
