@@ -345,6 +345,13 @@
 					<if test="normalCourseYn == 'Y'.toString()"> OR	A.NORMAL_COURSE_YN = 'Y'</if>
 				)
 		</if>
+		<if test="arrCourseIds != null"> 
+			AND A.COURSE_ID IN
+			<foreach item="item" index="index" collection="arrCourseIds"
+			      open="(" separator="," close=")">
+			        #{item}
+			  </foreach>
+		</if>
 		<if test="orderKind == 'Popularity'">
 			ORDER BY E.CNT DESC, B.COURSE_NAME
 		</if>

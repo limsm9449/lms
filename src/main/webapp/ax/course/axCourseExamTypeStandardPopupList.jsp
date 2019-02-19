@@ -45,16 +45,16 @@ $(document.body).ready(function () {
                     config : {
                         columnKeys: { optionValue: "CD", optionText: "NM" },
                         options: [
-                            {CD: "TOTAL", NM: "전체 평가"},
-                            {CD: "WEEK", NM: "주별 평가"}
+                            {CD: "TOTAL", NM: "최종 평가"},
+                            {CD: "WEEK", NM: "진행단계 평가"}
                         ]
                     } 
 	        	},
 	            formatter : function () {
 	            	if ( this.item.EXAM_KIND == "WEEK" )
-	            		return "주별 평가";
+	            		return "진행단계 평가";
 	            	else if ( this.item.EXAM_KIND == "TOTAL" )
-	                	return "전체 평가";
+	                	return "최종 평가";
 	            	else 
 	                	return "-";
 	           	},

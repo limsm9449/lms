@@ -26,6 +26,14 @@ public class LoginService {
     public LoginSet loginCheck(LoginSet set) throws Exception {
     	LoginVO loginVO = (LoginVO) sqlSession.selectOne("login.getLoginUser",set.getCondiVO());
     	
+    	String auth = CommUtil.getString(set.getCondiVO().getAuth());
+    	if ( "CHANNEL".equals(auth) || "C2C".equals(set.getCondiVO().getCompType()) ) {
+    		LoginVO vo = sqlSession.selectOne("login.c2cUserInfo",set.getCondiVO());
+    		if ( vo != null ) {
+    			set.setCompCd(vo.getCompCd());	
+    		}
+    	}
+    	
     	if ( loginVO == null ) {
     		set.setIsNotExistUserId("N");
     		set.setIsWrongPassword("N");

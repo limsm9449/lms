@@ -102,7 +102,8 @@ public class LoginController {
    	 				("SITE_MANAGER".equals(auth) && !"Y".equals(CommUtil.getString(set.getData().getSiteManagerYn()))) ||
    	 				("CONTENTS_MANAGER".equals(auth) && !"Y".equals(CommUtil.getString(set.getData().getContentsManagerYn()))) ||
    	 				("TEACHER".equals(auth) && !"Y".equals(CommUtil.getString(set.getData().getTeacherYn()))) ||
-   	 				("TUTOR".equals(auth) && !"Y".equals(CommUtil.getString(set.getData().getTutorYn()))) ) {
+   	 				("TUTOR".equals(auth) && !"Y".equals(CommUtil.getString(set.getData().getTutorYn()))) ||
+   	 				("CHANNEL".equals(auth) && CommUtil.isEqual(set.getCompCd(), "")) ) {
    	 			set.setIsNotAuth("Y");
    	 		} else {
 	   	 		LoginManager loginManager = LoginManager.getInstance();
@@ -123,14 +124,23 @@ public class LoginController {
 	   	 		sess.setMobile(set.getData().getMobile());
 	   	 		sess.setEmail(set.getData().getEmail());
 	   	 		sess.setCompName(set.getData().getCompName());
-	   	 		
+
+	   	 		//C2C로 로그인시 TEACHER이면 권한을 부여한다.
+	   	 		if ( CommUtil.isEqual(auth, "") && CommUtil.isEqual(SessionUtil.getSessionCompType(), "C2C") && CommUtil.isEqual(set.getData().getUserId(), set.getData().getC2cUserId()) ) {
+   	 				auth = "CHANNEL";
+	   	 		}
+
 	   	 		if ( "".equals(CommUtil.getString(set.getData().getCompCd())) ) {
 	   	 			sess.setCompCd("B2C");
+	   	 		} else if ( auth.equals("CHANNEL") ) {
+	   	 			sess.setCompCd(set.getCompCd());
+		   	 		sess.setCompName("개인채널");
+	   	 			sess.setC2cYn("Y");
 	   	 		} else {
 	   	 			sess.setCompCd(set.getData().getCompCd());
 	   	 			sess.setC2cYn(set.getData().getC2cYn());
 	   	 		}
-
+	   	 		
 	   	 		sess.setAuth(auth);
 	
 		    	//첨부자료 다운로드 권한 설정

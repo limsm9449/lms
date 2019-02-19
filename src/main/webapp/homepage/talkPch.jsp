@@ -298,7 +298,7 @@ function fn_otherTalkContents(row) {
                             <div class="tch_chat">  
                                 <div class="tch_box"> 
                                     <div class="tch_face">
-                                        <img src="/cImage/user/${row.USER_ID}_talk.png">
+                                        <img src="/cImage/user/${row.USER_ID}_talk.jpg">
                                     </div>
                                     <div class="tch_textbox">
                                         <p class="tch_txt">${fn:replace(row.CONTENTS, newLineChar, "<br>")}</p>

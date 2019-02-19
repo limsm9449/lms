@@ -117,7 +117,7 @@ function lfn_btn(pKind, pParam) {
 
                             </div>
                             
-                            <div class="class_1_div3">
+                            <div class="class_1_div3" style="top:-20px">
                                 <div class="class3_btn">
 <c:choose>
 	<c:when test="${row.questYn eq 'Y'}">

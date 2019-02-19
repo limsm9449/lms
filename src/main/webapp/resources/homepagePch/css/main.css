@@ -2066,6 +2066,7 @@ header {
 	background:none;
 }
 .img_iframe{
+
 }
 .top1_img{
 	background:#B6BCBC;
@@ -2325,9 +2326,6 @@ header {
 	}
 	.p_talk_btn img{
 		width:60%;
-		position:relative;
-		left:30px;
-		top:16px;
 	}
 	.p_v1 img {
 		width: 100%;

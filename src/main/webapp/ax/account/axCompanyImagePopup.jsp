@@ -148,18 +148,18 @@ function isExtention(fileName, compExt) {
 <div data-ax5layout="ax1" data-config='{layout:"tab-panel"}' style="height:515px;">
     <div data-tab-panel='{label: "로그인 화면 이미지", "active": "true"}' style="background: #eee;">
         <div style="padding: 10px;">
-            <div class="img_box"><img id="loginImg" src="/cImage/blank.jpg" style="width:650px;height:425px;"/></div>
+            <div class="img_box"><img id="loginImg" src="/cImage/blank.jpg" style="width:482px;height:107px;"/></div>
             <div class="file_btn_group">
-		      <a class="grayBtn file_button">Login Image.jpg 파일</a> 
+		      <a class="grayBtn file_button">Login Image.jpg(482 * 107) 파일</a> 
 		      <input type="file" name="loginImgFile" id="loginImgFile" class="hidden_inputfile" title="" onChange="fn_upload({kind:'LOGIN'}); return false;">
 		    </div>
         </div>
     </div>
     <div data-tab-panel='{label: "타이틀 로고 이미지", "active": "false"}' style="background: #ccc;">
         <div style="padding: 10px;">
-            <div class="img_box"><img id="gnbImg" src="/cImage/blank.jpg" style="width:650px;height:425px;"/></div>
+            <div class="img_box"><img id="gnbImg" src="/cImage/blank.jpg" style="width:170px;height:80px;"/></div>
             <div class="file_btn_group">
-		      <a class="grayBtn file_button">GNB Image.jpg 파일</a> 
+		      <a class="grayBtn file_button">GNB Image.jpg(170 * 80) 파일</a> 
 		      <input type="file" name="gnbImgFile" id="gnbImgFile" class="hidden_inputfile" title="" onChange="fn_upload({kind:'GNB'}); return false;">
 		    </div>
         </div>

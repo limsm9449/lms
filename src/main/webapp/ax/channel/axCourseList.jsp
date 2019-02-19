@@ -35,7 +35,7 @@ $(document.body).ready(function () {
 
     $('#MCB_COMPANY').multiselect(multiselectOptions);
     
-    gfn_callAjax("/common/axDd.do", { DD_KIND : "CategoryLevel1,Tutor,CompanyKind,Company,Company1,Company2,OpenKind,Year" }, fn_callbackAjax, "dd", { async : false });
+    gfn_callAjax("/common/axDd.do", { DD_KIND : "CategoryLevel1,Tutor,OpenKind,Year" }, fn_callbackAjax, "dd", { async : false });
     
     $('[data-grid-control]').click(function () {
         switch (this.getAttribute("data-grid-control")) {
@@ -305,8 +305,8 @@ function fn_params() {
 	params.LEVEL1_CODE = $("#CB_LEVEL1 option:selected").val();	
 	params.LEVEL2_CODE = $("#CB_LEVEL2 option:selected").val();	
 	params.LEVEL3_CODE = $("#CB_LEVEL3 option:selected").val();	
-	params.COMPANY = $("#CB_COMPANY option:selected").val();	
-	params.COMPANY2 = $("#CB_COMPANY2 option:selected").val();	
+	params.COMPANY = "C2C";	
+	params.COMPANY2 = "${session.compCd}";	
 	params.OPEN_KIND = $("#CB_OPEN_KIND option:selected").val();	
 	params.YEAR = $("#CB_YEAR option:selected").val();	
 	params.MONTH = $("#CB_MONTH option:selected").val();	
@@ -337,7 +337,6 @@ function fn_callbackAjax(data, id) {
 	} else if ( id == "dd" ){
 		dd = $.extend({}, data);
 		
-		gfn_cbRefresh("CB_COMPANY", data.CompanyKind, true);
 		gfn_cbRefresh("CB_LEVEL1", data.CategoryLevel1, true);
 		gfn_cbRefresh("CB_OPEN_KIND", data.OpenKind, true);
 
@@ -366,14 +365,6 @@ function fn_cbChange(id) {
 	    gfn_callAjax("/common/axDd.do", { DD_KIND : "CategoryLevel2", LEVEL1_CODE : $("#CB_LEVEL1 option:selected").val()}, fn_callbackAjax, "CB_LEVEL1", { async : false });
 	} else  if ( id == "CB_LEVEL2" ) {
 	    gfn_callAjax("/common/axDd.do", { DD_KIND : "CategoryLevel3", LEVEL2_CODE : $("#CB_LEVEL2 option:selected").val()}, fn_callbackAjax, "CB_LEVEL2", { async : false });
-	} else if ( id == "CB_COMPANY" ) {
-		if ( $("#CB_COMPANY").val() == "B2B" ) {
-			gfn_cbRefresh("CB_COMPANY2", dd.Company1, true);
-		} else if ( $("#CB_COMPANY").val() == "C2C" ) {
-			gfn_cbRefresh("CB_COMPANY2", dd.Company2, true);
-		} else {
-			gfn_cbRefresh("CB_COMPANY2", null, true);
-		}
 	}
 }
 
@@ -407,15 +398,6 @@ function fn_cbChange(id) {
 </div>
 <div style="height:10px"></div>
 <div class="form-inline">
-  	<div class="form-group">
-    	<label for="CB_COMPANY">&nbsp;회사 구분</label>
-		<select class="form-control" id="CB_COMPANY" onchange="fn_cbChange('CB_COMPANY')">
-			<option value="">전체</option>
-		</select>
-		<select class="form-control" id="CB_COMPANY2">
-			<option value="">전체</option>
-		</select>
-  	</div>
   	<div class="form-group">
     	<label for="CB_OPEN_KIND">&nbsp;오픈구분</label>
 		<select class="form-control" id="CB_OPEN_KIND">
@@ -451,7 +433,7 @@ function fn_cbChange(id) {
 
 <div>
     <button class="btn btn-default" data-grid-control="search">검색</button>
-    <button class="btn btn-default" data-grid-control="export">엑셀</button>
+    <button class="btn btn-default" data-grid-control="export">엑셀</button>  
     <button class="btn btn-default" data-grid-control="viewContent">학습내용</button>
     <button class="btn btn-default" data-grid-control="viewImage">강의 이미지</button>
 </div>

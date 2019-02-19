@@ -178,7 +178,7 @@
 				,MP4_YN = T_MP4_YN
 				,ORD = T_ORD
 				,USE_YN = T_USE_YN
-		WHERE	SEQ IN ( SELECT SEQ FROM MAIN_FRAME WHERE CHANNEL_KIND = #{CHANNEL_KIND} )				
+		WHERE	MAIN_FRAME_SEQ IN ( SELECT SEQ FROM MAIN_FRAME WHERE CHANNEL_KIND = #{CHANNEL_KIND} )				
 	</update>
 
 	<select id="axMainFrameCompanyDomain" parameterType="hashmap" resultType="String">

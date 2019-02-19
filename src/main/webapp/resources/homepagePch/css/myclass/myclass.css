@@ -50,9 +50,9 @@
 }
 .class_1_div3{
 	display: inline-block;
-    padding: 57px 10px 14px 10px;
+    padding: 4px 10px 8px 10px;
     position: relative;
-    top: -21px;
+    top: 20px;
 }
 .class_2_div {
     display: inline-block;
@@ -170,12 +170,16 @@
 	font-size:17px;
 	color:white;
 	background:#0071BD;
-	padding:10px 20px;
+	padding:15% 20%;
 	text-align:center;
 	position: relative;
     top: -13px;
 	margin-right:10px;
 	cursor:pointer;
+	margin-bottom:10px;
+}
+#btn1_l2{
+	padding:10px 20px;
 }
 .class_1_btn2{
 	font-family: 'NanumSquare';

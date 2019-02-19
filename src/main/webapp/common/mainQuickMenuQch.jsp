@@ -22,7 +22,7 @@
                     <a href='#' onclick="page.goPage('/main/noticeList', '');">
                     	<li class='quick_menu_list' id="q_menu5"></li>
                     </a>
-                    <li class='quick_menu_list' id="q_menu7">Q</li>
+                    <li class='quick_menu_list' id="q_menu7"></li>
                     <c:if test="${!empty cart}"><img src="/resources/homepageQch/img/main/quick/q_menu2_circle.png" alt=' ' id="q_menu2_circle"><span class="q_menu2_num">${cart.size()}</span></c:if>
                     
                 </ul>

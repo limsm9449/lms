@@ -79,6 +79,7 @@ function lfn_login(userId) {
    					<option value="SITE_MANAGER">사이트 관리자</option>
    					<option value="TEACHER">Teacher</option>
    					<option value="TUTOR">Tutor</option>
+   					<option value="CHANNEL">개인채널</option>
            		</select>
             </div>
             <button onclick = 'lfn_cms_login()'>로그인</button>

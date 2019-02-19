@@ -22,7 +22,12 @@
                     <a href='#' onclick="page.goPage('/main/noticeList', '');">
                     	<li class='quick_menu_list' id="q_menu5"></li>
                     </a>
-                    <li class='quick_menu_list' id="q_menu7">P</li>
+<c:if test="${session.auth eq 'CHANNEL'}">                    
+                    <a href='#' onclick="window.open(context + '/home/adminHome.do', '_blank');">
+                    	<li class='quick_menu_list' id="q_menu6"></li>
+                    </a>
+</c:if>                    
+                    <li class='quick_menu_list' id="q_menu7"></li>
                     <c:if test="${!empty cart}"><img src="/resources/homepagePch/img/main/quick/q_menu2_circle.png" alt=' ' id="q_menu2_circle"><span class="q_menu2_num">${cart.size()}</span></c:if>
                     
                 </ul>

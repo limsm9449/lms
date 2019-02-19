@@ -36,6 +36,11 @@ $(document).ready(function() {
 		window.close();
 	}
 	
+	<%/* 로그인 페이지로 왔는데 어디민 화면에서 세션이 끊긴 경우 홈으로 간다. */ %>
+	if ( parent.document.getElementById("left") ) {
+		page.goHome();
+	}
+	
 	if ( $.cookie(cookieName + 'login') == "Y" ) {
 		$("input:checkbox[id='cb_continue']").prop("checked", true);
 

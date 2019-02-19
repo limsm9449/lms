@@ -26,7 +26,7 @@
                 <p>
                     (주)큐피플 서울시 금천구 가산동 371-50번지 에이스하이엔드3차 410/411호 | 대표이사 : 이준호 | 사업자등록번호: 119-81-78776 |
                     <span>
-                        Copyright 2017 Qpeople Academy. ALL Rights Reserved - Q
+                        Copyright 2017 Qpeople Academy. ALL Rights Reserved
                     </span>
                 </p>
             </div>

@@ -159,8 +159,8 @@ function fn_makeGrid() {
                 }
 	        },{
 	        	key : "QUESTION_CNT", 
-	        	label : "유형 문항수", 
-	            width : 100,
+	        	label : "최종평가 문항수",  
+	            width : 130,
 	        	align : "right", 
 	        	editor: {
                     type : "number"

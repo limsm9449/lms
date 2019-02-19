@@ -91,7 +91,7 @@ $(document.body).ready(function () {
             	fn_save();
                 break;
             case "export":
-                grid.exportExcel("과정Master관리.xls");
+                grid.exportExcel("강의관리.xls");
                 break;
             case "tutor":
             	var row = grid.getList("selected");

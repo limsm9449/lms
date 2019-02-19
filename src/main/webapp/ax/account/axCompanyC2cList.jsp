@@ -255,6 +255,16 @@ function fn_makeGrid() {
 				styleClass: function () {
                     return "grid-cell-edit";
                 }
+			},{
+	        	key : "LOGIN_IMG", 
+	        	label : "로그인화면 이미지", 
+	            width : 140,
+	        	align : "center"
+			},{
+	        	key : "GNB_IMG", 
+	        	label : "타이틀 로고 이미지", 
+	            width : 140,
+	        	align : "center"
 	        },{
 	            key : "LAST_UPDATE_USER",
 	            label : "수정자",
@@ -391,6 +401,7 @@ function fn_gridEvent(event, obj) {
     <button class="btn btn-default" data-grid-control="reset">초기화</button>
     <button class="btn btn-default" data-grid-control="save">저장</button>
     <button class="btn btn-default" data-grid-control="export">엑셀</button>
+    <button class="btn btn-default" data-grid-control="editImage">이미지 관리</button>
     <button class="btn btn-default" data-grid-control="zipcodeUrl">주소검색</button>
     <button class="btn btn-default" data-grid-control="employee">강사 상세정보</button>
 </div> 

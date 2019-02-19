@@ -217,7 +217,7 @@ function lfn_btn(pKind, pParam) {
 	<c:choose>
  		<c:when test = "${row.FRAME_KIND eq 'P_MAIN'}">
 			<c:forEach var="detailRow" items="${detailList}" varStatus="idx2">
-	 			<div class="top1_img">
+	 			<div class="top1_img" style="margin-bottom:${row.BOTTOM_HEIGHT}px">
 	            	<div class="p_main_img slide_${detailRow.SEQ}"></div>
 		        	<div class="top1_txt">  
 		            	<div class='p_wrap pp_lectures_wrap'>
@@ -254,7 +254,7 @@ function lfn_btn(pKind, pParam) {
 	         </c:forEach>
         </c:when>
  		<c:when test = "${row.FRAME_KIND eq 'DOT_SLIDE'}">
- 			<div class='recommend_wrap lectures_wrap'>
+ 			<div class='recommend_wrap lectures_wrap' style="margin-bottom:${row.BOTTOM_HEIGHT}px">
 	 			<c:if test = "${row.FRAME_NAME ne ''}">
 	 				<p>
 	                    ${row.FRAME_NAME}
@@ -279,7 +279,7 @@ function lfn_btn(pKind, pParam) {
 	      	</div>
         </c:when>
  		<c:when test = "${row.FRAME_KIND eq 'DOT_S_SLIDE'}">
-            <div class='process_wrap lectures_wrap'>
+            <div class='process_wrap lectures_wrap' style="margin-bottom:${row.BOTTOM_HEIGHT}px">
 	 			<c:if test = "${row.FRAME_NAME ne ''}">
 	 				<p>
 	                    ${row.FRAME_NAME}
@@ -304,7 +304,7 @@ function lfn_btn(pKind, pParam) {
             </div> 		
         </c:when>
  		<c:when test = "${row.FRAME_KIND eq 'SLIDE'}">
-            <div class='recommend_wrap lectures_wrap'>
+            <div class='recommend_wrap lectures_wrap' style="margin-bottom:${row.BOTTOM_HEIGHT}px">
 	 			<c:if test = "${row.FRAME_NAME ne ''}">
 	 				<p>
 	                    ${row.FRAME_NAME}
@@ -339,7 +339,7 @@ function lfn_btn(pKind, pParam) {
 	 				 <p class='pc'>${row.FRAME_DESC}</p>
 	 			</c:if>
             </div>
-            <div class="star_slide">
+            <div class="star_slide" style="margin-bottom:${row.BOTTOM_HEIGHT}px">
             	<img id="star_back" src="/resources/homepagePch/img/main/star_b.png" alt="" width="74" onclick="back('thumbnailSlide_${row.SEQ}')">
            		<div class="slide" id="s_slide">
                     <ul id="thumbnailSlide_${row.SEQ}">
@@ -358,7 +358,7 @@ function lfn_btn(pKind, pParam) {
            </div>
         </c:when>
  		<c:when test = "${row.FRAME_KIND eq 'MP4'}">
- 			<div class='recommend_wrap lectures_wrap'>
+ 			<div class='recommend_wrap lectures_wrap' style="margin-bottom:${row.BOTTOM_HEIGHT}px">
 	 			<c:if test = "${row.FRAME_NAME ne ''}">
 	 				<p>
 	                    ${row.FRAME_NAME}
@@ -376,7 +376,7 @@ function lfn_btn(pKind, pParam) {
 			</div>
         </c:when>
  		<c:when test = "${row.FRAME_KIND eq 'IMAGE'}">
- 			<div class='recommend_wrap lectures_wrap'>
+ 			<div class='recommend_wrap lectures_wrap' style="margin-bottom:${row.BOTTOM_HEIGHT}px">
 	 			<c:if test = "${row.FRAME_NAME ne ''}">
 	 				<p>
 	                    ${row.FRAME_NAME}
@@ -395,7 +395,7 @@ function lfn_btn(pKind, pParam) {
  			</div> 
         </c:when>
  		<c:when test = "${row.FRAME_KIND eq 'IMAGE_MP4'}">
-			<div class='recommend_wrap lectures_wrap'>
+			<div class='recommend_wrap lectures_wrap' style="margin-bottom:${row.BOTTOM_HEIGHT}px">
 	 			<c:if test = "${row.FRAME_NAME ne ''}">
 	 				<p>
 	                    ${row.FRAME_NAME}
@@ -420,7 +420,7 @@ function lfn_btn(pKind, pParam) {
          	</div>        
         </c:when>
  		<c:when test = "${row.FRAME_KIND eq 'MP4_IMAGE'}">
-			<div class='recommend_wrap lectures_wrap'>
+			<div class='recommend_wrap lectures_wrap' style="margin-bottom:${row.BOTTOM_HEIGHT}px">
 	 			<c:if test = "${row.FRAME_NAME ne ''}">
 	 				<p>
 	                    ${row.FRAME_NAME}

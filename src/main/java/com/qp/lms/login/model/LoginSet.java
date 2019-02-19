@@ -16,6 +16,7 @@ public class LoginSet extends CommonSet {
 	private String isNotAdmin;
 	private String isNotCertification;
 	private String isLogin;
+	private String compCd;
 	
 	private CompanyVO companyData;
 	
@@ -97,6 +98,14 @@ public class LoginSet extends CommonSet {
 
 	public void setIsLogin(String isLogin) {
 		this.isLogin = isLogin;
+	}
+
+	public String getCompCd() {
+		return compCd;
+	}
+
+	public void setCompCd(String compCd) {
+		this.compCd = compCd;
 	}
 
 	

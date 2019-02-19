@@ -55,6 +55,11 @@ $(document).ready(function(){
 	
 	$("#tuFirstGroup").addClass("here");
 </c:if>	
+<c:if test="${auth eq 'CHANNEL'}">         		
+gfn_openMenu('axCourseListCh');
+
+$("#chFirstGroup").addClass("here");
+</c:if>	
 
 //$("#firstMenu").addClass("here");
 });
@@ -160,7 +165,9 @@ var pageObj = {
 	axCourseListTu :			{	page : "/ax/tutor/axCourseList"	},
 	axIncomeListTu :			{	page : "/ax/tutor/axIncomeList"	},
 	axCourseListTe :			{	page : "/ax/teacher/axCourseList"	},
-	axIncomeListTe :			{	page : "/ax/teacher/axIncomeList"	}
+	axIncomeListTe :			{	page : "/ax/teacher/axIncomeList"	},
+	axCourseListCh :			{	page : "/ax/channel/axCourseList"	},
+	axIncomeListCh :			{	page : "/ax/channel/axIncomeList"	}
 }
 
 var pageParam = {}
@@ -201,7 +208,7 @@ function gfn_openMenu(pageId, params) {
 	</c:otherwise>
 </c:choose>      		
 	      		
-	      		<p class="logmsg f-small">${set.loginVO.userName}님이 로그인하셨습니다.</p>
+	      		<p class="logmsg f-small">${set.loginVO.userName}님</p>
 	      		<div class="log_btn">
 	        		<a href="#" onclick="gfn_openMenu('axAccountUser'); "><img src="/resources/images/admin/common/btn_mem_info.png" /></a>
 	        		<a href="#" onclick="gfn_ajax.logout()"><img src="/resources/images/admin/common/btn_logout.png" /></a>
@@ -338,6 +345,10 @@ function gfn_openMenu(pageId, params) {
 	          		<li><a href="#" class="mainMenu linker" onclick="gfn_openMenu('axCourseListTu'); gfn_menu(this)" id="tuFirstGroup"><span>강의 관리</span></a></li>
 	          		<li><a href="#" class="mainMenu linker" onclick="gfn_openMenu('axScoreList'); gfn_menu(this)"><span>성적 관리</span></a></li> 
 	          		<li><a href="#" class="mainMenu linker" onclick="gfn_openMenu('axIncomeListTu'); gfn_menu(this)"><span>수입 관리</span></a></li>
+</c:if>
+<c:if test="${auth eq 'CHANNEL'}">         		
+	          		<li><a href="#" class="mainMenu linker" onclick="gfn_openMenu('axCourseListCh'); gfn_menu(this)" id="chFirstGroup"><span>강의 관리</span></a></li>
+	          		<li><a href="#" class="mainMenu linker" onclick="gfn_openMenu('axIncomeListCh'); gfn_menu(this)"><span>수입 관리</span></a></li>
 </c:if>
         		</ul>
       		</div>

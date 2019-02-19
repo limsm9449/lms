@@ -249,6 +249,11 @@ public class MainService {
 			}
 		}
 		
+		//과정ID가 목록으로 들어올 경우...
+		if ( !CommUtil.isEqual(set.getCondiVO().getCourseIds(), "") ) {
+			set.getCondiVO().setArrCourseIds(CommUtil.stringSplit(set.getCondiVO().getCourseIds()));
+		}
+		
     	List<CourseVO> courseList = sqlSession.selectList("main.courseList", set.getCondiVO());
     	if ( "IMAGE".equals(set.getCondiVO().getViewType()) && courseList.size() % 3 != 0 ) {
 	    	for ( int i = courseList.size() % 3 + 1; i <= 3; i++ ) {

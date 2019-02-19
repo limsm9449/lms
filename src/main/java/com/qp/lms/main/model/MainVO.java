@@ -64,6 +64,8 @@ public class MainVO extends CommonVO {
 	private String mainViewMode;
 	private String topSearch;
 	private String talkId;
+	private String courseIds;
+    private String[] arrCourseIds;
 
 	public String getC1Code() {
 		return c1Code;
@@ -374,7 +376,18 @@ public class MainVO extends CommonVO {
 	public void setTalkId(String talkId) {
 		this.talkId = talkId;
 	}
-	
+	public String getCourseIds() {
+		return courseIds;
+	}
+	public void setCourseIds(String courseIds) {
+		this.courseIds = courseIds;
+	}
+	public String[] getArrCourseIds() {
+		return arrCourseIds;
+	}
+	public void setArrCourseIds(String[] arrCourseIds) {
+		this.arrCourseIds = arrCourseIds;
+	}
 	
 	
 

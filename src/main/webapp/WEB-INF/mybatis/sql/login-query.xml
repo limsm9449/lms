@@ -31,6 +31,7 @@
 				CAREER,
 				(SELECT COMP_NAME FROM COMPANY WHERE COMP_CD = A.COMP_CD) COMP_NAME,
 				(SELECT C2C_YN FROM COMPANY WHERE COMP_CD = A.COMP_CD) C2C_YN 	 
+				,(SELECT C2C_USER_ID FROM COMPANY WHERE COMP_CD = #{compCd}) C2C_USER_ID
     	  FROM 	USER A
     	 WHERE 	USER_ID = #{userId}
     	   AND 	USER_PASSWORD = SHA1(#{password}) 
@@ -99,5 +100,11 @@
 		AND		LOGIN_TIME > DATE_ADD(CURRENT_TIMESTAMP,INTERVAL -1 DAY)
 		AND 	LOGOUT_TIME IS NULL
 	</update>
+
+    <select id="c2cUserInfo" resultType="com.qp.lms.login.model.LoginVO">
+    	SELECT COMP_CD
+    	  FROM COMPANY
+    	 WHERE C2C_USER_ID = #{userId}
+    </select>
 
 </mapper>

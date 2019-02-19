@@ -127,18 +127,34 @@
 	                            </div>
 	                        </div>
 	                        
-	                        <div class="class_1_div3">
-	                        	<div class="class_btn">
+							<div class="class_1_div3">
+	                        	<div class="class_btn" style="position:relative;top:-5px">
 	                                <div class="class_1_btn1" onclick="javascript:Popup.showStudyroomQch('${row.courseId}')">
 	                                    학습시작
 	                                </div>
+<c:choose>
+	<c:when test="${row.questYn eq 'Y'}">
+                              		<div class="class_1_btn1" onclick="javascript:Popup.showQuestResult('${row.courseId}'); return false;">설문확인</div>
+	</c:when>
+	<c:otherwise>
+                             		<div class="class_1_btn1" onclick="javascript:Popup.showQuest('${row.courseId}'); return false;">설문참여</div>
+	</c:otherwise>
+</c:choose>
 	                            </div>
-	                            <div class="class_btn">
-	                                <div class="class_1_btn2" onclick="javascript:Popup.showUserBoard('DATA','${row.courseId}');">
+	                            <div class="class_btn" style="position:relative;top:3px">
+	                                <div class="class_1_btn1" onclick="javascript:Popup.showUserBoard('DATA','${row.courseId}');">
 	                                    자료실
 	                                </div>
+<c:choose>
+	<c:when test="${row.postscriptYn eq 'Y'}">
+									<div class="class_1_btn1" id="btn1_l2" onclick="javascript:Popup.showPostscriptV('${row.courseId}'); return false;">수강후기 확인</div>
+	</c:when>
+	<c:otherwise>
+									<div class="class_1_btn1" id="btn1_l2" onclick="javascript:Popup.showPostscript('${row.courseId}'); return false;">수강후기 참여</div>
+	</c:otherwise>
+</c:choose>                 
 	                            </div>
-	                        </div>
+	                        </div>	                        
 	                    </div>
 </c:forEach>	                    
                     </div>
