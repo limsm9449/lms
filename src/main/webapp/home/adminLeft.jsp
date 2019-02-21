@@ -169,6 +169,7 @@ var pageObj = {
 	axCourseListTe :			{	page : "/ax/teacher/axCourseList"	},
 	axIncomeListTe :			{	page : "/ax/teacher/axIncomeList"	},
 	axCourseListCh :			{	page : "/ax/channel/axCourseList"	},
+	axScoreListCh :				{	page : "/ax/channel/axScoreList"	},
 	axIncomeListCh :			{	page : "/ax/channel/axIncomeList"	}
 }
 
@@ -352,6 +353,7 @@ function gfn_openMenu(pageId, params) {
 </c:if>
 <c:if test="${auth eq 'CHANNEL'}">         		
 	          		<li><a href="#" class="mainMenu linker" onclick="gfn_openMenu('axCourseListCh'); gfn_menu(this)" id="chFirstGroup"><span>강의 관리</span></a></li>
+	          		<li><a href="#" class="mainMenu linker" onclick="gfn_openMenu('axScoreListCh'); gfn_menu(this)"><span>성적 관리</span></a></li> 
 	          		<li><a href="#" class="mainMenu linker" onclick="gfn_openMenu('axIncomeListCh'); gfn_menu(this)"><span>수입 관리</span></a></li>
 </c:if>
         		</ul>

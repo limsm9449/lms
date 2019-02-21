@@ -552,6 +552,7 @@ public class MainService {
 	
 	public MainSet myActivity(MainSet set) throws Exception {
 		set.getCondiVO().setUserId(SessionUtil.getSessionUserId());
+		set.getCondiVO().setCompCd(SessionUtil.getSessionCompCd());
 		
     	List<CounselVO> myCounselList = sqlSession.selectList("main.myCounselLimit3",set.getCondiVO());
     	set.setMyCounselList(myCounselList);
@@ -564,6 +565,7 @@ public class MainService {
 
 	public MainSet myQnaList(MainSet set) throws Exception {
 		set.getCondiVO().setUserId(SessionUtil.getSessionUserId());
+		set.getCondiVO().setCompCd(SessionUtil.getSessionCompCd());
 
     	//쿼리에서 가져올 갯수 지정
     	set.getCondiVO().setLimitUnit(Constant.unitForMainPage);

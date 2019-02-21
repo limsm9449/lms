@@ -53,13 +53,15 @@ function fn_callbackAjax(data, id) {
 	
 	if ( id == "search" ) {
 		$('#TITLE').val(data.row.TITLE);
-		
 		$('#CONTENTS').val(data.row.CONTENTS);
 		
 		if ( MODE == "UPDATE" ) {
 			$("#CONTENTS").cleditor()[0].refresh();
 		} else {
+			$("#TITLE").attr("readonly", true);
 			$("#CONTENTS").cleditor()[0].disable(true).refresh();
+			
+			$("#btn_save").hide();
 		}
 	} else if ( id == "save" ){
 		mask.close();

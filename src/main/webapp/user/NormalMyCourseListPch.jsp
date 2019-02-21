@@ -121,7 +121,7 @@ function lfn_btn(pKind, pParam) {
                                 <div class="class3_btn">
 	<c:choose>
 		<c:when test="${row.qgId eq '0'}">
-									<div class="class_3_btn1" onclick="javascript:Popup.showQuestResult('${row.courseId}'); return false;">-</div>
+									<div class="class_3_btn1" onclick="">-</div>
 		</c:when>
 		<c:when test="${row.questYn eq 'Y'}">
                               		<div class="class_3_btn1" onclick="javascript:Popup.showQuestResult('${row.courseId}'); return false;">설문확인</div>
