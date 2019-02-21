@@ -1,11 +1,7 @@
 package com.qp.lms.member.controller;
 
 import java.io.File;
-import java.io.UnsupportedEncodingException;
 import java.util.Map;
-import java.util.UUID;
-
-import javax.mail.MessagingException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,12 +15,10 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
-import com.qp.lms.board.model.AttachSet;
-import com.qp.lms.board.model.AttachVO;
+import com.qp.lms.ax.common.service.AxCommService;
 import com.qp.lms.common.CommUtil;
 import com.qp.lms.common.Constant;
 import com.qp.lms.common.LoginManager;
-import com.qp.lms.common.PlainMail;
 import com.qp.lms.common.SessionUtil;
 import com.qp.lms.common.service.CommService;
 import com.qp.lms.common.service.DdService;
@@ -44,6 +38,9 @@ public class MemberController {
     private CommService commSvr;
 	@Autowired
 	private DdService ddService;
+	
+	@Autowired
+	private AxCommService axCommService;
 
     /**
      * 사용자 리스트
@@ -570,42 +567,27 @@ public class MemberController {
 	    	MemberSet set = new MemberSet();
 	    	set.setCondiVO(vo);
 	    	
-	    	try {
-	        	//메일 발송
-	    		PlainMail mail = new PlainMail();
-	    		
-		    	mail.setSubject("[회원가입 인증메일] 큐러닝에 가입하신 환영합니다.");
-	
-		    	StringBuffer contents = new StringBuffer();
-		    	contents.append("<div style='font-size: 12px; width: 650px; height:500px; margin:0 auto;' align='center'>");
-		    	contents.append("  <div align='left'>");
-		    	contents.append("    <a href='http://www.qlearning.co.kr'><img src='http://www.qlearning.co.kr/resources/images/common/toplogo.png' style='border:0;' /></a>");
-		    	contents.append("  </div>");
-		    	contents.append("  <div style='text-align: left;margin: 30px 10px 30px;'>");
-		    	contents.append("    <p style='font-size: 14px; line-height: 1.5;'>안녕하세요.<br />온라인 학습 사이트 <b>큐러닝</b>입니다.<br /><br /></p>");
-		    	contents.append("    " + vo.getUserName() + "님의 회원가입을 축하드립니다.<br />");
-		    	contents.append("    회원 가입을 정상적으로 처리하기 위해서는 아래 이메일 인증 주소를 클릭 하시거나 <a href='http://www.qlearning.co.kr/guest/certification.do?certificationKey=" + vo.getCertificationKey() + "'>여기</a>를 클릭하여 주십시오.");
-		    	contents.append("    <p style='display:block;margin: 30px 10px;'><a href='http://www.qlearning.co.kr/guest/certification.do?certificationKey=" + vo.getCertificationKey() + "'>http://www.qlearning.co.kr/guest/certification.do?certificationKey=" + vo.getCertificationKey() + "</a></p>");
-		    	contents.append("    이메일이 정상적으로 인증 되지 않을 경우 고객센터로 연락 주시면 신속하게 처리해 드리겠습니다.  ");
-		    	contents.append("  </div>");
-		    	contents.append("  <div style='margin: 40px 0 0;'>");
-		    	contents.append("    <div style='float: left;'><img src='http://www.qlearning.co.kr/resources/images/admin/common/bottom_logo.png' alt='Qpeople' /></div>");
-		    	contents.append("    <div style='float: left;margin-left: 20px;'><p style='font-size: 11px;'>Copyrights 2014 Qpeople Academy. ALL Right Reserved</p></div>");
-		    	contents.append("  </div>");
-		    	contents.append("</div>");
-		    	
-		    	mail.setReceiver(vo.getEmail());
-    	    	mail.setContent(contents.toString());
-	
-	        	mail.SendMail();
-	    	} catch ( UnsupportedEncodingException e ) {
-	    		e.printStackTrace();
-	    		throw e;
-	    	} catch ( MessagingException e ) {
-	    		e.printStackTrace();
-	    		throw e;
-	    	}
-	
+	    	StringBuffer contents = new StringBuffer();
+	    	contents.append("<div style='font-size: 12px; width: 650px; height:500px; margin:0 auto;' align='center'>");
+	    	contents.append("  <div align='left'>");
+	    	contents.append("    <a href='http://www.qlearning.co.kr'><img src='http://www.qlearning.co.kr/resources/images/common/toplogo.png' style='border:0;' /></a>");
+	    	contents.append("  </div>");
+	    	contents.append("  <div style='text-align: left;margin: 30px 10px 30px;'>");
+	    	contents.append("    <p style='font-size: 14px; line-height: 1.5;'>안녕하세요.<br />온라인 학습 사이트 <b>큐러닝</b>입니다.<br /><br /></p>");
+	    	contents.append("    " + vo.getUserName() + "님의 회원가입을 축하드립니다.<br />");
+	    	contents.append("    회원 가입을 정상적으로 처리하기 위해서는 아래 이메일 인증 주소를 클릭 하시거나 <a href='http://www.qlearning.co.kr/guest/certification.do?certificationKey=" + vo.getCertificationKey() + "'>여기</a>를 클릭하여 주십시오.");
+	    	contents.append("    <p style='display:block;margin: 30px 10px;'><a href='http://www.qlearning.co.kr/guest/certification.do?certificationKey=" + vo.getCertificationKey() + "'>http://www.qlearning.co.kr/guest/certification.do?certificationKey=" + vo.getCertificationKey() + "</a></p>");
+	    	contents.append("    이메일이 정상적으로 인증 되지 않을 경우 고객센터로 연락 주시면 신속하게 처리해 드리겠습니다.  ");
+	    	contents.append("  </div>");
+	    	contents.append("  <div style='margin: 40px 0 0;'>");
+	    	contents.append("    <div style='float: left;'><img src='http://www.qlearning.co.kr/resources/images/admin/common/bottom_logo.png' alt='Qpeople' /></div>");
+	    	contents.append("    <div style='float: left;margin-left: 20px;'><p style='font-size: 11px;'>Copyrights 2017 Qpeople Academy. ALL Right Reserved</p></div>");
+	    	contents.append("  </div>");
+	    	contents.append("</div>");
+	    	
+    		axCommService.axMailSave(set.getCondiVO().getUserId(), vo.getEmail(), "[회원가입 인증메일] 큐러닝에 가입하신 환영합니다.", contents.toString());
+    		axCommService.axSendMail(null);
+        		
 			set.setRtnMode(Constant.mode.OK.name());
 	    	
 	        model.addAttribute("set", set );

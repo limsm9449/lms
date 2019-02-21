@@ -28,7 +28,11 @@ $(document.body).ready(function () {
         theme: "danger"
     });
 
-	$("#POINT_DATE").val(gfn_currentDay(null, "-"));		
+    $( window ).resize( function() {
+		gfn_gridResize("grid-parent", grid);  
+	} );
+
+    $("#POINT_DATE").val(gfn_currentDay(null, "-"));		
 	gfn_initDatepicker("POINT_DATE");
 
     $('[data-grid-control]').click(function () {
@@ -43,6 +47,8 @@ $(document.body).ready(function () {
     });
     
 	fn_makeGrid();
+
+	$(window).trigger("resize");
 });
 
 function fn_makeGrid() {

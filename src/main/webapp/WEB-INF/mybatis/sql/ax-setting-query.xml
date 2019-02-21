@@ -187,4 +187,29 @@
 		WHERE	COMP_CD = #{COMP_CD}
 	</select>   
 	
+	<select id="axSettingSmtpList" resultType="hashmap">
+		SELECT 	A.*
+				,'N' NEW_FLAG
+		FROM 	MAIL_SMTP A		 
+		ORDER BY SEQ
+	</select>
+	
+	<insert id="axSettingSmtpInsert" parameterType="hashmap">
+		INSERT INTO MAIL_SMTP( MAIL_SERVER, MAIL_USER_ID, MAIL_PASSWORD, USE_YN )
+    	VALUES ( #{MAIL_SERVER}, #{MAIL_USER_ID}, #{MAIL_PASSWORD}, #{USE_YN} )
+	</insert>  
+	
+	<update id="axSettingSmtpUpdate" parameterType="hashmap">
+		UPDATE 	MAIL_SMTP
+    	   SET 	MAIL_SERVER = #{MAIL_SERVER}
+    	   		,MAIL_USER_ID = #{MAIL_USER_ID}
+				,MAIL_PASSWORD = #{MAIL_PASSWORD}
+				,USE_YN = #{USE_YN}
+    	 WHERE 	SEQ = #{SEQ} 
+	</update>    
+	
+	<delete id="axSettingSmtpDelete" parameterType="hashmap">
+		DELETE FROM MAIL_SMTP
+		 WHERE SEQ = #{SEQ} 
+	</delete> 
 </mapper>

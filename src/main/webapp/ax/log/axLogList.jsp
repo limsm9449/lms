@@ -45,6 +45,26 @@ $(document.body).ready(function () {
 	        case "search":
 	            fn_search();
 	            break;
+	        case "delete":
+	        	mask.open();
+	           	confirmDialog.confirm(
+	           		{
+	                   	title: "Confirm",
+	                   	msg: '30일 이전의 접속 로그를 삭제하시겠습니까?'
+	               	}, 
+	               	function(){
+	                 	if ( this.key == "ok" ) {
+	                 		var saveParams = {
+	                 		};
+	                 		
+	                 		gfn_callAjax("/log/axLogDelete.do", { }, fn_callbackAjax, "delete");
+	                   	} else {
+	                   		mask.close();
+	                   	}
+	               	}
+	           	);
+	           	
+	            break; 
             case "export":
                 grid.exportExcel("로그관리.xls");
                 break;
@@ -106,10 +126,20 @@ function fn_search() {
 }
 
 function fn_callbackAjax(data, id) {
-	//console.log("fn_callbackAjax : " + id);
+	if ( data.RtnMode == "ERROR" ) {
+		mask.open();
+		dialog.alert( { msg : "처리시 오류가 발생했습니다. 관리자에게 문의하세요." }, function () { mask.close();	fn_search(); } );
+		return;
+	}
+
 	if ( id == "search" ) {
 		list = data.list;
 		grid.setData(data.list);
+	} else if ( id == "delete" ){
+		mask.close();
+
+		mask.open();
+		dialog.alert( { msg : "삭제 되었습니다." }, function () { mask.close();	fn_search(); } );
 	}
 }
 
@@ -153,6 +183,7 @@ function fn_gridEvent(event, obj) {
 
 <div>
     <button class="btn btn-default" data-grid-control="search">검색</button>
+    <button class="btn btn-default" data-grid-control="delete">접속 로그 삭제</button>
     <button class="btn btn-default" data-grid-control="export">엑셀</button>
 </div> 
 

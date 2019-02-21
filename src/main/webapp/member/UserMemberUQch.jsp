@@ -80,7 +80,7 @@ function lfn_validate() {
 	if ( formValid.check("homeZipcode",{isNecess:true,msg:"우편번호를 입력하세요.",maxLeng:50}) == false ) return false;
 	if ( formValid.check("homeAddr",{isNecess:true,msg:"주소를 입력하세요.",maxLeng:50}) == false ) return false;
 
-	if ( formValid.check("mobile",{isNecess:true,msg:"휴대전화번호를 입력하세요.",minLeng:11,maxLeng:12,isNum:true}) == false ) return false;
+	if ( formValid.check("mobile",{isNecess:true,msg:"휴대전화번호를 입력하세요.",minLeng:11,maxLeng:13,isMobile:true}) == false ) return false;
 	
 	if ( formValid.check("email1",{isNecess:true,msg:"이메일주소를 입력하세요.",maxLeng:50}) == false ) return false;
 	if ( $("#emailKind").val() == "" && $("#email2").val() == "" ) {

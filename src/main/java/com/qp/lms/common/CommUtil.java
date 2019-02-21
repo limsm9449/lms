@@ -7,6 +7,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.math.BigDecimal;
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -570,4 +571,16 @@ public class CommUtil {
 	}
 	*/
 
+	/**
+	  * 숫자에 천단위마다 콤마 넣기
+	  * @param int
+	  * @return String
+	  * */
+	public static String toNumFormat(int num) {
+		DecimalFormat df = new DecimalFormat("#,###");
+		return df.format(num);
+	}
+	public static String toNumFormat(String num) {
+		return toNumFormat(Integer.parseInt(num));
+	}	 
 }

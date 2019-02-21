@@ -1,15 +1,19 @@
 package com.qp.lms.ax.common.service;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
+
+import javax.mail.MessagingException;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.qp.lms.common.CommUtil;
+import com.qp.lms.common.PlainMail;
 
 @Service
 public class AxCommService {
@@ -243,6 +247,100 @@ public class AxCommService {
     	hm.put("list", list);
         
     	return hm;
+    }
+	
+	public void axMailSave(String userId, String email, String title, String contents) throws Exception {
+		HashMap<String, Object> hm = new HashMap<String, Object>();
+		
+		hm.put("USER_ID", userId);
+		hm.put("EMAIL", email);
+		hm.put("TITLE", title);
+		hm.put("CONTENTS", contents);
+
+		sqlSession.insert("axMailSend.axMailContentsInsert", hm);
+	}
+	
+	public boolean axSendMail(HashMap<String, Object> paramMap) throws Exception {
+		boolean isError = false;
+		
+		int mailCnt = 0;
+		int smtpSeq = 0;
+		
+		//일자별 smtp를 가져온다.
+    	HashMap<String, Object> smtpInfo = sqlSession.selectOne("axMailSend.axMailSmtp", paramMap);
+    	//없으면 생성
+    	if ( CommUtil.getIntValue(smtpInfo.get("CNT")) == 0 ) {
+    		sqlSession.insert("axMailSend.axMailSmtpInsert", paramMap);
+    	}
+    	smtpInfo = sqlSession.selectOne("axMailSend.axMailSmtp", paramMap);
+    	if ( CommUtil.isEqual((String)smtpInfo.get("MAIL_USER_ID"), "") ) {
+    		isError = true;
+    		return isError;
+    	} else {
+    		mailCnt = CommUtil.getIntValue(smtpInfo.get("MAIL_CNT"));
+    		smtpSeq = CommUtil.getIntValue(smtpInfo.get("SMTP_SEQ"));
+    	}
+    	
+    	PlainMail mail = new PlainMail((String)smtpInfo.get("MAIL_SERVER"), (String)smtpInfo.get("MAIL_USER_ID"), (String)smtpInfo.get("MAIL_PASSWORD"));
+    	
+    	List<HashMap<String, Object>> list = sqlSession.selectList("axMailSend.axMailList", paramMap);
+    	for ( int i = 0; i < list.size(); i++ ) {
+    		try {
+		    	mail.setSubject((String)list.get(i).get("TITLE"));
+		    	mail.setReceiver((String)list.get(i).get("EMAIL"));
+    	    	mail.setContent((String)list.get(i).get("CONTENTS"));
+	
+	        	mail.SendMail();
+	        	
+	        	++mailCnt; 
+	    	} catch ( Exception e ) {
+	    		e.printStackTrace();
+	    		
+	    		smtpInfo.put("MAIL_CNT", mailCnt);
+	    		sqlSession.update("axMailSend.axMailSmtpBlockUpdate", smtpInfo);
+
+	    		//오류시 다른 smtp로 전송
+	    		smtpInfo = sqlSession.selectOne("axMailSend.axMailSmtp", paramMap);
+	    		if ( CommUtil.isEqual((String)smtpInfo.get("MAIL_USER_ID"), "") ) {
+	        		isError = true;
+	        		return isError;
+	        	} else {
+	        		mailCnt = CommUtil.getIntValue(smtpInfo.get("MAIL_CNT"));
+	        		smtpSeq = CommUtil.getIntValue(smtpInfo.get("SMTP_SEQ"));
+	        	}
+	    		
+	    		try {
+		    		mail = new PlainMail((String)smtpInfo.get("MAIL_SERVER"), (String)smtpInfo.get("MAIL_USER_ID"), (String)smtpInfo.get("MAIL_PASSWORD"));
+		    		
+			    	mail.setSubject((String)list.get(i).get("TITLE"));
+			    	mail.setReceiver((String)list.get(i).get("EMAIL"));
+	    	    	mail.setContent((String)list.get(i).get("CONTENTS"));
+		
+		        	mail.SendMail();
+		        	
+		        	++mailCnt; 
+		    	} catch ( Exception e2 ) {
+		    		e2.printStackTrace();
+		    		isError = true;
+
+		    		smtpInfo.put("MAIL_CNT", mailCnt);
+		    		sqlSession.update("axMailSend.axMailSmtpBlockUpdate", smtpInfo);
+		    		
+		    		//두번째에서 오류가 발생을 하면 발송 종료
+		    		break;
+		    	}
+	    	}
+        	
+        	//발송저장
+        	list.get(i).put("SMTP_SEQ", smtpSeq);
+        	sqlSession.insert("axMailSend.axMailContentsUpdate", list.get(i));
+    	}
+    	
+    	//일자별 smtp 수정(갯수)
+		smtpInfo.put("MAIL_CNT", mailCnt);
+    	sqlSession.update("axMailSend.axMailSmtpUpdate", smtpInfo);
+        
+    	return isError;
     }
 
 }

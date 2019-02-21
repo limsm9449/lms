@@ -1,12 +1,8 @@
 package com.qp.lms.ax.board.service;
 
 import java.io.File;
-import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Random;
-
-import javax.mail.MessagingException;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,13 +10,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.qp.lms.board.model.AttachVO;
 import com.qp.lms.common.CommUtil;
 import com.qp.lms.common.Constant;
-import com.qp.lms.common.PlainMail;
 import com.qp.lms.common.SessionUtil;
-import com.qp.lms.common.service.DdService;
-import com.qp.lms.member.model.MemberVO;
 
 @Service
 public class AxBoardReportService {

@@ -34,7 +34,7 @@ $(document.body).ready(function () {
 
     gfn_callAjax("/common/axDd.do", { DD_KIND : "ZipcodeUrl" }, fn_callbackAjax, "dd", { async : false });
     
-    //fn_search();
+    fn_search();
     
     $('[data-grid-control]').click(function () {
         switch (this.getAttribute("data-grid-control")) {
@@ -115,7 +115,6 @@ function fn_callbackAjax(data, id) {
 		$("#BIRTH_DAY").val(data.row.BIRTH_DAY);
 		$("#EMAIL").val(data.row.EMAIL);
 		$("#MOBILE").val(data.row.MOBILE);
-		$("#HOME_TEL").val(data.row.HOME_TEL);
 		$("#HOME_ZIPCODE").val(data.row.HOME_ZIPCODE);
 		$("#HOME_ADDR").val(data.row.HOME_ADDR);
 		$("#BANK").val(data.row.BANK);
@@ -211,12 +210,6 @@ function fn_hidePopupDiv(popupDivId, mode) {
     	<label for="MOBILE" class="col-sm-2 control-label">핸드폰번호</label>
     	<div class="col-sm-10">
       		<input type="text" class="form-control" id="MOBILE" name="MOBILE" placeholder="">
-    	</div>
-  	</div>
-  	<div class="form-group">
-    	<label for="HOME_TEL" class="col-sm-2 control-label">전화번호</label>
-    	<div class="col-sm-10">
-      		<input type="text" class="form-control" id="HOME_TEL" name="HOME_TEL" placeholder="">
     	</div>
   	</div>
   	<div class="form-group">

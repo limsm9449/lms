@@ -148,10 +148,12 @@ var pageObj = {
 	axConfigList :				{	page : "/ax/setting/axConfigList"	},
 	axMailList :				{	page : "/ax/setting/axMailList"	},
 	axBankList :				{	page : "/ax/setting/axBankList"	},
+	axSmtpList :				{	page : "/ax/setting/axSmtpList"	},
 	axCodeList :				{	page : "/ax/setting/axCodeList"	},
 	axLogList :					{	page : "/ax/log/axLogList"	},
 	axLoginLogList :			{	page : "/ax/log/axLoginLogList"	},
 	axLoginMonthLogList :		{	page : "/ax/log/axLoginMonthLogList"	},
+	axMailLogList :				{	page : "/ax/log/axMailLogList"	},
 	axCourseCodeListCm : 		{	page : "/ax/contentsManager/axCourseCodeList"	},
 	axCourseListCm :			{	page : "/ax/contentsManager/axCourseList"	},
 	axIncomeListCm :			{	page : "/ax/contentsManager/axIncomeList"	},
@@ -296,6 +298,7 @@ function gfn_openMenu(pageId, params) {
 			              	<li><a href="#" class="subMenu linker" onclick="gfn_openMenu('axLoginMonthLogList'); gfn_subMenu(this);"><span>월별 로그인 로그</span></a></li>
 			              	<li><a href="#" class="subMenu linker" onclick="gfn_openMenu('axLoginLogList'); gfn_subMenu(this);"><span>로그인 로그</span></a></li>
 			              	<li><a href="#" class="subMenu linker" onclick="gfn_openMenu('axLogList'); gfn_subMenu(this)"><span>접속 로그</span></a></li>
+			              	<li><a href="#" class="subMenu linker" onclick="gfn_openMenu('axMailLogList'); gfn_subMenu(this)"><span>메일 로그</span></a></li>
 			         	</ul>
 			      	</li>
 
@@ -306,6 +309,7 @@ function gfn_openMenu(pageId, params) {
 			              	<li><a href="#" class="subMenu linker" onclick="gfn_openMenu('axConfigList'); gfn_subMenu(this);"><span>환경설정</span></a></li>
 			              	<li><a href="#" class="subMenu linker" onclick="gfn_openMenu('axMailList'); gfn_subMenu(this);"><span>메일 담당자</span></a></li>
 			              	<li><a href="#" class="subMenu linker" onclick="gfn_openMenu('axBankList'); gfn_subMenu(this);"><span>은행</span></a></li>
+			              	<li><a href="#" class="subMenu linker" onclick="gfn_openMenu('axSmtpList'); gfn_subMenu(this);"><span>메일 SMTP</span></a></li>
 			              	<li><a href="#" class="subMenu linker" onclick="gfn_openMenu('axCodeList'); gfn_subMenu(this);"><span>코드</span></a></li>
 			         	</ul>
 			      	</li>

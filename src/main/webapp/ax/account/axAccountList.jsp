@@ -96,6 +96,7 @@ $(document.body).ready(function () {
             	             	if ( this.key == "ok" ) {
             	             		var saveParam = {
             	             			USER_ID : row[0].USER_ID,
+            	             			USER_NAME : row[0].USER_NAME,
             	             			EMAIL : row[0].EMAIL
             	             		}
             	             		gfn_callAjax("/account/axPasswordReset.do", saveParam, fn_callbackAjax, "passwordReset");

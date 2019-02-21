@@ -27,7 +27,6 @@
 }
 .class_3_div1{
 	display: inline-block;
-    border-right: solid 1px #ccc;
     padding: 36px 18px 23px 10px;
     position: relative;
     top: -5px;
@@ -37,12 +36,13 @@
     display: inline-block;
     border-right: solid 1px #ccc;
 	border-left: solid 1px #ccc;
-    padding: 13px 20px 9px 14px;
+    padding: 19px 20px 15px 14px;
     position: relative;
     top: -1px;
 }
 .class_3_div2 {
     display: inline-block;
+	border-left: solid 1px #ccc;
     border-right: solid 1px #ccc;
     padding: 74px 38px 17px 31px;
     position: relative;

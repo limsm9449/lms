@@ -1,10 +1,7 @@
 package com.qp.lms.ax.account.service;
 
-import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.List;
-
-import javax.mail.MessagingException;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,16 +9,18 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.qp.lms.ax.common.service.AxCommService;
 import com.qp.lms.common.CommUtil;
 import com.qp.lms.common.Constant;
-import com.qp.lms.common.PlainMail;
 import com.qp.lms.common.SessionUtil;
-import com.qp.lms.common.service.DdService;
 
 @Service
 public class AxPointService {
 	@Autowired
 	private SqlSession sqlSession;
+	
+	@Autowired
+	private AxCommService axCommService;
 	
 	public HashMap<String, Object> axPointCodeList(HashMap<String, Object> paramMap) throws Exception {
 		HashMap<String, Object> hm = new HashMap<String, Object>();
@@ -112,20 +111,26 @@ public class AxPointService {
 			sqlSession.insert("axPoint.memberEventPointInsert", paramMap);
 		}
 
-		PlainMail mail = new PlainMail();
-    	try {
-			for ( int i = 0 ; i < updList.size(); i++ ) {
-		    	mail.setReceiver((String)updList.get(i).get("EMAIL"));
-		    	mail.setSubject("회원 이벤트 포인트 지급 공지");
-		    	mail.setContent("안녕하세요.<br><br>회원 이벤트로 포인트를 지급하였습니다.");
-		    	
-	    		mail.SendMail();
-			}
-    	} catch ( UnsupportedEncodingException e ) {
-    		e.printStackTrace();
-    	} catch ( MessagingException e ) {
-    		e.printStackTrace();
-    	}
+		for ( int i = 0 ; i < updList.size(); i++ ) {
+	    	StringBuffer contents = new StringBuffer();
+	    	contents.append("<div style='font-size: 12px; width: 650px; height:500px; margin:0 auto;' align='center'>");
+	    	contents.append("  <div align='left'>");
+	    	contents.append("    <a href='http://www.qlearning.co.kr'><img src='http://www.qlearning.co.kr/resources/images/common/toplogo.png' style='border:0;' /></a>");
+	    	contents.append("  </div>");
+	    	contents.append("  <div style='text-align: left;margin: 30px 10px 30px;'>");
+	    	contents.append("    <p style='font-size: 14px; line-height: 1.5;'>안녕하세요.<br />온라인 학습 사이트 <b>큐러닝</b>입니다.<br /><br /></p>");
+	    	contents.append("    " + updList.get(i).get("USER_NAME") + "님의 포인트가 ( " + CommUtil.toNumFormat((String)paramMap.get("POINT")) + " )점 적립되었습니다. <br />");
+	    	contents.append("    <p style='display:block;margin: 30px 10px;'>자세한 적립/사용내역은 <span style='color:#0a88d9'>마이페이지 > 포인트</span> 페이지에서 확인하실 수 있습니다.</p>");
+	    	contents.append("  </div>");
+	    	contents.append("  <div style='margin: 40px 0 0;'>");
+	    	contents.append("    <div style='float: left;'><img src='http://www.qlearning.co.kr/resources/images/admin/common/bottom_logo.png' alt='Qpeople' /></div>");
+	    	contents.append("    <div style='float: left;margin-left: 20px;'><p style='font-size: 11px;'>Copyrights 2017 Qpeople Academy. ALL Right Reserved</p></div>");
+	    	contents.append("  </div>");
+	    	contents.append("</div>");
+	    	
+	    	axCommService.axMailSave((String)updList.get(i).get("USER_ID"), (String)updList.get(i).get("EMAIL"), "회원 이벤트 포인트 지급 공지", contents.toString());
+		}
+		axCommService.axSendMail(null);
 		
 		hm.put("RtnMode", Constant.mode.OK.name());
 		

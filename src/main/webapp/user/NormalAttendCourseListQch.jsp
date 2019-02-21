@@ -89,11 +89,11 @@
 	                            <div class="class_1_title">
 	                                <a href='#' class='user_lecture_list_subject' onclick="javascript:Popup.showStudyroomQch('${row.courseId}');">${row.courseName}</a>
 	                            </div> 
-<c:if test="${row.mobileYn eq 'Y'}">                        
+	<c:if test="${row.mobileYn eq 'Y'}">                        
 	                            <div class="class_1_mobile">
 	                                모바일 병행
 	                            </div>
-</c:if>	                            
+	</c:if>	                            
 	                        </div>
 	                        
 	                        <div class="class_1_div2">
@@ -132,27 +132,32 @@
 	                                <div class="class_1_btn1" onclick="javascript:Popup.showStudyroomQch('${row.courseId}')">
 	                                    학습시작
 	                                </div>
-<c:choose>
-	<c:when test="${row.questYn eq 'Y'}">
+	<fmt:parseNumber value="${row.questProgressRatio}" var="questProgressRatio"/>
+	<fmt:parseNumber value="${row.progress}"   var="progress"/>	                                
+	<c:choose>
+		<c:when test="${row.qgId eq '0' || questProgressRatio > progress}">
+									<div class="class_3_btn1" onclick="">-</div>
+		</c:when>
+		<c:when test="${row.questYn eq 'Y'}">
                               		<div class="class_1_btn1" onclick="javascript:Popup.showQuestResult('${row.courseId}'); return false;">설문확인</div>
-	</c:when>
-	<c:otherwise>
+		</c:when>
+		<c:otherwise>
                              		<div class="class_1_btn1" onclick="javascript:Popup.showQuest('${row.courseId}'); return false;">설문참여</div>
-	</c:otherwise>
-</c:choose>
+		</c:otherwise>
+	</c:choose>
 	                            </div>
 	                            <div class="class_btn" style="position:relative;top:3px">
 	                                <div class="class_1_btn1" onclick="javascript:Popup.showUserBoard('DATA','${row.courseId}');">
 	                                    자료실
 	                                </div>
-<c:choose>
-	<c:when test="${row.postscriptYn eq 'Y'}">
+	<c:choose>
+		<c:when test="${row.postscriptYn eq 'Y'}">
 									<div class="class_1_btn1" id="btn1_l2" onclick="javascript:Popup.showPostscriptV('${row.courseId}'); return false;">수강후기 확인</div>
-	</c:when>
-	<c:otherwise>
+		</c:when>
+		<c:otherwise>
 									<div class="class_1_btn1" id="btn1_l2" onclick="javascript:Popup.showPostscript('${row.courseId}'); return false;">수강후기 참여</div>
-	</c:otherwise>
-</c:choose>                 
+		</c:otherwise>
+	</c:choose>                 
 	                            </div>
 	                        </div>	                        
 	                    </div>

@@ -146,7 +146,7 @@ function fn_makeGrid() {
               	columns: [	        
               		{
 			            key : "EVENT_POINT_FROM",
-			            label : "이베트 시작일",
+			            label : "이벤트 시작일",
 			            width : 110,
 			            align : "center",
 			            editor : { 

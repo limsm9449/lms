@@ -37,14 +37,17 @@ public class PlainMail {
 	private Address senderAddress = null;
 	private Address[] receiverAddress = null;
 	
-	public PlainMail() throws Exception {
+	public PlainMail(String _server, String _userName, String _password) throws Exception {
 		//System.out.println("mailServer : " + SessionUtil.getProperties("mailServer"));
 		
-		mailServer = SessionUtil.getProperties("mailServer");
+		//mailServer = SessionUtil.getProperties("mailServer");
+		mailServer = _server;
 		sender = SessionUtil.getProperties("mailSender");
 		senderName = SessionUtil.getProperties("mailSenderName");
-		username =  SessionUtil.getProperties("mailUsername");            
-		password = SessionUtil.getProperties("mailPassword");   		
+		//username =  SessionUtil.getProperties("mailUsername");            
+		//password = SessionUtil.getProperties("mailPassword");   		
+		username =  _userName;            
+		password = _password;
 	}
 	
 	public void SendMail() throws UnsupportedEncodingException,MessagingException,Exception {
@@ -77,7 +80,7 @@ public class PlainMail {
 	}
 
 	/*
-	 * 구글 사용자 메일 계정 아이디/패스 정보     
+	 * 메일 계정 아이디/패스 정보     
 	 */    
 	private class SMTPAuthenticator extends javax.mail.Authenticator {        
 		public PasswordAuthentication getPasswordAuthentication() {            

@@ -1,9 +1,5 @@
 package com.qp.lms.ns.controller;
 
-import java.io.UnsupportedEncodingException;
-
-import javax.mail.MessagingException;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,9 +9,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.qp.lms.ax.common.service.AxCommService;
 import com.qp.lms.common.CommUtil;
-import com.qp.lms.common.PlainMail;
-import com.qp.lms.member.model.MemberVO;
 import com.qp.lms.ns.model.MailVO;
 import com.qp.lms.ns.model.NsSet;
 import com.qp.lms.ns.model.NsVO;
@@ -27,6 +22,9 @@ public class NsController {
 
     @Autowired
     private NsService svr;
+	
+	@Autowired
+	private AxCommService axCommService;
 
     /*
      * ZipCode 화면 호출 
@@ -52,7 +50,7 @@ public class NsController {
      */
     @RequestMapping(value = "/ns/searchUserIdV")
     public String findUser(@ModelAttribute NsVO vo, Model model) throws Exception {
-   	    return "/ns/SearchUserIdV";
+   	    return CommUtil.getCompTypePage("/ns/SearchUserIdV");
     }
 
     /*
@@ -83,7 +81,7 @@ public class NsController {
      */
     @RequestMapping(value = "/ns/searchPasswordV")
     public String findPassword(@ModelAttribute NsVO vo, Model model) throws Exception {
-		return "/ns/SearchPasswordV";
+		return CommUtil.getCompTypePage("/ns/SearchPasswordV");
     }
 
     /*
@@ -113,27 +111,27 @@ public class NsController {
 
     @RequestMapping(value = "/ns/sendMailQuestion", method = RequestMethod.POST)
     public String sendMailQuestion(@ModelAttribute MailVO vo,Model model) throws Exception {
-    	try {
-        	//메일 발송
-    		PlainMail mail = new PlainMail();
-    		
-	    	mail.setSubject(vo.getMailSubject());
-	    	mail.setReceiver(vo.getCategory());
-	    	mail.setContent("이름 : " + vo.getUserName() + "<br>" + 
-	    					"메일주소 : " + vo.getEmail() + "<br>" +
-	    					"전화번호 : " + vo.getMobile() + "<br><br>" +
-	    					"내용 : " + vo.getMailContents());
+    	StringBuffer contents = new StringBuffer();
+    	contents.append("<div style='font-size: 12px; width: 650px; height:500px; margin:0 auto;' align='center'>");
+    	contents.append("  <div align='left'>");
+    	contents.append("    <a href='http://www.qlearning.co.kr'><img src='http://www.qlearning.co.kr/resources/images/common/toplogo.png' style='border:0;' /></a>");
+    	contents.append("  </div>");
+    	contents.append("  <div style='text-align: left;margin: 30px 10px 30px;'>");
+    	contents.append("이름 : " + vo.getUserName() + "<br>"); 
+    	contents.append("메일주소 : " + vo.getEmail() + "<br>");
+    	contents.append("전화번호 : " + vo.getMobile() + "<br><br>");
+    	contents.append("내용 : " + vo.getMailContents());
+    	contents.append("  </div>");
+    	contents.append("  <div style='margin: 40px 0 0;'>");
+    	contents.append("    <div style='float: left;'><img src='http://www.qlearning.co.kr/resources/images/admin/common/bottom_logo.png' alt='Qpeople' /></div>");
+    	contents.append("    <div style='float: left;margin-left: 20px;'><p style='font-size: 11px;'>Copyrights 2017 Qpeople Academy. ALL Right Reserved</p></div>");
+    	contents.append("  </div>");
+    	contents.append("</div>");
 
-        	mail.SendMail();
+    	axCommService.axMailSave("메일문의", vo.getCategory(), vo.getMailSubject(), contents.toString());
+		axCommService.axSendMail(null);
 
-	    	model.addAttribute("json", CommUtil.getJsonObject("OK",""));
-    	} catch ( UnsupportedEncodingException e ) {
-    		e.printStackTrace();
-    		throw e;
-    	} catch ( MessagingException e ) {
-    		e.printStackTrace();
-    		throw e;
-    	}
+    	model.addAttribute("json", CommUtil.getJsonObject("OK",""));
 
     	return "/common/json";
     }

@@ -113,7 +113,12 @@ function fn_callbackAjax(data, id) {
 		gfn_cbRefresh("CB_YEAR", data.Year2, true);
 		
 		$("#CB_YEAR").val((new Date()).getFullYear());
-		$("#CB_MONTH").val((new Date()).getMonth() + 1);
+		
+		if ( (new Date()).getMonth() < 9 ) {
+			$("#CB_MONTH").val("0" + (((new Date()).getMonth() + 1)));
+		} else {
+			$("#CB_MONTH").val((new Date()).getMonth() + 1);
+		}
 		
 		fn_makeGrid();
 	}

@@ -24,6 +24,11 @@
 		</if>			 
 		ORDER BY A.CREATE_DATE DESC
 	</select>
+	
+	<delete id="axLogDelete">
+		DELETE 	FROM REQUEST_LOG
+		WHERE	CREATE_DATE <![CDATA[<]]> DATE_ADD(SYSDATE(), INTERVAL -30 DAY)
+	</delete>
 
 	<select id="axLoginLogList" resultType="hashmap">
 		SELECT 	A.SEQ
@@ -98,5 +103,54 @@
 			</if>
 		</if>			 
 		ORDER BY U1.USER_NAME
-	</select>    
+	</select>
+	    
+	<select id="axMailLog1List" resultType="hashmap">
+		SELECT 	A.MAIL_DATE
+				,A.MAIL_CNT
+				,A.BLOCK_YN
+				,B.MAIL_SERVER
+				,B.MAIL_USER_ID
+				,B.MAIL_PASSWORD 
+				,A.SMTP_SEQ
+		FROM 	MAIL_SMTP_DAY A 
+					JOIN MAIL_SMTP B ON A.SMTP_SEQ = B.SEQ
+		WHERE	A.MAIL_DATE BETWEEN #{FROM_DATE} AND #{TO_DATE}
+		ORDER	BY A.MAIL_DATE DESC
+	</select>
+	    
+	<select id="axMailLog2List" resultType="hashmap">
+		SELECT 	A.SEQ
+				,DATE_FORMAT(A.CREATE_DATE,'%Y-%m-%d %H:%i:%s') CREATE_DATE
+				,A.USER_ID
+				,B.USER_NAME
+				,A.TITLE
+				,A.EMAIL
+				,DATE_FORMAT(A.SEND_DATE,'%Y-%m-%d %H:%i:%s') SEND_DATE
+		FROM 	MAIL_CONTENTS A 
+					LEFT OUTER JOIN USER B ON A.USER_ID = B.USER_ID
+		WHERE	A.CREATE_DATE >= STR_TO_DATE(#{FROM_DATE}, '%Y-%m-%d') 
+		AND 	A.CREATE_DATE <![CDATA[<]]> DATE_ADD(STR_TO_DATE(#{TO_DATE}, '%Y-%m-%d'), INTERVAL 1 DAY)
+		<if test="SEARCH_STR != null and SEARCH_STR != ''">
+		  AND 	A.TITLE LIKE CONCAT('%',#{SEARCH_STR},'%') 
+		</if>			 
+		ORDER	BY A.CREATE_DATE DESC
+	</select>
+
+	<select id="axMailLogOne" resultType="hashmap">
+		SELECT 	A.*
+		FROM 	MAIL_CONTENTS A 
+		WHERE	A.SEQ = #{SEQ} 
+	</select>
+	    
+	<delete id="axMailLogDelete1">
+		DELETE 	FROM MAIL_CONTENTS
+		WHERE	CREATE_DATE <![CDATA[<]]> DATE_ADD(SYSDATE(), INTERVAL -30 DAY)
+	</delete>
+	    
+	<delete id="axMailLogDelete2">
+		DELETE 	FROM MAIL_SMTP_DAY
+		WHERE	MAIL_DATE <![CDATA[<]]> DATE_FORMAT(DATE_ADD(SYSDATE(), INTERVAL -30 DAY), '%Y-%m-%d')
+	</delete>
+
 </mapper>

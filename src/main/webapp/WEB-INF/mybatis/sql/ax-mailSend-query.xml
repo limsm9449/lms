@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="axMailSend">
+
+	<insert id="axMailContentsInsert">
+		INSERT 	INTO	MAIL_CONTENTS ( CREATE_DATE, USER_ID, TITLE, EMAIL, CONTENTS )
+		VALUES	( CURRENT_TIMESTAMP, #{USER_ID}, #{TITLE}, #{EMAIL}, #{CONTENTS} )
+	</insert>
+	
+    <select id="axMailSmtp" parameterType="hashmap" resultType="hashmap">
+		SELECT 	A.*
+				,B.*
+				,(SELECT COUNT(*) FROM MAIL_SMTP_DAY WHERE MAIL_DATE = A.TODAY) CNT
+		FROM	(	SELECT DATE_FORMAT(SYSDATE(), '%Y-%m-%d') TODAY ) A
+					LEFT OUTER JOIN (
+						SELECT 	A.MAIL_CNT
+								,B.MAIL_SERVER
+								,B.MAIL_USER_ID
+								,B.MAIL_PASSWORD 
+								,A.SMTP_SEQ
+						FROM 	MAIL_SMTP_DAY A 
+									JOIN MAIL_SMTP B ON A.SMTP_SEQ = B.SEQ
+						WHERE	A.MAIL_DATE = DATE_FORMAT(SYSDATE(), '%Y-%m-%d')
+						AND		A.BLOCK_YN = 'N'
+						LIMIT 	1 ) B ON 1 = 1
+	</select>
+
+	<insert id="axMailSmtpInsert">
+		INSERT 	INTO MAIL_SMTP_DAY ( MAIL_DATE, SMTP_SEQ, MAIL_CNT, BLOCK_YN )
+		SELECT	DATE_FORMAT(SYSDATE(), '%Y-%m-%d')
+				,SEQ
+				,0
+				,'N'
+		FROM	MAIL_SMTP
+		WHERE	USE_YN = 'Y'
+	</insert>
+	
+    <select id="axMailList" parameterType="hashmap" resultType="hashmap">
+		SELECT 	A.*
+		FROM	MAIL_CONTENTS A
+		WHERE	CREATE_DATE > DATE_FORMAT(DATE_ADD(SYSDATE(), INTERVAL -5 DAY), '%Y-%m-%d')
+		AND 	SEND_DATE IS NULL
+	</select>
+	
+	<update id="axMailContentsUpdate">
+		UPDATE	MAIL_CONTENTS
+		SET		SMTP_SEQ = #{SMTP_SEQ}
+				,SEND_DATE = CURRENT_TIMESTAMP
+		WHERE	SEQ = #{SEQ}
+	</update>
+	
+	<update id="axMailSmtpUpdate">
+		UPDATE	MAIL_SMTP_DAY
+		SET		MAIL_CNT = #{MAIL_CNT}
+		WHERE	MAIL_DATE = DATE_FORMAT(SYSDATE(), '%Y-%m-%d')
+		AND		SMTP_SEQ = #{SMTP_SEQ}
+	</update>
+	
+	<update id="axMailSmtpBlockUpdate">
+		UPDATE	MAIL_SMTP_DAY
+		SET		MAIL_CNT = #{MAIL_CNT}
+				,BLOCK_YN = 'Y'
+		WHERE	MAIL_DATE = DATE_FORMAT(SYSDATE(), '%Y-%m-%d')
+		AND		SMTP_SEQ = #{SMTP_SEQ}
+	</update>
+	
+</mapper>
