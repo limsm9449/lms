@@ -206,15 +206,6 @@ function fn_makeGrid() {
                     return "grid-cell-edit";
                 }
 	        },{
-	        	key : "PROMOTION_VIDEO_YN", 
-	        	label : "홍보영상", 
-	            width : 80, 
-	        	align : "center", 
-	        	editor : { type : "checkbox", config : {height: 17, trueValue: "Y", falseValue: "N"} },
-				styleClass: function () {
-                    return "grid-cell-edit";
-                }
-	        },{
 	            key : "COURSE_COST",
 	            label : "과정비용",
 	            width : 90,
@@ -334,13 +325,18 @@ function fn_makeGrid() {
               	label: "학습내용", 
               	columns: [	        
 			        {
+			            key : "LEARING_CONTENT_YN",
+			            label : "강의소개",
+			            width : 80,
+			            align : "center"
+			        },{
 			            key : "LEARING_GOAL_YN",
 			            label : "학습목표",
 			            width : 80,
 			            align : "center"
 			        },{
-			            key : "LEARING_CONTENT_YN",
-			            label : "학습내용",
+			            key : "LEARING_TARGET_YN",
+			            label : "교육대상",
 			            width : 80,
 			            align : "center"
 			        },{
@@ -349,13 +345,13 @@ function fn_makeGrid() {
 			            width : 80,
 			            align : "center"
 			        },{
-			            key : "LEARING_TARGET_YN",
-			            label : "학습대상",
+			            key : "LEARING_COST_YN",
+			            label : "학습비용",
 			            width : 80,
 			            align : "center"
 			        },{
-			            key : "LEARING_COST_YN",
-			            label : "학습비용",
+			            key : "OFFLINE_DESC_YN",
+			            label : "오프라인",
 			            width : 80,
 			            align : "center"
 			        }

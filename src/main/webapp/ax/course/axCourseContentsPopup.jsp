@@ -35,26 +35,29 @@ $(document.body).ready(function () {
         },
         onOpenTab: function () {
         	if ( this.activePanelIndex == 0 ) {
-        		$("#learingGoal").cleditor()[0].refresh();
-        	} else if ( this.activePanelIndex == 1 ) {
         		$("#learingContent").cleditor()[0].refresh();
+        	} else if ( this.activePanelIndex == 1 ) {
+        		$("#learingGoal").cleditor()[0].refresh();
         	} else if ( this.activePanelIndex == 2 ) {
-        		$("#evalMethod").cleditor()[0].refresh();
-        	} else if ( this.activePanelIndex == 3 ) {
         		$("#learingTarget").cleditor()[0].refresh();
+        	} else if ( this.activePanelIndex == 3 ) {
+        		$("#evalMethod").cleditor()[0].refresh();
         	} else if ( this.activePanelIndex == 4 ) {
         		$("#learingCost").cleditor()[0].refresh();
-        	} 
+        	} else if ( this.activePanelIndex == 5 ) {
+        		$("#offlineDesc").cleditor()[0].refresh();
+        	}  
         		
             console.log(this);
         }
     });
 
-	$("#learingGoal").cleditor({height:405});
+    $("#learingGoal").cleditor({height:405});
 	$("#learingContent").cleditor({height:405});
 	$("#evalMethod").cleditor({height:405});
 	$("#learingTarget").cleditor({height:405});
 	$("#learingCost").cleditor({height:405});
+	$("#offlineDesc").cleditor({height:405});
 
 	if ( gfn_getUrlParams("IS_VIEW") == "Y" ) {
 		$("button[data-grid-control='save'").hide();
@@ -63,6 +66,7 @@ $(document.body).ready(function () {
 		$("#evalMethod").cleditor()[0].disable(true).refresh();
 		$("#learingTarget").cleditor()[0].disable(true).refresh();
 		$("#learingCost").cleditor()[0].disable(true).refresh();
+		$("#offlineDesc").cleditor()[0].disable(true).refresh();
 	}
 
     $('[data-grid-control]').click(function () {
@@ -96,22 +100,22 @@ function fn_search() {
 }
 
 function fn_save() {
-	if ( checkByte($('learingGoal').val()) > course_contents_length ) {
+	if ( checkByte($('learingContent').val()) > course_contents_length ) {
 		mask.open();
 		dialog.alert( { msg : "입력 가능한 자릿수를 넘었습니다." }, function () { layout$.ax5layout("tabOpen", 0); mask.close();	} );
 		return false;
 	}
-	if ( checkByte($('learingContent').val()) > course_contents_length ) {
+	if ( checkByte($('learingGoal').val()) > course_contents_length ) {
 		mask.open();
 		dialog.alert( { msg : "입력 가능한 자릿수를 넘었습니다." }, function () { layout$.ax5layout("tabOpen", 1); mask.close();	} );
 		return false;
 	}
-	if ( checkByte($('evalMethod').val()) > course_contents_length ) {
+	if ( checkByte($('learingTarget').val()) > course_contents_length ) {
 		mask.open();
 		dialog.alert( { msg : "입력 가능한 자릿수를 넘었습니다." }, function () { layout$.ax5layout("tabOpen", 2); mask.close();	} );
 		return false;
 	}
-	if ( checkByte($('learingTarget').val()) > course_contents_length ) {
+	if ( checkByte($('evalMethod').val()) > course_contents_length ) {
 		mask.open();
 		dialog.alert( { msg : "입력 가능한 자릿수를 넘었습니다." }, function () { layout$.ax5layout("tabOpen", 3); mask.close();	} );
 		return false;
@@ -119,6 +123,11 @@ function fn_save() {
 	if ( checkByte($('learingCost').val()) > course_contents_length ) {
 		mask.open();
 		dialog.alert( { msg : "입력 가능한 자릿수를 넘었습니다." }, function () { layout$.ax5layout("tabOpen", 4); mask.close();	} );
+		return false;
+	}
+	if ( checkByte($('offlineDesc').val()) > course_contents_length ) {
+		mask.open();
+		dialog.alert( { msg : "입력 가능한 자릿수를 넘었습니다." }, function () { layout$.ax5layout("tabOpen", 5); mask.close();	} );
 		return false;
 	}
 
@@ -136,6 +145,7 @@ function fn_save() {
          				EVAL_METHOD : $('#evalMethod').val(),
          				LEARING_TARGET : $('#learingTarget').val(),
          				LEARING_COST : $('#learingCost').val(),
+         				OFFLINE_DESC : $('#offlineDesc').val(),
          				COURSE_ID : params.COURSE_ID
          		};
          		gfn_callAjax("/course/axCourseContentsSave.do", saveParams, fn_callbackAjax, "save");
@@ -154,12 +164,14 @@ function fn_callbackAjax(data, id) {
 		$('#evalMethod').text(data.list[0].EVAL_METHOD);
 		$('#learingTarget').text(data.list[0].LEARING_TARGET);
 		$('#learingCost').text(data.list[0].LEARING_COST);
+		$('#offlineDesc').text(data.list[0].OFFLINE_DESC);
 		
 		$("#learingGoal").cleditor()[0].refresh();
 		$("#learingContent").cleditor()[0].refresh();
 		$("#evalMethod").cleditor()[0].refresh();
 		$("#learingTarget").cleditor()[0].refresh();
 		$("#learingCost").cleditor()[0].refresh();
+		$("#offlineDesc").cleditor()[0].refresh();
 		
 		//mask.close();
 	} else if ( id == "save" ){
@@ -194,14 +206,19 @@ function fn_callbackAjax(data, id) {
 <div style="height:10px"></div>
 
 <div data-ax5layout="ax1" data-config='{layout:"tab-panel"}' style="height:460px;">
-    <div data-tab-panel='{label: "학습목표", "active": "true"}' style="background: #eee;">
+    <div data-tab-panel='{label: "강의소개", "active": "true"}' style="background: #ccc;">
+        <div style="padding: 10px;">
+            <textarea id="learingContent" name="learingContent"></textarea>
+        </div>
+    </div>
+    <div data-tab-panel='{label: "학습목표", "active": "false"}' style="background: #eee;">
         <div style="padding: 10px;">
             <textarea id="learingGoal" name="learingGoal"></textarea>
         </div>
     </div>
-    <div data-tab-panel='{label: "학습내용", "active": "false"}' style="background: #ccc;">
+    <div data-tab-panel='{label: "교육대상", "active": "false"}' style="background: #ccc;">
         <div style="padding: 10px;">
-            <textarea id="learingContent" name="learingContent"></textarea>
+            <textarea id="learingTarget" name="learingTarget"></textarea>
         </div>
     </div>
     <div data-tab-panel='{label: "평가방법", "active": "false"}' style="background: #ccc;">
@@ -209,14 +226,14 @@ function fn_callbackAjax(data, id) {
             <textarea id="evalMethod" name="evalMethod"></textarea>
         </div>
     </div>
-    <div data-tab-panel='{label: "학습대상", "active": "false"}' style="background: #ccc;">
-        <div style="padding: 10px;">
-            <textarea id="learingTarget" name="learingTarget"></textarea>
-        </div>
-    </div>
     <div data-tab-panel='{label: "학습비용", "active": "false"}' style="background: #ccc;">
         <div style="padding: 10px;">
             <textarea id="learingCost" name="learingCost"></textarea>
+        </div>
+    </div>
+    <div data-tab-panel='{label: "오프라인", "active": "false"}' style="background: #ccc;">
+        <div style="padding: 10px;">
+            <textarea id="offlineDesc" name="learingCost"></textarea>
         </div>
     </div>
 </div>

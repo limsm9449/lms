@@ -177,6 +177,15 @@ function fn_makeGrid() {
 	            width : 80,
 	            align : "right"
 	        },{
+	        	key : "PREVIEW_YN", 
+	        	label : "미리보기 여부", 
+	            width : 100, 
+	        	align : "center", 
+	        	editor : { type : "checkbox", config : {height: 17, trueValue: "Y", falseValue: "N"} },
+				styleClass: function () {
+                    return "grid-cell-edit";
+                }
+	        },{
 	            key : "H_PX",
 	            label : "가로 길이",
 	            width : 90,
@@ -384,7 +393,8 @@ function fn_categorySelect(data) {
 					DIRECTORY : maxSeq,
 					POINT : 0,
 					USE_YN : "Y", 
-					CONTENTS_URL : ""
+					CONTENTS_URL : "",
+					PREVIEW_YN : "Y"
 				}, "last", {focus: "END"});
 		},
 		error : function(e) {

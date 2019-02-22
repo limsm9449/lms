@@ -51,7 +51,14 @@
 		           JOIN COURSE_EVAL E ON CR.COURSE_ID = E.COURSE_ID AND CR.USER_ID = E.USER_ID
 		WHERE 	CR.USER_ID = #{userId}
 		AND 	CR.STATUS = 'A'
+<choose>
+	<when test="compType != 'B2B'">
+		AND		( C.COMP_CD = 'B2C' OR C.COMP_CD IN ( SELECT COMP_CD FROM COMPANY WHERE C2C_YN = 'Y' ) )
+  	</when>
+  	<otherwise>
 		AND		C.COMP_CD = #{compCd}
+  	</otherwise>
+</choose>	
 		AND 	DATE_FORMAT(CURDATE(),'%Y-%m-%d')
 						BETWEEN 	CASE WHEN C.TERM_YN = 'Y' THEN C.STUDY_PERIOD_FROM ELSE DATE_FORMAT(CR.CONFIRM_DATE,'%Y-%m-%d') END
 						AND 		CASE WHEN C.TERM_YN = 'Y' THEN C.STUDY_PERIOD_TO ELSE DATE_FORMAT(DATE_ADD(CR.CONFIRM_DATE,INTERVAL C.C_PERIOD DAY),'%Y-%m-%d') END
@@ -86,7 +93,14 @@
 		           JOIN COURSE_MASTER CM ON CM.COURSE_CODE = C.COURSE_CODE
 		WHERE 	CR.USER_ID = #{userId}
 		AND 	CR.STATUS = 'B'
+<choose>
+	<when test="compType != 'B2B'">
+		AND		( C.COMP_CD = 'B2C' OR C.COMP_CD IN ( SELECT COMP_CD FROM COMPANY WHERE C2C_YN = 'Y' ) )
+  	</when>
+  	<otherwise>
 		AND		C.COMP_CD = #{compCd}
+  	</otherwise>
+</choose>	
 		UNION	ALL
 		SELECT 	CD.COURSE_NAME,
 		       	C.COURSE_ID,
@@ -114,7 +128,14 @@
 		           JOIN COURSE_MASTER CM ON CM.COURSE_CODE = C.COURSE_CODE
 		WHERE 	CR.USER_ID = #{userId}
 		AND 	CR.STATUS = 'A'
+<choose>
+	<when test="compType != 'B2B'">
+		AND		( C.COMP_CD = 'B2C' OR C.COMP_CD IN ( SELECT COMP_CD FROM COMPANY WHERE C2C_YN = 'Y' ) )
+  	</when>
+  	<otherwise>
 		AND		C.COMP_CD = #{compCd}
+  	</otherwise>
+</choose>	
 		AND 	DATE_FORMAT(CURDATE(),'%Y-%m-%d') <![CDATA[<]]> CASE WHEN C.TERM_YN = 'Y' THEN C.STUDY_PERIOD_FROM ELSE DATE_FORMAT(CR.CONFIRM_DATE,'%Y-%m-%d') END
 		ORDER 	BY COURSE_NAME
     </select>
@@ -140,7 +161,14 @@
 		           JOIN COURSE_CODE CD ON CD.COURSE_CODE = C.COURSE_CODE
 		WHERE 	CR.USER_ID = #{userId}
 		AND 	CR.STATUS IN ('C','R')
+<choose>
+	<when test="compType != 'B2B'">
+		AND		( C.COMP_CD = 'B2C' OR C.COMP_CD IN ( SELECT COMP_CD FROM COMPANY WHERE C2C_YN = 'Y' ) )
+  	</when>
+  	<otherwise>
 		AND		C.COMP_CD = #{compCd}
+  	</otherwise>
+</choose>	
 		ORDER 	BY CD.COURSE_NAME
     </select>
 
@@ -206,7 +234,14 @@
 		WHERE 	CR.USER_ID = #{userId}
 		AND 	DATE_FORMAT(CURDATE(),'%Y-%m-%d') > CASE WHEN C.TERM_YN = 'Y' THEN C.STUDY_PERIOD_TO ELSE DATE_FORMAT(DATE_ADD(CR.CONFIRM_DATE,INTERVAL C.C_PERIOD DAY),'%Y-%m-%d') END
 		AND		CR.STATUS = 'A'
+<choose>
+	<when test="compType != 'B2B'">
+		AND		( C.COMP_CD = 'B2C' OR C.COMP_CD IN ( SELECT COMP_CD FROM COMPANY WHERE C2C_YN = 'Y' ) )
+  	</when>
+  	<otherwise>
 		AND		C.COMP_CD = #{compCd}
+  	</otherwise>
+</choose>	
 		ORDER 	BY C_FROM_DATE DESC
     </select>
 

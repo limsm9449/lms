@@ -241,12 +241,10 @@ public class MainService {
 	public MainSet courseList(MainSet set) throws Exception {
 		set.getCondiVO().setCompCd((String)SessionUtil.getAttribute("compCd"));
 		
-		if ( "Y".equals(set.getCondiVO().getViewTypeChg()) ) {
-			if ( "LIST".equals(set.getCondiVO().getViewType()) ) {
-				set.getCondiVO().setLimitUnit(10);
-			} else {
-				set.getCondiVO().setLimitUnit(12);
-			}
+		if ( "IMAGE".equals(set.getCondiVO().getViewType()) ) {
+			set.getCondiVO().setLimitUnit(12);
+		} else {
+			set.getCondiVO().setLimitUnit(10);
 		}
 		
 		//과정ID가 목록으로 들어올 경우...

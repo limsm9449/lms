@@ -20,7 +20,8 @@
     <link rel='stylesheet' href='/resources/homepageQch/css/initialization.css'>
     <link rel='stylesheet' href='/resources/homepageQch/css/myclass/myclass_main.css'>
     <link rel='stylesheet' href='/resources/homepageQch/css/myclass/myclass_table.css'>
-    <link rel='stylesheet' href='/resources/homepageQch/css/myclass/myclass.css'>    
+    <link rel='stylesheet' href='/resources/homepageQch/css/myclass/myclass.css'>   
+    <link rel='stylesheet' href='/resources/homepageQch/css/IE_style.css'>       
 </head>
 
 <script type="text/javascript">

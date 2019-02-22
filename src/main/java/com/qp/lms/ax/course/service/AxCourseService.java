@@ -58,6 +58,7 @@ public class AxCourseService {
 					row.put("EVAL_METHOD", courseMaster.get("EVAL_METHOD"));
 					row.put("LEARING_TARGET", courseMaster.get("LEARING_TARGET"));
 					row.put("LEARING_COST", courseMaster.get("LEARING_COST"));
+					row.put("OFFLINE_DESC", courseMaster.get("OFFLINE_DESC"));
 				}
 	
 				sqlSession.insert("axCourse.axCourseInsert", row);

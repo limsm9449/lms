@@ -104,11 +104,13 @@ function fn_save() {
        	for ( var i = 0; i < allList.length; i++ ) {
        		costSum += parseInt(allList[i].WEEK_COST)
        	}
+       	/*
        	if ( courseCost != costSum ) {
        		mask.open();
 			dialog.alert( { msg : "차시비용의 합계는 " + checkThousand(costSum) + " 입니다. <br>총비용은 " + checkThousand(courseCost) + "입니다."}, function () { mask.close(); } );
 			return;
        	}
+       	*/
    		
    		mask.open();
        	confirmDialog.confirm(

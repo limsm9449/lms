@@ -135,10 +135,7 @@ function lfn_page(kind) {
 				<!-- Top END -->
 
 				<div class='util_wrap signin'>
-					<h1>
-						<span>Welcome</span> 큐러닝에 오신 것을 환영합니다.
-					</h1>
-					<p>로그인을 위하여 아래 아이디와 비밀번호를 입력하여 주십시오.</p>
+					<img src='/cImage/company/${compCd}_login.jpg' alt=' '>
 					<div class='signin_main_control clear_fix'>
 						<input type='text' name='userId' id='userId' placeholder='아이디'>
 						<input type='password' name='password' id='password' placeholder='비밀번호' onkeydown="lfn_passwordEnter()">
@@ -155,12 +152,6 @@ function lfn_page(kind) {
 							</div>
 						</div>
 					</div>
-					<!-- <div class='signin_option_box clear_fix'>
-						<button class='naver' onclick="alert('작업중입니다.');">네이버
-							아이디로 로그인</button>
-						<button class='facebook' onclick="alert('작업중입니다.');">페이스북
-							아이디로 로그인</button>
-					</div> -->
 					<div class='signin_bg_box'> 
 						<img src='/resources/homepage/img/util/login_bg.png' alt=''>
 					</div>

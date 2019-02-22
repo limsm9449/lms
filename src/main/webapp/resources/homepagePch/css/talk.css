@@ -83,6 +83,7 @@
 	max-height:765px;
 	overflow-y:auto;
 	padding-top:30px;
+	min-height:765px;
 }
 /*****************me*********************/
 .me_chat{

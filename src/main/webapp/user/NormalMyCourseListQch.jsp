@@ -21,6 +21,7 @@
     <link rel='stylesheet' href='/resources/homepageQch/css/myclass/myclass_main.css'>
     <link rel='stylesheet' href='/resources/homepageQch/css/myclass/myclass_table.css'>
     <link rel='stylesheet' href='/resources/homepageQch/css/myclass/myclass.css'>    
+    <link rel='stylesheet' href='/resources/homepageQch/css/IE_style.css'>    
 </head>
 
 <script type="text/javascript">
@@ -104,7 +105,7 @@ function lfn_btn(pKind, pParam) {
 </c:if>	 
                             </div>
                             
-                            <div class="class_3_div2">
+                            <div class="class_3_div2 IEvr1">
 
                                 <div class="class_3_per_div">
                                     <div class="class_3_chk1">
@@ -117,7 +118,7 @@ function lfn_btn(pKind, pParam) {
 
                             </div>
                             
-                            <div class="class_1_div3" style="top:-20px">
+                            <div class="class_1_div3 IEvr1" style="top:-20px">
                                 <div class="class3_btn">
 	<c:choose>
 		<c:when test="${row.qgId eq '0'}">
@@ -132,7 +133,7 @@ function lfn_btn(pKind, pParam) {
 	</c:choose>
                                 
                                 </div>
-                                <div class="class3_btn">
+                                <div class="class3_btn line2">
 	<c:choose>
 		<c:when test="${row.postscriptYn eq 'Y'}">
 									<div class="class_3_btn2" onclick="javascript:Popup.showPostscriptV('${row.courseId}'); return false;">수강후기 확인</div>

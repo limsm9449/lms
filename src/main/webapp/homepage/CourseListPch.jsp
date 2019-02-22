@@ -25,24 +25,17 @@
 <script type="text/javascript">
 
 $(document).ready(function(){
-    $("#categoryAll").click(function(){
-        if ( $("#categoryAll").prop("checked") ) {
-            $("input[name=categorys]").prop("checked",true);
-        }else{
-            $("input[name=categorys]").prop("checked",false);
-        }
-    })
-    
-	<c:forEach var="row" items="${set.condiVO.categorys}" varStatus="idx">
-		$("input[name=categorys][value=${row}]").prop("checked",true);
-	</c:forEach>
-	
 	f_makePageNavigator("pagingLayer",${set.condiVO.pageNum},${set.totalCount},${set.condiVO.limitUnit});
 });
 
 
 function lfn_btn(pKind, pParam) {
 	if ( pKind == "search" || pKind == "paging" || pKind == "refresh" ) {
+		if ( pKind == "search" )
+			$("#pageNum").val(1);
+		else if ( pKind == "paging" )
+			$("#pageNum").val(pParam.page);
+		
 		f_submitSelf("/main/courseList");	
 	} else if ( pKind == "view" ) {
 		$("#courseId").val(pParam.courseId);
@@ -78,7 +71,6 @@ function lfn_btn(pKind, pParam) {
 
 function lfn_viewTypeChg(kind) {
 	$('#viewType').val(kind); 
-	$('#viewTypeChg').val('Y'); 
 	$('#pageNum').val(1); 
 	
 	lfn_btn('search');
@@ -90,8 +82,7 @@ function lfn_viewTypeChg(kind) {
 
 <form name="frm" id="frm" method="post">
 	<input type='hidden' id='courseId' name='courseId'>
-	<input type='hidden' id='viewType' name='viewType'>
-	<input type='hidden' id='viewTypeChg' name='viewTypeChg' value="N">
+	<input type='hidden' id='viewType' name='viewType' value="${set.condiVO.viewType}">
 	
 <frameset rows='*'>
     <div class='wrap'>
@@ -186,6 +177,9 @@ function lfn_viewTypeChg(kind) {
 			<c:if test="${row.mobileYn eq 'Y'}">     	                                    
 	                                    <p class='process_result_mobile'>모바일</p>
 			</c:if>	                                    
+			<c:if test="${row.offlineYn eq 'Y'}">     	                                    
+	                                    <p class='process_result_offline'>오프라인</p>
+			</c:if>	                                    
 	                                </div>
 	                                <p><a href="javascript:" onclick="lfn_btn('view',{courseId:'${row.courseId}'}); return false;">${row.courseName}</a></p>
 	                                <div class='process_result_text_bottom clear_fix'>
@@ -209,7 +203,14 @@ function lfn_viewTypeChg(kind) {
 	                            </p>
 	                        </div>
 	                        <div class='process_result_btn con'>
-	                            <button onclick="javascript:Popup.showSampleCoursePch('${row.courseId}','${row.hPx + 100}','${row.vPx + 100}'); return false;">맛보기</button>
+			<c:choose>
+				<c:when test = "${row.previewYn ne 'N'}">
+	                            <button onclick="javascript:Popup.showSampleCourseQch('${row.courseId}','${row.hPx + 100}','${row.vPx + 100}'); return false;">맛보기</button>
+			   	</c:when>
+			   	<c:otherwise>
+	                            <button onclick="" class="no_btnclick">맛보기</button>
+			   	</c:otherwise>
+			</c:choose>			
 	                            <button onclick="javascript:lfn_btn('cart',{courseId:'${row.courseId}',cnt:'${row.cnt}'}); return false;">장바구니</button>
 	                            <button onclick="javascript:lfn_btn('view',{courseId:'${row.courseId}'}); return false;" class='process_result_admission'>수강신청</button>
 	                        </div>
@@ -226,21 +227,31 @@ function lfn_viewTypeChg(kind) {
                         <li <c:if test="${idx.index % 3 eq 2}">  class='last_right'</c:if>>
 			<c:choose>
 				<c:when test = "${row.courseId ne null}">
-                            <a href=''><img src='/cImage/contents/${row.courseCode}/bImg.jpg' alt=' '></a>
+                            <a href=''><img src='/cImage/contents/${row.courseCode}/cImg.jpg' alt=' '></a>
                             <div class='process_text_box'>
                                 <div class='process_info_box'>
                                     <div>
                                         <p>일반</p>
 					<c:if test="${row.mobileYn eq 'Y'}">     	                                    
-                                        <p>모바일</p>
+                                        <p class='process_result_moblie'>모바일</p>
 					</c:if>                                     
+					<c:if test="${row.offlineYn eq 'Y'}">     	                                    
+	                                    <p class='process_result_offline'>오프라인</p>
+					</c:if>	                                    
                                     </div>
                                     <p class='process_title'>
                                         <a href="javascript:" onclick="lfn_btn('view',{courseId:'${row.courseId}'}); return false;">${row.courseName}</a>
                                     </p>
                                 </div>
                                 <div class='process_btn_area clear_fix'>
-                                    <button onclick="javascript:Popup.showSampleCoursePch('${row.courseId}','${row.hPx + 100}','${row.vPx + 100}'); return false;">맛보기</button>
+					<c:choose>
+						<c:when test = "${row.previewYn ne 'N'}">
+			                     	<button onclick="javascript:Popup.showSampleCourseQch('${row.courseId}','${row.hPx + 100}','${row.vPx + 100}'); return false;">맛보기</button>
+					   	</c:when>
+					   	<c:otherwise>
+			                        <button onclick="" class="no_btnclick">맛보기</button>
+					   	</c:otherwise>
+					</c:choose>			
 		                            <button onclick="javascript:lfn_btn('cart',{courseId:'${row.courseId}',cnt:'${row.cnt}'}); return false;">장바구니</button>
                                     <button onclick="javascript:lfn_btn('view',{courseId:'${row.courseId}'}); return false;" class='admission'>수강신청</button>
                                 </div>
@@ -275,6 +286,7 @@ function lfn_viewTypeChg(kind) {
 </c:choose>  
 
                     <!-- Pager Area -->
+                    <input type='hidden' id='pageNum' name='pageNum' value="${set.condiVO.pageNum}">
                     <div class='pager_box'>
                         <div class='pager clear_fix'>
                             <div class='pager_prev clear_fix' id="pagingLayerPrev">

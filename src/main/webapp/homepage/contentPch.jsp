@@ -31,6 +31,7 @@
 
     <link rel='stylesheet' type='text/css' href='/resources/homepagePch/css/initialization.css'>
     <link rel='stylesheet' type='text/css' href='/resources/homepagePch/css/main.css?timestamp=<%=timestamp%>'>
+    <link rel='stylesheet' href='/resources/homepagePch/css/IE_style.css'>    
 </head>
 
 <script type="text/javascript">
@@ -86,7 +87,7 @@ $(document).ready(function(){
 					<c:set var="imgs" value="${fn:split(detailRow.BK_IMAGE_URL,'^')}" />
 					<c:forEach var="img" items="${imgs}" varStatus="g">
 						<c:if test="${g.count == 1}">
-							document.querySelector('.slide_mi1_${detailRow.SEQ}').style.background = "url('" + "${img}" + "') 50% 0 no-repeat";
+							document.querySelector('.slide_mi1_${detailRow.SEQ}').style.background = "url('" + fn_getPcMobileImg(isPc, "${img}") + "') 50% 0 no-repeat";
 						</c:if>
 						<c:if test="${g.count == 2}">
 							$(".slide_mi2_${detailRow.SEQ}").attr("src","${img}");
@@ -102,7 +103,7 @@ $(document).ready(function(){
 						$(".slide_mi1_${detailRow.SEQ}").attr("src","${img}");
 					</c:if>
 					<c:if test="${g.count == 2}">
-						document.querySelector('.slide_mi2_${detailRow.SEQ}').style.background = "url('" + "${img}" + "') 50% 0 no-repeat";
+						document.querySelector('.slide_mi2_${detailRow.SEQ}').style.background = "url('" + fn_getPcMobileImg(isPc, "${img}") + "') 50% 0 no-repeat";
 				    </c:if>
 				</c:forEach> 
 			</c:forEach>

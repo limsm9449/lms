@@ -207,8 +207,11 @@ function lfn_btn(pKind, pParam) {
                         <h2>${set.courseData.courseName}</h2>
                         <p>일반</p>
 <c:if test="${set.courseData.mobileYn eq 'Y'}">                        
-                        <p class='bg_other'>모바일</p>
-</c:if>                        
+                        <p class='process_result_mobile'>모바일</p>
+</c:if>
+<c:if test="${set.courseData.offlineYn eq 'Y'}">     	                                    
+                        <p class='process_result_offline'>오프라인</p>
+</c:if>	                         
                     </div>
                 </div>
                 <div class='register_course_contents clear_fix'>
@@ -282,7 +285,14 @@ function lfn_btn(pKind, pParam) {
                             </span>
                         </p>
                         <div class='register_btn_area clear_fix'>
-                            <button onclick="javascript:Popup.showSampleCourseQch('${set.courseData.courseId}','${set.courseData.hPx + 100}','${set.courseData.vPx + 100}'); return false;">맛보기</button>
+<c:choose>
+	<c:when test = "${set.courseData.previewYn ne 'N'}">
+                   			<button onclick="javascript:Popup.showSampleCourseQch('${set.courseData.courseId}','${set.courseData.hPx + 100}','${set.courseData.vPx + 100}'); return false;">맛보기</button>
+   	</c:when>
+   	<c:otherwise>
+                      		<button onclick="" class="no_btnclick">맛보기</button>
+   	</c:otherwise>
+</c:choose>
 <c:if test="${set.courseData.courseCost gt 0}">                        
                             <button onclick="javascript:lfn_btn('cart'); return false;">장바구니</button>
 </c:if>                            
@@ -306,7 +316,7 @@ function lfn_btn(pKind, pParam) {
                     <div class='register_tab_content_box' id='introduce'>
                         <ul>
                             <li class='register_introduce_list clear_fix'>
-                                <p class='register_introduce_list_title'>강의개요</p>
+                                <p class='register_introduce_list_title'>강의소개</p>
                                 <div>
                                 	<p>${set.courseData.learingContent}</p>
                                 </div>
@@ -323,6 +333,14 @@ function lfn_btn(pKind, pParam) {
                                 	<p>${set.courseData.learingTarget}</p>
                                 </div>
                             </li>
+<c:if test="${set.courseData.offlineDescYn eq 'Y'}">     	                                    
+                            <li class='register_introduce_list clear_fix'>
+                                <p class='register_introduce_list_title'>오프라인</p>
+                                <div>
+                                	<p>${set.courseData.offlineDesc}</p>
+                                </div>
+                            </li>
+</c:if>                            
                             <li class='register_introduce_list clear_fix'>
                                 <p class='register_introduce_list_title'>교수소개</p>
                                 <span><img src='/cImage/user/${set.courseData.teacherId}.jpg' alt=' '></span>
@@ -393,8 +411,8 @@ function lfn_btn(pKind, pParam) {
                                         ${idx.index + 1}<span></span>${row.title}
                                     </p>
                                 </td>
-                                <td class='mobile_none'>${row.weekTime}분</td>
-                                <td class='last_right part_only'><fmt:formatNumber value="${row.weekCost}" type="number"/> <span><img src='/resources/homepageQch/img/course/ic_won.png' alt=' '></span></td>
+                                <td class='mobile_none'>${row.weekTime} 분</td>
+                                <td class='last_right part_only'><fmt:formatNumber value="${row.weekCost}" type="number"/> 원</td>
                             </tr>
 		</c:forEach>                            
 	</c:when>
@@ -410,7 +428,7 @@ function lfn_btn(pKind, pParam) {
                                         ${idx.index + 1}<span></span>${row.title}
                                     </p>
                                 </td>
-                                <td class='last_right part_only'>${row.weekTime}분</td>
+                                <td class='last_right part_only'>${row.weekTime} 분</td>
                             </tr>
 		</c:forEach>                            
 	</c:otherwise>

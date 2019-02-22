@@ -603,6 +603,10 @@ header {
     line-height: 120%;
     letter-spacing: -1px;
     padding: 10px 0;
+	text-overflow:ellipsis;
+	overflow:hidden; 
+	white-space:nowrap;
+
 }
 .process_btn_area button{
     float: left;
@@ -804,6 +808,7 @@ header {
 }
 .process_search_result > div .process_result_con{
     text-indent:13%;
+	width:67px;
 }
 .process_result_checkbox{
     float:left;
@@ -865,8 +870,29 @@ header {
     padding: 4px 0;
     margin-right: 2px;
 }
+.no_btnclick{
+	background:#EAEAEA !important;
+	cursor:default !important;
+}
 .process_result_text_top .process_result_mobile{
-    background: #99cc33;
+    background: #00cc33;
+}
+.process_result_text_top .process_result_offline{
+    background: #0066cc;
+	width:60px;
+}
+.process_result_text_top .process_result_person{
+    background: #ff9900;
+}
+.process_result_text_top .process_result_office{
+    background: #ff6600;
+}
+.process_result_text_top .process_result_smart{
+    background: #00cccc;
+	width:68px;
+}
+.process_result_text_top .process_result_cess{
+    background: #cc33cc;
 }
 .process_result_text > p{
     font-family: "NanumSquare";
@@ -1321,6 +1347,7 @@ header {
         letter-spacing:-1px;
         line-height:130%;
         padding:10px 0 70px;
+		width:339px;
     }
     .process_search_category.con .process_category_text {
         line-height: 250%;

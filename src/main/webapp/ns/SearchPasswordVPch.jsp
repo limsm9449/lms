@@ -18,17 +18,20 @@
 
     <link href='https://fonts.googleapis.com/css?family=Nanum+Gothic' rel='stylesheet'>
 
-    <link rel='stylesheet' href='/resources/homepageQch/css/initialization.css'>
-    <link rel='stylesheet' href='/resources/homepageQch/css/etc/find.css'>
+    <link rel='stylesheet' href='/resources/homepagePch/css/initialization.css'>
+    <link rel='stylesheet' href='/resources/homepagePch/css/etc/find.css'>
 </head>
 
 <script type="text/javascript">
+
 $(document).ready(function() {
-	$("#userName").focus();
+	$("#userId").focus();
 });
 
 function lfn_btn(pKind, pParam) {
 	if ( pKind =="find" ) {
+		if ( formValid.check("userId",{isNecess:true}) == false )
+			return false;
 		if ( formValid.check("userName",{isNecess:true}) == false )
 			return false;
 		if ( formValid.check("email",{isNecess:true}) == false )
@@ -36,18 +39,22 @@ function lfn_btn(pKind, pParam) {
 			
 		$.ajax({
 			type :"POST",
-			url : context +"/ns/searchUserId.do",
+			url : context +"/ns/searchPassword.do",
 			dataType :"json",
 			data : $("#frm").serialize(),
 			success : function(json){
-				if ( json.rtnMode == "EXIST") {
-					alert("등록된 사용자 ID는 [" + json.rtnMessage + "] 입니다.");
+				if ( json.rtnMode == "CHANGE_PASSWORD") {
+					alert("임시패스워드를 Email로 발송하였습니다.\n접속후에 패스워드를 변경해주세요.");
+					page.goHome();
+				} else if ( json.rtnMode == "INCORRECT_PASSWORD") {
+					alert("해당하는 사용자가 없습니다.");
+					$("#userId").select();
+				} else if ( json.rtnMode == "INCORRECT_USER") {
+					alert("아이디가 틀립니다.");
+					$("#userId").select();
 				} else if ( json.rtnMode == "RETIRED") {
 					alert("탈퇴한 회원입니다.\n재가입시 관리자에게 문의하시기 바랍니다.");
-					$("#userName").select();
-				} else if ( json.rtnMode == "NOT_EXIST") {
-					alert("해당하는 사용자가 없습니다.");
-					$("#userName").select();
+					$("#userId").select();
 				}
 			},
 			error : function(e) {
@@ -57,8 +64,7 @@ function lfn_btn(pKind, pParam) {
 	}
 }
 
-
-</script> 
+</script>
 
 <body>
 
@@ -67,14 +73,15 @@ function lfn_btn(pKind, pParam) {
 <frameset rows='*'>
     <div class='wrap'>
         <!-- HEAD -->
-        <%@ include file="../common/mainTopQch.jsp" %>
+        <%@ include file="../common/mainTopPch.jsp" %>
         <!-- HEAD END -->
 
         <!-- QUICK MENU -->
-        <%@ include file="../common/mainQuickMenuQch.jsp" %>
-
+        <%@ include file="../common/mainQuickMenuPch.jsp" %>
+        
         <!-- CONTENTS -->
         <div class='contents_wrap_box' >
+
             <!-- Top -->
             <div class='top_area'>
                 <div class='clear_fix'>
@@ -99,10 +106,14 @@ function lfn_btn(pKind, pParam) {
 			<div style="height:100px"></div>
             <div class='util_wrap'>
                 <h1>
-                    아이디 찾기
+                    비밀번호 찾기
                 </h1>
 
                 <div class='certification_list'>
+                    <div class='certification_name clear_fix'>
+                        <p>아이디</p>
+                        <input type='text' name='userId' id='userId' placeholder='아이디를 입력해주세요.'>
+                    </div>
                     <div class='certification_name clear_fix'>
                         <p>이름</p>
                         <input type='text' name='userName' id='userName' placeholder='이름을 입력해주세요.'>
@@ -114,7 +125,7 @@ function lfn_btn(pKind, pParam) {
                 </div>  
                 <div class='signup_btn_box clear_fix'>
                     <button onclick='page.goHome();'>취소</button>
-                    <button class='last' onclick="lfn_btn('find');">아이디 찾기</button>
+                    <button class='last' onclick="lfn_btn('find');">비밀번호 찾기</button>
                 </div>
             </div>
 
@@ -122,10 +133,10 @@ function lfn_btn(pKind, pParam) {
         <!-- CONTENTS END -->
 
         <!-- FOOTER -->
-        <%@ include file="../common/mainBottomQch.jsp" %>
+        <%@ include file="../common/mainBottomPch.jsp" %>
         <!-- FOOTER END -->
     </div>
-    <script src='/resources/homepageQch/js/main.js'></script>
+    <script src='/resources/homepagePch/js/main.js'></script>
     
 </frameset>
 

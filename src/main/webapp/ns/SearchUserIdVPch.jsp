@@ -18,8 +18,8 @@
 
     <link href='https://fonts.googleapis.com/css?family=Nanum+Gothic' rel='stylesheet'>
 
-    <link rel='stylesheet' href='/resources/homepageQch/css/initialization.css'>
-    <link rel='stylesheet' href='/resources/homepageQch/css/etc/find.css'>
+    <link rel='stylesheet' href='/resources/homepagePch/css/initialization.css'>
+    <link rel='stylesheet' href='/resources/homepagePch/css/etc/find.css'>
 </head>
 
 <script type="text/javascript">
@@ -67,11 +67,11 @@ function lfn_btn(pKind, pParam) {
 <frameset rows='*'>
     <div class='wrap'>
         <!-- HEAD -->
-        <%@ include file="../common/mainTopQch.jsp" %>
+        <%@ include file="../common/mainTopPch.jsp" %>
         <!-- HEAD END -->
 
         <!-- QUICK MENU -->
-        <%@ include file="../common/mainQuickMenuQch.jsp" %>
+        <%@ include file="../common/mainQuickMenuPch.jsp" %>
 
         <!-- CONTENTS -->
         <div class='contents_wrap_box' >
@@ -122,10 +122,10 @@ function lfn_btn(pKind, pParam) {
         <!-- CONTENTS END -->
 
         <!-- FOOTER -->
-        <%@ include file="../common/mainBottomQch.jsp" %>
+        <%@ include file="../common/mainBottomPch.jsp" %>
         <!-- FOOTER END -->
     </div>
-    <script src='/resources/homepageQch/js/main.js'></script>
+    <script src='/resources/homepagePch/js/main.js'></script>
     
 </frameset>
 

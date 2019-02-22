@@ -384,11 +384,19 @@ header {
 
 /* CONTENTS */
 .contents_wrap_box{
-    width:1122px;
     padding-top:95px;
     margin:0 auto;
 }
-
+.util_wrap{
+    width:764px;
+    margin:20px auto 50px;
+}
+.util_wrap h1{
+    font-family: 'NanumSquare';
+    font-size: 34px;
+    font-weight: 900;
+    letter-spacing: -1px;
+}
 
 /* QUICK MENU */
 .quick_menu_wrap{
@@ -515,6 +523,10 @@ header {
 }
 
 /* Top */
+.top_area{
+    width:1122px;
+    margin:0 auto;
+}
 .process_history_box{
     font-size: 13px;
     float: right;
@@ -534,500 +546,187 @@ header {
     float: left;
     padding: 0 10px;
 }
-.top_area h1{
-    clear: both;
-    font-family:"NanumSquare";
-    font-size: 20px;
-    letter-spacing: -2px;
-    padding-bottom: 16px;
-    border-bottom: solid 1px #003366;
-}
-.top_area h1 span{
-    font-family:"NanumSquare";
-    color: #0180d3;
-}
 
 
-/* REGISTER COURSE */
-.register_course_title{
-    border-bottom: solid 1px #ddd;
-    text-align:center;
-}
-
-.register_course_title div{
-    display:inline-block;
-    width: inherit;
-    padding: 20px 0 10px;
-    margin: 0 auto;
-}
-.register_course_title div h2{
-    font-family: "NanumSquareB";
-    font-size: 35px;
-    padding-bottom: 12px;
-}
-.register_course_title div p{
-    float: left;
-    width: 50px;
-    font-size: 12px;
-    color: #fff;
-    text-align: center;
-    padding: 4px 0;
-    margin-right: 2px;
-    background: #ff6666;
-}
-.register_course_title div .bg_other{
-    background:#99cc33;
-}
-.register_course_contents{
-    width: 85%;
-    padding: 30px 0;
-    margin: 0 auto;
-}
-.register_course_image{
-    float: left;
-    width: 35%;
-}
-#register_big_img{}
-#register_big_img img{
-    display: block;
-    width: 100%;
-}
-.register_image_list{
-    padding-top: 10px;
-}
-.register_image_list_item{
-    position:relative;
-    display: block;
-    float: left;
-    width: 32%;
-    margin-right: 2%;
-}
-.no_btnclick{
-	background:#EAEAEA !important;
-	cursor:default !important;
-}
-.register_image_list .last_right{
-    margin-right:0;
-}
-.register_image_list_item img{
-    display: block;
-    width: 100%;
-}
-.register_image_list li:after{
-    display:block;
-    content:'';
-    position:absolute;
-    top:0;
-    left:0;
-    width:100%;
-    height:100%;
-}
-.register_image_list li.active:after{
-    display:none;
-}
-.register_course_review{
-    text-align: center;
-    margin-top: 15px;
-}
-.register_course_review > span{}
-.register_course_review > span img{}
-.register_course_review p{
-    display: inline;
+/* FIND */
+.signup_title_box p{
     font-size: 14px;
+    color:#555;
+    line-height: 130%;
 }
-.register_course_review p span{}
-.register_course_info{
-    float: right;
-    width: 450px;
-}
-.register_course_info_text{}
-.register_course_info_text p{
-    float: left;
-    width: 50%;
-    font-size: 16px;
-    line-height: 200%;
-}
-.register_course_info_text .register_course_info_title{
-    font-weight: 500;
-    letter-spacing: 1px;
-}
-.register_course_info_text div{
-    float: left;
-    width: 50%;
-}
-.register_course_info_text div select{
-    padding: 4px 2%;
-    width: 96%;
-    margin-top: 2px;
-    font-size: 16px;
-}
-.register_course_info_text div select option{}
-.register_course_info_text div p{
-    width: 100%;
-    font-size: 14px;
-    color: #999;
-    line-height: 140%;
-    padding-top: 10px;
-    letter-spacing: -1px;
-}
-.register_course_info_text div p span{}
-.register_payment{
-    font-family: "NanumSquare";
-    font-weight: 900;
-    font-size: 24px;
-    padding: 20px 0 40px;
-}
-.register_payment span{
-    color: #666;
-}
-.register_payment span strong{
-    font-family: "NanumSquare";
-    font-size: 36px;
-    color: #048ae3;
-}
-.register_btn_area{
-}
-.register_btn_area button{
-    display: block;
-    float: left;
-    width: 31.5%;
-    margin-right: 1.5%;
-    background: #fff;
-    border: solid 1px #ddd;
-    font-family: "NanumSquare";
-    font-size: 20px;
-    padding: 6px 0;
-}
-.register_btn_area .last_right{
-    margin-right:0;
-}
-
-
-/* REGISTER COURSE TAB CONTENTS */
-
-.register_tab_contents_wrap{}
-.register_tab_box{}
-.register_tab_box button{
-    position:relative;
-    font-family: "NanumSquare";
-    font-size: 18px;
-    font-weight: 900;
-    color: #fff;
-    padding: 10px 0;
-    display: block;
-    float: left;
-    width: 33.3%;
-    border-right: solid 1px #fff;
-    background: #374049;
-}
-.register_tab_box button.active{
-    background:#4c555f;
-}
-.register_tab_box button.active:after{
-    position:absolute;
-    bottom:-10px;
-    left:47%;
+.signup_title_box p .circle{
     display:block;
-    content:'';
-    width: 0; 
-    height: 0; 
-    border-left: 10px solid transparent;
-    border-right: 10px solid transparent;
-    border-top: 10px solid #374049;
-}   
-.register_tab_box .last_right{
-    border-right:0;
-}
-.register_tab_content_box{
-    display:none;
-    padding:40px 0 60px;
-}
-#introduce{
-    display:block;
-}
-#compose{
-    /* padding: 40px 6%; */
-}
-#estimate{
-    min-height:800px;
-    /* padding: 40px 6%; */
-}
-#introduce > ul{
-    padding-bottom:50px;
-}
-.register_introduce_list{
-    padding: 14px 0;
-    border-bottom: dashed 1px #ddd;
-}
-.register_introduce_list > div{
-    float:right;
-    width:84%;
-}
-.register_introduce_list > p{
-    float: left;
-    width:78%;
-}
-.register_introduce_list div p {
-    line-height: 150%;
-}
-.register_introduce_list > p,
-.register_introduce_goal_list li p,
-.register_introduce_target_list li p{
-    font-size: 15px;
-    letter-spacing: -1px;
-    line-height: 150%;
-}
-.register_introduce_goal_list li,
-.register_introduce_target_list li{
-    margin-bottom:4px;
-}
-.register_introduce_list .register_introduce_list_title{
-    width: 16%;
-    font-size: 18px;
-    font-weight: 700;
-    text-indent: 6%;
-    color: #555;
-}
-.register_introduce_goal_list,
-.register_introduce_target_list{
-    float: left;
-    width: 84%;
-}
-.register_introduce_goal_list li{}
-.register_introduce_goal_list li p{}
-.register_introduce_target_list li{}
-.register_introduce_target_list li p{}
-.register_introduce_list > span{
-    display: block;
-    float: left;
-    width: 12%;
-}
-.register_introduce_list span img{
-    display: block;
-    width: 100%;
-}
-.register_introduce_list > div{
-    float: left;
-    width: 72%;
-}
-.register_tutor_explain > div{
     float:left;
-    width:76%;
+    width:4px;
+    height:4px;
+    margin:4px 4px 0 0;
+    border:solid 2px #54a7d8;
+    border-radius:4px;
 }
-.register_tutor_explain{}
-.register_tutor_explain p{
-    float: left;
-    width: 90%;
-    line-height:150%;
+.signup_title_box .signup_title{
+    font-family: 'NanumSquareB';
+    font-size: 24px;
+    color: #0180d3;
+    padding: 20px 0 4px;
+    border-bottom:solid 1px #ccc;
 }
-.register_tutor_explain .register_tutor_title{
-    font-size: 16px;
-    font-weight: 600;
-    width: 8%;
-    padding: 0 1% 30px;
-    text-align: center;
+.signup_title_box .signup_title.line{
+    padding:20px 0 2px;
+    margin-bottom:4px;
+    border-bottom:solid 1px #ccc;
+}
+.signup_title_box p span{
+    display:block;
 }
 
-.register_content_title{
-    font-family: 'NanumSquare';
-    font-size: 24px;
-    font-weight: 900;
+.certification_list{
+    padding: 50px 0 60px;
+    border-bottom: solid 1px #ddd;
+}
+.signup_input_list{
+    padding:30px 0 20px;
+}
+.certification_list > div{
     padding-bottom: 20px;
 }
-.register_review_table{
-    border-top: solid 2px #0071bc;
-    text-align: center;
-    width: 100%;
+.certification_list > div > p{
+    font-family: 'NanumSquareB';
+    font-size: 18px;
+    color: #555;
+    width: 18%;
+    float: left;
+    line-height: 220%;
 }
-.register_review_table tr{
-    font-size: 16px;
-    letter-spacing: -1px;
-    line-height: 200%;
-    border-bottom: solid 1px #ccc;
-}
-.register_review_table tr th{
-    font-weight: 500;
-    border-right: solid 1px #ccc;
-}
-.register_review_table tr td{
-    padding: 10px 0;
-    border-right: solid 1px #ccc;
-}
-.register_review_table tr .register_review_lecture{
-    max-width:400px;
-    text-align:left;
-    text-indent: 2%;
-}
-.register_review_lecture a{
-    display:block;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    display: inline-block;
-    width:90%;
-    margin-bottom:-10px;
-}
-.register_review_table tr .last_right{
-    border-right:0;
-}
-.register_review_col1{
-    width: 6%;
-}
-.register_review_col3,
-.register_review_col5{
-    width: 10%;
-}
-.register_review_table tr td span{
-    width: 13px;
-    display: inline-block;
-}
-.register_review_table tr td span img{
-    display:block;
-    width:100%;
-}
-#compose > p{
-    font-size: 15px;
-    letter-spacing: -1px;
-    line-height: 150%;
-    padding-bottom: 10px;
-}
-#compose > p span{
-    display:block;
-}
-#compose > p strong{
-    color: #0071bc;
-    font-weight: 500;
-}
-.register_compose_table{
-    width: 100%;
-    border-top: solid 2px #0071bc;
-}
-.register_compose_table tr{
-    font-size: 16px;
-    letter-spacing: -1px;
-    line-height: 200%;
-    text-align: center;
-    border-bottom: solid 1px #ccc;
-}
-.register_compose_table tr .register_compose_lecture{
-    max-width:400px;
-    text-align:left;
-    padding-left:10px;
-}
-.register_compose_lecture p{
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    display: inline-block;
-    width: 96%;
-    margin-bottom: -10px;
-}
-.register_compose_table tr th{
-    background: #eee;
-    border-right: solid 1px #ddd;
-}
-.register_compose_table tr td{
-    border-right: solid 1px #ddd;
-    padding: 10px 0;
-}
-.register_compose_table tr .last_right{
-    border-right:0;
-}
-.register_compose_table tr .right_border{
-    border-right:0;
-}
-.register_compose_table tr th input[type='checkbox'],
-.register_compose_table tr td input[type='checkbox']{
+.certification_list > div > p:before{
     display: block;
-    width: 16px;
-    height: 16px;
-    margin: 10px auto 0;
-}
-.register_compose_table tr td span{
-    display: inline-block;
-    width: 16px;
-    vertical-align:sub;
-}
-.register_compose_table tr td span img{
-    width:100%;
-}
-.register_compose_col1{
-    width: 5%;
-}
-.register_compose_col3,
-.register_compose_col4{
-    width: 10%;
+    content: '';
+    width: 6px;
+    height: 6px;
+    border: solid 4px #54a7d8;
+    border-radius: 7px;
+    float: left;
+    margin: 10px 5% 0 0;
 }
 
-
-#compose .register_course_list_text {
-    padding: 10px 20px;
-    margin-top: 10px;
-    font-size: 20px;
-    font-weight: 600;
-    background: #eee;
+.certification_name input[type='text']{
+    display: block;
+    float: left;
+    padding: 10px 1%;
     border: solid 1px #ccc;
-    border-bottom: 0;
+    width:58%;
+    font-size:14px;
+    margin-left:12%;
 }
-.register_course_list{
-    padding:10px 20px;
-    border: solid 1px #ccc;
-}
-.register_course_list p{
-    box-sizing:border-box;
-    font-size:16px;
-    line-height:150%;
-}
-.n_course_list_left{
-    width:90%;
+.certification_type_wrap{
     float:left;
+    width:72.3%;
 }
-.n_course_list_right{
-    float:right;
-    width:10%;
-    text-align:right;
-}
-.process_result_mobile{
-    background: #00cc33 !important;
-}
-.process_result_offline{
-    background: #0066cc !important;
-	width:60px !important;
-}
-.process_result_person{
-    background: #ff9900 !important;
-}
-.process_result_office{
-    background: #ff6600 !important;
-}
-.process_result_smart{
-    background: #00cccc !important;
-	width:68px !important;
-}
-.process_result_cess{
-    background: #cc33cc !important;
+.certification_gender input[type='radio']{
+    display:block;
+    float:left;
+    width: 20px;
+    height: 20px;
+    margin-top:8px;
 }
 
-.register_estimate_table{
-    width: 100%;
-    border-top: solid 2px #0071bc;
+.certification_type_wrap > div{}
+.find_by_email{}
+.certification_type_wrap > div input[type='radio']{
+    display: block;
+    float: left;
+    width: 20px;
+    height: 20px;
+    margin-top: 8px;
 }
-.register_estimate_table tr{
+.find_by_email input[type='radio']{}
+.find_by_email span{}
+.find_by_email input[type='text']{
+    display:block;
+    float:right;
+    width:79%;
+    padding:10px 2%;
+    border:solid 1px #ccc;
+}
+.find_by_phone{
+    padding-top: 4px;
+}
+.find_by_phone input[type='radio']{}
+.find_by_phone span{}
+.find_by_phone select{
+    display: block;
+    float: left;
+    margin-left: 1.6%;
+    width: 14%;
+    padding: 10px 1%;
+    border: solid 1px #ccc;
+}
+.find_by_phone input[type='text']{
+    display: block;
+    float: left;
+    padding: 10px 1%;
+    width: 30%;
+    font-size: 15px;
+    border: solid 1px #ccc;
+    border-left: 0;
+}
+.find_by_phone button{
+    display: block;
+    float: right;
+    box-sizing: inherit;
+    width: 36.5%;
+    padding: 10px 0;
     font-size: 16px;
-    line-height: 200%;
-    letter-spacing: -1px;
+    background: #0180d3;
+    font-family: 'NanumSquare';
+    color: #fff;
+    font-weight: 900;
+}
+.find_by_phone p{
+    clear: both;
+    padding-left: 17%;
+    padding-top: 6px;
+    font-size: 14px;
+    color: #999;
+}
+
+.info_input_phone button,
+.info_input_address button{
+    width:136px;
+    font-family:'NanumSquare';
+    font-size:16px;
+    font-weight:900;
+    color:#fff;
+    padding:10px 0 9px;
+    margin-left:4px;
+    background:#0180d3;
+}
+.certification_gender span{
+    float:left;
+    line-height:120%;
+    padding:10px 10px 0 8px;
+}
+
+.signup_btn_box{
     text-align: center;
-    border-bottom: solid 1px #ddd;
+    padding: 30px 0 50px;
 }
-.register_estimate_table tr th{
-    width:30%;
+.signup_btn_box button{
+    width: 48.9%;
+    padding: 20px 0;
+    background: #fff;
+    border: solid 1px #ddd;
+    font-size: 18px;
     font-weight: 500;
-    background: #eee;
-    border-right: solid 1px #ddd;
+    color: #666;
+    font-family: 'NanumSquare';
 }
-.register_estimate_table tr td{
-    border-right: solid 1px #ddd;
+.signup_btn_box .last{
+    background: #0180d3;
+    border: solid 1px #0180d3;
+    color: #fff;
+    margin-left:1%;
 }
+
 
 
 /* FOOTER */
@@ -1090,11 +789,11 @@ header {
 
  
 @media all and (max-width:1122px){
+
+    /* HEAD */
     .head_wrap,
     .menu_layout,
-    .contents_wrap_box,
-    .cs
-    {
+    .contents_wrap_box{
         width:100%;
     }.util_box p,
     .util_box a{
@@ -1227,143 +926,80 @@ header {
 
     /* Top */
     .top_area h1 {
-        font-size: 20px;
+        font-size: 30px;
         padding-bottom:10px;
     }
     .process_history_box {
         float: left;
     }
-    .process_category {
-        font-size: 20px;
-        color: #333;
-        background: #ffd638;
-    }
-    .process_score_text{
-        font-size:14px;
+    .util_wrap{
+        width:100%;
+        margin:20px auto;
     }
 
-    /* Tab Content */
-    .register_course_title div{
-        width:100%;
+
+    .signup_title_box p{
+        letter-spacing:-1px;
     }
-    .register_course_title div h2 {
-        font-size: 28px;
-        text-align: center;
+    .signup_title_box .signup_title{
+        margin-bottom:6px;
     }
-    .register_course_contents{
-        width:100%;
-        padding:0 0 10px;
+
+    .certification_list {
+        padding:30px 0;
     }
-    .register_course_image,
-    .register_course_info{
-        float:none;
-        width:100%;
+    .certification_list > div{
+        padding-bottom:10px;
     }
-    .register_course_info{
-        padding:10px 0 50px;
-    }
-    .register_course_info_text div p {
-        width:164%;
-        text-align:left;
-        margin-left:-68%;
-    }
-    .register_course_info_text div select{
-        width:90%;
-    }
-    .register_payment{
-        padding: 40px 0 15px;
-    }
-    .register_tab_box button{
-        font-weight:normal;
-    }
-    .register_tab_box button.active:after{
-        left:43%;
-    }
-    .register_tab_content_box{
-        padding:20px 0 60px;
-    }
-    .register_introduce_list .register_introduce_list_title{
-        width:22%;
-        text-indent:0;
-    }
-    .register_introduce_goal_list,
-    .register_introduce_target_list{
-        width:78%;
-    }
-    .register_introduce_list > span{
-        float:right;
-        width:45%;
-        margin-right:15%;
-    }
-    .register_introduce_list > div{
-        float:right;
-        width:78%;
-        padding-top:10px;
-    }
-    .register_tutor_explain p{
-        float:left;
-        width:78%;
-    }
-    .register_tutor_explain .register_tutor_title{
+    .certification_list > div > p{
         width:20%;
-        padding:0 1% 4px;
     }
-    .register_course_info_text p,
-    .register_course_info_text div{
-        width:60%;
+    .certification_list > .certification_gender > p{
+        width:100%;
+    }
+    .certification_list > .certification_gender > p:before{
+        margin: 10px 1% 0 0;
+    }
+    .certification_gender span {
+        padding: 10px 2.5% 0 2%;
+    }
+    .certification_name input[type='text'] {
+        width: 73%;
+        margin-left: 4%;
+    }
+    .certification_type_wrap{
+        width:100%;
+    }
+    .find_by_email input[type='text'] {
+        width: 72%;
+    }
+    .find_by_phone select {
+        display: block;
+        float: left;
+        width: 20%;
+        padding: 10px 1%;
+        margin-left:2%;
+        border: solid 1px #ccc;
+    }
+    .find_by_phone input[type='text'] {
+        width: 54%;
+        margin-bottom:20px;
+    }
+    .find_by_phone button{
+        float:none;
+        width:100%
+    }
+    .find_by_phone p{
         text-align:center;
+        padding:10px 0;
     }
-    .register_course_info_text .register_course_info_title {
-        width: 40%;
-        text-align: left;
-    }
-    .register_review_box{
-        padding:0;
-    }
-    .register_review_table tr .mobile_none{
-        display:none;
-    }
-    .register_review_table tr .mobile_last{
-        border-right:0;
-    }
-    .register_review_col1{
-        width:14%;
-    }
-    .register_review_col3{
-        width:25%
-    }
-    .register_review_table tr td span{
-        width:10px;
-    }
-    .register_compose_table tr{
-        line-height:180%;
-    }
-    .register_review_table tr .register_review_lecture,
-    .register_compose_table tr .register_compose_lecture{
-        max-width:220px;
-    }
-    .register_compose_table tr th input[type='checkbox'],
-    .register_compose_table tr td input[type='checkbox'] {
-        margin: 6px 5px -3px 0;
+    .find_by_phone button{
+        background:#666;
     }
 
-    #compose{
-        padding:35px 0;
+    .signup_btn_box button {
+        width: 45%;
     }
-    #estimate {
-        min-height: 140px;
-        padding: 35px 0;
-    }
-    #compose > p{
-        font-size:14px;
-    }
-    #compose > p span{
-        display:none;
-    }
-    .register_compose_table tr .mobile_none{
-        display:none;
-    }
-    
 
 
     /* FOOTER */
@@ -1377,23 +1013,65 @@ header {
         display:none;
     }
 }
+@media all and (max-width: 410px){
+    .find_by_phone select {
+        margin-left:1.6%;
+    }
+}
+@media all and (max-width:401px){
+    .find_by_phone select {
+        margin-left: 1.2%;
+    }
+}
+@media all and (max-width:391px){
+    .find_by_phone select {
+        margin-left: 0.5%;
+    }
+}
+@media all and (max-width:380px){
+    .certification_name input[type='text'] {
+        width: 64%;
+        margin-left: 13%;
+    }
+    .find_by_email input[type='text'] {
+        width: 62%;
+    }
+    .find_by_phone input[type='text'] {
+        width: 44%;
+    }
+    .find_by_phone select {
+        margin-left: 10%;
+    }
+}
 @media all and (max-width:370px){
-    .register_review_table tr{
-        font-size:15px;
+    .find_by_email input[type='text'] {
+        width: 63.5%;
+        margin-right: 0.5%;
     }
-    .register_review_table tr .register_review_lecture,
-    .register_compose_table tr .register_compose_lecture{
-        max-width:200px;
-        font-size:14px;
+    .find_by_phone select {
+        margin-left: 8%;
     }
-    .register_estimate_table tr {
-        font-size: 15px;
+    .find_by_phone input[type='text'] {
+        width: 45%;
     }
 }
 @media all and (max-width:350px){
-    .register_review_table tr .register_review_lecture,
-    .register_compose_table tr .register_compose_lecture{
-        max-width:180px;
-        font-size:13px;
+    .find_by_phone select {
+        margin-left: 6.5%;
+    }
+    .find_by_phone input[type='text'] {
+        width: 45.5%;
+    }
+}
+@media all and (max-width:336px){
+    .find_by_email input[type='text'] {
+        width: 62%;
+        margin-right: 0.5%;
+    }
+    .find_by_phone select {
+        margin-left: 7%;
+    }
+    .find_by_phone input[type='text'] {
+        width: 44%;
     }
 }

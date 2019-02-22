@@ -612,7 +612,7 @@ header {
 .signin_sub_control{}
 .signin_sub_control.left{
     float: left;
-    width: 130px;
+    width: 155px;
     padding: 6px 0;
 }
 .signin_sub_control.right{
@@ -639,7 +639,7 @@ header {
     font-size: 16px;
     border: solid 1px #ccc;
     padding: 6px 0;
-    width: 32%;
+    width: 31.6%;
     margin-left: 1%;
     text-align: center;
 }
@@ -649,7 +649,7 @@ header {
     border:solid 1px #0180d3;
 }
 .signin_sub_control .last_left{
-    margin-left:0;
+    margin-left:1%;
 }
 .signin_option_box{
     padding:50px 0;
@@ -678,6 +678,7 @@ header {
     background-size:cover;
 }
 .signin_bg_box{
+	margin-top:20px;
     width:100%;
 }
 .signin_bg_box img{
@@ -782,6 +783,9 @@ header {
     }
 }
 @media all and (max-width:420px){
+	.signin img{
+		width:100%;
+	}
     #width_text{
         color:#fff;
         background:green;
@@ -923,8 +927,7 @@ header {
         padding: 6px 0 20px;
     }
     .signin_sub_control a{
-        width:32.6%;
-        margin-left:0;
+        width:31.6%;
     }
     .signin_option_box .naver{
         float:none;

@@ -202,6 +202,10 @@ public class CourseVO extends CommonVO {
     private String paymentKind;
     private String paymentKindName;
     private String totalCost;
+    private String previewYn;
+    private String offlineYn;
+    private String offlineDescYn;
+    private String offlineDesc;
     
     public String getPeriodProgress() {
 		return periodProgress;
@@ -1475,6 +1479,38 @@ public class CourseVO extends CommonVO {
 
 	public void setTotalCost(String totalCost) {
 		this.totalCost = totalCost;
+	}
+
+	public String getPreviewYn() {
+		return previewYn;
+	}
+
+	public void setPreviewYn(String previewYn) {
+		this.previewYn = previewYn;
+	}
+
+	public String getOfflineYn() {
+		return offlineYn;
+	}
+
+	public void setOfflineYn(String offlineYn) {
+		this.offlineYn = offlineYn;
+	}
+
+	public String getOfflineDescYn() {
+		return offlineDescYn;
+	}
+
+	public void setOfflineDescYn(String offlineDescYn) {
+		this.offlineDescYn = offlineDescYn;
+	}
+
+	public String getOfflineDesc() {
+		return offlineDesc;
+	}
+
+	public void setOfflineDesc(String offlineDesc) {
+		this.offlineDesc = offlineDesc;
 	}
 
 

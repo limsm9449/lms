@@ -20,7 +20,8 @@
     <link rel='stylesheet' href='/resources/homepagePch/css/initialization.css'>
     <link rel='stylesheet' href='/resources/homepagePch/css/myclass/myclass_main.css'>
     <link rel='stylesheet' href='/resources/homepagePch/css/myclass/myclass_table.css'>
-    <link rel='stylesheet' href='/resources/homepagePch/css/myclass/myclass.css'>    
+    <link rel='stylesheet' href='/resources/homepagePch/css/myclass/myclass.css'>
+    <link rel='stylesheet' href='/resources/homepagePch/css/IE_style.css'>    
 </head>
 
 <script type="text/javascript">

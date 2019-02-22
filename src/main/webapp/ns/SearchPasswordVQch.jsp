@@ -18,8 +18,8 @@
 
     <link href='https://fonts.googleapis.com/css?family=Nanum+Gothic' rel='stylesheet'>
 
-    <link rel='stylesheet' href='/resources/homepage/css/initialization.css'>
-    <link rel='stylesheet' href='/resources/homepage/css/etc/find.css'>
+    <link rel='stylesheet' href='/resources/homepageQch/css/initialization.css'>
+    <link rel='stylesheet' href='/resources/homepageQch/css/etc/find.css'>
 </head>
 
 <script type="text/javascript">
@@ -73,13 +73,14 @@ function lfn_btn(pKind, pParam) {
 <frameset rows='*'>
     <div class='wrap'>
         <!-- HEAD -->
-        <%@ include file="../common/mainTop.jsp" %>
+        <%@ include file="../common/mainTopQch.jsp" %>
         <!-- HEAD END -->
 
+        <!-- QUICK MENU -->
+        <%@ include file="../common/mainQuickMenuQch.jsp" %>
+        
         <!-- CONTENTS -->
         <div class='contents_wrap_box' >
-            <!-- QUICK MENU -->
-            <%@ include file="../common/mainQuickMenu.jsp" %>
 
             <!-- Top -->
             <div class='top_area'>
@@ -102,6 +103,7 @@ function lfn_btn(pKind, pParam) {
             </div>
             <!-- Top END -->
 
+			<div style="height:100px"></div>
             <div class='util_wrap'>
                 <h1>
                     비밀번호 찾기
@@ -131,10 +133,10 @@ function lfn_btn(pKind, pParam) {
         <!-- CONTENTS END -->
 
         <!-- FOOTER -->
-        <%@ include file="../common/mainBottom.jsp" %>
+        <%@ include file="../common/mainBottomQch.jsp" %>
         <!-- FOOTER END -->
     </div>
-    <script src='/resources/homepage/js/dev_sub.js'></script>
+    <script src='/resources/homepageQch/js/main.js'></script>
     
 </frameset>
 
