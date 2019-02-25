@@ -60,6 +60,10 @@ $(document.body).ready(function () {
 	        case "search":
 	            fn_search();
 	            break; 
+            case "courseSearch":
+            	Popup.showCourseSearch( { kind : "VIEW_MODE" });
+
+		    	break;
             case "addMaster":
             	grid1.addRow( {
             		NEW_FLAG : "Y"
@@ -633,6 +637,7 @@ function fn_saveApply() {
 
 <div>
     <button class="btn btn-default" data-grid-control="search">검색</button>
+    <button class="btn btn-default" data-grid-control="courseSearch">과정검색</button>
     <button class="btn btn-default" data-grid-control="addMaster">Master 추가</button>
     <button class="btn btn-default" data-grid-control="deleteMaster">Master 삭제</button>
     <button class="btn btn-default" data-grid-control="saveMaster">Master 저장</button>

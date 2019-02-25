@@ -818,6 +818,16 @@ function fn_callbackAjax(data, id) {
 
 		mask.open();
 		dialog.alert( { msg : "저장 되었습니다." }, function () { mask.close();	fn_search(); } );
+	} else if ( id == "companyDomain" ) {
+		var row = grid.getList("selected");
+		if ( row.length > 0 ) {
+	   		window.open("","courseDataPopup","width=1400,height=900");
+	   		document.frm.action = "http://" + data.domain + "." + window.location.host + "/main/mainCourseData.do" + "?" + "courseId=" + row[0].COURSE_ID;
+	   		console.log(document.frm.action);
+	   		document.frm.target = "courseDataPopup";
+	   		document.frm.method = "POST";	
+	   		document.frm.submit();
+		}
 	}
 }
 
@@ -827,6 +837,13 @@ function fn_gridEvent(event, obj) {
 	} else if ( event == "DBLClick" ) {
 		if ( obj.column.key == "COURSE_EXAM_TYPE_NAME" && parseInt(obj.item.EXAM_RATE) > 0 ) {
 	    	Popup.showExamType( { COURSE_CODE : obj.item.COURSE_CODE } );
+		}
+		if ( obj.column.key == "COURSE_ID" ) {
+			if ( obj.item.COMP_CD == "B2C" ) {
+    			f_popup('/main/mainCourseData', {displayName:'courseDataPopup',option:'width=1400,height=900', urlParams : "courseId=" + obj.item.COURSE_ID});
+        	} else {
+        		gfn_callAjax("/setting/axMainFrameCompanyDomain.do", { COMP_CD : obj.item.COMP_CD }, fn_callbackAjax, "companyDomain");
+        	}
 		}
 	} else if ( event == "DataChanged" ) {
 		if ( obj.key == "COURSE_EXAM_TYPE_NAME" ||

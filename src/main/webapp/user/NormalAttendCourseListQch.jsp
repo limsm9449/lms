@@ -129,26 +129,26 @@
 	                        </div>
 	                        
 							<div class="class_1_div3">
-	                        	<div class="class_btn" style="position:relative;top:-5px">
-	                                <div class="class_1_btn1" onclick="javascript:Popup.showStudyroomQch('${row.courseId}')">
+	                        	<div class="class_btn">
+	                                <div class="class_1_btn1" id="btn1_l1" onclick="javascript:Popup.showStudyroomQch('${row.courseId}')">
 	                                    학습시작
 	                                </div>
 	<fmt:parseNumber value="${row.questProgressRatio}" var="questProgressRatio"/>
 	<fmt:parseNumber value="${row.progress}"   var="progress"/>	                                
 	<c:choose>
 		<c:when test="${row.qgId eq '0' || questProgressRatio > progress}">
-									<div class="class_3_btn1" onclick="">-</div>
+									<div class="class_1_btn1" id="btn1_l1" onclick="">-</div>
 		</c:when>
 		<c:when test="${row.questYn eq 'Y'}">
-                              		<div class="class_1_btn1" onclick="javascript:Popup.showQuestResult('${row.courseId}'); return false;">설문확인</div>
+                              		<div class="class_1_btn1" id="btn1_l1" onclick="javascript:Popup.showQuestResult('${row.courseId}'); return false;">설문확인</div>
 		</c:when>
 		<c:otherwise>
-                             		<div class="class_1_btn1" onclick="javascript:Popup.showQuest('${row.courseId}'); return false;">설문참여</div>
+                             		<div class="class_1_btn1" id="btn1_l1" onclick="javascript:Popup.showQuest('${row.courseId}'); return false;">설문참여</div>
 		</c:otherwise>
 	</c:choose>
 	                            </div>
-	                            <div class="class_btn" style="position:relative;top:3px">
-	                                <div class="class_1_btn1" onclick="javascript:Popup.showUserBoard('DATA','${row.courseId}');">
+	                            <div class="class_btn">
+	                                <div class="class_1_btn1" id="btn1_nshow" onclick="javascript:Popup.showUserBoard('DATA','${row.courseId}');">
 	                                    자료실
 	                                </div>
 	<c:choose>

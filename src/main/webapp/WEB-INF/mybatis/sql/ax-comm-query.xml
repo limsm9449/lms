@@ -330,6 +330,9 @@
 		  	            LEFT OUTER JOIN COMPANY I ON I.COMP_CD = A.COMP_CD  
 		WHERE 	IFNULL(A.OPEN_YN,'N') IN ('Y')
 		AND 	IFNULL(A.CLOSE_YN,'N') IN ('N')
+<if test="LEVEL1_CODE != null and LEVEL1_CODE != ''"> AND C.C1_CODE = #{LEVEL1_CODE}</if>
+<if test="LEVEL2_CODE != null and LEVEL2_CODE != ''"> AND C.C2_CODE = #{LEVEL2_CODE}</if>
+<if test="LEVEL3_CODE != null and LEVEL3_CODE != ''"> AND C.C3_CODE = #{LEVEL3_CODE}</if>
 <if test="COMPANY != null and COMPANY == 'B2C'">
 		AND 	IFNULL(A.COMP_CD,'B2C') = 'B2C'
 </if>

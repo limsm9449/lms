@@ -41,7 +41,7 @@ $(document.body).ready(function () {
 	            fn_search();
 	            break;
             case "add":
-            	Popup.showCourseSearch();
+            	Popup.showCourseSearch( { kind : "COURSE_MODE" });
 
 		    	break;
             case "delete":
