@@ -129,7 +129,7 @@
 	                        </div>
 	                        
 	                        <div class="class_1_div3">
-	                        	<div class="class_btn" style="position:relative;top:-5px">
+	                        	<div class="class_btn">
 	                                <div class="class_1_btn1" id="btn1_l1" onclick="javascript:Popup.showStudyroomQch('${row.courseId}')">
 	                                    학습시작
 	                                </div>
@@ -147,7 +147,7 @@
 		</c:otherwise>
 	</c:choose>
 	                            </div>
-	                            <div class="class_btn" style="position:relative;top:3px">
+	                            <div class="class_btn right_btn">
 	                                <div class="class_1_btn1" id="btn1_nshow" onclick="javascript:Popup.showUserBoard('DATA','${row.courseId}');">
 	                                    자료실
 	                                </div>
