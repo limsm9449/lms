@@ -803,7 +803,6 @@ function fn_callbackAjax(data, id) {
 		gfn_cbRefresh("CB_LEVEL1", data.CategoryLevel1, true);
 
 		gfn_cbRefresh("CB_OPEN_KIND", data.OpenKind, true);
-		$("#CB_OPEN_KIND").val("NOT_CLOSE");
 
 		gfn_cbRefresh("CB_YEAR", data.Year, true);
 		$("#CB_YEAR").val(new Date().getFullYear());

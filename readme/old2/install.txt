@@ -1,5 +1,0 @@
-- tomcat 다운로드 및 설치
-	https://tomcat.apache.org/download-90.cgi
-	user name : admin
-	password : jambo75
-	
