@@ -130,7 +130,7 @@ $(document).ready(function(){
                                 </div>
                             </td>
                             <td class="my_table_mid_2">${row.paymentDate}</td>
-                            <td class="my_table_mid_3"><fmt:formatNumber value="${row.totalCost}" type="number"/> 원</td>
+                            <td class="my_table_mid_3"><fmt:formatNumber value="${row.courseCost}" type="number"/> 원</td>
                             <td class="my_table_mid_4">${row.paymentKindName}</td>
                             <td class="my_table_mid_5">${row.statusName}</td>
                             <td class="my_table_mid_6">

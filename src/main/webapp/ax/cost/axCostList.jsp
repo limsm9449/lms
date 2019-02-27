@@ -65,12 +65,17 @@ $(document.body).ready(function () {
 						approvalDup[rows[i].APPROVAL_ID] = rows[i].APPROVAL_ID;
 					} else {
 	            		mask.open();
-	            		dialog.alert( { msg : (rows[i].__index + 1) + " 라인 : 동일 결재ID로 여러개를 선택할 수 없습니다. 한개만 선택해 주세요."	}, function () { mask.close();	} );
+	            		dialog.alert( { msg : (rows[i].__index + 1) + " 라인 : 동일 결제ID로 여러개를 선택할 수 없습니다. 한개만 선택해 주세요."	}, function () { mask.close();	} );
 	            		return;
 					}		        			
 	        	}
+	        	var allRows = grid.getList();
 	        	for ( var i = 0; i < rows.length; i++ ) {
-					grid.setValue(rows[i].__index, "STATUS", "A");
+	        		for ( var m = 0; m < allRows.length; m++ ) {
+	        			if ( rows[i].APPROVAL_ID == allRows[m].APPROVAL_ID ) {
+							grid.setValue(allRows[m].__index, "STATUS", "A");
+	        			}	
+	        		}
 	        	}
 	        	
 	        	grid.repaint();
@@ -101,12 +106,17 @@ $(document.body).ready(function () {
 						approvalDup[rows[i].APPROVAL_ID] = rows[i].APPROVAL_ID;
 					} else {
 	            		mask.open();
-	            		dialog.alert( { msg : (rows[i].__index + 1) + " 라인 : 동일 결재ID로 여러개를 선택할 수 없습니다. 한개만 선택해 주세요."	}, function () { mask.close();	} );
+	            		dialog.alert( { msg : (rows[i].__index + 1) + " 라인 : 동일 결제ID로 여러개를 선택할 수 없습니다. 한개만 선택해 주세요."	}, function () { mask.close();	} );
 	            		return;
 					}		        			
 	        	}
+	        	var allRows = grid.getList();
 	        	for ( var i = 0; i < rows.length; i++ ) {
-					grid.setValue(rows[i].__index, "STATUS", "B");
+	        		for ( var m = 0; m < allRows.length; m++ ) {
+	        			if ( rows[i].APPROVAL_ID == allRows[m].APPROVAL_ID ) {
+							grid.setValue(allRows[m].__index, "STATUS", "B");
+	        			}	
+	        		}
 	        	}
 	        	
 	        	grid.repaint();
@@ -132,12 +142,17 @@ $(document.body).ready(function () {
 						approvalDup[rows[i].APPROVAL_ID] = rows[i].APPROVAL_ID;
 					} else {
 	            		mask.open();
-	            		dialog.alert( { msg : (rows[i].__index + 1) + " 라인 : 동일 결재ID로 여러개를 선택할 수 없습니다. 한개만 선택해 주세요."	}, function () { mask.close();	} );
+	            		dialog.alert( { msg : (rows[i].__index + 1) + " 라인 : 동일 결제ID로 여러개를 선택할 수 없습니다. 한개만 선택해 주세요."	}, function () { mask.close();	} );
 	            		return;
 					}		        			
 	        	}
+	        	var allRows = grid.getList();
 	        	for ( var i = 0; i < rows.length; i++ ) {
-					grid.setValue(rows[i].__index, "STATUS", "C");
+	        		for ( var m = 0; m < allRows.length; m++ ) {
+	        			if ( rows[i].APPROVAL_ID == allRows[m].APPROVAL_ID ) {
+							grid.setValue(allRows[m].__index, "STATUS", "C");
+	        			}	
+	        		}
 	        	}
 	        	
 	        	grid.repaint();
@@ -182,7 +197,7 @@ function fn_makeGrid() {
 	grid = gfn_makeAx5Grid("first-grid",
 		[ 	{
 	            key : "APPROVAL_ID",
-	            label : "결재ID",
+	            label : "결제ID",
 	            width : 100,
 	            align : "center"
 	        },{
@@ -223,7 +238,7 @@ function fn_makeGrid() {
                 }
 	        },{
               	key : undefined, 
-              	label: "결재", 
+              	label: "결제 (여러 과정을 한번에 결제시 결제정보가 동일하게 보입니다.)", 
               	columns: [	
               		{
 			            key : "TOTAL_COST",
@@ -243,7 +258,7 @@ function fn_makeGrid() {
 			           	}
 			        },{
 			            key : "PAYMENT_COST",
-			            label : "결재 금액",
+			            label : "결제 금액",
 			            width : 80,
 			            align : "right",
 			            formatter : function () {
@@ -251,7 +266,7 @@ function fn_makeGrid() {
 			           	}
 			        },{
 			            key : "PAYMENT_KIND",
-			            label : "결재 방법",
+			            label : "결제 방법",
 			            width : 80,
 			            align : "center", 
 			        	editor: {
@@ -269,7 +284,7 @@ function fn_makeGrid() {
 			           	}
 			        },{
 			            key : "PAYMENT_BANK",
-			            label : "결재 은행",
+			            label : "결제 은행",
 			            width : 200,
 			            align : "left", 
 			        	editor: {
@@ -287,68 +302,14 @@ function fn_makeGrid() {
 			           	}
 			        },{
 			            key : "PAYMENT_DATE",
-			            label : "결재 일자",
+			            label : "결제 일자",
 			            width : 120,
 			            align : "center"
 			        }
 			  	]	            
 	        },{
-	            key : "CATEGORY_NAME",
-	            label : "카테고리",
-	            width : 150,
-	            align : "left"
-	        },{
-	            key : "COURSE_ID",
-	            label : "ID",
-	            width : 40,
-	            align : "right"
-	        },{
-	            key : "COURSE_NAME",
-	            label : "과정명",
-	            width : 150,
-	            align : "left"
-	        },{
-	            key : "COURSE_CODE",
-	            label : "과정코드",
-	            width : 90,
-	            align : "left"
-	        },{
-	            key : "YEAR", 
-	            label : "년",
-	            width : 50,
-	            align : "center"
-	        },{
-	            key : "MONTH",
-	            label : "월",
-	            width : 50,
-	            align : "center"
-	        },{
-	            key : "CHASU",
-	            label : "차수",
-	            width : 50,
-	            align : "right"
-
-	        },{
-	        	key : "COMP_CD", 
-	        	label : "회사", 
-	            width : 100,
-	        	align : "center", 
-	        	editor: {
-	                type : "select", 
-	                config : {
-	                    columnKeys: { optionValue: "value", optionText: "text" },
-	                    options: dd.Company
-	                },
-	            	disabled : function () {
-	                    return true;
-	                }
-	        	},
-	            formatter : function () {
-	                return gfn_getValueInList(dd.Company, "value",  this.item.COMP_CD, "text");
-	           	}
-	        },{
               	key : undefined, 
-              	label: "환불", 
+              	label: "환불 (여러 과정을 한번에 결제시 환불정보가 동일하게 보입니다.)", 
               	columns: [	 
               		{
 			            key : "REFUND_COST",
@@ -403,6 +364,67 @@ function fn_makeGrid() {
               		}
               	]
 	        },{
+	            key : "CATEGORY_NAME",
+	            label : "카테고리",
+	            width : 150,
+	            align : "left"
+	        },{
+	            key : "COURSE_ID",
+	            label : "ID",
+	            width : 40,
+	            align : "right"
+	        },{
+	            key : "COURSE_NAME",
+	            label : "과정명",
+	            width : 150,
+	            align : "left"
+	        },{
+	            key : "COURSE_CODE",
+	            label : "과정코드",
+	            width : 90,
+	            align : "left"
+	        },{
+	            key : "YEAR", 
+	            label : "년",
+	            width : 50,
+	            align : "center"
+	        },{
+	            key : "MONTH",
+	            label : "월",
+	            width : 50,
+	            align : "center"
+	        },{
+	            key : "CHASU",
+	            label : "차수",
+	            width : 50,
+	            align : "right"
+	        },{
+	            key : "COURSE_COST",
+	            label : "과정금액",
+	            width : 80,
+	            align : "right",
+	            formatter : function () {
+	                return checkThousand(this.item.COURSE_COST);
+	           	}
+	        },{
+	        	key : "COMP_CD", 
+	        	label : "회사", 
+	            width : 100,
+	        	align : "center", 
+	        	editor: {
+	                type : "select", 
+	                config : {
+	                    columnKeys: { optionValue: "value", optionText: "text" },
+	                    options: dd.Company
+	                },
+	            	disabled : function () {
+	                    return true;
+	                }
+	        	},
+	            formatter : function () {
+	                return gfn_getValueInList(dd.Company, "value",  this.item.COMP_CD, "text");
+	           	}
+	        },{
 	            key : "LAST_UPDATE_USER",
 	            label : "수정자",
 	            width : 80,
@@ -418,7 +440,7 @@ function fn_makeGrid() {
 	  		showRowSelector : true,
 	  		multipleSelect: true,
 	  		frozenColumnIndex : 5,
-	  		mergeCells : ["APPROVAL_ID"]
+	  		mergeCells : ["APPROVAL_ID","USER_ID","USER_NAME","REQUEST_DATE"]
 	  	}
 	);
 	
@@ -534,7 +556,7 @@ function fn_hidePopupDiv(popupDivId) {
 		} 
 
 		if ( parseInt($("#UPD_REFUND_COST").val()) > parseInt(rows[0].PAYMENT_COST) ) {
-			alert("환불비용이 결재금액보다 급니다.");
+			alert("환불비용이 결제금액보다 급니다.");
 			return;
 		} 
 	

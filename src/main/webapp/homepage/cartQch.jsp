@@ -57,7 +57,7 @@ function lfn_btn(pKind, pParam) {
 				}
 			</c:when>
 			<c:otherwise>
-				if ( confirm("해당 과정으로 결재하시겠습니까?") == true ) {
+				if ( confirm("해당 과정으로 결제하시겠습니까?") == true ) {
 					var cb = $('input:checkbox[name="chk"]:checked');
 					var courseIds = "";
 					for ( var i = 0; i < cb.length; i++ ) {

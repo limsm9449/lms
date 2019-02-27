@@ -94,7 +94,7 @@ $(document.body).ready(function () {
             		dialog.alert( { msg : "과정을 선택하셔야 합니다." }, function () { mask.close();	} );
             	} else if ( row[0]["W_USER_CNT"] == 0 ) {
             		mask.open();
-            		dialog.alert( { msg : "미결재 수강생이 없습니다." }, function () { mask.close();	} );
+            		dialog.alert( { msg : "미결제 수강생이 없습니다." }, function () { mask.close();	} );
             	} else {
             		window.open("","courseNotApprovalRegister", "width=900,height=700");
             		document.frm.action = context + "/paymentGateway/axApplication.do?COURSE_ID=" + row[0]["COURSE_ID"] + "&KIND=TYPE2";	
@@ -166,7 +166,7 @@ function fn_makeGrid() {
 			            align : "right"
 			        },{
 			            key : "W_USER_CNT",
-			            label : "미결재",
+			            label : "미결제",
 			            width : 70,
 			            align : "right"
 			        }
@@ -472,7 +472,7 @@ function fn_cbChange(id) {
     <button class="btn btn-default" data-grid-control="viewContent">학습내용</button>
     <button class="btn btn-default" data-grid-control="viewImage">강의 이미지</button>
     <button class="btn btn-default" data-grid-control="courseRegister">수강신청</button>
-    <button class="btn btn-default" data-grid-control="courseNotApprovalRegister">미결재 수강신청</button>
+    <button class="btn btn-default" data-grid-control="courseNotApprovalRegister">미결제 수강신청</button>
 </div>
 
 <div style="height:10px"></div>

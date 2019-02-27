@@ -52,7 +52,7 @@ $(document.body).ready(function () {
             	var row = grid.getList("selected");
             	if ( row.length == 0 ) {
             		mask.open();
-            		dialog.alert( { msg : "결재를 선택하셔야 합니다." }, function () { mask.close();	} );
+            		dialog.alert( { msg : "결제를 선택하셔야 합니다." }, function () { mask.close();	} );
             	} else {
             		var urlParams = "page=/ax/siteManager/axApprovalUserPopup";
             		urlParams += "&APPROVAL_ID=" + row[0]["APPROVAL_ID"];
@@ -114,12 +114,12 @@ function fn_makeGrid() {
 	            align : "center"
 	        },{
 	            key : "CREATE_DATE",
-	            label : "결재일자",
+	            label : "결제일자",
 	            width : 110,
 	            align : "center"
 	        },{
               	key : undefined, 
-              	label: "결재", 
+              	label: "결제", 
               	columns: [	        
         	        {
 			            key : "TOTAL_COST",
@@ -139,7 +139,7 @@ function fn_makeGrid() {
 			           	}
 			        },{
 			            key : "PAYMENT_COST",
-			            label : "결재 금액",
+			            label : "결제 금액",
 			            width : 110,
 			            align : "right",
 			            formatter : function () {
@@ -147,12 +147,12 @@ function fn_makeGrid() {
 			           	}
 			        },{
 			            key : "PAYMENT_KIND_NAME",
-			            label : "결재 방법",
+			            label : "결제 방법",
 			            width : 110,
 			            align : "center"
 			        },{
 			            key : "PAYMENT_BANK_NAME",
-			            label : "결재 은행",
+			            label : "결제 은행",
 			            width : 200,
 			            align : "left"
 			        }

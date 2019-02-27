@@ -31,7 +31,7 @@ var etop = {
 	currentPage : ""
 }
 
-var weeks = [], pages = [], directorys = [], titles = [], clips = [];
+var weeks = [], pages = [], directorys = [], titles = [], clips = [], myWeeks = [];
 var rootDirectory = "";
 var mobileYn = "N";
 var oldCurrentWeek = 0;
@@ -44,7 +44,7 @@ var QP_API = {
 	 * @param pCurrentPage
 	 * @param pTotalWeek
 	 */
-	init : function(pCurrentCourseId, pCurrentWeek, pCurrentPage, pTotalWeek, pIsSaveOk, pIsSample) {
+	init : function(pCurrentCourseId, pCurrentWeek, pCurrentPage, pTotalWeek, pIsSaveOk, pIsSample, pUserId) {
 		currentCourseId = pCurrentCourseId;
 		currentWeek = pCurrentWeek;
 		currentPage = pCurrentPage;
@@ -58,7 +58,7 @@ var QP_API = {
 				url : context +"/ns/education/resourceInfo.do",
 				dataType :"json",
 				async : false,
-				data : "courseId=" + currentCourseId,
+				data : "courseId=" + currentCourseId + "&userId=" + ( pUserId == undefined ? "" : pUserId ),
 				success : function(json){
 					if ( json.contentsUrl != "-" ) {
 						contents = json.contentsUrl;
@@ -70,13 +70,14 @@ var QP_API = {
 							pages.push(json.resourceList[i].previewPage); 
 							directorys.push(json.resourceList[i].rootDirectory + "/" + json.resourceList[i].directory + "/"); 
 							titles.push(json.resourceList[i].title);
+							myWeeks.push("Y"); 
 						} else {
 							weeks.push(json.resourceList[i].week); 
 							pages.push(json.resourceList[i].pageCnt); 
 							directorys.push(json.resourceList[i].rootDirectory + "/" + json.resourceList[i].directory + "/"); 
 							titles.push(json.resourceList[i].title);
+							myWeeks.push(json.resourceList[i].myWeek); 
 						}
-						
 					}
 					
 					for ( var i = 0; i < json.resourcePageList.length; i++ ) {
@@ -116,12 +117,10 @@ var QP_API = {
 			console.log("currentWeek : " + currentWeek);
 
 			//다음 차시를 구한다.
-			//currentWeek = currentWeek + 1;
 			var isNext = false;
 			for ( i = currentWeek; i < totalWeek; i++ ) {
 				// 2019.1.23 ????
-				//if ( weeks[i] != 0 && pages[i] != 0) {
-				if ( pages[i] != 0) {
+				if ( myWeeks[i] == "Y" && pages[i] != 0) {
 					currentWeek = i + 1;
 					isNext = true;
 					break;
@@ -186,16 +185,12 @@ var QP_API = {
 				alert("1차시 입니다.");
 			} else {
 				//이전 차시를 구한다.
-				//currentWeek = currentWeek - 1;
-				/* 2019.1.23 ?????
 				for ( i = currentWeek - 2; i >= 0; i-- ) {
-					if ( weeks[i] != 0 ) {
+					if ( myWeeks[i] == "Y" && pages[i] != 0) {
 						currentWeek = i + 1;
 						break;
 					}
 				}
-				*/
-				currentWeek = currentWeek - 1;
 
 				console.log("currentWeek : " + currentWeek);
 				
@@ -430,3 +425,18 @@ function f_viewEdu(idx) {
 } 
 
 
+function gfn_qpApiLog() {
+	console.log("weeks");
+	console.log(weeks);
+	console.log("pages");
+	console.log(pages);
+	console.log("directorys");
+	console.log(directorys);
+	console.log("titles");
+	console.log(titles);
+	console.log("clips");
+	console.log(clips);
+	console.log("myWeeks");
+	console.log(myWeeks);
+	console.log("currentWeek : " + currentWeek + ", oldCurrentWeek : " + oldCurrentWeek + ", currentPage : " + currentPage);
+}

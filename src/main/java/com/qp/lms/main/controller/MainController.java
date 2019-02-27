@@ -295,7 +295,7 @@ public class MainController {
     		e.printStackTrace();
     	}
 
-    	return "/homepage/cart";
+    	return CommUtil.getCompTypePage("/homepage/cart");
     }
 
     /**

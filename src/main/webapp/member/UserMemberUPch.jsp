@@ -168,6 +168,10 @@ function lfn_validate() {
                 </div>
                 <div class='signup_input_list'>
                     <div class='certification_name clear_fix'>
+                        <p>사용자 ID</p>
+                        <input type="text" name="userId" id="userId" value="${set.data.userId}" disabled>
+                    </div>
+                    <div class='certification_name clear_fix'>
                         <p>이름</p>
                         <input type="text" name="userName" id="userName" value="${set.data.userName}" disabled>
                     </div>

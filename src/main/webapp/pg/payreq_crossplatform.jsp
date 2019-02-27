@@ -134,6 +134,9 @@
 	 payReqMap.put("LGD_RESPMSG"  		 , "" );
 	 payReqMap.put("LGD_PAYKEY"  		 , "" );
 
+	 /* 할부개월수 */
+	 payReqMap.put("LGD_INSTALLRANGE"  		 , "0:2:3" );
+
 	 session.setAttribute("PAYREQ_MAP", payReqMap);
 
  %>
@@ -248,6 +251,7 @@ function payment_return() {
 <input type='hidden' name='paymentPoint' id='paymentPoint' value='<%=request.getParameter("paymentPoint")%>'>
 <input type='hidden' name='courseId' id='courseId' value='<%=request.getParameter("courseId")%>'>
 <input type='hidden' name='paymentKind' id='paymentKind' value='<%=request.getParameter("LGD_CUSTOM_USABLEPAY")%>'>
+<input type="hidden" id="cartWeeks" name="cartWeeks" value='<%=request.getParameter("cartWeeks")%>'>
 
 </form>
 

@@ -43,6 +43,7 @@ public class CourseResourceVO extends CommonVO {
 
 	private int previewPageInt;
 	private int fromPageInt;
+	private String myWeek;
 
 	public String getCourseCode() {
 		return courseCode;
@@ -232,6 +233,12 @@ public class CourseResourceVO extends CommonVO {
 	}
 	public void setFromPageInt(int fromPageInt) {
 		this.fromPageInt = fromPageInt;
+	}
+	public String getMyWeek() {
+		return myWeek;
+	}
+	public void setMyWeek(String myWeek) {
+		this.myWeek = myWeek;
 	}
 	
 

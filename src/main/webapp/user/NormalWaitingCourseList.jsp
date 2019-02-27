@@ -29,7 +29,7 @@ function lfn_btn(pKind, pParam) {
 		if ( pParam.approvalCnt == "1" ) {
 			msg = "수강취소를 하시겠습니까?";
 		} else {
-			msg = "수강취소시 같이 결재한 " + pParam.approvalCnt + "개의 과정이 같이 취소됩니다. 수강취소를 하시겠습니까?";
+			msg = "수강취소시 같이 결제한 " + pParam.approvalCnt + "개의 과정이 같이 취소됩니다. 수강취소를 하시겠습니까?";
 		}
 		if ( confirm(msg) == false )
 			return false;

@@ -77,7 +77,7 @@ function fn_makeGrid() {
 	grid = gfn_makeAx5Grid("first-grid",
 		[ 	{
 	            key : "APPROVAL_ID",
-	            label : "결재ID",
+	            label : "결제ID",
 	            width : 120,
 	            align : "center"
 	        },{
@@ -120,7 +120,7 @@ function fn_makeGrid() {
 	            align : "center"
 	        },{
               	key : undefined, 
-              	label: "결재", 
+              	label: "결제", 
               	columns: [	
               		{
 			            key : "TOTAL_COST",
@@ -140,7 +140,7 @@ function fn_makeGrid() {
 			           	}
 			        },{
 			            key : "PAYMENT_COST",
-			            label : "결재 금액",
+			            label : "결제 금액",
 			            width : 80,
 			            align : "right",
 			            formatter : function () {
@@ -148,7 +148,7 @@ function fn_makeGrid() {
 			           	}
 			        },{
 			            key : "PAYMENT_KIND",
-			            label : "결재 방법",
+			            label : "결제 방법",
 			            width : 80,
 			            align : "center", 
 			        	editor: {
@@ -166,7 +166,7 @@ function fn_makeGrid() {
 			           	}
 			        },{
 			            key : "PAYMENT_DATE",
-			            label : "결재 일자",
+			            label : "결제 일자",
 			            width : 120,
 			            align : "center"
 			        }
@@ -207,6 +207,14 @@ function fn_makeGrid() {
 	            width : 50,
 	            align : "right"
 	        },{
+	            key : "COURSE_COST",
+	            label : "과정금액",
+	            width : 80,
+	            align : "right",
+	            formatter : function () {
+	                return checkThousand(this.item.COURSE_COST);
+	           	}
+	        },{
 	        	key : "COMP_CD", 
 	        	label : "회사", 
 	            width : 100,
@@ -240,7 +248,7 @@ function fn_makeGrid() {
 	  		showRowSelector : false,
 	  		multipleSelect: false,
 	  		frozenColumnIndex : 5,
-	  		mergeCells : ["APPROVAL_ID"]
+	  		mergeCells : ["APPROVAL_ID","REQUEST_DATE","USER_ID","USER_NAME"]
 	  	}
 	);
 	

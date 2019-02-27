@@ -39,6 +39,18 @@ function lfn_pointChg() {
 		alert("사용가능 포인트를 넘었습니다. 포인트를 다시 입력해주세요.");
 		return false;
 	}
+
+	if ( parseInt($("#paymentPoint").val()) > 0 && parseInt($("#paymentPoint").val()) < 1000 ) {
+		$("#paymentPoint").val(0);
+		alert("1,000 원 단위로 포인트를 사용하셔야 합니다.");
+		return false;
+	} 
+	
+	if ( parseInt($("#paymentPoint").val()) > 0 && parseInt($("#paymentPoint").val()) % 1000 != 0 ) {
+		$("#paymentPoint").val(parseInt($("#paymentPoint").val()) - parseInt($("#paymentPoint").val()) % 1000);
+		alert("1,000 원 단위로 포인트를 사용하셔야 합니다.");
+		return false;
+	} 
 	
 	$("#paymentCost").val(parseInt($("#totalCost").val()) - parseInt($("#paymentPoint").val()));
 	$("#LGD_AMOUNT").val(parseInt($("#totalCost").val()) - parseInt($("#paymentPoint").val()));
@@ -64,6 +76,18 @@ function lfn_pay() {
 		$("#paymentPoint").focus();
 		return false;
 	}
+
+	if ( parseInt($("#paymentPoint").val()) > 0 && parseInt($("#paymentPoint").val()) < 1000 ) {
+		$("#paymentPoint").val(0);
+		alert("1,000 원 단위로 포인트를 사용하셔야 합니다.");
+		return false;
+	} 
+	
+	if ( parseInt($("#paymentPoint").val()) > 0 && parseInt($("#paymentPoint").val()) % 1000 != 0 ) {
+		$("#paymentPoint").val(parseInt($("#paymentPoint").val()) - parseInt($("#paymentPoint").val()) % 1000);
+		alert("1,000 원 단위로 포인트를 사용하셔야 합니다.");
+		return false;
+	} 
 	
 	$("#paymentCost").val(parseInt($("#totalCost").val()) - parseInt($("#paymentPoint").val()));
 	$("#LGD_AMOUNT").val(parseInt($("#totalCost").val()) - parseInt($("#paymentPoint").val()));
@@ -133,6 +157,7 @@ $(document.body).ready(function () {
 		<input type="text"/>
 	</div>
 	<input id="courseId" name="courseId" type="hidden" value="${set.condiVO.courseId}"/>
+	<input id="cartWeeks" name="cartWeeks" type="hidden" value="${set.condiVO.cartWeeks}"/>
 	<input type="hidden" name="approvalId" id="approvalId" value=""/>
 
 	<input type="hidden" name="CST_MID" id="CST_MID" value="<%=request.getAttribute("g_CST_MID")%>"/>
@@ -269,7 +294,7 @@ $(document.body).ready(function () {
                         <li class='basket_info_list clear_fix'>
                             <span></span>
                             <p class='basket_info_type'>결제방식 선택</p>
-                            <select id="LGD_CUSTOM_USABLEPAY" name="LGD_CUSTOM_USABLEPAY" onchange="lfn_kindChg()" style="width:100px">
+                            <select id="LGD_CUSTOM_USABLEPAY" name="LGD_CUSTOM_USABLEPAY" onchange="lfn_kindChg()" style="width:160px">
                                 <option value="SC0010">신용카드</option>				
 								<option value="SC0030">계좌이체</option>				
 								<!-- option value="SC0040">무통장입금</option-->				

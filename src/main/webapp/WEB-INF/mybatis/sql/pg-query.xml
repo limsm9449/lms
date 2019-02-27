@@ -316,7 +316,7 @@
     			,#{approvalId}
     	FROM	COURSE
     	WHERE 	COURSE_ID = #{courseId}
-    	AND		CURRENT_TIMESTAMP BETWEEN EVENT_POINT_FROM AND EVENT_POINT_TO
+    	AND		DATE_FORMAT(CURRENT_TIMESTAMP, '%Y-%m-%d') BETWEEN EVENT_POINT_FROM AND EVENT_POINT_TO
     </insert>
     
     <update id="myCertificateNoUpd" parameterType="pg">

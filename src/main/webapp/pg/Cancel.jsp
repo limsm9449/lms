@@ -84,10 +84,10 @@
 	        out.println( "TX Response_msg = " + xpay.m_szResMsg + "<p>");
 	        
 	    	pgService.approvalCancelRollback(set);
-	        out.println("시스템의 결재 취소를 롤백하였습니다.  <br>");
+	        out.println("시스템의 결제 취소를 롤백하였습니다.  <br>");
 	    }
 	} else {
-        out.println("시스템의 결재 취소를 실패하였습니다.  <br>");
+        out.println("시스템의 결제 취소를 실패하였습니다.  <br>");
 	}
 %>
 

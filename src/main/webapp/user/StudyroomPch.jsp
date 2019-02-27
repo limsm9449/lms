@@ -38,7 +38,7 @@ $(document).ready(function() {
 			$("textarea[name='contents']").cleditor();
 			
 			<%-- 초기값 세팅 --%>
-			QP_API.init(${set.condiVO.courseId}, ${set.courseInfo.lastWeek}, ${set.courseInfo.lastPage}, ${set.courseInfo.totalWeek}, true, false);
+			QP_API.init(${set.condiVO.courseId}, ${set.courseInfo.lastWeek}, ${set.courseInfo.lastPage}, ${set.courseInfo.totalWeek}, true, false, "${set.condiVO.userId}");
 	
 			QP_API.openLastPage();
 		</c:otherwise>
@@ -143,23 +143,25 @@ function lfn_validate() {
          <div class="cl_left" id="index">
              <div class="cl_fixed">
 <c:forEach var="row" items="${set.resourceList}" varStatus="idx"> 
+	<c:if test="${row.myWeek eq 'Y'}">                   
                 <div class='left_menu tutorial'>
-                    <button onclick='left_menu_open(this, "main")' class="left_b_btn" id="left_week_${idx.index + 1}">
+                    <button onclick='left_menu_open(this, "main")' class="left_b_btn" id="left_week_${row.week}">
                         <div class='left_txt'>
-                                <p>${idx.index + 1}회차</p>
+                                <p>${row.week}회차</p>
                                 <p>${row.title}</p>
                         </div>
                     </button>
                     <ul class="left_bottom_ul">
-	<c:set var="subIdx" value="1"/>                     
-	<c:forEach var="row2" items="${set.resourcePageList}" varStatus="idx2">
-		<c:if test="${row2.week eq row.week}">             
+		<c:set var="subIdx" value="1"/>                     
+		<c:forEach var="row2" items="${set.resourcePageList}" varStatus="idx2">
+			<c:if test="${row2.week eq row.week}">             
                         <li class="left_bottom_txt <c:if test="${subIdx eq 1}">first_depth</c:if>" onclick="QP_API.clickPage(${row.week}, ${row2.fromPage});" id="left_page_${row.week}_${row2.clip}">${row2.title}</li>
                         <c:set var="subIdx" value="${subIdx + 1}"/>     
-        </c:if>
-   	</c:forEach>               
+        	</c:if>
+   		</c:forEach>               
                     </ul>
                 </div>
+	</c:if>                
 </c:forEach>               
              </div>
          </div>

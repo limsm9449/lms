@@ -41,7 +41,7 @@ public class PgService {
     	set.setCourseList(courseList);
     	
     	HashMap cart = (HashMap)SessionUtil.getAttribute("cart");
-    	if ( cart == null ) {
+    	if ( cart == null || cart.size() == 0 ) {
     		//바로 신청할 경우....
     		cart = new HashMap();
     		cart.put(set.getCondiVO().getCourseId(), set.getCondiVO().getCartWeeks());
@@ -153,7 +153,7 @@ public class PgService {
 		}
 		
 		HashMap cart = (HashMap)SessionUtil.getAttribute("cart");
-		if ( cart == null ) {
+		if ( cart == null || cart.size() == 0 ) {
 			//바로 신청할 경우....
     		cart = new HashMap();
     		cart.put(set.getCondiVO().getCourseId(), set.getCondiVO().getCartWeeks());

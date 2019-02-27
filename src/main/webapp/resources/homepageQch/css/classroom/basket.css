@@ -666,6 +666,7 @@ header {
 }
 .process_search_result > div .process_result_con{
     text-indent:13%;
+	width:67px;
 }
 .process_result_checkbox{
     float:left;
