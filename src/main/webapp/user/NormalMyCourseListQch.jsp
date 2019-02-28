@@ -96,7 +96,14 @@ function lfn_btn(pKind, pParam) {
                             </div>
                             <div class="class_3_div1">
                                 <div class="class_3_title">
-                                    <a href='#' class='user_lecture_list_subject' onclick="javascript:Popup.showStudyroom('${row.courseId}', true);">${row.courseName}</a>
+	<c:choose>
+		<c:when test="${row.offlineYn eq 'Y'}">
+	                                ${row.courseName}
+		</c:when>
+		<c:otherwise>
+	                                <a href='#' class='user_lecture_list_subject' onclick="javascript:Popup.showStudyroomQch('${row.courseId}');">${row.courseName}</a>
+		</c:otherwise>
+	</c:choose>	                                
                                 </div>
 <c:if test="${row.mobileYn eq 'Y'}">                        
 	                            <div class="class_1_mobile">
@@ -104,9 +111,19 @@ function lfn_btn(pKind, pParam) {
 	                            </div>
 </c:if>	 
                             </div>
-                            
-                            <div class="class_3_div2 IEvr1">
 
+	<c:choose>
+		<c:when test="${row.offlineYn eq 'Y'}">
+                            <div class="class_3_div2 IEvr1 clear_offline">
+	                        	<div class="div_area clear_area">
+	                            	<div class="div_textarea clear_textarea">
+	                                	${row.offlineDesc}
+	                                </div>
+	                            </div>
+                            </div>
+		</c:when>
+		<c:otherwise>
+                            <div class="class_3_div2 IEvr1">
                                 <div class="class_3_per_div">
                                     <div class="class_3_chk1">
                                         학습기간
@@ -115,14 +132,15 @@ function lfn_btn(pKind, pParam) {
                                         ${row.cFromDate} ~ ${row.cToDate}
                                     </div>
                                 </div>
-
                             </div>
+		</c:otherwise>
+	</c:choose>                           
                             
                             <div class="class_1_div3 IEvr1" style="top:-20px">
                                 <div class="class3_btn">
 	<c:choose>
 		<c:when test="${row.qgId eq '0'}">
-									<div class="class_3_btn1" onclick="">-</div>
+									<div class="class_3_btn1 no_click_btn" onclick="">설문참여</div>
 		</c:when>
 		<c:when test="${row.questYn eq 'Y'}">
                               		<div class="class_3_btn1" onclick="javascript:Popup.showQuestResult('${row.courseId}'); return false;">설문확인</div>
@@ -151,7 +169,7 @@ function lfn_btn(pKind, pParam) {
 									<div class="class_3_btn3" onclick="javascript:Popup.showCertificate('${row.courseId}'); return false;">수료증</div>
 		</c:when>
 		<c:otherwise>
-									<div class="class_3_btn3" onclick="javascript:alert('미수료인 경우 수료증을 발급받을 수 없습니다.');">미수료</div>
+									<div class="class_3_btn3 no_click_btn" onclick="">미수료</div>
 		</c:otherwise>
 	</c:choose>                                 
                                 </div>

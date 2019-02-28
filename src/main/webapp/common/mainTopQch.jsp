@@ -111,7 +111,9 @@
                         <span>
                             <img src='/resources/homepageQch/img/main/ic_login.png' alt=' '>
                         </span>
+<c:if test="${!empty session}">      		
                         <a href="javascript:" onclick="gfn_ajax.logout()" >로그아웃</a>
+</c:if>
                     </div>
                     <div class='mobile_study_box'>
                         <a href="javascript:" onclick="page.goPage('/normalUser/attendCourseList', '');">

@@ -88,7 +88,14 @@
 	                        </div>
 	                        <div class="class_1_div1">
 	                            <div class="class_1_title">
+	<c:choose>
+		<c:when test="${row.offlineYn eq 'Y'}">
+	                                ${row.courseName}
+		</c:when>
+		<c:otherwise>
 	                                <a href='#' class='user_lecture_list_subject' onclick="javascript:Popup.showStudyroomQch('${row.courseId}');">${row.courseName}</a>
+		</c:otherwise>
+	</c:choose>		                            
 	                            </div> 
 	<c:if test="${row.mobileYn eq 'Y'}">                        
 	                            <div class="class_1_mobile">
@@ -96,7 +103,18 @@
 	                            </div>
 	</c:if>	                            
 	                        </div>
-	                        
+
+	<c:choose>
+		<c:when test="${row.offlineYn eq 'Y'}">
+                        <div class="class_1_div2 div2_offline">
+                        	<div class="div_area">
+                            	<div class="div_textarea">
+                                	${row.offlineDesc}
+                                </div>
+                            </div>
+                        </div>
+		</c:when>
+		<c:otherwise>
 	                        <div class="class_1_div2">
 	                        	<div class="class_1_per_div">
 	                                <div class="class_1_chk1">
@@ -127,17 +145,28 @@
 	                                </div>
 	                            </div>
 	                        </div>
+		</c:otherwise>
+	</c:choose>	                        
 	                        
 							<div class="class_1_div3">
 	                        	<div class="class_btn">
+	<c:choose>
+		<c:when test="${row.offlineYn eq 'Y'}">
+	                                <div class="class_1_btn1 no_click_btn" id="btn1_l1" onclick="">
+	                                    학습시작
+	                                </div>
+		</c:when>
+		<c:otherwise>
 	                                <div class="class_1_btn1" id="btn1_l1" onclick="javascript:Popup.showStudyroomQch('${row.courseId}')">
 	                                    학습시작
 	                                </div>
+		</c:otherwise>
+	</c:choose>	                        	
 	<fmt:parseNumber value="${row.questProgressRatio}" var="questProgressRatio"/>
 	<fmt:parseNumber value="${row.progress}"   var="progress"/>	                                
 	<c:choose>
 		<c:when test="${row.qgId eq '0' || questProgressRatio > progress}">
-									<div class="class_1_btn1" id="btn1_l1" onclick="">-</div>
+									<div class="class_1_btn1 no_click_btn" id="btn1_l1" onclick="">설문참여</div>
 		</c:when>
 		<c:when test="${row.questYn eq 'Y'}">
                               		<div class="class_1_btn1" id="btn1_l1" onclick="javascript:Popup.showQuestResult('${row.courseId}'); return false;">설문확인</div>

@@ -41,6 +41,12 @@ html[data-useragent*='MSIE 10.0'] .head_mobile.on .mobile_dropwdown_wrap{
 
 /* HEADER */
 
+.textarea_qa iframe{
+	min-height:216px !important;
+	max-width:983px;
+	padding:0 1% 8px 0 !important;
+}
+	
 #width_text{
     display:none;
     position: absolute;
@@ -1069,6 +1075,15 @@ header {
     }
 }
 @media all and (max-width:420px){
+	.textarea_qa iframe{
+		min-height:150px !important;
+		
+		max-width:983px;
+		padding:0 1% 8px 0 !important;
+		position:relative;
+		top:-10px;
+		
+	}
     #width_text{
         color:#fff;
         background:green;

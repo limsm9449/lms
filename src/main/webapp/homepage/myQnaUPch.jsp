@@ -143,7 +143,7 @@ function lfn_validate() {
                         <div class='title'>
                             <p>내용</p>
                         </div>
-                        <div class='editor_area'>
+                        <div class='editor_area textarea_qa'>
                         	<textarea id="contents" name="contents">${set.myQnaData.contents}</textarea>
                         </div>
                     </div>

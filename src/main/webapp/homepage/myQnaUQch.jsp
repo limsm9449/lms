@@ -21,6 +21,7 @@
     <link rel='stylesheet' href='/resources/homepageQch/css/mypage/mypage_register.css'>   
 </head>
 
+
 <script type="text/javascript">
 
 $(document).ready(function() {
@@ -143,7 +144,7 @@ function lfn_validate() {
                         <div class='title'>
                             <p>내용</p>
                         </div>
-                        <div class='editor_area'>
+                        <div class='editor_area textarea_qa'>
                         	<textarea id="contents" name="contents">${set.myQnaData.contents}</textarea>
                         </div>
                     </div>
