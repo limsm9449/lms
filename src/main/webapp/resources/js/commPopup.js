@@ -483,6 +483,25 @@ var Popup = {
 		})	
 	},
 
+	showReviewStudyroomQch : function(pCourseId) {
+		$.ajax({
+			type :"POST",
+			url : context + "/user/checkMyCourse.do",
+			dataType :"json",
+			data : "courseId=" + pCourseId,
+			success : function(json){
+				if ( json.cnt == 0 ) {
+					alert("내가 등록한 과정이 아닙니다.");
+				} else {
+					window.open(context + "/user/reviewStudyroomQch.do?courseId=" + pCourseId + "&timestamp=" + gfn_timestamp(), "_blank");
+				}
+			},
+			error : function(e) {
+				alert("시스템 오류 발생하였습니다. 관리자에게 문의하세요.");
+			}
+		})	
+	},
+
 	showSampleCourseQch : function(pCourseId) {
 		window.open(context + "/main/sampleCourse.do?courseId=" + pCourseId + "&timestamp=" + gfn_timestamp(), "_blank");
 	},

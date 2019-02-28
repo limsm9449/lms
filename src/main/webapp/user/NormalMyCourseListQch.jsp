@@ -101,7 +101,7 @@ function lfn_btn(pKind, pParam) {
 	                                ${row.courseName}
 		</c:when>
 		<c:otherwise>
-	                                <a href='#' class='user_lecture_list_subject' onclick="javascript:Popup.showStudyroomQch('${row.courseId}');">${row.courseName}</a>
+	                                <a href='#' class='user_lecture_list_subject' onclick="javascript:Popup.showReviewStudyroomQch('${row.courseId}');">${row.courseName}</a>
 		</c:otherwise>
 	</c:choose>	                                
                                 </div>

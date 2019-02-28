@@ -119,7 +119,6 @@ var QP_API = {
 			//다음 차시를 구한다.
 			var isNext = false;
 			for ( i = currentWeek; i < totalWeek; i++ ) {
-				// 2019.1.23 ????
 				if ( myWeeks[i] == "Y" && pages[i] != 0) {
 					currentWeek = i + 1;
 					isNext = true;
@@ -128,7 +127,7 @@ var QP_API = {
 			}
 
 			//차시가 변경이 되면 설문기능 반영을 위해서 강의창을 refresh 한다.
-			if ( isNext == true ) {
+			if ( isNext == true && isSaveOk == true ) {
 				opener.location.reload();
 			}
 			
