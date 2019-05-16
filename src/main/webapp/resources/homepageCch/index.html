@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang='ko'>
+<head>
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1'>
+    <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+    <title>Q learning - Main</title>
+
+    <script src='./js/jquery_3.3.1.js'></script>
+    <!--[if IE8]>
+        <script src="http://code.jquery.com/jquery-1.12.3.js></script>
+    <![endif]-->
+    <script src='./js/jquery.bxslider.js'></script>
+
+    <!--[if IE]>
+        <link rel='stylesheet' type='text/css' href='./css/main_compatibility.css'>
+    <![endif]-->
+
+    <link href='https://fonts.googleapis.com/css?family=Nanum+Gothic' rel='stylesheet'>
+    <link href="https://fonts.googleapis.com/css?family=Noto+Sans" rel="stylesheet">
+
+    <link rel='stylesheet' type='text/css' href='./css/initialization.css'>
+    <link rel='stylesheet' type='text/css' href='./css/main.css'>
+</head>
+
+<body>
+<frameset rows='*'>
+    <div class="wrap" >
+        <!-- HEAD -->
+        <div id='width_text'></div>
+        <!-- PC HEADER -->
+        <header class='head_pc'>
+            <div class="head_wrap pc clear_fix">
+                <div class='head_con logo_box'>
+                    <a href='#'>
+                        <img src='./img/main/logo.png' alt=' '>
+                    </a>
+                </div>
+                <div class='head_con search_box'>
+                    <input type="text">
+                    <button>
+                        <img src='./img/main/search_ic.png' alt=' '>
+                    </button>
+                </div>
+                <div class='head_con util_box'>
+                    <!-- 로그오프 상태 -->
+                    <a href='./html/etc/signup_step1.html' class='last_right'>회원가입</a>
+                    <a href='./html/etc/signin.html' onclick='login()'>로그인</a>
+                    
+                    <!-- 로그인 상태 -->
+                    <!-- <a href='./index.html' class='last_right'>로그아웃</a> -->
+                    <!-- <p class='pc'>OOO님 반갑습니다.</p> -->
+                </div>
+            </div>
+            <div class="head_wrap mobile clear_fix">
+                <div class='mobile_btn'>
+                    <button >
+                        <span></span><span></span><span></span>
+                    </button>
+                </div>
+                <div class='head_con logo_box'>
+                    <a href='#'>
+                        <img src='./img/main/logo.png' alt=' '>
+                    </a>
+                </div>
+                <div class='head_con util_box'>
+                    <a href='./index.html' class='last_right'>로그아웃</a>
+                </div>
+                <div class='head_con search_box'>
+                    <input type="text">
+                    <button>
+                        <img src='./img/main/search_ic.png' alt=' '>
+                    </button>
+                </div>
+            </div>
+            <div class='menu_wrap'>
+                <div class='menu_layout pc'>
+                    
+                    
+                    
+                </div>
+                <div class='menu_dropdown_wrapper' id='menu_dropdown_pc'>
+                    <div class='menu_dropdown_wrap clear_fix'>
+                        <ul class='menu_sub' id="menu_sub1">
+                            <li class='menu_title'><a href='./html/course/process.html'>전체과정보기</a></li>
+                        </ul>
+                        <ul class='menu_sub classroom' id="menu_sub2">
+                            <li class='menu_title'><a href='./html/classroom/classroom.html'>나의강의실</a></li>
+                            <li><a href='./html/classroom/lectures.html'>수강중 과정</a></li>
+                            <li><a href='./html/classroom/lecture_standby.html'>대기중 과정</a></li>
+                            <li><a href='./html/classroom/lecture_completed.html'>수강완료과정</a></li>
+                        </ul>
+                        <ul class='menu_sub' id="menu_sub3">
+                            <li class='menu_title'><a href='#'>마이페이지</a></li>
+                            <li><a href='#'>주문/신청 조회</a></li>
+                            <li><a href='#'>포인트</a></li>
+                            <li><a href='#'>나의 활동관리</a></li>
+                            <li><a href='./html/etc/user_info_change.html' class='pc'>회원정보수정</a></li>
+                        </ul>
+                        <ul class='menu_sub' id="menu_sub4">
+                            <li class='menu_title'><a href='./html/support/support.html'>고객지원</a></li>
+                            <li><a href='./html/support/notice.html'>공지사항</a></li>
+                            <li><a href='./html/support/notice.html'>자주 묻는 질문</a></li>
+                            <li><a href='./html/support/notice.html'>1:1 메일문의</a></li>
+                            <li><a href='./html/support/notice.html'>학습지원</a></li>
+                            <li><a href='./html/support/notice.html'>입금계좌안내</a></li>
+                        </ul>
+                        <ul class='menu_sub' id="menu_sub5">
+                            <li class='menu_title'><a href=''>큐러닝</a></li>
+                            <li><a href='http://www.qpeople.co.kr/page1_1.html' target='_blank'>회사소개</a></li>
+                            <li><a href='./html/etc/company_learning.html'>기업교육문의</a></li>
+                            <li><a href='./html/etc/tutor_support.html'>튜터지원</a></li>
+                        </ul>
+                    </div>
+                   
+                </div>
+            </div>
+        </header>
+        <!-- PC HEADER END -->
+
+        <!-- MOBILE HEADER -->
+        <header class='head_mobile'>
+            <div class="head_wrap pc clear_fix">
+                <div class='menu_wrap'>
+                    <div class='menu_layout pc' onclick='sub_show_hide()'>
+                        <div class='mobile_btn'>
+                            <button onclick='mobile_menu()'>
+                                <span></span><span></span><span></span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class='head_con logo_box'>
+                    <a href='#'>
+                        <img src='./img/main/logo.png' alt=' '>
+                    </a>
+                </div>
+                <div class='head_con util_box'>
+                    <!-- <a href='./html/etc/signin.html' class='last_right' onclick='login()'>로그인</a> -->
+                    <a href='./index.html' class='last_right' onclick=''>로그아웃</a>
+                </div>
+                <div class='head_con search_box'>
+                    <input type="text">
+                    <button>
+                        <img src='./img/main/search_ic.png' alt=' '>
+                    </button>
+                </div>
+            </div>
+            <div class='mobile_dropwdown_wrap'>
+                <div class='mobile_bg_box'>
+                    <div class='close_btn_area' onclick='mobile_menu_close()'>
+                        <img src='./img/main/ic_menu_close.png' alt=' '>
+                    </div>
+                    <div class='mobile_menu login clear_fix'>
+                        <span>
+                            <img src='./img/main/ic_login.png' alt=' '>
+                        </span>
+                        <!-- <a href='./html/etc/signin.html' onclick='login()'>로그인</a> -->
+                        <a href='./index.html'>로그아웃</a>
+                    </div>
+                    <div class='mobile_study_box'>
+                        <a href='./html/classroom/classroom.html'>
+                            나의강의실
+                        </a>
+                    </div>
+                    <div class='mobile_full_box'>
+                        <a href='./html/course/process.html'>
+                            전체과정보기
+                        </a>
+                    </div>
+                    <div class='mobile_menu classroom'>
+                        <button onclick='sub_menu_open(this, "main")'>
+                            나의강의실
+                        </button>
+                        <ul>
+                        	<li class='first_depth'><a href='./html/classroom/classroom.html'>나의강의실</a></li>
+                            <li><a href='./html/classroom/lectures.html'>수강중 과정</a></li>
+                            <li><a href='./html/classroom/lecture_standby.html'>대기중 과정</a></li>
+                            <li><a href='./html/classroom/lecture_completed.html'>수강완료과정</a></li>
+                        </ul>
+                    </div>
+                    <div class='mobile_menu tutorial'>
+                        <button onclick='sub_menu_open(this, "main")'>
+                            마이페이지
+                        </button>
+                        <ul>
+                            <li class='first_depth'><a href='#'>마이페이지</a></li>
+                            <li><a href='#'>주문/신청 조회</a></li>
+                            <li><a href='#'>포인트</a></li>
+                            <li><a href='#'>나의 활동관리</a></li>
+                            <li><a href='#'>회원정보수정</a></li>
+                        </ul>
+                    </div>
+                    <div class='mobile_menu service'>
+                        <button onclick='sub_menu_open(this, "main")'>
+                            고객지원
+                        </button>
+                        <ul>
+                            <li class='first_depth'><a href='./html/support/support.html'>고객지원</a></li>
+                            <li><a href='./html/support/notice.html'>공지사항</a></li>
+                            <li><a href='./html/support/notice.html'>자주 묻는 질문</a></li>
+                            <li><a href='./html/support/notice.html'>1:1 메일문의</a></li>
+                            <li><a href='./html/support/notice.html'>학습지원</a></li>
+                            <li><a href='./html/support/notice.html'>입금계좌안내</a></li>
+                        </ul>
+                    </div>
+                    <div class='mobile_menu service'>
+                        <button onclick='sub_menu_open(this, "main")'>
+                            큐러닝
+                        </button>
+                        <ul>
+                            <li class='first_depth'><a href='./html/support/support.html'>큐러닝</a></li>
+                            <li><a href='http://www.qpeople.co.kr/page1_1.html' target='_blank'>회사소개</a></li>
+                            <li><a href='./html/etc/company_learning.html'>기업교육문의</a></li>
+                            <li><a href='./html/etc/tutor_support.html'>튜터지원</a></li>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+        </header>
+        <!-- MOBILE HEADER END -->
+        <!-- HEAD END -->
+
+        <!-- CONTENTS -->
+        <div class='contents_wrap'>
+            <!-- QUICK MENU -->
+            <div class='quick_menu_wrap'>
+                <div class='mobile_btn'>
+                        <button onClick="sub_show_hide_pc(this)">
+                            <span class='first'></span><span class='middle'></span><span class='last'></span>
+                        </button>
+                    </div>
+                <ul>
+                	<a href='./html/classroom/classroom.html'>
+                    	<li class='quick_menu_list' id="q_menu1"></li>
+                    </a>
+                    <a href='./html/classroom/basket_step1.html'>
+                    	<li class='quick_menu_list' id="q_menu2"><img src="./img/main/quick/q_menu2_circle.png" alt=' ' id="q_menu2_circle"><span class="q_menu2_num">2</span></li>
+                    </a>
+                    <a href='#'>
+                    	<li class='quick_menu_list' id="q_menu3"> </li>
+                    </a>
+                    <a href='./html/support/support.html'>
+                    	<li class='quick_menu_list' id="q_menu4"></li>
+                    </a>
+                    <a href='./html/support/support.html'>
+                    	<li class='quick_menu_list' id="q_menu5"></li>
+                    </a>
+                    <a href='./html/support/support.html'>
+                    	<li class='quick_menu_list' id="q_menu6"></li>
+                    </a>
+                    <li class='quick_menu_list' id="q_menu7"></li>
+                    
+                </ul>
+               <!-- 탑다운버튼<p class='quick_top'>
+                    <span>
+                        <img src='./img/main/quick/q_topbtn.png' alt=' '>
+                    </span>
+                </p>
+                <p class='quick_down'>
+                    <span>
+                        <img src='./img/main/quick/q_downbtn.png' alt=' '>
+                    </span>
+                </p>-->
+            </div>
+
+            <!-- VISUAL -->
+            <ul class='slider_wrap tabs' id='tab1'>
+                <li class='slide_box slide_1'>
+                    <div class='visual_box'>
+                        <div class='slide clear_fix'>
+                            <div class='slider_text_box'>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li class='slide_box slide_2'>
+                    <div class='visual_box'>
+                        <div class='slide clear_fix'>
+                            <div class='slider_text_box left'>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li class='slide_box slide_3'>
+                    <div class='visual_box'>
+                        <div class='slide clear_fix'>
+                            <div class='slider_text_box'>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+           
+            
+            <!-- 영상 -->
+			<div class='recommend_wrap lectures_wrap'>
+                <p>
+                    <strong>화제의</strong> 큐러닝강의
+                </p>
+                <p class='pc'>큐러닝의 강의는 쉽고 재미있습니다.</p>
+                <div class="v1">
+                	<a onclick="v1_show()"><img src="./img/main/v1.png" alt=""></a>
+                </div>
+                <div class="m1">
+                    <div id="movie1">
+                    	<div class="v1_close" id="vclose" onClick="v_close()">
+                    		<img src ='./img/main/ic_menu_close.png' alt="">
+                    	</div>
+                        <video id="video1" controls>
+                             <source src="./vod/01_01.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                </div>
+             </div>
+             
+             <!-- 신규교육과정 -->
+            <div class='process_wrap lectures_wrap'>
+                <p>
+                    <strong>신규</strong> <span>교육</span>과정
+                </p>
+                <p class='pc'>큐러닝의 신규 교육과정을 만나보세요</p>
+                
+                <div class='slider_wrap process1_slide_wrap'>
+                	<a href='./html/course/register_course.html'>
+                        <div class='slide_box slide_1'>
+                            <div class='process_box process1'>
+                                
+                                <div class='process clear_fix'>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </a>
+                    <a href='./html/course/register_course.html'>
+                    <div class='slide_box slide_2'>
+                        <div class='process_box process1'>
+                            <div class='process clear_fix'>
+                            </div>
+                        </div>
+                    </div>
+                    </a>
+                    <a href='./html/course/register_course.html'>
+                    <div class='slide_box slide_3'>
+                        <div class='process_box process1'>
+                            <div class='process clear_fix'>
+                            </div>
+                        </div>
+                    </div>
+                    </a>
+                </div>
+                
+                <div class='slider_wrap process2_slide_wrap'>
+                	<a href='./html/course/register_course.html'>
+                    <div class='slide_box slide_1'>
+                        <div class='process_box process2'>
+                            <div class='process'>
+                            </div>
+                        </div>
+                    </div>
+                    </a>
+                    <a href='./html/course/register_course.html'>
+                    <div class='slide_box slide_2'>
+                        <div class='process_box process2'>
+                            <div class='process'>
+                            </div>
+                        </div>
+                    </div>
+                    </a>
+                    <a href='./html/course/register_course.html'>
+                    <div class='slide_box slide_3'>
+                        <div class='process_box process2'>
+                            <div class='process'>
+                            </div>
+                        </div>
+                    </div>
+                    </a>
+                </div>
+            </div>
+            
+            
+            <!-- 추천과정 -->
+            <div class='recommend_wrap lectures_wrap'>
+                <p id="wrap_p">
+                    <strong>추천</strong> 과정
+                </p>
+                <p class='pc'>큐매니저가 추천하는 특별한 교육과정을 만나보세요</p>
+                
+                <div class="r_bg">
+                    <div class="r_bg_b2">
+                    	<img id="recc_back" src="./img/main/star_b.png" alt="" width="74">
+                            <div class="r_div">
+                                <ul class='clear_fix' id="r_ul">
+                                    <li class='recommend recommend1 clear_fix'>
+                                        <p class='recommend_text' onclick='location.href = "./html/course/register_course.html"'></p>
+                                    </li>
+                                    
+                                    <li class='recommend recommend2 clear_fix'>
+                                        <p class='recommend_text' onclick='location.href = "./html/course/register_course.html"'></p>
+                                    </li>
+                                    <li class='recommend recommend3 clear_fix last_right'>
+                                        <p class='recommend_text' onclick='location.href = "./html/course/register_course.html"'></p>
+                                    </li>
+                                </ul>
+                            </div>
+                        <img id="recc_next" src="./img/main/star_n.png" alt="" width="74">
+                            </div>
+                </div>
+            </div>
+           <!--스타 강사-->
+            <div class='s_recommend_wrap lectures_wrap'>
+                <p>
+                    <strong>스타</strong> 강사
+                </p>
+                <p class='pc'>스타강사의 특별한 강의를 만나보세요.</p>
+                
+            </div>
+            <div class="star_slide">
+            	<img id="star_back" src="./img/main/star_b.png" alt="" width="74">
+           		<div class="slide" id="s_slide">
+                      <ul id="slide_ul">
+                        <a href="#"><div class="star"></div></a>
+                        <a href="#"><div class="star"></div></a>
+                        <a href="#"><div class="star"></div></a>
+                        <a href="#"><div class="star"></div></a>
+                        <a href="#"><div class="star"></div></a>
+                        
+                        <a href="#"><div class="star"></div></a>
+                        <a href="#"><div class="star"></div></a>
+                        <a href="#"><div class="star"></div></a>
+                        <a href="#"><div class="star"></div></a>
+                        <a href="#"><div class="star"></div></a>
+                        
+                        <a href="#"><div class="star"></div></a>
+                        <a href="#"><div class="star"></div></a>
+                        <a href="#"><div class="star"></div></a>
+                        <a href="#"><div class="star"></div></a>
+                        <a href="#"><div class="star"></div></a>
+                      </ul>
+                </div>
+                <img id="star_next" src="./img/main/star_n.png" alt="" width="74">
+           </div>
+            <!-- CUSTOMER SERVICE END -->
+
+            <div class='user_cs clear_fix'>
+                <div class='user_cs_notice_box'>
+                    
+                
+                
+            </div>
+
+        </div>
+        
+         <!-- CONTENTS END -->
+         
+     <div class="p_visual3_bg">    
+        <div class="p_visual3">
+              <div class="p_visual3_1">
+                <div class='p_filter clear_fix'>
+                    <div>
+                        <ul class='clear_fix'>
+                            <li class='p_filter_item select1'>
+                                <select name='' id=''>
+                                    <option value=''>전체과정</option>
+                                    <option value=''>추천강의순</option>
+                                </select>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+             </div>
+                <!-- Filter Area END -->
+
+                <!-- Search Result Area -->
+                <div class='p_search_result'>
+
+                    <ul class='p_result_list'>
+                        <li class='clear_fix'>
+                            <div class='p_result_con con clear_fix'>
+                                <div class='p_result_img'>
+                                    <a href=""><img src='./img/main/p_visual3_img1.png' alt=' '></a>
+                                </div>
+                                <div class='p_result_text'>
+                                    <p class="p_result_text_1">[Work Smart, smart Work]</p>
+                                    <p class="p_result_text_2">권필 쌤 강의 좋아요</p>
+                                    <p class="p_result_text_3">오랜만에 문법 정리를 하는데 이해하기 좋고 편해서 넘 감사해요<br>이제 2일 되었지만 강의 내용 구성도 재미가 있네요</p>
+                                    <p class="p_result_text_4"><span  class="p_result_txt_name">by 한승우</span><span class="p_result_txt_date">2019-01-03</span></p>
+                                    <a href="" class="p_result_text_btn">더보기</a>
+                                    
+                                </div>
+                                
+                            </div>
+                            <div class='p_result_review con'>
+                                <div class='clear_fix'>
+                                	<img src="./img/main/u_line.png" alt='' class="u_line">
+                                    <span><img src='./img/course/star_active.png' alt=' '></span>
+                                        <span><img src='./img/course/star_active.png' alt=' '></span>
+                                        <span><img src='./img/course/star_active.png' alt=' '></span>
+                                        <span><img src='./img/course/star_active.png' alt=' '></span>
+                                        <span><img src='./img/course/star_inactive.png' alt=' '></span>
+                                        <span class="p_recommend_btn"><a href="" class="p_recommend_btn_a">답글 </a></span>
+                                </div>
+                            </div>
+                            
+                        </li>
+                        <li class='clear_fix'>
+                            <div class='p_result_con con clear_fix'>
+                                <div class='p_result_img'>
+                                    <a href=""><img src='./img/main/p_visual3_img1.png' alt=' '></a>
+                                </div>
+                                <div class='p_result_text'>
+                                    <p class="p_result_text_1">[Work Smart, smart Work]</p>
+                                    <p class="p_result_text_2">권필 쌤 강의 좋아요</p>
+                                    <p class="p_result_text_3">오랜만에 문법 정리를 하는데 이해하기 좋고 편해서 넘 감사해요<br>이제 2일 되었지만 강의 내용 구성도 재미가 있네요</p>
+                                    <p class="p_result_text_4"><span  class="p_result_txt_name">by 한승우</span><span class="p_result_txt_date">2019-01-03</span></p>
+                                    <a href="" class="p_result_text_btn">더보기</a>
+                                    
+                                </div>
+                            </div>
+                            <div class='p_result_review con'>
+                                <div class='clear_fix'>
+                                	<img src="./img/main/u_line.png" alt='' class="u_line">
+                                    <span><img src='./img/course/star_active.png' alt=' '></span>
+                                        <span><img src='./img/course/star_active.png' alt=' '></span>
+                                        <span><img src='./img/course/star_active.png' alt=' '></span>
+                                        <span><img src='./img/course/star_active.png' alt=' '></span>
+                                        <span><img src='./img/course/star_inactive.png' alt=' '></span>
+                                        <span class="p_recommend_btn"><a href="" class="p_recommend_btn_a">답글 </a></span>
+                                </div>
+                            </div>
+                            
+                        </li>
+                        <li class='clear_fix'>
+                            <div class='p_result_con con clear_fix'>
+                                <div class='p_result_img'>
+                                    <a href=""><img src='./img/main/p_visual3_img1.png' alt=' '></a>
+                                </div>
+                                <div class='p_result_text'>
+                                    <p class="p_result_text_1">[Work Smart, smart Work]</p>
+                                    <p class="p_result_text_2">권필 쌤 강의 좋아요</p>
+                                    <p class="p_result_text_3">오랜만에 문법 정리를 하는데 이해하기 좋고 편해서 넘 감사해요<br>이제 2일 되었지만 강의 내용 구성도 재미가 있네요</p>
+                                    <p class="p_result_text_4"><span  class="p_result_txt_name">by 한승우</span><span class="p_result_txt_date">2019-01-03</span></p>
+                                    <a href="" class="p_result_text_btn">더보기</a>
+                                    
+                                </div>
+                            </div>
+                            <div class='p_result_review con'>
+                                <div class='clear_fix'>
+                                	<img src="./img/main/u_line.png" alt='' class="u_line">
+                                    <span><img src='./img/course/star_active.png' alt=' '></span>
+                                        <span><img src='./img/course/star_active.png' alt=' '></span>
+                                        <span><img src='./img/course/star_active.png' alt=' '></span>
+                                        <span><img src='./img/course/star_active.png' alt=' '></span>
+                                        <span><img src='./img/course/star_inactive.png' alt=' '></span>
+                                        <span class="p_recommend_btn"><a href="" class="p_recommend_btn_a">답글 </a></span>
+                                </div>
+                            </div>
+                            
+                        </li>
+                        <li class='clear_fix'>
+                            <div class='p_result_con con clear_fix'>
+                                <div class='p_result_img'>
+                                    <a href=""><img src='./img/main/p_visual3_img1.png' alt=' '></a>
+                                </div>
+                                <div class='p_result_text'>
+                                    <p class="p_result_text_1">[Work Smart, smart Work]</p>
+                                    <p class="p_result_text_2">권필 쌤 강의 좋아요</p>
+                                    <p class="p_result_text_3">오랜만에 문법 정리를 하는데 이해하기 좋고 편해서 넘 감사해요<br>이제 2일 되었지만 강의 내용 구성도 재미가 있네요</p>
+                                    <p class="p_result_text_4"><span  class="p_result_txt_name">by 한승우</span><span class="p_result_txt_date">2019-01-03</span></p>
+                                    <a href="" class="p_result_text_btn">더보기</a>
+                                    
+                                </div>
+                            </div>
+                            <div class='p_result_review con'>
+                                <div class='clear_fix'>
+                                	<img src="./img/main/u_line.png" alt='' class="u_line">
+                                    
+                                    <span><img src='./img/course/star_active.png' alt=' '></span>
+                                        <span><img src='./img/course/star_active.png' alt=' '></span>
+                                        <span><img src='./img/course/star_active.png' alt=' '></span>
+                                        <span><img src='./img/course/star_active.png' alt=' '></span>
+                                        <span><img src='./img/course/star_inactive.png' alt=' '></span>
+                                        <span class="p_recommend_btn"><a href="" class="p_recommend_btn_a">답글 </a></span>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+              </div>
+            </div>
+            </div>
+            
+            
+            <div class="mobile_recomm">
+            	<div class='mobile_menu tutorial' id="mobile_r1">
+                        <button onclick='m_menu_open(this, "main")' id="menu_b_btn">
+                            <div class='p_result_text'>
+                                    <p class="p_result_text_1">[Work Smart, smart Work]</p>
+                                    <p class="p_result_text_2">권필 쌤 강의 좋아요</p>
+                                    <p class="p_result_text_4" id="t4">
+                                        <span  class="p_result_txt_name">by 한승우</span>
+                                        <span class="p_result_txt_date">2019-01-03</span>
+                                        <span class="p_recommend_btn"><a href="" class="p_recommend_btn_a">답글 </a></span>
+                                    </p>
+                                    
+                                </div>
+                        </button>
+                        <ul>
+                            <li class="mobile_re_txt">강의를 새로운 마음으로 수강신청했지만 역시나 작심삼일로 끝났었습니다. 이제 새해가 밝아 다시 도전해보자 하는 마음으로 다시 시작하였고 느낌동사편을 수강하고 있는데 예나샘의 친절한설명과 발음, 훈련편의 권필선생님의 친근한 연습이 더해지면서 어려웠던 문장이 조금이나마 쉽게 느껴지게 되었습니다. 영어센스를 높일 수 있는 기초회화편 수강해보세요.</li>
+                        </ul>
+                    </div>
+            </div>
+            
+            <div class="mobile_recomm">
+            	<div class='mobile_menu tutorial' id="mobile_r1">
+                        <button onclick='m_menu_open(this, "main")' id="menu_b_btn">
+                            <div class='p_result_text'>
+                                    <p class="p_result_text_1">[Work Smart, smart Work]</p>
+                                    <p class="p_result_text_2">권필 쌤 강의 좋아요</p>
+                                    <p class="p_result_text_4" id="t4">
+                                        <span  class="p_result_txt_name">by 한승우</span>
+                                        <span class="p_result_txt_date">2019-01-03</span>
+                                        <span class="p_recommend_btn"><a href="" class="p_recommend_btn_a">답글 </a></span>
+                                    </p>
+                                    
+                                </div>
+                        </button>
+                        <ul>
+                            <li class="mobile_re_txt">강의를 새로운 마음으로 수강신청했지만 역시나 작심삼일로 끝났었습니다. 이제 새해가 밝아 다시 도전해보자 하는 마음으로 다시 시작하였고 느낌동사편을 수강하고 있는데 예나샘의 친절한설명과 발음, 훈련편의 권필선생님의 친근한 연습이 더해지면서 어려웠던 문장이 조금이나마 쉽게 느껴지게 되었습니다. 영어센스를 높일 수 있는 기초회화편 수강해보세요.</li>
+                        </ul>
+                    </div>
+            </div>
+            <div class="mobile_recomm">
+            	<div class='mobile_menu tutorial' id="mobile_r1">
+                        <button onclick='m_menu_open(this, "main")' id="menu_b_btn">
+                            <div class='p_result_text'>
+                                    <p class="p_result_text_1">[Work Smart, smart Work]</p>
+                                    <p class="p_result_text_2">권필 쌤 강의 좋아요</p>
+                                    <p class="p_result_text_4" id="t4">
+                                        <span  class="p_result_txt_name">by 한승우</span>
+                                        <span class="p_result_txt_date">2019-01-03</span>
+                                        <span class="p_recommend_btn"><a href="" class="p_recommend_btn_a">답글 </a></span>
+                                    </p>
+                                    
+                                </div>
+                        </button>
+                        <ul>
+                            <li class="mobile_re_txt">강의를 새로운 마음으로 수강신청했지만 역시나 작심삼일로 끝났었습니다. 이제 새해가 밝아 다시 도전해보자 하는 마음으로 다시 시작하였고 느낌동사편을 수강하고 있는데 예나샘의 친절한설명과 발음, 훈련편의 권필선생님의 친근한 연습이 더해지면서 어려웠던 문장이 조금이나마 쉽게 느껴지게 되었습니다. 영어센스를 높일 수 있는 기초회화편 수강해보세요.</li>
+                        </ul>
+                    </div>
+            </div>
+            <div class="mobile_recomm">
+            	<div class='mobile_menu tutorial' id="mobile_r1">
+                        <button onclick='m_menu_open(this, "main")' id="menu_b_btn">
+                            <div class='p_result_text'>
+                                    <p class="p_result_text_1">[Work Smart, smart Work]</p>
+                                    <p class="p_result_text_2">권필 쌤 강의 좋아요</p>
+                                    <p class="p_result_text_4" id="t4">
+                                        <span  class="p_result_txt_name">by 한승우</span>
+                                        <span class="p_result_txt_date">2019-01-03</span>
+                                        <span class="p_recommend_btn"><a href="" class="p_recommend_btn_a">답글 </a></span>
+                                    </p>
+                                    
+                                </div>
+                        </button>
+                        <ul>
+                            <li class="mobile_re_txt">강의를 새로운 마음으로 수강신청했지만 역시나 작심삼일로 끝났었습니다. 이제 새해가 밝아 다시 도전해보자 하는 마음으로 다시 시작하였고 느낌동사편을 수강하고 있는데 예나샘의 친절한설명과 발음, 훈련편의 권필선생님의 친근한 연습이 더해지면서 어려웠던 문장이 조금이나마 쉽게 느껴지게 되었습니다. 영어센스를 높일 수 있는 기초회화편 수강해보세요.</li>
+                        </ul>
+                    </div>
+            </div>
+            
+            
+        	<div class='p_pager_box'>
+                    <div class='p_pager clear_fix'>
+                        <div class='p_pager_prev clear_fix'>
+                            <div>&laquo;</div>
+                            <div>&lsaquo;</div>
+                        </div>
+                        <ul class='clear_fix'>
+                            <li class='on'>1</li>
+                            <li>2</li>
+                            <li>3</li>
+                            <li>4</li>
+                            <li>5</li>
+                        </ul>
+                        <div class='p_pager_next clear_fix'>
+                            <div>&rsaquo;</div>
+                            <div>&raquo;</div>
+                        </div>
+                    </div>
+                </div>
+        
+        <!-- CONTENTS END -->
+
+        <!-- FOOTER -->
+        <div class='footer_wrap'>
+            <ul class='foot_link_box clear_fix'>
+                <li>
+                    <a href='http://www.qpeople.co.kr/page1_1.html' target='_blank'></a>
+                </li>
+                <li>
+                    <a href='./html/etc/signup_step1.html'>서비스이용약관</a>
+                </li>
+                <li>
+                    <a href='./html/etc/signup_step1.html'>개인정보취급방침</a>
+                </li>
+                <li>
+                    <a href='./html/support/map.html'>찾아오시는길</a>
+                </li>
+                <li class='second_first'>
+                    <a href='./html/etc/company_learning.html'>기업교육 문의</a>
+                </li>
+                <li>
+                    <a href='./html/etc/tutor_support.html'>튜터 지원</a>
+                </li>
+                <li class='last_right'>
+                    <a href='./html/etc/sitemap.html'>사이트맵</a>
+                </li>
+            </ul>
+            <div class='foot_box'>
+                <p>
+                    (주)큐피플 서울시 금천구 가산동 371-50번지 에이스하이엔드3차 410/411호 | 대표이사 : 이준호 | 사업자등록번호: 119-81-78776 |
+                    <span>
+                        Copyright 2017 Qpeople Academy. ALL Rights Reserved
+                    </span>
+                </p>
+            </div>
+        </div>
+        <!-- FOOTER END -->
+    </div>
+    <script src='./js/main.js'></script>
+    <script type="text/javascript">
+    $(document).ready(function(){
+      var imgs;
+	  var star_count = 1;
+	  var min_count = -4;
+	  var max_count = 6;
+
+      imgs = $(".slide ul");
+      img_count = imgs.children().length;
+
+      //버튼을 클릭했을 때 함수 실행
+      $('#star_back').click(function () {
+        back();
+      });
+      $('#star_next').click(function () {
+        next();
+      });
+
+      function back() {
+        if(star_count!=min_count){
+          imgs.animate({
+            left:'+=224px'
+          });
+		  star_count--;
+        }
+      }
+      function next() {
+        if(star_count!=max_count){
+          imgs.animate({
+            left:'-=224px'
+          });
+		  star_count++;
+        } 
+      }
+
+
+      //이미지 끝까지 가면 버튼 사라지기
+	
+
+
+    });
+	
+	$(document).ready(function(){
+      var r_imgs;
+      var r_img_position = 1;
+	  var r_count = 1;
+	  var r_min_count = -4;
+	  var r_max_count = 6;
+
+      r_imgs = $("#r_ul");
+      r_img_count = r_imgs.children().length;
+
+      //버튼을 클릭했을 때 함수 실행
+      $('#recc_back').click(function () {
+        r_back();
+      });
+      $('#recc_next').click(function () {
+        r_next();
+      });
+
+      function r_back() {
+        if(r_count!=r_min_count){
+          r_imgs.animate({
+            left:'+=364px'
+          });
+          r_img_position--;
+		  r_count--;
+        }
+      }
+      function r_next() {
+        if(r_count!=r_max_count){
+          r_imgs.animate({
+            left:'-=364px'
+          });
+          r_img_position++;
+		  r_count++;
+        }
+		
+      }
+	   });
+  </script>
+
+</frameset>
+</body>
+
+</html>

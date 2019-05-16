@@ -546,7 +546,7 @@ public class CommUtil {
 			return page + "Pch";
 		} else if ( compType.equals("B2B") ) {
 			//연수원
-			return page;
+			return page + "Cch";
 		} else {
 			return "error";
 		}

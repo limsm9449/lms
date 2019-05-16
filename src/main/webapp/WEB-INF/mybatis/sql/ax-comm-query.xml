@@ -379,6 +379,14 @@
 		FROM 	COMPANY        
 		WHERE	C2C_YN = 'Y'
 		AND		USE_YN = 'Y'
+		UNION 	ALL
+		SELECT 	3 ORD
+				,COMP_CD value
+				,CONCAT('연수원 - ',COMP_NAME) text
+		FROM 	COMPANY        
+		WHERE	C2C_YN = 'N'
+		AND		USE_YN = 'Y'
+		AND		COMP_CD != 'B2C'
 		ORDER 	BY 1, 3
 	</select>
     

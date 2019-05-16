@@ -356,7 +356,7 @@
     </insert>
 
 	<select id="getRecommendJoinPoint" parameterType="Member" resultType="int">
-		SELECT 	POINT
+		SELECT 	IFNULL(MAX(POINT),0) POINT
 		FROM	POINT_CODE
 		WHERE 	POINT_CODE = 'RECOMMEND_JOIN'
     </select>

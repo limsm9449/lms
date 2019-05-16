@@ -204,11 +204,11 @@ function lfn_viewTypeChg(kind) {
 	                        </div>
 	                        <div class='process_result_btn con'>
 			<c:choose>
-				<c:when test = "${row.previewYn ne 'N'}">
-	                            <button onclick="javascript:Popup.showSampleCourseQch('${row.courseId}','${row.hPx + 100}','${row.vPx + 100}'); return false;">맛보기</button>
+				<c:when test = "${row.previewYn eq 'N' || row.offlineYn eq 'Y'}">
+	                            <button onclick="" class="no_btnclick">맛보기</button>
 			   	</c:when>
 			   	<c:otherwise>
-	                            <button onclick="" class="no_btnclick">맛보기</button>
+	                            <button onclick="javascript:Popup.showSampleCourseQch('${row.courseId}','${row.hPx + 100}','${row.vPx + 100}'); return false;">맛보기</button>
 			   	</c:otherwise>
 			</c:choose>			
 	                            <button onclick="javascript:lfn_btn('cart',{courseId:'${row.courseId}',cnt:'${row.cnt}'}); return false;">장바구니</button>
@@ -245,11 +245,11 @@ function lfn_viewTypeChg(kind) {
                                 </div>
                                 <div class='process_btn_area clear_fix'>
 					<c:choose>
-						<c:when test = "${row.previewYn ne 'N'}">
-			                     	<button onclick="javascript:Popup.showSampleCourseQch('${row.courseId}','${row.hPx + 100}','${row.vPx + 100}'); return false;">맛보기</button>
+						<c:when test = "${row.previewYn eq 'N' || row.offlineYn eq 'Y'}">
+		                            <button onclick="" class="no_btnclick">맛보기</button>
 					   	</c:when>
 					   	<c:otherwise>
-			                        <button onclick="" class="no_btnclick">맛보기</button>
+		                            <button onclick="javascript:Popup.showSampleCourseQch('${row.courseId}','${row.hPx + 100}','${row.vPx + 100}'); return false;">맛보기</button>
 					   	</c:otherwise>
 					</c:choose>			
 		                            <button onclick="javascript:lfn_btn('cart',{courseId:'${row.courseId}',cnt:'${row.cnt}'}); return false;">장바구니</button>

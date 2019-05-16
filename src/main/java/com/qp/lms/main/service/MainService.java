@@ -117,6 +117,38 @@ public class MainService {
         	set.getCondiVO().setCompCd(SessionUtil.getSessionCompCd());
         	List<HashMap> noticePopupList = sqlSession.selectList("main.mainNoticePopupList", null);
         	set.setNoticePopupList(noticePopupList);
+		} else if ( CommUtil.isEqual("B2B", compType) ) {
+			List<HashMap> mainFrame = null; 
+    		HashMap<String, Object> paramMap = new HashMap<String, Object>();
+    		paramMap.put("CHANNEL_KIND", SessionUtil.getSessionCompCd());
+    		paramMap.put("MODE", set.getCondiVO().getMainViewMode());
+    		mainFrame = sqlSession.selectList("comm.getMainFrame", paramMap);
+
+    		HashMap mainFrameDetailHm = new HashMap();
+    		for ( int i = 0; i < mainFrame.size(); i++ ) {
+    			mainFrame.get(i).put("MODE", set.getCondiVO().getMainViewMode());
+    			List<HashMap> mainFrameDetail = sqlSession.selectList("comm.getMainFrameDetail", mainFrame.get(i));
+    			mainFrameDetailHm.put(mainFrame.get(i).get("SEQ"), mainFrameDetail);
+    		}
+
+    		set.setMainFrame(mainFrame); 
+    		set.setMainFrameDetailHm(mainFrameDetailHm); 
+    		
+    		//전체 수강후기
+    		PostScriptVO postScriptVO = new PostScriptVO(); 
+    		postScriptVO.setPageNum(set.getCondiVO().getPageNum());
+    		postScriptVO.setLimitUnit(Constant.unitForPostscript);
+    		postScriptVO.setCompCd(SessionUtil.getSessionCompCd());
+
+        	List<PostScriptVO> postScriptList = sqlSession.selectList("postscript.postscriptAllList", postScriptVO);
+        	set.setPostScriptList(postScriptList);
+        	set.setTotalCount(((PostScriptVO)sqlSession.selectOne("postscript.postscriptAllTotal",postScriptVO)).getCnt());
+        	set.setPageUnit(Constant.unitForPostscript);
+        	set.setPageCnt(Constant.pageForMainPage);
+
+        	set.getCondiVO().setCompCd(SessionUtil.getSessionCompCd());
+        	List<HashMap> noticePopupList = sqlSession.selectList("main.mainNoticePopupList", null);
+        	set.setNoticePopupList(noticePopupList);
 		} else {
 			String compCd = (String)SessionUtil.getAttribute("compCd");
 			

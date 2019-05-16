@@ -1,0 +1,147 @@
+<%@ page contentType="text/html;charset=utf-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+
+<!DOCTYPE html>
+<html lang='ko' data-useragent='Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; Trident/6.0)'>
+
+<head>
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1'>
+    <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+    <title>Q learning - 아이디/비밀번호 찾기</title>
+
+    <%@ include file="../common/commMainInclude.jsp" %>
+
+    <link href='https://fonts.googleapis.com/css?family=Nanum+Gothic' rel='stylesheet'>
+
+    <link rel='stylesheet' href='/resources/homepageCch/css/initialization.css'>
+    <link rel='stylesheet' href='/resources/homepageCch/css/etc/find.css'>
+</head>
+
+<script type="text/javascript">
+
+$(document).ready(function() {
+	$("#userId").focus();
+});
+
+function lfn_btn(pKind, pParam) {
+	if ( pKind =="find" ) {
+		if ( formValid.check("userId",{isNecess:true}) == false )
+			return false;
+		if ( formValid.check("userName",{isNecess:true}) == false )
+			return false;
+		if ( formValid.check("email",{isNecess:true}) == false )
+			return false;
+			
+		$.ajax({
+			type :"POST",
+			url : context +"/ns/searchPassword.do",
+			dataType :"json",
+			data : $("#frm").serialize(),
+			success : function(json){
+				if ( json.rtnMode == "CHANGE_PASSWORD") {
+					alert("임시패스워드를 Email로 발송하였습니다.\n접속후에 패스워드를 변경해주세요.");
+					page.goHome();
+				} else if ( json.rtnMode == "INCORRECT_PASSWORD") {
+					alert("해당하는 사용자가 없습니다.");
+					$("#userId").select();
+				} else if ( json.rtnMode == "INCORRECT_USER") {
+					alert("아이디가 틀립니다.");
+					$("#userId").select();
+				} else if ( json.rtnMode == "RETIRED") {
+					alert("탈퇴한 회원입니다.\n재가입시 관리자에게 문의하시기 바랍니다.");
+					$("#userId").select();
+				}
+			},
+			error : function(e) {
+				alert("<spring:message code="lms.msg.systemError" text="-" />");
+			}
+		})
+	}
+}
+
+</script>
+
+<body>
+
+<form id="frm" name="frm">
+
+<frameset rows='*'>
+    <div class='wrap'>
+        <!-- HEAD -->
+        <%@ include file="../common/mainTopCch.jsp" %>
+        <!-- HEAD END -->
+
+        <!-- QUICK MENU -->
+        <%@ include file="../common/mainQuickMenuCch.jsp" %>
+        
+        <!-- CONTENTS -->
+        <div class='contents_wrap_box' >
+
+            <!-- Top -->
+            <div class='top_area'>
+                <div class='clear_fix'>
+                    <div class='process_history_box clear_fix'>
+                        <span>
+                            <img src='/resources/homepage/img/course/ic_home.jpg' alt=' '>
+                        </span>
+                        <p>HOME</p>
+                        <span>
+                            <img src='/resources/homepage/img/course/arr_right.jpg' alt=' '>
+                        </span>
+                        <p>수강신청</p>
+                        <span>
+                            <img src='/resources/homepage/img/course/arr_right.jpg' alt=' '>
+                        </span>
+                        <p>교육과정</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Top END -->
+
+			<div style="height:100px"></div>
+            <div class='util_wrap'>
+                <h1>
+                    비밀번호 찾기
+                </h1>
+
+                <div class='certification_list'>
+                    <div class='certification_name clear_fix'>
+                        <p>아이디</p>
+                        <input type='text' name='userId' id='userId' placeholder='아이디를 입력해주세요.'>
+                    </div>
+                    <div class='certification_name clear_fix'>
+                        <p>이름</p>
+                        <input type='text' name='userName' id='userName' placeholder='이름을 입력해주세요.'>
+                    </div>
+                    <div class='certification_name clear_fix'>
+                        <p>이메일</p>
+                        <input type='text' name='email' id='email' placeholder='이메일을 입력해주세요.'>
+                    </div>
+                </div>  
+                <div class='signup_btn_box clear_fix'>
+                    <button onclick='page.goHome();'>취소</button>
+                    <button class='last' onclick="lfn_btn('find');">비밀번호 찾기</button>
+                </div>
+            </div>
+
+        </div>
+        <!-- CONTENTS END -->
+
+        <!-- FOOTER -->
+        <%@ include file="../common/mainBottomCch.jsp" %>
+        <!-- FOOTER END -->
+    </div>
+    <script src='/resources/homepageCch/js/main.js'></script>
+    
+</frameset>
+
+</form>
+
+</body>
+
+</html>

@@ -1,0 +1,68 @@
+@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none){
+	/*p 메인*/
+	.lecture_1 {
+		bottom: 5px !important;
+	}
+	.lecture_3 {
+		bottom: 5px !important;
+	}
+	.lecture_5 {
+		bottom: 130px !important;
+	}
+	.lecture_4 {
+		bottom: 85px;
+	}
+	.p_talk_btn {
+		top: -146px !important;
+	}
+	.p_result_txt_date {
+		left: -10px;
+		top: -144px;
+		width:100px;
+	}
+	.p_score_image {
+		top: -95px;
+	}
+	/*나의 강의실*/
+	.class_1_div1 {
+		width: 26%;
+	}
+	.class_1_div2 {
+		top: 8px;
+	}
+	.class_3_div2 {
+		top: -13px;
+	}
+	.class_3_btn2 {
+		top: 10px !important;
+	}
+	.line2{
+		position:relative;
+		top:8px;	
+	}
+	.IEvr1{
+		margin-bottom:-45px;
+		top:-30px !important;
+	}
+}
+@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) and (max-width:767px){
+	.lecture_5 {
+		bottom: 120px !important;
+	}
+	.p_talk_btn {
+		top: -196px !important;
+		left:660px !important;
+	}
+	.p_result_txt_date {
+		left: 255px;
+		top: 20px;
+	}
+	.lecture_4 {
+		bottom: 45px;
+	}
+	.p_score_image {
+		top: -55px;
+	}
+}
+
+

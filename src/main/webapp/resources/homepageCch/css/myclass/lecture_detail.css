@@ -1,0 +1,419 @@
+@charset "utf-8";
+
+@font-face {
+    font-family: 'NanumSquare';
+    /* font-style: normal; */
+    /* font-weight: 500; */
+    src: local('NanumSquareR'),
+        url('../../font/NanumSquareR.woff') format('woff'),
+        url('../../font/NanumSquareR.ttf') format('truetype'),
+        url('../../font/NanumSquareR.eot') format('embedded-opentype');
+}
+@font-face {
+    font-family: 'NanumSquareB';
+    /* font-style: normal; */
+    /* font-weight: 900; */
+    src: local('NanumSquareEB'),
+        url('../../font/NanumSquareEB.woff') format('woff'),
+        url('../../font/NanumSquareEB.ttf') format('truetype'),
+        url('../../font/NanumSquareEB.eot') format('embedded-opentype');
+}
+
+html{
+    overflow-y:hidden !important;
+}
+
+/* CONTENTS */
+.contents_wrap_box{
+    width:100%;
+    max-width:800px;
+    min-height:700px;
+    padding-top:20px;
+    margin:0 auto;
+}
+.contents_wrap_box.popup{
+    width:98%;
+}
+
+/* Top */
+.top_area h1{
+    clear: both;
+    font-family:"NanumSquare";
+    font-size: 44px;
+    letter-spacing: -2px;
+    padding-bottom: 16px;
+    padding-left:1%;
+    border-bottom: solid 1px #003366;
+}
+.top_area h1 span{
+    font-family:"NanumSquare";
+    color: #0180d3;
+}
+.top_text_box{
+    padding: 20px 5% 0 5%;
+    width: 90%;
+    background: #1291de;
+    border-bottom: solid 1px #1291de;
+}
+.top_text_box > span{
+    float: right;
+}
+.top_text_box > span img{
+    display:block;
+}
+.top_text_box p{
+    float: left;
+    width: 60%;
+    font-size: 15px;
+    letter-spacing: -1px;
+    color: #fff;
+    line-height: 150%;
+}
+.top_text_box .top_title{
+    font-family:'NanumSquare';
+    font-size: 34px;
+}
+.top_text_box p span{
+    display:block;
+}
+
+/* SEARCH */
+.notice_search_box{
+    text-align:right;
+    padding:20px 10px 10px;
+}
+.notice_search_box input[type='text']{
+    width: 20%;
+    min-width: 200px;
+    padding:6px 4px;
+    font-size:16px;
+    border:solid 1px #ddd;
+}
+.notice_search_box button{
+    font-size: 16px;
+    padding: 6px 0;
+    color: #fff;
+    background: #003466;
+    width: 7%;
+    min-width: 50px;
+}
+
+/* LECTURE DETAIL TABLE COMMON */
+.lecture_detail_table_box{
+    padding:0 10px;
+}
+.lecture_detail_table_box.score{
+    padding:30px 10px 50px;
+}
+.lecture_detail_table_box.contents{
+    padding:0 10px 50px;
+}
+.lecture_detail_table_box table{
+    width:100%;
+    border-top:solid 2px #0180d3;
+    border-bottom:solid 1px #ddd;
+    border-left:solid 1px #ddd;
+}
+.lecture_detail_table_box table tr{}
+.lecture_detail_table_box table tr th{
+    font-family:'NanumSquare';
+    font-size:16px;
+    font-weight:900;
+    padding:6px 0;
+    background:#f7f7f7;
+    border-right:solid 1px #ddd;
+}
+.lecture_detail_table_box table tr td{
+    font-size:16px;
+    text-align:center;
+    padding:6px 0;
+    border-top:solid 1px #ddd;
+    border-right:solid 1px #ddd;
+}
+
+.lecture_detail_table_box.contents .col_2,
+.lecture_detail_table_box.documents .col_2{
+    width:50%;
+    max-width:0;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+}
+.lecture_detail_table_box.documents .col_1,
+.lecture_detail_table_box.documents .col_5{
+    width:11%;
+}
+.lecture_detail_table_box.qna .col_2{
+    width:60%;
+    max-width:0;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+}
+
+
+/* LECTURE REVIEW */
+.classroom_lecture{
+    width: 100%;
+    border-top: solid 2px #0071bc;
+    border-bottom: solid 1px #ccc;
+    margin-bottom: 50px;
+    margin-top:20px;
+}
+.classroom_lecture tr th{
+    font-family: 'NanumSquare';
+    font-size: 16px;
+    font-weight: 600;
+    padding: 8px 0;
+    background: #f7f7f7;
+    border-right: solid 1px #ddd;
+}
+.classroom_lecture tr td{
+    padding: 10px 0;
+    text-align: center;
+    font-size: 16px;
+    border-top: solid 1px #ddd;
+    border-right: solid 1px #ddd;
+    height: 20px;
+}
+.classroom_lecture tr td button{
+    display: block;
+    margin: 0 auto;
+    width: 80%;
+    padding: 4px 0;
+    margin-top: -4px;
+    background: #0071bc;
+    color: #fff;
+    font-size: 16px;
+}
+.classroom_lecture.review tr .col_2{
+    width:40%;
+    max-width:0;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    padding-left:1%;
+    padding-right:1%;
+}
+.classroom_lecture.review tr .col_1{
+    width:8%;
+}
+.classroom_lecture.review tr .col_4{
+    width:18%;
+}
+.classroom_lecture.review tr .col_5{
+    width:20%;
+}
+
+
+/* LECTURE NOTICE */
+.classroom_lecture.notice tr .col_1{
+    width:10%;
+}
+.classroom_lecture.notice tr .col_2{
+    width:60%;
+    max-width:0;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    padding-left:1%;
+    padding-right:1%;
+}
+.classroom_lecture.notice tr .col_3{
+    /* width:20%; */
+}
+.classroom_lecture.notice tr .col_4{
+    width:10%;
+}
+
+
+/* PAGER */
+.pager_box{
+    text-align:center;
+    padding: 50px 0 0;
+}
+.pager{
+    display:inline-block;
+    margin: 0 auto;
+}
+.pager > *{
+    float:left;
+}
+.pager_prev,
+.pager_next{
+    width:80px;
+    margin:0 2px;
+}
+.pager_prev div,
+.pager_next div{
+    float: left;
+    width: 45%;
+    font-family: sans-serif;
+    font-size: 30px;
+    text-align: center;
+    vertical-align: middle;
+    padding-bottom: 10px;
+    margin-right:1px;
+    border: solid 1px #ccc;
+    cursor:pointer;
+}
+.pager ul{
+    display:inline;
+    margin-right:2px;
+}
+.pager ul li{
+    float: left;
+    width: 35px;
+    font-size: 18px;
+    text-align: center;
+    padding: 11px 0;
+    border: solid 1px #ccc;
+    cursor:pointer;
+}
+.pager ul .on{
+    color:#fff;
+    background:#1976d2;
+    border:solid 1px #1976d2;
+}
+
+/* BUTTON */
+.detail_btn_area{
+    text-align: center;
+    padding:50px 0;
+}
+.detail_btn_area a,
+.detail_btn_area button{
+    display:inline-block;
+    width: 20%;
+    min-width: 170px;
+    font-size: 16px;
+    font-weight: 500;
+    color: #555;
+    text-align:center;
+    padding: 20px 0;
+    background: #fff;
+    border:solid 1px #ddd;
+}
+.detail_btn_area .bg_color{
+    color:#fff;
+    background:#0280d4;
+    border:solid 1px #0280d4;
+}
+
+
+
+/*----- Media query -----*/
+
+@media all and (max-width:420px){
+    #width_text{
+        color:#fff;
+        background:green;
+    }
+
+    /* CONTENTS */
+    .contents_wrap_box {
+        min-height: 500px;
+        padding-top:10px;
+        margin:0 auto;
+    }
+
+    /* Top */
+    .top_area h1 {
+        font-size: 30px;
+        padding-bottom:10px;
+    }
+    .top_text_box{
+        width:90%;
+        padding:20px 5%;
+    }
+    .top_text_box > span,
+    .top_text_box p span{
+        display:none;
+    }
+    .top_text_box p{
+        width:100%;
+        text-align:center;
+    }
+
+    /* SERACH */
+    .notice_search_box {
+        text-align: center;
+        padding: 20px 0;
+    }
+    .notice_search_box input[type='text'] {
+        width: 70%;
+    }
+
+    /* TABLE */
+    .lecture_detail_table_box table tr td,
+    .lecture_detail_table_box table tr th{
+        font-size:14px;
+    }
+    .lecture_detail_table_box.score th {
+        width: 20%;
+    }
+    .lecture_detail_table_box.score {
+        padding: 20px 0 30px;
+    }
+    .lecture_detail_table_box.contents{
+        padding:0 0 50px;
+    }
+    .lecture_detail_table_box.contents .col_1 {
+        width: 8%;
+    }
+    .lecture_detail_table_box.contents .col_3 {
+        width: 12%;
+    }
+    .lecture_detail_table_box.contents .col_4,
+    .lecture_detail_table_box.documents .col_4,
+    .lecture_detail_table_box.qna .col_3{
+        display:none;
+    }
+
+    /* LECTURE REVIEW */
+    .classroom_lecture.review tr .col_1, .classroom_lecture.review tr .col_3, .classroom_lecture.review tr .col_4{
+        display: none;
+    }    
+    .classroom_lecture.review tr .col_2{
+        width:65%;
+    }
+
+    /* PAGER */
+    .pager_prev,
+    .pager_next{
+        width:50px;
+    }
+    .pager_prev div,
+    .pager_next div{
+        width:44%;
+    }
+    .pager ul {
+        margin-right: 0;
+    }
+    
+
+    /* BUTTON */
+    .detail_btn_area{
+        padding:20px 0 0;
+    }
+    .contents_wrap_box.page .detail_btn_area{
+        padding:20px 0;
+    }
+    .detail_btn_area a{
+        width:40%;
+        min-width:inherit;
+        padding:16px 0;
+    }
+}
+@media all and (max-width:360px){
+    .lecture_detail_table_box.qna .col_1,.lecture_detail_table_box.qna .col_5{
+        width:11%;
+    }
+
+    /* LECTURE REVIEW */
+    .classroom_lecture tr th,
+    .classroom_lecture tr td,
+    .classroom_lecture tr td button{
+        font-size:14px;
+    }
+}

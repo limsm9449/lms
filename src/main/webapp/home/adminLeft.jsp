@@ -314,7 +314,7 @@ function gfn_openMenu(pageId, params) {
 			              	<li><a href="#" class="subMenu linker" onclick="gfn_openMenu('axCodeList'); gfn_subMenu(this);"><span>코드</span></a></li>
 			         	</ul>
 			      	</li>
-	          		<li><a href="#" class="mainMenu linker" onclick="gfn_openMenu('axMainPageList'); gfn_menu(this)" id="firstGroup"><span>메인 페이지 관리(?)</span></a></li>
+	          		<!--li><a href="#" class="mainMenu linker" onclick="gfn_openMenu('axMainPageList'); gfn_menu(this)" id="firstGroup"><span>메인 페이지 관리(?)</span></a></li  -->
 </c:if>
 <c:if test="${auth eq 'CONTENTS_MANAGER'}">         		
 	          		<li><a href="#" class="mainMenu linker" onclick="gfn_menu(this)" id="cmFirstGroup"><span>과정 관리</span></a>
