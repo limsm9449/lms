@@ -22,6 +22,7 @@
     <link rel='stylesheet' href='/resources/homepageCch/css/mypage/mypage_table.css'>
     <link rel='stylesheet' href='/resources/homepageCch/css/mypage/mypage_re.css'>
     <link rel='stylesheet' href='/resources/homepageCch/css/mypage/mypage.css'>
+    <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 </head>
 
 
@@ -79,6 +80,11 @@ function lfn_btn(pKind, pParam) {
 function lfn_validate() {
 	if ( formValid.check("homeZipcode",{isNecess:true,msg:"우편번호를 입력하세요.",maxLeng:50}) == false ) return false;
 	if ( formValid.check("homeAddr",{isNecess:true,msg:"주소를 입력하세요.",maxLeng:50}) == false ) return false;
+	if ( $("#homeAddr").val().indexOf(roadAddress) < 0 ) {
+		alert("검색한 주소가 변경이 되었습니다. 다시 입력해주세요.");
+		$("#homeAddr").val(roadAddress);
+		return false;
+	}
 
 	if ( formValid.check("mobile",{isNecess:true,msg:"휴대전화번호를 입력하세요.",minLeng:11,maxLeng:13,isMobile:true}) == false ) return false;
 	
@@ -97,6 +103,18 @@ function lfn_validate() {
 	$("#emailInformYn").val( ( $("input:checkbox[id='emailInform']").is(":checked") ? "Y" : "N" ) );
 	
 	return true;
+}
+
+var roadAddress = "";
+function lfn_zipcode() {
+	new daum.Postcode({
+        oncomplete: function(data) {
+            $("#homeZipcode").val(data.zonecode);
+            $("#homeAddr").val(data.roadAddress);
+            
+            roadAddress = data.roadAddress;
+        }
+    }).open();
 }
 
 </script>
@@ -217,7 +235,7 @@ function lfn_validate() {
                     <div class='info_input_address clear_fix'>
                         <p>주소</p>
                         <input type='text' name='homeZipcode' id='homeZipcode' placeholder='우편번호' value="${set.data.homeZipcode}">
-                        <button onClick="window.open('${set.zipcodeUrl}', 'zipcode','width=900,height=650');">우편번호검색</button>
+                        <button onClick="lfn_zipcode();">우편번호검색</button>
                         <input class="address_txt" type='text' name='homeAddr' id='homeAddr' placeholder='주소를 입력해주세요.'  value="${set.data.homeAddr}">
                     </div>
                     <div class='info_input_phone clear_fix'>

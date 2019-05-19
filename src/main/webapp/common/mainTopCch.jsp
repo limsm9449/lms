@@ -26,10 +26,10 @@
                 <div class='head_con util_box'>
 <c:if test="${empty session}">
        				<a href="/guest/join.do" class='last_right'>회원가입</a>
-       				<a href="/login.do" onclick='login()'>로그인 - C</a>
+       				<a href="/login.do" onclick='login()'>로그인</a>
 </c:if>      		
 <c:if test="${!empty session}">      		
-                    <a href="javascript:" onclick="gfn_ajax.logout()" class='last_right'>로그아웃 - C</a>
+                    <a href="javascript:" onclick="gfn_ajax.logout()" class='last_right'>로그아웃</a>
                     <a href="javascript:" onclick="page.goPage('/member/userMemberU');" class='pc'>회원정보수정</a>
 </c:if>                  
                 </div>
