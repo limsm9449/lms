@@ -530,13 +530,13 @@ header {
 	background-color:#0073BF;
 }
 #q_menu6{
-	background:url('../img/main/quick/q_menu6.png') 50% 5px no-repeat; 
+	background:url('../img/main/quick/q_menu6.png') 0px 20px no-repeat; 
 	padding:56px 0px;
 	cursor:pointer;
 }
 #q_menu6:hover{
-	background:url('../img/main/quick/q_menu6_over.png') 50% 5px no-repeat; 
-	/*background-color:#0073BF;*/
+	background:url('../img/main/quick/q_menu6_over.png') 0px 20px no-repeat; 
+	background-color:#0073BF;
 }
 #q_menu7{
 	padding:38px 0px;

@@ -1010,4 +1010,20 @@ public class MainController {
         return "/homepage/mainNoticePopup";
     }
 
+    @RequestMapping(value = "/main/noticeQstar")
+    public String noticeQstar(@ModelAttribute MainVO vo,Model model) throws Exception {
+    	try {
+    		vo.setCompCd((String)SessionUtil.getAttribute("compCd"));
+    		
+    		MainSet set = new MainSet();
+	    	set.setCondiVO(vo);
+	    	
+	        model.addAttribute("set", set ); 
+    	} catch ( Exception e ) {
+    		e.printStackTrace();
+    	}
+
+        return "/guest/NoticeQstar";
+    }
+
 }
