@@ -22,7 +22,7 @@
                     <a href='#' onclick="page.goPage('/main/noticeList', '');">
                     	<li class='quick_menu_list' id="q_menu5"></li>
                     </a>
-                    <a href='#' onclick="page.goPage('/main/noticeQstar', '');">
+                    <a href='http://qpeople.co.kr/qstar/qstar_apply.html' target="_sub">
                     	<li class='quick_menu_list' id="q_menu6"></li>
                     </a>
                     <li class='quick_menu_list' id="q_menu7"></li>
