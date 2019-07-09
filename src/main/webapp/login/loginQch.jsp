@@ -53,11 +53,14 @@ $(document).ready(function() {
 
 function lfn_passwordEnter() {
 	if ( event.keyCode == 13 ) {
-		lfn_login();
+		lfn_dupLoginCheck();
+		event.preventDefault();
 	}
 }
 
-function lfn_login() {
+function lfn_dupLoginCheck() {
+	document.frm.action = "dupLoginCheck.do";	
+	
 	if ( $("#userId").val() == "") {
 		alert("<spring:message code="lms.msg.inputUserId" text="-" />");
 		$("#userId").focus();
@@ -69,6 +72,13 @@ function lfn_login() {
 		return;
 	}
 
+	document.frm.target = "tranFrame";	
+	document.frm.submit();
+}
+
+function lfn_login() {
+	document.frm.action = "loginCheck.do";	
+	
 	if ( $("input:checkbox[id='cb_continue']").is(":checked") ) {
 		$.cookie(cookieName + 'login', "Y", { expires: 7 });
 		$.cookie(cookieName + 'userId', $("#userId").val(), { expires: 7 });
@@ -99,7 +109,7 @@ function lfn_page(kind) {
 
 <body>
 <frameset rows='*'>
-	<form name="frm" action="dupLoginCheck.do" method="post">
+	<form name="frm" action="dupLoginCheck.do" method="post" onsubmit="return false;">
 		<div style="display:none">
 			<!-- 이것은 자동이동을 막기위함이다. -->
 			<input type="submit" onclick="return false;" />
@@ -137,8 +147,8 @@ function lfn_page(kind) {
 				<div class='util_wrap signin'>
 					<img src='/resources/homepageQch/img/etc/login_main.png' alt=' '>
 					<div class='signin_main_control clear_fix'>
-						<input type='text' name='userId' id='userId' placeholder='아이디'>
-						<input type='password' name='password' id='password' placeholder='비밀번호' onkeydown="lfn_passwordEnter()">
+						<input type='text' name='userId' id='userId' placeholder='아이디' onkeydown="lfn_passwordEnter();">
+						<input type='password' name='password' id='password' placeholder='비밀번호' onkeydown="lfn_passwordEnter();">
 						<button class='signin_complete_btn' onclick="lfn_login()">로그인</button>
 						<div>
 							<div class='signin_sub_control left clear_fix'>
@@ -172,7 +182,7 @@ function lfn_page(kind) {
 
 </frameset>
 
-<iframe name="tranFrame" style="display: none;"></iframe>
+<iframe name="tranFrame" id="tranFrame" style="display: none;"></iframe>
 
 </body>
 

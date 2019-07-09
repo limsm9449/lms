@@ -35,7 +35,6 @@ $(document).ready(
 		} else if ( "${set.isLogin}" == "Y" ) {
 			parent.lfn_page('loginConfirm');
 		} else if ( "${set.isLogin}" == "N" ) {
-			parent.document.frm.action = "loginCheck.do";	
 			parent.lfn_login();
 		} else {
 			parent.lfn_page();

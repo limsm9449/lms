@@ -51,14 +51,17 @@ public class LoginController {
 
     	LoginSet set = new LoginSet();
     	set.setCondiVO(loginVO);
-    	
-    	LoginManager loginManager = LoginManager.getInstance();
- 		if ( loginManager.isUsing(loginVO.getUserId()) ) {
- 			set.setIsLogin("Y");
- 		} else {
- 			set.setIsLogin("N");
- 		}
 
+    	set = service.loginCheck(set);
+    	if ( !"Y".equals(set.getIsNotExistUserId()) && !"Y".equals(set.getIsWrongPassword()) ) {
+	    	LoginManager loginManager = LoginManager.getInstance();
+	 		if ( loginManager.isUsing(loginVO.getUserId()) ) {
+	 			set.setIsLogin("Y");
+	 		} else {
+	 			set.setIsLogin("N");
+	 		}
+    	}
+    	
    	 	model.addAttribute("set", set );
    	 	
     	return "/login/loginTran";
