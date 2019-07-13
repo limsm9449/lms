@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="axTalk">
+
+	<select id="axTalkList" resultType="hashmap">
+		SELECT 	A.SEQ,
+		       	A.CONTENTS,
+		       	A.USER_ID,
+		       	B.USER_NAME,
+		       	DATE_FORMAT(A.CREATE_DATE, '%y.%m.%d %H:%i:%s') CREATE_DATE
+		FROM 	TALK_DETAIL A 
+					LEFT OUTER JOIN USER B ON A.USER_ID = B.USER_ID
+		WHERE 	A.TALK_ID = #{TALK_ID}
+		AND		DATE_FORMAT(A.CREATE_DATE, '%Y-%m-%d') BETWEEN #{FROM_DT} AND #{TO_DT}	
+		ORDER 	BY A.CREATE_DATE DESC
+	</select>
+
+    <delete id="axTalkDelete" parameterType="hashmap">
+		DELETE FROM TALK_DETAIL
+		 WHERE SEQ = #{SEQ}
+    </delete>	
+    
+	<select id="axTalkNoticeList" resultType="hashmap">
+		SELECT 	C.USER_ID,
+		       	C.USER_NAME,
+		       	A.COMP_CD,
+		       	A.COMP_NAME,
+		       	C.TALK_NOTICE
+		FROM 	COMPANY A JOIN USER C ON A.C2C_USER_ID = C.USER_ID
+		WHERE 	IFNULL(A.COMP_CD,'B2C') != 'B2C'
+		AND 	IFNULL(A.C2C_YN,'N') = 'Y'
+	    <if test="COMP_CD != null and COMP_CD != ''">
+	 		AND A.COMP_CD = #{COMP_CD}
+	    </if>		
+		ORDER 	BY C.USER_NAME
+	</select>
+
+    <update id="axTalkNoticeUpdate" parameterType="hashmap">
+		UPDATE 	USER
+		SET		TALK_NOTICE = #{TALK_NOTICE} 
+		WHERE 	USER_ID = #{USER_ID}
+    </update>	
+</mapper>

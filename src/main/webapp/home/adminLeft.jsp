@@ -142,6 +142,8 @@ var pageObj = {
 	axBoardQnaList :			{	page : "/ax/board/axBoardQnaList"	},
 	axBoardDiscussionList :		{	page : "/ax/board/axBoardDiscussionList"	},
 	axMainBoardEventList :		{	page : "/ax/board/axMainBoardEventList"	},
+	axTalkList :				{	page : "/ax/board/axTalkList"	},
+	axTalkNoticeList :			{	page : "/ax/board/axTalkNoticeList"	},
 	axCounselList :				{	page : "/ax/counsel/axCounselList"	},
 	axInquiryList :				{	page : "/ax/counsel/axInquiryList"	},
 	axMainFrameList :			{	page : "/ax/setting/axMainFrameList"	},
@@ -170,7 +172,9 @@ var pageObj = {
 	axIncomeListTe :			{	page : "/ax/teacher/axIncomeList"	},
 	axCourseListCh :			{	page : "/ax/channel/axCourseList"	},
 	axScoreListCh :				{	page : "/ax/channel/axScoreList"	},
-	axIncomeListCh :			{	page : "/ax/channel/axIncomeList"	}
+	axIncomeListCh :			{	page : "/ax/channel/axIncomeList"	},
+	axTalkListCh :				{	page : "/ax/channel/axTalkList"	},
+	axTalkNoticeListCh :		{	page : "/ax/channel/axTalkNoticeList"	}
 }
 
 var pageParam = {}
@@ -286,6 +290,8 @@ function gfn_openMenu(pageId, params) {
 			              	<li><a href="#" class="subMenu linker" onclick="gfn_openMenu('axBoardQnaList'); gfn_subMenu(this);"><span>Q&A</span></a></li>
 			              	<li><a href="#" class="subMenu linker" onclick="gfn_openMenu('axBoardDiscussionList'); gfn_subMenu(this);"><span>토론</span></a></li-->
 			              	<li><a href="#" class="subMenu linker" onclick="gfn_openMenu('axMainBoardEventList'); gfn_subMenu(this);"><span>이벤트</span></a></li>
+			              	<li><a href="#" class="subMenu linker" onclick="gfn_openMenu('axTalkList'); gfn_subMenu(this);"><span>큐톡 관리</span></a></li>
+			              	<li><a href="#" class="subMenu linker" onclick="gfn_openMenu('axTalkNoticeList'); gfn_subMenu(this);"><span>큐톡 공지 관리</span></a></li>
 			         	</ul>
 			      	</li>
 	          		<li><a href="#" class="mainMenu linker" onclick="gfn_menu(this)"><span>문의 관리</span></a>
@@ -355,6 +361,8 @@ function gfn_openMenu(pageId, params) {
 	          		<li><a href="#" class="mainMenu linker" onclick="gfn_openMenu('axCourseListCh'); gfn_menu(this)" id="chFirstGroup"><span>강의 관리</span></a></li>
 	          		<li><a href="#" class="mainMenu linker" onclick="gfn_openMenu('axScoreListCh'); gfn_menu(this)"><span>성적 관리</span></a></li> 
 	          		<li><a href="#" class="mainMenu linker" onclick="gfn_openMenu('axIncomeListCh'); gfn_menu(this)"><span>수입 관리</span></a></li>
+	              	<li><a href="#" class="mainMenu linker" onclick="gfn_openMenu('axTalkListCh'); gfn_subMenu(this);"><span>큐톡 관리</span></a></li>
+	              	<li><a href="#" class="mainMenu linker" onclick="gfn_openMenu('axTalkNoticeListCh'); gfn_subMenu(this);"><span>큐톡 공지 관리</span></a></li>
 </c:if>
         		</ul>
       		</div>

@@ -109,11 +109,13 @@ public class LoginController {
    	 				("CHANNEL".equals(auth) && CommUtil.isEqual(set.getCompCd(), "")) ) {
    	 			set.setIsNotAuth("Y");
    	 		} else {
+   	 			/* 사용안함 2019.7.10
 	   	 		LoginManager loginManager = LoginManager.getInstance();
 	   	 		if ( loginManager.isUsing(set.getData().getUserId()) ) {
 	   	 			//기존의 접속(세션)을 끊는다.
 	   	 			loginManager.removeSession(set.getData().getUserId());
 	   	 		}
+	   	 		*/
 
 	   	 		SessionVO sess = new SessionVO();
 	   	 		sess.setUserId(set.getData().getUserId());
@@ -156,8 +158,10 @@ public class LoginController {
 
 	   	 		SessionUtil.setAttribute("session", sess);
 	   	         
+	   	 		/* 사용안함 2019.7.10
    	 			//새로운 세션을 등록한다. setSession함수를 수행하면 valueBound()함수가 호출된다.
    	 			loginManager.setSession(request.getSession(), set.getData().getUserId());
+   	 			*/
    	 		}
    	 		
    	 		//session 종료시 다시 로긴후 돌아갈 곳을 찾기 위해서 사용

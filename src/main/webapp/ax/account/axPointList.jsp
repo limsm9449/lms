@@ -60,6 +60,41 @@ $(document.body).ready(function () {
             case "export":
                 grid.exportExcel("포인트관리.xls");
                 break;
+            case "delete":
+            	var row = grid2.getList("selected");
+            	if ( row.length == 0 ) {
+            		mask.open();
+            		dialog.alert( { msg : "포인트를 선택하셔야 합니다." }, function () { mask.close();	} );
+            		return;
+            	}
+               	
+            	if ( parseInt(row[0]["IN_POINT_USE"]) > 0 || parseInt(row[0]["DELETE_POINT"]) > 0 || parseInt(row[0]["DELETED_POINT"]) > 0 ) {
+            		mask.open();
+            		dialog.alert( { msg : "사용,소멸,소멸 예정 포인트는 삭제할 수 없습니다." }, function () { mask.close();	} );
+            		return;
+            	}
+            	if ( parseInt(row[0]["POINT"]) < 0 ) {
+            		mask.open();
+            		dialog.alert( { msg : "결제사용 기록은 삭제할 수 없습니다." }, function () { mask.close();	} );
+            		return;
+            	}
+            	
+               	mask.open();
+               	confirmDialog.confirm(
+               		{
+                       	title: "Confirm",
+                       	msg: '포인트를 삭제 하시겠습니까?'
+                   	}, 
+                   	function(){
+                     	if ( this.key == "ok" ) {
+                           	grid2.deleteRow("selected");
+                           	
+                     		gfn_callAjax("/point/axPointSave.do", gfn_getSaveData(grid2), fn_callbackAjax, "save");
+                       	} else {
+                       		mask.close();
+                       	}
+                   	}
+               	);
         }
     });
     
@@ -221,6 +256,11 @@ function fn_callbackAjax(data, id) {
 		grid1.setData(data.list);
 	} else if ( id == "searchDetail" ) {
 		grid2.setData(data.list);
+	} else if ( id == "save" ){
+		mask.close();
+
+		mask.open();
+		dialog.alert( { msg : "저장 되었습니다." }, function () { mask.close();	gfn_callAjax("/point/axPointDetailList.do", params, fn_callbackAjax, "searchDetail"); } );
 	} else if ( id == "dd" ){
 		dd = $.extend({}, data);
 
@@ -228,12 +268,16 @@ function fn_callbackAjax(data, id) {
 	}
 }
 
-function fn_gridEvent(event, obj) {
+function fn_gridEvent(event, obj, gridId) {
 	if ( event == "Click" ) {
-		obj.self.select(obj.dindex);
+		if ( gridId == "left-first-grid" ) {
+			obj.self.select(obj.dindex);
 
-		params.USER_ID = obj.item.USER_ID;	
-		gfn_callAjax("/point/axPointDetailList.do", params, fn_callbackAjax, "searchDetail");
+			params.USER_ID = obj.item.USER_ID;	
+			gfn_callAjax("/point/axPointDetailList.do", params, fn_callbackAjax, "searchDetail");
+		} else {
+			obj.self.select(obj.dindex);
+		}
 	} else if ( event == "DBLClick" ) {
 	} else if ( event == "DataChanged" ) {
 	}
@@ -260,6 +304,7 @@ function fn_gridEvent(event, obj) {
 <div>
     <button class="btn btn-default" data-grid-control="search">검색</button>
     <button class="btn btn-default" data-grid-control="export">엑셀</button>
+    <button class="btn btn-default" data-grid-control="delete">포인트 삭제</button>
 </div> 
 
 <div style="height:10px"></div>

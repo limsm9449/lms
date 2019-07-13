@@ -53,7 +53,7 @@ $(document).ready(function() {
 
 function lfn_passwordEnter() {
 	if ( event.keyCode == 13 ) {
-		lfn_dupLoginCheck();
+		lfn_login();
 		event.preventDefault();
 	}
 }
@@ -79,6 +79,17 @@ function lfn_dupLoginCheck() {
 function lfn_login() {
 	document.frm.action = "loginCheck.do";	
 	
+	if ( $("#userId").val() == "") {
+		alert("<spring:message code="lms.msg.inputUserId" text="-" />");
+		$("#userId").focus();
+		return;
+	}
+	if ( $("#password").val() == "") {
+		alert("<spring:message code="lms.msg.inputPassword" text="-" />");
+		$("#password").focus();
+		return;
+	}
+
 	if ( $("input:checkbox[id='cb_continue']").is(":checked") ) {
 		$.cookie(cookieName + 'login', "Y", { expires: 7 });
 		$.cookie(cookieName + 'userId', $("#userId").val(), { expires: 7 });
@@ -104,6 +115,10 @@ function lfn_page(kind) {
 		}
 	}
 }
+
+$( window ).unload(function() {
+	  return "Handler for .unload() called.";
+	});
 
 </script>
 

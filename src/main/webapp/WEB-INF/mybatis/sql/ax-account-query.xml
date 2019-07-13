@@ -58,6 +58,10 @@
 		</if>			 
 		<if test="CB_USERKIND != null and CB_USERKIND == 'USER'">
 		   AND IFNULL(A.ADMIN_YN,'N') = 'N' AND IFNULL(A.SITE_MANAGER_YN,'N') = 'N' AND IFNULL(A.CONTENTS_MANAGER_YN,'N') = 'N' AND IFNULL(A.TEACHER_YN,'N') = 'N' AND IFNULL(A.TUTOR_YN,'N') = 'N'
+		   AND IFNULL(A.RETIRED_YN,'N') = 'N'
+		</if>			 
+		<if test="CB_USERKIND != null and CB_USERKIND == 'RETIRED_USER'">
+		   AND IFNULL(A.RETIRED_YN,'N') = 'Y'
 		</if>			 
 		<if test="COMPANY != null and COMPANY == 'B2C'">
 			AND 	IFNULL(A.COMP_CD,'B2C') = 'B2C'

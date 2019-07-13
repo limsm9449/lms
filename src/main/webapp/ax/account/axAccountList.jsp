@@ -573,7 +573,9 @@ function fn_callbackAjax(data, id) {
 		gfn_cbRefresh("CB_COMPANY", data.CompanyKind, true);
 		
 		fn_makeGrid();
-		
+
+		$("#CB_USERKIND").val("USER");
+
 		if ( openParams ) {
 			if ( openParams.COMP_CD ) {
 				$("#CB_SEARCHKIND").val("COMPANY");
@@ -639,6 +641,7 @@ function fn_cbChange(id) {
 			<option value="TEACHER"> - 강사</option>
 			<option value="TUTOR"> - 튜터</option>
 			<option value="USER">일반사용자</option>
+			<option value="RETIRED_USER">탈퇴회원</option>
 		</select>
   	</div>  
   	<div class="form-group">

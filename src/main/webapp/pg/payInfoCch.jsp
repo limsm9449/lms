@@ -93,30 +93,37 @@ function lfn_pay() {
 	$("#LGD_AMOUNT").val(parseInt($("#totalCost").val()) - parseInt($("#paymentPoint").val()));
 
 	$("#paymentKind").val($("#LGD_CUSTOM_USABLEPAY").val());
-	
-	if ( $("#LGD_CUSTOM_USABLEPAY").val() == "SC0030" ) {
-		var today = new Date();
-		$("#approvalId").val(today.getTime());
-		
-		$.ajax({
-			type :"POST",
-			url : context +"/paymentGateway/cashApproval.do",
-			dataType :"json",
-			data : $("#frm").serialize(),
-			success : function(json){
-				if ( json.rtnMode == "OK") {
-					alert("입금 확인후에 수강신청이 완료됩니다.\n승인후에 나의 강의실에서 과정을 들으시면 됩니다.");
-					page.goPage('/normalUser/waitingCourseList');
+
+	if ( $("#paymentCost").val() == "0" && $("#LGD_CUSTOM_USABLEPAY").val() != "SC0030" ) {
+		alert("계좌이체를 선택하셔야 합니다.");
+		return false;
+	}
+
+	if ( confirm("결제하시겠습니까?") ) {
+		if ( $("#LGD_CUSTOM_USABLEPAY").val() == "SC0030" ) {
+			var today = new Date();
+			$("#approvalId").val(today.getTime());
+			
+			$.ajax({
+				type :"POST",
+				url : context +"/paymentGateway/cashApproval.do",
+				dataType :"json",
+				data : $("#frm").serialize(),
+				success : function(json){
+					if ( json.rtnMode == "OK") {
+						alert("입금 확인후에 수강신청이 완료됩니다.\n승인후에 나의 강의실에서 과정을 들으시면 됩니다.");
+						page.goPage('/normalUser/waitingCourseList');
+					}
+				},
+				error : function(e) {
+					alert("<spring:message code="lms.msg.systemError" text="-" />");
 				}
-			},
-			error : function(e) {
-				alert("<spring:message code="lms.msg.systemError" text="-" />");
-			}
-		})
-	} else {
-		window.open("",	"xpay", "width=660,height=680,scrollbars=no,resizable=no,status=no,toolbar=no,menubar=no");
-		document.frm.target = "xpay";
-		document.frm.submit();
+			})
+		} else {
+			window.open("",	"xpay", "width=660,height=680,scrollbars=no,resizable=no,status=no,toolbar=no,menubar=no");
+			document.frm.target = "xpay";
+			document.frm.submit();
+		}
 	}
 }
 
@@ -252,10 +259,11 @@ $(document.body).ready(function () {
 </c:forEach>                    
                     <div class='basket_lectures_result clear_fix'>
                         <p class='first'>주문금액 : <span class='text'><fmt:formatNumber value="${set.condiVO.paymentCost}" type="number"/></span>원</p>
-                        <span class='ic_first'><img src='/resources/homepageCch/img/classroom/basket_ic1.png' alt=' '></span>
-                        <p class='second'>적용포인트 : <span class='text'><input id="paymentPoint" name="paymentPoint" type="text" value="0" onblur="lfn_pointChg();" class="basket_discount"/></span>원</p>
-                        <span class='ic_second'><img src='/resources/homepageCch/img/classroom/basket_ic2.png' alt=' '></span>
+                        <span class='ic_first'><img src='/resources/homepageQch/img/classroom/basket_ic1.png' alt=' '></span>
+                        <p class='second'>적용포인트<img src="/resources/homepageQch/img/classroom/ic_att.png"> : <span class='text'><input id="paymentPoint" name="paymentPoint" type="text" value="0" onblur="lfn_pointChg();" class="basket_discount"/></span>원</p>
+                        <span class='ic_second'><img src='/resources/homepageQch/img/classroom/basket_ic2.png' alt=' '></span>
                         <p class='last_payment'>최종결제금액 : <span class='text' id="paymentCost1"><fmt:formatNumber value="${set.condiVO.paymentCost}" type="number"/></span>원</p>
+                        <p class='third_text'><img src="/resources/homepageQch/img/classroom/ic_att.png">포인트는 1,000 단위로 사용이 가능합니다.</p>
                         
                         <input id="totalCost" name="totalCost" type="hidden" readonly value="${set.condiVO.paymentCost}"/>
 			          	<input id="remainPoint" name="remainPoint" type="hidden" value="${set.condiVO.point}"/>
@@ -288,7 +296,7 @@ $(document.body).ready(function () {
                     </ul>
                 </div>
 
-                <p class='basket_payment_title'>결제정보 입력</p>
+                <p class='basket_payment_title'>결제정보 입력 <span><img src="/resources/homepageQch/img/classroom/ic_att.png">0원 결제(무료강의, 전액 포인트 결제) 시에는 결제방식에서 [계좌이체]를 선택하셔야 수강이 가능합니다.</span></p>
                 <div class='basket_payment info'>    
                     <ul>
                         <li class='basket_info_list clear_fix'>
@@ -297,11 +305,11 @@ $(document.body).ready(function () {
                             <select id="LGD_CUSTOM_USABLEPAY" name="LGD_CUSTOM_USABLEPAY" onchange="lfn_kindChg()" style="width:160px">
                                 <option value="SC0010">신용카드</option>				
 								<option value="SC0030">계좌이체</option>				
-								<!-- option value="SC0040">무통장입금</option-->				
-								<option value="SC0060">휴대폰</option>				
+								<option value="SC0060">휴대폰 소액결제</option>				
+								<!-- option value="SC0040">무통장입금</option>				
 								<option value="SC0090">OK캐쉬백</option>				
 								<option value="SC0111">문화상품권</option>				
-								<option value="SC0112">게임문화상품권</option>	
+								<option value="SC0112">게임문화상품권</option-->	
                             </select>
                             <input type="hidden" name="paymentKind" id="paymentKind"/>
                         </li>

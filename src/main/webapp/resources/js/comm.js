@@ -888,17 +888,17 @@ function gfn_makeAx5Grid(gridId, columns, datas, options) {
             columnHeight : 28,
             onClick: function () {
             	if ( $.isFunction(fn_gridEvent) ) {
-            		fn_gridEvent("Click", this);
+            		fn_gridEvent("Click", this, gridId);
     			}
             },
             onDBLClick: function () {
             	if ( $.isFunction(fn_gridEvent) ) {
-            		fn_gridEvent("DBLClick", this);
+            		fn_gridEvent("DBLClick", this, gridId);
     			}
             },
             onDataChanged: function () {
             	if ( $.isFunction(fn_gridEvent) ) {
-            		fn_gridEvent("DataChanged", this);
+            		fn_gridEvent("DataChanged", this, gridId);
     			}
             },
             mergeCells : gfn_defined(tOptions.mergeCells, [])

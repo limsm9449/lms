@@ -145,28 +145,30 @@ function lfn_validate() {
                 <div class='signup_input_list'>
                     <div class='certification_name clear_fix'>
                         <p>아이디</p>
-                        <input type='text' name='userId' id='userId' value="" placeholder='아이디를 입력해주세요'>
+                        <input style="display:none" aria-hidden="true">
+                        <input type='text' name='userId' id='userId' value="" placeholder='아이디를 입력해주세요'  autocomplete="new-password">
                     </div>
                     <div class='certification_name clear_fix'>
                         <p>비밀번호</p>
-                        <input type='password' name='userPassword' id='userPassword' value="" placeholder='비밀번호를 입력해주세요'>
+                        <input style="display:none" aria-hidden="true">
+                        <input type='password' name='userPassword' id='userPassword' value="" placeholder='비밀번호를 입력해주세요'  autocomplete="new-password">
                     </div>
                     
-                    <div class='certification_name clear_fix'>
+                    <div class='info_input_address clear_fix'>
                         <p>탈퇴 사유</p>
-                        <textarea name='retiredReason' id='retiredReason' cols='30' rows='10'></textarea>
+                        <textarea name='retiredReason' id='retiredReason' cols='30' rows='10' style="height:100px"></textarea>
                     </div>
                     
-                    <div class="info_chk">
-                    	<span class="out_memo"><font id="memo_t">※ 회원탈퇴 신청 전에 반드시 확인해 주시기 바랍니다.</font><Br>
-회원탈퇴 신청 후에는 모든 정보가 삭제되며, 복원이 불가능하오니 신중하게 결정하여 주시기 바랍니다.<Br>
-- 회원탈퇴 신청 후에는 큐피플 웹사이트에서 이용하셨던 수강정보, 결제 및 포인트, 개인정보 등 모든 정보가 
-   삭제되며, 복구가 불가능합니다.<Br>
-- 회원탈퇴 신청 후 재가입 시 동일한 아이디로 회원가입이 불가능합니다. 
-						</span>
-                    </div>
                 </div>
-                	
+				<div class='withdraw_note'>
+                    <p>
+                        <strong>※ 회원탈퇴 신청 전에 반드시 확인해 주시기 바랍니다.</strong><br>
+                        - 회원탈퇴를 하시면 회원정보가 모두 삭제되며, 재가입시에도 복원되지 않으니 신중하게 결정하여 주시기 바랍니다.<br>
+                        - 회원탈퇴 후에는 큐러닝 및 각 채널 사이트에서 이용하셨던 수강정보, 결제내역 등 모든 정보가 삭제되며, 복구되지 않습니다.<br>
+                        - 회원 아이디로 적립된 포인트는 회원탈퇴와 함께 영구소멸되므로, 미리 확인하시고 탈퇴 전 소진하시기 바랍니다.<br>
+                        - 회원탈퇴 신청 후 재가입 시 동일한 아이디로 회원가입이 불가능합니다.
+                    </p>
+                </div>                	
                 <div class='signup_btn_box clear_fix'>
                     <button onclick='page.goHome();'>취소</button>
                     <button id="saveBtn" onclick="lfn_btn('save');" class='last'>회원탈퇴</button>

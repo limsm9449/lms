@@ -34,9 +34,9 @@ public class AxCourseController {
     public @ResponseBody HashMap<String,Object> axCourseList(@RequestBody HashMap<String, Object> paramMap, HttpServletRequest request, HttpServletResponse response) throws Exception {
     	HashMap<String, Object> hm = new HashMap<String, Object>();
 
-    	commSvr.requestLog(SessionUtil.getSessionUserId(), request.getRequestURI(), paramMap.toString(), request.getRemoteAddr());
-    	
     	try {
+    		commSvr.requestLog(SessionUtil.getSessionUserId(), request.getRequestURI(), paramMap.toString(), request.getRemoteAddr());
+    		
     		hm = svr.axCourseList(paramMap);
     	} catch ( Exception e ) {
     		e.printStackTrace();
@@ -49,9 +49,9 @@ public class AxCourseController {
     public @ResponseBody HashMap<String,Object> axCourseSave(@RequestBody HashMap<String, Object> paramMap, HttpServletRequest request, HttpServletResponse response) throws Exception {
     	HashMap<String, Object> hm = new HashMap<String, Object>();
 
-    	commSvr.requestLog(SessionUtil.getSessionUserId(), request.getRequestURI(), paramMap.toString(), request.getRemoteAddr());
-
 		try {
+	    	commSvr.requestLog(SessionUtil.getSessionUserId(), request.getRequestURI(), paramMap.toString(), request.getRemoteAddr());
+
     		hm = svr.axCourseSave(paramMap);
     	} catch ( Exception e ) {
     		e.printStackTrace();

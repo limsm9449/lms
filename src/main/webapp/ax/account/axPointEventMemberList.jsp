@@ -20,6 +20,7 @@ var confirmDialog = new ax5.ui.dialog();
 var dialog = new ax5.ui.dialog( { title: '<i class="axi axi-ion-alert"></i> Alert' } );
 var grid = null;
 var params = {}
+var dd = {};
 
 var isSave = false;
 
@@ -28,6 +29,8 @@ $(document.body).ready(function () {
         theme: "danger"
     });
 
+    gfn_callAjax("/common/axDd.do", { DD_KIND : "CompanyKind,Company,Company1,Company2,Job,Sex,ZipcodeUrl" }, fn_callbackAjax, "dd", { async : false });
+    
     $( window ).resize( function() {
 		gfn_gridResize("grid-parent", grid);  
 	} );
@@ -46,39 +49,55 @@ $(document.body).ready(function () {
         }
     });
     
-	fn_makeGrid();
-
 	$(window).trigger("resize");
 });
 
 function fn_makeGrid() {
 	grid = gfn_makeAx5Grid("first-grid",
 		[ 	{
-            key : "USER_ID",
-            label : "사용자 ID",
-            width : 100,
-            align : "left"
-        },{
-            key : "USER_NAME",
-            label : "사용자명",
-            width : 90,
-            align : "left"
-        },{
-            key : "EMAIL",
-            label : "E-mail",
-            width : 150,
-            align : "left"
-        },{
-            key : "BIRTH_DAY",
-            label : "생일",
-            width : 80,
-            align : "center"
-        },{
-            key : "MOBILE",
-            label : "핸드폰",
-            width : 100,
-            align : "left"
-        }	], 
+	        	key : "COMP_CD", 
+	        	label : "회사", 
+	            width : 140,
+	        	align : "left", 
+	        	editor: {
+	                type : "select", 
+	                config : {
+	                    columnKeys: { optionValue: "value", optionText: "text" },
+	                    options: dd.Company
+	                },
+		           	disabled : function () {
+	                    return true;
+	                }
+	        	},
+	            formatter : function () {
+	                return gfn_getValueInList(dd.Company, "value",  this.item.COMP_CD, "text", true);
+	           	}
+	        },{
+	            key : "USER_ID",
+	            label : "사용자 ID",
+	            width : 100,
+	            align : "left"
+	        },{
+	            key : "USER_NAME",
+	            label : "사용자명",
+	            width : 90,
+	            align : "left"
+	        },{
+	            key : "EMAIL",
+	            label : "E-mail",
+	            width : 150,
+	            align : "left"
+	        },{
+	            key : "BIRTH_DAY",
+	            label : "생일",
+	            width : 80,
+	            align : "center"
+	        },{
+	            key : "MOBILE",
+	            label : "핸드폰",
+	            width : 100,
+	            align : "left"
+	        }	], 
 	  	null,
 	  	{
 	  		showRowSelector : true,
@@ -90,6 +109,9 @@ function fn_makeGrid() {
 function fn_params() {
 	params.CB_SEARCHKIND = $("#CB_SEARCHKIND option:selected").val();	
 	params.SEARCH_STR = $("#SEARCH_STR").val();	
+	params.CB_USERKIND = $("#CB_USERKIND option:selected").val();	
+	params.COMPANY = $("#CB_COMPANY option:selected").val();	
+	params.COMPANY2 = $("#CB_COMPANY2 option:selected").val();	
 }
 
 function fn_search() {
@@ -102,6 +124,11 @@ function fn_save() {
 	if ( $("#POINT").val() == "" && isNaN($("#POINT").val()) ) {
 		mask.open();
 		dialog.alert( { msg : "이벤트 포인트를 입력하셔야 합니다." }, function () { mask.close(); } );
+		return false;
+	}
+	if ( parseInt($("#POINT").val()) < 0 ) {
+		mask.open();
+		dialog.alert( { msg : "포인트는 0 이상을 입력하셔야 합니다." }, function () { mask.close(); } );
 		return false;
 	}
 	if ( $("#VALID_MONTH").val() == "" && isNaN($("#VALID_MONTH").val()) ) {
@@ -152,6 +179,14 @@ function fn_callbackAjax(data, id) {
 		}
 		
 		isSave = true;
+	} else if ( id == "dd" ){
+		dd = $.extend({}, data);
+
+		dd.Company = [{value : "", text : ""}].concat(dd.Company);
+		
+		gfn_cbRefresh("CB_COMPANY", data.CompanyKind, true);
+		
+		fn_makeGrid();
 	}
 }
 
@@ -163,6 +198,17 @@ function fn_gridEvent(event, obj) {
 	}
 }
 
+function fn_cbChange(id) {
+	if ( id == "CB_COMPANY" ) {
+		if ( $("#CB_COMPANY").val() == "B2B" ) {
+			gfn_cbRefresh("CB_COMPANY2", dd.Company1, true);
+		} else if ( $("#CB_COMPANY").val() == "C2C" ) {
+			gfn_cbRefresh("CB_COMPANY2", dd.Company2, true);
+		} else {
+			gfn_cbRefresh("CB_COMPANY2", null, true);
+		}
+	}
+}
 
 </script>
 
@@ -183,6 +229,15 @@ function fn_gridEvent(event, obj) {
 	       	<option value="MOBILE" >핸드폰</option>
 		</select>
 		<input class="form-control" type="text" class="search_input" id="SEARCH_STR" name="SEARCH_STR" value="" />
+  	</div>
+  	<div class="form-group">
+    	<label for="CB_COMPANY">&nbsp;회사 구분</label>
+		<select class="form-control" id="CB_COMPANY" onchange="fn_cbChange('CB_COMPANY')">
+			<option value="">전체</option>
+		</select>
+		<select class="form-control" id="CB_COMPANY2">
+			<option value="">전체</option>
+		</select>
   	</div>
 </div>
 

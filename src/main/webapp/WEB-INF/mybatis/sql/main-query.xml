@@ -896,6 +896,12 @@
 		ORDER	BY A.CREATE_DATE ASC
     </select>
     
+	<select id="talkNotice" parameterType="Main" resultType="String">
+		SELECT 	TALK_NOTICE
+		FROM	USER
+		WHERE	USER_ID = ( SELECT C2C_USER_ID USER_ID FROM COMPANY WHERE COMP_CD = #{talkId} )
+    </select>
+    
 	<select id="talkNextList" parameterType="Main" resultType="hashmap">
 		SELECT 	A.*
 				,U.USER_NAME

@@ -693,6 +693,8 @@ public class MainService {
     	List<HashMap> talkList = sqlSession.selectList("main.talkList",set.getCondiVO());
     	set.setTalkList(talkList);
 
+    	set.setTalkNotice((String)sqlSession.selectOne("main.talkNotice",set.getCondiVO()));
+    	
     	sqlSession.update("main.talkLastViewDateUpd",set.getCondiVO());
     	
     	return set;

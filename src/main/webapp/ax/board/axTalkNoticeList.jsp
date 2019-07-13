@@ -20,44 +20,42 @@ var confirmDialog = new ax5.ui.dialog();
 var dialog = new ax5.ui.dialog( { title: '<i class="axi axi-ion-alert"></i> Alert' } );
 var grid = null;
 
+var params = {};
+var dd = {};
+
 $(document.body).ready(function () {
 	$( window ).resize( function() {
-		gfn_gridResize("grid-parent", grid, 135); 
+		gfn_gridResize("grid-parent", grid); 
 	} );
-	
+
+    gfn_callAjax("/common/axDd.do", { DD_KIND : "Company2" }, fn_callbackAjax, "dd", { async : false });
+    
     confirmDialog.setConfig({
         theme: "danger"
     });
-
+    
 	grid = gfn_makeAx5Grid("first-grid",
 		[ 	{
-	            key : "DD_MAIN",
-	            label : "그룹코드",
-	            width : 150,
-	            align : "left"
+				key : "COMP_NAME",
+	            label : "채널",
+	            width : 120,
+	            align : "center"
 	        },{
-	        	key : "DD_KEY", 
-	        	label : "코드값", 
-	            width : 100,
-	        	align : "left"
+				key : "USER_NAME",
+	            label : "담당자",
+	            width : 120,
+	            align : "center"
 	        },{
-	        	key : "DD_VALUE", 
-	        	label : "코드명", 
-	            width : 300,
-	        	align : "left", 
-	        	editor : { type : "text"},
+  	            key : "TALK_NOTICE",
+  	            label : "공지 내용",
+  	            width : 700,
+  	            align : "left",
+	            editor : { 
+	            	type : "text"
+				},
 				styleClass: function () {
                     return "grid-cell-edit";
-                } 
-	        },{
-	        	key : "ORD", 
-	        	label : "순번", 
-	            width : 60,
-	        	align : "left", 
-	        	editor : { type : "number"},
-				styleClass: function () {
-                    return "grid-cell-edit";
-                } 
+                }
 	        }	], 
 	  	null,
 	  	{
@@ -72,49 +70,40 @@ $(document.body).ready(function () {
 	        case "search":
 	            fn_search();
 	            break;
-            case "reset":
-            	fn_search();
-                break;
-            case "save" :
-            	fn_save();
-                break;
+		    case "save":
+		       	mask.open();
+		       	confirmDialog.confirm(
+		       		{
+		               	title: "Confirm",
+		               	msg: '저장하시겠습니까?'
+		           	}, 
+		           	function(){
+		             	if ( this.key == "ok" ) {
+		             		gfn_callAjax("/board/axTalkNoticeSave.do", gfn_getSaveData(grid), fn_callbackAjax, "save");
+		               	} else {
+		               		mask.close();
+		               	}
+		           	}
+		       	);
+		    	
+		    	break;
             case "export":
-                grid.exportExcel("코드관리.xls");
+                grid.exportExcel("큐톡공지관리.xls");
                 break;
         }
     });
     
-    fn_search();
+    //fn_search();
 });
 
-function fn_search() {
-	//mask.open();
-	
-	gfn_callAjax("/setting/axSettingCodeList.do", {}, fn_callbackAjax, "search");
+function fn_params() {
+	params.COMP_CD = $("#CB_COMPANY option:selected").val();
 }
 
-function fn_save() {
-	var fieldParams = {
-		DD_VALUE : { mendatory : true, colName : "코드명" },
-		ORD : { mendatory : true, colName : "순번" }
-   	};
-   	if ( gfn_validationCheck(grid, fieldParams) ) {
-       	mask.open();
-       	
-       	confirmDialog.confirm(
-       		{
-               	title: "Confirm",
-               	msg: '저장하시겠습니까?'
-           	}, 
-           	function(){
-             	if ( this.key == "ok" ) {
-             		gfn_callAjax("/setting/axSettingCodeSave.do", gfn_getSaveData(grid), fn_callbackAjax, "save");
-               	} else {
-               		mask.close();
-               	}
-           	}
-       	);
-   	}
+function fn_search() {
+	fn_params();
+	
+	gfn_callAjax("/board/axTalkNoticeList.do", params, fn_callbackAjax, "search");
 }
 
 function fn_callbackAjax(data, id) {
@@ -126,13 +115,15 @@ function fn_callbackAjax(data, id) {
 	
 	if ( id == "search" ) {
 		grid.setData(data.list);
-		
-		//mask.close();
-	} else if ( id == "save" ){
+	} else if ( id == "save" ) {
 		mask.close();
 
 		mask.open();
 		dialog.alert( { msg : "저장 되었습니다." }, function () { mask.close();	fn_search(); } );
+	} else if ( id == "dd" ){
+		dd = $.extend({}, data);
+
+		gfn_cbRefresh("CB_COMPANY", data.Company2, true);
 	}
 }
 
@@ -148,12 +139,21 @@ function fn_gridEvent(event, obj) {
 
 <form id="frm" name="frm" method="post">
 
-<h2>코드관리</h2>
+<h2>큐톡 공지 관리</h2>
+<div style="height:10px"></div>
+
+<div class="form-inline"> 
+  	<div class="form-group">
+    	<label for="CB_COMPANY">&nbsp;채널</label>
+		<select class="form-control" id="CB_COMPANY">
+			<option value="">전체</option>
+		</select>
+  	</div>
+</div>
 <div style="height:10px"></div>
 
 <div>
     <button class="btn btn-default" data-grid-control="search">검색</button>
-    <button class="btn btn-default" data-grid-control="reset">초기화</button>
     <button class="btn btn-default" data-grid-control="save">저장</button>
     <button class="btn btn-default" data-grid-control="export">엑셀</button>
 </div>
@@ -165,9 +165,10 @@ function fn_gridEvent(event, obj) {
     <div data-ax5grid="first-grid" style="height: 100%;"></div>
 </div>
 
-
 </form>
-	
+
+
+<div class="mask"></div>
 
 </body>
 </html>

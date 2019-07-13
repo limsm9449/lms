@@ -28,91 +28,105 @@ public class AxPointController {
 
 	 private static final Logger logger = LoggerFactory.getLogger(AxPointController.class);
 
-	    @Autowired
-	    private AxPointService svr;
+    @Autowired
+    private AxPointService svr;
 
-	    @RequestMapping(value = "/point/axPointCodeList", method = RequestMethod.POST, consumes = "application/json" )
-	    public @ResponseBody HashMap<String,Object> axPointCodeList(@RequestBody HashMap<String, Object> paramMap, HttpServletRequest request, HttpServletResponse response) throws Exception {
-	    	HashMap<String, Object> hm = new HashMap<String, Object>();
+    @RequestMapping(value = "/point/axPointCodeList", method = RequestMethod.POST, consumes = "application/json" )
+    public @ResponseBody HashMap<String,Object> axPointCodeList(@RequestBody HashMap<String, Object> paramMap, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    	HashMap<String, Object> hm = new HashMap<String, Object>();
 
-	    	try {
-	    		hm = svr.axPointCodeList(paramMap);
-	    	} catch ( Exception e ) {
-	    		e.printStackTrace();
-	    	}
+    	try {
+    		hm = svr.axPointCodeList(paramMap);
+    	} catch ( Exception e ) {
+    		e.printStackTrace();
+    	}
 
-	        return hm;
-	    }
-	    
-	    @RequestMapping(value = "/point/axPointCodeSave", method = RequestMethod.POST, consumes = "application/json" )
-	    public @ResponseBody HashMap<String,Object> axPointCodeSave(@RequestBody HashMap<String, Object> paramMap, HttpServletRequest request, HttpServletResponse response) throws Exception {
-	    	HashMap<String, Object> hm = new HashMap<String, Object>();
-	    	
-			try {
-	    		hm = svr.axPointCodeSave(paramMap);
-	    	} catch ( Exception e ) {
-	    		e.printStackTrace();
-	    		hm.put("RtnMode", Constant.mode.ERROR.name());
-	    	}
+        return hm;
+    }
+    
+    @RequestMapping(value = "/point/axPointCodeSave", method = RequestMethod.POST, consumes = "application/json" )
+    public @ResponseBody HashMap<String,Object> axPointCodeSave(@RequestBody HashMap<String, Object> paramMap, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    	HashMap<String, Object> hm = new HashMap<String, Object>();
+    	
+		try {
+    		hm = svr.axPointCodeSave(paramMap);
+    	} catch ( Exception e ) {
+    		e.printStackTrace();
+    		hm.put("RtnMode", Constant.mode.ERROR.name());
+    	}
 
-	        return hm;
-	    }
+        return hm;
+    }
 
-	    @RequestMapping(value = "/point/axPointList", method = RequestMethod.POST, consumes = "application/json" )
-	    public @ResponseBody HashMap<String,Object> axPointList(@RequestBody HashMap<String, Object> paramMap, HttpServletRequest request, HttpServletResponse response) throws Exception {
-	    	HashMap<String, Object> hm = new HashMap<String, Object>();
+    @RequestMapping(value = "/point/axPointList", method = RequestMethod.POST, consumes = "application/json" )
+    public @ResponseBody HashMap<String,Object> axPointList(@RequestBody HashMap<String, Object> paramMap, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    	HashMap<String, Object> hm = new HashMap<String, Object>();
 
-	    	try {
-	    		hm = svr.axPointList(paramMap);
-	    	} catch ( Exception e ) {
-	    		e.printStackTrace();
-	    	}
+    	try {
+    		hm = svr.axPointList(paramMap);
+    	} catch ( Exception e ) {
+    		e.printStackTrace();
+    	}
 
-	        return hm;
-	    }
-	    
-	    @RequestMapping(value = "/point/axPointDetailList", method = RequestMethod.POST, consumes = "application/json" )
-	    public @ResponseBody HashMap<String,Object> axPointDetailList(@RequestBody HashMap<String, Object> paramMap, HttpServletRequest request, HttpServletResponse response) throws Exception {
-	    	HashMap<String, Object> hm = new HashMap<String, Object>();
+        return hm;
+    }
+    
+    @RequestMapping(value = "/point/axPointDetailList", method = RequestMethod.POST, consumes = "application/json" )
+    public @ResponseBody HashMap<String,Object> axPointDetailList(@RequestBody HashMap<String, Object> paramMap, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    	HashMap<String, Object> hm = new HashMap<String, Object>();
 
-	    	try {
-	    		hm = svr.axPointDetailList(paramMap);
-	    	} catch ( Exception e ) {
-	    		e.printStackTrace();
-	    	}
+    	try {
+    		hm = svr.axPointDetailList(paramMap);
+    	} catch ( Exception e ) {
+    		e.printStackTrace();
+    	}
 
-	        return hm;
-	    }
-	    
-	    @RequestMapping(value = "/point/axPointEventMemberList", method = RequestMethod.POST, consumes = "application/json" )
-	    public @ResponseBody HashMap<String,Object> axPointEventMemberList(@RequestBody HashMap<String, Object> paramMap, HttpServletRequest request, HttpServletResponse response) throws Exception {
-	    	HashMap<String, Object> hm = new HashMap<String, Object>();
+        return hm;
+    }
+    
+    @RequestMapping(value = "/point/axPointEventMemberList", method = RequestMethod.POST, consumes = "application/json" )
+    public @ResponseBody HashMap<String,Object> axPointEventMemberList(@RequestBody HashMap<String, Object> paramMap, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    	HashMap<String, Object> hm = new HashMap<String, Object>();
 
-	    	try {
-	    		hm = svr.axPointEventMemberList(paramMap);
-	    	} catch ( Exception e ) {
-	    		e.printStackTrace();
-	    	}
+    	try {
+    		hm = svr.axPointEventMemberList(paramMap);
+    	} catch ( Exception e ) {
+    		e.printStackTrace();
+    	}
 
-	        return hm;
-	    }
-	    
-	    @RequestMapping(value = "/point/axPointEventMemberSave", method = RequestMethod.POST, consumes = "application/json" )
-	    public @ResponseBody HashMap<String,Object> axPointEventMemberSave(@RequestBody HashMap<String, Object> paramMap, HttpServletRequest request, HttpServletResponse response) throws Exception {
-	    	HashMap<String, Object> hm = new HashMap<String, Object>();
-	    	
-			try {
-	    		hm = svr.axPointEventMemberSave(paramMap);
-	    	} catch ( Exception e ) {
-	    		e.printStackTrace();
-	    		hm.put("RtnMode", Constant.mode.ERROR.name());
-	    	}
+        return hm;
+    }
+    
+    @RequestMapping(value = "/point/axPointEventMemberSave", method = RequestMethod.POST, consumes = "application/json" )
+    public @ResponseBody HashMap<String,Object> axPointEventMemberSave(@RequestBody HashMap<String, Object> paramMap, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    	HashMap<String, Object> hm = new HashMap<String, Object>();
+    	
+		try {
+    		hm = svr.axPointEventMemberSave(paramMap);
+    	} catch ( Exception e ) {
+    		e.printStackTrace();
+    		hm.put("RtnMode", Constant.mode.ERROR.name());
+    	}
 
-	        return hm;
-	    }
+        return hm;
+    }
 
-	    
-	    
+
+    
+    @RequestMapping(value = "/point/axPointSave", method = RequestMethod.POST, consumes = "application/json" )
+    public @ResponseBody HashMap<String,Object> axPointSave(@RequestBody HashMap<String, Object> paramMap, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    	HashMap<String, Object> hm = new HashMap<String, Object>();
+    	
+		try {
+    		hm = svr.axPointSave(paramMap);
+    	} catch ( Exception e ) {
+    		e.printStackTrace();
+    		hm.put("RtnMode", Constant.mode.ERROR.name());
+    	}
+
+        return hm;
+    }
+    
 	    
 
 }

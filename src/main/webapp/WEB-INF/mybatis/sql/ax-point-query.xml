@@ -75,21 +75,24 @@
 				,DATE_FORMAT(A.VALID_DATE, '%y.%m.%d') VALID_DATE_STR
 				,CASE WHEN VALID_DATE >= CURDATE() AND VALID_DATE <![CDATA[<]]> DATE_ADD(CURDATE(),INTERVAL 1 MONTH) THEN IN_POINT - IN_POINT_USE ELSE 0 END DELETE_POINT
 				,CASE WHEN VALID_DATE <![CDATA[<]]> CURDATE() THEN IN_POINT - IN_POINT_USE ELSE 0 END DELETED_POINT
-		FROM 	POINT A
-		WHERE	USER_ID = #{USER_ID}
-		AND		USE_YN = 'Y'
-		ORDER 	BY POINT_DATE DESC
+				,B.USER_NAME
+				,B.EMAIL
+		FROM 	POINT A LEFT OUTER JOIN USER B ON B.USER_ID = A.USER_ID
+		WHERE	A.USER_ID = #{USER_ID}
+		AND		A.USE_YN = 'Y'
+		ORDER 	BY A.POINT_DATE DESC
 	</select>
 	
 	<select id="axPointEventMemberList" resultType="hashmap">
-		SELECT 	USER_ID
-				,USER_NAME
-				,EMAIL
-				,BIRTH_DAY
-				,MOBILE
+		SELECT 	A.USER_ID
+				,A.USER_NAME
+				,A.EMAIL
+				,A.BIRTH_DAY
+				,A.MOBILE
+				,A.COMP_CD
 		FROM 	USER A
-	 	WHERE 	COMP_CD = 'B2C'
-	 	AND		RETIRED_YN = 'N'
+					LEFT OUTER JOIN COMPANY C ON C.COMP_CD = A.COMP_CD
+	 	WHERE 	RETIRED_YN = 'N'
 	 	AND		CERTIFICATION_YN = 'Y'
 	 	AND		ADMIN_YN = 'N'
 	 	AND		SITE_MANAGER_YN = 'N'
@@ -109,7 +112,21 @@
 			<if test="CB_SEARCHKIND == 'MOBILE'">
 			  AND UPPER(A.MOBILE) LIKE CONCAT('%',UPPER(#{SEARCH_STR}),'%') 
 			</if>
-		</if>			 
+		</if>
+		<if test="COMPANY != null and COMPANY == 'B2C'">
+			AND 	IFNULL(A.COMP_CD,'B2C') = 'B2C'
+		</if>
+		<if test="COMPANY != null and COMPANY == 'B2B'">
+			AND 	IFNULL(A.COMP_CD,'B2C') != 'B2C'
+			AND 	IFNULL(C.C2C_YN,'N') = 'N'
+		</if>
+		<if test="COMPANY != null and COMPANY == 'C2C'">
+			AND 	IFNULL(A.COMP_CD,'B2C') != 'B2C'
+			AND 	IFNULL(C.C2C_YN,'N') = 'Y'
+		</if>
+		<if test="COMPANY2 != null and COMPANY2 != ''">
+			AND 	IFNULL(A.COMP_CD,'B2C') = #{COMPANY2}
+		</if>
 		ORDER BY USER_NAME
 	</select>
 	
@@ -122,5 +139,10 @@
 	    			#{SESSION_USER_ID} )
     </insert>
 
+	<delete id="axPointDelete" parameterType="hashmap">
+		UPDATE	POINT
+		SET		USE_YN = 'N'
+		WHERE 	SEQ = #{SEQ}  
+	</delete>  
         
 </mapper>

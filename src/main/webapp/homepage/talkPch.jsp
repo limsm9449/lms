@@ -329,6 +329,9 @@ function fn_otherTalkContents(row) {
                         </div>
                     </div>
                     <!--------------채팅 입력창----------------->
+                    <c:if test = "${set.talkNotice ne null and set.talkNotice ne ''}">
+                    	${set.talkNotice}
+                    </c:if>
                     <div class="t_typing">
                     	<table class="t_table">
                     	<tr>

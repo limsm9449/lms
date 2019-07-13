@@ -496,12 +496,13 @@ header {
 	background-color:#0073BF;
 }
 #q_menu6{
-	background:url('../../img/main/quick/q_menu6.png') 50% 50% no-repeat; 
+	background:url('../../img/main/quick/q_menu6.png') 0px 20px no-repeat; 
 	padding:56px 0px;
 	cursor:pointer;
 }
 #q_menu6:hover{
-	background:url('../../img/main/quick/q_menu6_over.png') 50% 50% no-repeat; 
+	background:url('../../img/main/quick/q_menu6_over.png') 0px 20px no-repeat; 
+	background-color:#0073BF;
 }
 #q_menu7{
 	padding:38px 0px;
@@ -665,7 +666,6 @@ header {
 }
 .process_search_result > div .process_result_con{
     text-indent:13%;
-	width:67px;
 }
 .process_result_checkbox{
     float:left;
@@ -802,6 +802,10 @@ header {
     color: #1897e2;
     padding: 60px 0 10px;
 }
+/*0712*/
+.basket_payment_title span{font-size:15px; font-family: 'NanumSquare'; font-weight: normal;}
+.basket_payment_title img{vertical-align: bottom;}
+
 .basket_payment{
     border-top:solid 1px #555;
     border-bottom:solid 1px #ccc;
@@ -883,6 +887,11 @@ header {
     font-family: 'NanumSquare';
     font-size: 18px;
 }
+
+.basket_lectures_result .second img {margin-top:-4px; vertical-align: middle;}/*0712*/
+.basket_lectures_result .third_text{padding:0 0 20px 10px;}/*0712*/
+.basket_lectures_result .third_text img {vertical-align: bottom; padding:0 5px;}/*0712*/
+
 .basket_lectures_result p span{}
 .basket_lectures_result > span{
     display: block;
@@ -1735,6 +1744,9 @@ th.register_compose_col1.right_border.part_only {
     .foot_link_pc{
         display:none;
     }
+    
+    .basket_payment_title span{display:block; padding:10px 0;}
+    .basket_lectures_result .third_text{font-size:16px; float:left; text-align: left; padding:0;}/*0712*/
 }
 @media all and (max-width:380px){
     .detail_btn_area a,

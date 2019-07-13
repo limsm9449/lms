@@ -72,10 +72,10 @@
 	INSERT INTO COURSE_REGISTER(COURSE_ID,USER_ID,STATUS,COURSE_COST,APPROVAL_ID,CONFIRM_DATE,CREATE_DATE,CREATE_USER)
 	SELECT A.COURSE_ID, 
 	       #{userId},
-	       if(#{paymentKind} = 'CASH','B','A'),
+	       if(#{paymentCost} = '0','A',if(#{paymentKind} = 'CASH','B','A')),
 	       A.COURSE_COST,
 	       #{approvalId},
-	       if(#{paymentKind} = 'CASH',NULL,CURRENT_TIMESTAMP),
+	       if(#{paymentCost} = '0',CURRENT_TIMESTAMP,if(#{paymentKind} = 'CASH',NULL,CURRENT_TIMESTAMP)),
 	       CURRENT_TIMESTAMP,
 	       #{createUser}
 	  FROM COURSE A LEFT OUTER JOIN COURSE_CODE B ON A.COURSE_CODE = B.COURSE_CODE
@@ -84,7 +84,7 @@
 
 	<select id="approvalIns" parameterType="Pg">
 	INSERT INTO APPROVAL(APPROVAL_ID,USER_ID,STATUS,TOTAL_COST,PAYMENT_POINT,PAYMENT_COST,PAYMENT_KIND,PAYMENT_BANK,PAYMENT_DATE,CREATE_DATE,CREATE_USER, PAY_APPROVAL_ID)
-	VALUES(#{approvalId},#{userId},if(#{paymentKind} = 'CASH','B','A'),#{totalCost},#{paymentPoint},#{paymentCost},#{paymentKind},#{paymentBank},CURRENT_TIMESTAMP,CURRENT_TIMESTAMP,#{createUser}, #{payApprovalId})   
+	VALUES(#{approvalId},#{userId},if(#{paymentCost} = '0','A',if(#{paymentKind} = 'CASH','B','A')),#{totalCost},#{paymentPoint},#{paymentCost},#{paymentKind},#{paymentBank},CURRENT_TIMESTAMP,CURRENT_TIMESTAMP,#{createUser}, #{payApprovalId})   
 	</select>	
 
 	<select id="courseEvalIns" parameterType="Pg">

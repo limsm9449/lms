@@ -164,6 +164,7 @@ public class PgService {
 		saveVO.setCreateUser(SessionUtil.getSessionUserId());
 		saveVO.setApprovalId(set.getCondiVO().getApprovalId());
 		saveVO.setPaymentKind(set.getCondiVO().getPaymentKind());
+		saveVO.setPaymentCost(set.getCondiVO().getPaymentCost());
 		
 		String[] courseIds = set.getCondiVO().getCourseId().split(",");
 		for ( int i = 0; i < courseIds.length; i++ ) {
