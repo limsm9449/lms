@@ -145,7 +145,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
-<title>통합LG유플러스 전자결서비스 결제테스트</title>
+<title>통합LG유플러스 전자결서비스</title>
 <!-- 
   test일 경우
 <script language="javascript" src="https://pretest.uplus.co.kr:9443/xpay/js/xpay_crossplatform.js" type="text/javascript"></script>
