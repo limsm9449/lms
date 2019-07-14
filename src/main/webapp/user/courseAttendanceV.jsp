@@ -20,7 +20,7 @@
     <link rel='stylesheet' href='/resources/homepage/css/initialization.css'>
     <link rel='stylesheet' href='/resources/homepage/css/classroom/lecture_detail.css'>
 </head>
-
+             
 <body style='background:#fff'>
 <frameset rows='*'>
     <div class='wrap'>
