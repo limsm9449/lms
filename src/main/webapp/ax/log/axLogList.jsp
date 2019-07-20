@@ -116,7 +116,7 @@ function fn_params() {
 	params.SEARCH_STR = $("#SEARCH_STR").val();
 	params.SEARCH_STR2 = $("#SEARCH_STR2").val();
 }
-
+  
 function fn_search() {
 	//mask.open();
 	
