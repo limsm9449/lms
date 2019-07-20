@@ -19,7 +19,7 @@
     <link href='https://fonts.googleapis.com/css?family=Nanum+Gothic' rel='stylesheet'>
     <link rel='stylesheet' href='/resources/homepage/css/initialization.css'>
     <link rel='stylesheet' href='/resources/homepage/css/classroom/lecture_detail.css'>
-</head>
+</head> 
 
 <body style='background:#fff'>
 <frameset rows='*'>
