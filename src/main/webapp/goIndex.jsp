@@ -12,7 +12,7 @@
 <script type="text/javascript">
 	location = "/login.do?preUrl=<%=request.getParameter("preUrl")%>&loginAuth=<%=request.getParameter("loginAuth")%>";
 </script>
-
+    
 </html>
 
 
