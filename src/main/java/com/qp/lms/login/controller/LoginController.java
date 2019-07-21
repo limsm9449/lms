@@ -129,6 +129,7 @@ public class LoginController {
 	   	 		sess.setMobile(set.getData().getMobile());
 	   	 		sess.setEmail(set.getData().getEmail());
 	   	 		sess.setCompName(set.getData().getCompName());
+	   	 		sess.setPassword(set.getCondiVO().getPassword());
 
 	   	 		//C2C로 로그인시 TEACHER이면 권한을 부여한다.
 	   	 		if ( CommUtil.isEqual(auth, "") && CommUtil.isEqual(SessionUtil.getSessionCompType(), "C2C") && CommUtil.isEqual(set.getData().getUserId(), set.getData().getC2cUserId()) ) {
@@ -232,8 +233,8 @@ public class LoginController {
     		LoginVO loginVO = new LoginVO();
     		loginVO.setUserId(SessionUtil.getSessionUserId());
     		
-    		LoginManager loginManager = LoginManager.getInstance();
-    		loginManager.removeSession(loginVO.getUserId());
+    		//LoginManager loginManager = LoginManager.getInstance();
+    		//loginManager.removeSession(loginVO.getUserId());
     		
         	LoginSet set = new LoginSet();
         	set.setCondiVO(loginVO);
@@ -269,5 +270,15 @@ public class LoginController {
         return "login/companyLogin";
     } 
 
+    @RequestMapping(value = "/openChannel")
+    public String openChannel(@ModelAttribute LoginVO loginVO, Model model) throws Exception {
+    	LoginSet set = new LoginSet();
+    	set.setCondiVO(loginVO);
+		
+        model.addAttribute("set", set );
+        
+        return "login/openChannel";
+    }
+    
     
 }

@@ -14,6 +14,7 @@ alter table USER add (
 );
 
 
-하하
-ㅎㅎ  
-zz
+ALTER TABLE COURSE ADD (
+	COURSE_ORG_COST INT
+);	
+

@@ -6,10 +6,12 @@
 	
 	<!-- 결재할 과정 리스트 -->
 	<select id="applicationCourseList" resultType="Course">
+	/* pg.applicationCourseList */
 	SELECT D.CATEGORY_NAME
 	       ,A.COURSE_ID
 	       ,B.COURSE_NAME
 	       ,A.COURSE_COST
+	       ,IFNULL(A.COURSE_ORG_COST, A.COURSE_COST) COURSE_ORG_COST
 	       ,A.COURSE_CODE
 	       ,DATE_FORMAT(CURDATE(),'%y.%m.%d') C_FROM_DATE
 	       ,DATE_FORMAT(DATE_ADD(CURDATE(),INTERVAL A.C_PERIOD DAY),'%y.%m.%d') C_TO_DATE

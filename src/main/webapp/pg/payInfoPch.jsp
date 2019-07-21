@@ -246,6 +246,9 @@ $(document.body).ready(function () {
                     <div class='basket_lectures_lecture clear_fix'>
                         <p>[${row.categoryName}] ${row.courseName}</p>
                         <p class='sum'><span class='text'><fmt:formatNumber value="${row.courseCost}" type="number"/></span>원</p>
+	<c:if test="${row.courseCost ne row.courseOrgCost}">
+						<p class='sum'>(시중가격 : <span class='text'><fmt:formatNumber value="${row.courseOrgCost}" type="number"/></span>원)</p>
+	</c:if>
                     </div>
 	<c:if test="${not empty row.cartWeekList}">
                     <p class='register_course_list_text'>차시 리스트</p>
