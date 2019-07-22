@@ -2349,12 +2349,19 @@ header {
 	.big_txt {
 		font-size: 27px;
 	}
+	.pp_lectures_wrap{
+		height:180px;
+	}
+	
 	.p_v1_txt {
 		background:url('../img/main/mobile_v1_txt.png') #FFF 0% 0% no-repeat; 
 		height:300px;
-		width:530px;
-		left:-10px;
+		width:100%;
+		left:0px;
 		top:30px;
+	}
+	.q_iframimg img{
+		width:100%;
 	}
 	.video_txt_bottom{
 		font-size:15px;

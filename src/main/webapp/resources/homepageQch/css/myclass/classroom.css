@@ -54,16 +54,14 @@ body{
 
 /*left*/
 .cl_left{
-	width:1000px;
+	width:300px;
 	position:fixed;
 	overflow:auto;
 	display:block;
-	left:calc(50% - 500px);
-	top:741px;
+	left:0;
+	top:55px;
 	bottom:0;
 	border-right:solid 1px #ccc;
-	border-left:solid 1px #ccc;
-    height:194px;
 }
 .cl_close{
 	position:fixed;

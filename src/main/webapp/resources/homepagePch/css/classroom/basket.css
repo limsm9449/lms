@@ -665,7 +665,10 @@ header {
     text-align:center;
 }
 .process_search_result > div .process_result_con{
-    text-indent:13%;
+    /*text-indent:13%;*/
+    float:none;
+    display:inline-block;
+    width:25%;
 }
 .process_result_checkbox{
     float:left;
