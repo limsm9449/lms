@@ -261,6 +261,20 @@ function fn_makeGrid() {
 	            width : 80,
 	            align : "right"
 	        },{
+	            key : "COURSE_ORG_COST",
+	            label : "시중 과정비용",
+	            width : 120,
+	            align : "right",
+	            editor : { 
+	            	type : "number"
+				},
+				styleClass: function () {
+                    return "grid-cell-edit";
+                },
+	            formatter : function () {
+	                return checkThousand(this.item.COURSE_ORG_COST);
+	           	}
+	        },{
 	            key : "COURSE_COST",
 	            label : "과정비용",
 	            width : 90,
@@ -763,6 +777,11 @@ function fn_save() {
        		if ( gfn_getString(allList[i].TERM_YN) == "Y" && (gfn_getString(allList[i].TERM_PERIOD_FROM) == "" || gfn_getString(allList[i].TERM_PERIOD_TO) == "")) {
     			mask.open();
     			dialog.alert( { msg : (allList[i].__index + 1) + "라인의" + "가입 시작일/종료일을 입력하셔야 합니다." }, function () { mask.close(); } );
+    			return false; 
+       		}
+       		if ( gfn_getString(allList[i].TERM_YN) == "Y" && (gfn_getString(allList[i].STUDY_PERIOD_FROM) == "" || gfn_getString(allList[i].STUDY_PERIOD_TO) == "")) {
+    			mask.open();
+    			dialog.alert( { msg : (allList[i].__index + 1) + "라인의" + "학습 시작일/종료일을 입력하셔야 합니다." }, function () { mask.close(); } );
     			return false; 
        		}
        		if ( (gfn_getString(allList[i].STUDY_PERIOD_FROM) == "" && gfn_getString(allList[i].STUDY_PERIOD_TO) == "" && allList[i].C_PERIOD == 0) ||

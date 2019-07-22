@@ -19,6 +19,7 @@ public class SessionVO {
 	private String compName;
 	private String c2cYn;
 	private String downloadAuth;				/** 튜터, 어드민, 강사는 첨부 다운로드 권한이 있다. */
+	private String password;
 	
 	
 	//2014.8.3
@@ -134,6 +135,12 @@ public class SessionVO {
 	}
 	public void setC2cYn(String c2cYn) {
 		this.c2cYn = c2cYn;
+	}
+	public String getPassword() {
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
 	}
 	
 		

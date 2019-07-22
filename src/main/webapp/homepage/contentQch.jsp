@@ -188,10 +188,26 @@ function lfn_btn(pKind, pParam) {
 	}
 }
 
+function lfn_openChannel(channel) {
+	<c:choose>
+		<c:when test = "${session == null}">
+			window.open("http://" + channel + "." + window.location.host.replace("www.",""));
+		</c:when>
+		<c:otherwise>
+			$("#channel").val(channel);
+			document.frm.action = "/openChannel.do";	
+			document.frm.target = "tranFrame";	
+			document.frm.submit();		
+		</c:otherwise>
+	</c:choose> 
+}
+
+
 </script>
 
 <body>
 <form name="frm" id="frm" method="post">
+	<input type='hidden' id='channel' name='channel' value="">
 	<input type='hidden' id='shap' name='shap' value="">
 	<input type='hidden' id='mainViewMode' name='mainViewMode' value="${set.condiVO.mainViewMode}">
 	
@@ -561,6 +577,8 @@ function fn_close(){
 </script>
 
 </frameset>
+
+<iframe name="tranFrame" id="tranFrame" style="display: none;"></iframe>
 
 </form>
 

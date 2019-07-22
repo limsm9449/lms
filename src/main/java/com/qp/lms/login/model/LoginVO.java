@@ -22,6 +22,7 @@ public class LoginVO extends CommonVO{
 	private String c2cYn;
 	private String compType;
 	private String c2cUserId;
+	private String channel;
 	
 	//2104.6.20 추가
 	private String certificationYn;
@@ -136,6 +137,12 @@ public class LoginVO extends CommonVO{
 	}
 	public void setC2cUserId(String c2cUserId) {
 		this.c2cUserId = c2cUserId;
+	}
+	public String getChannel() {
+		return channel;
+	}
+	public void setChannel(String channel) {
+		this.channel = channel;
 	}
 	
 	

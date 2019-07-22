@@ -32,23 +32,34 @@
 <script type="text/javascript">
 
 $(document).ready(function() {
-	if ( opener ) {
-		window.close();
-	}
-	
-	<%/* 로그인 페이지로 왔는데 어디민 화면에서 세션이 끊긴 경우 홈으로 간다. */ %>
-	if ( parent.document.getElementById("left") ) {
-		page.goHome();
-	}
-	
-	if ( $.cookie(cookieName + 'login') == "Y" ) {
-		$("input:checkbox[id='cb_continue']").prop("checked", true);
+	var param = gfn_getUrlParams("p");
+	if ( param != "" ) {
+		loginInfo = atob(param).split(":");
+		$("#userId").val(loginInfo[0]);
+		$("#password").val(loginInfo[1]);
 
-		$("#userId").val($.cookie(cookieName + 'userId'));
-		$("#password").val($.cookie(cookieName + 'password'));
-	}
+		document.frm.action = "loginCheck.do";	
+		document.frm.target = "tranFrame";	
+		document.frm.submit();
+	} else {
+		if ( opener ) {
+			window.close();
+		}
+		
+		<%/* 로그인 페이지로 왔는데 어디민 화면에서 세션이 끊긴 경우 홈으로 간다. */ %>
+		if ( parent.document.getElementById("left") ) {
+			page.goHome();
+		}
+		
+		if ( $.cookie(cookieName + 'login') == "Y" ) {
+			$("input:checkbox[id='cb_continue']").prop("checked", true);
 	
-	$("#userId").focus(); 
+			$("#userId").val($.cookie(cookieName + 'userId'));
+			$("#password").val($.cookie(cookieName + 'password'));
+		}
+		
+		$("#userId").focus();
+	}
 });
 
 function lfn_passwordEnter() {

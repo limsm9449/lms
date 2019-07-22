@@ -55,6 +55,7 @@ public class CourseVO extends CommonVO {
 	private String learingTarget;
 	private String learingCost;
 	private String courseCost;
+	private String courseOrgCost;
 	private String reportRate;
 	private String reportRateName;
 	private String examRate;
@@ -1511,6 +1512,14 @@ public class CourseVO extends CommonVO {
 
 	public void setOfflineDesc(String offlineDesc) {
 		this.offlineDesc = offlineDesc;
+	}
+
+	public String getCourseOrgCost() {
+		return courseOrgCost;
+	}
+
+	public void setCourseOrgCost(String courseOrgCost) {
+		this.courseOrgCost = courseOrgCost;
 	}
 
 
