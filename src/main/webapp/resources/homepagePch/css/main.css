@@ -36,7 +36,7 @@ html[data-useragent*='MSIE 10.0'] .head_mobile.on .mobile_dropwdown_wrap{
 }
 
 /* HEADER */
-.menu_over_2depth{
+.menu_over_2depth{ 
     display:none;
     position:absolute;
     width:230px;
