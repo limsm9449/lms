@@ -1,15 +1,17 @@
-호스팅 업체 : 카페24(http://www.cafe24.com)
-아이디        : qlearning
-비밀번호     : zbvl7805
++ 운영 : qlearn / ace1703! / ace1703+
++ 테스트 : testqlearn / ace1703! / ace1703+
 
-telnet 접속
-아이디        : qlearning
-비밀번호     : zbvlvmf7805
++ 개발 배포
+  /lms/src/main/webapp/WEB-INF/mybatis/config/config.properties 소스에서 DB 정보를 테스트로 바꾼후에 배포를 해야한다.
+	#운영 접속시 --> 주석처리
+	#jdbc.driverClassName=com.mysql.jdbc.Driver
+	#jdbc.url=jdbc:mysql://localhost:3306/qlearn
+	#jdbc.username=qlearn
+	#jdbc.password=ace1703+
 
-FTP 접속 
-아이디        : qlearning
-비밀번호     : zbvlvmf7805
+	#테스트 접속시  --> 주석을 풀어준다.
+	jdbc.driverClassName=com.mysql.jdbc.Driver
+	jdbc.url=jdbc:mysql://localhost:3306/testqlearn
+	jdbc.username=testqlearn
+	jdbc.password=ace1703+
 
-DataBase
-아이디        : qlearning
-비밀번호     : dlql7805 elql7805
