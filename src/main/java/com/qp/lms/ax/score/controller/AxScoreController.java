@@ -54,7 +54,7 @@ public class AxScoreController {
     }
     
     @RequestMapping(value = "/score/axUserScoreSave", method = RequestMethod.POST, consumes = "application/json" )
-    public @ResponseBody HashMap<String,Object> axUserScoreUpdateReportDiscussion(@RequestBody HashMap<String, Object> paramMap, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public @ResponseBody HashMap<String,Object> axUserScoreSave(@RequestBody HashMap<String, Object> paramMap, HttpServletRequest request, HttpServletResponse response) throws Exception {
     	HashMap<String, Object> hm = new HashMap<String, Object>();
 
     	try {
@@ -137,6 +137,19 @@ public class AxScoreController {
 
     	try {
     		hm = svr.axUserScoreQuestOne(paramMap);
+    	} catch ( Exception e ) {
+    		e.printStackTrace();
+    	}
+
+        return hm;
+    }
+    
+    @RequestMapping(value = "/score/axUserScoreReset", method = RequestMethod.POST, consumes = "application/json" )
+    public @ResponseBody HashMap<String,Object> axUserScoreReset(@RequestBody HashMap<String, Object> paramMap, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    	HashMap<String, Object> hm = new HashMap<String, Object>();
+
+    	try {
+    		hm = svr.axUserScoreReset(paramMap);
     	} catch ( Exception e ) {
     		e.printStackTrace();
     	}

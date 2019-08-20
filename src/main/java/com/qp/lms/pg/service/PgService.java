@@ -199,6 +199,7 @@ public class PgService {
 			sqlSession.delete("pg.rejectCourseWeekDel",saveVO);
 			
 			if ( CommUtil.isEqual((String)cart.get(courseIds[i]), "") ) {
+				//과정 신청 생성
 		    	sqlSession.insert("pg.courseRegisterIns",saveVO);
 
 		    	//평가 데이타 생성

@@ -192,6 +192,28 @@ function fn_makeGrid() {
                     return "grid-cell-edit";
                 }
 	        },{
+	            key : "NAVER_CLIENT_ID",
+	            label : "네이버 Client ID",
+	            width : 160,
+	            align : "center",
+	            editor : { 
+	            	type : "text"
+				},
+				styleClass: function () {
+                    return "grid-cell-edit";
+                }
+	        },{
+	            key : "NAVER_CLIENT_SECRET",
+	            label : "네이버 Client Secret",
+	            width : 140,
+	            align : "center",
+	            editor : { 
+	            	type : "text"
+				},
+				styleClass: function () {
+                    return "grid-cell-edit";
+                }
+	        },{
 	            key : "ZIPCODE",
 	            label : "우편번호",
 	            width : 80,

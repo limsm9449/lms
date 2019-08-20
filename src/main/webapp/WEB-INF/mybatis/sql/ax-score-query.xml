@@ -402,5 +402,72 @@
 		AND		USER_ID = #{USER_ID}
 	</select>        
 
+	<update id="courseRegisterReset" parameterType="hashmap">
+		UPDATE 	COURSE_REGISTER
+		SET		CONFIRM_DATE = CURRENT_TIMESTAMP
+		WHERE 	COURSE_ID = #{COURSE_ID}
+		AND		USER_ID = #{USER_ID}
+	</update>
+
+	<update id="courseEvalReset" parameterType="hashmap">
+		UPDATE 	COURSE_EVAL
+		SET		REPORT = 0
+				,EXAM = 0
+				,DISCUSSION = 0
+				,PROGRESS = 0
+				,TOTAL = 0
+				,LAST_WEEK = 1
+				,LAST_PAGE = 1
+				,EXAM_WEEK = 0
+				,EXAM_TOTAL = 0
+				,CREATE_DATE = CURRENT_TIMESTAMP
+				,E_FROM_DATE = NULL
+				,E_TO_DATE = NULL
+				,REPORT_YN = 'N'
+				,REPORT_USER_CONTENTS = ''
+				,REPORT_TUTOR_YN = 'N'
+				,REPORT_TUTOR_CONTENTS = ''
+				,QUEST_YN = 'N'
+				,EXAM_YN = 'N'
+				,COMPLETE_YN = 'N'
+				,POSTSCRIPT_YN = 'N'
+		WHERE 	COURSE_ID = #{COURSE_ID}
+		AND		USER_ID = #{USER_ID}
+	</update>
+
+	<update id="courseWeekReset" parameterType="hashmap">
+		UPDATE 	COURSE_WEEK
+		SET		PROGRESS_RATE = 0
+				,STUDY_START = NULL
+				,STUDY_END = NULL
+		WHERE 	COURSE_ID = #{COURSE_ID}
+		AND		USER_ID = #{USER_ID}
+	</update>    
+
+	<delete id="courseWeekPageReset" parameterType="hashmap">
+		DELETE 	FROM COURSE_WEEK_PAGE
+		WHERE 	COURSE_ID = #{COURSE_ID}
+		AND		USER_ID = #{USER_ID}
+	</delete>    
+
+	<delete id="postscriptReset" parameterType="hashmap">
+		DELETE 	FROM POSTSCRIPT
+		WHERE 	COURSE_ID = #{COURSE_ID}
+		AND		USER_ID = #{USER_ID}
+	</delete>    
+
+	<delete id="userExamReset" parameterType="hashmap">
+		DELETE 	FROM USER_EXAM
+		WHERE 	COURSE_ID = #{COURSE_ID}
+		AND		USER_ID = #{USER_ID}
+	</delete>    
+
+	<delete id="userQuestReset" parameterType="hashmap">
+		DELETE 	FROM USER_QUEST
+		WHERE 	COURSE_ID = #{COURSE_ID}
+		AND		USER_ID = #{USER_ID}
+	</delete>    
+
+	
 </mapper>
 

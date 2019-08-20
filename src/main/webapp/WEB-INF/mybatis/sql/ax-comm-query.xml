@@ -278,9 +278,15 @@
     </delete>		    
     
     <select id="axCompCdFromSubDomain" resultType="hashmap">
-    	SELECT COMP_CD, C2C_YN, IFNULL(USE_YN,'Y') USE_YN, COMP_NAME
+    	SELECT COMP_CD, C2C_YN, IFNULL(USE_YN,'Y') USE_YN, COMP_NAME, NAVER_CLIENT_ID, NAVER_CLIENT_SECRET
     	  FROM COMPANY
     	 WHERE SUB_DOMAIN = #{SUB_DOMAIN}
+    </select>
+
+    <select id="axMainNaverClientInfo" resultType="hashmap">
+    	SELECT NAVER_CLIENT_ID, NAVER_CLIENT_SECRET
+    	  FROM COMPANY
+    	 WHERE COMP_CD = 'B2C'
     </select>
 
 	<select id="axUserSearchList" parameterType="hashmap" resultType="hashmap">

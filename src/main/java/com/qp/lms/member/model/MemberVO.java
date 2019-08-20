@@ -59,6 +59,8 @@ public class MemberVO extends CommonVO{
 	private String hintQuestion;
 	private String hintAnswer;
 	private String emailInformYn;
+
+	private String naverUserYn;
 	
 	public String getUserId() {
 		return userId;
@@ -314,6 +316,12 @@ public class MemberVO extends CommonVO{
 	}
 	public void setEmailInformYn(String emailInformYn) {
 		this.emailInformYn = emailInformYn;
+	}
+	public String getNaverUserYn() {
+		return naverUserYn;
+	}
+	public void setNaverUserYn(String naverUserYn) {
+		this.naverUserYn = naverUserYn;
 	}
 	
 

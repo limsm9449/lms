@@ -32,6 +32,7 @@
 				(SELECT COMP_NAME FROM COMPANY WHERE COMP_CD = A.COMP_CD) COMP_NAME,
 				(SELECT C2C_YN FROM COMPANY WHERE COMP_CD = A.COMP_CD) C2C_YN 	 
 				,(SELECT C2C_USER_ID FROM COMPANY WHERE COMP_CD = #{compCd}) C2C_USER_ID
+				,NAVER_USER_YN
     	  FROM 	USER A
     	 WHERE 	USER_ID = #{userId}
     	   AND 	USER_PASSWORD = SHA1(#{password}) 
@@ -107,4 +108,8 @@
     	 WHERE C2C_USER_ID = #{userId}
     </select>
 
+	<insert id="naverUserInsert" parameterType="com.qp.lms.login.model.LoginVO">
+    	INSERT INTO USER(USER_ID, USER_NAME, EMAIL, USER_PASSWORD, SEX, CERTIFICATION_YN, NAVER_USER_YN)
+    	VALUES (#{userId}, #{userName}, #{email}, SHA1(#{password}), #{sex}, 'Y', 'Y')
+    </insert>
 </mapper>

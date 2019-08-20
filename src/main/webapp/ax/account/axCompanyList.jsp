@@ -187,6 +187,34 @@ function fn_makeGrid() {
                     return "grid-cell-edit";
                 }
 	        },{
+	            key : "NAVER_CLIENT_ID",
+	            label : "네이버 Client ID",
+	            width : 160,
+	            align : "center",
+	            editor : { 
+	            	type : "text"
+	            	,disabled : function () {
+                        return ( this.item.COMP_CD == "B2C" ? false : true );
+                    }
+				},
+				styleClass: function () {
+                    return ( this.item.COMP_CD == "B2C" ? "grid-cell-edit" : "" );
+                }
+	        },{
+	            key : "NAVER_CLIENT_SECRET",
+	            label : "네이버 Client Secret",
+	            width : 140,
+	            align : "center",
+	            editor : { 
+	            	type : "text"
+	            	,disabled : function () {
+                        return ( this.item.COMP_CD == "B2C" ? false : true );
+                    }
+				},
+				styleClass: function () {
+                    return ( this.item.COMP_CD == "B2C" ? "grid-cell-edit" : "" );
+                }
+	        },{
 	            key : "AUTH_CNT",
 	            label : "등록 인증키",
 	            width : 100,

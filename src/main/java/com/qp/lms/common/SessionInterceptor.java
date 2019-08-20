@@ -51,7 +51,9 @@ public class SessionInterceptor extends HandlerInterceptorAdapter {
 				"/companyLogin.do",
 				"/cms",
 				"/postscript/postscriptList.do",
-				"/postscript/postscriptV.do"
+				"/postscript/postscriptV.do",
+				"/naverLogin.do",
+				"/naverCallback.do"
 	    	};
 	    	
 	    	// Session이 있을 수도 있고 없을 수도 있는 URL
@@ -123,13 +125,25 @@ public class SessionInterceptor extends HandlerInterceptorAdapter {
 		        	SessionUtil.setAttribute("compCd", compCd);
 		        	SessionUtil.setAttribute("compType", compType);
 		        	SessionUtil.setAttribute("compName", compName);
+
+		        	SessionUtil.setAttribute("NAVER_CLIENT_ID", (String)compInfo.get("NAVER_CLIENT_ID"));
+		        	SessionUtil.setAttribute("NAVER_CLIENT_SECRET", (String)compInfo.get("NAVER_CLIENT_SECRET"));
 	   	 		} else {
 	   	 			compCd = (String)SessionUtil.getAttribute("compCd");
 	   	 			compType = (String)SessionUtil.getAttribute("compType");
 	   	 			compName = (String)SessionUtil.getAttribute("compName");
 	   	 			compUseYn = (String)SessionUtil.getAttribute("compUseYn");
 	   	 		}
-
+	   	 		
+	   	 		/* 필요한 로직인가?	
+	   	 		if ( SessionUtil.getAttribute("NAVER_CLIENT_ID") == null ) {
+	   	 			System.out.println("GET NAVER_CLIENT_ID...");
+		        	HashMap<String, Object> compInfo = axCommService.axCompInfoFromSubDomain(domains[0]);
+		        	SessionUtil.setAttribute("NAVER_CLIENT_ID", (String)compInfo.get("NAVER_CLIENT_ID"));
+		        	SessionUtil.setAttribute("NAVER_CLIENT_SECRET", (String)compInfo.get("NAVER_CLIENT_SECRET"));
+	   	 		}
+	   	 		*/
+	   	 		
    	 			System.out.println("---------------------------> " + RequestContextHolder.getRequestAttributes().getSessionId() + ", " + compCd + ", " + compType + ", " + compName + ", " + SessionUtil.getAttribute("compCd") + ", " + SessionUtil.getAttribute("compType") + ", " + SessionUtil.getAttribute("compName"));
 
 	        	//회사 도메인이면서 등록이 안되었거나, 사용불가인 경우 에러 페이지로 이동
