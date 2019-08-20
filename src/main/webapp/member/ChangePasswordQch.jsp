@@ -33,6 +33,11 @@ $(document).ready(function() {
 
 function lfn_btn(pKind, pParam) {
 	if ( pKind =="save" ) {
+<c:if test = "${session.naverUserYn eq 'Y'}">
+		alert("네이버로 가입한 가입자는 비밀번호를 변경 할 수 없습니다.");
+		return false;
+</c:if>
+<c:if test = "${session.naverUserYn eq 'N'}">
 		if ( lfn_validate() == false )
 			return false;
 		
@@ -58,6 +63,7 @@ function lfn_btn(pKind, pParam) {
 				}
 			})
 		}
+</c:if>
 	}
 }
 
@@ -165,7 +171,7 @@ function lfn_validate() {
                 	
                 <div class='signup_btn_box clear_fix'>
                     <button onclick='page.goHome();'>취소</button>
-                    <button id="saveBtn" onclick="lfn_btn('save');" class='last'>비밀번호 변경</button>
+                    <button id="saveBtn" onclick="lfn_btn('save');"<c:if test = "${session.naverUserYn eq 'N'}"> class='last'</c:if>>비밀번호 변경</button>
                 </div>
             </div>
 

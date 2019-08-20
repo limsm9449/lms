@@ -23,6 +23,9 @@ public class LoginVO extends CommonVO{
 	private String compType;
 	private String c2cUserId;
 	private String channel;
+	private String naverAccessToken;
+	private String sex;
+	private String naverUserYn;
 	
 	//2104.6.20 추가
 	private String certificationYn;
@@ -143,6 +146,24 @@ public class LoginVO extends CommonVO{
 	}
 	public void setChannel(String channel) {
 		this.channel = channel;
+	}
+	public String getNaverAccessToken() {
+		return naverAccessToken;
+	}
+	public void setNaverAccessToken(String naverAccessToken) {
+		this.naverAccessToken = naverAccessToken;
+	}
+	public String getSex() {
+		return sex;
+	}
+	public void setSex(String sex) {
+		this.sex = sex;
+	}
+	public String getNaverUserYn() {
+		return naverUserYn;
+	}
+	public void setNaverUserYn(String naverUserYn) {
+		this.naverUserYn = naverUserYn;
 	}
 	
 	

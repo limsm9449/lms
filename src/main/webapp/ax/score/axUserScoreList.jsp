@@ -184,6 +184,34 @@ $(document.body).ready(function () {
            		f_popup('/common/axOpenPage', {displayName:'scoreDiscussionPopup',option:'width=1000,height=700', urlParams:urlParams});
             		
                 break;
+            case "scoreReset":
+            	var row = grid.getList("selected");
+            	if ( row.length == 0 ) {
+            		mask.open();
+            		dialog.alert( { msg : "수강생을 선택하셔야 합니다." }, function () { mask.close();	} );
+            	} else {
+	               	mask.open();
+	               	
+	               	confirmDialog.confirm(
+	               		{
+	                       	title: "Confirm",
+	                       	msg: '학습을 초기화 하시겠습니까?'
+	                   	}, 
+	                   	function(){
+	                     	if ( this.key == "ok" ) {
+	                     		var saveParam = {
+            	             			USER_ID : row[0].USER_ID,
+            	             			COURSE_ID : row[0].COURSE_ID
+            	             		}
+	                     		gfn_callAjax("/score/axUserScoreReset.do", saveParam, fn_callbackAjax, "scoreReset");
+	                       	} else {
+	                       		mask.close();
+	                       	}
+	                   	}
+	               	);
+            	}
+            	
+                break;
         }
     });
     
@@ -507,6 +535,11 @@ function fn_callbackAjax(data, id) {
 
 		mask.open();
 		dialog.alert( { msg : "저장 되었습니다." }, function () { mask.close();	fn_search(); } );
+	} else if ( id == "scoreReset" ){
+		mask.close();
+
+		mask.open();
+		dialog.alert( { msg : "학습이 초기화 되었습니다." }, function () { mask.close();	fn_search(); } );
 	} else if ( id == "dd" ){
 		dd = $.extend({}, data);
 		
@@ -558,6 +591,7 @@ function fn_gridEvent(event, obj) {
     <button class="btn btn-default" data-grid-control="viewDiscussion" id="btnDiscussion">토론</button>
     <button class="btn btn-default" data-grid-control="viewQuest">설문지</button>
     <button class="btn btn-default" data-grid-control="viewPostscript">수강후기</button>
+    <button class="btn btn-default" data-grid-control="scoreReset">학습초기화</button>
 </div>
 
 <div style="height:10px"></div>

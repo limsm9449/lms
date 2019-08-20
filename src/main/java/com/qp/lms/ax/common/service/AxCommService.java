@@ -216,16 +216,29 @@ public class AxCommService {
    			compInfo.put("COMP_TYPE", "B2C");
    			compInfo.put("USE_YN", "N");
    			compInfo.put("COMP_NAME", "");
+   			
+   			row = sqlSession.selectOne("axComm.axMainNaverClientInfo", params);
+   			if ( row != null ) {
+	   			compInfo.put("NAVER_CLIENT_ID", (String)row.get("NAVER_CLIENT_ID"));
+	   			compInfo.put("NAVER_CLIENT_SECRET", (String)row.get("NAVER_CLIENT_SECRET"));
+   			} else {
+	   			compInfo.put("NAVER_CLIENT_ID", "");
+	   			compInfo.put("NAVER_CLIENT_SECRET", "");
+   			}
     	} else if ( CommUtil.isEqual((String)row.get("C2C_YN"), "Y") ) {
    			compInfo.put("COMP_CD", (String)row.get("COMP_CD"));
     		compInfo.put("COMP_TYPE", "C2C");
    			compInfo.put("USE_YN", (String)row.get("USE_YN"));
    			compInfo.put("COMP_NAME", (String)row.get("COMP_NAME"));
+   			compInfo.put("NAVER_CLIENT_ID", (String)row.get("NAVER_CLIENT_ID"));
+   			compInfo.put("NAVER_CLIENT_SECRET", (String)row.get("NAVER_CLIENT_SECRET"));
     	} else {
    			compInfo.put("COMP_CD", (String)row.get("COMP_CD"));
     		compInfo.put("COMP_TYPE", "B2B");
    			compInfo.put("USE_YN", (String)row.get("USE_YN"));
    			compInfo.put("COMP_NAME", (String)row.get("COMP_NAME"));
+   			compInfo.put("NAVER_CLIENT_ID", "");
+   			compInfo.put("NAVER_CLIENT_SECRET", "");
     	}
     	
         return compInfo;

@@ -104,6 +104,24 @@ function lfn_login() {
 	document.frm.submit();
 }
 
+function lfn_naverLogin() {
+	top.location = "/naverLogin.do";
+	//window.open("http://localhost:8080/naverLogin.do", "naverLogin", "width=500,height=500,location=no");
+	/*
+	document.frm.action = "naverLogin.do";	
+	document.frm.target = "_self";	
+	document.frm.submit();
+	*/
+}
+
+function lfn_naverLoginCallback(key) {
+	$("#naverAccessToken").val(key);
+	
+	document.frm.action = "loginCheck.do";	
+	document.frm.target = "tranFrame";	
+	document.frm.submit();
+}
+
 function lfn_page(kind) {
 	if ( kind == "loginConfirm" ) {
 		page.goPage("/loginConfirm", "userId=" + $("#userId").val() + "&password=" + $("#password").val());
@@ -115,10 +133,6 @@ function lfn_page(kind) {
 		}
 	}
 }
-
-$( window ).unload(function() {
-	  return "Handler for .unload() called.";
-	});
 
 </script>
 
@@ -177,6 +191,13 @@ $( window ).unload(function() {
 							</div>
 						</div>
 					</div>
+<c:if test = "${NAVER_CLIENT_ID ne null and NAVER_CLIENT_ID ne ''}">
+					<div class='signin_option_box clear_fix'>
+						<input type='hidden' name='naverAccessToken' id='naverAccessToken'>
+						<button class='naver' onclick="lfn_naverLogin();">네이버
+							아이디로 로그인</button>
+					</div>
+</c:if>					
 					<div class='signin_bg_box'> 
 						<img src='/resources/homepage/img/util/login_bg.png' alt=''>
 					</div>
@@ -197,7 +218,7 @@ $( window ).unload(function() {
 
 </frameset>
 
-<iframe name="tranFrame" id="tranFrame" style="display: none;"></iframe>
+<iframe name="tranFrame" style="display: none;"></iframe>
 
 </body>
 

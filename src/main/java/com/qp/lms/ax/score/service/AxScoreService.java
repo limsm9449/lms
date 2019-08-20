@@ -167,6 +167,23 @@ public class AxScoreService {
     	return hm;
     }
 
+	@Transactional(propagation=Propagation.REQUIRED, rollbackFor={Throwable.class})
+    public HashMap<String, Object>  axUserScoreReset(HashMap<String, Object> paramMap) throws Exception {
+		HashMap<String, Object> hm = new HashMap<String, Object>();
+		
+		sqlSession.update("axScore.courseRegisterReset", paramMap);
+		sqlSession.update("axScore.courseEvalReset", paramMap);
+		sqlSession.update("axScore.courseWeekReset", paramMap);
+		sqlSession.delete("axScore.courseWeekPageReset", paramMap);
+		sqlSession.delete("axScore.postscriptReset", paramMap);
+		sqlSession.delete("axScore.userExamReset", paramMap);
+		sqlSession.delete("axScore.userQuestReset", paramMap);
+
+		hm.put("RtnMode", Constant.mode.OK.name());
+		
+    	return hm;
+    }
+
     
     
 }

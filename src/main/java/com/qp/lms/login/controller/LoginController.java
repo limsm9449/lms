@@ -1,13 +1,21 @@
 package com.qp.lms.login.controller;
 
+import java.io.BufferedReader;
 import java.io.FileInputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLEncoder;
 import java.util.Properties;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.CommonAnnotationBeanPostProcessor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -85,96 +93,101 @@ public class LoginController {
      */
     @RequestMapping(value = "/loginCheck", method = RequestMethod.POST)
     public String loginCheck(@ModelAttribute LoginVO loginVO, Model model,HttpServletRequest request) throws Exception {
-    	loginVO.setLoginIp(request.getRemoteAddr());
-    	
-    	LoginSet set = new LoginSet();
-    	set.setCondiVO(loginVO);
-    	
-    	set.getCondiVO().setCompCd(SessionUtil.getSessionCompCd());
-    	set.getCondiVO().setCompType(SessionUtil.getSessionCompType());
-			
-    	set = service.loginCheck(set);
-    	
-   	 	model.addAttribute("set", set );
-
-   	 	//사용자 정보가 존재하면 session 정보를 만든다.
-   	 	if ( set.getData() != null && !"".equals(set.getData().getUserId()) && "N".equals(set.getData().getRetiredYn()) ) {
-   	 		String auth = CommUtil.getString(loginVO.getAuth());
-   	 		
-   	 		if ( ("ADMIN".equals(auth) && !"Y".equals(CommUtil.getString(set.getData().getAdminYn()))) ||
-   	 				("SITE_MANAGER".equals(auth) && !"Y".equals(CommUtil.getString(set.getData().getSiteManagerYn()))) ||
-   	 				("CONTENTS_MANAGER".equals(auth) && !"Y".equals(CommUtil.getString(set.getData().getContentsManagerYn()))) ||
-   	 				("TEACHER".equals(auth) && !"Y".equals(CommUtil.getString(set.getData().getTeacherYn()))) ||
-   	 				("TUTOR".equals(auth) && !"Y".equals(CommUtil.getString(set.getData().getTutorYn()))) ||
-   	 				("CHANNEL".equals(auth) && CommUtil.isEqual(set.getCompCd(), "")) ) {
-   	 			set.setIsNotAuth("Y");
-   	 		} else {
-   	 			/* 사용안함 2019.7.10
-	   	 		LoginManager loginManager = LoginManager.getInstance();
-	   	 		if ( loginManager.isUsing(set.getData().getUserId()) ) {
-	   	 			//기존의 접속(세션)을 끊는다.
-	   	 			loginManager.removeSession(set.getData().getUserId());
-	   	 		}
-	   	 		*/
-
-	   	 		SessionVO sess = new SessionVO();
-	   	 		sess.setUserId(set.getData().getUserId());
-	   	 		sess.setUserName(set.getData().getUserName());
-	   	 		sess.setAdminYn(set.getData().getAdminYn());
-	   	 		sess.setSiteManagerYn(set.getData().getSiteManagerYn());
-	   	 		sess.setContentsManagerYn(set.getData().getContentsManagerYn());
-	   	 		sess.setTutorYn(set.getData().getTutorYn());
-	   	 		sess.setTeacherYn(set.getData().getTeacherYn());
-	   	 		sess.setUserIp(request.getRemoteAddr());
-	   	 		sess.setMobile(set.getData().getMobile());
-	   	 		sess.setEmail(set.getData().getEmail());
-	   	 		sess.setCompName(set.getData().getCompName());
-	   	 		sess.setPassword(set.getCondiVO().getPassword());
-
-	   	 		//C2C로 로그인시 TEACHER이면 권한을 부여한다.
-	   	 		if ( CommUtil.isEqual(auth, "") && CommUtil.isEqual(SessionUtil.getSessionCompType(), "C2C") && CommUtil.isEqual(set.getData().getUserId(), set.getData().getC2cUserId()) ) {
-   	 				auth = "CHANNEL";
-	   	 		}
-
-	   	 		if ( "".equals(CommUtil.getString(set.getData().getCompCd())) ) {
-	   	 			sess.setCompCd("B2C");
-	   	 		} else if ( auth.equals("CHANNEL") ) {
-	   	 			sess.setCompCd(set.getCompCd());
-		   	 		sess.setCompName("개인채널");
-	   	 			sess.setC2cYn("Y");
+    	try {
+	    	loginVO.setLoginIp(request.getRemoteAddr());
+	    	
+	    	LoginSet set = new LoginSet();
+	    	set.setCondiVO(loginVO);
+	    	
+	    	set.getCondiVO().setCompCd(SessionUtil.getSessionCompCd());
+	    	set.getCondiVO().setCompType(SessionUtil.getSessionCompType());
+				
+	    	set = service.loginCheck(set);
+	    	
+	   	 	model.addAttribute("set", set );
+	
+	   	 	//사용자 정보가 존재하면 session 정보를 만든다.
+	   	 	if ( set.getData() != null && !"".equals(set.getData().getUserId()) && "N".equals(set.getData().getRetiredYn()) ) {
+	   	 		String auth = CommUtil.getString(loginVO.getAuth());
+	   	 		
+	   	 		if ( ("ADMIN".equals(auth) && !"Y".equals(CommUtil.getString(set.getData().getAdminYn()))) ||
+	   	 				("SITE_MANAGER".equals(auth) && !"Y".equals(CommUtil.getString(set.getData().getSiteManagerYn()))) ||
+	   	 				("CONTENTS_MANAGER".equals(auth) && !"Y".equals(CommUtil.getString(set.getData().getContentsManagerYn()))) ||
+	   	 				("TEACHER".equals(auth) && !"Y".equals(CommUtil.getString(set.getData().getTeacherYn()))) ||
+	   	 				("TUTOR".equals(auth) && !"Y".equals(CommUtil.getString(set.getData().getTutorYn()))) ||
+	   	 				("CHANNEL".equals(auth) && CommUtil.isEqual(set.getCompCd(), "")) ) {
+	   	 			set.setIsNotAuth("Y");
 	   	 		} else {
-	   	 			sess.setCompCd(set.getData().getCompCd());
-	   	 			sess.setC2cYn(set.getData().getC2cYn());
+	   	 			/* 사용안함 2019.7.10
+		   	 		LoginManager loginManager = LoginManager.getInstance();
+		   	 		if ( loginManager.isUsing(set.getData().getUserId()) ) {
+		   	 			//기존의 접속(세션)을 끊는다.
+		   	 			loginManager.removeSession(set.getData().getUserId());
+		   	 		}
+		   	 		*/
+	
+		   	 		SessionVO sess = new SessionVO();
+		   	 		sess.setUserId(set.getData().getUserId());
+		   	 		sess.setUserName(set.getData().getUserName());
+		   	 		sess.setAdminYn(set.getData().getAdminYn());
+		   	 		sess.setSiteManagerYn(set.getData().getSiteManagerYn());
+		   	 		sess.setContentsManagerYn(set.getData().getContentsManagerYn());
+		   	 		sess.setTutorYn(set.getData().getTutorYn());
+		   	 		sess.setTeacherYn(set.getData().getTeacherYn());
+		   	 		sess.setUserIp(request.getRemoteAddr());
+		   	 		sess.setMobile(set.getData().getMobile());
+		   	 		sess.setEmail(set.getData().getEmail());
+		   	 		sess.setCompName(set.getData().getCompName());
+		   	 		sess.setPassword(set.getCondiVO().getPassword());
+		   	 		sess.setNaverUserYn(set.getData().getNaverUserYn());
+	
+		   	 		//C2C로 로그인시 TEACHER이면 권한을 부여한다.
+		   	 		if ( CommUtil.isEqual(auth, "") && CommUtil.isEqual(SessionUtil.getSessionCompType(), "C2C") && CommUtil.isEqual(set.getData().getUserId(), set.getData().getC2cUserId()) ) {
+	   	 				auth = "CHANNEL";
+		   	 		}
+	
+		   	 		if ( "".equals(CommUtil.getString(set.getData().getCompCd())) ) {
+		   	 			sess.setCompCd("B2C");
+		   	 		} else if ( auth.equals("CHANNEL") ) {
+		   	 			sess.setCompCd(set.getCompCd());
+			   	 		sess.setCompName("개인채널");
+		   	 			sess.setC2cYn("Y");
+		   	 		} else {
+		   	 			sess.setCompCd(set.getData().getCompCd());
+		   	 			sess.setC2cYn(set.getData().getC2cYn());
+		   	 		}
+		   	 		
+		   	 		sess.setAuth(auth);
+		
+			    	//첨부자료 다운로드 권한 설정
+			    	if ( "Y".equals(set.getData().getAdminYn()) || "Y".equals(set.getData().getSiteManagerYn()) || "Y".equals(set.getData().getContentsManagerYn()) || "Y".equals(set.getData().getTutorYn()) || "Y".equals(set.getData().getTeacherYn()) )
+			    		sess.setDownloadAuth("Y");
+			    	else
+			    		sess.setDownloadAuth("N");
+	
+	 	 			//sess.setCompCd(set.getCondiVO().getCompCd());
+	
+		   	 		SessionUtil.setAttribute("session", sess);
+		   	         
+		   	 		/* 사용안함 2019.7.10
+	   	 			//새로운 세션을 등록한다. setSession함수를 수행하면 valueBound()함수가 호출된다.
+	   	 			loginManager.setSession(request.getSession(), set.getData().getUserId());
+	   	 			*/
 	   	 		}
 	   	 		
-	   	 		sess.setAuth(auth);
+	   	 		//session 종료시 다시 로긴후 돌아갈 곳을 찾기 위해서 사용
+	   	 		SessionUtil.setAttribute("loginAuth", auth);
+	   	 	}
+	   	 	
+	   	 	//카트 정보 삭제
+			SessionUtil.setAttribute("cart", null);
+			SessionUtil.setAttribute("tempCart", null);
 	
-		    	//첨부자료 다운로드 권한 설정
-		    	if ( "Y".equals(set.getData().getAdminYn()) || "Y".equals(set.getData().getSiteManagerYn()) || "Y".equals(set.getData().getContentsManagerYn()) || "Y".equals(set.getData().getTutorYn()) || "Y".equals(set.getData().getTeacherYn()) )
-		    		sess.setDownloadAuth("Y");
-		    	else
-		    		sess.setDownloadAuth("N");
-
- 	 			//sess.setCompCd(set.getCondiVO().getCompCd());
-
-	   	 		SessionUtil.setAttribute("session", sess);
-	   	         
-	   	 		/* 사용안함 2019.7.10
-   	 			//새로운 세션을 등록한다. setSession함수를 수행하면 valueBound()함수가 호출된다.
-   	 			loginManager.setSession(request.getSession(), set.getData().getUserId());
-   	 			*/
-   	 		}
-   	 		
-   	 		//session 종료시 다시 로긴후 돌아갈 곳을 찾기 위해서 사용
-   	 		SessionUtil.setAttribute("loginAuth", auth);
-   	 	}
-   	 	
-   	 	//카트 정보 삭제
-		SessionUtil.setAttribute("cart", null);
-		SessionUtil.setAttribute("tempCart", null);
-
-    	//임시 파일들을 삭제한다.
-    	commSvr.delAttachTemp();
+	    	//임시 파일들을 삭제한다.
+	    	commSvr.delAttachTemp();
+    	} catch ( Exception e ) {
+    		e.printStackTrace();
+    	}
 
         return "login/loginTran";
     }
@@ -279,6 +292,73 @@ public class LoginController {
         
         return "login/openChannel";
     }
-    
+
+    @RequestMapping(value = "/naverLogin", method = RequestMethod.GET)
+    public String naverLogin(Model model, HttpServletRequest request) throws Exception {
+    	LoginSet set = new LoginSet();
+		
+        model.addAttribute("naverClientId", SessionUtil.getAttribute("NAVER_CLIENT_ID"));
+       	model.addAttribute("naverCallback", "http://" + request.getServerName() + ":" + request.getServerPort() + "/naverCallback.do");
+        
+        return "naver/login";
+    } 
+
+    @RequestMapping(value = "/naverCallback")
+    public String naverCallback(Model model, HttpServletRequest request) throws Exception {
+    	System.out.println("naverCallback.do");
+    	
+    	String accessToken = "";
+
+        String clientId = (String)SessionUtil.getAttribute("NAVER_CLIENT_ID");
+        String clientSecret = (String)SessionUtil.getAttribute("NAVER_CLIENT_SECRET");
+        String code = request.getParameter("code");
+        String state = request.getParameter("state");
+        String redirectURI = URLEncoder.encode("YOUR_CALLBACK_URL", "UTF-8");
+        String apiURL;
+        apiURL = "https://nid.naver.com/oauth2.0/token?grant_type=authorization_code&";
+        apiURL += "client_id=" + clientId;
+        apiURL += "&client_secret=" + clientSecret;
+        apiURL += "&redirect_uri=" + redirectURI;
+        apiURL += "&code=" + code;
+        apiURL += "&state=" + state;
+        String access_token = "";
+        String refresh_token = "";
+        
+        try {
+        	URL url = new URL(apiURL);
+        	HttpURLConnection con = (HttpURLConnection)url.openConnection();
+        	con.setRequestMethod("GET");
+        	int responseCode = con.getResponseCode();
+        	BufferedReader br;
+        	if(responseCode==200) { // 정상 호출
+        		br = new BufferedReader(new InputStreamReader(con.getInputStream()));
+        	} else {  // 에러 발생
+        		br = new BufferedReader(new InputStreamReader(con.getErrorStream()));
+        	}
+        	String inputLine;
+        	StringBuffer res = new StringBuffer();
+        	while ((inputLine = br.readLine()) != null) {
+        		res.append(inputLine);
+        	}
+        	br.close();
+        	if(responseCode==200) {
+        		JSONParser jsonParser = new JSONParser();
+        		JSONObject jsonObject = (JSONObject) jsonParser.parse(res.toString());
+        		
+        		accessToken = (String)jsonObject.get("access_token");
+
+                model.addAttribute("error", "N");
+        		model.addAttribute("accessToken", accessToken);
+        	} else {
+                model.addAttribute("error", "Y");
+        		model.addAttribute("accessToken", "");
+        	}
+        } catch (Exception e) {
+        	e.printStackTrace();
+        }
+
+        return "naver/callback";
+    } 
+
     
 }

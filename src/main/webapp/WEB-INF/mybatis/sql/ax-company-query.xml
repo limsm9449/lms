@@ -33,10 +33,10 @@
 	<insert id="axCompanyInsert" parameterType="hashmap">
 		INSERT INTO COMPANY(COMP_CD, COMP_NAME, SUB_DOMAIN, ADDR, ZIPCODE, 
 						COMP_TEL, FAX,  BUSINESS_NO, OWNER_NAME, LOGIN_IMG, GNB_IMG, 
-    	                CREATE_DATE, CREATE_USER, C2C_YN, MOBILE, C2C_USER_ID, USE_YN)
+    	                CREATE_DATE, CREATE_USER, C2C_YN, MOBILE, C2C_USER_ID, USE_YN, NAVER_CLIENT_ID, NAVER_CLIENT_SECRET)
     	VALUES (#{COMP_CD}, #{COMP_NAME}, #{SUB_DOMAIN}, #{ADDR}, #{ZIPCODE}, 
     			#{COMP_TEL}, #{FAX}, #{BUSINESS_NO}, #{OWNER_NAME}, 'N', 'N',
-    	        CURRENT_TIMESTAMP, #{SESSION_USER_ID}, #{C2C_YN}, #{MOBILE}, #{C2C_USER_ID}, #{USE_YN})
+    	        CURRENT_TIMESTAMP, #{SESSION_USER_ID}, #{C2C_YN}, #{MOBILE}, #{C2C_USER_ID}, #{USE_YN}, #{NAVER_CLIENT_ID}, #{NAVER_CLIENT_SECRET})
 	</insert>  
 	
 	<update id="axCompanyUpdate" parameterType="hashmap">
@@ -56,6 +56,8 @@
 				,USE_YN = #{USE_YN}
     	       	,UPDATE_DATE = CURRENT_TIMESTAMP
     	       	,UPDATE_USER = #{SESSION_USER_ID}
+				,NAVER_CLIENT_ID = #{NAVER_CLIENT_ID}
+				,NAVER_CLIENT_SECRET = #{NAVER_CLIENT_SECRET}
     	 WHERE 	COMP_CD = #{COMP_CD}
 	</update>    
 	

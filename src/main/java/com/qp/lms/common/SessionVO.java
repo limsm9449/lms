@@ -20,6 +20,7 @@ public class SessionVO {
 	private String c2cYn;
 	private String downloadAuth;				/** 튜터, 어드민, 강사는 첨부 다운로드 권한이 있다. */
 	private String password;
+	private String naverUserYn;
 	
 	
 	//2014.8.3
@@ -141,6 +142,12 @@ public class SessionVO {
 	}
 	public void setPassword(String password) {
 		this.password = password;
+	}
+	public String getNaverUserYn() {
+		return naverUserYn;
+	}
+	public void setNaverUserYn(String naverUserYn) {
+		this.naverUserYn = naverUserYn;
 	}
 	
 		

@@ -17,6 +17,7 @@ public class LoginSet extends CommonSet {
 	private String isNotCertification;
 	private String isLogin;
 	private String compCd;
+	private String naverClientId;
 	
 	private CompanyVO companyData;
 	
@@ -106,6 +107,14 @@ public class LoginSet extends CommonSet {
 
 	public void setCompCd(String compCd) {
 		this.compCd = compCd;
+	}
+
+	public String getNaverClientId() {
+		return naverClientId;
+	}
+
+	public void setNaverClientId(String naverClientId) {
+		this.naverClientId = naverClientId;
 	}
 
 	
