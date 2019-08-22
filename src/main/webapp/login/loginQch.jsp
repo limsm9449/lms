@@ -182,7 +182,7 @@ function lfn_page(kind) {
 						<!-- 네이버아이디로로그인 버튼 노출 영역 -->
                         <script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
                         <script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
-                      	<style>.api_block{display:flex; justify-content:space-between; width:100%; margin-bottom:30px;}</style>
+                      	<style>.api_block{display:flex; flex-wrap:wrap; justify-content:space-between; width:100%; margin-bottom:30px;}</style>
                           <div class="api_block">
                               <div id="naver_id_login"></div>
                               <a id="kakao-login-btn"></a>
