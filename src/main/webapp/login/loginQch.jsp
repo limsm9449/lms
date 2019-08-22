@@ -226,13 +226,14 @@ function lfn_page(kind) {
 							</div>
 						</div>
 					</div>
-<c:if test = "${NAVER_CLIENT_ID ne null and NAVER_CLIENT_ID ne ''}">
+					<% /*
+<c:if  test = "${NAVER_CLIENT_ID ne null and NAVER_CLIENT_ID ne ''}">
 					<div class='signin_option_box clear_fix'>
 						<input type='hidden' name='naverAccessToken' id='naverAccessToken'>
 						<button class='naver' onclick="lfn_naverLogin();">네이버
 							아이디로 로그인</button>
 					</div>
-</c:if>					
+</c:if> */	%>				
 					<div class='signin_bg_box'> 
 						<img src='/resources/homepage/img/util/login_bg.png' alt=''>
 					</div>
