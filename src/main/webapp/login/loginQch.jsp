@@ -179,6 +179,41 @@ function lfn_page(kind) {
 						<input type='text' name='userId' id='userId' placeholder='아이디' onkeydown="lfn_passwordEnter();">
 						<input type='password' name='password' id='password' placeholder='비밀번호' onkeydown="lfn_passwordEnter();">
 						<button class='signin_complete_btn' onclick="lfn_login()">로그인</button>
+						<!-- 네이버아이디로로그인 버튼 노출 영역 -->
+                        <script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
+                        <script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
+                      	<style>.api_block{display:flex; justify-content:space-between; width:100%; margin-bottom:30px;}</style>
+                          <div class="api_block">
+                              <div id="naver_id_login"></div>
+                              <a id="kakao-login-btn"></a>
+                          </div>
+                          <!-- //네이버아이디로로그인 버튼 노출 영역 -->
+                          <script type="text/javascript">
+                            var naver_id_login = new naver_id_login("6jlIlsVQtLVPSn6H05Ow", "http://www.qlearning.co.kr//naverCallback.do");
+                            var state = naver_id_login.getUniqState();
+                            naver_id_login.setButton("green", 3,50);
+                            naver_id_login.setDomain("http://www.qlearning.co.kr//naverLogin.do");
+                            naver_id_login.setState(state);
+                            naver_id_login.setPopup();
+                            naver_id_login.init_naver_id_login();
+                          </script>
+                          <!-- //카카오아이디로로그인 버튼 노출 영역 -->
+                          <script type='text/javascript'>
+                          //<![CDATA[
+                            // 사용할 앱의 JavaScript 키를 설정해 주세요.
+                            Kakao.init('45c6406331bca7a8d451c9d36f1c7a94');
+                            // 카카오 로그인 버튼을 생성합니다.
+                            Kakao.Auth.createLoginButton({
+                                container: '#kakao-login-btn',
+                                success: function(authObj) {
+                                    document.getElementById('kakao-login-result').innerText = 'success: ' + JSON.stringify(authObj);
+                                },
+                                fail: function(err) {
+                                    document.getElementById('kakao-login-result').innerText = 'fail: ' + JSON.stringify(err);
+                                }
+                            });
+                          //]]>
+                        </script>
 						<div>
 							<div class='signin_sub_control left clear_fix'>
 								<input type='checkbox' name='cb_continue' id='cb_continue'>
