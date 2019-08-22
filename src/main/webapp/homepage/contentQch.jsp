@@ -265,6 +265,43 @@ function lfn_openChannel(channel) {
 	            <ul class='slider_wrap tabs' id='tab${row.SEQ}'>
 					<c:forEach var="detailRow" items="${detailList}" varStatus="idx2">
 		                <li class='slide_box slide_${detailRow.SEQ}' onclick="fn_linkCall(${detailRow.SEQ})">
+		                <style>
+							.tab_type1{
+								width:1122px;
+								margin: 0 auto 20px;
+								font-weight: 300;
+							}
+							.tab_type1 ol{display: flex;}
+							.tab_type1 li{
+								flex:1;
+								border: 1px solid #e8e8e8;
+								background-color: #e8e8e8;
+							}   
+							.tab_type1 li:hover {
+								border-color: #222 ;
+								background-color: #fff;
+								font-weight: 400;
+								}
+							.tab_type1 li a{
+								display: block;
+								height: 48px;
+								text-align: center;
+								line-height: 48px;
+								font-weight:700;
+							}
+						</style>
+                        <nav class="tab_type1">
+                            <ol>
+                                <li ><a href="#">전체</a></li>
+                                <li ><a href="#">직무/비지니스</a></li>
+                                <li><a href="#">IT/프로그래밍</a></li>
+                                <li><a href="#">디자인</a></li>
+                                <li><a href="#">인문/사회</a></li>
+                                <li><a href="#">초/중/고등 학습</a></li>
+                                <li><a href="#">생활/취미</a></li>
+                                <li><a href="#">자격증</a></li>
+                            </ol>
+                        </nav>
 		                    <div class='visual_box'>
 		                        <div class='slide clear_fix'>
 		                            <div class='slider_text_box'>
