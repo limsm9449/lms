@@ -51,7 +51,7 @@
                             </tr>
                             <tr class="print_table_top">
                                 <td class="print_table_title">사업자 소재시</td>
-                                <td class="print_table_content">서울특별시 금천구 가산디지털1로 145, 4층 410, 411호(가산동, 에이스하이엔드타워3차)</td>
+                                <td class="print_table_content">서울특별시 금천구 디지털로 121, 1703호(가산동, 에이스 가산타워)</td>
                             </tr>
                             <tr class="print_table_top">
                                 <td class="print_table_title">업태</td>
