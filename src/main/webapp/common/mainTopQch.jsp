@@ -125,6 +125,11 @@
                             전체과정보기
                         </a>
                     </div>
+                    <div class='mobile_full_box'>
+                        <a href="javascript:" onclick="page.goPage('/main/cart', '');">
+                            장바구니
+                        </a>
+                    </div>
                     <div class='mobile_menu classroom'>
                         <button onclick='sub_menu_open(this, "main")'>
                             나의강의실
