@@ -1320,6 +1320,9 @@ th.register_compose_col1.right_border.part_only {
         width:15.5%;
         padding-left:7.5%;
     }
+    .search_box{
+		left:11%;
+	}
 }
 @media all and (max-width:420px){
     #width_text{
