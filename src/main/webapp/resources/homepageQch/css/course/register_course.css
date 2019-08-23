@@ -670,20 +670,26 @@ header {
     letter-spacing: -1px;
 }
 .register_course_info_text div p span{}
+.payment{font-family:"NanumSquare"; font-weight: 900; }
+.payment span strong{font-family:"NanumSquare"; font-size:36px;}
 .register_payment{
     font-family: "NanumSquare";
     font-weight: 900;
-    font-size: 24px;
-    padding: 20px 0 40px;
+    font-size: 12px;
+    padding: 20px 0;
 }
 .register_payment span{
     color: #666;
 }
 .register_payment span strong{
     font-family: "NanumSquare";
-    font-size: 36px;
-    color: #048ae3;
+    font-size: 18px;
+    color: #333;
+    text-decoration:line-through;
 }
+.discount_payment {padding-bottom: 40px; font-size:24px;}
+.discount_payment span strong{font-size:36px; color:#048ae3}
+
 .register_btn_area{
 }
 .register_btn_area button{
