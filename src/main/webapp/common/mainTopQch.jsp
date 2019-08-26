@@ -130,6 +130,7 @@
                             장바구니
                         </a>
                     </div>
+                    <!--
                     <div class='mobile_menu classroom'>
                         <button onclick='sub_menu_open(this, "main")'>
                             나의강의실
@@ -141,6 +142,7 @@
                             <li><a href="javascript:" onclick="page.goPage('/normalUser/myCourseList');">수강완료과정</a></li>
                         </ul>
                     </div>
+                    -->
                     <div class='mobile_menu tutorial'>
                         <button onclick='sub_menu_open(this, "main")'>
                             마이페이지
