@@ -251,6 +251,28 @@ function lfn_openChannel(channel) {
 					</c:forEach>
 	            </ul>
 	      	</div>
+<style>
+.tab_type1{
+    font-weight: 300;
+}
+.tab_type1 ol{display: flex;}
+.tab_type1 li{
+    flex:1;
+    border: 1px solid #e8e8e8;
+	background-color: #e8e8e8;
+}   
+.tab_type1 li:hover {
+    border-color: #222 ;
+	background-color: #fff;
+    font-weight: 400;
+    }
+.tab_type1 li a{
+    display: block;
+    height: 40px;
+    text-align: center;
+    line-height: 40px;
+}
+</style>
 	      	    <nav class="tab_type1">
 			        <ol>
 			            <li ><a href="#">전체</a></li>
