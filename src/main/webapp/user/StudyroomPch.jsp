@@ -219,7 +219,10 @@ function lfn_validate() {
 
 </form>
 
-
+<script>
+var nodown=document.getElementById('MPlayer');
+nodown.setAttribute('controlsList','nodownload');
+</script>
 </body>
 
 </html>
