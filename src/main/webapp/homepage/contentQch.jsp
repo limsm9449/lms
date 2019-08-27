@@ -251,7 +251,20 @@ function lfn_openChannel(channel) {
 					</c:forEach>
 	            </ul>
 	      	</div>
+	      	    <nav class="tab_type1">
+			        <ol>
+			            <li ><a href="#">전체</a></li>
+			            <li class="on"><a href="#">직무/비지니스</a></li>
+			            <li><a href="#">IT/프로그래밍</a></li>
+			            <li><a href="#">디자인</a></li>
+			            <li><a href="#">인문/사회</a></li>
+			            <li><a href="#">초/중/고등 학습</a></li>
+			            <li><a href="#">생활/취미</a></li>
+			            <li><a href="#">자격증</a></li>
+			        </ol>
+			    </nav>
         </c:when>
+        
  		<c:when test = "${row.FRAME_KIND eq 'DOT_S_SLIDE'}">
             <div class='process_wrap lectures_wrap' style="margin-bottom:${row.BOTTOM_HEIGHT}px">
 	 			<c:if test = "${row.FRAME_NAME ne ''}">
