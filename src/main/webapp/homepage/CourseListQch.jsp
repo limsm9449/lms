@@ -117,12 +117,12 @@ function lfn_viewTypeChg(kind) {
                     <!-- Top END -->
 
                     <!-- Filter Area -->
-                 	<script>
-						function fn_cbChange(id) {
-							if ( id == "CB_LEVEL1" ) {
-							    gfn_callAjax("/common/axDd.do", { DD_KIND : "CategoryLevel2", LEVEL1_CODE : $("#CB_LEVEL1 option:selected").val()}, fn_callbackAjax, "CB_LEVEL1", { async : false });
-							} 
-						}
+                    <script>
+					function fn_cbChange(id) {
+						if ( id == "CB_LEVEL1" ) {
+						    gfn_callAjax("/common/axDd.do", { DD_KIND : "CategoryLevel2", LEVEL1_CODE : $("#CB_LEVEL1 option:selected").val()}, fn_callbackAjax, "CB_LEVEL1", { async : false });
+						} 
+					}
 					</script>
                     <div class='process_filter clear_fix'>
                         <div>
@@ -130,6 +130,13 @@ function lfn_viewTypeChg(kind) {
                             	<li class='process_filter_item select1'>
 		                            <select class="form-control" id="CB_LEVEL1" onchange="fn_cbChange('CB_LEVEL1')">
                                         <option value="">전체</option>
+                                        <option value="C02">비지니스</option>
+                                        <option value="C03">IT/프로그래밍</option>
+                                        <option value="C04">디자인</option>
+                                        <option value="C05">인문/사회</option>
+                                        <option value="C06">초/중/고등학습</option>
+                                        <option value="C07">생활/취미</option>
+                                        <option value="C08">자젹증</option>
                                     </select>
                                 </li>
                                 <li class='process_filter_item select2'>
