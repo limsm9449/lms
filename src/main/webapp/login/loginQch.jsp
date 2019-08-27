@@ -172,17 +172,25 @@ function lfn_page(kind) {
 					</div>
 				</div>
 				<!-- Top END -->
-
 				<div class='util_wrap signin'>
 					<img src='/resources/homepageQch/img/etc/login_main.png' alt=' '>
 					<div class='signin_main_control clear_fix'>
 						<input type='text' name='userId' id='userId' placeholder='아이디' onkeydown="lfn_passwordEnter();">
 						<input type='password' name='password' id='password' placeholder='비밀번호' onkeydown="lfn_passwordEnter();">
 						<button class='signin_complete_btn' onclick="lfn_login()">로그인</button>
+						
+						
+						<style>
+							.api_block{display:flex; flex-wrap:wrap; justify-content:space-between; width:100%; margin-bottom:30px;}
+							.signin_option_box{display:none;}
+							@media (max-width:550px){
+								.api_block{ display: none;}
+								.signin_option_box{display:block;}
+							}
+						</style>
 						<!-- 네이버아이디로로그인 버튼 노출 영역 -->
                         <script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
                         <script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
-                      	<style>.api_block{display:flex; flex-wrap:wrap; justify-content:space-between; width:100%; margin-bottom:30px;}</style>
                           <div class="api_block">
                               <div id="naver_id_login"></div>
                               <a id="kakao-login-btn"></a>
@@ -214,6 +222,14 @@ function lfn_page(kind) {
                             });
                           //]]>
                         </script>
+                        					
+<c:if  test = "${NAVER_CLIENT_ID ne null and NAVER_CLIENT_ID ne ''}">
+					<div class='signin_option_box clear_fix'>
+						<input type='hidden' name='naverAccessToken' id='naverAccessToken'>
+						<button class='naver' onclick="lfn_naverLogin();">네이버
+							아이디로 로그인</button>
+					</div>
+</c:if> 		
 						<div>
 							<div class='signin_sub_control left clear_fix'>
 								<input type='checkbox' name='cb_continue' id='cb_continue'>
@@ -226,14 +242,7 @@ function lfn_page(kind) {
 							</div>
 						</div>
 					</div>
-					<% /*
-<c:if  test = "${NAVER_CLIENT_ID ne null and NAVER_CLIENT_ID ne ''}">
-					<div class='signin_option_box clear_fix'>
-						<input type='hidden' name='naverAccessToken' id='naverAccessToken'>
-						<button class='naver' onclick="lfn_naverLogin();">네이버
-							아이디로 로그인</button>
-					</div>
-</c:if> */	%>				
+		
 					<div class='signin_bg_box'> 
 						<img src='/resources/homepage/img/util/login_bg.png' alt=''>
 					</div>

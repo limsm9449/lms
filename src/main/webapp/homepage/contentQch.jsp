@@ -253,7 +253,9 @@ function lfn_openChannel(channel) {
 	      	</div>
 <style>
 .tab_type1{
-    font-weight: 300;
+	width:1122px;
+	margin: 0 auto;
+    font-weight: 300; 
 }
 .tab_type1 ol{display: flex;}
 .tab_type1 li{
