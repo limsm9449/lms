@@ -275,14 +275,14 @@ function lfn_openChannel(channel) {
 </style>
 	      	    <nav class="tab_type1">
 			        <ol>
-			            <li ><a href="#">전체</a></li>
-			            <li class="on"><a href="#">직무/비지니스</a></li>
-			            <li><a href="#">IT/프로그래밍</a></li>
-			            <li><a href="#">디자인</a></li>
-			            <li><a href="#">인문/사회</a></li>
-			            <li><a href="#">초/중/고등 학습</a></li>
-			            <li><a href="#">생활/취미</a></li>
-			            <li><a href="#">자격증</a></li>
+			            <li><a href='#' onclick="page.goPage('/main/courseList', '');">전체</a></li>
+			            <li><a href='#' onclick="page.goPage('/main/courseList', '');">직무/비지니스</a></li>
+			            <li><a href='#' onclick="page.goPage('/main/courseList', '');">IT/프로그래밍</a></li>
+			            <li><a href='#' onclick="page.goPage('/main/courseList', '');">디자인</a></li>
+			            <li><a href='#' onclick="page.goPage('/main/courseList', '');">인문/사회</a></li>
+			            <li><a href='#' onclick="page.goPage('/main/courseList', '');">초/중/고등 학습</a></li>
+			            <li><a href='#' onclick="page.goPage('/main/courseList', '');">생활/취미</a></li>
+			            <li><a href='#' onclick="page.goPage('/main/courseList', '');">자격증</a></li>
 			        </ol>
 			    </nav>
         </c:when>
