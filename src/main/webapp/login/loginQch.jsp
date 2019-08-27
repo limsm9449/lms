@@ -180,14 +180,6 @@ function lfn_page(kind) {
 						<button class='signin_complete_btn' onclick="lfn_login()">로그인</button>
 						
 						
-						<style>
-							.api_block{display:flex; flex-wrap:wrap; justify-content:space-between; width:100%; margin-bottom:30px;}
-							.signin_option_box{display:none;}
-							@media (max-width:550px){
-								.api_block{ display: none;}
-								.signin_option_box{display:block;}
-							}
-						</style>
 						<!-- 네이버아이디로로그인 버튼 노출 영역 -->
                         <script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
                         <script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>

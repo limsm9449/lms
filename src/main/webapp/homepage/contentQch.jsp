@@ -260,8 +260,9 @@ function lfn_openChannel(channel) {
 .tab_type1 ol{display: flex;}
 .tab_type1 li{
     flex:1;
+    margin: 2px;
     border: 1px solid #e8e8e8;
-	background-color: #e8e8e8;
+	background-color: #fff;
 }   
 .tab_type1 li:hover {
     border-color: #222 ;
