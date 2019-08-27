@@ -117,10 +117,22 @@ function lfn_viewTypeChg(kind) {
                     <!-- Top END -->
 
                     <!-- Filter Area -->
+                 	<script>
+						function fn_cbChange(id) {
+							if ( id == "CB_LEVEL1" ) {
+							    gfn_callAjax("/common/axDd.do", { DD_KIND : "CategoryLevel2", LEVEL1_CODE : $("#CB_LEVEL1 option:selected").val()}, fn_callbackAjax, "CB_LEVEL1", { async : false });
+							} 
+						}
+					</script>
                     <div class='process_filter clear_fix'>
                         <div>
                             <ul class='clear_fix'>
-                                <li class='process_filter_item select1'>
+                            	<li class='process_filter_item select1'>
+		                            <select class="form-control" id="CB_LEVEL1" onchange="fn_cbChange('CB_LEVEL1')">
+                                        <option value="">전체</option>
+                                    </select>
+                                </li>
+                                <li class='process_filter_item select2'>
 		                            <select name='orderKind' id='orderKind' onchange="$('pageNum').val(1); lfn_btn('search');">
 		                                <option value='Popularity' <c:if test="${set.condiVO.orderKind eq null || set.condiVO.orderKind eq 'Popularity'}">selected</c:if>>인기강의순</option>
 		                                <option value='Recommendation' <c:if test="${set.condiVO.orderKind eq 'Recommendation'}">selected</c:if>>추천강의순</option>
