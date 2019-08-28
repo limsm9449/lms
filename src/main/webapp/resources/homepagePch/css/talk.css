@@ -413,4 +413,6 @@
 	.t_0{
 		width:45%;
 	}
+.t_view{min-height:600px}
+.t_chat{max-height:500px; min-height:500px;}
 }
