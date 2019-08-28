@@ -130,6 +130,7 @@ function lfn_validate() {
          	<div class="mobile_topbtn" onclick="mobile_show();">
             	<img src="/resources/homepageQch/img/myclass/top_btn.png">
             </div>
+           	<a href="#" onclick="page.goPage('/normal/User/attendCourseList','');" style="float:right; color:#fff;" >닫기</a>
             <div class="top_title">
         		${set.courseInfo.courseName}
             </div>
