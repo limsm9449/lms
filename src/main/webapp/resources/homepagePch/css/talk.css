@@ -5,8 +5,8 @@
 	height:1000px;
 	/*margin-bottom:250px;*/
 }
-.t_exit{position:absolute; right: calc(50% -300px)}
-.t_exit a{display:block; width:100px; height:100px; border:3px solid #fff; border-radius:100%; color:#fff; font-size:22px; line-height:100px;}
+.t_exit{position:absolute; right: calc(50% - 300px); top: 100px;}
+.t_exit a{display:block; width:100px; height:100px; border:3px solid #fff; border-radius:100%; color:#fff; font-size:22px; tex-align:center; line-height:100px;}
 
 .t_title{
 	margin-bottom:10px;
@@ -279,9 +279,9 @@
 }
 /*****************텍스트 입력***********************/
 .t_notice_wrap{display:flex; }
-.t_notice_wrap span{display:block; height:30px; background-color:#fff;}
-.t_notice_wrap span:nth-of-type(1){width: 100px; }
-.t_notice_wrap span:nth-of-type(2){flex:1;}
+.t_notice_wrap span{display:block; height:45px; line-height:45px}
+.t_notice_wrap span:nth-of-type(1){width: 100px; text-align:center; background-color:#13beda }
+.t_notice_wrap span:nth-of-type(2){flex:1; background-color:#fff;}
 .t_typing{
 	background:#F6F6F6;
 	height:115px;
