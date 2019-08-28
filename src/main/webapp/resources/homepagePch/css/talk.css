@@ -3,7 +3,7 @@
 .t_bg{
 	background:url('../img/talk/t_bg.png') #0F97A7 0% 0% no-repeat;
 	height:1000px;
-	margin-bottom:250px;
+	/*margin-bottom:250px;*/
 }
 .t_title{
 	margin-bottom:10px;
@@ -33,6 +33,8 @@
 	margin-top:30px;
 	margin-bottom:30px;
 	min-height:874px;
+	transfrom:scale(0.7);
+	transform-origin:top;
 }
 .t_chat_view{
 	
