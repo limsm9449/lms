@@ -344,6 +344,7 @@ body{
 		text-align:left;
 		padding-left:10px;
 	}
+	.top_exit{position:absolute; right:8px; top:15px; color:#fff}
 }
 @media all and (max-width:1000px){
 	.nav_btn_group {
@@ -362,6 +363,7 @@ body{
 		width:80%;
 		display:inline-block;
 	}
+	.top_exit{top:20px}
 	.mobile_topbtn > img{
 		position:relative;
 		top:-6px;
