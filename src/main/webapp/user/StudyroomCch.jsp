@@ -133,7 +133,7 @@ function lfn_validate() {
             <div class="top_title">
         		${set.courseInfo.courseName}
             </div>
-            <a class="top_exit" href="#" onclick="page.goPage('/normalUser/attendCourseList','');">닫기</a>
+            <a class="top_exit" href="#" onclick="window.close();">닫기</a>
          </div>
          <!-----left----->   
          <div class="cl_bg" id="index_bg">

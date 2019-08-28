@@ -50,7 +50,7 @@ body{
 	font-family: 'NanumSquare';
 	color:#cccccc;
 }
-
+.top_exit{position:absolute; right:8px; top:15px; color:#fff}
 
 /*left*/
 .cl_left{
