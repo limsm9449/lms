@@ -32,6 +32,14 @@
 <frameset rows='*'>
     <div class='wrap'>
         <!-- CONTENTS -->
+        <style>
+        	.btn_wrap:after{content:'';clear:both}
+        	.btn_wrap button{float:right; width:150px; height:50px}
+        </style>
+        <div class="btn_wrap">
+        	<button onclick='window.print();'>인쇄하기</button>
+        	<button onclick='window.close();'>닫기</button>
+        </div>
         <div class='contents_wrap process'>
             <div class='contents_wrap_box popup'>
                 <div class='basket_completed_popup'>

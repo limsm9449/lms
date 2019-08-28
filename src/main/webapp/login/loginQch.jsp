@@ -192,7 +192,7 @@ function lfn_page(kind) {
                             var naver_id_login = new naver_id_login("45c6406331bca7a8d451c9d36f1c7a94", "http://www.qlearning.co.kr//naverCallback.do");
                             var state = naver_id_login.getUniqState();
                             naver_id_login.setButton("green", 3,50);
-                            naver_id_login.setDomain("http://www.qlearning.co.kr//naverLogin.do");
+                            naver_id_login.setDomain("http://testqlearn.cafe24.com//naverLogin.do");
                             naver_id_login.setState(state);
                             naver_id_login.setPopup();
                             naver_id_login.init_naver_id_login();
