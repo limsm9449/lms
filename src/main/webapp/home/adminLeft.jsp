@@ -361,8 +361,8 @@ function gfn_openMenu(pageId, params) {
 	          		<li><a href="#" class="mainMenu linker" onclick="gfn_openMenu('axCourseListCh'); gfn_menu(this)" id="chFirstGroup"><span>강의 관리</span></a></li>
 	          		<li><a href="#" class="mainMenu linker" onclick="gfn_openMenu('axScoreListCh'); gfn_menu(this)"><span>성적 관리</span></a></li> 
 	          		<li><a href="#" class="mainMenu linker" onclick="gfn_openMenu('axIncomeListCh'); gfn_menu(this)"><span>수입 관리</span></a></li>
-	              	<li><a href="#" class="mainMenu linker" onclick="gfn_openMenu('axTalkListCh'); gfn_subMenu(this);"><span>큐톡 관리</span></a></li>
-	              	<li><a href="#" class="mainMenu linker" onclick="gfn_openMenu('axTalkNoticeListCh'); gfn_subMenu(this);"><span>큐톡 공지 관리</span></a></li>
+	              	<li><a href="#" class="mainMenu linker" onclick="gfn_openMenu('axTalkListCh'); gfn_menu(this);"><span>큐톡 관리</span></a></li>
+	              	<li><a href="#" class="mainMenu linker" onclick="gfn_openMenu('axTalkNoticeListCh'); gfn_menu(this);"><span>큐톡 공지 관리</span></a></li>
 </c:if>
         		</ul>
       		</div>
