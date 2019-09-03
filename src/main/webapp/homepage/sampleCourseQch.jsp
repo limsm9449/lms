@@ -169,9 +169,9 @@ function lfn_validate() {
         <!------------------------------video--->
         <div class="videohtml">
         <style>
-        	#eduContent{width:100%}
+        	#eduContent{width:100%; }
         	@media only screen and (orientation: landscape) and (max-width: 720px) {
-			  #eduContent{margin: 0 auto; width:100vh;}
+			  #eduContent{margin: 0 auto; width:100vh; height: calc(100vh - 56px);}
 			}
         </style>
         	<div class="innerhtml" >
