@@ -170,7 +170,7 @@ function lfn_validate() {
         <div class="videohtml">
         
         	<div class="innerhtml" >
-        		<iframe name="eduContent" id="eduContent" class="innerframe" src="" style="width:100%;height: ${set.courseData.vPx}px;"></iframe>
+        		<iframe name="eduContent" id="eduContent" class="innerframe" src="" style="width:100%;max-height: ${set.courseData.vPx}px;height:56vw;"></iframe>
             </div>
             
             <!-----------------nav-------------->
