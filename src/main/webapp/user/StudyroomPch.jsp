@@ -170,7 +170,12 @@ function lfn_validate() {
          
         <!------------------------------video--->
         <div class="videohtml">
-        
+        <style>
+        #eduContent{width:100%; }
+   		@media only screen and (orientation: landscape) and (max-width: 720px) {
+ 	 		#eduContent{margin: 0 auto; width:100vh; height: calc(100vh - 56px);}
+		}
+        </style>
         	<div class="innerhtml" >
         		<iframe name="eduContent" id="eduContent" class="innerframe" src="" style="max-height: ${set.courseInfo.vPx}px; height:calc(${set.courseInfo.vPx}vw * 0.1 );"></iframe>
             </div>
