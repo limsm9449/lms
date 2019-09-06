@@ -170,7 +170,7 @@ function lfn_validate() {
         <style>
         #eduContent{width:100%; max-height: ${set.courseData.vPx}px; height:calc(${set.courseData.vPx}vw * 0.1 ); }
    		@media only screen and (orientation: landscape) and (max-width: 720px) {
- 	 		#eduContent{margin: 0 auto; width:clac((100vh - 56px) * 1000 / ${set.courseData.vPx}); height: calc(100vh - 56px);}
+ 	 		#eduContent{margin: 0 auto; width:calc((100vh - 56px) * 1000 / ${set.courseData.vPx}); height: calc(100vh - 56px);}
 		}
         </style>
         	<div class="innerhtml" >
