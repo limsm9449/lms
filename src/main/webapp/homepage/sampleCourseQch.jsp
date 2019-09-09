@@ -169,7 +169,7 @@ function lfn_validate() {
         <div class="videohtml">
         <style>
         #eduContent{margin: 0 auto; max-width: ${set.courseData.hPx}px; max-height: ${set.courseData.vPx}px;  width:calc((100vh - 56px) * ${set.courseData.hPx} / ${set.courseData.vPx}); height: calc(100vh - 56px); }
-   		@media only screen and (orientation: portrate) {
+   		@media only screen and (orientation: portrait) {
  	 		#eduContent{width:100%; height:calc(${set.courseData.vPx}vw * 0.1 ); }
 		}
         </style>

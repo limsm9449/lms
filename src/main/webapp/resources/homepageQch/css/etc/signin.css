@@ -659,9 +659,13 @@ header {
     font-size:15px;
     font-weight:500;
     color:#fff;
-    text-align:right;
+    /*text-align:right;*/
     letter-spacing:-1px;
     padding:22px 18px 22px 0;
+	/* 네이버 로그인 단일 */
+	text-align:center;
+	background-color:#1dc800;
+	background-size:contain;
 }
 .signin_option_box button:hover{
     color:#ddd;
@@ -964,7 +968,7 @@ header {
 
 
 
-.api_block{display:flex; flex-wrap:wrap; justify-content:space-between; width:100%; margin-bottom:30px;}
+.api_block{display:none; flex-wrap:wrap; justify-content:space-between; width:100%; margin-bottom:30px;}
 .signin_option_box{display:block;}
 @media (max-width:550px){
 	.api_block{ display: none;}
