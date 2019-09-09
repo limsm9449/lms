@@ -599,7 +599,8 @@ header {
     color: #fff;
     padding: 20px 0;
     background: #0180d3;
-    margin: 20px 0 30px;
+    /*margin: 20px 0 30px; */
+    margin: 20px 0 0;
 }
 .signin_complete_btn:hover{
     background:#1e92de;
@@ -677,6 +678,7 @@ header {
     background-size:contain;
     background-color:#1ec800;
 	text-align:center;
+	margin: 10px 0;
 }
 .signin_option_box .facebook{
     float:right;
