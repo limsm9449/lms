@@ -220,6 +220,11 @@ function fn_makeGrid() {
 	            width : 70,
 	            align : "right"
 	        },{
+	            key : "TEACHER_NAME",
+	            label : "강사",
+	            width : 70,
+	            align : "center"
+	        },{
 	        	key : "COMP_CD", 
 	        	label : "회사", 
 	            width : 100,

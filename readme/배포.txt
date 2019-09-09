@@ -15,3 +15,4 @@
 	jdbc.username=testqlearn
 	jdbc.password=ace1703+
 
++ 네이버 - limsm : EenAgdYVn_EwufGkhqCD / dFAg8sTVHt
