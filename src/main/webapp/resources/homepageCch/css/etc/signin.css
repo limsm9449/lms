@@ -670,7 +670,13 @@ header {
 .signin_option_box .naver{
     float:left;
     background:url('../../img/etc/login_naver.jpg') no-repeat;
-    background-size:cover;
+    /*background-size:cover;*/
+    /* 네이버 로그인 단일 */
+	float:none;
+    width:100%;
+    background-size:contain;
+    background-color:#1ec800;
+	text-align:center;
 }
 .signin_option_box .facebook{
     float:right;
@@ -963,7 +969,7 @@ header {
     
 }
 
-.api_block{display:flex; flex-wrap:wrap; justify-content:space-between; width:100%; margin-bottom:30px;}
+.api_block{display:none; flex-wrap:wrap; justify-content:space-between; width:100%; margin-bottom:30px;}
 .signin_option_box{display:none;}
 @media (max-width:550px){
 	.api_block{ display: none;}

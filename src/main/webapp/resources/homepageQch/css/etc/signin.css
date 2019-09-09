@@ -655,17 +655,14 @@ header {
 }
 .signin_option_box button{
     display:block;
-    width:49%;
+    /*width:49%;*/
     font-size:15px;
     font-weight:500;
     color:#fff;
     /*text-align:right;*/
     letter-spacing:-1px;
     padding:22px 18px 22px 0;
-	/* 네이버 로그인 단일 */
-	text-align:center;
-	background-color:#1dc800;
-	background-size:contain;
+
 }
 .signin_option_box button:hover{
     color:#ddd;
@@ -673,7 +670,13 @@ header {
 .signin_option_box .naver{
     float:left;
     background:url('../../img/etc/login_naver.jpg') no-repeat;
-    background-size:cover;
+    /*background-size:cover; */
+    /* 네이버 로그인 단일 */
+	float:none;
+    width:100%;
+    background-size:contain;
+    background-color:#1ec800;
+	text-align:center;
 }
 .signin_option_box .facebook{
     float:right;

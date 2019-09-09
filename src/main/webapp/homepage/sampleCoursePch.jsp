@@ -169,9 +169,9 @@ function lfn_validate() {
         <!------------------------------video--->
         <div class="videohtml">
         <style>
-        #eduContent{width:100%; max-height: ${set.courseData.vPx}px; height:calc(${set.courseData.vPx}vw * 0.1 ); }
-   		@media only screen and (orientation: landscape) and (max-width: 720px) {
- 	 		#eduContent{margin: 0 auto; width:calc((100vh - 56px) * ${set.courseData.hPx} / ${set.courseData.vPx}); height: calc(100vh - 56px);}
+        #eduContent{margin: 0 auto; max-width: ${set.courseData.hPx}px; max-height: ${set.courseData.vPx}px;  width:calc((100vh - 56px) * ${set.courseData.hPx} / ${set.courseData.vPx}); height: calc(100vh - 56px); }
+   		@media only screen and (orientation: portrait) {
+ 	 		#eduContent{width:100%; height:calc(${set.courseData.vPx}vw * 0.1 ); }
 		}
         </style>
         	<div class="innerhtml" >

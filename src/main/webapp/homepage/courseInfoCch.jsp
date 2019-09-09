@@ -287,7 +287,12 @@ function lfn_btn(pKind, pParam) {
                         </p>
 </c:if>              
                         <p class='register_payment'>
-                            판매가격 :
+                            총 상품금액 :
+                            <c:if test="${set.courseData.courseCost ne set.courseData.courseOrgCost}">
+                            	<span style="text-decoration:line-through;">
+                                	<fmt:formatNumber value="${set.courseData.courseOrgCost}" type="number"/>원
+                            	</span>
+                            </c:if>
                             <span>
                                 <strong><fmt:formatNumber value="${set.courseData.courseCost}" type="number"/></strong>원
                             </span>
