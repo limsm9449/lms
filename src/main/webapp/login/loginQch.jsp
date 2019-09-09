@@ -179,7 +179,7 @@ function lfn_page(kind) {
 						<input type='password' name='password' id='password' placeholder='비밀번호' onkeydown="lfn_passwordEnter();">
 						<button class='signin_complete_btn' onclick="lfn_login()">로그인</button>
 						
-						
+<!-- 						
 						<!-- 네이버아이디로로그인 버튼 노출 영역 -->
                         <script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
                         <script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
@@ -214,7 +214,7 @@ function lfn_page(kind) {
                             });
                           //]]>
                         </script>
-                        					
+ -->                        					
 <c:if  test = "${NAVER_CLIENT_ID ne null and NAVER_CLIENT_ID ne ''}">
 					<div class='signin_option_box clear_fix'>
 						<input type='hidden' name='naverAccessToken' id='naverAccessToken'>

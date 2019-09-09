@@ -277,7 +277,8 @@ function lfn_btn(pKind, pParam) {
                                 </p>
                             </div>
                         </div>
-</c:if>                        
+</c:if>
+<!--                          
 <c:if test="${set.courseData.courseCost ne set.courseData.courseOrgCost}">
                         <p class='register_payment payment'>
                             시중가격 :
@@ -285,9 +286,15 @@ function lfn_btn(pKind, pParam) {
                                 <strong><fmt:formatNumber value="${set.courseData.courseOrgCost}" type="number"/></strong>원
                             </span>
                         </p>
-</c:if>                        
+</c:if>
+-->                        
                         <p class='discount_payment payment'>
-                            판매가격 :
+                            총 상품금액 :
+                            <c:if test="${set.courseData.courseCost ne set.courseData.courseOrgCost}">
+                            	<span style="text-decoration:line-through;">
+                                	<fmt:formatNumber value="${set.courseData.courseOrgCost}" type="number"/>원
+                            	</span>
+                            </c:if>
                             <span>
                                 <strong><fmt:formatNumber value="${set.courseData.courseCost}" type="number"/></strong>원
                             </span>
