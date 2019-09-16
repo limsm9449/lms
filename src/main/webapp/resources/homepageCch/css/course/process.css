@@ -807,7 +807,7 @@ header {
     text-align:center;
 }
 .process_search_result > div .process_result_con{
-    text-indent:13%;
+    /*text-indent:13%;*/
 	width:67px;
 }
 .process_result_checkbox{
