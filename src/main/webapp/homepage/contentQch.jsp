@@ -276,6 +276,7 @@ function lfn_openChannel(channel) {
     line-height: 40px;
 }
 </style>
+			<!--
 	      	    <nav class="tab_type1">
 			        <ol>
 			            <li><a href='#' onclick="page.goPage('/main/courseList', '');">전체</a></li>
@@ -288,6 +289,7 @@ function lfn_openChannel(channel) {
 			            <li><a href='#' onclick="page.goPage('/main/courseList', '');">자격증</a></li>
 			        </ol>
 			    </nav>
+			    -->
         </c:when>
         
  		<c:when test = "${row.FRAME_KIND eq 'DOT_S_SLIDE'}">

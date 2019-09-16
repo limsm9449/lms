@@ -120,6 +120,7 @@ function lfn_viewTypeChg(kind) {
                     <div class='process_filter clear_fix'>
                         <div>
                             <ul class='clear_fix'>
+                            <!-- 
                             	<li class='process_filter_item select1'>
 		                            <select class="form-control" id="CB_LEVEL1">
                                         <option value="">전체</option>
@@ -132,6 +133,7 @@ function lfn_viewTypeChg(kind) {
                                         <option value="C08">자격증</option>
                                     </select>
                                 </li>
+                              -->
                                 <li class='process_filter_item select2'>
 		                            <select name='orderKind' id='orderKind' onchange="$('pageNum').val(1); lfn_btn('search');">
 		                                <option value='Popularity' <c:if test="${set.condiVO.orderKind eq null || set.condiVO.orderKind eq 'Popularity'}">selected</c:if>>인기강의순</option>

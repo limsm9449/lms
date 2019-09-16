@@ -215,13 +215,13 @@ function lfn_page(kind) {
                           //]]>
                         </script>
                        					
-<?php /* <c:if  test = "${NAVER_CLIENT_ID ne null and NAVER_CLIENT_ID ne ''}"> */ ?>
+<?php /* <c:if  test = "${NAVER_CLIENT_ID ne null and NAVER_CLIENT_ID ne ''}"> 
 					<div class='signin_option_box clear_fix'>
 						<input type='hidden' name='naverAccessToken' id='naverAccessToken'>
 						<button class='naver' onclick="lfn_naverLogin();">네이버
 							아이디로 로그인</button>
 					</div>
-<?php /* </c:if> */ ?> 		
+ </c:if> */ ?> 		
 						<div>
 							<div class='signin_sub_control left clear_fix'>
 								<input type='checkbox' name='cb_continue' id='cb_continue'>
