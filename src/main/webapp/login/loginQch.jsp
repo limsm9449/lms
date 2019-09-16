@@ -192,7 +192,7 @@ function lfn_page(kind) {
                             var naver_id_login = new naver_id_login("6jlIlsVQtLVPSn6H05Ow", "http://testqlearn.cafe24.com//naverCallback.do");
                             var state = naver_id_login.getUniqState();
                             naver_id_login.setButton("green", 3,50);
-                            naver_id_login.setDomain("http://testqlearn.cafe24.com//naverLogin.do");
+                            naver_id_login.setDomain("http://testqlearn.cafe24.com");
                             naver_id_login.setState(state);
                             naver_id_login.setPopup();
                             naver_id_login.init_naver_id_login();
