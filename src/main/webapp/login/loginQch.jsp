@@ -177,7 +177,7 @@ function lfn_page(kind) {
 					<div class='signin_main_control clear_fix'>
 						<input type='text' name='userId' id='userId' placeholder='아이디' onkeydown="lfn_passwordEnter();">
 						<input type='password' name='password' id='password' placeholder='비밀번호' onkeydown="lfn_passwordEnter();">
-						<button class='signin_complete_btn' onclick="lfn_login()">로그인</button>
+						<button class='signin_complete_btn' onclick="lfn_login()" style="margin-bottom:10px;">로그인</button>
 						
 					
 						<!-- 네이버아이디로로그인 버튼 노출 영역 -->
