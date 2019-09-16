@@ -283,7 +283,7 @@ function lfn_btn(pKind, pParam) {
                             <c:if test="${set.courseData.courseCost ne set.courseData.courseOrgCost}">
                             	<span style="text-decoration:line-through;">
                                 	<fmt:formatNumber value="${set.courseData.courseOrgCost}" type="number"/>원
-                            	</span> <span>&nbsp;&nbsp; --> </span>
+                            	</span> <span>&nbsp; --> </span>
                             </c:if>
                             <span>
                                 <strong><fmt:formatNumber value="${set.courseData.courseCost}" type="number"/></strong>원
