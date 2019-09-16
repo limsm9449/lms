@@ -23,7 +23,7 @@
 
 <!--
 <html>
-  <meta http-equiv="refresh" content="0;url=<%=apiURL%>">	
+  <meta http-equiv="refresh" content="0;url=<%--=apiURL--%>">	
 </html>
 <body>
 </body>
