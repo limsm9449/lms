@@ -53,7 +53,8 @@ public class SessionInterceptor extends HandlerInterceptorAdapter {
 				"/postscript/postscriptList.do",
 				"/postscript/postscriptV.do",
 				"/naverLogin.do",
-				"/naverCallback.do"
+				"/naverCallback.do",
+				"/favicon.ico"
 	    	};
 	    	
 	    	// Session이 있을 수도 있고 없을 수도 있는 URL

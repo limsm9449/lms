@@ -35,6 +35,8 @@
 	<resources mapping="/resources/**" location="/resources/" />
 	<!-- fckeditor 로 들어오는 것들은 다 fckeditor로 가도록 한다. -->
 	<resources mapping="/fckeditor/**" location="/fckeditor/" />
+
+	<resources mapping="/favicon.ico" location="/resources/images/favicon.ico" />
 	
 	<beans:bean id="downloadView" class="com.qp.lms.common.DownloadView" />
 	
