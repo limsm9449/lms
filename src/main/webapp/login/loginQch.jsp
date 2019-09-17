@@ -189,7 +189,7 @@ function lfn_page(kind) {
                           </div>
                           <!-- //네이버아이디로로그인 버튼 노출 영역 -->
                           <script type="text/javascript">
-                            var naver_id_login = new naver_id_login("6jlIlsVQtLVPSn6H05Ow", "http://testqlearn.cafe24.com//naverCallback.do");
+                            var naver_id_login = new naver_id_login("6jlIlsVQtLVPSn6H05Ow", "http://testqlearn.cafe24.com:80/naverCallback.do");
                             var state = naver_id_login.getUniqState();
                             naver_id_login.setButton("green", 3,50);
                             naver_id_login.setDomain("http://testqlearn.cafe24.com");
