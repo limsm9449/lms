@@ -34,6 +34,14 @@
         <!-- CONTENTS -->
         <div class='contents_wrap process'>
             <div class='contents_wrap_box popup'>
+            	<style>
+        		.btn_wrap:after{display:block; content:'';clear:both}
+        		.btn_wrap button{float:right; margin-right:15px; margin-top:5px; width:150px; height:50px}
+        		</style>
+        		<div class="btn_wrap">
+        			<button onclick='window.close();'>닫기</button>
+        			<button onclick='window.print();'>인쇄하기</button>
+        		</div>
                 <div class='basket_completed_popup'>
                     <div class='title clear_fix'>
                         <p>영수증<span class="span_txt">(공급받는자용)</span></p>
