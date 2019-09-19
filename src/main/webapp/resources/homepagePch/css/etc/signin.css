@@ -969,10 +969,3 @@ header {
 @media all and (max-width:380px){
     
 }
-
-.api_block{display:none; flex-wrap:wrap; justify-content:space-between; width:100%; margin-bottom:30px;}
-.signin_option_box{display:none;}
-@media (max-width:550px){
-	.api_block{ display: none;}
-	.signin_option_box{display:block;}
-}
