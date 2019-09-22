@@ -342,6 +342,7 @@ public class LoginController {
         	}
         	br.close();
         	if(responseCode==200) {
+        		System.out.println("res.toString() : "  + res.toString());
         		JSONParser jsonParser = new JSONParser();
         		JSONObject jsonObject = (JSONObject) jsonParser.parse(res.toString());
         		

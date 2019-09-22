@@ -3,7 +3,9 @@ package com.qp.lms.common;
 
 import java.io.FileInputStream;
 import java.net.URLEncoder;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
@@ -16,7 +18,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
@@ -145,7 +146,11 @@ public class SessionInterceptor extends HandlerInterceptorAdapter {
 	   	 		}
 	   	 		*/
 	   	 		
-   	 			System.out.println("---------------------------> " + RequestContextHolder.getRequestAttributes().getSessionId() + ", " + compCd + ", " + compType + ", " + compName + ", " + SessionUtil.getAttribute("compCd") + ", " + SessionUtil.getAttribute("compType") + ", " + SessionUtil.getAttribute("compName"));
+	   	 		SimpleDateFormat format1 = new SimpleDateFormat ( "yyyy-MM-dd HH:mm:ss");
+	   	 	
+   	 			System.out.println("---------------------------> " + format1.format(new Date()) + " / " + compCd + ", " + compType + ", " + compName
+   	 						+ " / "+ SessionUtil.getAttribute("compCd") + ", " + SessionUtil.getAttribute("compType") + ", " + SessionUtil.getAttribute("compName")
+   	 						+ " / " + SessionUtil.getAttribute("NAVER_CLIENT_ID") + ", " + SessionUtil.getAttribute("NAVER_CLIENT_SECRET"));
 
 	        	//회사 도메인이면서 등록이 안되었거나, 사용불가인 경우 에러 페이지로 이동
 	        	if ( !url.equals("/main/errorNotUseCompany.do") ) {
@@ -217,7 +222,7 @@ public class SessionInterceptor extends HandlerInterceptorAdapter {
 
         request.removeAttribute("startTime");
 
-    	logger.debug(" =============> End");
+    	//logger.debug(" =============> End");
     	
         //modelAndView.addObject("handlingTime", endTime - startTime);
     }

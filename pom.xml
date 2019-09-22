@@ -178,7 +178,9 @@
 			<configuration>
 				<warsourcedirectory>src/main/webapp</warsourcedirectory>
 				<webxml>src/main/webapp/WEB-INF/web.xml</webxml>
-				<encording>UTF-8</encording>
+				<source>1.8</source>
+				<target>1.8</target>
+				<encoding>UTF-8</encoding>
 			</configuration>
 		</plugin>             
 		<plugin>
