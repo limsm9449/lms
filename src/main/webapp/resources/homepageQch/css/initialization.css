@@ -120,7 +120,7 @@ table {
 
 
 
-/* 추가 */
+/* 異붽� */
 
 html, body{
     height:100%;
@@ -269,7 +269,8 @@ button.active .middle{
 
 .head_mobile .mobile_dropwdown_wrap{
     overflow-y:scroll;
-	height:1000px;
+	/*height:1000px;*/
+	height:100vh;
 }
 
 .menu_sub .menu_title a {

@@ -273,7 +273,8 @@ header {
     width: 238px;
     top: 0px;
     border-right: 1px solid #ccc;
-    height: 956px;
+    /*height: 956px;*/
+    height:100vh;
     overflow: auto;
 }
 .menu_dropdown{
@@ -434,8 +435,10 @@ header {
 /* QUICK MENU */
 .quick_menu_wrap{
     position:fixed;
+    overflow-y:auto;
 	top:0px;
     width:78px;
+    height:100vh;
     text-align:center;
     background:#fff;
     z-index:999999;
@@ -540,7 +543,8 @@ header {
 }
 #q_menu7{
 	padding:38px 0px;
-	padding-bottom:1000px;
+	/*padding-bottom:1000px;*/
+	padding-bottom:0;
 }
 
 #q_menu2_circle{
