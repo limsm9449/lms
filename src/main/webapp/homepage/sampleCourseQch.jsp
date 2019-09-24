@@ -197,11 +197,6 @@ function lfn_validate() {
 </frameset>
 
 </form>
-<script>
-var nodown=document.getElementById('MPlayer');
-nodown.setAttribute('controlsList','nodownload');
-</script>
-
 </body>
 
 </html>

@@ -175,7 +175,7 @@ function lfn_validate() {
 		}
         </style>
         	<div class="innerhtml" >
-        		<iframe name="eduContent" id="eduContent" class="innerframe" src="" style="max-height: ${set.courseData.vPx}px; height:calc(${set.courseData.vPx}vw * 0.1 );"></iframe>
+        		<iframe name="eduContent" id="eduContent" class="innerframe" src="" style=""></iframe>
             </div>
             
             <!-----------------nav-------------->
