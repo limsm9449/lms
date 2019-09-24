@@ -434,8 +434,8 @@ header {
 
 /* QUICK MENU */
 .quick_menu_wrap{
+	overflow-y:auto;
     position:fixed;
-    overflow-y:auto;
 	top:0px;
     width:78px;
     height:100vh;
@@ -3159,6 +3159,7 @@ header {
     }
     .head_mobile .menu_dropdown_wrap{
         width:100%;
+        height:100vh;
     }
     .head_mobile .menu_dropdown{
         padding-left:20px;
