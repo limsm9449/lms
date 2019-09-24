@@ -174,7 +174,7 @@ function lfn_validate() {
 		}
         </style>
         	<div class="innerhtml" >
-        		<iframe name="eduContent" id="eduContent" class="innerframe" src=""></iframe>
+        		<iframe name="eduContent" id="eduContent" class="innerframe" src="" allow="autoplay"></iframe>
             </div>
             
             <!-----------------nav-------------->

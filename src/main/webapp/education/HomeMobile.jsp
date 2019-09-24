@@ -59,7 +59,7 @@ $(document).ready(function() {
 
 
 <body>
-	<iframe name="eduContent" id="eduContent" src="about:blank;" width="100%" height="100%" allow="autoplay"></iframe>
+	<iframe name="eduContent" id="eduContent" src="about:blank;" width="100%" height="100%"></iframe>
 	<form name="frm" method="post">
 	</form>
 </body>
