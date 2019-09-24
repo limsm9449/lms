@@ -393,9 +393,11 @@ header {
 
 /* QUICK MENU */
 .quick_menu_wrap{
+	overflow-y:auto;
     position:fixed;
 	top:0px;
     width:78px;
+    heigth:100vh;
     text-align:center;
     background:#fff;
     z-index:999999;
