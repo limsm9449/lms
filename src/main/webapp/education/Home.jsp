@@ -67,7 +67,7 @@ $(document).ready(function() {
             </p>
         </div>
         <div class='learnig_test_image'>
-            <iframe name="eduContent" id="eduContent" src="about:blank;" style="width: ${set.data.hPx}px; height: ${set.data.vPx}px;">학습 콘텐츠 영역</iframe>
+            <iframe name="eduContent" id="eduContent" src="about:blank;" style="width: ${set.data.hPx}px; height: ${set.data.vPx}px;" allow="autoplay">학습 콘텐츠 영역</iframe>
         </div>
         <div class='learnig_btn_area clear_fix'>
             <button onclick="javascript:Popup.showUserBoard('NOTICE','${set.condiVO.courseId}'); return false;">공지사항</button>
