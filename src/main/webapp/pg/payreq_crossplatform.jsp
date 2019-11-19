@@ -207,7 +207,7 @@ function payment_return() {
 </script>
 <body>
 <form method="post" name="LGD_PAYINFO" id="LGD_PAYINFO" action="/paymentGateway/payres.do">
-<table>
+<table cellpadding="10">
     <tr>
         <td>구매자 이름 </td>
         <td><%= LGD_BUYER %></td>
