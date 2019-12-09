@@ -78,6 +78,7 @@ function mobile_close(){
             <div class="top_title">
         		${set.courseInfo.courseName}
             </div>
+            <a class="top_exit" href="#" onclick="window.close();">닫기</a>
          </div>
          <!-----left----->   
          <div class="cl_bg" id="index_bg">
