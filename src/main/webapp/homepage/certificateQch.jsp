@@ -36,36 +36,32 @@ $(document).ready(function() {
     <div class='wrap'>
         <!-- CONTENTS -->
               <div>  
+              		<div class="class_btn"><button onClick="window.print()">인쇄하기</button> <button onClick="javascript:window.close();">닫기</button></div>
                     <div class="class_bg">
                     	<table>
                         	<tr>
-                            	<td>수료번호 : </td>
+                            	<th>수료번호 : </th>
                                 <td>${set.dataHm.COURSE_CODE}-${set.dataHm.CERTIFICATE_NO}</td>
                             </tr>
                             <tr>
-                            	<td>성&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;명 :</td>
+                            	<th>성&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;명 :</th>
                                 <td>${set.dataHm.USER_NAME}</td>
                             </tr>
                             <tr>
-                            	<td>교육과정 : </td>
+                            	<th>교육과정 : </th>
                                 <td>${set.dataHm.COURSE_NAME}</td>
                             </tr>
                             <tr>
-                            	<td>교육기간 : </td>
+                            	<th>교육기간 : </th>
                                 <td>${set.dataHm.C_FROM_DATE} ~ ${set.dataHm.C_TO_DATE}</td>
                             </tr>
                             <tr>
-                            	<td>교육시간 :</td>
+                            	<th>교육시간 :</th>
                                 <td>${set.dataHm.STUDY_HOUR}시간</td>
                             </tr>
                         </table>
                         
-                       	<table class="tday">
-                        	<tr>
-                            	<td>발급일 :</td>
-                                <td>${set.dataHm.CERTIFICATE_DATE}</td>
-                            </tr>
-                        </table>
+                         <span>발급일 : ${set.dataHm.CERTIFICATE_DATE}</div>
                         
                     </div>
                </div>
