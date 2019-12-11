@@ -35,9 +35,9 @@
 	background:#C2D8ED;
 	margin-top:30px;
 	margin-bottom:30px;
-	min-height:874px;
-	transform:scale(0.7);
-	transform-origin:top;
+	min-height:400px;
+	/*transform:scale(0.7);
+	transform-origin:top;*/
 }
 .t_chat_view{
 	
@@ -85,10 +85,10 @@
 }
 .t_chat{
 	margin-top:15px;
-	max-height:765px;
+	max-height:400px;
 	overflow-y:auto;
 	padding-top:30px;
-	min-height:765px;
+	min-height:400px;
 }
 /*****************me*********************/
 .me_chat{
@@ -415,6 +415,6 @@
 	}
 .t_exit{right:calc(50% - 150px); top:750px;}
 .t_exit a{width:300px; border-radius:0;}
-.t_view{min-height:600px}
-.t_chat{max-height:500px; min-height:500px;}
+.t_view{min-height:400px}
+.t_chat{max-height:300px; min-height:300px;}
 }
