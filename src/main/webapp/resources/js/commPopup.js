@@ -567,7 +567,7 @@ var Popup = {
 	},
 
 	showCertificate : function(pCourseId) {
-		Popup.showPopup(context + "/main/certificate.do?courseId=" + pCourseId,800,870,"certificatePopup");
+		Popup.showPopup(context + "/main/certificate.do?courseId=" + pCourseId,800,880,"certificatePopup");
 	},
 
 	showReceipt : function(pCourseId) {
