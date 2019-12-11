@@ -526,23 +526,62 @@ html[data-useragent*='MSIE 10.0'] .head_mobile.on .mobile_dropwdown_wrap{
 
 
 /* 2019 */
+.class_btn{
+	margin-left:462px;
+}
+.class_btn button{
+	margin-top:5px;
+	padding: 7px;
+	color: #FFFFFF;
+	background:#0180d3;
+}
 .class_bg{
+	position:relative;
 	background:url("../../img/myclass/classbg.png") no-repeat;
 	height:842px;
 	width:595px;
 }
-.class_bg > table{
+.class_bg table{
 	position:relative;
 	top:200px;
 	left:75px;
+	width:450px;
+}
+.class_bg table tr th{
+	font-family:'NanumMyeongjo';
+	font-size:20px;
+	padding-bottom:20px;
+	padding-left:5px;
+	width:100px;
+	vertical-align:top;
 }
 .class_bg table tr td{
+	width:350px;
 	font-family:'NanumMyeongjo';
 	font-size:20px;
 	padding-bottom:20px;
 	padding-left:5px;
 }
+.class_bg span{
+	position: absolute;
+	font-family:'NanumMyeongjo';
+	font-size:20px;
+	width: 280px;
+	left:180px;
+	top:660px;
+	/*border: solid 1px #000;*/
+}
+/*
+.tday{
+	font-family:'NanumMyeongjo';
+	font-size:20px;
+	position: absolute;
+	width: 280px;
+	left:257px;
+	top:700px;
+}
 .tday{
 	left:173px !important;
 	top:461px !important;
 }
+*/
