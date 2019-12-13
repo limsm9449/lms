@@ -26,28 +26,74 @@
             overflow-y:hidden;
         }
     </style>
+    
+<script type="text/javascript">
+// 지정영역 인쇄
+var initBody;
+function printDiv () {
+	window.onbeforeprint = beforeDivs();
+	window.print();
+	window.onafterprint = afterDivs();
+}
+function beforeDivs () {
+	initBody = document.body.innerHTML;
+	document.body.innerHTML = objContents.innerHTML;
+}
+function afterDivs () {
+	document.body.innerHTML = initBody;
+}
+</script>
 </head>
 
 <body style='background:#fff'>
 <frameset rows='*'>
-    <div class='wrap'>
+<style>
+	.btn_wrap:after{display:block; content:'';clear:both}
+	.btn_wrap button{float:right; margin-right:15px; margin-top:5px; width:150px; height:50px}
+</style>
+	<div class="btn_wrap">
+		<button onclick='window.close();'>닫기</button>
+		<button onclick='printDiv();'>인쇄하기</button>
+	</div>
+    <div class='wrap' id="objContents">
         <!-- CONTENTS -->
         
         <div class='contents_wrap process'>
             <div class='contents_wrap_box popup'>
-                <style>
-        		.btn_wrap:after{display:block; content:'';clear:both}
-        		.btn_wrap button{float:right; margin-right:15px; margin-top:5px; width:150px; height:50px}
-        		</style>
-        		<div class="btn_wrap">
-        			<button onclick='window.close();'>닫기</button>
-        			<button onclick='window.print();'>인쇄하기</button>
-        		</div>
                 <div class='basket_completed_popup'>
                     <div class='title clear_fix'>
                         <p>영수증<span class="span_txt">(공급받는자용)</span></p>
                     </div>
                     <div class='basket_popup_contents'>
+                    	<table class="print_table0">
+                    		<tr>
+                    			<td colspan="2"><img src="/resources/homepageQch/img/myclass/receipt_img1.png"/></td>
+                    		</tr>
+                    		<tr><td colspan="2" height="20"></td></tr>
+                    		<tr>
+                    			<td width="188"><img src="/resources/homepageQch/img/myclass/receipt_img2.png"/></td>
+	                    		<td> 
+		                    		<table class="print_table2">
+			                            <tr class="print_table2_top">
+			                                <td height="41" class="print_table2_content print_t3">${set.dataHm.USER_NAME}</td>
+			                            </tr>
+			                            <tr class="print_table2_top">
+			                                <td height="59" class="print_table2_content">${set.dataHm.COURSE_NAME}</td>
+			                            </tr>
+			                            <tr class="print_table2_top">
+			                                <td height="41" class="print_table2_content"><fmt:formatNumber value="${set.dataHm.COURSE_COST}" type="number"/> 원</td>
+			                            </tr>
+			                            <tr class="print_table2_top">
+			                                <td height="42" class="print_table2_content">${set.dataHm.CONFIRM_DATE}</td> 
+			                            </tr>
+			                    	</table>
+			                    </td>
+			                </tr>
+	                    </table>
+	                </div>
+                    
+					<p>&nbsp;&nbsp;&nbsp;* 위 금액을 정희 영수하였습니다. </p><br/>
+                    <!-- 
                         <table class="print_table">
                             <tr class="print_table_top">
                                 <td class="print_table_title print_t1" rowspan="4">공<br><br>급<br><br>자</td>
@@ -88,9 +134,7 @@
                                 <td class="print_table2_content">${set.dataHm.CONFIRM_DATE}</td>
                             </tr>
                     	</table>
-                    
-                        <p>* 위 금액을 정희 영수하였습니다. </p>
-                    </div>
+                     -->
                 </div>
 
             </div>
