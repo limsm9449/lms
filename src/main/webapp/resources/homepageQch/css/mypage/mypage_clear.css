@@ -527,7 +527,7 @@ html[data-useragent*='MSIE 10.0'] .head_mobile.on .mobile_dropwdown_wrap{
 
 /* 2019 */
 .class_btn{
-	margin-left:462px;
+	margin-left:542px;
 }
 .class_btn button{
 	margin-top:5px;
@@ -535,9 +535,15 @@ html[data-useragent*='MSIE 10.0'] .head_mobile.on .mobile_dropwdown_wrap{
 	color: #FFFFFF;
 	background:#0180d3;
 }
+.class_all{
+	z-index: 1;
+	position:absolute;
+	background:#fff;
+}
 .class_bg{
+	z-index: 10;
 	position:relative;
-	background:url("../../img/myclass/classbg.png") no-repeat;
+	/*background:url("../../img/myclass/classbg.png") no-repeat;*/
 	height:842px;
 	width:595px;
 }
