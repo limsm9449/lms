@@ -120,7 +120,7 @@
 	padding:5px 10px;
 	display:inline;
 	position: relative;
-    top: -13px;
+    top: 5px;
 }
 .class_3_title{
 	font-family: 'NanumSquare';
@@ -218,6 +218,24 @@
 	position:relative;
 	top:8px;
 }
+
+/******************************************/
+.class_4_btn{
+	width:120px;
+}
+.class_4_btn1{
+	font-family: 'NanumSquare';
+	font-size:17px;
+	color:white;
+	background:#0071BD;
+	padding:15% 20%;
+	text-align:center;
+	cursor:pointer;
+	position: relative;
+	margin-right:10px;
+}
+/******************************************/
+
 #btn1_l2{
 	padding:10px 20px;
 }
@@ -275,7 +293,7 @@
 }
 @media all and (max-width:420px){
 	.div2_offline{
-		top: -36px !important;
+		top: -16px !important;
 	}
 	.right_btn{
 		top:0;
@@ -332,6 +350,9 @@
 		display:none;
 	}
 	.class_btn{
+		width:330px;
+	}
+	.class_4_btn{
 		width:330px;
 	}
 	.class_1_chk1{
