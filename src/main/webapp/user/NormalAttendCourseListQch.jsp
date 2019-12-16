@@ -87,7 +87,7 @@
 	                            <img id="mImg" src='/cImage/contents/${row.courseCode}/mImg1.jpg' alt=' '>
 	                        </div>
 	                        <div class="class_1_div1">
-	                            <div class="class_1_title">
+	                            <div class="class_1_title"> 
 	<c:choose>
 		<c:when test="${row.offlineYn eq 'Y'}">
 	                                ${row.courseName}
@@ -95,13 +95,34 @@
 		<c:otherwise>
 	                                <a href='#' class='user_lecture_list_subject' onclick="javascript:Popup.showStudyroomQch('${row.courseId}');">${row.courseName}</a>
 		</c:otherwise>
-	</c:choose>		                            
-	                            </div> 
-	<c:if test="${row.mobileYn eq 'Y'}">                        
-	                            <div class="class_1_mobile">
-	                                모바일 병행
+	</c:choose>		     
+	<c:if test="${row.mobileYn eq 'Y'}">
+								<br/>                    
+		                            <div class="class_1_mobile">
+		                                모바일 병행
+		                            </div>
+	</c:if>                       
 	                            </div>
-	</c:if>	                            
+	
+	<!-- 학습시작 버튼 이쪽으로 이동 20191216 -->
+	<c:choose>
+		<c:when test="${row.offlineYn eq 'Y'}">
+								<div class="class_4_btn">
+	                                <div class="class_4_btn1 no_click_btn" id="btn1_l1" onclick="">
+	                                    학습시작
+	                                </div>
+								</div> 
+		</c:when>
+		<c:otherwise> 
+								<div class="class_4_btn">
+	                                <div class="class_4_btn1" id="btn1_l1" onclick="javascript:Popup.showStudyroomQch('${row.courseId}')">
+	                                    학습시작
+	                                </div>
+								</div> 
+		</c:otherwise>
+	</c:choose>
+	
+	
 	                        </div>
 
 	<c:choose>
@@ -150,6 +171,16 @@
 	                        
 							<div class="class_1_div3">
 	                        	<div class="class_btn">
+	<!-- 학습시작이 있던 자리에 수료증으로 변경 -->
+	<c:choose>
+		<c:when test="${row.completeYn eq 'Y'}">
+									<div class="class_1_btn1" id="btn1_l1" onclick="javascript:Popup.showCertificate('${row.courseId}'); return false;">수료증</div>
+		</c:when>
+		<c:otherwise>
+									<div class="class_1_btn1 no_click_btn" id="btn1_l1" onclick="">미수료</div>
+		</c:otherwise>
+	</c:choose>
+	<!-- 
 	<c:choose>
 		<c:when test="${row.offlineYn eq 'Y'}">
 	                                <div class="class_1_btn1 no_click_btn" id="btn1_l1" onclick="">
@@ -161,7 +192,8 @@
 	                                    학습시작
 	                                </div>
 		</c:otherwise>
-	</c:choose>	                        	
+	</c:choose>
+	 -->
 	<fmt:parseNumber value="${row.questProgressRatio}" var="questProgressRatio"/>
 	<fmt:parseNumber value="${row.progress}"   var="progress"/>	                                
 	<c:choose>
