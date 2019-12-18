@@ -126,7 +126,9 @@ public class PgService {
 				row.setApprovalId(set.getCondiVO().getApprovalId());
 				
 				if ( paymentPoint > 0 ) {
-					if ( row.getInPointUse() < paymentPoint &&  row.getInPoint() >= paymentPoint ) {
+					//fixed 2019.12.18 : 계산로직 오류
+					//if ( row.getInPointUse() < paymentPoint &&  row.getInPoint() >= paymentPoint ) {
+					if ( row.getInPoint() - row.getInPointUse() >= paymentPoint ) {
 						row.setUsePoint(paymentPoint);
 						
 						row.setInPointUse(row.getInPointUse() + row.getUsePoint());

@@ -74,7 +74,7 @@
 	INSERT INTO COURSE_REGISTER(COURSE_ID,USER_ID,STATUS,COURSE_COST,APPROVAL_ID,CONFIRM_DATE,CREATE_DATE,CREATE_USER)
 	SELECT A.COURSE_ID, 
 	       #{userId},
-	       if(#{paymentCost} = '0','A',if(#{paymentKind} = 'CASH','B','A')),
+	       if(#{paymentCost} = '0','A',if(#{paymentKind} = 'CASH','B','A')), 
 	       A.COURSE_COST,
 	       #{approvalId},
 	       if(#{paymentCost} = '0',CURRENT_TIMESTAMP,if(#{paymentKind} = 'CASH',NULL,CURRENT_TIMESTAMP)),
