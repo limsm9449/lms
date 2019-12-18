@@ -117,7 +117,6 @@
 	SELECT A.COURSE_ID, 
 	       #{userId},
 	       if(#{paymentCost} = '0','A',if(#{paymentKind} = 'CASH','B','A')),
-	       <!-- if(#{paymentKind} = 'CASH','B','A'), -->
 	       (SELECT SUM(WEEK_COST)
               FROM COURSE_RESOURCE
              WHERE COURSE_CODE = A.COURSE_CODE
@@ -125,7 +124,6 @@
              GROUP BY COURSE_ID) COURSE_COST,
 	       #{approvalId},
 	       if(#{paymentCost} = '0',CURRENT_TIMESTAMP,if(#{paymentKind} = 'CASH',NULL,CURRENT_TIMESTAMP)),
-	       <!-- if(#{paymentKind} = 'CASH',NULL,CURRENT_TIMESTAMP),-->
 	       CURRENT_TIMESTAMP,
 	       #{createUser}
 	  FROM COURSE A LEFT OUTER JOIN COURSE_CODE B ON A.COURSE_CODE = B.COURSE_CODE
