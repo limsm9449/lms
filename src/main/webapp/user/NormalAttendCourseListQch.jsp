@@ -86,8 +86,8 @@
 	                        <div class="class_1_img">
 	                            <img id="mImg" src='/cImage/contents/${row.courseCode}/mImg1.jpg' alt=' '>
 	                        </div>
-	                        <div class="class_1_div1">
-	                            <div class="class_1_title"> 
+	                        <div class="class_1_div1" style="padding-top: 20px;">
+	                            <div class="class_1_title" style="top: 0px;padding-bottom: 15px;">
 	<c:choose>
 		<c:when test="${row.offlineYn eq 'Y'}">
 	                                ${row.courseName}
@@ -98,7 +98,7 @@
 	</c:choose>		     
 	<c:if test="${row.mobileYn eq 'Y'}">
 								<br/>                    
-		                            <div class="class_1_mobile">
+		                            <div class="class_1_mobile"> 
 		                                모바일 병행
 		                            </div>
 	</c:if>                       

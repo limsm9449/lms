@@ -221,14 +221,15 @@
 
 /******************************************/
 .class_4_btn{
-	width:120px;
+	width:111px;
+	position: relative;
 }
 .class_4_btn1{
 	font-family: 'NanumSquare';
 	font-size:17px;
 	color:white;
 	background:#0071BD;
-	padding:15% 20%;
+	padding:7px 0px;
 	text-align:center;
 	cursor:pointer;
 	position: relative;
