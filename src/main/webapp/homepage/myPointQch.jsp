@@ -30,11 +30,20 @@ $(document).ready(function(){
 	f_makePageNavigator("pagingLayer",${set.condiVO.pageNum},${set.totalCount},${set.condiVO.limitUnit});
 });
 
+function lfn_btn(pKind, pParam) {
+	$("#pageNum").val(pParam.page);
+	if ( $("#searchMonth").val() == '' ) {
+		$("#searchMonth").val('all');
+	}
+	f_submitSelf("/main/myPoint");
+}
+
 </script>
 
 <body>
 
 <form id="frm" name="frm" method="post">
+<input type="hidden" id="searchMonth" name="searchMonth" value="${set.condiVO.searchMonth}"/>
 	
 <frameset rows='*'>
     <div class='wrap'>
