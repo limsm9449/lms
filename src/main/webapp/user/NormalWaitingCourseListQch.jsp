@@ -84,7 +84,7 @@
 <c:forEach var="row" items="${set.course}" varStatus="idx">
                         <div class="class_2">
                             <div class="class_1_img">
-                                <img src='/cImage/contents/${row.courseCode}/mImg1.jpg' alt=' '>
+                                <img src='/cImage/contents/${row.courseCode}/bImg.jpg' alt=' '>
                             </div>
                             <div class="class_1_div1">
                                 <div class="class_1_title">

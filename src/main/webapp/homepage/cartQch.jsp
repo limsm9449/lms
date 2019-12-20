@@ -166,7 +166,7 @@ function lfn_btn(pKind, pParam) {
                             </div>
                             <div class='process_result_con con clear_fix'>
                                 <div class='process_result_img'>
-                                    <img src='/cImage/contents/${row.courseCode}/mImg1.jpg' alt=' '>
+                                    <img src='/cImage/contents/${row.courseCode}/bImg.jpg' alt=' '>
                                 </div>
                                 <div class='process_result_text'>
                                     <div class='process_result_text_top clear_fix'>
