@@ -511,7 +511,9 @@ header {
 .q_menu2_num{
 	position:absolute;
 	top:347px;
-	left:18px;
+	left:7px;
+	/*left:18px;*/
+	width:30px;
 	color:white;
 }
 
