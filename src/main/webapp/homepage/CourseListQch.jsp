@@ -169,7 +169,7 @@ function lfn_viewTypeChg(kind) {
 	            <div class='process_search_result'> 
 	                <div class='clear_fix'>
 	                    <div class='process_result_checkbox'>
-	                        <input type='checkbox' name='' id=''>
+	                        <!-- <input type='checkbox' name='' id=''> -->&nbsp;&nbsp;&nbsp;
 	                    </div>
 	                    <p class='process_result_con'>과정정보</p>
 	                    <p class='process_result_review'>만족도/후기</p>
@@ -179,7 +179,7 @@ function lfn_viewTypeChg(kind) {
 		<c:forEach var="row" items="${set.courseList}" varStatus="idx">
 	                    <li class='clear_fix'>
 	                        <div class='process_result_checkbox con'>
-	                            <input type='checkbox' name='' id=''>
+	                            <!-- <input type='checkbox' name='' id=''> -->
 	                        </div>
 	                        <div class='process_result_con con clear_fix'>
 	                            <div class='process_result_img'>
