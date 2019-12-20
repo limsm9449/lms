@@ -214,7 +214,7 @@ function lfn_btn(pKind, pParam) {
 
                 <div class='detail_btn_area'>
                     <button onclick="lfn_btn('cartSelectDel'); return false;">장바구니 비우기</button>
-                    <button onclick="lfn_btn('cartApplication'); return false;" class='bg_color'>전체과정 주문</button>
+                    <button onclick="lfn_btn('cartApplication'); return false;" class='bg_color'>선택과정 주문</button>
                 </div>
             </div>
         </div>
