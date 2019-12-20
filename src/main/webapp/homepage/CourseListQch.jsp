@@ -198,7 +198,7 @@ function lfn_viewTypeChg(kind) {
 	                                <p><a href="javascript:" onclick="lfn_btn('view',{courseId:'${row.courseId}'}); return false;">${row.courseName}</a></p>
 	                                <div class='process_result_text_bottom clear_fix'>
 	                                    <p>교육비</p>
-	                                    <p class='process_result_payment'><fmt:formatNumber value="${row.courseCost}" type="number"/> 원</p>
+	                                    <p class='process_result_payment' style="width:100px;"><fmt:formatNumber value="${row.courseCost}" type="number"/> 원</p>
 	                                </div>
 	                            </div>
 	                        </div>
