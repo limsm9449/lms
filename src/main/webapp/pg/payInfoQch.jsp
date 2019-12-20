@@ -247,7 +247,7 @@ $(document.body).ready(function () {
                         <p>[${row.categoryName}] ${row.courseName}</p>
                         <p class='sum'><span class='text'><fmt:formatNumber value="${row.courseCost}" type="number"/></span>원</p>
 	<c:if test="${row.courseCost ne row.courseOrgCost}">
-						<p class='sum'>(시중가격 : <span class='text'><fmt:formatNumber value="${row.courseOrgCost}" type="number"/></span>원)</p>
+						<!-- <p class='sum'>(시중가격 : <span class='text'><fmt:formatNumber value="${row.courseOrgCost}" type="number"/></span>원)</p> -->
 	</c:if>
                     </div>
 	<c:if test="${not empty row.cartWeekList}">
