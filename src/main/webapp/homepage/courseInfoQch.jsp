@@ -395,10 +395,6 @@ function lfn_btn(pKind, pParam) {
                         </div>
                     </div>
                     <div class='register_tab_content_box' id='compose'>
-                        <p>
-                            여러분이 수강을 원하는 강의를 선택하여 수강신청을 할 수 있습니다. <span></span>
-                            <strong>전체 강의 신청시 할인된 금액으로 수강신청이 가능</strong>합니다.
-                        </p>
                         <table class='register_compose_table'>
 <c:choose>
 	<c:when test="${set.condiVO.requestKind eq 'PART'}">

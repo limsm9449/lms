@@ -126,6 +126,7 @@ function fn_makeGrid() {
 				styleClass: function () {
                     return "grid-cell-edit";
                 } 
+	        /*
 	        },{
 	            key : "IMG1",
 	            label : "PC 이미지",
@@ -136,6 +137,7 @@ function fn_makeGrid() {
 	            label : "모바일 이미지",
 	            width : 120,
 	            align : "center"
+	        */
 	        },{
 	        	key : "COLOR", 
 	        	label : "배경색", 
@@ -299,7 +301,7 @@ function fn_cbChange(id) {
     <button class="btn btn-default" data-grid-control="delete">삭제</button>    
     <button class="btn btn-default" data-grid-control="save">저장</button>
     <button class="btn btn-default" data-grid-control="export">엑셀</button>
-    <button class="btn btn-default" data-grid-control="editImage">이미지 편집</button>
+    <!-- button class="btn btn-default" data-grid-control="editImage">이미지 편집</button-->
 </div>
 
 <div style="height:10px"></div>
