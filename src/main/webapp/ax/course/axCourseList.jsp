@@ -703,7 +703,7 @@ function fn_mcbCompanySelect(data) {
 				COURSE_NAME : row[0].COURSE_NAME, 
 				COMP_CD : data.companys[i],
 				TUTOR_ID : row[0].TUTOR_ID,
-				COURSE_ORG_COST : row[0].COURSE_ORG_COST,
+				COURSE_ORG_COST : row[0].COURSE_ORG_COST, 
 				COURSE_COST : row[0].COURSE_COST,
 				REPORT_RATE : row[0].REPORT_RATE,
 				EXAM_RATE : row[0].EXAM_RATE,
