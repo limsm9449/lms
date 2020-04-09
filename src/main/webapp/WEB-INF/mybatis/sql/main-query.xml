@@ -582,6 +582,11 @@
 		VALUES ( 'COMPANY', #{userId}, #{userName}, #{mobile}, #{tel}, #{email}, #{companyName}, #{title}, #{contents}, CURRENT_TIMESTAMP ) 
 	</insert>	        
 
+	<insert id="tutorInquiryInsert" parameterType="Main">
+		INSERT INTO USER_INQUIRY ( KIND, USER_ID, USER_NAME, MOBILE, TEL, EMAIL, ABOUT_ME, MOTIVE, CONTENTS, CREATE_DATE )
+		VALUES ( 'TUTOR', #{userId}, #{userName}, #{mobile}, #{tel}, #{email}, #{aboutMe}, #{motive}, #{contents}, CURRENT_TIMESTAMP ) 
+	</insert>	        
+
 	<insert id="interestCourseInsert" parameterType="Main">
 		INSERT INTO USER_INTEREST_COURSE ( USER_ID, COURSE_ID )
 		VALUES ( #{userId}, #{courseId} ) 
