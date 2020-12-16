@@ -22,6 +22,7 @@ import com.qp.lms.board.model.BoardVO;
 import com.qp.lms.board.service.BoardFaqService;
 import com.qp.lms.board.service.BoardNoticeService;
 import com.qp.lms.common.CommUtil;
+import com.qp.lms.common.SessionUtil;
 import com.qp.lms.common.service.CommService;
 import com.qp.lms.common.service.DdService;
 import com.qp.lms.education.model.EducationSet;
@@ -510,7 +511,8 @@ public class GuestController {
     @RequestMapping(value = "/guest/authOnlyReq", method = RequestMethod.POST)
     public String authOnlyReq(HttpServletRequest request, @ModelAttribute GuestVO vo, Model model) throws Exception {
     	request.setAttribute("g_LGD_MERTKEY", commSvr.getSetting("g_LGD_MERTKEY"));
-    	request.setAttribute("g_LGD_AUTH_RETURNURL", commSvr.getSetting("g_LGD_AUTH_RETURNURL"));
+    	
+    	request.setAttribute("g_LGD_AUTH_RETURNURL", SessionUtil.getAttribute("serverDomain") + commSvr.getSetting("g_LGD_AUTH_RETURNURL"));
 
         return "/pg/AuthOnlyReq";
     }

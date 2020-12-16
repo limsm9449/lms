@@ -83,9 +83,13 @@ public class PgController {
     public String payreqCrossplatform(HttpServletRequest request, Model model) throws Exception {
     	request.setAttribute("serverMode", commSvr.getSetting("SERVER_MODE"));
 
-    	request.setAttribute("g_LGD_CASNOTEURL", commSvr.getSetting("g_LGD_CASNOTEURL"));
-    	request.setAttribute("g_LGD_RETURNURL", commSvr.getSetting("g_LGD_RETURNURL"));
+    	request.setAttribute("g_LGD_CASNOTEURL", SessionUtil.getAttribute("serverDomain") + commSvr.getSetting("g_LGD_CASNOTEURL"));
+    	request.setAttribute("g_LGD_RETURNURL", SessionUtil.getAttribute("serverDomain") + commSvr.getSetting("g_LGD_RETURNURL"));
     	request.setAttribute("g_LGD_MERTKEY", commSvr.getSetting("g_LGD_MERTKEY"));
+    	
+    	System.out.println("g_LGD_CASNOTEURL : " + SessionUtil.getAttribute("serverDomain") + commSvr.getSetting("g_LGD_CASNOTEURL"));
+    	System.out.println("g_LGD_RETURNURL : " + SessionUtil.getAttribute("serverDomain") + commSvr.getSetting("g_LGD_RETURNURL"));
+
     	request.setAttribute("g_xpay_js", commSvr.getSetting("g_xpay_js"));
     	
         return "/pg/payreq_crossplatform";

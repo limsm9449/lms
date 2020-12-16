@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.qp.lms.ax.common.service.AxCommService;
 import com.qp.lms.common.CommUtil;
+import com.qp.lms.common.SessionUtil;
 import com.qp.lms.ns.model.MailVO;
 import com.qp.lms.ns.model.NsSet;
 import com.qp.lms.ns.model.NsVO;
@@ -114,7 +115,7 @@ public class NsController {
     	StringBuffer contents = new StringBuffer();
     	contents.append("<div style='font-size: 12px; width: 650px; height:500px; margin:0 auto;' align='center'>");
     	contents.append("  <div align='left'>");
-    	contents.append("    <a href='http://www.qlearning.co.kr'><img src='http://www.qlearning.co.kr/resources/images/common/toplogo.png' style='border:0;' /></a>");
+    	contents.append("    <a href='" + SessionUtil.getAttribute("serverDomain") + "'><img src='http://www.qlearning.co.kr/resources/images/common/toplogo.png' style='border:0;' /></a>");
     	contents.append("  </div>");
     	contents.append("  <div style='text-align: left;margin: 30px 10px 30px;'>");
     	contents.append("이름 : " + vo.getUserName() + "<br>"); 

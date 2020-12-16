@@ -197,7 +197,7 @@ public class MemberService {
     	StringBuffer contents = new StringBuffer();
     	contents.append("<div style='font-size: 12px; width: 650px; height:500px; margin:0 auto;' align='center'>");
     	contents.append("  <div align='left'>");
-    	contents.append("    <a href='http://www.qlearning.co.kr'><img src='http://www.qlearning.co.kr/resources/images/common/toplogo.png' style='border:0;' /></a>");
+    	contents.append("    <a href='" + SessionUtil.getAttribute("serverDomain") + "'><img src='http://www.qlearning.co.kr/resources/images/common/toplogo.png' style='border:0;' /></a>");
     	contents.append("  </div>");
     	contents.append("  <div style='text-align: left;margin: 30px 10px 30px;'>");
     	contents.append("    <p style='font-size: 14px; line-height: 1.5;'>안녕하세요.<br />온라인 학습 사이트 <b>큐러닝</b>입니다.<br /><br /></p>");
@@ -262,13 +262,13 @@ public class MemberService {
 	    	StringBuffer contents = new StringBuffer();
 	    	contents.append("<div style='font-size: 12px; width: 650px; height:500px; margin:0 auto;' align='center'>");
 	    	contents.append("  <div align='left'>");
-	    	contents.append("    <a href='http://www.qlearning.co.kr'><img src='http://www.qlearning.co.kr/resources/images/common/toplogo.png' style='border:0;' /></a>");
+	    	contents.append("    <a href='" + SessionUtil.getAttribute("serverDomain") + "'><img src='http://www.qlearning.co.kr/resources/images/common/toplogo.png' style='border:0;' /></a>");
 	    	contents.append("  </div>");
 	    	contents.append("  <div style='text-align: left;margin: 30px 10px 30px;'>");
 	    	contents.append("    <p style='font-size: 14px; line-height: 1.5;'>안녕하세요.<br />온라인 학습 사이트 <b>큐러닝</b>입니다.<br /><br /></p>");
 	    	contents.append("    " + set.getCondiVO().getUserName() + "님의 회원가입을 축하드립니다.<br />");
-	    	contents.append("    회원 가입을 정상적으로 처리하기 위해서는 아래 이메일 인증 주소를 클릭 하시거나 <a href='http://www.qlearning.co.kr/guest/certification.do?certificationKey=" + certificationKey + "'>여기</a>를 클릭하여 주십시오.");
-	    	contents.append("    <p style='display:block;margin: 30px 10px;'><a href='http://www.qlearning.co.kr/guest/certification.do?certificationKey=" + certificationKey + "'>http://www.qlearning.co.kr/guest/certification.do?certificationKey=" + certificationKey + "</a></p>");
+	    	contents.append("    회원 가입을 정상적으로 처리하기 위해서는 아래 이메일 인증 주소를 클릭 하시거나 <a href='" + SessionUtil.getAttribute("serverDomain") + "/guest/certification.do?certificationKey=" + certificationKey + "'>여기</a>를 클릭하여 주십시오.");
+	    	contents.append("    <p style='display:block;margin: 30px 10px;'><a href='" + SessionUtil.getAttribute("serverDomain") + "/guest/certification.do?certificationKey=" + certificationKey + "'>" + SessionUtil.getAttribute("serverDomain") + "/guest/certification.do?certificationKey=" + certificationKey + "</a></p>");
 	    	contents.append("    이메일이 정상적으로 인증 되지 않을 경우 고객센터로 연락 주시면 신속하게 처리해 드리겠습니다.  ");
 	    	contents.append("  </div>");
 	    	contents.append("  <div style='margin: 40px 0 0;'>");

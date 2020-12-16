@@ -110,12 +110,12 @@ public class AxPointService {
 			
 			sqlSession.insert("axPoint.memberEventPointInsert", paramMap);
 		}
-
+		
 		for ( int i = 0 ; i < updList.size(); i++ ) {
 	    	StringBuffer contents = new StringBuffer();
 	    	contents.append("<div style='font-size: 12px; width: 650px; height:500px; margin:0 auto;' align='center'>");
 	    	contents.append("  <div align='left'>");
-	    	contents.append("    <a href='http://www.qlearning.co.kr'><img src='http://www.qlearning.co.kr/resources/images/common/toplogo.png' style='border:0;' /></a>");
+	    	contents.append("    <a href='" + SessionUtil.getAttribute("serverDomain") + "'><img src='http://www.qlearning.co.kr/resources/images/common/toplogo.png' style='border:0;' /></a>");
 	    	contents.append("  </div>");
 	    	contents.append("  <div style='text-align: left;margin: 30px 10px 30px;'>");
 	    	contents.append("    <p style='font-size: 14px; line-height: 1.5;'>안녕하세요.<br />온라인 학습 사이트 <b>큐러닝</b>입니다.<br /><br /></p>");
@@ -149,7 +149,7 @@ public class AxPointService {
 	    	StringBuffer contents = new StringBuffer();
 	    	contents.append("<div style='font-size: 12px; width: 650px; height:500px; margin:0 auto;' align='center'>");
 	    	contents.append("  <div align='left'>");
-	    	contents.append("    <a href='http://www.qlearning.co.kr'><img src='http://www.qlearning.co.kr/resources/images/common/toplogo.png' style='border:0;' /></a>");
+	    	contents.append("    <a href='" + SessionUtil.getAttribute("serverDomain") + "'><img src='http://www.qlearning.co.kr/resources/images/common/toplogo.png' style='border:0;' /></a>");
 	    	contents.append("  </div>");
 	    	contents.append("  <div style='text-align: left;margin: 30px 10px 30px;'>");
 	    	contents.append("    <p style='font-size: 14px; line-height: 1.5;'>안녕하세요.<br />온라인 학습 사이트 <b>큐러닝</b>입니다.<br /><br /></p>");

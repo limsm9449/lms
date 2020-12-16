@@ -40,6 +40,12 @@ public class SessionInterceptor extends HandlerInterceptorAdapter {
     	try {
 	    	request.setAttribute("startTime", System.currentTimeMillis());
 	
+	    	String domain = "http://" + request.getServerName();
+	    	if ( !"80".equals(request.getServerPort()) ) {
+	    		domain += ":" + request.getServerPort();
+	    	}
+	    	SessionUtil.setAttribute("serverDomain", domain);
+	    	
 	    	// 기본적으로 제외 되어야 할 URL
 	    	String[] urls = {
 	    		"/login.do",
@@ -66,7 +72,7 @@ public class SessionInterceptor extends HandlerInterceptorAdapter {
 	    	
 	    	String url = request.getRequestURI();
 	    	if ( url.indexOf("/resources/") < 0 ) {
-	    		System.out.println("URL ===================> " + url);
+	    		System.out.println("URL ===================> " + request.getRequestURL());
 	    	}
 	    	
 	    	if ( url.indexOf("/resources/") > -1 ) {

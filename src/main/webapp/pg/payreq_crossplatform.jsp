@@ -162,6 +162,8 @@
 <script type="text/javascript">
 
 $(document.body).ready(function () {
+	document.cookie = "SameSite=None; Secure";
+	
 	launchCrossPlatform();
 });
 
