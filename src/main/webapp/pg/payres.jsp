@@ -191,6 +191,7 @@ request.setCharacterEncoding("euc-kr");
 
 <script type="text/javascript">
 $(document.body).ready(function () {
+	document.cookie = "SameSite=Lax";
 	document.cookie = "SameSite=None; Secure";
 });
 

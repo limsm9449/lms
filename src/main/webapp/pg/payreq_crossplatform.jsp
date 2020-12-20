@@ -161,12 +161,6 @@
 
 <script type="text/javascript">
 
-$(document.body).ready(function () {
-	document.cookie = "SameSite=None; Secure";
-	
-	launchCrossPlatform();
-});
-
 
 /*
 * 수정불가.
@@ -256,6 +250,16 @@ function payment_return() {
 <input type="hidden" id="cartWeeks" name="cartWeeks" value='<%=request.getParameter("cartWeeks")%>'>
 
 </form>
+
+<script type="text/javascript">
+
+$(document.body).ready(function () {
+	document.cookie = "SameSite=Lax";
+	document.cookie = "SameSite=None; Secure";
+	
+	launchCrossPlatform();
+});
+</script>
 
 </body>
 
