@@ -35,7 +35,18 @@
     String LGD_WINDOW_TYPE      = request.getParameter("LGD_WINDOW_TYPE");              //결제창 호출 방식 (수정불가)
 
 	String LGD_OSTYPE_CHECK     = "P";                                                  //값 P: XPay 실행(PC 결제 모듈): PC용과 모바일용 모듈은 파라미터 및 프로세스가 다르므로 PC용은 PC 웹브라우저에서 실행 필요. 
-                                                                                        //"P", "M" 외의 문자(Null, "" 포함)는 모바일 또는 PC 여부를 체크하지 않음
+																					    //"P", "M" 외의 문자(Null, "" 포함)는 모바일 또는 PC 여부를 체크하지 않음
+    String browser = request.getHeader("User-Agent");       // 브라우저 구해오기
+    boolean result = false;
+	if (browser.indexOf("Android") > 0) {                // 안드로이드로 접속했다면 결과값 true
+       	result = true;
+    } else if (browser.indexOf("iPhone") > 0) {               // 아이폰으로 접속했다면 결과값 true
+     	result = true;
+    }
+    if (result == true) {
+    	LGD_OSTYPE_CHECK     = "M";         // 안드로이드나 아이폰으로 접속했다면 모바일사이트로 이동
+    } 
+    
 	//String LGD_ACTIVEXYN		= "N";													//계좌이체 결제시 사용, ActiveX 사용 여부로 "N" 이외의 값: ActiveX 환경에서 계좌이체 결제 진행(IE)
 
     

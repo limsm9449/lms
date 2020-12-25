@@ -121,6 +121,9 @@ $(document.body).ready(function () {
 	document.getElementById("LGD_OID").value = timeValue;
 	document.getElementById("LGD_TIMESTAMP").value = timeValue;
 	document.getElementById("approvalId").value = timeValue;
+	
+	document.cookie = "SameSite=Lax";
+	document.cookie = "SameSite=None; Secure";
 });
 </script>
 
